@@ -1,10 +1,23 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-function App() {
+import Contacts from './components/Contacts'
+import Home from './components/Home'
+import Portfolio from './components/Portfolio'
+import Project from './components/Project'
+import Layout from './layout/Layout'
+
+const App = () => {
   return (
-    <div className="App">
-      Home
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='portfolio' element={<Portfolio />} />
+          <Route path='contacts' element={<Contacts />} />
+          <Route path=':id' element={<Project />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
