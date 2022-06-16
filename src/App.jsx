@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Contacts from "./components/Contacts";
-import Home from "./components/Home";
-import Portfolio from "./components/Portfolio";
-import Project from "./components/Project";
+import Contacts from "./pages/Contacts";
+import Home from "./pages/Home";
+import Portfolio from "./pages/Portfolio";
+import Project from "./pages/Project";
 import Layout from "./layout/Layout";
 
 const App = () => {

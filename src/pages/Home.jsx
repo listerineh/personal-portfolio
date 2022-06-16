@@ -4,7 +4,7 @@ import {
   DatabaseIcon,
   TranslateIcon,
 } from "@heroicons/react/outline";
-import MyImage from "../images/20220414_210120.webp";
+import MyImage from "../images/main-photo.webp";
 
 const Home = () => {
   return (
