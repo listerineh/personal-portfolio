@@ -117,7 +117,7 @@ const Home = () => {
             </p>
             <p className="font-extralight">[Apr. 2022 - Present]</p>
             <p className="text-sm font-bold text-indigo-600">Functions:</p>
-            <div className="text-sm font-extralight pl-5 text-justify">
+            <div className="text-sm font-extralight pl-5 ">
               <p>
                 - Maintenance of an internal application using: Python, Docker,
                 Azure Platform, Angular, Git.
