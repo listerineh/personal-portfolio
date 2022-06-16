@@ -13,7 +13,7 @@ const Home = () => {
         <img
           src={MyImage}
           alt="Sebastian Alvarez"
-          className="bg-indigo-400 p-1 max-w-full h-auto rounded-full transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
+          className="bg-indigo-500 p-1 max-w-full h-auto rounded-full transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
         />
 
         <h1 className="text-2xl text-indigo-600 font-bold uppercase mt-10">
