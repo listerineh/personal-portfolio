@@ -21,11 +21,11 @@ const Home = () => {
         </h1>
         <div className="text-sm text-white border-l border-indigo-400 mx-5 pl-5 my-3">
           Hi! My name is Sebastian Alvarez, I'm an ecuadorian software
-          engeneering student and developer. I consider myself as a person who
+          engeneering student and developer. I consider myself a person who
           enjoys learning new things, meeting people from different places and
           sharing technical and personal experiences to grow mutually. I love
-          technology and enjoy knowing its enormous potential and I'm also an
-          amateur musician so I can play guitar, bass and piano.
+          technology and enjoy learning about it and I'm also an amateur
+          musician so I can play guitar, bass and piano.
         </div>
       </div>
 
