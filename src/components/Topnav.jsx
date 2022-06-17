@@ -48,7 +48,7 @@ const Topnav = () => {
                       to="/"
                       className={`${
                         currentLocation === "/"
-                          ? "bg-indigo-400 text-white"
+                          ? "bg-indigo-600 text-white"
                           : "text-gray-300 hover:bg-zinc-500 hover:text-white"
                       }  px-3 py-2 rounded-sm text-sm font-medium`}
                     >
@@ -58,7 +58,7 @@ const Topnav = () => {
                       to="/portfolio"
                       className={`${
                         currentLocation === "/portfolio"
-                          ? "bg-indigo-400 text-white"
+                          ? "bg-indigo-600 text-white"
                           : "text-gray-300 hover:bg-zinc-500 hover:text-white"
                       }  px-3 py-2 rounded-sm text-sm font-medium`}
                     >
@@ -68,7 +68,7 @@ const Topnav = () => {
                       to="/contacts"
                       className={`${
                         currentLocation === "/contacts"
-                          ? "bg-indigo-400 text-white"
+                          ? "bg-indigo-600 text-white"
                           : "text-gray-300 hover:bg-zinc-500 hover:text-white"
                       }  px-3 py-2 rounded-sm text-sm font-medium`}
                     >
@@ -86,7 +86,7 @@ const Topnav = () => {
                 to="/"
                 className={`${
                   currentLocation === "/"
-                    ? "bg-indigo-400 text-white"
+                    ? "bg-indigo-600 text-white"
                     : "text-gray-300 hover:bg-zinc-500 hover:text-white"
                 }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
               >
@@ -96,7 +96,7 @@ const Topnav = () => {
                 to="/portfolio"
                 className={`${
                   currentLocation === "/portfolio"
-                    ? "bg-indigo-400 text-white"
+                    ? "bg-indigo-600 text-white"
                     : "text-gray-300 hover:bg-zinc-500 hover:text-white"
                 }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
               >
@@ -106,7 +106,7 @@ const Topnav = () => {
                 to="/contacts"
                 className={`${
                   currentLocation === "/contacts"
-                    ? "bg-indigo-400 text-white"
+                    ? "bg-indigo-600 text-white"
                     : "text-gray-300 hover:bg-zinc-500 hover:text-white"
                 }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
               >

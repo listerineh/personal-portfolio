@@ -3,17 +3,42 @@ import {
   ChipIcon,
   DatabaseIcon,
   TranslateIcon,
+  PaperClipIcon
 } from "@heroicons/react/outline";
-import MyImage from "../images/20220414_210120.webp";
+import MyImage from "../images/main-photo.webp";
 
 const Home = () => {
+  const languages = [
+    { name: "C/C++", url: "https://cplusplus.com/" },
+    { name: "Java ", url: "https://www.java.com/es/" },
+    { name: "Python", url: "https://www.python.org/" },
+    { name: ".NET", url: "https://dotnet.microsoft.com/en-us/" },
+    { name: "Javascript", url: "https://www.javascript.com/" },
+    { name: "HTML", url: "https://html.com/" },
+    { name: "CSS", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+  ];
+  const technologies = [
+    { name: "OpenCV", url: "https://opencv.org/" },
+    { name: "Tensorflow", url: "https://www.tensorflow.org/" },
+    { name: "Keras", url: "https://keras.io/" },
+    { name: "Node", url: "https://nodejs.org/en/" },
+    { name: "React", url: "https://reactjs.org/" },
+    { name: "Tailwind", url: "https://tailwindcss.com/" },
+  ];
+  const databases = [
+    { name: "MySQL", url: "https://www.mysql.com/" },
+    { name: "Oracle", url: "https://www.oracle.com/index.html" },
+    { name: "MongoDB", url: "https://www.mongodb.com/" },
+    { name: "Firebase", url: "https://firebase.google.com/" },
+  ];
+
   return (
     <div className="md:flex relative md:mt-5">
       <div className="md:w-1/4 px-5 py-5 ">
         <img
           src={MyImage}
           alt="Sebastian Alvarez"
-          className="bg-indigo-400 p-1 max-w-full h-auto rounded-full transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
+          className="bg-indigo-500 p-1 max-w-full h-auto rounded-full transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
         />
 
         <h1 className="text-2xl text-indigo-600 font-bold uppercase mt-10">
@@ -21,12 +46,13 @@ const Home = () => {
         </h1>
         <div className="text-sm text-white border-l border-indigo-400 mx-5 pl-5 my-3">
           Hi! My name is Sebastian Alvarez, I'm an ecuadorian software
-          engeneering student and developer. I consider myself as a person who
+          engeneering student and developer. I consider myself a person who
           enjoys learning new things, meeting people from different places and
           sharing technical and personal experiences to grow mutually. I love
-          technology and enjoy knowing its enormous potential and I'm also an
-          amateur musician so I can play guitar, bass and piano.
+          technology and enjoy learning about it and I'm also an amateur
+          musician so I can play guitar, bass and piano.
         </div>
+
       </div>
 
       <div className="md:w-2/4 px-5 py-5">
@@ -147,7 +173,7 @@ const Home = () => {
               >
                 Oracle Academy
               </a>{" "}
-              <span className="font-extralight">[Issued on Apr 2019].</span>
+              <span className="font-extralight">[Issued on Apr. 2019].</span>
             </p>
           </div>
 
@@ -161,7 +187,7 @@ const Home = () => {
               >
                 Oracle Academy
               </a>{" "}
-              <span className="font-extralight">[Issued on Sep 2019].</span>
+              <span className="font-extralight">[Issued on Sep. 2019].</span>
             </p>
           </div>
 
@@ -191,19 +217,19 @@ const Home = () => {
               >
                 INGLIDEX
               </a>{" "}
-              <span className="font-extralight">[Issued on Oct 2019].</span>
+              <span className="font-extralight">[Issued on Oct. 2019].</span>
             </p>
           </div>
 
           <div className="mb-5">
-            <p>
+            <p className="flex">
               Learn SCRUM{" "}
               <a
                 href="https://www.linkedin.com/learning/certificates/fce085566104ebfac691daa0e74fbdbc87ebe56ef2903bb3cd4614f106a1dedd"
                 target="_blank"
                 className="text-green-400 text-xs uppercase font-bold"
               >
-                Credential
+                <PaperClipIcon className="h-6 w-6" />
               </a>
             </p>
             <p className="text-sm">
@@ -214,19 +240,19 @@ const Home = () => {
               >
                 LinkedIn
               </a>{" "}
-              <span className="font-extralight">[Issued on Feb 2022].</span>
+              <span className="font-extralight">[Issued on Feb. 2022].</span>
             </p>
           </div>
 
           <div className="mb-5">
-            <p>
+            <p className="flex">
               4.0 Industry Course{" "}
               <a
                 href="https://www.udemy.com/certificate/UC-0ee5e343-766f-4790-a059-505f3ab3a275/"
                 target="_blank"
                 className="text-green-400 text-xs uppercase font-bold"
               >
-                Credential
+                <PaperClipIcon className="h-6 w-6" />
               </a>
             </p>
             <p className="text-sm">
@@ -237,19 +263,19 @@ const Home = () => {
               >
                 Udemy
               </a>{" "}
-              <span className="font-extralight">[Issued on Mar 2022].</span>
+              <span className="font-extralight">[Issued on Mar. 2022].</span>
             </p>
           </div>
 
           <div className="mb-5">
-            <p>
+            <p className="flex">
               Cibersecurity - CompTIA Security{" "}
               <a
                 href="https://www.udemy.com/certificate/UC-610201d3-c862-4d46-b313-f93d759a912b/"
                 target="_blank"
                 className="text-green-400 text-xs uppercase font-bold"
               >
-                Credential
+                <PaperClipIcon className="h-6 w-6" />
               </a>
             </p>
             <p className="text-sm">
@@ -260,7 +286,7 @@ const Home = () => {
               >
                 Udemy
               </a>{" "}
-              <span className="font-extralight">[Issued on Mar 2022].</span>
+              <span className="font-extralight">[Issued on Mar. 2022].</span>
             </p>
           </div>
         </div>
@@ -310,75 +336,41 @@ const Home = () => {
           Knowledges
         </h1>
         <div className="text-white border-l border-indigo-400 mx-5 pl-5 mt-3 mb-12">
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> C/C++</pre>
-          </div>
+          {languages.map((language) => (
+            <div className="flex" key={language.name} >
+              <CodeIcon className="h-6 w-6" />
+              <pre translate="no">
+                {" "}
+                <a href={language.url} target="_blank">
+                  {language.name}
+                </a>
+              </pre>
+            </div>
+          ))}
 
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> Java</pre>
-          </div>
+          {technologies.map((technology) => (
+            <div className="flex" key={technology.name}>
+              <ChipIcon className="h-6 w-6" />
+              <pre translate="no">
+                {" "}
+                <a href={technology.url} target="_blank">
+                  {technology.name}
+                </a>
+              </pre>
+            </div>
+          ))}
 
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> Python</pre>
-          </div>
-
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> .NET</pre>
-          </div>
-
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> Javascript</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> OpenCV</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> Tensorflow</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> Keras</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> Node</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> React</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> MySQL</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> Oracle</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> MongoDB</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> Firebase</pre>
-          </div>
+          {databases.map((database) => (
+            <div className="flex" key={database.name}>
+              <DatabaseIcon className="h-6 w-6" />
+              <pre translate="no">
+                {" "}
+                <a href={database.url} target="_blank">
+                  {database.name}
+                </a>
+              </pre>
+            </div>
+          ))}
         </div>
 
         <h1 className="text-2xl text-indigo-600 font-bold uppercase">
