@@ -7,6 +7,30 @@ import {
 import MyImage from "../images/main-photo.webp";
 
 const Home = () => {
+  const languages = [
+    { name: "C/C++", url: "https://cplusplus.com/" },
+    { name: "Java ", url: "https://www.java.com/es/" },
+    { name: "Python", url: "https://www.python.org/" },
+    { name: ".NET", url: "https://dotnet.microsoft.com/en-us/" },
+    { name: "Javascript", url: "https://www.javascript.com/" },
+    { name: "HTML", url: "https://html.com/" },
+    { name: "CSS", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+  ];
+  const technologies = [
+    { name: "OpenCV", url: "https://opencv.org/" },
+    { name: "Tensorflow", url: "https://www.tensorflow.org/" },
+    { name: "Keras", url: "https://keras.io/" },
+    { name: "Node", url: "https://nodejs.org/en/" },
+    { name: "React", url: "https://reactjs.org/" },
+    { name: "Tailwind", url: "https://tailwindcss.com/" },
+  ];
+  const databases = [
+    { name: "MySQL", url: "https://www.mysql.com/" },
+    { name: "Oracle", url: "https://www.oracle.com/index.html" },
+    { name: "MongoDB", url: "https://www.mongodb.com/" },
+    { name: "Firebase", url: "https://firebase.google.com/" },
+  ];
+
   return (
     <div className="md:flex relative md:mt-5">
       <div className="md:w-1/4 px-5 py-5 ">
@@ -27,6 +51,11 @@ const Home = () => {
           technology and enjoy learning about it and I'm also an amateur
           musician so I can play guitar, bass and piano.
         </div>
+
+        <h1 className="text-2xl text-indigo-600 font-bold uppercase mt-10">
+          Find me on
+        </h1>
+        <div className="text-sm text-white">Put social media here</div>
       </div>
 
       <div className="md:w-2/4 px-5 py-5">
@@ -147,7 +176,7 @@ const Home = () => {
               >
                 Oracle Academy
               </a>{" "}
-              <span className="font-extralight">[Issued on Apr 2019].</span>
+              <span className="font-extralight">[Issued on Apr. 2019].</span>
             </p>
           </div>
 
@@ -161,7 +190,7 @@ const Home = () => {
               >
                 Oracle Academy
               </a>{" "}
-              <span className="font-extralight">[Issued on Sep 2019].</span>
+              <span className="font-extralight">[Issued on Sep. 2019].</span>
             </p>
           </div>
 
@@ -191,7 +220,7 @@ const Home = () => {
               >
                 INGLIDEX
               </a>{" "}
-              <span className="font-extralight">[Issued on Oct 2019].</span>
+              <span className="font-extralight">[Issued on Oct. 2019].</span>
             </p>
           </div>
 
@@ -214,7 +243,7 @@ const Home = () => {
               >
                 LinkedIn
               </a>{" "}
-              <span className="font-extralight">[Issued on Feb 2022].</span>
+              <span className="font-extralight">[Issued on Feb. 2022].</span>
             </p>
           </div>
 
@@ -237,7 +266,7 @@ const Home = () => {
               >
                 Udemy
               </a>{" "}
-              <span className="font-extralight">[Issued on Mar 2022].</span>
+              <span className="font-extralight">[Issued on Mar. 2022].</span>
             </p>
           </div>
 
@@ -260,7 +289,7 @@ const Home = () => {
               >
                 Udemy
               </a>{" "}
-              <span className="font-extralight">[Issued on Mar 2022].</span>
+              <span className="font-extralight">[Issued on Mar. 2022].</span>
             </p>
           </div>
         </div>
@@ -310,75 +339,41 @@ const Home = () => {
           Knowledges
         </h1>
         <div className="text-white border-l border-indigo-400 mx-5 pl-5 mt-3 mb-12">
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> C/C++</pre>
-          </div>
+          {languages.map((language) => (
+            <div className="flex">
+              <CodeIcon className="h-6 w-6" />
+              <pre translate="no">
+                {" "}
+                <a href={language.url} target="_blank">
+                  {language.name}
+                </a>
+              </pre>
+            </div>
+          ))}
 
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> Java</pre>
-          </div>
+          {technologies.map((technology) => (
+            <div className="flex">
+              <ChipIcon className="h-6 w-6" />
+              <pre translate="no">
+                {" "}
+                <a href={technology.url} target="_blank">
+                  {technology.name}
+                </a>
+              </pre>
+            </div>
+          ))}
 
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> Python</pre>
-          </div>
-
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> .NET</pre>
-          </div>
-
-          <div className="flex">
-            <CodeIcon className="h-6 w-6" />
-            <pre> Javascript</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> OpenCV</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> Tensorflow</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> Keras</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> Node</pre>
-          </div>
-
-          <div className="flex">
-            <ChipIcon className="h-6 w-6" />
-            <pre> React</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> MySQL</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> Oracle</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> MongoDB</pre>
-          </div>
-
-          <div className="flex">
-            <DatabaseIcon className="h-6 w-6" />
-            <pre> Firebase</pre>
-          </div>
+          {databases.map((database) => (
+            <div className="flex">
+              <DatabaseIcon className="h-6 w-6" />
+              <pre translate="no">
+                {" "}
+                <a href={database.url} target="_blank">
+                  {database.name}
+                </a>
+              </pre>
+            </div>
+          ))}
         </div>
 
         <h1 className="text-2xl text-indigo-600 font-bold uppercase">
