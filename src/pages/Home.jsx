@@ -3,6 +3,7 @@ import {
   ChipIcon,
   DatabaseIcon,
   TranslateIcon,
+  PaperClipIcon
 } from "@heroicons/react/outline";
 import MyImage from "../images/main-photo.webp";
 
@@ -52,10 +53,6 @@ const Home = () => {
           musician so I can play guitar, bass and piano.
         </div>
 
-        <h1 className="text-2xl text-indigo-600 font-bold uppercase mt-10">
-          Find me on
-        </h1>
-        <div className="text-sm text-white">Put social media here</div>
       </div>
 
       <div className="md:w-2/4 px-5 py-5">
@@ -225,14 +222,14 @@ const Home = () => {
           </div>
 
           <div className="mb-5">
-            <p>
+            <p className="flex">
               Learn SCRUM{" "}
               <a
                 href="https://www.linkedin.com/learning/certificates/fce085566104ebfac691daa0e74fbdbc87ebe56ef2903bb3cd4614f106a1dedd"
                 target="_blank"
                 className="text-green-400 text-xs uppercase font-bold"
               >
-                Credential
+                <PaperClipIcon className="h-6 w-6" />
               </a>
             </p>
             <p className="text-sm">
@@ -248,14 +245,14 @@ const Home = () => {
           </div>
 
           <div className="mb-5">
-            <p>
+            <p className="flex">
               4.0 Industry Course{" "}
               <a
                 href="https://www.udemy.com/certificate/UC-0ee5e343-766f-4790-a059-505f3ab3a275/"
                 target="_blank"
                 className="text-green-400 text-xs uppercase font-bold"
               >
-                Credential
+                <PaperClipIcon className="h-6 w-6" />
               </a>
             </p>
             <p className="text-sm">
@@ -271,14 +268,14 @@ const Home = () => {
           </div>
 
           <div className="mb-5">
-            <p>
+            <p className="flex">
               Cibersecurity - CompTIA Security{" "}
               <a
                 href="https://www.udemy.com/certificate/UC-610201d3-c862-4d46-b313-f93d759a912b/"
                 target="_blank"
                 className="text-green-400 text-xs uppercase font-bold"
               >
-                Credential
+                <PaperClipIcon className="h-6 w-6" />
               </a>
             </p>
             <p className="text-sm">
@@ -340,7 +337,7 @@ const Home = () => {
         </h1>
         <div className="text-white border-l border-indigo-400 mx-5 pl-5 mt-3 mb-12">
           {languages.map((language) => (
-            <div className="flex">
+            <div className="flex" key={language.name} >
               <CodeIcon className="h-6 w-6" />
               <pre translate="no">
                 {" "}
@@ -352,7 +349,7 @@ const Home = () => {
           ))}
 
           {technologies.map((technology) => (
-            <div className="flex">
+            <div className="flex" key={technology.name}>
               <ChipIcon className="h-6 w-6" />
               <pre translate="no">
                 {" "}
@@ -364,7 +361,7 @@ const Home = () => {
           ))}
 
           {databases.map((database) => (
-            <div className="flex">
+            <div className="flex" key={database.name}>
               <DatabaseIcon className="h-6 w-6" />
               <pre translate="no">
                 {" "}
