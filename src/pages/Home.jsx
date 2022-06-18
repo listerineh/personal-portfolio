@@ -6,12 +6,14 @@ import Achivements from "../components/Achivements";
 import Languages from "../components/Languages";
 import About from "../components/About";
 import Interests from "../components/Interests";
+import SocialMedia from "../components/SocialMedia";
 
 const Home = () => {
   return (
     <div className="md:flex relative md:mt-5">
       <div className="md:w-1/4 px-5 py-5 ">
         <About />
+        <SocialMedia />
       </div>
 
       <div className="md:w-2/4 px-5 py-5">
