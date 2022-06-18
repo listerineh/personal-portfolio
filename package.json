@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@headlessui/react": "^1.6.4",
     "@heroicons/react": "^1.0.6",
     "emailjs-com": "^3.2.0",

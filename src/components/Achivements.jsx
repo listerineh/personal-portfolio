@@ -11,7 +11,7 @@ const Achivements = () => {
           <div className="mb-5" key={achivement.title}>
             <p className="text-xl">{achivement.title}</p>
             <p className="text-sm font-bold text-indigo-600">Description:</p>
-            <div className="text-sm font-extralight pl-5 text-justify">
+            <div className="text-sm font-extralight pl-5">
               <p>{achivement.description}</p>
               <p>Date: {achivement.date}</p>
               <p>Duration: {achivement.duration}</p>
