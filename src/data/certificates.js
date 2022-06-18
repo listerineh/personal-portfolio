@@ -71,4 +71,15 @@ export const certificates = [
     issuedtime: "Issued on Mar. 2022",
     credential: "https://www.udemy.com/certificate/UC-610201d3-c862-4d46-b313-f93d759a912b/",
   },
+  {
+    title: "Google Cloud Essentials",
+    giver: [
+      {
+        company: "Google Developer Student Clubs",
+        url: "https://developers.google.com/community/gdsc",
+      },
+    ],
+    issuedtime: "Issued on Jun. 2022",
+    credential: "https://www.cloudskillsboost.google/public_profiles/a849c3c5-e16e-420c-a96f-c5dd569aaf7f/badges/2267142?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share",
+  },
 ];
