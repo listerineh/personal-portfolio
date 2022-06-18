@@ -13,10 +13,10 @@ const App = () => {
         <Route path="" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="portfolio" element={<Portfolio />} />
-          <Route path="contacts" element={<Contacts />} />
           <Route path="portfolio/:id" element={<Project />} />
-          <Route path="*" element={<Error404 />} />
+          <Route path="contacts" element={<Contacts />} />
         </Route>
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
   );
