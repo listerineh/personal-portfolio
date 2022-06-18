@@ -10,7 +10,7 @@ import SocialMedia from "../components/SocialMedia";
 
 const Home = () => {
   return (
-    <div className="md:flex relative md:mt-5">
+    <div className="md:flex relative md:mt-5 lg:ml-10">
       <div className="md:w-1/4 px-5 py-5 ">
         <About />
         <SocialMedia />
