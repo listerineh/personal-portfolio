@@ -1,6 +1,7 @@
 import { useState } from "react";
 import emailjs from "emailjs-com";
 import Error from "../components/Error";
+import { keys } from "../data/email-data";
 
 const Contacts = () => {
   const [name, setName] = useState("");
@@ -21,19 +22,16 @@ const Contacts = () => {
       return;
     }
 
-    emailjs
-      .send(
-        "service_dufc4dd",
-        "template_s8r5rwq",
-        { name: name, email: email, lastname: lastname, message: message },
-        "0QC6Oj8JwOIS-5TzY"
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    emailjs.send(
+      keys.service,
+      keys.template,
+      { name: name, email: email, lastname: lastname, message: message },
+      keys.public
+    );
+
+    alert(
+      "Your email was sended successfully!\nI'll be in contact with you soon :)"
+    );
 
     setName("");
     setLastname("");
