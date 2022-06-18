@@ -2,7 +2,6 @@ export const languages = [
   { name: "C/C++", url: "https://cplusplus.com/" },
   { name: "Java ", url: "https://www.java.com/es/" },
   { name: "Python", url: "https://www.python.org/" },
-  { name: ".NET", url: "https://dotnet.microsoft.com/en-us/" },
   { name: "Javascript", url: "https://www.javascript.com/" },
   { name: "HTML", url: "https://html.com/" },
   { name: "CSS", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
