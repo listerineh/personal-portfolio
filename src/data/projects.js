@@ -10,6 +10,15 @@ export const projects = [
     url: "1",
     description:
       "Simple responsive web application to manage a veterinary using CRUD operations and saving the data in Local Storage (Browser).",
+    stack: [
+      "vite", 
+      "reactjs", 
+      "react-hooks", 
+      "react-components", 
+      "tailwindcss"
+    ],
+    demo: "https://veterinary-administrator.netlify.app/",
+    repo: "https://github.com/listerineh/veterinary-administrator",
   },
   {
     title: "Budget Plannifier",
@@ -17,6 +26,18 @@ export const projects = [
     url: "2",
     description:
       "Simple responsive web application to plan your budget adding, editing and deleting expenses with a graphic and dinamic view.",
+    stack: [
+      "vite",
+      "react",
+      "react-hooks",
+      "react-components",
+      "react-circular-progressbar",
+      "react-swipeable-list",
+      "normalizecss",
+      "google-fonts",
+    ],
+    demo: "https://budget-plannifier.netlify.app",
+    repo: "https://github.com/listerineh/budget-planner",
   },
   {
     title: "Clients Administrator",
@@ -24,6 +45,19 @@ export const projects = [
     url: "3",
     description:
       "Simple responsive web application to manage your clients using CRUD operations and saving the data in a json server splitted in development and production mode.",
+    stack: [
+      "vite",
+      "react",
+      "react-hooks",
+      "react-components",
+      "react-router-dom",
+      "json-server",
+      "formik",
+      "yup",
+      "tailwindcss",
+    ],
+    demo: "https://simple-crn.netlify.app/",
+    repo: "https://github.com/listerineh/simple-CRN",
   },
   {
     title: "Quote Cryptocurrencies",
@@ -31,5 +65,16 @@ export const projects = [
     url: "4",
     description:
       "Simple responsive web application to quote currencies instantly with the TOP 12 cryptocurrencies of the moment.",
+      stack: [
+        "vite",
+        "react",
+        "react-hooks",
+        "react-custom-hooks",
+        "react-components",
+        "styled-components",
+        "google-fonts",
+      ],
+    demo: "https://quote-cryptos.netlify.app",
+    repo: "https://github.com/listerineh/quote-cryptocurrencies",
   },
 ];
