@@ -1,3 +1,4 @@
+import Topnav from "../components/Topnav";
 import Experience from "../components/Experience";
 import Knowledges from "../components/Knowledges";
 import Studies from "../components/Studies";
@@ -10,25 +11,28 @@ import SocialMedia from "../components/SocialMedia";
 
 const Home = () => {
   return (
-    <div className="md:flex relative md:mt-5">
-      <div className="md:w-1/4 px-5 py-5 ">
-        <About />
-        <SocialMedia />
-      </div>
+    <>
+      <Topnav />
+      <div className="md:flex relative md:mt-5 lg:ml-8">
+        <div className="md:w-1/4 px-5 py-5 ">
+          <About />
+          <SocialMedia />
+        </div>
 
-      <div className="md:w-2/4 px-5 py-5">
-        <Studies />
-        <Experience />
-        <Certificates />
-        <Achivements />
-      </div>
+        <div className="md:w-2/4 px-5 py-5">
+          <Studies />
+          <Experience />
+          <Certificates />
+          <Achivements />
+        </div>
 
-      <div className="md:w-1/4 px-5 py-5">
-        <Knowledges />
-        <Languages />
-        <Interests />
+        <div className="md:w-1/4 px-5 py-5">
+          <Knowledges />
+          <Languages />
+          <Interests />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
