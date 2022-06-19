@@ -11,28 +11,25 @@ import SocialMedia from "../components/SocialMedia";
 
 const Home = () => {
   return (
-    <>
-      <Topnav />
-      <div className="md:flex relative md:mt-5 lg:ml-8">
-        <div className="md:w-1/4 px-5 py-5 ">
-          <About />
-          <SocialMedia />
-        </div>
-
-        <div className="md:w-2/4 px-5 py-5">
-          <Studies />
-          <Experience />
-          <Certificates />
-          <Achivements />
-        </div>
-
-        <div className="md:w-1/4 px-5 py-5">
-          <Knowledges />
-          <Languages />
-          <Interests />
-        </div>
+    <div className="md:flex relative md:mt-5 lg:ml-8">
+      <div className="md:w-1/4 px-5 py-5 ">
+        <About />
+        <SocialMedia />
       </div>
-    </>
+
+      <div className="md:w-2/4 px-5 py-5">
+        <Studies />
+        <Experience />
+        <Certificates />
+        <Achivements />
+      </div>
+
+      <div className="md:w-1/4 px-5 py-5">
+        <Knowledges />
+        <Languages />
+        <Interests />
+      </div>
+    </div>
   );
 };
 
