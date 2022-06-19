@@ -1,9 +1,11 @@
-import React from 'react'
+import Topnav from "../components/Topnav";
 
 const Project = () => {
   return (
-    <div>Project</div>
-  )
-}
+    <>
+      <Topnav />
+    </>
+  );
+};
 
-export default Project
+export default Project;

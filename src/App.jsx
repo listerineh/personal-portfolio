@@ -10,12 +10,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="portfolio" element={<Portfolio />} />
-          <Route path="portfolio/:id" element={<Project />} />
-          <Route path="contacts" element={<Contacts />} />
-        </Route>
+        <Route path="" element={<Home />} />
+        <Route path="portfolio" element={<Portfolio />} />
+        <Route path="portfolio/:id" element={<Project />} />
+        <Route path="contacts" element={<Contacts />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
