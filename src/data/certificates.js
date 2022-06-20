@@ -82,4 +82,26 @@ export const certificates = [
     issuedtime: "Issued on Jun. 2022",
     credential: "https://www.cloudskillsboost.google/public_profiles/a849c3c5-e16e-420c-a96f-c5dd569aaf7f/badges/2267142?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share",
   },
+  {
+    title: "Problem Solving (Basic)",
+    giver: [
+      {
+        company: "HackerRank",
+        url: "https://www.hackerrank.com/",
+      },
+    ],
+    issuedtime: "Issued on Jun. 2022",
+    credential: "https://www.hackerrank.com/certificates/f3678e51ebe5",
+  },
+  {
+    title: "Python (Basic)",
+    giver: [
+      {
+        company: "HackerRank",
+        url: "https://www.hackerrank.com/",
+      },
+    ],
+    issuedtime: "Issued on Jun. 2022",
+    credential: "https://www.hackerrank.com/certificates/9419616fd1c4",
+  },
 ];
