@@ -13,8 +13,8 @@ const Portfolio = () => {
             </h2>
             <Link to={project.url} rel="noopener noreferrer">
               <img
-                src={project.photo}
-                className="border-indigo-500 border-2 mt-2"
+                src={project.photo[0]}
+                className="border-indigo-500 border-2 mt-2 w-full"
               />
             </Link>
             <p className="text-white text-base">{project.description}</p>

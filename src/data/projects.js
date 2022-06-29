@@ -2,11 +2,14 @@ import VeterinaryPhoto from "../images/veterinary-admin.webp";
 import BudgetPhoto from "../images/budget-planner.webp";
 import ClientsPhoto from "../images/clients-admin.webp";
 import CryptosPhoto from "../images/quote-cryptos.webp";
+import SignLanguageMenu from "../images/menu-sign-language.webp";
+import SignLanguage1 from "../images/1-sign-language.webp";
+import SignLanguage2 from "../images/2-sign-language.webp";
 
 export const projects = [
   {
     title: "Veterinary Administrator",
-    photo: VeterinaryPhoto,
+    photo: [VeterinaryPhoto],
     url: "1",
     description:
       "Simple responsive web application to manage a veterinary using CRUD operations and saving the data in Local Storage (Browser).",
@@ -22,7 +25,7 @@ export const projects = [
   },
   {
     title: "Budget Plannifier",
-    photo: BudgetPhoto,
+    photo: [BudgetPhoto],
     url: "2",
     description:
       "Simple responsive web application to plan your budget adding, editing and deleting expenses with a graphic and dinamic view.",
@@ -41,7 +44,7 @@ export const projects = [
   },
   {
     title: "Clients Administrator",
-    photo: ClientsPhoto,
+    photo: [ClientsPhoto],
     url: "3",
     description:
       "Simple responsive web application to manage your clients using CRUD operations and saving the data in a json server splitted in development and production mode.",
@@ -61,7 +64,7 @@ export const projects = [
   },
   {
     title: "Quote Cryptocurrencies",
-    photo: CryptosPhoto,
+    photo: [CryptosPhoto],
     url: "4",
     description:
       "Simple responsive web application to quote currencies instantly with the TOP 12 cryptocurrencies of the moment.",
@@ -76,5 +79,20 @@ export const projects = [
       ],
     demo: "https://quote-cryptos.netlify.app",
     repo: "https://github.com/listerineh/quote-cryptocurrencies",
+  },
+  {
+    title: "Sign Language Learning Platform BETA",
+    photo: [SignLanguageMenu, SignLanguage1, SignLanguage2],
+    url: "5",
+    description:
+      "Platform for learning sign language through interactive training through the computer, the BETA version has a way to test what has been learned.",
+      stack: [
+        "python",
+        "pyqt5",
+        "tensorflow",
+        "keras",
+        "opencv",
+      ],
+    repo: "https://github.com/listerineh/alphabet-sign-languaje-recognition",
   },
 ];

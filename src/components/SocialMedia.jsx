@@ -13,6 +13,7 @@ const SocialMedia = () => {
             href={social.url}
             target="_blank"
             key={social.id}
+            name={social.name}
           >
             <FontAwesomeIcon
               icon={social.name}
