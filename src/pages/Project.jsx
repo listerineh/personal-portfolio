@@ -20,14 +20,17 @@ const Project = () => {
     <>
       {val ? (
         <div className="md:flex">
-          <div className="md:w-2/3 px-5 pb-5">
+          <div className="md:w-2/3 px-5 pb-5 md:h-screen md:overflow-y-scroll">
             <h2 className="mt-5 text-3xl text-indigo-600 font-bold">
               {project.title}
             </h2>
-            <img
-              src={project.photo}
-              className="border-indigo-500 border-2 mt-2"
-            />
+            {project.photo.map((ph) => (
+              <img
+                key={String(ph)}
+                src={ph}
+                className="border-indigo-500 border-2 mt-2 w-full"
+              />
+            ))}
           </div>
           <div className="md:w-1/3 px-5 md:mt-16">
             <div className="mb-5">
@@ -46,7 +49,7 @@ const Project = () => {
               ))}
             </div>
 
-            <div className="flex bottom-0">
+            <div className="flex bottom-0 mb-5">
               <div className="w-3/4"></div>
               <div>
                 <div className="flex gap-x-2">
