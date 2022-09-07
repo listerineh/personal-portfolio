@@ -7,6 +7,7 @@ export const studies = [
     memberships: [
       { body: "Software Development Club member since 2018." },
       { body: "CIS-IEEE ESPE Branch member, 2018-2019." },
+      { body: "Google Developer Student Club ESPE member since 2020." },
     ],
   },
 ];
