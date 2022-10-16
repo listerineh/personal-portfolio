@@ -117,7 +117,7 @@ const Contacts = () => {
               id="message"
               rows="3"
               className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-              placeholder="Describe the symptoms"
+              placeholder="Enter your message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />

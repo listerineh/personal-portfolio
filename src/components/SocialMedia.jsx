@@ -1,12 +1,11 @@
 import { socialmedia } from "../data/socialmedia";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Title from "./Title";
 
 const SocialMedia = () => {
   return (
     <>
-      <h1 className="text-2xl text-indigo-600 font-bold uppercase mt-10">
-        Find me on
-      </h1>
+      <Title>Find me on</Title>
       <div className="mt-5 flex gap-x-2 border-l border-indigo-400 mx-5 pl-5">
         {socialmedia.map((social) => (
           <a

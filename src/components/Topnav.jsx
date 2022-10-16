@@ -25,7 +25,7 @@ const Topnav = () => {
                 <div className="flex-shrink-0 flex items-center">
                   <div className="block lg:hidden h-8 w-auto text-white text-xl font-bold">
                     <h1>
-                      Sebastian Alvarez {""}
+                      <Link to="/">Sebastian Alvarez</Link> {""}
                       <span className="text-indigo-600 text-base font-extralight">
                         Dev
                       </span>
@@ -33,7 +33,7 @@ const Topnav = () => {
                   </div>
                   <div className="hidden lg:block h-8 w-auto text-white text-xl font-bold">
                     <h1>
-                      Sebastian Alvarez {""}
+                      <Link to="/">Sebastian Alvarez</Link> {""}
                       <span className="text-indigo-600 text-base font-extralight">
                         Software Developer
                       </span>
@@ -44,16 +44,6 @@ const Topnav = () => {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
-                    <Link
-                      to="/"
-                      className={`${
-                        currentLocation === "/"
-                          ? "bg-indigo-600 text-white"
-                          : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium`}
-                    >
-                      Home
-                    </Link>
                     <Link
                       to="/portfolio"
                       className={`${
@@ -82,16 +72,6 @@ const Topnav = () => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-0">
-              <Link
-                to="/"
-                className={`${
-                  currentLocation === "/"
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
-              >
-                Home
-              </Link>
               <Link
                 to="/portfolio"
                 className={`${

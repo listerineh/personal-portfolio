@@ -1,12 +1,11 @@
 import { idioms } from "../data/languages";
 import { TranslateIcon } from "@heroicons/react/outline";
+import Title from "./Title";
 
 const Languages = () => {
   return (
     <>
-      <h1 className="text-2xl text-indigo-600 font-bold uppercase">
-        Languages
-      </h1>
+      <Title>Languages</Title>
       <div className="text-white border-l border-indigo-400 mx-5 pl-5 mt-3 mb-12">
         {idioms.map((idiom) => (
           <div className="flex" key={idiom.name}>

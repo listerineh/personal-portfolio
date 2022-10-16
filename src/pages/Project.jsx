@@ -1,49 +1,47 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faSafari } from "@fortawesome/free-brands-svg-icons";
 import Error404 from "../pages/Error404";
 import { projects } from "../data/projects";
+import Carousel from "../components/Carousel";
+import Title from "../components/Title";
 
 const Project = () => {
   const { id } = useParams();
   const currentProject = projects.filter((project) => project.url === id);
 
-  var val = false;
-  var project = "";
-
-  if (currentProject.length > 0) {
-    project = currentProject[0];
-    val = true;
-  }
+  var imageIndexExists = currentProject.length > 0;
+  var project = imageIndexExists ? currentProject[0] : null;
+  var numberOfPhotos = imageIndexExists ? project.photo.length : null;
 
   return (
     <>
-      {val ? (
+      {imageIndexExists ? (
         <div className="md:flex">
-          <div className="md:w-2/3 px-5 pb-5 md:h-screen md:overflow-y-scroll">
-            <h2 className="mt-5 text-3xl text-indigo-600 font-bold">
-              {project.title}
-            </h2>
-            {project.photo.map((ph) => (
+          <div className="md:w-2/3 px-5 py-5">
+            <Title>{project.title}</Title>
+            {numberOfPhotos > 1 ? (
+              <Carousel photos={project.photo} />
+            ) : (
               <img
-                key={String(ph)}
-                src={ph}
+                src={project.photo[0]}
                 className="border-indigo-500 border-2 mt-2 w-full"
               />
-            ))}
+            )}
           </div>
           <div className="md:w-1/3 px-5 md:mt-16">
             <div className="mb-5">
-              <h1 className="text-indigo-600 text-xl">Description:</h1>
+              <h1 className="text-white text-xl font-semibold">Description:</h1>
               <p className="text-white font-extralight">
                 {project.description}
               </p>
             </div>
 
             <div className="mb-5">
-              <h1 className="text-indigo-600 text-xl">Stack:</h1>
+              <h1 className="text-white text-xl font-semibold">Stack:</h1>
               {project.stack.map((item) => (
-                <pre className="pl-5 text-white" translate="no">
+                <pre className="pl-5 text-white" translate="no" key={item}>
                   - {item}
                 </pre>
               ))}
