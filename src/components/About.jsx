@@ -1,20 +1,15 @@
 import { about } from "../data/information";
-import MyImage from "../images/main-photo.webp";
-import Title from "./Title";
 
 const About = () => {
   return (
-    <>
-      <img
-        src={MyImage}
-        alt="Sebastian Alvarez"
-        className="bg-slate-50 mb-10 p-1 w-full h-auto rounded-full transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
-      />
-      <Title>About me</Title>
-      <div className="text-sm text-white border-l border-indigo-400 mx-5 pl-5 my-3 mb-10">
+    <div className="text-white md:px-32 px-10 my-3 mb-10">
+      <div className="md:text-7xl text-5xl font-mono border-b border-indigo-600 pb-1 md:mb-7 mb-5">
+        {about.greeting}
+      </div>
+      <div className="md:text-xl text-md text-justify font-extralight">
         {about.text}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -5,6 +5,7 @@ import Portfolio from "./pages/Portfolio";
 import Project from "./pages/Project";
 import Layout from "./layout/Layout";
 import Error404 from "./pages/Error404";
+import Info from "./pages/Info";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Routes>
         <Route path="" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="info" element={<Info />} />
           <Route path="portfolio" element={<Portfolio />} />
           <Route path="portfolio/:id" element={<Project />} />
           <Route path="contacts" element={<Contacts />} />

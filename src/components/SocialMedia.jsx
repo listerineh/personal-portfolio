@@ -5,8 +5,7 @@ import Title from "./Title";
 const SocialMedia = () => {
   return (
     <>
-      <Title>Find me on</Title>
-      <div className="mt-5 flex gap-x-2 border-l border-indigo-400 mx-5 pl-5">
+      <div className="mt-5 flex justify-center gap-x-2 mx-5">
         {socialmedia.map((social) => (
           <a
             href={social.url}
@@ -17,7 +16,7 @@ const SocialMedia = () => {
             <FontAwesomeIcon
               icon={social.name}
               size="2x"
-              className="text-white"
+              className="text-white hover:text-indigo-600 transition-all"
             />
           </a>
         ))}

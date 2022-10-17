@@ -45,6 +45,16 @@ const Topnav = () => {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     <Link
+                      to="/info"
+                      className={`${
+                        currentLocation === "/info"
+                          ? "bg-indigo-600 text-white"
+                          : "text-gray-300 hover:bg-zinc-500 hover:text-white"
+                      }  px-3 py-2 rounded-sm text-sm font-medium`}
+                    >
+                      Information
+                    </Link>
+                    <Link
                       to="/portfolio"
                       className={`${
                         currentLocation === "/portfolio"
@@ -72,6 +82,16 @@ const Topnav = () => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-0">
+              <Link
+                to="/info"
+                className={`${
+                  currentLocation === "/info"
+                    ? "bg-indigo-600 text-white"
+                    : "text-gray-300 hover:bg-zinc-500 hover:text-white"
+                }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
+              >
+                Information
+              </Link>
               <Link
                 to="/portfolio"
                 className={`${
