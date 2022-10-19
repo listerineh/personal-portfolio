@@ -13,7 +13,7 @@ const Languages = () => {
                 index === 0 ? "border-r" : ""
               }`}
             >
-              <p className="text-3xl">{idiom.name}</p>
+              <p className="md:text-3xl text-2xl">{idiom.name}</p>
               <p className="font-light">{idiom.level}</p>
             </div>
           ))}
