@@ -6,7 +6,7 @@ const Languages = () => {
     <div className="text-center mx-10">
       <Title>Languages</Title>
       <div className="grid bg-[rgba(0,0,0,0.4)] rounded-lg my-4 p-10">
-        <div className={`grid grid-cols-${idioms.length} text-white`}>
+        <div className={`grid grid-cols-2 text-white`}>
           {idioms.map((idiom, index) => (
             <div
               className={`grid grid-rows-2 space-y-2 ${
