@@ -19,21 +19,21 @@ const Carousel = ({ photos }) => {
 
   return (
     <div className="flex w-full text-center">
-      <button className="w-1/12" onClick={handleMoveLeft}>
-        <FontAwesomeIcon
-          icon={faChevronLeft}
-          className="text-slate-500 hover:text-white text-xl hover:text-2xl transition-all"
-        />
+      <button
+        className="w-1/12 text-slate-500 hover:text-white text-xl hover:text-2xl transition-all"
+        onClick={handleMoveLeft}
+      >
+        <FontAwesomeIcon icon={faChevronLeft} />
       </button>
       <img
         src={photos[imageIndex]}
         className="border-indigo-500 border-2 mt-2 w-10/12 transition-all"
       />
-      <button className="w-1/12" onClick={handleMoveRight}>
-        <FontAwesomeIcon
-          icon={faChevronRight}
-          className="text-slate-500 hover:text-white text-xl hover:text-2xl transition-all"
-        />
+      <button
+        className="w-1/12 text-slate-500 hover:text-white text-xl hover:text-2xl transition-all"
+        onClick={handleMoveRight}
+      >
+        <FontAwesomeIcon icon={faChevronRight} />
       </button>
     </div>
   );

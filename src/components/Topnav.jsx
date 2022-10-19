@@ -45,12 +45,22 @@ const Topnav = () => {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     <Link
+                      to="/"
+                      className={`${
+                        currentLocation === "/"
+                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
+                          : "text-gray-300 hover:bg-zinc-500 hover:text-white"
+                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
+                    >
+                      About
+                    </Link>
+                    <Link
                       to="/info"
                       className={`${
                         currentLocation === "/info"
-                          ? "bg-indigo-600 text-white"
+                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
                           : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium`}
+                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
                     >
                       Information
                     </Link>
@@ -58,9 +68,9 @@ const Topnav = () => {
                       to="/portfolio"
                       className={`${
                         currentLocation === "/portfolio"
-                          ? "bg-indigo-600 text-white"
+                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
                           : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium`}
+                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
                     >
                       Portfolio
                     </Link>
@@ -68,9 +78,9 @@ const Topnav = () => {
                       to="/contacts"
                       className={`${
                         currentLocation === "/contacts"
-                          ? "bg-indigo-600 text-white"
+                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
                           : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium`}
+                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
                     >
                       Contacts
                     </Link>
@@ -82,6 +92,16 @@ const Topnav = () => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-0">
+              <Link
+                to="/"
+                className={`${
+                  currentLocation === "/"
+                    ? "bg-indigo-600 text-white"
+                    : "text-gray-300 hover:bg-zinc-500 hover:text-white"
+                }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
+              >
+                About
+              </Link>
               <Link
                 to="/info"
                 className={`${

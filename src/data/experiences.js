@@ -2,50 +2,37 @@ export const experiences = [
   {
     title: "Software Developer",
     location: "ioet",
-    url: "https://ioet.com/",
     timerange: "Jul. 2022 - Present",
-    functions: [
+    subtitle: "Functions",
+    extras: [
       {
-        body: "Develop of a Slack bot for an internal app using Python.",
-      },
-      {
-        body: "Administration and help in the database migration process from Cosmos DB to PostgreSQL.",
-      },
-      {
-        body: "Help in the backend migration process and in the correct documentation of it.",
-      },
-      {
-        body: "Work as a frontend developer using React ts with material UI and React Admin.",
-      },
-      {
-        body: "Help in the develop of the authentication/login of an internal app.",
+        body: "Full stack development for a billing web application. As an agile software developer, I am accountable for architecture design, UI design, prototyping, producing clean code, implementing unit and render testing (front end)  and integration testing (back end), debugging, refactoring and front end deployment.",
       },
     ],
   },
   {
     title: "Information Technology Intern",
     location: "ioet",
-    url: "https://ioet.com/",
     timerange: "Apr. 2022 - Jul. 2022",
-    functions: [
+    subtitle: "Functions",
+    extras: [
       {
-        body: "Maintenance of an internal application using: Python, Docker, Azure Platform, Angular, Git.",
+        body: "Maintenance, developing new features and debugging for a time tracker web application. In addition, responsible for the database administration, migration process from Cosmos DB to PostgreSQL, and  implementing a slack bot using Python.",
       },
-      { body: "Training in Scrum agile development methodology." },
-      { body: "English training for communications with foreign clients." },
-      { body: "Management of PostgreSQL and CosmosDB databases." },
       {
-        body: "Training in DevOps with Terraform, Github actions and CI/CD based on an Azure architecture.",
+        body: "Coordinating and handling the software development process with  SCRUM and Kanban methodology within the Jira platform.",
       },
     ],
   },
   {
     title: "Development team leader",
     location: "Prowessec",
-    url: "https://prowessec.com/",
     timerange: "Jan. 2022 - Mar. 2022",
-    functions: [
-      { body: "Management of the e-commerce website with Wordpress." },
+    subtitle: "Functions",
+    extras: [
+      {
+        body: "Management of a responsive e-commerce website with Wordpress to provide the e-commerce service to people who cannot pay for it.",
+      },
       {
         body: "Meetings for communicating progress to the administratives of the project.",
       },
@@ -55,14 +42,18 @@ export const experiences = [
     ],
   },
   {
-    title: "Student / Developer",
+    title: "IA Developer",
     location: "Military Applications Research Center CICTE",
-    url: "https://cicte.espe.edu.ec/",
     timerange: "Jul. 2020 - Dec. 2020",
-    functions: [
-      { body: "Development of computer vision algorithms in Matlab." },
+    subtitle: "Functions",
+    extras: [
+      {
+        body: "Development of computer vision algorithms in take care the military storages.",
+      },
       { body: "Integration with Arduino and servomotors." },
-      { body: "Presentation of the project to a jury." },
+      {
+        body: "Presentation of the project to a military jury and win a price with my university.",
+      },
     ],
   },
 ];
