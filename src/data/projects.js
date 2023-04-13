@@ -1,14 +1,14 @@
-import BudgetPhoto from "../images/budget-planner.webp";
-import ClientsPhoto from "../images/clients-admin.webp";
-import CryptosPhoto from "../images/quote-cryptos.webp";
-import SignLanguageMenu from "../images/menu-sign-language.webp";
-import SignLanguage1 from "../images/1-sign-language.webp";
-import SignLanguage2 from "../images/2-sign-language.webp";
-import Petvet1 from "../images/petvet1.webp";
-import Petvet2 from "../images/petvet2.webp";
-import Petvet3 from "../images/petvet3.webp";
-import Petvet4 from "../images/petvet4.webp";
-import Petvet5 from "../images/petvet5.webp";
+import BudgetPhoto from "../assets/images/budget-planner.webp";
+import ClientsPhoto from "../assets/images/clients-admin.webp";
+import CryptosPhoto from "../assets/images/quote-cryptos.webp";
+import SignLanguageMenu from "../assets/images/menu-sign-language.webp";
+import SignLanguage1 from "../assets/images/1-sign-language.webp";
+import SignLanguage2 from "../assets/images/2-sign-language.webp";
+import Petvet1 from "../assets/images/petvet1.webp";
+import Petvet2 from "../assets/images/petvet2.webp";
+import Petvet3 from "../assets/images/petvet3.webp";
+import Petvet4 from "../assets/images/petvet4.webp";
+import Petvet5 from "../assets/images/petvet5.webp";
 
 export const projects = [
   {

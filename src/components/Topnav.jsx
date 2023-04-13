@@ -1,142 +1,62 @@
-import { Disclosure } from "@headlessui/react";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
-import { Link, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const Topnav = () => {
-  const location = useLocation();
-  const currentLocation = location.pathname;
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+    document.body.style.overflow = isOpen ? "auto" : "hidden";
+  };
 
   return (
-    <Disclosure as="nav" className="bg-black sticky top-0 z-50">
-      {({ open }) => (
-        <>
-          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-            <div className="relative flex items-center justify-between h-16">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
-              <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex-shrink-0 flex items-center">
-                  <div className="block lg:hidden h-8 w-auto text-white text-xl font-bold">
-                    <h1>
-                      <Link to="/">Sebastian Alvarez</Link> {""}
-                      <span className="text-indigo-600 text-base font-extralight">
-                        Dev
-                      </span>
-                    </h1>
-                  </div>
-                  <div className="hidden lg:block h-8 w-auto text-white text-xl font-bold">
-                    <h1>
-                      <Link to="/">Sebastian Alvarez</Link> {""}
-                      <span className="text-indigo-600 text-base font-extralight">
-                        Software Developer
-                      </span>
-                    </h1>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <div className="hidden sm:block sm:ml-6">
-                  <div className="flex space-x-4">
-                    <Link
-                      to="/"
-                      className={`${
-                        currentLocation === "/"
-                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
-                          : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
-                    >
-                      About
-                    </Link>
-                    <Link
-                      to="/info"
-                      className={`${
-                        currentLocation === "/info"
-                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
-                          : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
-                    >
-                      Information
-                    </Link>
-                    <Link
-                      to="/portfolio"
-                      className={`${
-                        currentLocation === "/portfolio"
-                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
-                          : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
-                    >
-                      Portfolio
-                    </Link>
-                    <Link
-                      to="/contacts"
-                      className={`${
-                        currentLocation === "/contacts"
-                          ? "bg-indigo-600 text-white hover:bg-indigo-500"
-                          : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                      }  px-3 py-2 rounded-sm text-sm font-medium transition-all`}
-                    >
-                      Contacts
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-0">
-              <Link
-                to="/"
-                className={`${
-                  currentLocation === "/"
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
+    <nav className="flex justify-between absolute h-16 box-border w-full bg-black rounded-b-2xl cursor-default">
+      <h1 className="text-white font-bold p-5">
+        Sebastian Alvarez{" "}
+        <span className="text-indigo-500 text-sm font-extralight">
+          Fullstack Engineer
+        </span>
+      </h1>
+      <button className="absolute z-4 right-5 w-5 h-5 p-5" onClick={handleOpen}>
+        <FontAwesomeIcon
+          icon={!isOpen && faBars}
+          size="1x"
+          className="text-white md:text-gray-700 hover:text-white scale-110 transition-all"
+        />
+      </button>
+      {isOpen && (
+        <nav className="absolute z-0 w-full h-screen bg-[rgba(20,20,20,0.95)]">
+          <button
+            className="absolute z-4 right-5 w-5 h-5 p-5"
+            onClick={handleOpen}
+          >
+            <FontAwesomeIcon
+              icon={isOpen && faXmark}
+              size="1x"
+              className="text-white md:text-gray-700 hover:text-white scale-110 transition-all"
+            />
+          </button>
+          <ul className="flex flex-col gap-y-5 w-full h-full items-center justify-center text-white text-2xl">
+            <li>
+              <a
+                href="#"
+                className="md:hover:border-indigo-600 md:hover:border-b-2 md:hover:text-white hover:text-indigo-600 transition-transform"
               >
                 About
-              </Link>
-              <Link
-                to="/info"
-                className={`${
-                  currentLocation === "/info"
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="md:hover:border-indigo-600 md:hover:border-b-2 md:hover:text-white hover:text-indigo-600 transition-transform"
               >
                 Information
-              </Link>
-              <Link
-                to="/portfolio"
-                className={`${
-                  currentLocation === "/portfolio"
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
-              >
-                Portfolio
-              </Link>
-              <Link
-                to="/contacts"
-                className={`${
-                  currentLocation === "/contacts"
-                    ? "bg-indigo-600 text-white"
-                    : "text-gray-300 hover:bg-zinc-500 hover:text-white"
-                }  block px-3 py-2 rounded-sm text-base font-medium shadow`}
-              >
-                Contacts
-              </Link>
-            </div>
-          </Disclosure.Panel>
-        </>
+              </a>
+            </li>
+          </ul>
+        </nav>
       )}
-    </Disclosure>
+    </nav>
   );
 };
 

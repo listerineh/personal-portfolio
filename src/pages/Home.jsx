@@ -1,14 +1,16 @@
 import About from "../components/About";
+import GoToTopButton from "../components/GoToTopButton";
 import SocialMedia from "../components/SocialMedia";
 
 const Home = () => {
   return (
-    <div className="grid p-5 content-center h-[calc(100vh-16vh)]">
-      <div className="grid content-center">
+    <main className="flex flex-col">
+      <section className="flex flex-col items-center justify-center h-screen">
         <About />
         <SocialMedia />
-      </div>
-    </div>
+      </section>
+      <GoToTopButton />
+    </main>
   );
 };
 

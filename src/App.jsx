@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Contacts from "./pages/Contacts";
+import Contacts from "./components/ContactForm";
 import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
 import Project from "./pages/Project";
@@ -13,10 +13,10 @@ const App = () => {
       <Routes>
         <Route path="" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="info" element={<Info />} />
+          {/* <Route path="info" element={<Info />} />
           <Route path="portfolio" element={<Portfolio />} />
           <Route path="portfolio/:id" element={<Project />} />
-          <Route path="contacts" element={<Contacts />} />
+          <Route path="contacts" element={<Contacts />} /> */}
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>
