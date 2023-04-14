@@ -5,7 +5,10 @@ import ContactInformation from "./ContactInformation";
 const Footer = () => {
   return (
     <footer className="flex flex-col w-full text-white cursor-default">
-      <section className="flex flex-col-reverse md:flex-row md:flex-wrap rounded-t-2xl bg-[rgba(20,20,20,0.9)]">
+      <section
+        id="contacs-section"
+        className="flex flex-col-reverse md:flex-row md:flex-wrap rounded-t-2xl bg-[rgba(20,20,20,0.9)]"
+      >
         <ContactForm />
         <ContactInformation />
       </section>
