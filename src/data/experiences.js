@@ -1,59 +1,54 @@
 export const experiences = [
   {
-    title: "Software Developer",
+    title: "Junior Software Engineer",
     location: "ioet",
-    timerange: "Jul. 2022 - Present",
+    timerange: "Sep. 2022 - Present",
+    place: "Remote",
     subtitle: "Functions",
     extras: [
-      {
-        body: "Full stack development for a billing web application. As an agile software developer, I am accountable for architecture design, UI design, prototyping, producing clean code, implementing unit and render testing (front end)  and integration testing (back end), debugging, refactoring and front end deployment.",
-      },
+      "Currently, I work as a backend developer and test automator within a multinational company in a project oriented to developing automation scripts, maintaining microservices and implementing integration, load, and stress tests.",
+      "I worked as a fullstack developer in a project oriented to the automation of a fundamental process within the company.",
     ],
   },
   {
     title: "Information Technology Intern",
     location: "ioet",
-    timerange: "Apr. 2022 - Jul. 2022",
+    timerange: "Apr. 2022 - Sep. 2022",
+    place: "Remote",
     subtitle: "Functions",
     extras: [
-      {
-        body: "Maintenance, developing new features and debugging for a time tracker web application. In addition, responsible for the database administration, migration process from Cosmos DB to PostgreSQL, and  implementing a slack bot using Python.",
-      },
-      {
-        body: "Coordinating and handling the software development process with  SCRUM and Kanban methodology within the Jira platform.",
-      },
+      "Fullstack-oriented remote internship as technical and soft skills preparation to work on international projects.",
+    ],
+  },
+  {
+    title: "Freelance Web Developer",
+    location: "Freelance",
+    timerange: "May. 2022 - Oct. 2022",
+    place: "Remote",
+    subtitle: "Functions",
+    extras: [
+      "I worked on the complete development of a responsive web application to manage architecture projects for students of the Universidad San Francisco de Quito university.",
     ],
   },
   {
     title: "Development team leader",
     location: "Prowessec",
     timerange: "Jan. 2022 - Mar. 2022",
+    place: "Quito, Ecuador",
     subtitle: "Functions",
     extras: [
-      {
-        body: "Management of a responsive e-commerce website with Wordpress to provide the e-commerce service to people who cannot pay for it.",
-      },
-      {
-        body: "Meetings for communicating progress to the administratives of the project.",
-      },
-      {
-        body: "Use plugins like: WooCommerce, Elementor, Dokan, Google Analytics, etc.",
-      },
+      "I worked as a Team Lead in the management of the e-commerce website using Wordpress, WooCommerce, Dokan, and additional plugins.",
     ],
   },
   {
     title: "IA Developer",
     location: "Military Applications Research Center CICTE",
     timerange: "Jul. 2020 - Dec. 2020",
+    place: "Quito, Ecuador",
     subtitle: "Functions",
     extras: [
-      {
-        body: "Development of computer vision algorithms in take care the military storages.",
-      },
-      { body: "Integration with Arduino and servomotors." },
-      {
-        body: "Presentation of the project to a military jury and win a price with my university.",
-      },
+      "I worked on the development of computer vision algorithms in Matlab and integration with Arduino and servo motors.",
+      "Contact: TCNL. Henry Cruz - 098 727 7102",
     ],
   },
 ];

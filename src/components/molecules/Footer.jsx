@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="flex flex-col w-full text-white cursor-default">
       <section
         id="contacs-section"
-        className="flex flex-col-reverse md:flex-row md:flex-wrap rounded-t-2xl bg-[rgba(20,20,20,0.9)]"
+        className="flex flex-col-reverse md:flex-row md:flex-wrap rounded-t-2xl bg-custom-dark"
       >
         <ContactForm />
         <ContactInformation />

@@ -1,5 +1,5 @@
 import React from "react";
-import { socialmedia } from "../data/socialmedia";
+import { socialmedia } from "../../data/socialmedia";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ContactInformation = () => {
