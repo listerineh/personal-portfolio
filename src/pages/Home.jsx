@@ -11,10 +11,10 @@ import { experiences } from "../data/experiences";
 
 const Home = () => {
   return (
-    <main className="flex flex-col bg-zinc-900">
+    <main className="flex flex-col bg-custom-gray">
       <section
         id="home-section"
-        className="flex flex-col items-center justify-center h-auto md:h-screen"
+        className="flex flex-col items-center justify-center h-screen"
       >
         <About />
       </section>

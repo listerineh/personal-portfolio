@@ -4,9 +4,9 @@ const Items = ({ list }) => {
       {list.map((item) => (
         <div
           key={item.timerange}
-          className="flex flex-start border-l-2 border-zinc-800"
+          className="flex flex-start border-l-2 border-custom-gray"
         >
-          <div className="bg-zinc-800 mt-4 w-6 h-6 flex items-center justify-center rounded-full -ml-3" />
+          <div className="bg-custom-gray mt-4 w-8 h-7 flex items-center justify-center rounded-full -ml-4" />
           <section className="block p-6 px-6 pt-2 pb-6 w-full ml-6 mb-6">
             <h2 className="text-2xl md:text-3xl font-bold">{item.title}</h2>
             <h3 className="font-thin text-indigo-500">{item.location}</h3>

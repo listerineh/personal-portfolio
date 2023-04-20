@@ -9,7 +9,7 @@ const SocialMedia = () => {
           <FontAwesomeIcon
             icon={social.name}
             size="2x"
-            className="text-white md:text-gray-700 hover:text-white md:hover:scale-110 transition-all"
+            className="text-white md:text-gray-400 hover:text-white md:hover:scale-110 transition-all"
           />
         </a>
       ))}

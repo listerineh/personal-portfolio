@@ -13,7 +13,7 @@ const ContactInformation = () => {
             target="_blank"
             key={social.id}
             name={social.name}
-            className="flex gap-x-5 items-center text-white md:text-gray-700 hover:text-white md:hover:scale-110 transition-all"
+            className="flex gap-x-5 items-center text-white md:text-gray-500 hover:text-white md:hover:scale-110 transition-all"
           >
             <FontAwesomeIcon icon={social.name} size="2x" />
             <p>{social.social}</p>
