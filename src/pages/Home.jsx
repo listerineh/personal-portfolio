@@ -14,7 +14,7 @@ const Home = () => {
     <main className="flex flex-col bg-custom-gray">
       <section
         id="home-section"
-        className="flex flex-col items-center justify-center h-screen max-h-screen"
+        className="flex flex-col items-center justify-center h-auto md:h-screen"
       >
         <About />
       </section>
