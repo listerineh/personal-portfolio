@@ -4,7 +4,7 @@ import SocialMedia from "../atoms/SocialMedia";
 
 const About = () => {
   return (
-    <article className="md:px-28 px-10 mt-20 md:mt-10 md:mb-0 mb-10 cursor-default max-w-7xl">
+    <article className="md:px-28 px-10 mt-10 md:mb-0 mb-10 cursor-default max-w-7xl">
       <div className="flex flex-col text-white md:pb-0 p-5 md:p-10">
         <p className="md:text-xl text-md font-extralight md:text-start text-center">
           {about.greeting}
