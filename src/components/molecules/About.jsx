@@ -17,11 +17,11 @@ const About = () => {
             {about.text}
           </p>
         </aside>
-        <aside className="w-full md:w-1/3 flex flex-col justify-center items-center">
+        <aside className="w-full md:w-1/3 flex flex-col justify-center items-center md:p-0 p-5">
           <img
             src={Me}
             alt="Personal picture of Sebastian Alvarez"
-            className="rounded-full border-2 border-indigo-600 max-w-xs"
+            className="rounded-full"
           />
         </aside>
       </div>
