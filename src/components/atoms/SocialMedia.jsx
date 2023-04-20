@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SocialMedia = () => {
   return (
-    <span className="mt-5 md:mt-0 flex md:justify-start justify-center gap-x-2 px-10">
+    <span className="mt-5 md:mt-0 flex md:justify-start justify-center gap-x-2">
       {socialmedia.map((social) => (
         <a href={social.url} target="_blank" key={social.id} name={social.name}>
           <FontAwesomeIcon
