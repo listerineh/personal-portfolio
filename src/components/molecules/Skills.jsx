@@ -54,19 +54,11 @@ const Skills = () => {
             <div>
               {[1, 2, 3, 4, 5].map((number) => (
                 <span key={number}>
-                  {number <= technology.grade ? (
-                    <FontAwesomeIcon
-                      icon={SolidStar}
-                      size="1x"
-                      className="text-yellow-400"
-                    />
-                  ) : (
-                    <FontAwesomeIcon
-                      icon={LightStar}
-                      size="1x"
-                      className="text-yellow-400"
-                    />
-                  )}
+                  <FontAwesomeIcon
+                    icon={number <= technology.grade ? SolidStar : LightStar}
+                    size="1x"
+                    className="text-yellow-400"
+                  />
                 </span>
               ))}
             </div>

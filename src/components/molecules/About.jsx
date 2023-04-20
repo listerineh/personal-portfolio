@@ -21,7 +21,7 @@ const About = () => {
           <img
             src={Me}
             alt="Personal picture of Sebastian Alvarez"
-            className="rounded-full"
+            className="rounded-full max-w-xs"
           />
         </aside>
       </div>
