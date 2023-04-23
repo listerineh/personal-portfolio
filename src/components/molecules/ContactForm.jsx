@@ -44,7 +44,7 @@ const ContactForm = () => {
           <input
             id="name"
             type="text"
-            placeholder="eg. Joe Doe"
+            placeholder="e.g. Joe Doe"
             className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b focus:border-indigo-600 focus:bg-transparent outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -57,7 +57,7 @@ const ContactForm = () => {
           <input
             id="email"
             type="email"
-            placeholder="eg. joe.doe@example.com"
+            placeholder="e.g. joe.doe@example.com"
             className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b focus:border-indigo-600 focus:bg-transparent outline-none"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -71,7 +71,7 @@ const ContactForm = () => {
             id="message"
             rows="3"
             className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b focus:border-indigo-600 focus:bg-transparent outline-none"
-            placeholder="eg. Hi! Work with me, please!"
+            placeholder="e.g. Hi! Work with me, please!"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
