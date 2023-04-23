@@ -3,6 +3,7 @@ import { technologies, categories } from "../../data/knowledges";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as SolidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as LightStar } from "@fortawesome/free-regular-svg-icons";
+import Title from "../atoms/Title";
 
 const Skills = () => {
   const [selected, setSelected] = useState("");
@@ -26,11 +27,12 @@ const Skills = () => {
 
   return (
     <article className="px-5 md:px-10 mb-5">
-      <div className="flex justify-end md:px-0 px-5 py-5">
+      <div className="flex justify-between md:px-0 p-5">
+        <Title title="skills" />
         <select
           value={selected}
           onChange={handleSelectChange}
-          className="bg-custom-gray text-white w-52 rounded-md outline-none py-2 px-4 cursor-pointer"
+          className="bg-background dark:bg-background-dark w-52 rounded-md shadow-md dark:shadow-background-dark text-on-background dark:text-on-background-dark outline-none py-2 px-4 cursor-pointer"
         >
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -39,7 +41,7 @@ const Skills = () => {
           ))}
         </select>
       </div>
-      <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center mx-5 md:mx-0 px-5 py-14 bg-custom-gray rounded-md shadow-lg">
+      <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center mx-5 md:mx-0 px-5 py-14">
         {technologiesToShow.map((technology) => (
           <div
             key={technology.name}
@@ -50,7 +52,9 @@ const Skills = () => {
               alt={technology.name}
               className="w-12 md:w-24"
             />
-            <p className="text-white text-sm md:text-base">{technology.name}</p>
+            <p className="text-on-background dark:text-on-background-dark text-sm md:text-base">
+              {technology.name}
+            </p>
             <div>
               {[1, 2, 3, 4, 5].map((number) => (
                 <span key={number}>

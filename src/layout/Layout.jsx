@@ -1,12 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Topnav from "../components/molecules/Topnav";
 import Footer from "../components/molecules/Footer";
-// import "../styles/background.css";
 
-const Layout = () => {
+const Layout = ({ handleThemeSwitch, theme }) => {
   return (
-    <main className="scrollbar-thin scrollbar-thumb-black scrollbar-track-black">
-      <Topnav />
+    <main>
+      <Topnav handleThemeSwitch={handleThemeSwitch} theme={theme} />
       <Outlet />
       <Footer />
     </main>

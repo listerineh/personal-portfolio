@@ -1,13 +1,36 @@
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import Error404 from "./pages/Error404";
 
 const App = () => {
+  const [theme, setTheme] = useState();
+
+  useEffect(() => {
+    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = dark ? "dark" : "light";
+    setTheme(initialTheme);
+    document.documentElement.classList.toggle("dark", initialTheme === "dark");
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
+
+  const handleThemeSwitch = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<Layout />}>
+        <Route
+          path=""
+          element={
+            <Layout handleThemeSwitch={handleThemeSwitch} theme={theme} />
+          }
+        >
           <Route index element={<Home />} />
           <Route path="/portfolio" element={<div>TODO</div>} />
           <Route path="/project/:id" element={<div>TODO</div>} />

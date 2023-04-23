@@ -45,7 +45,7 @@ const ContactForm = () => {
             id="name"
             type="text"
             placeholder="e.g. Joe Doe"
-            className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b focus:border-indigo-600 focus:bg-transparent outline-none"
+            className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b border-shadow dark:border-shadow-dark focus:border-indigo-600 focus:bg-transparent outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -58,7 +58,7 @@ const ContactForm = () => {
             id="email"
             type="email"
             placeholder="e.g. joe.doe@example.com"
-            className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b focus:border-indigo-600 focus:bg-transparent outline-none"
+            className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b border-shadow dark:border-shadow-dark focus:border-indigo-600 focus:bg-transparent outline-none"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -70,7 +70,7 @@ const ContactForm = () => {
           <textarea
             id="message"
             rows="3"
-            className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b focus:border-indigo-600 focus:bg-transparent outline-none"
+            className="w-full p-2 mt-2 placeholder-gray-400 bg-transparent border-b border-shadow dark:border-shadow-dark focus:border-indigo-600 focus:bg-transparent outline-none"
             placeholder="e.g. Hi! Work with me, please!"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -80,7 +80,7 @@ const ContactForm = () => {
 
         <input
           type="submit"
-          className="bg-indigo-800 md:bg-transparent border-2 border-indigo-900 w-full p-3 text-white font-bold uppercase hover:bg-indigo-900 cursor-pointer transition-all"
+          className="bg-secondary-variant md:hover:bg-secondary dark:bg-primary-dark w-full text-on-primary font-bold uppercase p-3 cursor-pointer transition-all"
           value="Send"
         />
       </form>

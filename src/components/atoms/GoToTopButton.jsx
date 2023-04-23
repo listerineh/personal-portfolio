@@ -24,13 +24,13 @@ const GoToTopButton = () => {
 
   return (
     <button
-      className={`fixed bottom-4 right-4 text-white ${!isVisible && "hidden"}`}
+      className={`fixed bottom-4 right-4 ${!isVisible && "hidden"}`}
       onClick={handleClick}
     >
       <FontAwesomeIcon
         icon={faCircleArrowUp}
         size="2x"
-        className="text-white md:text-gray-700 hover:text-white hover:scale-110 transition-all"
+        className="text-secondary md:text-secondary-variant md:hover:text-secondary md:hover:scale-110 transition-all"
       />
     </button>
   );

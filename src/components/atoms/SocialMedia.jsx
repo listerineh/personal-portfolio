@@ -1,5 +1,5 @@
-import { socialmedia } from "../../data/socialmedia";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { socialmedia } from "../../data/socialmedia";
 
 const SocialMedia = () => {
   return (
@@ -9,7 +9,7 @@ const SocialMedia = () => {
           <FontAwesomeIcon
             icon={social.name}
             size="2x"
-            className="text-white md:text-gray-400 hover:text-white md:hover:scale-110 transition-all"
+            className="text-secondary-variant md:hover:text-secondary md:hover:scale-110 transition-all"
           />
         </a>
       ))}
