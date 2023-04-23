@@ -32,7 +32,7 @@ const Topnav = () => {
           visible
             ? "opacity-100 transform translate-y-0"
             : "opacity-0 transform -translate-y-full"
-        } fixed flex justify-between h-16 md:h-20 box-border w-full bg-black rounded-b-2xl cursor-default transition-all duration-300`}
+        } fixed flex z-10 justify-between h-16 md:h-20 box-border w-full bg-black rounded-b-2xl cursor-default transition-all duration-300`}
       >
         <h1 className="text-white text-base md:text-lg font-bold p-5 md:p-6">
           Sebastian Alvarez{" "}

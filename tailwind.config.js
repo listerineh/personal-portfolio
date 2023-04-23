@@ -12,7 +12,7 @@ module.exports = {
           light: "#141414f2",
         },
         "custom-gray": {
-          DEFAULT: "#2e2e2e",
+          DEFAULT: "#121212",
         },
       },
     },

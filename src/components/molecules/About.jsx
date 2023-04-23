@@ -1,5 +1,5 @@
 import { about } from "../../data/information";
-import Me from "../../assets/images/me.jpg";
+import Me from "../../assets/images/me.png";
 import SocialMedia from "../atoms/SocialMedia";
 
 const About = () => {
@@ -16,7 +16,7 @@ const About = () => {
           <img
             src={Me}
             alt="Personal picture of Sebastian Alvarez"
-            className="rounded-full w-36 md:w-48 block md:hidden"
+            className="absolute right-0 bottom-0 opacity-25"
           />
         </div>
         <p className="md:text-xl text-md text-justify font-extralight mb-5">

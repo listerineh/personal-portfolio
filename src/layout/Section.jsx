@@ -5,7 +5,7 @@ const Section = ({ children, title, dark }) => {
     <section
       id={`${title}-section`}
       className={`flex flex-col pt-10 md:pt-5 px-0 md:px-20 ${
-        dark && "bg-custom-dark"
+        dark && "bg-black"
       }`}
     >
       <Title title={title} />

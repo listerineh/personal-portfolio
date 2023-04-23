@@ -19,8 +19,6 @@ const Home = () => {
         <About />
       </section>
 
-      <TopWave />
-
       <Section title="skills" dark={true}>
         <Skills />
       </Section>
@@ -28,7 +26,7 @@ const Home = () => {
       <section className="flex flex-col md:flex-row">
         <aside
           id="education-section"
-          className="flex flex-col pt-10 md:pt-5 pl-0 md:pl-20 bg-custom-dark w-full md:w-1/2"
+          className="flex flex-col pt-10 md:pt-5 pl-0 md:pl-20 bg-black w-full md:w-1/2"
         >
           <Title title="education" />
           <Items list={studies} />
@@ -36,7 +34,7 @@ const Home = () => {
 
         <aside
           id="experience-section"
-          className="flex flex-col pt-10 md:pt-5 pr-0 md:pr-20 bg-custom-dark w-full md:w-1/2"
+          className="flex flex-col pt-10 md:pt-5 pr-0 md:pr-20 bg-black w-full md:w-1/2"
         >
           <Title title="experience" />
           <Items list={experiences} />

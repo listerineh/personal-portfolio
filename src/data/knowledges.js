@@ -205,8 +205,8 @@ export const technologies = [
   {
     name: "Go",
     img: "https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg",
-    category: ["Tools", "Most used"],
-    grade: 4,
+    category: ["Tools"],
+    grade: 3,
   },
   {
     name: "Jenkins",
@@ -253,7 +253,7 @@ export const technologies = [
   {
     name: "PyTest",
     img: "https://raw.githubusercontent.com/devicons/devicon/master/icons/pytest/pytest-original.svg",
-    category: ["Tools"],
+    category: ["Tools", "Most used"],
     grade: 4,
   },
   {
