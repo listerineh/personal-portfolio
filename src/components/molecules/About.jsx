@@ -16,7 +16,7 @@ const About = () => {
           <img
             src={Me}
             alt="Personal picture of Sebastian Alvarez"
-            className="absolute right-0 bottom-0 opacity-25"
+            className="absolute right-0 bottom-0 opacity-20 h-[calc(100vh-15vh)]"
           />
         </div>
         <p className="md:text-xl text-md text-justify font-extralight mb-5">
