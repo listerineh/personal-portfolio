@@ -54,7 +54,7 @@ const Topnav = () => {
 
       {isOpen && (
         <nav
-          className="absolute z-20 w-full h-screen bg-custom-dark-light"
+          className="absolute z-50 w-full h-screen bg-custom-dark-light"
           style={{ top: `${window.pageYOffset}px` }}
         >
           <button

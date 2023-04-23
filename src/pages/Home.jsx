@@ -1,7 +1,5 @@
 import About from "../components/molecules/About";
 import GoToTopButton from "../components/atoms/GoToTopButton";
-import TopWave from "../components/atoms/TopWave";
-import BottomWave from "../components/atoms/BottomWave";
 import Skills from "../components/molecules/Skills";
 import Section from "../layout/Section";
 import Title from "../components/atoms/Title";
@@ -40,8 +38,6 @@ const Home = () => {
           <Items list={experiences} />
         </aside>
       </section>
-
-      <BottomWave />
 
       <Section title="projects" dark={false}></Section>
 
