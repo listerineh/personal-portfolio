@@ -6,7 +6,8 @@ export const experiences = [
     place: "Remote",
     subtitle: "Functions",
     extras: [
-      "Currently, I work as a backend developer and test automator within a multinational company in a project oriented to developing automation scripts, maintaining microservices and implementing integration, load, and stress tests.",
+      "Currently, I'm working as a backend developer and test automator within a multinational company in a project oriented to developing automation scripts, maintaining microservices and implementing integration, load, and stress tests.",
+      "Currently, I'm working as a fullstack developer on an internal project of ioet for the implementation of a web application to manage an inventory of all ioet's hardware devices.",
       "I worked as a fullstack developer in a project oriented to the automation of a fundamental process within the company.",
     ],
   },
@@ -18,6 +19,7 @@ export const experiences = [
     subtitle: "Functions",
     extras: [
       "Fullstack-oriented remote internship as technical and soft skills preparation to work on international projects.",
+      "I worked as a fullstack developer on an international project of ioet based for the maintanance of a web application to manage the working time of every ioet workers.",
     ],
   },
   {
