@@ -1,13 +1,38 @@
 import { useState } from "react";
+import emailjs from "emailjs-com";
 
 const ContactForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+  const SERVICE_KEY = import.meta.env.VITE_SERVICE_KEY;
+  const RECEIVE_TEMPLATE_KEY = import.meta.env.VITE_RECEIVE_TEMPLATE_KEY;
+  const SEND_TEMPLATE_KEY = import.meta.env.VITE_SEND_TEMPLATE_KEY;
+  const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("test submit");
+
+    emailjs.send(
+      SERVICE_KEY,
+      RECEIVE_TEMPLATE_KEY,
+      { name: name, email: email, message: message },
+      PUBLIC_KEY
+    );
+
+    emailjs.send(
+      SERVICE_KEY,
+      SEND_TEMPLATE_KEY,
+      { name: name, email: email },
+      PUBLIC_KEY
+    );
+
+    setName("");
+    setEmail("");
+    setMessage("");
+
+    alert("Thanks for submitting your message!\nI'll contact you soon!");
   };
 
   return (
