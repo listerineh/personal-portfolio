@@ -15,7 +15,7 @@ const ContactInformation = () => {
             target="_blank"
             key={social.id}
             name={social.name}
-            className="flex gap-x-5 items-center dark:text-on-background-dark text-shadow-dark md:hover:text-on-background md:hover:scale-110 transition-all"
+            className="flex gap-x-5 items-center text-shadow-dark md:hover:text-on-background dark:md:hover:text-on-background-dark md:hover:scale-110 transition-all"
           >
             <FontAwesomeIcon icon={social.name} size="2x" />
             <p>{social.social}</p>
