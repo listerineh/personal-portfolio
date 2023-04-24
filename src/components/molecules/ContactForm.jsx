@@ -80,7 +80,7 @@ const ContactForm = () => {
 
         <input
           type="submit"
-          className="bg-secondary-variant md:hover:bg-secondary dark:bg-primary-dark w-full text-on-primary font-bold uppercase p-3 cursor-pointer transition-all"
+          className="bg-secondary-variant md:hover:bg-secondary w-full text-on-primary font-bold uppercase p-3 cursor-pointer transition-all"
           value="Send"
         />
       </form>
