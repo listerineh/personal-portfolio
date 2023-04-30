@@ -1,13 +1,19 @@
+import Vet1 from "../assets/images/petvet1.webp";
+import Vet2 from "../assets/images/petvet2.webp";
+import Vet3 from "../assets/images/petvet3.webp";
+import Vet4 from "../assets/images/petvet4.webp";
+import Vet5 from "../assets/images/petvet5.webp";
+import Crypto from "../assets/images/quote-cryptos.webp";
+import SLLP1 from "../assets/images/1-sign-language.webp";
+import SLLP2 from "../assets/images/2-sign-language.webp";
+import SLLP3 from "../assets/images/menu-sign-language.webp";
+import Budget from "../assets/images/budget-planner.webp";
+import Admin from "../assets/images/clients-admin.webp";
+
 export const projects = [
   {
     title: "Veterinary Administrator",
-    photo: [
-      "@src/assets/images/petvet2.webp",
-      "@src/assets/images/petvet3.webp",
-      "@src/assets/images/petvet4.webp",
-      "@src/assets/images/petvet1.webp",
-      "@src/assets/images/petvet5.webp",
-    ],
+    photo: [Vet1, Vet2, Vet3, Vet4, Vet5],
     id: "1",
     description:
       "Responsive web application to manage a veterinary clinic using CRUD operations and saving the data in Local Storage with a beauty dark mode.",
@@ -18,7 +24,7 @@ export const projects = [
   },
   {
     title: "Quote Cryptocurrencies",
-    photo: ["@src/assets/images/quote-cryptos.webp"],
+    photo: [Crypto],
     id: "2",
     description:
       "Responsive web application to quote currencies instantly with the TOP 12 cryptocurrencies of the moment.",
@@ -29,11 +35,7 @@ export const projects = [
   },
   {
     title: "SLLP alpha",
-    photo: [
-      "@src/assets/images/1-sign-language.webp",
-      "@src/assets/images/2-sign-language.webp",
-      "@src/assets/images/menu-sign-language.webp",
-    ],
+    photo: [SLLP1, SLLP2, SLLP3],
     id: "3",
     description:
       "Platform for learning sign language through interactive training within the computer, this alpha version has all the alphabet and a way to test what have you been learned.",
@@ -43,7 +45,7 @@ export const projects = [
   },
   {
     title: "Budget Plannifier",
-    photo: ["@src/assets/images/budget-planner.webp"],
+    photo: [Budget],
     id: "4",
     description:
       "Responsive web application to plan your budget adding, editing and deleting expenses within a graphic and dinamic view.",
@@ -61,7 +63,7 @@ export const projects = [
   },
   {
     title: "Clients Administrator",
-    photo: ["@src/assets/images/clients-admin.webp"],
+    photo: [Admin],
     id: "5",
     description:
       "Responsive web application to manage your clients using CRUD operations and saving the data in a json server splitted in development and production mode.",
