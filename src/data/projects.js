@@ -2,11 +2,11 @@ export const projects = [
   {
     title: "Veterinary Administrator",
     photo: [
-      "/src/assets/images/petvet1.webp",
-      "/src/assets/images/petvet2.webp",
-      "/src/assets/images/petvet3.webp",
-      "/src/assets/images/petvet4.webp",
-      "/src/assets/images/petvet5.webp",
+      "@src/assets/images/petvet2.webp",
+      "@src/assets/images/petvet3.webp",
+      "@src/assets/images/petvet4.webp",
+      "@src/assets/images/petvet1.webp",
+      "@src/assets/images/petvet5.webp",
     ],
     id: "1",
     description:
@@ -18,7 +18,7 @@ export const projects = [
   },
   {
     title: "Quote Cryptocurrencies",
-    photo: ["/src/assets/images/quote-cryptos.webp"],
+    photo: ["@src/assets/images/quote-cryptos.webp"],
     id: "2",
     description:
       "Responsive web application to quote currencies instantly with the TOP 12 cryptocurrencies of the moment.",
@@ -30,9 +30,9 @@ export const projects = [
   {
     title: "SLLP alpha",
     photo: [
-      "/src/assets/images/1-sign-language.webp",
-      "/src/assets/images/2-sign-language.webp",
-      "/src/assets/images/menu-sign-language.webp",
+      "@src/assets/images/1-sign-language.webp",
+      "@src/assets/images/2-sign-language.webp",
+      "@src/assets/images/menu-sign-language.webp",
     ],
     id: "3",
     description:
@@ -43,7 +43,7 @@ export const projects = [
   },
   {
     title: "Budget Plannifier",
-    photo: ["/src/assets/images/budget-planner.webp"],
+    photo: ["@src/assets/images/budget-planner.webp"],
     id: "4",
     description:
       "Responsive web application to plan your budget adding, editing and deleting expenses within a graphic and dinamic view.",
@@ -61,7 +61,7 @@ export const projects = [
   },
   {
     title: "Clients Administrator",
-    photo: ["/src/assets/images/clients-admin.webp"],
+    photo: ["@src/assets/images/clients-admin.webp"],
     id: "5",
     description:
       "Responsive web application to manage your clients using CRUD operations and saving the data in a json server splitted in development and production mode.",
