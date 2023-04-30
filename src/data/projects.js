@@ -1,97 +1,81 @@
-import BudgetPhoto from "../assets/images/budget-planner.webp";
-import ClientsPhoto from "../assets/images/clients-admin.webp";
-import CryptosPhoto from "../assets/images/quote-cryptos.webp";
-import SignLanguageMenu from "../assets/images/menu-sign-language.webp";
-import SignLanguage1 from "../assets/images/1-sign-language.webp";
-import SignLanguage2 from "../assets/images/2-sign-language.webp";
-import Petvet1 from "../assets/images/petvet1.webp";
-import Petvet2 from "../assets/images/petvet2.webp";
-import Petvet3 from "../assets/images/petvet3.webp";
-import Petvet4 from "../assets/images/petvet4.webp";
-import Petvet5 from "../assets/images/petvet5.webp";
-
 export const projects = [
   {
     title: "Veterinary Administrator",
-    photo: [Petvet1, Petvet2, Petvet3, Petvet4, Petvet5],
-    url: "1",
-    description:
-      "Simple responsive web application to manage a veterinary using CRUD operations and saving the data in Local Storage (Browser) with a beauty dark mode.",
-    stack: [
-      "vite",
-      "reactjs",
-      "react-hooks",
-      "react-components",
-      "tailwindcss",
-      "vercel",
+    photo: [
+      "/src/assets/images/petvet1.webp",
+      "/src/assets/images/petvet2.webp",
+      "/src/assets/images/petvet3.webp",
+      "/src/assets/images/petvet4.webp",
+      "/src/assets/images/petvet5.webp",
     ],
+    id: "1",
+    description:
+      "Responsive web application to manage a veterinary clinic using CRUD operations and saving the data in Local Storage with a beauty dark mode.",
+    stack: ["vite", "reactjs", "tailwindcss", "vercel"],
     demo: "https://petvet-admin.vercel.app/",
     repo: "https://github.com/listerineh/veterinary-administrator",
-  },
-  {
-    title: "Budget Plannifier",
-    photo: [BudgetPhoto],
-    url: "2",
-    description:
-      "Simple responsive web application to plan your budget adding, editing and deleting expenses with a graphic and dinamic view.",
-    stack: [
-      "vite",
-      "react",
-      "react-hooks",
-      "react-components",
-      "react-circular-progressbar",
-      "react-swipeable-list",
-      "normalizecss",
-      "google-fonts",
-    ],
-    demo: "https://budget-plannifier.netlify.app",
-    repo: "https://github.com/listerineh/budget-planner",
-  },
-  {
-    title: "Clients Administrator",
-    photo: [ClientsPhoto],
-    url: "3",
-    description:
-      "Simple responsive web application to manage your clients using CRUD operations and saving the data in a json server splitted in development and production mode.",
-    stack: [
-      "vite",
-      "react",
-      "react-hooks",
-      "react-components",
-      "react-router-dom",
-      "json-server",
-      "formik",
-      "yup",
-      "tailwindcss",
-    ],
-    demo: "https://simple-crn.netlify.app/",
-    repo: "https://github.com/listerineh/simple-CRN",
+    icon: "PWA",
   },
   {
     title: "Quote Cryptocurrencies",
-    photo: [CryptosPhoto],
-    url: "4",
+    photo: ["/src/assets/images/quote-cryptos.webp"],
+    id: "2",
     description:
-      "Simple responsive web application to quote currencies instantly with the TOP 12 cryptocurrencies of the moment.",
+      "Responsive web application to quote currencies instantly with the TOP 12 cryptocurrencies of the moment.",
+    stack: ["vite", "react", "google-fonts", "styled-components", "netlify"],
+    demo: "https://quote-cryptos.netlify.app",
+    repo: "https://github.com/listerineh/quote-cryptocurrencies",
+    icon: "PWA",
+  },
+  {
+    title: "SLLP alpha",
+    photo: [
+      "/src/assets/images/1-sign-language.webp",
+      "/src/assets/images/2-sign-language.webp",
+      "/src/assets/images/menu-sign-language.webp",
+    ],
+    id: "3",
+    description:
+      "Platform for learning sign language through interactive training within the computer, this alpha version has all the alphabet and a way to test what have you been learned.",
+    stack: ["python", "pyqt5", "tensorflow", "keras", "opencv"],
+    repo: "https://github.com/listerineh/alphabet-sign-languaje-recognition",
+    icon: "Desktop",
+  },
+  {
+    title: "Budget Plannifier",
+    photo: ["/src/assets/images/budget-planner.webp"],
+    id: "4",
+    description:
+      "Responsive web application to plan your budget adding, editing and deleting expenses within a graphic and dinamic view.",
     stack: [
       "vite",
       "react",
-      "react-hooks",
-      "react-custom-hooks",
-      "react-components",
-      "styled-components",
-      "google-fonts",
+      "normalizecss",
+      "netlify",
+      "react-circular-progressbar",
+      "react-swipeable-list",
     ],
-    demo: "https://quote-cryptos.netlify.app",
-    repo: "https://github.com/listerineh/quote-cryptocurrencies",
+    demo: "https://budget-plannifier.netlify.app",
+    repo: "https://github.com/listerineh/budget-planner",
+    icon: "PWA",
   },
   {
-    title: "Sign Language Learning Platform BETA",
-    photo: [SignLanguageMenu, SignLanguage1, SignLanguage2],
-    url: "5",
+    title: "Clients Administrator",
+    photo: ["/src/assets/images/clients-admin.webp"],
+    id: "5",
     description:
-      "Platform for learning sign language through interactive training through the computer, the BETA version has a way to test what has been learned.",
-    stack: ["python", "pyqt5", "tensorflow", "keras", "opencv"],
-    repo: "https://github.com/listerineh/alphabet-sign-languaje-recognition",
+      "Responsive web application to manage your clients using CRUD operations and saving the data in a json server splitted in development and production mode.",
+    stack: [
+      "vite",
+      "react",
+      "formik",
+      "yup",
+      "json-server",
+      "tailwindcss",
+      "netlify",
+    ],
+    demo: "https://simple-crn.netlify.app/",
+    repo: "https://github.com/listerineh/simple-CRN",
+    icon: "PWA",
   },
 ];

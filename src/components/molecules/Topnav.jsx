@@ -1,3 +1,5 @@
+import { useState, useRef, useEffect } from "react";
+import { Link as Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -5,7 +7,6 @@ import {
   faSun,
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState, useRef, useEffect } from "react";
 import Link from "../atoms/Link";
 
 const Topnav = ({ handleThemeSwitch, theme }) => {
@@ -37,10 +38,12 @@ const Topnav = ({ handleThemeSwitch, theme }) => {
           visible
             ? "opacity-100 transform translate-y-0"
             : "opacity-0 transform -translate-y-full"
-        } fixed flex z-10 p-5 md:p-6 justify-between h-16 md:h-20 box-border w-full bg-primary-variant dark:bg-surface-dark rounded-b-2xl shadow-md cursor-default duration-300`}
+        } fixed flex z-20 p-5 md:p-6 justify-between h-16 md:h-20 box-border w-full bg-primary-variant dark:bg-surface-dark rounded-b-2xl shadow-md cursor-default duration-300`}
       >
         <h1 className="text-on-primary dark:text-on-background-dark text-base md:text-lg font-bold">
-          Sebastian Alvarez{" "}
+          <Redirect to="/" className="cursor-pointer">
+            Sebastian Alvarez
+          </Redirect>{" "}
           <span className="text-on-surface-dark dark:text-primary-dark font-light">
             Fullstack Engineer
           </span>

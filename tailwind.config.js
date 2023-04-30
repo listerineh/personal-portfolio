@@ -4,6 +4,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      width: {
+        fix: "32%",
+      },
       colors: {
         background: {
           DEFAULT: "#F0F0F0",
@@ -50,6 +53,10 @@ module.exports = {
         shadow: {
           DEFAULT: "#C5C5C5",
           dark: "#696969",
+        },
+        "on-shawdow": {
+          DEFAULT: "#FFFFFF",
+          dark: "#000000",
         },
       },
     },

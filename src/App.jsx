@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import Error404 from "./pages/Error404";
+import Portfolio from "./pages/Portfolio";
+import Project from "./pages/Project";
 
 const App = () => {
   const [theme, setTheme] = useState();
@@ -32,8 +34,8 @@ const App = () => {
           }
         >
           <Route index element={<Home />} />
-          <Route path="/portfolio" element={<div>TODO</div>} />
-          <Route path="/project/:id" element={<div>TODO</div>} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/projects/:id" element={<Project />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>
