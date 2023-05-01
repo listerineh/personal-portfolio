@@ -8,6 +8,7 @@ const Portfolio = () => {
   const [projectsToShow, setProjectsToShow] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setActiveCategory(categories[0]);
   }, []);
 
@@ -19,7 +20,6 @@ const Portfolio = () => {
         projects.filter((project) => project.icon.includes(activeCategory))
       );
     }
-    console.log(projects);
   }, [activeCategory]);
 
   return (
