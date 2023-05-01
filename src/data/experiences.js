@@ -29,7 +29,7 @@ export const experiences = [
     place: "Remote",
     subtitle: "Functions",
     extras: [
-      "I worked on the complete development of a responsive web application to manage architecture projects for students of the Universidad San Francisco de Quito university.",
+      "I worked on the complete development of a responsive web applications for students of ESPE university.",
     ],
   },
   {
