@@ -10,7 +10,7 @@ const Portfolio = () => {
             {projects.map((project) => (
               <Project
                 key={project.id}
-                id={project.id}
+                to={project.id}
                 icon={project.icon}
                 description={project.description}
                 title={project.title}

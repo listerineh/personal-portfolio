@@ -10,7 +10,7 @@ const Projects = () => {
           {projects.slice(0, 3).map((project) => (
             <Project
               key={project.id}
-              id={project.id}
+              to={`/projects/${project.id}`}
               icon={project.icon}
               description={project.description}
               title={project.title}
@@ -23,7 +23,7 @@ const Projects = () => {
         </div>
         <div className="w-full flex justify-end py-5">
           <Link
-            to="portfolio"
+            to="projects"
             className="bg-secondary-variant text-center text-white px-3 py-2 rounded-md md:hover:bg-secondary transition-all w-full md:w-auto"
           >
             See more

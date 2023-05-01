@@ -17,24 +17,21 @@ const Project = ({
   stack,
   codeURL,
   siteURL,
-  id,
+  to,
 }) => {
+  const icons = {
+    PWA: faLaptopHouse,
+    Mobile: faMobileScreen,
+    Desktop: faLaptop,
+  };
+
   const setIcon = () => {
-    switch (icon) {
-      case "PWA":
-        return faLaptopHouse;
-      case "Mobile":
-        return faMobileScreen;
-      case "Desktop":
-        return faLaptop;
-      default:
-        return faCode;
-    }
+    return icons[icon] || faCode;
   };
 
   return (
     <Link
-      to={`projects/${id}`}
+      to={to}
       className="flex flex-col justify-between md:w-fix p-3 rounded-xl shadow-xl md:hover:scale-105 transition-all bg-surface dark:bg-surface-dark text-on-surface dark:text-on-surface-dark"
     >
       <div className="relative inline-block">
@@ -47,7 +44,7 @@ const Project = ({
           className="w-full md:h-48 opacity-80"
         />
         <div className="absolute bottom-0 right-0 z-10">
-          <span className="flex gap-x-2">
+          <span className="flex gap-x-2 z-10">
             {codeURL && (
               <ButtonPrincipal URL={codeURL} icon={faCode} text="View Code" />
             )}
