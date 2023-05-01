@@ -49,7 +49,7 @@ export const projects = [
       "express",
     ],
     repo: "https://github.com/listerineh/react-socket-express-chatapp",
-    icon: "PWA",
+    icon: "Web",
   },
   {
     title: "Veterinary Administrator",
@@ -60,7 +60,7 @@ export const projects = [
     stack: ["vite", "reactjs", "tailwindcss", "vercel"],
     demo: "https://petvet-admin.vercel.app/",
     repo: "https://github.com/listerineh/veterinary-administrator",
-    icon: "PWA",
+    icon: "Web",
   },
   {
     title: "SLLP alpha",
@@ -101,7 +101,7 @@ export const projects = [
     stack: ["vite", "react", "google-fonts", "styled-components", "netlify"],
     demo: "https://quote-cryptos.netlify.app",
     repo: "https://github.com/listerineh/quote-cryptocurrencies",
-    icon: "PWA",
+    icon: "Web",
   },
   {
     title: "Budget Plannifier",
@@ -119,7 +119,7 @@ export const projects = [
     ],
     demo: "https://budget-plannifier.netlify.app",
     repo: "https://github.com/listerineh/budget-planner",
-    icon: "PWA",
+    icon: "Web",
   },
   {
     title: "Clients Administrator",
@@ -138,7 +138,7 @@ export const projects = [
     ],
     demo: "https://simple-crn.netlify.app/",
     repo: "https://github.com/listerineh/simple-CRN",
-    icon: "PWA",
+    icon: "Web",
   },
   {
     title: "Console hanged game",

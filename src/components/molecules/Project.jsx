@@ -20,7 +20,7 @@ const Project = ({
   to,
 }) => {
   const icons = {
-    PWA: faLaptopHouse,
+    Web: faLaptopHouse,
     Mobile: faMobileScreen,
     Desktop: faLaptop,
   };
