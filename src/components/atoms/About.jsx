@@ -1,4 +1,4 @@
-import SocialMedia from "../atoms/SocialMedia";
+import SocialMedia from "./SocialMedia";
 import Me from "../../assets/images/me.png";
 import { about } from "../../data/information";
 

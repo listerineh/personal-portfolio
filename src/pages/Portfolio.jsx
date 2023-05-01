@@ -1,4 +1,4 @@
-import Project from "../components/atoms/Project";
+import Project from "../components/molecules/Project";
 import { projects } from "../data/projects";
 
 const Portfolio = () => {

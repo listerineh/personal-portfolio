@@ -1,6 +1,6 @@
 import React from "react";
 import ContactForm from "./ContactForm";
-import ContactInformation from "./ContactInformation";
+import ContactInformation from "../atoms/ContactInformation";
 
 const Footer = () => {
   return (

@@ -7,7 +7,7 @@ import {
   faMobileScreen,
   faLaptopHouse,
 } from "@fortawesome/free-solid-svg-icons";
-import ButtonPrincipal from "./ButtonPrincipal";
+import ButtonPrincipal from "../atoms/ButtonPrincipal";
 
 const Project = ({
   icon,
@@ -35,7 +35,7 @@ const Project = ({
       className="flex flex-col justify-between md:w-fix p-3 rounded-xl shadow-xl md:hover:scale-105 transition-all bg-surface dark:bg-surface-dark text-on-surface dark:text-on-surface-dark"
     >
       <div className="relative inline-block">
-        <span className="absolute left-[calc(100%-50%-20px)] -top-5 z-10 bg-primary dark:bg-primary-dark text-on-primary dark:text-on-background-dark rounded-full p-2">
+        <span className="absolute left-[calc(50%-20px)] -top-5 z-10 bg-primary dark:bg-primary-dark text-on-primary dark:text-on-background-dark rounded-full p-2">
           <FontAwesomeIcon icon={setIcon()} size="2x" />
         </span>
         <img
@@ -44,7 +44,7 @@ const Project = ({
           className="w-full md:h-48 opacity-80"
         />
         <div className="absolute bottom-0 right-0 z-10">
-          <span className="flex gap-x-2 z-10">
+          <span className="flex gap-x-2">
             {codeURL && (
               <ButtonPrincipal URL={codeURL} icon={faCode} text="View Code" />
             )}

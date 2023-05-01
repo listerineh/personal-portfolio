@@ -1,4 +1,4 @@
-import Project from "../atoms/Project";
+import Project from "../molecules/Project";
 import { Link } from "react-router-dom";
 import { projects } from "../../data/projects";
 

@@ -18,10 +18,7 @@ const Items = ({ list }) => {
               <div className="mt-2">
                 <h3 className="font-semibold">{item.subtitle}:</h3>
                 {item.extras.map((extra) => (
-                  <p
-                    key={extra}
-                    className="pl-5 font-thin text-sm text-justify"
-                  >
+                  <p key={extra} className="pl-5 font-thin text-sm">
                     - {extra}
                   </p>
                 ))}
