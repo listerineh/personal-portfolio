@@ -7,24 +7,27 @@ module.exports = {
       width: {
         fix: "32%",
       },
+      fontFamily: {
+        sans: ['Raleway', 'system-ui', 'sans-serif'],
+      },
       colors: {
         background: {
-          DEFAULT: "#F0F0F0",
-          dark: "#000000",
+          DEFAULT: "#e4e1fe",
+          dark: "#18181b",
         },
         surface: {
           DEFAULT: "#FFFFFF",
           dark: "#121212",
         },
         primary: {
-          DEFAULT: "#6200EE",
-          dark: "#BB86FC",
-          variant: "#3700B3",
+          DEFAULT: "#4e327d",
+          dark: "#9269eb",
+          variant: "#3d265f",
         },
         secondary: {
-          DEFAULT: "#03DAC6",
-          dark: "#03DAC6",
-          variant: "#018786",
+          DEFAULT: "#763fc3",
+          dark: "#9269eb",
+          variant: "#d0c9fc",
         },
         error: {
           DEFAULT: "#B00020",
@@ -61,5 +64,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
+  plugins: [],
 };

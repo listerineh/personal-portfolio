@@ -52,7 +52,7 @@ export const projects = [
     icon: "Web",
   },
   {
-    title: "Veterinary Administrator",
+    title: "Vet Administrator",
     photo: [Vet1, Vet2, Vet3, Vet4, Vet5],
     id: "2",
     description:

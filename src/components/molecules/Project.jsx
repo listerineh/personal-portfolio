@@ -58,7 +58,9 @@ const Project = ({
       <p className="text-">{description}</p>
       <div className="flex flex-wrap justify-center gap-3 w-full bg-background dark:bg-background-dark rounded-xl p-5 mt-3">
         {stack.map((tech) => (
-          <span className="text-primary dark:text-primary-dark">{tech}</span>
+          <span key={tech} className="text-primary dark:text-primary-dark">
+            {tech}
+          </span>
         ))}
       </div>
     </Link>

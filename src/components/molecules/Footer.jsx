@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="flex flex-col w-full text-on-background dark:text-on-background-dark cursor-default">
       <section
-        id="contacs-section"
+        id="contacts-section"
         className="flex flex-col-reverse md:flex-row md:flex-wrap bg-surface dark:bg-surface-dark rounded-t-md"
       >
         <ContactForm />
