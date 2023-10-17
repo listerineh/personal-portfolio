@@ -39,9 +39,9 @@ const Topnav = ({ handleThemeSwitch, theme }) => {
         </h1>
         <button onClick={handleThemeSwitch}>
           <FontAwesomeIcon
-            icon={theme === "dark" ? faMoon : faSun}
+            icon={theme === "dark" ? faSun : faMoon}
             size="1x"
-            className="text-yellow-600 dark:text-white md:text-yellow-300 dark:md:text-secondary-variant dark:md:hover:text-secondary md:hover:text-yellow-500 md:hover:scale-110 transition-all"
+            className="text-secondary-variant md:hover:scale-110 transition-all"
           />
         </button>
       </nav>
