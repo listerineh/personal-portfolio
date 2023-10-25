@@ -29,17 +29,6 @@ const Skills = () => {
     <article className="px-5 md:px-10 mb-5">
       <div className="flex justify-between md:px-0 p-5">
         <Title title="skills" />
-        <select
-          value={selected}
-          onChange={handleSelectChange}
-          className="bg-background dark:bg-background-dark w-52 rounded-md shadow-md dark:shadow-background-dark text-on-background dark:text-on-background-dark outline-none py-2 px-4 cursor-pointer"
-        >
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center mx-5 md:mx-0 px-5 py-14">
         {technologiesToShow.map((technology) => (

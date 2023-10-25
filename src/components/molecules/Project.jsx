@@ -30,10 +30,7 @@ const Project = ({
   };
 
   return (
-    <Link
-      to={to}
-      className="flex flex-col justify-between md:w-fix p-3 rounded-xl shadow-xl md:hover:scale-105 transition-all bg-surface dark:bg-surface-dark text-on-surface dark:text-on-surface-dark"
-    >
+    <div className="flex flex-col justify-between md:w-fix p-3 rounded-xl shadow-xl md:hover:scale-105 transition-all bg-surface dark:bg-surface-dark text-on-surface dark:text-on-surface-dark">
       <div className="relative inline-block">
         <span className="absolute left-[calc(50%-20px)] -top-5 z-10 bg-primary dark:bg-primary-dark text-on-primary dark:text-on-background-dark rounded-full p-2">
           <FontAwesomeIcon icon={setIcon()} size="2x" />
@@ -63,7 +60,7 @@ const Project = ({
           </span>
         ))}
       </div>
-    </Link>
+    </div>
   );
 };
 
