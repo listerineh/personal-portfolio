@@ -1,37 +1,35 @@
-import { useEffect, useState } from "react";
-import { technologies, categories } from "../../data/knowledges";
+import { useState } from "react";
+import { technologies } from "../../data/knowledges";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar as SolidStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStar as SolidStar,
+  faArrowCircleDown,
+  faArrowCircleUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { faStar as LightStar } from "@fortawesome/free-regular-svg-icons";
 import Title from "../atoms/Title";
 
 const Skills = () => {
-  const [selected, setSelected] = useState("");
-  const [technologiesToShow, setTechnologiesToShow] = useState([]);
+  const [showCount, setShowCount] = useState(1);
 
-  const handleSelectChange = (event) => {
-    setSelected(event.target.value);
+  const totalParts = 3;
+  const partSize = Math.ceil(technologies.length / totalParts);
+  const parts = Array.from({ length: totalParts }, (_, i) =>
+    technologies.slice(i * partSize, (i + 1) * partSize)
+  );
+
+  const visibleTechnologies = parts.slice(0, showCount).flat();
+  visibleTechnologies.sort((a, b) => b.grade - a.grade);
+
+  const toggleShowAll = () => {
+    setShowCount(showCount === totalParts ? 1 : showCount + 1);
   };
 
-  useEffect(() => {
-    setSelected(categories[0]);
-  }, []);
-
-  useEffect(() => {
-    setTechnologiesToShow(
-      technologies
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .filter((technology) => technology.category.includes(selected))
-    );
-  }, [selected]);
-
   return (
-    <article className="px-5 md:px-10 mb-5">
-      <div className="flex justify-between md:px-0 p-5">
-        <Title title="skills" />
-      </div>
-      <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center mx-5 md:mx-0 px-5 py-14">
-        {technologiesToShow.map((technology) => (
+    <article className="px-0 md:px-10 mb-10">
+      <Title title="skills" />
+      <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center mx-5 md:mx-0 px-5 py-14 transition-all">
+        {visibleTechnologies.map((technology) => (
           <div
             key={technology.name}
             className="flex flex-col justify-center items-center md:hover:scale-125 transition-all"
@@ -58,6 +56,16 @@ const Skills = () => {
           </div>
         ))}
       </div>
+      <button
+        className="dark:text-on-primary text-on-primary-dark mx-auto block"
+        onClick={toggleShowAll}
+      >
+        <FontAwesomeIcon
+          icon={showCount === totalParts ? faArrowCircleUp : faArrowCircleDown}
+          size="1x"
+          className="animate-bounce transition-all"
+        />
+      </button>
     </article>
   );
 };
