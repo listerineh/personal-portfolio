@@ -31,7 +31,7 @@ const Topnav = ({ handleThemeSwitch, theme }) => {
         <img src="/favicon.svg" />
         <Redirect to="/" className="cursor-pointer">
           Sebastian Alvarez{" "}
-          <span className="text-on-surface-dark dark:text-primary-dark font-light text-sm">
+          <span className="text-on-surface-dark dark:text-primary-dark font-light text-xs">
             Fullstack Developer
           </span>
         </Redirect>
