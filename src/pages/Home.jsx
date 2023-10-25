@@ -8,7 +8,7 @@ const Home = () => {
     <main className="flex flex-col">
       <section
         id="home-section"
-        className="flex flex-col items-center justify-center h-screen"
+        className="flex flex-col items-center justify-center h-screen pt-5 md:pt-0"
       >
         <About />
       </section>

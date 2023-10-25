@@ -34,8 +34,6 @@ const App = () => {
           }
         >
           <Route index element={<Home />} />
-          <Route path="/projects" element={<Portfolio />} />
-          <Route path="/projects/:id" element={<Project />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>
