@@ -23,7 +23,7 @@ const Projects = () => {
     <div className="flex justify-center items-center flex-col">
       <div className="px-5 mt-5">
         {groupedProjects.map((group, index) => (
-          <div key={index} className="flex flex-col md:flex-row gap-5">
+          <div key={index} className="flex flex-col md:flex-row gap-5 py-3">
             {group.map((project) => (
               <Project
                 key={project.id}
