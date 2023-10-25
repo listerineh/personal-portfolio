@@ -2,7 +2,7 @@ import SocialMedia from "../atoms/SocialMedia";
 
 const About = () => {
   return (
-    <article className="relative flex flex-col justify-center h-screen px-10 mt-10 md:mb-0 mb-10 cursor-default max-w-[1350px]">
+    <article className="relative flex flex-col justify-center w-full h-full px-10 pt-10 md:pb-0 pb-10 cursor-default">
       <div className="flex flex-col text-on-background dark:text-on-background-dark md:pb-0 p-5 md:p-10">
         <p className="md:text-lg text-md font-extralight md:text-start text-center">
           Hi👋🏻, my name is

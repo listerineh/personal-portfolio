@@ -5,7 +5,7 @@ import { projects } from "../../data/projects";
 const Projects = () => {
   return (
     <div className="flex justify-center items-center flex-col">
-      <div className="px-5 mt-5 max-w-7xl">
+      <div className="px-5 mt-5">
         <div className="flex flex-col md:flex-row gap-5">
           {projects.slice(0, 3).map((project) => (
             <Project
