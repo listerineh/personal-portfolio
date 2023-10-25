@@ -11,6 +11,7 @@ import Title from "../atoms/Title";
 
 const Skills = () => {
   const [showCount, setShowCount] = useState(1);
+  technologies.sort((a, b) => b.grade - a.grade);
 
   const totalParts = 3;
   const partSize = Math.ceil(technologies.length / totalParts);
@@ -19,7 +20,6 @@ const Skills = () => {
   );
 
   const visibleTechnologies = parts.slice(0, showCount).flat();
-  visibleTechnologies.sort((a, b) => b.grade - a.grade);
 
   const toggleShowAll = () => {
     setShowCount(showCount === totalParts ? 1 : showCount + 1);
