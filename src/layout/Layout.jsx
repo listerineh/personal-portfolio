@@ -6,8 +6,8 @@ import SlideShow from "../components/atoms/SlideShow";
 
 const Layout = ({ handleThemeSwitch, theme }) => {
   return (
-    <div className="flex absolute w-full justify-center">
-      <main className="max-w-[1350px]">
+    <div className="flex absolute w-full justify-center max-w-[1350px]">
+      <main className="">
         <Topnav handleThemeSwitch={handleThemeSwitch} theme={theme} />
         <SlideShow />
         <Outlet />

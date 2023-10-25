@@ -18,9 +18,9 @@ const SlideShow = () => {
   }, [selected]);
 
   return (
-    <div className="fixed z-20 md:top-28 top-[70px] left-[calc(50vw-180px)]">
+    <div className="fixed z-20 md:top-28 top-[70px] left-[calc(50vw-170px)]">
       <div className="bg-secondary-variant p-3 rounded-full opacity-50 md:hover:opacity-100 transition-all">
-        <ul className="flex items-center gap-x-6 justify-center text-black text-sm">
+        <ul className="flex items-center gap-x-4 md:gap-x-6 justify-center text-black text-sm">
           {items.map((item, index) => (
             <li
               key={index}
