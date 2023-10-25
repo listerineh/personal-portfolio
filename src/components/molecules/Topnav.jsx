@@ -25,7 +25,7 @@ const Topnav = ({ handleThemeSwitch, theme }) => {
         visible
           ? "opacity-100 transform translate-y-0"
           : "opacity-0 transform -translate-y-full"
-      } fixed flex z-20 p-5 md:p-6 justify-between h-16 md:h-20 box-border w-full bg-primary-variant dark:bg-surface-dark rounded-b-2xl shadow-md cursor-default duration-300`}
+      } fixed max-w-[1350px] flex z-20 p-5 md:p-6 justify-between h-16 md:h-20 box-border w-full bg-primary-variant dark:bg-surface-dark rounded-b-2xl shadow-md cursor-default duration-300`}
     >
       <h1 className="flex gap-3 text-on-primary dark:text-on-background-dark text-base md:text-lg font-bold">
         <img src="/favicon.svg" />
