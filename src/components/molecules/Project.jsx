@@ -17,7 +17,6 @@ const Project = ({
   stack,
   codeURL,
   siteURL,
-  to,
 }) => {
   const icons = {
     Web: faLaptopHouse,
