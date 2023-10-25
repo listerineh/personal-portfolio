@@ -22,6 +22,12 @@ const Skills = () => {
   const visibleTechnologies = parts.slice(0, showCount).flat();
 
   const toggleShowAll = () => {
+    if (showCount === totalParts) {
+      const element = document.getElementById("skills-section");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
     setShowCount(showCount === totalParts ? 1 : showCount + 1);
   };
 
