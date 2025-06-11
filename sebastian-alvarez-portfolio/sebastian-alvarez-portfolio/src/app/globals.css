@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply scroll-smooth;
+}
+
+/* Keep font setup if it's separate from color theming */
+@theme inline {
+  /* --color-background: var(--background); - Removing as Tailwind handles this now */
+  /* --color-foreground: var(--foreground); - Removing as Tailwind handles this now */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+
+body {
+  @apply bg-background text-text-default;
+  font-family: Arial, Helvetica, sans-serif; /* Keeping existing font family */
+}
+
+/*
+  The :root and @media (prefers-color-scheme: dark) blocks
+  that defined --background and --foreground are removed
+  as Tailwind's 'background-DEFAULT' and 'text-DEFAULT'
+  (from tailwind.config.ts) will now be the source of truth.
+  Dark mode with Tailwind would typically be handled by adding 'dark:' prefixes
+  to utility classes in components, driven by a class applied to the html/body tag,
+  or using `dark:` variants in the tailwind.config.ts itself if we wanted to
+  define dark versions of our custom theme colors there.
+  For now, this sets a default light theme based on the new config.
+*/
