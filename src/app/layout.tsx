@@ -18,8 +18,25 @@ const fontSpaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Sebastian Alvarez | Software Engineer',
-  description: 'Portfolio of Sebastian Alvarez, showcasing experience, skills, projects, and blog.',
+  title: 'Sebastian Alvarez | Full-Stack Software Engineer',
+  description: 'Portfolio showcasing Sebastian Alvarez\'s expertise in modern web development, including React, Next.js, Node.js, and cloud technologies. View projects, experience, and technical blog.',
+  keywords: ['software engineer', 'web developer', 'portfolio', 'React', 'Next.js', 'Node.js'],
+  openGraph: {
+    title: 'Sebastian Alvarez | Full-Stack Software Engineer',
+    description: 'Professional portfolio showcasing web development projects and technical expertise',
+    url: 'https://listerineh.dev',
+    siteName: 'Sebastian Alvarez Portfolio',
+    images: [
+      {
+        url: '/images/sebastian_alvarez_photo.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Sebastian Alvarez Portfolio Preview',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
