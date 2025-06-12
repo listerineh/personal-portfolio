@@ -1,0 +1,119 @@
+
+import { blogPosts } from '@/lib/data';
+import type { BlogPost } from '@/types';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
+import { CalendarDays, UserCircle, Tag } from 'lucide-react';
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+
+interface BlogPostPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export async function generateStaticParams() {
+  return blogPosts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: BlogPostPageProps) {
+  const post = blogPosts.find((p) => p.slug === params.slug);
+  if (!post) {
+    return { title: 'Post Not Found' };
+  }
+  return {
+    title: `${post.title} | Sebastian Alvarez Blog`,
+    description: post.excerpt,
+  };
+}
+
+export default function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = blogPosts.find((p) => p.slug === params.slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  return (
+    <>
+      <Header />
+      <main className="pt-20 bg-background">
+        <article className="container mx-auto px-4 py-12 md:py-16 max-w-3xl">
+          <header className="mb-8 md:mb-12">
+            <Button asChild variant="ghost" className="mb-6 text-accent hover:text-primary pl-0">
+                <Link href="/blog">
+                    <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
+                </Link>
+            </Button>
+            <h1 className="text-3xl md:text-5xl font-headline font-bold text-primary mb-4">
+              {post.title}
+            </h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground mb-6">
+              <div className="flex items-center">
+                <CalendarDays className="mr-1.5 h-4 w-4" />
+                <span>{post.date}</span>
+              </div>
+              <div className="flex items-center">
+                <UserCircle className="mr-1.5 h-4 w-4" />
+                <span>By {post.author}</span>
+              </div>
+            </div>
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2 text-sm">
+                 <Tag className="mr-1.5 h-4 w-4 text-muted-foreground" />
+                {post.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary" className="font-normal">{tag}</Badge>
+                ))}
+              </div>
+            )}
+          </header>
+
+          {post.imageUrl && (
+            <div className="relative w-full h-64 md:h-96 mb-8 md:mb-12 rounded-lg overflow-hidden shadow-md">
+              <Image
+                src={post.imageUrl}
+                alt={post.title}
+                layout="fill"
+                objectFit="cover"
+                data-ai-hint={post.imageAiHint || 'blog post header'}
+                priority
+              />
+            </div>
+          )}
+          
+          <Separator className="my-6 md:my-8" />
+
+          <div
+            className="prose prose-lg dark:prose-invert max-w-none 
+                       prose-headings:font-headline prose-headings:text-primary 
+                       prose-p:text-foreground prose-a:text-accent hover:prose-a:text-primary
+                       prose-strong:text-foreground prose-blockquote:border-accent
+                       prose-code:bg-muted prose-code:p-1 prose-code:rounded-md prose-code:font-code
+                       prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg prose-pre:font-code"
+            dangerouslySetInnerHTML={{ __html: post.content.replace(/```([\w-]+)?\n([\s\S]+?)\n```/g, (match, lang, code) => `<pre><code class="language-${lang || ''}">${code.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`) }} 
+          />
+          
+          <Separator className="my-8 md:my-12" />
+
+          <div className="text-center">
+            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
+                <Link href="/blog">
+                    <ArrowLeft className="mr-2 h-4 w-4" /> More Articles
+                </Link>
+            </Button>
+          </div>
+
+        </article>
+      </main>
+      <Footer />
+    </>
+  );
+}

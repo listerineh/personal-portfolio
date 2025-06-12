@@ -1,0 +1,142 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter), sans-serif; /* Updated via layout.tsx and tailwind.config.ts */
+}
+
+@layer base {
+  :root {
+    --background: 220 20% 96%; /* #F0F2F5 Very light grey */
+    --foreground: 220 10% 20%; /* Dark Grey for text */
+
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 220 10% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 10% 20%;
+
+    --primary: 231 48% 48%; /* #3F51B5 Deep Indigo */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
+
+    --secondary: 220 15% 90%; /* Lighter grey for secondary elements */
+    --secondary-foreground: 220 10% 20%;
+
+    --muted: 220 15% 85%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 307 61% 37%;      /* Refined Rose */
+    --accent-foreground: 220 15% 50%;  /* White text on accent */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 231 48% 48%; /* Primary color for rings */
+
+    --chart-1: 231 48% 48%;
+    --chart-2: 215 60% 55%; /* Refined Blue for chart */
+    --chart-3: 210 40% 50%;
+    --chart-4: 30 80% 55%;
+    --chart-5: 120 40% 50%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar colors - adjust if sidebar is used, for now maintain consistency */
+    --sidebar-background: 220 20% 96%;
+    --sidebar-foreground: 220 10% 20%;
+    --sidebar-primary: 231 48% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 60% 55%; /* Refined Blue */
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 15% 88%;
+    --sidebar-ring: 231 48% 48%;
+  }
+
+  .dark {
+    --background: 240 6% 10%;   /* Very dark cool grey/blue */
+    --foreground: 220 20% 92%;  /* Light grey for text */
+
+    --card: 240 6% 14%;         /* Slightly lighter than background */
+    --card-foreground: 220 20% 92%;
+
+    --popover: 240 6% 12%;      /* Slightly darker than card for popovers */
+    --popover-foreground: 220 20% 92%;
+
+    --primary: 231 48% 58%;    /* Lighter Indigo for dark mode */
+    --primary-foreground: 230 80% 95%; /* Very light text for Indigo */
+
+    --secondary: 240 5% 18%;     /* Darker secondary */
+    --secondary-foreground: 220 15% 85%; /* Lighter text for secondary */
+
+    --muted: 240 5% 22%;        /* Darker muted */
+    --muted-foreground: 220 10% 65%; /* Kept existing, good contrast */
+
+    --accent: 307 61% 37%;      /* Elegant Silver-Blue */
+    --accent-foreground: 220 15% 85%; /* Dark grey/blue text for accent */
+
+    --destructive: 0 72% 50%; /* Standard destructive red */
+    --destructive-foreground: 0 0% 98%; /* Light text for destructive */
+
+    --border: 240 5% 25%;       /* Darker border */
+    --input: 240 5% 25%;        /* Darker input background */
+    --ring: 307 61% 37%;        /* Elegant Silver-Blue for focus rings */
+
+    --chart-1: 231 48% 58%;     /* Indigo */
+    --chart-2: 307 61% 37%;     /* Elegant Silver-Blue for chart */
+    --chart-3: 210 50% 65%;     /* Complementary Blue */
+    --chart-4: 300 60% 65%;     /* Magenta/Pink */
+    --chart-5: 190 50% 60%;     /* Cyan/Teal variant */
+    
+    --sidebar-background: 240 6% 10%;
+    --sidebar-foreground: 220 20% 92%;
+    --sidebar-primary: 231 48% 58%;
+    --sidebar-primary-foreground: 230 80% 95%;
+    --sidebar-accent: 210 40% 75%; /* Elegant Silver-Blue */
+    --sidebar-accent-foreground: 220 10% 15%; /* Dark grey/blue text for accent */
+    --sidebar-border: 240 5% 25%;
+    --sidebar-ring: 210 40% 75%; /* Elegant Silver-Blue for focus rings */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .pause-animation:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(5%, 15%);
+  }
+  50% {
+    transform: translate(10%, 5%);
+  }
+  75% {
+    transform: translate(5%, 15%);
+  }
+}
+
+.animate-float {
+  animation: float infinite ease-in-out;
+}
