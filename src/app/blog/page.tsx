@@ -12,10 +12,10 @@ export default function BlogListingPage() {
     <>
       <Header />
       <main className="pt-20">
-        <section className="py-16 md:py-24 bg-background">
+        <section className="py-16 md:py-24 bg-background/10">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-headline font-bold mb-12 md:mb-16 text-center text-primary">
-              My Blog
+              My Dev Blog
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogPosts.map((post) => (

@@ -70,7 +70,7 @@ export function ExperienceSection() {
                         <Button 
                           variant="link"
                           onClick={() => toggleExpand(index)}
-                          className="text-accent hover:underline text-sm -p-4 my-0"
+                          className="text-accent hover:underline text-xs -p-4 my-0"
                         >
                           {expandedItems[index] ? 'Show less' : 'See more...'}
                         </Button>
@@ -88,7 +88,7 @@ export function ExperienceSection() {
           <Button 
             variant="outline"
             onClick={() => setShowAll(true)}
-            className="text-right"
+            className="text-right hover:text-white"
           >
             Show all experience
           </Button>
