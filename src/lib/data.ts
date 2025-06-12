@@ -9,11 +9,11 @@ export const hero: Hero = {
 }
 
 export const navItems: NavItem[] = [
-  { label: 'Experience', href: '#experience' },
-  { label: 'Skills', href: '#skills' },
-  // { label: 'Projects', href: '#projects' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Skills', href: '/#skills' },
+  // { label: 'Projects', href: '/#projects' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export const experiences: Experience[] = [

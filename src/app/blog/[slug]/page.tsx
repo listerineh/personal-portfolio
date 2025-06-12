@@ -48,7 +48,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       <main className="pt-20 bg-background">
         <article className="container mx-auto px-4 py-12 md:py-16 max-w-3xl">
           <header className="mb-8 md:mb-12">
-            <Button asChild variant="ghost" className="mb-6 text-accent hover:text-primary pl-0">
+            <Button asChild variant="link" className="mb-6 text-accent pl-0">
                 <Link href="/blog">
                     <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
                 </Link>
