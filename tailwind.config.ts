@@ -108,6 +108,7 @@ export default {
   },
   plugins: [
     require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
     plugin(function({ addUtilities }) {
       const newUtilities = {
         '.animation-delay-100': { animationDelay: '100ms' },

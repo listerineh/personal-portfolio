@@ -1,6 +1,6 @@
 
 import { blogPosts } from '@/lib/data';
-import type { BlogPost } from '@/types';
+import { marked } from 'marked';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
@@ -96,9 +96,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                        prose-headings:font-headline prose-headings:text-primary 
                        prose-p:text-foreground prose-a:text-accent hover:prose-a:text-primary
                        prose-strong:text-foreground prose-blockquote:border-accent
-                       prose-code:bg-muted prose-code:p-1 prose-code:rounded-md prose-code:font-code
+                       prose-code:bg-transparent  prose-code:rounded-md prose-code:font-code
+                       prose-code:text-black dark:prose-code:text-white
                        prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg prose-pre:font-code"
-            dangerouslySetInnerHTML={{ __html: post.content.replace(/```([\w-]+)?\n([\s\S]+?)\n```/g, (match, lang, code) => `<pre><code class="language-${lang || ''}">${code.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`) }} 
+            dangerouslySetInnerHTML={{ __html: marked(post.content) as string }}
           />
           
           <Separator className="my-8 md:my-12" />
