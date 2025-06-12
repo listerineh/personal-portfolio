@@ -1,11 +1,15 @@
+"use client";
 
 import { Button } from '@/components/ui/button';
 import { ArrowDown, FileText } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { hero } from '@/lib/data';
+import { useToast } from '@/hooks/use-toast';
 
 export function HeroSection() {
+  const { toast } = useToast();
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-background via-secondary/90 to-secondary/0 py-20 pt-28 md:pt-20 overflow-hidden">
       <div className="container mx-auto px-4 text-center z-10">
@@ -29,7 +33,21 @@ export function HeroSection() {
           {hero.description}
         </p>
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 animate-fade-in animation-delay-700">
-          <Button size="lg" variant="ghost" className="text-accent hover:bg-accent/10 hover:text-accent w-full sm:w-auto">
+          <Button 
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = '/docs/CV_SebastianAlvarez_FS_EN.pdf';
+              link.download = 'CV_SebastianAlvarez_EN.pdf';
+              link.click();
+              toast({
+                title: "CV Downloaded!",
+                description: "Thank you for downloading my CV. I hope you find it useful.",
+              });
+            }}
+            size="lg" 
+            variant="ghost" 
+            className="text-accent hover:bg-accent/10 hover:text-accent w-full sm:w-auto"
+          >
             Download CV <FileText className="ml-2 h-5 w-5" />
           </Button>
           <Link href="#contact">
