@@ -14,12 +14,12 @@ export function SkillsSection() {
           {duplicatedSkills.map((skill, index) => (
             <div 
               key={`skill-${index}`} 
-              className="min-w-[65px] sm:min-w-[85px] md:min-w-[100px] inline-flex flex-col items-center justify-center p-4 mx-2 sm:mx-3 md:mx-4 transition-transform duration-300 hover:scale-110"
+              className="min-w-[65px] sm:min-w-[90px] md:min-w-[100px] inline-flex flex-col items-center justify-center p-4 mx-2 sm:mx-3 md:mx-4 transition-transform duration-300 hover:scale-110"
               title={skill.name}
             >
               {skill.iconUrl && (
                 <img
-                  className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-accent mb-1 aspect-square object-contain"
+                  className="h-10 w-10 sm:h-16 sm:w-16 md:h-18 md:w-18 text-accent mb-1 aspect-square object-contain"
                   src={skill.iconUrl}
                   alt={skill.name}
                 />
@@ -31,7 +31,7 @@ export function SkillsSection() {
           ))}
         </div>
       </div>
-      <p className="text-center text-muted-foreground mt-10 md:mt-12 text-sm md:text-base">
+      <p className="text-center text-muted-foreground mt-10 md:mt-12 text-sm md:text-base px-4">
         Proficient with a diverse range of modern development tools and frameworks, always keen to explore emerging technologies.
       </p>
     </SectionWrapper>
