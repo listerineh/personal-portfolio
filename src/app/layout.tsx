@@ -20,6 +20,10 @@ const fontSpaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: 'Sebastian Alvarez | Full-Stack Software Engineer',
   description: 'Portfolio showcasing Sebastian Alvarez\'s expertise in modern web development, including React, Next.js, Node.js, and cloud technologies. View projects, experience, and technical blog.',
+  generator: "Next.js",
+  referrer: "origin",
+  publisher: "Vercel",
+  authors: [{ name: 'Sebastian Alvarez', url: 'https://listerineh.dev' }],
   keywords: ['software engineer', 'web developer', 'portfolio', 'React', 'Next.js', 'Node.js'],
   openGraph: {
     title: 'Sebastian Alvarez | Full-Stack Software Engineer',
