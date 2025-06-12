@@ -73,7 +73,7 @@ export function Header() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-foreground hover:text-primary font-medium py-2 transition-colors"
+                className="text-foreground hover:text-primary font-medium py-2 transition-colors w-full text-center"
                 onClick={closeMobileMenu}
               >
                 {item.label}
