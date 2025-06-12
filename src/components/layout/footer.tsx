@@ -1,28 +1,21 @@
 import Link from 'next/link';
-import { socialLinks } from '@/lib/data';
+import { navItems, socialLinks } from '@/lib/data';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const internalLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/#about' },
-    { name: 'Experience', href: '/#experience' },
-    { name: 'Projects', href: '/#projects' },
-    { name: 'Blog', href: '/blog' },
-  ];
 
   return (
     <footer className="bg-secondary/75 text-secondary-foreground py-12">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-wrap justify-center gap-6 mb-6 md:mb-0">
-            {internalLinks.map((link) => (
+            {navItems.map((link) => (
               <Link 
-                key={link.name} 
+                key={link.label} 
                 href={link.href}
                 className="text-sm hover:text-primary transition-colors"
               >
-                {link.name}
+                {link.label}
               </Link>
             ))}
           </div>
