@@ -113,7 +113,7 @@ export function ContactSection() {
             {errors.message && <p className="text-sm text-destructive mt-1">{errors.message.message}</p>}
           </div>
 
-          <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={isSubmitting}>
+          <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-white" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...

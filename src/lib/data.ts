@@ -1,5 +1,5 @@
 import type { Experience, Skill, Project, BlogPost, NavItem, Hero } from '@/types';
-import { Linkedin, Github, Twitter, Mail } from 'lucide-react';
+import { Linkedin, Github, Instagram, Mail } from 'lucide-react';
 
 export const hero: Hero = {
   href: '/images/sebastian_alvarez_photo.webp',
@@ -232,8 +232,8 @@ Caching, lazy loading components...
 ];
 
 export const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com', icon: Github },
-  { name: 'LinkedIn', url: 'https://linkedin.com', icon: Linkedin },
-  { name: 'Twitter', url: 'https://twitter.com', icon: Twitter },
-  { name: 'Email', url: 'mailto:sebastian.alvarez@example.com', icon: Mail },
+  { name: 'GitHub', url: 'https://github.com/listerineh', icon: Github },
+  { name: 'LinkedIn', url: 'https://linkedin.com/in/listerineh', icon: Linkedin },
+  { name: 'Instagram', url: 'https://instagram.com/__listerineh', icon: Instagram },
+  { name: 'Email', url: 'mailto:sebask8er.alvarez@gmail.com', icon: Mail },
 ];

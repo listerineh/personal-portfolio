@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import { z } from "zod";
 import type { ContactFormData } from "@/types";
@@ -22,18 +22,27 @@ export async function submitContactForm(formData: ContactFormData) {
 
   const { name, email, message } = validatedFields.data;
 
-  // In a real application, you would send an email or save to a database here.
-  // For this portfolio, we'll simulate success.
-  console.log("Contact form submitted:");
-  console.log("Name:", name);
-  console.log("Email:", email);
-  console.log("Message:", message);
+  try {
+    const response = await fetch('/api/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, message }),
+    });
 
-  // Simulate a delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
+    if (!response.ok) {
+      throw new Error('Failed to send message');
+    }
 
-  return {
-    message: "Thank you for your message! I'll get back to you soon.",
-    success: true,
-  };
+    return {
+      message: "Thank you for your message! I'll get back to you soon.",
+      success: true,
+    };
+  } catch (error) {
+    return {
+      message: "Failed to send message. Please try again later.",
+      success: false,
+    };
+  }
 }
