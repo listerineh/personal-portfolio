@@ -170,65 +170,109 @@ export const projects: Project[] = [
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'why-markdown-for-blogs',
+    title: 'Is Markdown the Best Format for Blogs?',
+    date: 'June 15, 2025',
+    excerpt: 'Explore why Markdown is a powerful and flexible format for blog content — from developer ergonomics to performance and long-term maintainability.',
+    imageUrl: '/blog/markdown-basics.webp',
+    imageAiHint: 'markdown file, minimal blog, developer writing',
+    content: `
+  ## Introduction
+  
+  When building a developer blog, choosing how to store and write your content matters as much as how you display it. After experimenting with JSON, WYSIWYG editors, and headless CMSes, I found Markdown to be the cleanest, most scalable solution.
+  
+  In this post, I'll explain **why I use Markdown to structure my blog content**, how it's stored, and how I render it in the frontend — with Tailwind CSS for style — but the real value starts with Markdown itself.
+  
+  ---
+  
+  ## Why I Store Blog Posts in Markdown
+  
+  Here’s why Markdown is my go-to format:
+  
+  ### 1. 🧠 Simple, Human-Readable Syntax
+  
+  Markdown feels natural to write. Headers, lists, code blocks, and links are quick to type, with zero friction. It's like writing an email with formatting superpowers — no UI lag, no weird HTML artifacts.
+  
+  ### 2. 🧱 Easy to Store, Version, and Track
+  
+  Each post in my blog is stored as a simple JavaScript object that includes a Markdown \`content\` field. This means I can:
+  
+  - Store content in Git (like code)
+  - Track changes over time
+  - Use pull requests for content reviews
+  - Move fast without external tooling
+  
+  ### 3. 🔒 Portable and Framework-Agnostic
+  
+  Whether you're using React, Svelte, or a static site generator, Markdown plays nice everywhere. It’s easy to transform and render in any frontend — especially with libraries like \`marked\`, \`remark\`, or \`MDX\`.
+  
+  ### 4. ✍️ Developer-First Writing Experience
+  
+  Since my entire blog is code-based, it makes sense that writing should happen in code too. I can write a new blog post in my code editor, commit it with Git, and deploy. No extra UIs or plugins needed.
+  
+  ---
+  
+  ## How I Use It in My Blog
+  
+  Here’s what a blog post structure looks like in my setup:
+  
+  \`\`\`ts
+  {
     slug: 'mastering-async-javascript',
     title: 'Mastering Asynchronous JavaScript',
     date: 'October 26, 2023',
-    excerpt: 'A deep dive into Promises, async/await, and common patterns for handling asynchronous operations in JavaScript.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAiHint: 'code abstract',
-    content: `
-## Introduction
-Asynchronous programming is a cornerstone of modern JavaScript development...
-
-### Callbacks
-The traditional way...
-
-### Promises
-A more robust solution...
-
-\`\`\`javascript
-function fetchData() {
-  return new Promise((resolve, reject) => {
-    // ...
-  });
-}
-\`\`\`
-
-### Async/Await
-Syntactic sugar over Promises...
-
-## Conclusion
-Understanding these concepts is crucial...
-    `,
+    excerpt: 'A deep dive into Promises, async/await...',
+    content: \`## Introduction\\nAsynchronous programming is...\`,
     author: 'Sebastian Alvarez',
-    tags: ['JavaScript', 'Async', 'Promises', 'Tutorial']
-  },
-  {
-    slug: 'optimizing-nextjs-performance',
-    title: 'Optimizing Next.js Application Performance',
-    date: 'November 15, 2023',
-    excerpt: 'Tips and tricks for boosting the speed and efficiency of your Next.js applications, from code splitting to image optimization.',
-    imageUrl: 'https://placehold.co/600x400.png',
-    imageAiHint: 'website speed',
-    content: `
-## Why Performance Matters
-User experience and SEO are heavily impacted...
-
-### Code Splitting
-Next.js does this automatically, but you can optimize further...
-
-### Image Optimization
-Using \`next/image\` is key...
-
-### Server-Side Rendering (SSR) vs Static Site Generation (SSG)
-Choosing the right rendering strategy...
-
-## Advanced Techniques
-Caching, lazy loading components...
-    `,
+    tags: ['JavaScript', 'Async']
+  }
+  \`\`\`
+  
+  The \`content\` is raw Markdown. In the frontend, I convert it using \`marked\`:
+  
+  \`\`\`tsx
+  <div
+    className="prose dark:prose-invert max-w-none"
+    dangerouslySetInnerHTML={{ __html: marked(post.content) }}
+  />
+  \`\`\`
+  
+  This gives me the freedom of Markdown plus full control of rendering.
+  
+  ---
+  
+  ## Styling with Tailwind (Secondary but Nice)
+  
+  To make the Markdown look good, I use Tailwind’s \`@tailwindcss/typography\` plugin. It gives me a \`prose\` class that adds consistent styles to elements like \`<h1>\`, \`<p>\`, \`<pre>\`, and more.
+  
+  Tailwind's utility-based customization lets me tweak the style without touching the HTML. For example:
+  
+  \`\`\`css
+  prose-headings:text-primary
+  prose-a:text-accent hover:prose-a:text-primary
+  prose-code:font-code
+  prose-pre:bg-muted
+  \`\`\`
+  
+  This means I don’t have to worry about content authors messing up the layout — Markdown handles structure, and Tailwind handles appearance.
+  
+  ---
+  
+  ## Conclusion
+  
+  Markdown hits the sweet spot for blogging as a developer:
+  
+  - **Fast to write**
+  - **Easy to maintain**
+  - **Portable across tech stacks**
+  - **Perfect for Git-based workflows**
+  
+  If you're building a blog or dev-focused site, consider Markdown as your foundation — and let styling be a second step, not the first problem to solve.
+  
+  `,
     author: 'Sebastian Alvarez',
-    tags: ['Next.js', 'Performance', 'Optimization', 'Web Development']
-  },
+    tags: ['Markdown', 'Blog', 'Content Strategy', 'Developer Tools', 'Developer Experience']
+  },  
 ];
 
 export const socialLinks = [
