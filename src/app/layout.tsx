@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: 'Sebastian Alvarez Portfolio',
     images: [
       {
-        url: '/images/sebastian_alvarez_photo.webp',
+        url: '/images/website_screenshot.webp',
         width: 1200,
         height: 630,
         alt: 'Sebastian Alvarez Portfolio Preview',

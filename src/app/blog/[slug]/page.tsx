@@ -32,6 +32,16 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   return {
     title: `${post.title} | Sebastian Alvarez Blog`,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      images: [
+        {
+          url: post.imageUrl,
+          alt: `${post.excerpt} blog by ${post.author}`,
+        },
+      ],
+    },
   };
 }
 
