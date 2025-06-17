@@ -43,9 +43,13 @@ Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 ## ✨ Features
 
 ✅ Responsive design
+
 ✅ Dark/light mode toggle
+
 ✅ Contact form with email integration
+
 ✅ Blog section with markdown support
+
 ✅ Downloadable resume
 
 ---
