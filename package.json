@@ -36,8 +36,6 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dotenv": "^16.5.0",
-    "firebase": "^11.8.1",
-    "genkit": "^1.8.0",
     "lucide-react": "^0.475.0",
     "marked": "^15.0.12",
     "next": "15.3.3",
