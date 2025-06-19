@@ -1,68 +1,85 @@
-<h1 align="center" id="title">Personal Portfolio</h1>
+# 🚀 Personal Portfolio
 
-<p id="description">My own portfolio made using React tailwind vercel and other technologies. This helps me to improve my frontend designer and UI/UX skills.</p>
+✨ A modern, responsive personal portfolio website built with Next.js and Tailwind CSS. Showcases professional experience, projects, and contact information.
 
-<h2>🚀 Demos</h2>
+---
 
-Production environment: [https://listerineh.vercel.app](https://listerineh.vercel.app)
+## 🌍 Deployment
 
-Development environment: [https://dev-listerineh.vercel.app](https://dev-listerineh.vercel.app)
+Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 
-  
-  
-<h2>🧐 Features</h2>
+| Environment | URL |
+|-------------|-----|
+| Production  | [listerineh.dev](https://listerineh.dev) |
+| Development | [dev-listerineh.vercel.app](https://dev-listerineh.vercel.app) |
 
-Here're some of the project's best features:
+---
 
-*   Landing page with personal info.
-*   Projects page with all projects that I made.
-*   Contact me form with real-time email functionality.
-*   Social media redirects.
+## 🛠 Tech Stack
 
+### 🔧 Core Technologies
 
-<h2>🍳 In progress and Future Features</h2>
+| Technology | Description |
+|------------|-------------|
+| ![Next.js](https://img.shields.io/badge/-Next.js-000000?logo=next.js) | React framework for SSR and SSG |
+| ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript) | Type-safe JavaScript |
+| ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css) | Utility-first CSS framework |
+| ![React](https://img.shields.io/badge/-React-61DAFB?logo=react) | JavaScript UI library |
 
-Here're some features I'm working on:
+### 📦 Key Dependencies
 
-*   Redesign UI/UX based on mobile-first design.
-*   Update the information shown in the web.
-*   Add animations in web view.
+- ![Radix UI](https://img.shields.io/badge/-Radix_UI-161618) - Unstyled, accessible UI components
+- ![Lucide](https://img.shields.io/badge/-Lucide-FFD43B) - Beautiful, consistent icon set
+- ![Zod](https://img.shields.io/badge/-Zod-3E63DD) - TypeScript-first schema validation
+- ![Resend](https://img.shields.io/badge/-Resend-3ECF8E) - Email API for developers
 
-Here're some features for the future:
+### 🛠 Development Tools
 
-*   Change emailjs to sendgrid for email services.
-*   Add a backend to get all info from a NRDB.
-*   Create actions to validate CI-CD processes.
+- ![ESLint](https://img.shields.io/badge/-ESLint-4B32C3) - JavaScript linter
+- ![Prettier](https://img.shields.io/badge/-Prettier-F7B93E) - Code formatter
 
-<h2>🛠️ Installation Steps:</h2>
+---
 
-<p>1. Download the repo</p>
+## ✨ Features
 
-```
-git clone https://github.com/listerineh/personal-portfolio.git
-```
+✅ Responsive design
 
-<p>2. Download node dependencies</p>
+✅ Dark/light mode toggle
 
-```
+✅ Contact form with email integration
+
+✅ Blog section with markdown support
+
+✅ Downloadable resume
+
+---
+
+## 🏁 Getting Started
+
+1. Clone the repository
+   ```bash
+   git clone https://github.com/listerineh/personal-portfolio.git
+   ```
+2. Install dependencies:
+```bash
 npm install
 ```
-
-<p>3. Start the development server</p>
-
-```
+3. Run the development server
+```bash
 npm run dev
 ```
 
-  
-  
-<h2>💻 Built with</h2>
+## 🔄 Replication
 
-Technologies used in the project:
+If you want to replicate this project, you can fork this repository and modify `src/lib/data.ts` primary to your own data and then `src/app/globals.css` to implement your own design.
 
-*   react
-*   tailwind
-*   emailjs
-*   vite
-*   vercel
-*   tailwind-scrollbar
+Also necessary to set up environment variables for the contact form to work:
+```bash
+RESEND_API_KEY=your_resend_key
+EMAIL_FROM=your@email.com
+EMAIL_TO=recipient@email.com
+```
+
+### 📝 License
+
+This project is licensed under the MIT License.
