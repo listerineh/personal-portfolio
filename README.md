@@ -11,7 +11,7 @@ Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 | Environment | URL |
 |-------------|-----|
 | Production  | [listerineh.dev](https://listerineh.dev) |
-| Development | [dev-listerineh.vercel.app](https://dev-listerineh.vercel.app) |
+| Development | [listerineh.vercel.app](https://listerineh.vercel.app) |
 
 ---
 
