@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from 'next/link';
 import { SectionWrapper } from '@/components/common/section-wrapper';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,11 +17,13 @@ export function ProjectsSection() {
               <Image
                 src={project.imageUrl}
                 alt={project.title}
-                layout="fill"
-                objectFit="cover"
                 data-ai-hint={project.imageAiHint}
                 className="transition-transform duration-300 group-hover:scale-105"
-              />
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover"
+                }} />
             </div>
             <CardHeader>
               <CardTitle className="text-xl font-headline">{project.title}</CardTitle>

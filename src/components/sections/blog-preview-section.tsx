@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from 'next/link';
 import { SectionWrapper } from '@/components/common/section-wrapper';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,10 +19,12 @@ export function BlogPreviewSection() {
                 <Image
                   src={post.imageUrl}
                   alt={post.title}
-                  layout="fill"
-                  objectFit="cover"
                   data-ai-hint={post.imageAiHint || 'blog post image'}
-                />
+                  fill
+                  sizes="100vw"
+                  style={{
+                    objectFit: "cover"
+                  }} />
               </div>
             )}
             <CardHeader>

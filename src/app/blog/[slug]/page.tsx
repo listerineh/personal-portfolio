@@ -2,7 +2,7 @@
 import { blogPosts } from '@/lib/data';
 import { marked } from 'marked';
 import { notFound } from 'next/navigation';
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, UserCircle, Tag } from 'lucide-react';
 import { Header } from '@/components/layout/header';
@@ -104,11 +104,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <Image
                 src={post.imageUrl}
                 alt={post.title}
-                layout="fill"
-                objectFit="cover"
                 data-ai-hint={post.imageAiHint || 'blog post header'}
                 priority
-              />
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover"
+                }} />
             </div>
           )}
           
