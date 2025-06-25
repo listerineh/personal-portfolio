@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from 'next/link';
+import { ArrowRight, CalendarDays } from 'lucide-react';
+import { blogPosts } from '@/lib/data';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { blogPosts } from '@/lib/data';
-import { ArrowRight, CalendarDays } from 'lucide-react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 

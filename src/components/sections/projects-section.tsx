@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from 'next/link';
-import { SectionWrapper } from '@/components/common/section-wrapper';
+import { ExternalLink, Github } from 'lucide-react';
+import { projects } from '@/lib/data';
+import { SectionWrapper } from '@/components/common';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { projects } from '@/lib/data';
-import { ExternalLink, Github } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 export function ProjectsSection() {

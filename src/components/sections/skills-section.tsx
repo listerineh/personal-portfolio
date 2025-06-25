@@ -2,10 +2,10 @@
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import { SectionWrapper } from '@/components/common/section-wrapper';
 import { skills } from '@/lib/data';
 import { shuffleArray } from '@/lib/utils';
+import { SectionWrapper } from '@/components/common/section-wrapper';
+import 'swiper/css';
 
 
 export function SkillsSection() {

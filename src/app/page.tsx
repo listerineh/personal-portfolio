@@ -1,11 +1,12 @@
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { HeroSection } from '@/components/sections/hero-section';
-import { ExperienceSection } from '@/components/sections/experience-section';
-import { SkillsSection } from '@/components/sections/skills-section';
-import { ProjectsSection } from '@/components/sections/projects-section';
-import { BlogPreviewSection } from '@/components/sections/blog-preview-section';
-import { ContactSection } from '@/components/sections/contact-section';
+import { Header, Footer } from '@/components/layout';
+import { 
+  HeroSection, 
+  ExperienceSection, 
+  SkillsSection, 
+  ProjectsSection, 
+  BlogPreviewSection, 
+  ContactSection 
+} from '@/components/sections';
 
 export default function HomePage() {
   return (
@@ -15,7 +16,7 @@ export default function HomePage() {
         <HeroSection />
         <ExperienceSection />
         <SkillsSection />
-        {/* <ProjectsSection /> */}
+        <ProjectsSection />
         <BlogPreviewSection />
         <ContactSection />
       </main>

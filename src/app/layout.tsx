@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
-import { ThemeProvider } from '@/context/theme-context';
-import './globals.css';
-import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
-import AnimatedBackground from '@/components/common/animated-background';
+import { ThemeProvider } from '@/context/theme-context';
+import { AnimatedBackground } from '@/components/common';
+import { Toaster } from "@/components/ui/toaster";
+
+import './globals.css';
 
 const fontInter = Inter({
   subsets: ['latin'],

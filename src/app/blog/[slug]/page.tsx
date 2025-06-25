@@ -1,16 +1,14 @@
 
-import { blogPosts } from '@/lib/data';
 import { marked } from 'marked';
 import { notFound } from 'next/navigation';
 import Image from "next/image";
-import { Badge } from '@/components/ui/badge';
-import { CalendarDays, UserCircle, Tag } from 'lucide-react';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+import { CalendarDays, UserCircle, Tag, ArrowLeft } from 'lucide-react';
+import { blogPosts } from '@/lib/data';
+import { Header, Footer } from '@/components/layout';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
 
 interface BlogPostPageProps {
   params: {

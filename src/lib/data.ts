@@ -1,5 +1,5 @@
-import type { Experience, Skill, Project, BlogPost, NavItem, Hero } from '@/types';
 import { Linkedin, Github, Instagram, Mail } from 'lucide-react';
+import type { Experience, Skill, Project, BlogPost, NavItem, Hero } from '@/types';
 
 export const hero: Hero = {
   href: '/images/sebastian_alvarez_photo.webp',
@@ -11,7 +11,7 @@ export const hero: Hero = {
 export const navItems: NavItem[] = [
   { label: 'Experience', href: '/#experience' },
   { label: 'Skills', href: '/#skills' },
-  // { label: 'Projects', href: '/#projects' },
+  { label: 'Projects', href: '/#projects' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/#contact' },
 ];

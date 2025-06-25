@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from 'next/link';
-import { SectionWrapper } from '@/components/common/section-wrapper';
+import { ArrowRight, CalendarDays } from 'lucide-react';
+import { blogPosts } from '@/lib/data';
+import { SectionWrapper } from '@/components/common';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { blogPosts } from '@/lib/data';
-import { ArrowRight, CalendarDays } from 'lucide-react';
 
 export function BlogPreviewSection() {
   const displayedPosts = blogPosts.slice(0, 3);

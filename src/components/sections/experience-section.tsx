@@ -1,11 +1,11 @@
 'use client';
 
-import { SectionWrapper } from '@/components/common/section-wrapper';
-import { experiences } from '@/lib/data';
-import Image from "next/image";
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import Image from "next/image";
 import { Briefcase } from 'lucide-react';
+import { experiences } from '@/lib/data';
+import { SectionWrapper } from '@/components/common';
+import { Button } from '@/components/ui/button';
 
 export function ExperienceSection() {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
