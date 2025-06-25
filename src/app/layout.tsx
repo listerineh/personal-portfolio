@@ -41,6 +41,19 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website',
   },
+  twitter: {
+    title: 'Sebastian Alvarez | Full-Stack Software Engineer',
+    description: 'Professional portfolio showcasing web development projects and technical expertise',
+    images: [
+      {
+        url: '/images/website_screenshot.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Sebastian Alvarez Portfolio Preview',
+      },
+    ],
+    card: 'summary_large_image',
+  },
 };
 
 export default function RootLayout({
