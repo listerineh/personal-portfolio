@@ -11,7 +11,7 @@ export function HeroSection() {
   const { toast } = useToast();
 
   return (
-    <section id="hero" className="relative min-h-[100dvh] flex items-center justify-center bg-gradient-to-b from-background via-secondary/90 to-secondary/0 py-20 pt-28 md:pt-20 overflow-hidden">
+    <section id="hero" className="relative min-h-[100dvh] flex items-center justify-center bg-gradient-to-b from-secondary via-secondary/90 to-secondary/0 py-20 pt-28 md:pt-20 overflow-hidden">
       <div className="container mx-auto px-4 text-center z-10">
         <div className="relative w-36 h-36 md:w-48 md:h-48 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl border-4 border-primary animate-fade-in">
           <Image
