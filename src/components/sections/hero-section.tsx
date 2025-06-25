@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { ArrowDown, FileText } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { hero } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 

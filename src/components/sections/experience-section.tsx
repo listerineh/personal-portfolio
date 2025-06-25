@@ -2,7 +2,7 @@
 
 import { SectionWrapper } from '@/components/common/section-wrapper';
 import { experiences } from '@/lib/data';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Briefcase } from 'lucide-react';

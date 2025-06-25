@@ -2,7 +2,7 @@
 import { blogPosts } from '@/lib/data';
 import { marked } from 'marked';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, UserCircle, Tag } from 'lucide-react';
 import { Header } from '@/components/layout/header';
