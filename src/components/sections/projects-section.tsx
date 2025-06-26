@@ -13,7 +13,7 @@ export function ProjectsSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project) => (
           <Card key={project.id} className="flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="relative w-full h-48 md:h-56">
+            <div className="relative w-full h-48 md:h-56 hover:scale-105 transition-all">
               <Image
                 src={project.imageUrl}
                 alt={project.title}
@@ -38,14 +38,14 @@ export function ProjectsSection() {
             </CardContent>
             <CardFooter className="flex justify-start gap-3">
               {project.liveDemoUrl && (
-                <Button asChild variant="outline" size="sm" className="border-accent text-accent hover:bg-accent/10">
+                <Button asChild variant="outline" size="sm" className="border-accent text-accent hover:bg-accent/10 hover:text-accent">
                   <Link href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
                   </Link>
                 </Button>
               )}
               {project.sourceCodeUrl && (
-                <Button asChild variant="ghost" size="sm" className="text-muted-foreground">
+                <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-white">
                   <Link href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
                     <Github className="mr-2 h-4 w-4" /> Source Code
                   </Link>
