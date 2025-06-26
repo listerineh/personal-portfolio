@@ -160,6 +160,15 @@ export const skills: Skill[] = [
 
 export const projects: Project[] = [
   {
+    id: 'build-with-ai',
+    title: 'Build with AI website',
+    description: "Collaboration on the GDG Ecuador initiative to dynamically showcase all details of the Build with AI 2025 event, speakers, schedules, sponsors and internationalization. The site was developed collaboratively.",
+    imageUrl: '/projects/build-with-ai-web.webp',
+    imageAiHint: 'Build with AI website',
+    liveDemoUrl: 'https://www.gdgecuador.com/',
+    tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Vercel', 'i18n'],
+  },
+  {
     id: 'open-kanban-board',
     title: 'OpenKanban Board',
     description: "Effortlessly manage your projects with this free Kanban Board. Create, edit, and delete projects, and organize tasks by adding, moving, or removing them — all stored locally using your browser's localStorage.",
@@ -180,16 +189,6 @@ export const projects: Project[] = [
     tags: ['React.js', 'Tailwind', 'TypeScript', 'Vite', 'Firebase', 'Firestore', 'Vercel'],
   },
   {
-    id: 'joback-method-app',
-    title: 'Joback Method',
-    description: 'Generates chemical compounds to efficiently estimate the constant-pressure heat capacity of a gaseous substance across specified temperature ranges. Developed with vanilla JS and simple CSS.',
-    imageUrl: '/projects/joback-method-web.webp',
-    imageAiHint: 'Joback Method app',
-    liveDemoUrl: 'https://joback-method.vercel.app/',
-    sourceCodeUrl: 'https://github.com/listerineh/joback-method-application',
-    tags: ['HTML5', 'CSS3', 'TypeScript', 'Vercel', 'Chemistry', 'Vanilla.js'],
-  },
-  {
     id: 'tennis-duel-app',
     title: 'AI Tennis Duel',
     description: 'Select two famous tennis players and get an AI-powered prediction of the winner using Google Genkit. The app is built with Firebase Studio for a smooth and modern experience.',
@@ -198,6 +197,16 @@ export const projects: Project[] = [
     liveDemoUrl: 'https://tennis-duel.vercel.app/',
     sourceCodeUrl: 'https://github.com/listerineh/tennis-duel',
     tags: ['Next.js', 'React.js', 'Tailwind', 'Vercel', 'GenAI', 'RadixUI', 'Firebase Studio'],
+  },
+  {
+    id: 'joback-method-app',
+    title: 'Joback Method',
+    description: 'Generates chemical compounds to efficiently estimate the constant-pressure heat capacity of a gaseous substance across specified temperature ranges. Developed with vanilla JS and simple CSS.',
+    imageUrl: '/projects/joback-method-web.webp',
+    imageAiHint: 'Joback Method app',
+    liveDemoUrl: 'https://joback-method.vercel.app/',
+    sourceCodeUrl: 'https://github.com/listerineh/joback-method-application',
+    tags: ['HTML5', 'CSS3', 'TypeScript', 'Vercel', 'Chemistry', 'Vanilla.js'],
   },
 ];
 
