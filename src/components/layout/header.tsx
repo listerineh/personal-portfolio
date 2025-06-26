@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, X, CodeXml, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { Menu, X, CodeXml, Sun, Moon } from 'lucide-react';
 import { navItems } from '@/lib/data';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Button } from '@/components/ui/button';
 import { useTheme } from '@/context/theme-context';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

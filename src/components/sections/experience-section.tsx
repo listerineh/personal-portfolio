@@ -1,11 +1,11 @@
 'use client';
 
-import { SectionWrapper } from '@/components/common/section-wrapper';
-import { experiences } from '@/lib/data';
-import Image from 'next/image';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import Image from "next/image";
 import { Briefcase } from 'lucide-react';
+import { experiences } from '@/lib/data';
+import { SectionWrapper } from '@/components/common';
+import { Button } from '@/components/ui/button';
 
 export function ExperienceSection() {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
@@ -37,7 +37,10 @@ export function ExperienceSection() {
                       width={48}
                       height={48}
                       className="rounded-full border-2 border-background ring-4 ring-primary/20 z-10"
-                    />
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                   ) : (
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted border border-border text-muted-foreground">
                         <Briefcase className="h-6 w-6" />

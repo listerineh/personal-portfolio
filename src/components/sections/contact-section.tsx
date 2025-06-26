@@ -1,18 +1,18 @@
 "use client";
 
+import { useState } from "react";
+import { z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { Loader2, Mail, MessageSquare, User } from "lucide-react";
+import { submitContactForm } from "@/lib/actions";
 import { SectionWrapper } from '@/components/common/section-wrapper';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from "@/hooks/use-toast";
-import { submitContactForm } from "@/lib/actions";
 import type { ContactFormData } from "@/types";
-import { Loader2, Mail, MessageSquare, User } from "lucide-react";
-import { useState } from "react";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),

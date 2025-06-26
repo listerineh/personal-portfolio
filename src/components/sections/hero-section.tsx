@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from '@/components/ui/button';
-import { ArrowDown, FileText } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/image";
+import { ArrowDown, FileText } from 'lucide-react';
 import { hero } from '@/lib/data';
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
 export function HeroSection() {
@@ -21,7 +21,10 @@ export function HeroSection() {
             height={200}
             className="rounded-xl object-cover border-4 border-accent shadow-lg hover:scale-105 transition-transform duration-300"
             priority
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </div>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-headline font-bold text-foreground mb-4 animate-fade-in animation-delay-200">
           {hero.title}
