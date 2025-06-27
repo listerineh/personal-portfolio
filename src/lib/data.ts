@@ -171,12 +171,12 @@ export const projects: Project[] = [
   {
     id: 'open-kanban-board',
     title: 'OpenKanban Board',
-    description: "Effortlessly manage your projects with this free Kanban Board. Create, edit, and delete projects, and organize tasks by adding, moving, or removing them — all stored locally using your browser's localStorage.",
+    description: "Effortlessly manage your projects with this Open Source Kanban Board. Create, edit, and delete projects, and organize tasks by adding, moving, or removing them — all stored on Firebase Firestore and synchronized in real-time across all devices.",
     imageUrl: '/projects/open-kanban-board.webp',
     imageAiHint: 'OpenKanban board',
     liveDemoUrl: 'https://open-kanban.vercel.app/',
     sourceCodeUrl: 'https://github.com/listerineh/open-kanban-board',
-    tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'LocalStorage', 'Vercel'],
+    tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Firebase', 'Firestore', 'Vercel'],
   },
   {
     id: 'classroom-management-app',

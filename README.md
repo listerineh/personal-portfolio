@@ -32,6 +32,7 @@ Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 - ![Lucide](https://img.shields.io/badge/-Lucide-FFD43B) - Beautiful, consistent icon set
 - ![Zod](https://img.shields.io/badge/-Zod-3E63DD) - TypeScript-first schema validation
 - ![Resend](https://img.shields.io/badge/-Resend-3ECF8E) - Email API for developers
+- ![Vercel](https://img.shields.io/badge/-Vercel-000000) - Cloud platform for deployment
 
 ### 🛠 Development Tools
 
