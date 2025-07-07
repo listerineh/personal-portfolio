@@ -9,7 +9,8 @@ import 'swiper/css';
 
 
 export function SkillsSection() {
-  const shuffledArray = shuffleArray([...skills]);
+  const shuffledArrayLtR = shuffleArray([...skills]);
+  const shuffledArrayRtL = shuffleArray([...skills]);
 
   return (
     <SectionWrapper title="Technologies I Work With" id='skills' className="bg-secondary/85" isInfinite>   
@@ -26,9 +27,44 @@ export function SkillsSection() {
             speed={5000}
             freeMode={true}
             allowTouchMove={false}
+            className="w-full mb-2"
+          >
+            {shuffledArrayLtR.map((skill, index) => (
+              <SwiperSlide key={`skill-${index}`} className="!w-auto">
+                <div 
+                  className="min-w-[65px] sm:min-w-[90px] md:min-w-[100px] flex flex-col items-center justify-center p-4 mx-2 sm:mx-3 md:mx-4 transition-transform duration-300 hover:scale-110"
+                  title={skill.name}
+                >
+                  {skill.iconUrl && (
+                    <img
+                      className="h-10 w-10 sm:h-16 sm:w-16 md:h-18 md:w-18 text-accent mb-1 aspect-square object-contain"
+                      src={skill.iconUrl}
+                      alt={skill.name}
+                    />
+                  )}
+                  <p className="text-xs sm:text-sm font-medium text-center text-foreground/80 transition-colors truncate max-w-[80px] sm:max-w-[100px]">
+                    {skill.name}
+                  </p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={16}
+            slidesPerView={'auto'}
+            loop={true}
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+              reverseDirection: true,
+            }}
+            speed={5000}
+            freeMode={true}
+            allowTouchMove={false}
             className="w-full"
           >
-            {shuffledArray.map((skill, index) => (
+            {shuffledArrayRtL.map((skill, index) => (
               <SwiperSlide key={`skill-${index}`} className="!w-auto">
                 <div 
                   className="min-w-[65px] sm:min-w-[90px] md:min-w-[100px] flex flex-col items-center justify-center p-4 mx-2 sm:mx-3 md:mx-4 transition-transform duration-300 hover:scale-110"

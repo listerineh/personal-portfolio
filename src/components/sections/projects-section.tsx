@@ -12,8 +12,8 @@ export function ProjectsSection() {
     <SectionWrapper id="projects" title="Featured Projects">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project) => (
-          <Card key={project.id} className="flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="relative w-full h-48 md:h-56 hover:scale-105 transition-all">
+          <Card key={project.id} className="group flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="relative w-full h-48 md:h-56 overflow-hidden">
               <Image
                 src={project.imageUrl}
                 alt={project.title}
