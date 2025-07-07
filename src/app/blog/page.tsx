@@ -21,7 +21,7 @@ export default function BlogListingPage() {
               {blogPosts.map((post) => (
                 <Card key={post.slug} className="flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                   {post.imageUrl && (
-                    <div className="relative w-full h-48">
+                    <div className="relative w-full h-60">
                       <Image
                         src={post.imageUrl}
                         alt={post.title}
