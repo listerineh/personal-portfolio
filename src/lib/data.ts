@@ -179,6 +179,16 @@ export const projects: Project[] = [
     tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Firebase', 'Firestore', 'Vercel'],
   },
   {
+    id: 'pay-plan-app',
+    title: 'PayPlan App',
+    description: "Manage your projects with this free-to-use Kanban Board. Create, edit, and delete projects, as well as add, move, and delete tasks. Also, generate shared rooms to mantain expenses with friends and family.",
+    imageUrl: '/projects/pay-plan-app.webp',
+    imageAiHint: 'PayPlan App',
+    liveDemoUrl: 'https://payplay-app.vercel.app/',
+    sourceCodeUrl: 'https://github.com/listerineh/payplan-app',
+    tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Firebase', 'Firestore', 'Vercel'],
+  },
+  {
     id: 'classroom-management-app',
     title: 'Classroom Management',
     description: 'Easily manage your classes and students with this intuitive app. Create, edit, and delete classes and student profiles, and assign or remove points as rewards for participation — all seamlessly powered by a Firebase database.',
