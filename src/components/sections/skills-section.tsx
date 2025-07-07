@@ -9,8 +9,10 @@ import 'swiper/css';
 
 
 export function SkillsSection() {
-  const shuffledArrayLtR = shuffleArray([...skills]);
-  const shuffledArrayRtL = shuffleArray([...skills]);
+  const shuffledSkills = shuffleArray([...skills]);
+  const midpoint = Math.ceil(shuffledSkills.length / 2);
+  const shuffledArrayLtR = shuffledSkills.slice(0, midpoint);
+  const shuffledArrayRtL = shuffledSkills.slice(midpoint);
 
   return (
     <SectionWrapper title="Technologies I Work With" id='skills' className="bg-secondary/85" isInfinite>   
@@ -30,7 +32,7 @@ export function SkillsSection() {
             className="w-full mb-2"
           >
             {shuffledArrayLtR.map((skill, index) => (
-              <SwiperSlide key={`skill-${index}`} className="!w-auto">
+              <SwiperSlide key={`skill-${index}-1`} className="!w-auto">
                 <div 
                   className="min-w-[65px] sm:min-w-[90px] md:min-w-[100px] flex flex-col items-center justify-center p-4 mx-2 sm:mx-3 md:mx-4 transition-transform duration-300 hover:scale-110"
                   title={skill.name}
@@ -65,7 +67,7 @@ export function SkillsSection() {
             className="w-full"
           >
             {shuffledArrayRtL.map((skill, index) => (
-              <SwiperSlide key={`skill-${index}`} className="!w-auto">
+              <SwiperSlide key={`skill-${index}-2`} className="!w-auto">
                 <div 
                   className="min-w-[65px] sm:min-w-[90px] md:min-w-[100px] flex flex-col items-center justify-center p-4 mx-2 sm:mx-3 md:mx-4 transition-transform duration-300 hover:scale-110"
                   title={skill.name}
