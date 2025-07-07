@@ -179,6 +179,16 @@ export const projects: Project[] = [
     tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Firebase', 'Firestore', 'Vercel'],
   },
   {
+    id: 'pay-plan-app',
+    title: 'PayPlan App',
+    description: "Manage your projects with this free-to-use Kanban Board. Create, edit, and delete projects, as well as add, move, and delete tasks. Also, generate shared rooms to mantain expenses with friends and family.",
+    imageUrl: '/projects/pay-plan-app.webp',
+    imageAiHint: 'PayPlan App',
+    liveDemoUrl: 'https://payplay-app.vercel.app/',
+    sourceCodeUrl: 'https://github.com/listerineh/payplan-app',
+    tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Firebase', 'Firestore', 'Vercel'],
+  },
+  {
     id: 'classroom-management-app',
     title: 'Classroom Management',
     description: 'Easily manage your classes and students with this intuitive app. Create, edit, and delete classes and student profiles, and assign or remove points as rewards for participation — all seamlessly powered by a Firebase database.',
@@ -326,7 +336,132 @@ If you're building a blog or dev-focused site, consider Markdown as your foundat
 `,
     author: 'Sebastian Alvarez',
     tags: ['Markdown', 'Blog', 'Content Strategy', 'Developer Tools', 'Developer Experience']
-  },  
+  },
+  {
+    slug: 'from-chaos-to-clarity-kanban',
+    title: 'From Chaos to Clarity: My Journey with Kanban Boards',
+    date: 'July 7, 2025',
+    excerpt: 'Discover how Kanban boards help organize software projects, increase personal productivity, and why UI/UX — like drag and drop — makes all the difference.',
+    imageUrl: '/blog/from-chaos-to-clarity-kanban.webp',
+    imageAiHint: 'kanban board, drag and drop, software productivity, organized workspace',
+    content: `
+  ## Introduction
+
+  Managing tasks as a software developer — whether in freelance gigs, full-time roles, or personal projects — can be overwhelming without a system. I tried to-do lists, spreadsheets, and sticky notes, but they all fell short.
+
+  Everything changed when I embraced **Kanban boards**.
+
+  In this post, I’ll explain **why Kanban boards are essential for software teams and individual developers**, how I built <a href="https://open-kanban.vercel.app/" target="_blank" rel="noopener noreferrer">Open Kanban</a>
+ to fit my workflow, and how it helped me level up my productivity — not just in code, but in life.
+
+  ---
+
+  ## Why Kanban Boards Are a Game-Changer
+
+  Kanban isn’t just a fancy to-do list. It’s a visual system for managing work that improves clarity, focus, and flow.
+
+  Here’s why they work:
+
+  ### 1. 🧠 Visual Clarity Over Chaos
+
+  Kanban makes your workload visible. You’re not just writing tasks — you’re watching them **move** through stages:
+
+  - Backlog → In Progress → Review → Done
+
+  This flow mirrors how real software work happens. It helps you **see bottlenecks**, balance priorities, and stay focused.
+
+  Also, you can generate new steps on that flow to increase the control!
+
+  ### 2. 🧩 Flexible for Teams and Solo Devs
+
+  Whether you're collaborating with others or working solo, Kanban adapts. I use it to:
+
+  - Break down features during sprints
+  - Track freelance project deliverables
+  - Plan personal goals like workouts or reading
+  - Organize side projects
+
+  Once you start using columns and cards, it’s hard to go back to plain lists.
+
+  ### 3. ⚡ Encourages Focus and Flow
+
+  Limiting “In Progress” cards forces you to finish what you start. That leads to fewer half-baked features, fewer distractions, and a stronger feeling of progress.
+
+  ---
+
+  ## Why I Built Open Kanban
+
+  There are dozens of Kanban tools out there. But I wanted something **simple**, **fast**, and **customizable**.
+
+  That’s why I built [Open Kanban](https://open-kanban.vercel.app/).
+
+  - ✅ **Easy-to-use Google Authentication**
+  - ✅ **Drag and drop cards and columns**
+  - ✅ **Customizable columns and project settings**
+  - ✅ **Dark mode**
+  - ✅ **Firestore storage by default**
+
+  It’s built with Nextjs + Tailwind, focused entirely on UX — so it feels fast and frictionless.
+
+  I created it as a weekend project, and now I use it every single day.
+
+  ---
+
+  ## How It Improved My Workflow
+
+  Here’s how Open Kanban made a difference in my life:
+
+  ### 🧑‍💻 Freelance and Work Projects
+
+  - I track features and bugs with clear visibility
+  - No more jumping between Notion, Trello, and email
+  - It’s easier to plan sprints and deliver on time
+
+  ### 🧘‍♂️ Personal Life and Daily Goals
+
+  - I organize my day every morning
+  - I can drag tasks into "Done" — super satisfying!
+  - Planning long-term habits is easier with recurring templates
+
+  ### 🚀 Easy to increase
+
+  As a software engineer, having all the control of this amazing tool is a game-changer. I can easily generate new functionalities to adapt my new requirements to the app in minutes!
+
+  It became my **second brain**, helping me stay clear-headed and productive, even outside of coding.
+
+  ---
+
+  ## The Power of Good UI/UX
+
+  Design isn’t just “nice to have” — it **directly affects productivity**.
+
+  When UI gets out of your way and **feels smooth**, like with:
+
+  - 🖱️ **Drag and drop**
+  - 🌙 **Dark mode**
+  - 📲 **Responsive Adaptations**
+
+  …it becomes a tool you actually enjoy using.
+
+  I spent time polishing the drag-and-drop experience with libraries like \`dnd-kit\` to make sure it felt intuitive and satisfying. But I consider using native CSS \`draggable\` prop to make the experience easy to understand.
+
+  ---
+
+  ## Conclusion
+
+  Kanban changed how I work, how I plan, and how I finish things. And building my own tool around that idea made me a better developer.
+
+  If you're juggling multiple projects — or just want to finish what you start — **try Open Kanban**:
+
+  👉 <a href="https://open-kanban.vercel.app/" target="_blank" rel="noopener noreferrer">open-kanban.vercel.app</a>
+
+  It’s free, fast, and focused on making productivity feel good.
+
+  And remember: **the best software doesn’t just work — it feels great to use**.
+  `,
+    author: 'Sebastian Alvarez',
+    tags: ['Productivity', 'Developer Tools', 'UI/UX', 'Side Projects', 'Kanban', 'Open Source']
+  },
 ];
 
 export const socialLinks = [
