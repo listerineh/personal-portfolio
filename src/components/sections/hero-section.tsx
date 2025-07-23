@@ -25,7 +25,7 @@ export function HeroSection() {
               priority
             />
           </div>
-          <Badge className="w-max absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 bg-primary text-primary-foreground text-xs font-bold py-1.5 px-4 shadow-lg border-2 border-background">
+          <Badge className="w-max absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 bg-primary text-primary-foreground text-xs font-bold py-1.5 px-4 shadow-lg">
             +4 Years Experience
           </Badge>
         </div>
