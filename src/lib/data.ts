@@ -179,6 +179,16 @@ export const projects: Project[] = [
     tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Firebase', 'Firestore', 'Vercel'],
   },
   {
+    id: 'cadenza-app',
+    title: 'Cadenza App',
+    description: 'A free-to-use suite of interactive tools designed for musicians by musicians to explore, identify, and create music.',
+    imageUrl: '/projects/cadenza-app.webp',
+    imageAiHint: 'Cadenza app',
+    liveDemoUrl: 'https://cadenza-app.vercel.app/',
+    sourceCodeUrl: 'https://github.com/listerineh/cadenza-app',
+    tags: ['Next.js', 'React.js', 'Tailwind', 'Vercel', 'RadixUI'],
+  },
+  {
     id: 'pay-plan-app',
     title: 'PayPlan App',
     description: "Manage your projects with this free-to-use Kanban Board. Create, edit, and delete projects, as well as add, move, and delete tasks. Also, generate shared rooms to mantain expenses with friends and family.",
@@ -197,16 +207,6 @@ export const projects: Project[] = [
     liveDemoUrl: 'https://classmanageroom.vercel.app/',
     sourceCodeUrl: 'https://github.com/listerineh/classroom-management',
     tags: ['React.js', 'Tailwind', 'TypeScript', 'Vite', 'Firebase', 'Firestore', 'Vercel'],
-  },
-  {
-    id: 'tennis-duel-app',
-    title: 'AI Tennis Duel',
-    description: 'Select two famous tennis players and get an AI-powered prediction of the winner using Google Genkit. The app is built with Firebase Studio for a smooth and modern experience.',
-    imageUrl: '/projects/tennis-duel-app.webp',
-    imageAiHint: 'Tennis duel app',
-    liveDemoUrl: 'https://tennis-duel.vercel.app/',
-    sourceCodeUrl: 'https://github.com/listerineh/tennis-duel',
-    tags: ['Next.js', 'React.js', 'Tailwind', 'Vercel', 'GenAI', 'RadixUI', 'Firebase Studio'],
   },
   {
     id: 'joback-method-app',
