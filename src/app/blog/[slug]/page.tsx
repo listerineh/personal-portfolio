@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             {post.tags && post.tags.length > 0 && (
               <div className="flex flex-wrap items-center gap-2 text-sm">
-                 <Tag className="mr-1.5 h-4 w-4 text-muted-foreground" />
+                <Tag className="mr-1.5 h-4 w-4 text-muted-foreground" />
                 {post.tags.map((tag) => (
                   <Badge key={tag} variant="secondary" className="font-normal">{tag}</Badge>
                 ))}
@@ -98,7 +98,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </header>
 
           {post.imageUrl && (
-            <div className="relative w-full h-64 md:h-96 mb-8 md:mb-12 rounded-lg overflow-hidden shadow-md">
+            <div className="relative w-full h-80 md:h-96 mb-8 md:mb-12 rounded-lg overflow-hidden shadow-md">
               <Image
                 src={post.imageUrl}
                 alt={post.title}
