@@ -161,7 +161,7 @@ export const projects: Project[] = [
   {
     id: 'build-with-ai',
     title: 'Build with AI website',
-    description: "Collaboration on the GDG Ecuador initiative to dynamically showcase all details of the Build with AI 2025 event, speakers, schedules, sponsors and internationalization. The site was developed collaboratively.",
+    description: "This collaborative GDG Ecuador project is a dynamic hub for the Build with AI 2025 event. It comprehensively showcases speakers, schedules, sponsors, and internationalization efforts, providing attendees with all essential details.",
     imageUrl: '/projects/build-with-ai-web.webp',
     imageAiHint: 'Build with AI website',
     liveDemoUrl: 'https://www.gdgecuador.com/',
@@ -175,12 +175,12 @@ export const projects: Project[] = [
     imageAiHint: 'OpenKanban board',
     liveDemoUrl: 'https://open-kanban.vercel.app/',
     sourceCodeUrl: 'https://github.com/listerineh/open-kanban-board',
-    tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'Firebase', 'Firestore', 'Vercel'],
+    tags: ['Next.js', 'React.js', 'Tailwind', 'TypeScript', 'PWA', 'Firebase', 'Firestore', 'Vercel'],
   },
   {
     id: 'cadenza-app',
     title: 'Cadenza App',
-    description: 'A free-to-use suite of interactive tools designed for musicians by musicians to explore, identify, and create music.',
+    description: 'Discover a world of musical possibilities with our free, interactive tool suite, designed by musicians to empower your creativity. Easily explore new sounds, identify elements within your favorite tracks, and bring your unique musical ideas to life.',
     imageUrl: '/projects/cadenza-app.webp',
     imageAiHint: 'Cadenza app',
     liveDemoUrl: 'https://cadenza-app.vercel.app/',
@@ -210,7 +210,7 @@ export const projects: Project[] = [
   {
     id: 'joback-method-app',
     title: 'Joback Method',
-    description: 'Generates chemical compounds to efficiently estimate the constant-pressure heat capacity of a gaseous substance across specified temperature ranges. Developed with vanilla JS and simple CSS.',
+    description: 'Efficiently estimate the constant-pressure heat capacity of gaseous substances across specified temperature ranges with our web tool. It generates chemical compounds to streamline your calculations.',
     imageUrl: '/projects/joback-method-web.webp',
     imageAiHint: 'Joback Method app',
     liveDemoUrl: 'https://joback-method.vercel.app/',
