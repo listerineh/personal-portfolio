@@ -190,7 +190,7 @@ export const projects: Project[] = [
   {
     id: 'pay-plan-app',
     title: 'PayPlan App',
-    description: "Manage your projects with this free-to-use Kanban Board. Create, edit, and delete projects, as well as add, move, and delete tasks. Also, generate shared rooms to mantain expenses with friends and family.",
+    description: "Easily track and manage shared expenses with friends, family, colleagues or individually. Get instant clarity with easy-to-understand graphs and reports that visualize your financial situation, helping you make smarter decisions and achieve your financial goals effortlessly.",
     imageUrl: '/projects/pay-plan-app.webp',
     imageAiHint: 'PayPlan App',
     liveDemoUrl: 'https://payplay-app.vercel.app/',
