@@ -13,13 +13,14 @@ export function BlogPreviewSection() {
     <SectionWrapper id="blog" title="Latest Thoughts" className="bg-gradient-to-t from-background via-background/90 to-background/0">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {displayedPosts.map((post) => (
-          <Card key={post.slug} className="flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <Card key={post.slug} className="group flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
             {post.imageUrl && (
-              <div className="relative w-full h-60">
+              <div className="relative w-full h-64 overflow-hidden">
                 <Image
                   src={post.imageUrl}
                   alt={post.title}
                   data-ai-hint={post.imageAiHint || 'blog post image'}
+                  className="transition-transform duration-300 group-hover:scale-105"
                   fill
                   sizes="100vw"
                   style={{

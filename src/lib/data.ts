@@ -147,7 +147,6 @@ export const skills: Skill[] = [
   { name: 'Java', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" },
   { name: 'Jira', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/jira/jira-original.svg" },
   { name: 'Keras', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/keras/keras-original.svg" },
-  { name: 'Node', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" },
   { name: 'Playwright', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/playwright/playwright-original.svg" },
   { name: 'Postman', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/postman/postman-original.svg" },
   { name: 'Pytest', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/pytest/pytest-original.svg" },
@@ -221,6 +220,230 @@ export const projects: Project[] = [
 ];
 
 export const blogPosts: BlogPost[] = [
+  {
+  slug: 'coding-through-burnout',
+  title: 'Coding Through Burnout: How Hobbies Helped Me Heal',
+  date: 'July 31, 2025',
+  excerpt: 'Burnout is real — especially when code is both your job and your hobby. Here’s how I navigated it using rest, rhythm, and side projects that gave me purpose beyond productivity.',
+  imageUrl: '/blog/coding-through-burnout.webp',
+  imageAiHint: 'developer relaxing, cat on lap, music notes, burnout recovery, dual life of coder and musician',
+  content: `
+
+## Introduction
+
+Being a fullstack developer sounds exciting on paper — and it *is*. But over the years, working across **different projects, stacks, products, industries, and teams**, I found myself teetering on the edge of burnout more than once.
+
+I love what I do, but when your profession is also your hobby, the lines blur dangerously fast. I was coding all day for work… and still coding at night for personal projects. There were weeks where I felt more like a machine than a person.
+
+And yet, what helped me recover wasn’t stepping away from development completely — it was **redefining what coding meant to me**, and reconnecting with the things that remind me why I create in the first place.
+
+---
+
+## When the Burnout Hits
+
+The signs came slowly at first: exhaustion, irritability, brain fog. I’d sit in front of the editor and feel nothing. No curiosity. No drive. Just a mechanical push to “get things done.”
+
+Burnout isn’t just being tired — it’s feeling **disconnected from what used to bring you joy**.
+
+I tried taking weekends off, turning off Slack, muting notifications. But the real shift came when I learned how to **disconnect deeply and with purpose**.
+
+---
+
+## My Cats Were My First Wake-Up Call 🐈
+
+Sounds silly, right? But my cats reminded me how to *exist* without performance.
+
+Watching them nap in sunbeams, chase shadows, demand affection — it grounded me. Pets don’t care about your deadlines. They don’t measure your worth in commits.
+
+They just want you *present*.
+
+In the quiet moments with them, I remembered I was a person first — not just a developer.
+
+---
+
+## Music Helped Me Breathe Again 🎵
+
+I’ve always been an amateur musician. During some of my lowest points, I’d pick up the guitar, not to write songs, but just to *play*. To *feel* again.
+
+Playing music has no backlog, no Jira tickets, no standups. It’s just you and the moment.
+
+And yet, my love for tech snuck back in — in a good way.
+
+---
+
+## Turning Burnout Into Creation: Cadenza 🎹
+
+At some point, I realized: maybe I didn’t need to separate my love for tech and music — maybe I could let them **feed each other**.
+
+That’s how I ended up building [Cadenza](https://cadenza-app.vercel.app), a tool to help me with **musical composition and music theory practice**.
+
+I made it for myself — a simple way to experiment with harmony, discover new voicings, and explore theory in an interactive way. But without even realizing it, I was also building something **genuinely useful for other musicians**.
+
+That moment — when friends and fellow musicians started telling me they found value in it — reminded me **why I started building things** in the first place.
+
+Not for performance. Not for productivity. But to *solve real problems*, to *create tools that matter*, and to *bridge passions through code*.
+
+That realization brought me back to life as a developer.
+
+---
+
+## When Your Hobby Is Also Your Career
+
+This is the paradox a lot of us devs face: code is what we do for a living *and* what we do for fun.
+
+That’s powerful — but also dangerous.
+
+### Here’s what I learned:
+
+- 💡 **Not every side project needs to be “shipped.”** Sometimes, building something just for yourself is enough.
+- 😌 **Rest isn’t laziness — it’s fuel.** True rest means *disconnecting completely*, even from side projects.
+- 🎯 **Purpose heals.** When I stopped coding for output and started coding for *expression*, I remembered why I fell in love with tech in the first place.
+
+---
+
+## Conclusion
+
+Burnout doesn’t mean you’re broken — it means you’ve been running on empty. As a fullstack dev juggling many roles, it’s easy to forget you’re not just a producer of features. You’re a human with needs, rhythms, and a creative spark that needs care.
+
+So if you’re feeling burned out:
+
+- Pet a cat 🐾  
+- Play a chord 🎸  
+- Build something just for you 💻
+
+And remember: the same skills that wear you down can also be the ones that lift you back up — if you let them reconnect you with joy.
+
+👉 Try [Cadenza](https://cadenza-app.vercel.app) if you’re into music too — maybe it helps you like it helped me.
+
+`,
+  author: 'Sebastian Alvarez',
+  tags: ['Burnout', 'Developer Life', 'Mental Health', 'Side Projects', 'Music', 'Productivity']
+},
+  {
+    slug: 'from-chaos-to-clarity-kanban',
+    title: 'From Chaos to Clarity: My Journey with Kanban Boards',
+    date: 'July 7, 2025',
+    excerpt: 'Discover how Kanban boards help organize software projects, increase personal productivity, and why UI/UX — like drag and drop — makes all the difference.',
+    imageUrl: '/blog/from-chaos-to-clarity-kanban.webp',
+    imageAiHint: 'kanban board, drag and drop, software productivity, organized workspace',
+    content: `
+  ## Introduction
+
+  Managing tasks as a software developer — whether in freelance gigs, full-time roles, or personal projects — can be overwhelming without a system. I tried to-do lists, spreadsheets, and sticky notes, but they all fell short.
+
+  Everything changed when I embraced **Kanban boards**.
+
+  In this post, I’ll explain **why Kanban boards are essential for software teams and individual developers**, how I built <a href="https://open-kanban.vercel.app/" target="_blank" rel="noopener noreferrer">Open Kanban</a>
+  to fit my workflow, and how it helped me level up my productivity — not just in code, but in life.
+
+  ---
+
+  ## Why Kanban Boards Are a Game-Changer
+
+  Kanban isn’t just a fancy to-do list. It’s a visual system for managing work that improves clarity, focus, and flow.
+
+  Here’s why they work:
+
+  ### 1. 🧠 Visual Clarity Over Chaos
+
+  Kanban makes your workload visible. You’re not just writing tasks — you’re watching them **move** through stages:
+
+  - Backlog → In Progress → Review → Done
+
+  This flow mirrors how real software work happens. It helps you **see bottlenecks**, balance priorities, and stay focused.
+
+  Also, you can generate new steps on that flow to increase the control!
+
+  ### 2. 🧩 Flexible for Teams and Solo Devs
+
+  Whether you're collaborating with others or working solo, Kanban adapts. I use it to:
+
+  - Break down features during sprints
+  - Track freelance project deliverables
+  - Plan personal goals like workouts or reading
+  - Organize side projects
+
+  Once you start using columns and cards, it’s hard to go back to plain lists.
+
+  ### 3. ⚡ Encourages Focus and Flow
+
+  Limiting “In Progress” cards forces you to finish what you start. That leads to fewer half-baked features, fewer distractions, and a stronger feeling of progress.
+
+  ---
+
+  ## Why I Built Open Kanban
+
+  There are dozens of Kanban tools out there. But I wanted something **simple**, **fast**, and **customizable**.
+
+  That’s why I built [Open Kanban](https://open-kanban.vercel.app/).
+
+  - ✅ **Easy-to-use Google Authentication**
+  - ✅ **Drag and drop cards and columns**
+  - ✅ **Customizable columns and project settings**
+  - ✅ **Dark mode**
+  - ✅ **Firestore storage by default**
+
+  It’s built with Nextjs + Tailwind, focused entirely on UX — so it feels fast and frictionless.
+
+  I created it as a weekend project, and now I use it every single day.
+
+  ---
+
+  ## How It Improved My Workflow
+
+  Here’s how Open Kanban made a difference in my life:
+
+  ### 🧑‍💻 Freelance and Work Projects
+
+  - I track features and bugs with clear visibility
+  - No more jumping between Notion, Trello, and email
+  - It’s easier to plan sprints and deliver on time
+
+  ### 🧘‍♂️ Personal Life and Daily Goals
+
+  - I organize my day every morning
+  - I can drag tasks into "Done" — super satisfying!
+  - Planning long-term habits is easier with recurring templates
+
+  ### 🚀 Easy to increase
+
+  As a software engineer, having all the control of this amazing tool is a game-changer. I can easily generate new functionalities to adapt my new requirements to the app in minutes!
+
+  It became my **second brain**, helping me stay clear-headed and productive, even outside of coding.
+
+  ---
+
+  ## The Power of Good UI/UX
+
+  Design isn’t just “nice to have” — it **directly affects productivity**.
+
+  When UI gets out of your way and **feels smooth**, like with:
+
+  - 🖱️ **Drag and drop**
+  - 🌙 **Dark mode**
+  - 📲 **Responsive Adaptations**
+
+  …it becomes a tool you actually enjoy using.
+
+  I spent time polishing the drag-and-drop experience with libraries like \`dnd-kit\` to make sure it felt intuitive and satisfying. But I consider using native CSS \`draggable\` prop to make the experience easy to understand.
+
+  ---
+
+  ## Conclusion
+
+  Kanban changed how I work, how I plan, and how I finish things. And building my own tool around that idea made me a better developer.
+
+  If you're juggling multiple projects — or just want to finish what you start — **try Open Kanban**:
+
+  👉 <a href="https://open-kanban.vercel.app/" target="_blank" rel="noopener noreferrer">open-kanban.vercel.app</a>
+
+  It’s free, fast, and focused on making productivity feel good.
+
+  And remember: **the best software doesn’t just work — it feels great to use**.
+  `,
+    author: 'Sebastian Alvarez',
+    tags: ['Productivity', 'Developer Tools', 'UI/UX', 'Side Projects', 'Kanban', 'Open Source']
+  },
   {
     slug: 'why-markdown-for-blogs',
     title: 'Is Markdown the Best Format for Blogs?',
@@ -336,131 +559,6 @@ If you're building a blog or dev-focused site, consider Markdown as your foundat
 `,
     author: 'Sebastian Alvarez',
     tags: ['Markdown', 'Blog', 'Content Strategy', 'Developer Tools', 'Developer Experience']
-  },
-  {
-    slug: 'from-chaos-to-clarity-kanban',
-    title: 'From Chaos to Clarity: My Journey with Kanban Boards',
-    date: 'July 7, 2025',
-    excerpt: 'Discover how Kanban boards help organize software projects, increase personal productivity, and why UI/UX — like drag and drop — makes all the difference.',
-    imageUrl: '/blog/from-chaos-to-clarity-kanban.webp',
-    imageAiHint: 'kanban board, drag and drop, software productivity, organized workspace',
-    content: `
-  ## Introduction
-
-  Managing tasks as a software developer — whether in freelance gigs, full-time roles, or personal projects — can be overwhelming without a system. I tried to-do lists, spreadsheets, and sticky notes, but they all fell short.
-
-  Everything changed when I embraced **Kanban boards**.
-
-  In this post, I’ll explain **why Kanban boards are essential for software teams and individual developers**, how I built <a href="https://open-kanban.vercel.app/" target="_blank" rel="noopener noreferrer">Open Kanban</a>
- to fit my workflow, and how it helped me level up my productivity — not just in code, but in life.
-
-  ---
-
-  ## Why Kanban Boards Are a Game-Changer
-
-  Kanban isn’t just a fancy to-do list. It’s a visual system for managing work that improves clarity, focus, and flow.
-
-  Here’s why they work:
-
-  ### 1. 🧠 Visual Clarity Over Chaos
-
-  Kanban makes your workload visible. You’re not just writing tasks — you’re watching them **move** through stages:
-
-  - Backlog → In Progress → Review → Done
-
-  This flow mirrors how real software work happens. It helps you **see bottlenecks**, balance priorities, and stay focused.
-
-  Also, you can generate new steps on that flow to increase the control!
-
-  ### 2. 🧩 Flexible for Teams and Solo Devs
-
-  Whether you're collaborating with others or working solo, Kanban adapts. I use it to:
-
-  - Break down features during sprints
-  - Track freelance project deliverables
-  - Plan personal goals like workouts or reading
-  - Organize side projects
-
-  Once you start using columns and cards, it’s hard to go back to plain lists.
-
-  ### 3. ⚡ Encourages Focus and Flow
-
-  Limiting “In Progress” cards forces you to finish what you start. That leads to fewer half-baked features, fewer distractions, and a stronger feeling of progress.
-
-  ---
-
-  ## Why I Built Open Kanban
-
-  There are dozens of Kanban tools out there. But I wanted something **simple**, **fast**, and **customizable**.
-
-  That’s why I built [Open Kanban](https://open-kanban.vercel.app/).
-
-  - ✅ **Easy-to-use Google Authentication**
-  - ✅ **Drag and drop cards and columns**
-  - ✅ **Customizable columns and project settings**
-  - ✅ **Dark mode**
-  - ✅ **Firestore storage by default**
-
-  It’s built with Nextjs + Tailwind, focused entirely on UX — so it feels fast and frictionless.
-
-  I created it as a weekend project, and now I use it every single day.
-
-  ---
-
-  ## How It Improved My Workflow
-
-  Here’s how Open Kanban made a difference in my life:
-
-  ### 🧑‍💻 Freelance and Work Projects
-
-  - I track features and bugs with clear visibility
-  - No more jumping between Notion, Trello, and email
-  - It’s easier to plan sprints and deliver on time
-
-  ### 🧘‍♂️ Personal Life and Daily Goals
-
-  - I organize my day every morning
-  - I can drag tasks into "Done" — super satisfying!
-  - Planning long-term habits is easier with recurring templates
-
-  ### 🚀 Easy to increase
-
-  As a software engineer, having all the control of this amazing tool is a game-changer. I can easily generate new functionalities to adapt my new requirements to the app in minutes!
-
-  It became my **second brain**, helping me stay clear-headed and productive, even outside of coding.
-
-  ---
-
-  ## The Power of Good UI/UX
-
-  Design isn’t just “nice to have” — it **directly affects productivity**.
-
-  When UI gets out of your way and **feels smooth**, like with:
-
-  - 🖱️ **Drag and drop**
-  - 🌙 **Dark mode**
-  - 📲 **Responsive Adaptations**
-
-  …it becomes a tool you actually enjoy using.
-
-  I spent time polishing the drag-and-drop experience with libraries like \`dnd-kit\` to make sure it felt intuitive and satisfying. But I consider using native CSS \`draggable\` prop to make the experience easy to understand.
-
-  ---
-
-  ## Conclusion
-
-  Kanban changed how I work, how I plan, and how I finish things. And building my own tool around that idea made me a better developer.
-
-  If you're juggling multiple projects — or just want to finish what you start — **try Open Kanban**:
-
-  👉 <a href="https://open-kanban.vercel.app/" target="_blank" rel="noopener noreferrer">open-kanban.vercel.app</a>
-
-  It’s free, fast, and focused on making productivity feel good.
-
-  And remember: **the best software doesn’t just work — it feels great to use**.
-  `,
-    author: 'Sebastian Alvarez',
-    tags: ['Productivity', 'Developer Tools', 'UI/UX', 'Side Projects', 'Kanban', 'Open Source']
   },
 ];
 
