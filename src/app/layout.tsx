@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
 import { AnimatedBackground } from '@/components/common';
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/next"
 
 import './globals.css';
 
@@ -72,6 +73,7 @@ export default function RootLayout({
         <ThemeProvider>
           <AnimatedBackground />
           {children}
+          <Analytics /> 
         </ThemeProvider>
         <Toaster />
       </body>
