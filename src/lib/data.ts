@@ -20,7 +20,7 @@ export const experiences: Experience[] = [
   {
     company: 'Uwigo/Informat',
     logoUrl: '/images/informat_s_a_logo.jpeg',
-    companyAiHint: 'Uwigo Informat logo',
+    companyAiHint: 'Uwigo/Informat logo',
     jobTitle: 'Senior Fullstack Engineer',
     employmentDates: 'Aug 2025 - Present',
     location: 'Remote',
