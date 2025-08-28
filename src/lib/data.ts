@@ -19,7 +19,7 @@ export const navItems: NavItem[] = [
 export const experiences: Experience[] = [
   {
     company: 'Uwigo/Informat',
-    logoUrl: '/images/informat_s_a_logo.jpeg',
+    logoUrl: '/images/Informat_s_a_logo.jpeg',
     companyAiHint: 'Uwigo/Informat logo',
     jobTitle: 'Senior Fullstack Engineer',
     employmentDates: 'Aug 2025 - Present',
