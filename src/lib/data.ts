@@ -18,18 +18,31 @@ export const navItems: NavItem[] = [
 
 export const experiences: Experience[] = [
   {
+    company: 'Uwigo/Informat',
+    logoUrl: '/images/informat_s_a_logo.jpeg',
+    companyAiHint: 'Uwigo Informat logo',
+    jobTitle: 'Senior Fullstack Engineer',
+    employmentDates: 'Aug 2025 - Present',
+    location: 'Remote',
+    responsibilities: [
+      'Developed a dynamic and incremental Azure-based infrastructure, enhancing system scalability and reliability.',
+      'Designed and implemented a comprehensive authentication and authorization microservice utilized across the company.',
+      'Standardized API response formats, improving consistency and efficiency in inter-departmental communications.',
+      'Documented process enhancements, contributing to a culture of continuous improvement within the organization.',
+    ],
+  },
+  {
     company: 'Blue Express',
     logoUrl: '/images/blue_express_s_a_logo.jpeg',
     companyAiHint: 'Blue Express logo',
     jobTitle: 'Senior Fullstack Engineer',
-    employmentDates: 'Aug 2024 - Present',
+    employmentDates: 'Aug 2024 - Aug 2025',
     location: 'Remote',
     responsibilities: [
-      'Developed and maintained event-driven microservices architecture for core logistics systems.',
-      'Worked across backend, frontend, and mobile platforms to build scalable and efficient solutions.',
-      'Implemented infrastructure improvements to support high availability and system reliability.',
-      'Led the integration of a native AI model for image recognition to automate and enhance operations.',
-      'Collaborated with cross-functional teams to deliver innovative features aligned with business goals.',
+      'Developed and maintained a robust event-driven microservices architecture for BlueExpress, enhancing system scalability.',
+      'Spearheaded the integration of a native AI model for image recognition, driving innovation in logistics solutions.',
+      'Collaborated across backend, frontend, mobile, and infrastructure teams to deliver efficient and effective systems.',
+      'Leveraged modern technologies to improve operational efficiency, resulting in significant cost savings.',
     ],
   },
   {
