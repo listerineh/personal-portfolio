@@ -31,21 +31,7 @@ export const experiences: Experience[] = [
       'Documented process enhancements, contributing to a culture of continuous improvement within the organization.',
     ],
   },
-  {
-    company: 'Blue Express',
-    logoUrl: '/images/blue_express_s_a_logo.jpeg',
-    companyAiHint: 'Blue Express logo',
-    jobTitle: 'Senior Fullstack Engineer',
-    employmentDates: 'Aug 2024 - Aug 2025',
-    location: 'Remote',
-    responsibilities: [
-      'Developed and maintained a robust event-driven microservices architecture for BlueExpress, enhancing system scalability.',
-      'Spearheaded the integration of a native AI model for image recognition, driving innovation in logistics solutions.',
-      'Collaborated across backend, frontend, mobile, and infrastructure teams to deliver efficient and effective systems.',
-      'Leveraged modern technologies to improve operational efficiency, resulting in significant cost savings.',
-    ],
-  },
-  {
+    {
     company: 'Google Developer Groups Quito',
     logoUrl: '/images/gdg_quito_logo.jpeg',
     companyAiHint: 'Google Developer Groups Quito logo',
@@ -59,6 +45,20 @@ export const experiences: Experience[] = [
       'Led community expansion efforts by attracting new members and encouraging active contributions.',
       'Collaborated with team members to align goals and maintain strong internal communication.',
       'Delivered presentations on emerging technologies and industry trends to empower the community.',
+    ],
+  },
+  {
+    company: 'Blue Express',
+    logoUrl: '/images/blue_express_s_a_logo.jpeg',
+    companyAiHint: 'Blue Express logo',
+    jobTitle: 'Senior Fullstack Engineer',
+    employmentDates: 'Aug 2024 - Aug 2025',
+    location: 'Remote',
+    responsibilities: [
+      'Developed and maintained a robust event-driven microservices architecture for BlueExpress, enhancing system scalability.',
+      'Spearheaded the integration of a native AI model for image recognition, driving innovation in logistics solutions.',
+      'Collaborated across backend, frontend, mobile, and infrastructure teams to deliver efficient and effective systems.',
+      'Leveraged modern technologies to improve operational efficiency, resulting in significant cost savings.',
     ],
   },
   {
