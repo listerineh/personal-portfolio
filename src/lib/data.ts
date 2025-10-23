@@ -31,7 +31,7 @@ export const experiences: Experience[] = [
       'Documented process enhancements, contributing to a culture of continuous improvement within the organization.',
     ],
   },
-    {
+  {
     company: 'Google Developer Groups Quito',
     logoUrl: '/images/gdg_quito_logo.jpeg',
     companyAiHint: 'Google Developer Groups Quito logo',
