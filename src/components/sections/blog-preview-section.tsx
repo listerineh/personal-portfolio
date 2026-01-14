@@ -3,7 +3,9 @@
 import { useRef } from 'react';
 import Image from "next/image";
 import Link from 'next/link';
-import { ArrowRight, CalendarDays } from 'lucide-react';
+import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
+import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
+import { getBlogImageBlur } from '@/lib/image-blur';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { blogPosts } from '@/lib/data';
@@ -103,6 +105,8 @@ export function BlogPreviewSection() {
                   className="blog-image transition-transform duration-300 group-hover:scale-105"
                   fill
                   sizes="100vw"
+                  placeholder="blur"
+                  blurDataURL={getBlogImageBlur()}
                   style={{
                     objectFit: "cover"
                   }} />
@@ -112,8 +116,13 @@ export function BlogPreviewSection() {
               <CardTitle className="text-xl font-headline hover:text-primary transition-colors">
                 <Link href={`/blog/${post.slug}`}>{post.title}</Link>
               </CardTitle>
-              <div className="flex items-center text-xs text-muted-foreground pt-1">
-                <CalendarDays className="mr-1.5 h-3.5 w-3.5" /> {post.date} by {post.author}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground pt-1">
+                <div className="flex items-center">
+                  <CalendarDays className="mr-1.5 h-3.5 w-3.5" /> {post.date}
+                </div>
+                <div className="flex items-center">
+                  <Clock className="mr-1.5 h-3.5 w-3.5" /> {formatReadingTime(post.readingTime || calculateReadingTime(post.content))}
+                </div>
               </div>
             </CardHeader>
             <CardContent className="flex-grow">

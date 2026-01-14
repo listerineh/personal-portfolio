@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { getCookieConsent, setCookie, getCookie } from '@/lib/cookies';
 
 type Theme = 'light' | 'dark';
 
@@ -16,7 +17,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme || 'light';
+    const consent = getCookieConsent();
+    const usePreferenceCookies = consent?.preferences ?? false;
+
+    let savedTheme: Theme = 'light';
+
+    if (usePreferenceCookies) {
+      const cookieTheme = getCookie('theme') as Theme;
+      savedTheme = cookieTheme || 'light';
+    } else {
+      savedTheme = (localStorage.getItem('theme') as Theme) || 'light';
+    }
+
     setTheme(savedTheme);
     document.documentElement.classList.toggle('dark', savedTheme === 'dark');
   }, []);
@@ -24,7 +36,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
+
+    const consent = getCookieConsent();
+    const usePreferenceCookies = consent?.preferences ?? false;
+
+    if (usePreferenceCookies) {
+      setCookie('theme', newTheme);
+    } else {
+      localStorage.setItem('theme', newTheme);
+    }
+
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 

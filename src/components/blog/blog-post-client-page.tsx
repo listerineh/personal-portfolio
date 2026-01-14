@@ -14,7 +14,13 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { ArrowLeft, CalendarDays, UserCircle, Tag } from 'lucide-react';
+import { ShareButtons } from '@/components/blog/share-buttons';
+import { BlogStructuredData } from '@/components/blog/blog-structured-data';
+import { BlogViews } from '@/components/blog/blog-views';
+import { BlogReactions } from '@/components/blog/blog-reactions';
+import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
+import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
+import { getBlogImageBlur } from '@/lib/image-blur';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -32,36 +38,49 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
   const proseRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      if (!contentRef.current) return;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!contentRef.current) {
+            ticking = false;
+            return;
+          }
 
-      const element = contentRef.current;
-      const { top } = element.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const scrollDepth = window.scrollY - element.offsetTop;
-      const totalScrollableHeight = element.scrollHeight - viewportHeight;
+          const element = contentRef.current;
+          const { top } = element.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          const scrollDepth = window.scrollY - element.offsetTop;
+          const totalScrollableHeight = element.scrollHeight - viewportHeight;
 
-      if (totalScrollableHeight <= 0) {
-        if (top < viewportHeight) {
-          setReadingProgress(100);
-        } else {
-          setReadingProgress(0);
-        }
-        return;
+          if (totalScrollableHeight <= 0) {
+            if (top < viewportHeight) {
+              setReadingProgress(100);
+            } else {
+              setReadingProgress(0);
+            }
+            ticking = false;
+            return;
+          }
+
+          const progress = (scrollDepth / totalScrollableHeight) * 100;
+          setReadingProgress(Math.min(100, Math.max(0, progress)));
+          
+          ticking = false;
+        });
+
+        ticking = true;
       }
-
-      const progress = (scrollDepth / totalScrollableHeight) * 100;
-
-      setReadingProgress(Math.min(100, Math.max(0, progress)));
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [post]);
+  }, []);
 
   useEffect(() => {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -195,10 +214,11 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
       clearTimeout(timer);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, [post]);
+  }, [post.slug]);
 
   return (
     <>
+      <BlogStructuredData post={post} />
       <Header />
       <main className="pt-20 bg-background">
         <Progress value={readingProgress} className="fixed top-20 left-0 right-0 h-1 z-50 rounded-none bg-primary/20 transition-all duration-150" />
@@ -209,10 +229,18 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
               </Link>
             </Button>
-            <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary mb-6 leading-tight">
-              {post.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base text-muted-foreground mb-6">
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary leading-tight flex-1">
+                {post.title}
+              </h1>
+              <div className="hidden md:block pt-2">
+                <ShareButtons 
+                  title={post.title} 
+                  url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base text-muted-foreground mb-4">
               <div className="flex items-center">
                 <CalendarDays className="mr-2 h-5 w-5" />
                 <span>{post.date}</span>
@@ -221,15 +249,28 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
                 <UserCircle className="mr-2 h-5 w-5" />
                 <span>By {post.author}</span>
               </div>
-            </div>
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap items-center gap-2">
-                <Tag className="mr-1.5 h-5 w-5 text-muted-foreground" />
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="font-normal text-sm px-3 py-1">{tag}</Badge>
-                ))}
+              <div className="flex items-center">
+                <Clock className="mr-2 h-5 w-5" />
+                <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content))}</span>
               </div>
-            )}
+              <BlogViews slug={post.slug} />
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+              {post.tags && post.tags.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <Tag className="mr-1.5 h-5 w-5 text-muted-foreground" />
+                  {post.tags.map((tag) => (
+                    <Badge key={tag} variant="secondary" className="font-normal text-sm px-3 py-1">{tag}</Badge>
+                  ))}
+                </div>
+              )}
+              <div className="md:hidden">
+                <ShareButtons 
+                  title={post.title} 
+                  url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
+                />
+              </div>
+            </div>
           </header>
 
           {post.imageUrl && (
@@ -240,6 +281,8 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
                 fill
                 style={{ objectFit: 'cover' }}
                 data-ai-hint={post.imageAiHint || 'blog post header'}
+                placeholder="blur"
+                blurDataURL={getBlogImageBlur()}
                 priority
               />
             </div>
@@ -264,6 +307,21 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           />
 
           <Separator className="my-8 md:my-12" />
+
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold mb-4">What did you think?</h3>
+            <BlogReactions slug={post.slug} />
+          </div>
+
+          <Separator className="my-8" />
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+            <p className="text-muted-foreground">Found this article helpful? Share it!</p>
+            <ShareButtons 
+              title={post.title} 
+              url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
+            />
+          </div>
 
           <div className="text-center">
             <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">

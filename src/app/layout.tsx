@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
-import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton } from '@/components/common';
+import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton, CookieBanner } from '@/components/common';
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next"
 
@@ -77,6 +77,7 @@ export default function RootLayout({
             {children}
           </SmoothScrollWrapper>
           <BackToTopButton />
+          <CookieBanner />
           <Analytics /> 
         </ThemeProvider>
         <Toaster />

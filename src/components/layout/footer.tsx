@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { navItems, socialLinks } from '@/lib/data';
+import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
+import { RssSubscribeLink } from '@/components/blog/rss-subscribe-link';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -199,6 +201,19 @@ export function Footer() {
           </p>
           <p className="text-xs text-muted-foreground flex items-center justify-center gap-2">
             Built with <span className="text-primary">❤️</span> using Next.js, GSAP & Tailwind CSS
+          </p>
+          <p className="text-xs text-muted-foreground mt-2 flex flex-wrap items-center justify-center gap-3">
+            <RssSubscribeLink />
+            <span>•</span>
+            <CookieSettingsLink />
+            <span>•</span>
+            <Link href="/privacy" className="hover:text-primary transition-colors underline">
+              Privacy Policy
+            </Link>
+            <span>•</span>
+            <Link href="/terms" className="hover:text-primary transition-colors underline">
+              Terms of Use
+            </Link>
           </p>
         </div>
       </div>

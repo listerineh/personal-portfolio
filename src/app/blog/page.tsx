@@ -1,23 +1,32 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from 'next/link';
-import { ArrowRight, CalendarDays } from 'lucide-react';
+import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
+import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
+import { getBlogImageBlur } from '@/lib/image-blur';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { blogPosts } from '@/lib/data';
+import { BlogSearch } from '@/components/blog/blog-search';
+import { RssSubscribeDialog } from '@/components/blog/rss-subscribe-dialog';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
+import type { BlogPost } from '@/types';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 export default function BlogListingPage() {
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(blogPosts);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const rssButtonRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -30,6 +39,46 @@ export default function BlogListingPage() {
           y: 0,
           opacity: 1,
           duration: 0.8,
+          ease: 'power3.out',
+        }
+      );
+    }
+
+    if (descriptionRef.current) {
+      gsap.fromTo(descriptionRef.current,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          delay: 0.1,
+          ease: 'power3.out',
+        }
+      );
+    }
+
+    if (rssButtonRef.current) {
+      gsap.fromTo(rssButtonRef.current,
+        { y: 20, opacity: 0, scale: 0.9 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.6,
+          delay: 0.15,
+          ease: 'back.out(1.7)',
+        }
+      );
+    }
+
+    if (searchRef.current) {
+      gsap.fromTo(searchRef.current,
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          delay: 0.25,
           ease: 'power3.out',
         }
       );
@@ -90,11 +139,30 @@ export default function BlogListingPage() {
       <main className="pt-20">
         <section className="py-16 md:py-24 bg-background/10">
           <div className="container mx-auto px-4">
-            <h1 ref={titleRef} className="text-4xl md:text-5xl font-headline font-bold mb-12 md:mb-16 text-center text-primary">
-              My Dev Blog
-            </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post, index) => (
+            <div className="text-center mb-8">
+              <h1 ref={titleRef} className="text-4xl md:text-5xl font-headline font-bold mb-4 text-primary">
+                My Dev Blog
+              </h1>
+              <p ref={descriptionRef} className="text-muted-foreground mb-4">
+                Technical articles about software engineering, cloud infrastructure, and modern web development
+              </p>
+              <div ref={rssButtonRef} className="flex justify-center">
+                <RssSubscribeDialog />
+              </div>
+            </div>
+            
+            <div ref={searchRef} className="max-w-3xl mx-auto mb-12">
+              <BlogSearch posts={blogPosts} onFilteredPostsChange={setFilteredPosts} />
+            </div>
+
+            {filteredPosts.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-xl text-muted-foreground">No articles found matching your search.</p>
+                <p className="text-sm text-muted-foreground mt-2">Try adjusting your filters or search query.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredPosts.map((post, index) => (
                 <Card 
                   key={post.slug}
                   ref={(el) => { cardsRef.current[index] = el; }}
@@ -109,6 +177,8 @@ export default function BlogListingPage() {
                         className="transition-transform duration-300 group-hover:scale-105"
                         fill
                         sizes="100vw"
+                        placeholder="blur"
+                        blurDataURL={getBlogImageBlur()}
                         style={{
                           objectFit: "cover"
                         }} />
@@ -118,8 +188,13 @@ export default function BlogListingPage() {
                     <CardTitle className="text-xl font-headline hover:text-primary transition-colors">
                       <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </CardTitle>
-                    <div className="flex items-center text-xs text-muted-foreground pt-1">
-                      <CalendarDays className="mr-1.5 h-3.5 w-3.5" /> {post.date} by {post.author}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground pt-1">
+                      <div className="flex items-center">
+                        <CalendarDays className="mr-1.5 h-3.5 w-3.5" /> {post.date}
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="mr-1.5 h-3.5 w-3.5" /> {formatReadingTime(post.readingTime || calculateReadingTime(post.content))}
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent className="flex-grow">
@@ -134,7 +209,8 @@ export default function BlogListingPage() {
                   </CardFooter>
                 </Card>
               ))}
-            </div>
+              </div>
+            )}
           </div>
         </section>
       </main>

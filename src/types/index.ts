@@ -49,6 +49,7 @@ export interface BlogPost {
   content: string; 
   author: string;
   tags: string[];
+  readingTime?: number;
 }
 
 export interface ContactFormData {
