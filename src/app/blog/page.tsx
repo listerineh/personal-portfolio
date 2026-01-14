@@ -10,7 +10,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { blogPosts } from '@/lib/data';
 import { BlogSearch } from '@/components/blog/blog-search';
-import { RssSubscribeDialog } from '@/components/blog/rss-subscribe-dialog';
+import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Header } from '@/components/layout/header';
@@ -143,12 +143,9 @@ export default function BlogListingPage() {
               <h1 ref={titleRef} className="text-4xl md:text-5xl font-headline font-bold mb-4 text-primary">
                 My Dev Blog
               </h1>
-              <p ref={descriptionRef} className="text-muted-foreground mb-4">
+              <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
                 Technical articles about software engineering, cloud infrastructure, and modern web development
               </p>
-              <div ref={rssButtonRef} className="flex justify-center">
-                <RssSubscribeDialog />
-              </div>
             </div>
             
             <div ref={searchRef} className="max-w-3xl mx-auto mb-12">

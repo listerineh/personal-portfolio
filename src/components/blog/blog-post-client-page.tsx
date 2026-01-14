@@ -14,10 +14,12 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { ShareButtons } from '@/components/blog/share-buttons';
+import { ShareButtons } from './share-buttons';
 import { BlogStructuredData } from '@/components/blog/blog-structured-data';
-import { BlogViews } from '@/components/blog/blog-views';
-import { BlogReactions } from '@/components/blog/blog-reactions';
+import { BlogViews } from './blog-views';
+import { BlogReactions } from './blog-reactions';
+import { TableOfContents } from './table-of-contents';
+import { NewsletterSubscribe } from './newsletter-subscribe';
 import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { getBlogImageBlur } from '@/lib/image-blur';
@@ -222,7 +224,9 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
       <Header />
       <main className="pt-20 bg-background">
         <Progress value={readingProgress} className="fixed top-20 left-0 right-0 h-1 z-50 rounded-none bg-primary/20 transition-all duration-150" />
-        <article key={post.slug} ref={contentRef} className="container mx-auto px-4 py-12 md:py-16 max-w-4xl">
+        <div className="container mx-auto px-4 py-12 md:py-16">
+          <div className="grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-12 max-w-7xl mx-auto">
+            <article key={post.slug} ref={contentRef} className="max-w-4xl">
           <header ref={headerRef} className="mb-8 md:mb-12">
             <Button asChild variant="ghost" className="mb-6 text-accent hover:text-primary pl-0">
               <Link href="/blog">
@@ -323,6 +327,12 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
             />
           </div>
 
+          <Separator className="my-12" />
+
+          <div className="mb-12">
+            <NewsletterSubscribe />
+          </div>
+
           <div className="text-center">
             <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
               <Link href="/blog">
@@ -332,6 +342,12 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           </div>
 
         </article>
+            
+            <aside className="hidden xl:block">
+              <TableOfContents content={post.content} />
+            </aside>
+          </div>
+        </div>
       </main>
       <Footer />
     </>

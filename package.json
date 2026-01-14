@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "convert-images": "node scripts/convert-images-to-webp.js"
+    "convert-images": "node scripts/convert-images-to-webp.js",
+    "convert-heic": "node scripts/convert-heic-to-webp.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

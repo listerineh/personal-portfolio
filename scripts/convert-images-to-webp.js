@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const publicDir = path.join(__dirname, '../public');
-const supportedFormats = ['.jpg', '.jpeg', '.png'];
+const supportedFormats = ['.jpg', '.jpeg', '.png', '.heic'];
 
 async function convertToWebP(filePath) {
   const ext = path.extname(filePath).toLowerCase();
@@ -31,7 +31,15 @@ async function convertToWebP(filePath) {
     fs.unlinkSync(filePath);
     console.log(`🗑️  Deleted: ${relativePath}`);
   } catch (error) {
-    console.error(`❌ Error converting ${path.basename(filePath)}:`, error.message);
+    const relativePath = path.relative(publicDir, filePath);
+    
+    if (error.message.includes('heif') || error.message.includes('HEIC')) {
+      console.error(`❌ Error converting ${path.basename(filePath)}: HEIC format not supported`);
+      console.log(`💡 Tip: Convert HEIC to JPG/PNG first, or install libheif support`);
+      console.log(`   You can use: sips -s format jpeg "${filePath}" --out "${filePath.replace(/\.heic$/i, '.jpg')}"`);
+    } else {
+      console.error(`❌ Error converting ${relativePath}:`, error.message);
+    }
   }
 }
 

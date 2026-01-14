@@ -7,7 +7,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { navItems, socialLinks } from '@/lib/data';
 import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
-import { RssSubscribeLink } from '@/components/blog/rss-subscribe-link';
+import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -152,7 +152,6 @@ export function Footer() {
       ref={footerRef}
       className="relative bg-gradient-to-t from-secondary/60 via-secondary/40 to-secondary/20 text-secondary-foreground py-16 overflow-hidden backdrop-blur-md"
     >
-      {/* Decorative elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full blur-3xl" />
         <div className="absolute bottom-10 right-10 w-40 h-40 bg-accent rounded-full blur-3xl" />
@@ -160,7 +159,6 @@ export function Footer() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* Navigation Links */}
           <div className="flex flex-wrap justify-center gap-6">
             {navItems.map((link, index) => (
               <Link 
@@ -175,7 +173,6 @@ export function Footer() {
             ))}
           </div>
           
-          {/* Social Icons */}
           <div className="flex justify-center gap-4">
             {socialLinks.map((link, index) => (
               <Link 
@@ -194,7 +191,45 @@ export function Footer() {
           </div>
         </div>
         
-        {/* Copyright */}
+        <div className="mt-16 mb-12">
+          <div className="max-w-3xl mx-auto relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 rounded-2xl blur-2xl" />
+            
+            <div className="relative bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-8 md:p-10 shadow-2xl">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-4 shadow-lg">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-headline font-bold text-foreground mb-3">
+                  Stay in the Loop
+                </h3>
+                <p className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto">
+                  Get notified when I publish new articles about software development, DevOps, and tech insights.
+                </p>
+              </div>
+              
+              <NewsletterSubscribe />
+              
+              <div className="mt-6 flex items-center justify-center gap-6 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>No spam</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>Unsubscribe anytime</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <div ref={copyrightRef} className="text-center mt-12 pt-8 border-t border-border/30">
           <p className="text-sm font-medium mb-2">
             &copy; {currentYear} Sebastian Alvarez. All rights reserved.
@@ -203,8 +238,6 @@ export function Footer() {
             Built with <span className="text-primary">❤️</span> using Next.js, GSAP & Tailwind CSS
           </p>
           <p className="text-xs text-muted-foreground mt-2 flex flex-wrap items-center justify-center gap-3">
-            <RssSubscribeLink />
-            <span>•</span>
             <CookieSettingsLink />
             <span>•</span>
             <Link href="/privacy" className="hover:text-primary transition-colors underline">
