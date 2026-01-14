@@ -9,7 +9,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "convert-images": "node scripts/convert-images-to-webp.js",
-    "convert-heic": "node scripts/convert-heic-to-webp.js"
+    "convert-heic": "node scripts/convert-heic-to-webp.js",
+    "notify-blog": "node scripts/send-blog-notification.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

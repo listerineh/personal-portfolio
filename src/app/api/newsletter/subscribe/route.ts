@@ -16,6 +16,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    try {
+      const contactResponse = await fetch('https://api.resend.com/contacts', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          unsubscribed: false,
+        }),
+      });
+
+      const contactData = await contactResponse.json();
+      
+      if (contactResponse.ok) {
+        console.log('Contact created successfully:', contactData);
+      } else {
+        console.error('Error creating contact:', contactData);
+        
+        if (!contactData.message?.includes('already exists')) {
+          console.error('Failed to create contact in Resend. Email will still be sent.');
+        } else {
+          console.log('Contact already exists in Resend, continuing...');
+        }
+      }
+    } catch (contactError: any) {
+      console.error('Exception creating contact:', contactError);
+    }
+
     const { data, error } = await resend.emails.send({
       from: 'Sebastian Alvarez <hello@listerineh.dev>',
       to: email,
