@@ -207,18 +207,6 @@ export function ContactSection() {
                     </>
                   )}
                 </Button>
-
-                {/* Trust badges */}
-                <div className="flex items-center justify-center gap-6 pt-4 text-xs text-muted-foreground/60">
-                  <span className="flex items-center gap-1.5">
-                    <div className="w-1 h-1 rounded-full bg-primary" />
-                    Quick response
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <div className="w-1 h-1 rounded-full bg-primary" />
-                    Secure & private
-                  </span>
-                </div>
               </form>
       </div>
     </SectionWrapper>
