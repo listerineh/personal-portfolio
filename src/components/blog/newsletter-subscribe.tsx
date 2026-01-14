@@ -89,35 +89,29 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto relative my-16">
-      {/* Ambient glow */}
+    <div className="w-full max-w-3xl mx-auto relative my-8 sm:my-16">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/15 via-accent/15 to-primary/15 blur-[80px] opacity-30" />
       
       <div className="relative">
-        {/* Main card */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-2xl border border-border/40">
-          {/* Gradient overlay */}
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-2xl border border-border/40">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40" />
           
-          {/* Grid pattern */}
           <div className="absolute inset-0 opacity-[0.015]" style={{
             backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
             backgroundSize: '32px 32px'
           }} />
           
-          <div className="relative p-8 md:p-10">
-            {/* Header */}
-            <div className="text-center mb-8 space-y-3">
-              <h3 className="text-3xl md:text-4xl font-headline font-bold text-foreground tracking-tight">
+          <div className="relative p-6 sm:p-8 md:p-10">
+            <div className="text-center mb-6 sm:mb-8 space-y-2 sm:space-y-3">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-headline font-bold text-foreground tracking-tight">
                 Don't miss the next post
               </h3>
               
-              <p className="text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed px-2">
                 Join developers receiving curated insights on software engineering and tech trends.
               </p>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-3 max-w-md mx-auto">
               <Input
                 type="email"
@@ -125,13 +119,13 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={status === 'loading' || status === 'success'}
-                className="w-full h-16 text-lg px-6 bg-background/50 backdrop-blur-sm"
+                className="w-full h-12 sm:h-14 md:h-16 text-base sm:text-lg px-4 sm:px-6 bg-background/50 backdrop-blur-sm"
               />
               <Button 
                 type="submit" 
                 size="lg"
                 disabled={status === 'loading' || status === 'success'}
-                className="w-full h-14 text-base font-semibold"
+                className="w-full h-12 sm:h-14 text-sm sm:text-base font-semibold"
               >
                 {status === 'loading' ? (
                   <>
@@ -168,7 +162,6 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
               )}
             </form>
 
-            {/* Trust badges */}
             <div className="flex items-center justify-center gap-6 mt-4 text-xs text-muted-foreground/60">
               <span className="flex items-center gap-1.5">
                 <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
@@ -191,7 +184,6 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
             </div>
           </div>
           
-          {/* Corner highlights */}
           <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-primary/10 to-transparent rounded-tl-3xl" />
           <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-accent/10 to-transparent rounded-br-3xl" />
         </div>

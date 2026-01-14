@@ -192,33 +192,28 @@ export function Footer() {
         </div>
         
         <div className="mt-24 mb-20">
-          <div className="max-w-5xl mx-auto relative">
-            {/* Ambient glow effect */}
+          <div className="max-w-5xl mx-auto relative px-4 sm:px-0">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-[100px] opacity-20" />
             
             <div className="relative">
-              {/* Main card with bento-style design */}
-              <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-card/80 via-card/60 to-card/80 backdrop-blur-3xl border border-border/30">
-                {/* Animated gradient overlay */}
+              <div className="relative overflow-hidden rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-card/80 via-card/60 to-card/80 backdrop-blur-3xl border border-border/30">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50" />
                 
-                {/* Grid pattern overlay */}
                 <div className="absolute inset-0 opacity-[0.02]" style={{
                   backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
                   backgroundSize: '40px 40px'
                 }} />
                 
-                <div className="relative grid md:grid-cols-2 gap-12 p-10 md:p-16">
-                  {/* Left column - Content */}
-                  <div className="flex flex-col justify-center space-y-6">
-                    <div className="space-y-4">
+                <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 p-6 sm:p-8 md:p-16">
+                  <div className="flex flex-col justify-center space-y-4 md:space-y-6">
+                    <div className="space-y-3 md:space-y-4">
                       <div className="inline-flex">
-                        <span className="px-4 py-1.5 text-xs font-bold tracking-widest uppercase bg-primary/10 text-primary rounded-full border border-primary/20">
+                        <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-primary/10 text-primary rounded-full border border-primary/20">
                           Newsletter
                         </span>
                       </div>
                       
-                      <h3 className="text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tight">
+                      <h3 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tight">
                         Stay ahead of
                         <br />
                         <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
@@ -226,39 +221,36 @@ export function Footer() {
                         </span>
                       </h3>
                       
-                      <p className="text-lg text-muted-foreground leading-relaxed">
+                      <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                         Join developers who receive curated insights on modern software engineering, cloud infrastructure, and cutting-edge tech.
                       </p>
                     </div>
                     
-                    {/* Stats or benefits */}
-                    <div className="grid grid-cols-3 gap-6 pt-4">
+                    <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-2 md:pt-4">
                       <div className="space-y-1">
-                        <div className="text-2xl font-bold text-foreground">Monthly</div>
-                        <div className="text-xs text-muted-foreground uppercase tracking-wide">Updates</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">Monthly</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Updates</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-2xl font-bold text-foreground">0%</div>
-                        <div className="text-xs text-muted-foreground uppercase tracking-wide">Spam</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">0%</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Spam</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-2xl font-bold text-foreground">Free</div>
-                        <div className="text-xs text-muted-foreground uppercase tracking-wide">Forever</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">Free</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Forever</div>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Right column - Form */}
                   <div className="flex items-center">
-                    <div className="w-full space-y-6">
+                    <div className="w-full">
                       <NewsletterSubscribe />
                     </div>
                   </div>
                 </div>
                 
-                {/* Subtle corner highlights */}
-                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-tl-[2rem]" />
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-accent/10 to-transparent rounded-br-[2rem]" />
+                <div className="absolute top-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-tl-2xl sm:rounded-tl-[2rem]" />
+                <div className="absolute bottom-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tl from-accent/10 to-transparent rounded-br-2xl sm:rounded-br-[2rem]" />
               </div>
             </div>
           </div>

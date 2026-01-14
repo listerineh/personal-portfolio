@@ -117,6 +117,24 @@ export function Header() {
     setIsMobileMenuOpen(false);
   };
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isMobileMenuOpen]);
+
   return (
     <header 
       ref={headerRef}
@@ -136,7 +154,6 @@ export function Header() {
           <span className="text-lg sm:text-2xl">Sebastian Alvarez</span>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {navItems.map((item, index) => (
             <Link
@@ -152,7 +169,6 @@ export function Header() {
           <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent ml-2" />
         </nav>
 
-        {/* Mobile Navigation Trigger */}
         <div className="md:hidden flex items-center gap-2">
           <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
           <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle mobile menu" className="text-foreground hover:text-primary hover:bg-transparent">
@@ -161,21 +177,38 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
       {isMobile && isMobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 right-0 bg-background shadow-lg py-4 animate-in fade-in-20 slide-in-from-top-5 duration-300">
-          <nav className="flex flex-col items-center space-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="text-foreground hover:text-primary font-medium py-2 transition-colors w-full text-center"
-                onClick={closeMobileMenu}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+        <div className="md:hidden fixed inset-0 z-[60] bg-background/95 backdrop-blur-md animate-in fade-in-20 duration-300 overflow-hidden overscroll-none">
+          <button
+            onClick={closeMobileMenu}
+            className="absolute top-6 right-6 p-2 text-foreground hover:text-primary transition-colors z-10"
+            aria-label="Close menu"
+          >
+            <X className="h-8 w-8" />
+          </button>
+          
+          <div className="h-full w-full flex items-center justify-center overflow-hidden">
+            <nav className="flex flex-col items-center space-y-1 w-full px-8">
+              {navItems.map((item, index) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                  className="group relative w-full max-w-xs text-center py-6 animate-in slide-in-from-bottom-3 fade-in-0"
+                  style={{
+                    animationDelay: `${index * 50}ms`,
+                    animationFillMode: 'backwards'
+                  }}
+                >
+                  <span className="relative text-2xl font-medium text-foreground/70 group-hover:text-primary transition-colors duration-300">
+                    {item.label}
+                  </span>
+                  
+                  <span className="absolute bottom-4 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-primary group-hover:w-16 transition-all duration-300" />
+                </Link>
+              ))}
+            </nav>
+          </div>
         </div>
       )}
     </header>
