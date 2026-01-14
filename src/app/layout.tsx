@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/context/theme-context';
 import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton, CookieBanner } from '@/components/common';
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import './globals.css';
 
@@ -81,6 +82,7 @@ export default function RootLayout({
           <Analytics /> 
         </ThemeProvider>
         <Toaster />
+        <SpeedInsights />
       </body>
     </html>
   );
