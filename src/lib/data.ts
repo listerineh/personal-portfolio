@@ -18,17 +18,17 @@ export const navItems: NavItem[] = [
 
 export const experiences: Experience[] = [
   {
-    company: 'Uwigo/Informat',
-    logoUrl: '/images/Informat_s_a_logo.webp',
-    companyAiHint: 'Uwigo/Informat logo',
-    jobTitle: 'Senior Fullstack Engineer',
-    employmentDates: 'Aug 2025 - Present',
+    company: 'Galileo Financial Technologies',
+    logoUrl: '/images/galileo_financial_technologies_logo.webp',
+    companyAiHint: 'Galileo Financial Technologies logo',
+    jobTitle: 'Senior Software Engineer',
+    employmentDates: 'Dec 2025 - Present',
     location: 'Remote',
     responsibilities: [
-      'Developed a dynamic and incremental Azure-based infrastructure, enhancing system scalability and reliability.',
-      'Designed and implemented a comprehensive authentication and authorization microservice utilized across the company.',
-      'Standardized API response formats, improving consistency and efficiency in inter-departmental communications.',
-      'Documented process enhancements, contributing to a culture of continuous improvement within the organization.',
+      'Core team member of the API development team, architecting and enhancing critical backend systems that power the company\'s financial infrastructure.',
+      'Led the migration from a monolithic application to a microservices architecture, significantly improving system scalability, performance, and deployment velocity.',
+      'Designed and implemented distributed services with a focus on high availability, fault tolerance, and horizontal scalability.',
+      'Collaborated with cross-functional teams to establish best practices for API design, documentation, and versioning across the organization.',
     ],
   },
   {
@@ -45,6 +45,20 @@ export const experiences: Experience[] = [
       'Led community expansion efforts by attracting new members and encouraging active contributions.',
       'Collaborated with team members to align goals and maintain strong internal communication.',
       'Delivered presentations on emerging technologies and industry trends to empower the community.',
+    ],
+  },
+  {
+    company: 'Uwigo/Informat',
+    logoUrl: '/images/Informat_s_a_logo.webp',
+    companyAiHint: 'Uwigo/Informat logo',
+    jobTitle: 'Senior Fullstack Engineer',
+    employmentDates: 'Aug 2025 - Dec 2025',
+    location: 'Remote',
+    responsibilities: [
+      'Developed a dynamic and incremental Azure-based infrastructure, enhancing system scalability and reliability.',
+      'Designed and implemented a comprehensive authentication and authorization microservice utilized across the company.',
+      'Standardized API response formats, improving consistency and efficiency in inter-departmental communications.',
+      'Documented process enhancements, contributing to a culture of continuous improvement within the organization.',
     ],
   },
   {
