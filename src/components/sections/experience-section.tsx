@@ -17,7 +17,6 @@ if (typeof window !== 'undefined') {
 export function ExperienceSection() {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const [showAll, setShowAll] = useState(false);
-  const displayedExperiences = showAll ? experiences : experiences.slice(0, 3);
   const timelineRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -26,6 +25,52 @@ export function ExperienceSection() {
       ...prev,
       [index]: !prev[index]
     }));
+  };
+
+  const handleShowAll = () => {
+    setShowAll(true);
+    
+    // Configurar ScrollTrigger para las nuevas experiencias
+    setTimeout(() => {
+      const newItems = itemsRef.current.slice(3);
+      newItems.forEach((item, index) => {
+        if (item) {
+          const actualIndex = index + 3;
+          
+          // Establecer opacidad inicial en 1 para que el elemento sea visible
+          gsap.set(item, { opacity: 1 });
+          
+          gsap.from(item, {
+            x: actualIndex % 2 === 0 ? -50 : 50,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          });
+
+          const logo = item.querySelector('.experience-logo');
+          if (logo) {
+            gsap.from(logo, {
+              scale: 0,
+              rotation: 180,
+              duration: 0.6,
+              ease: 'back.out(1.7)',
+              scrollTrigger: {
+                trigger: item,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse',
+              },
+            });
+          }
+        }
+      });
+      
+      ScrollTrigger.refresh();
+    }, 100);
   };
 
   useGSAP(() => {
@@ -44,7 +89,8 @@ export function ExperienceSection() {
       });
     }
 
-    itemsRef.current.forEach((item, index) => {
+    // Solo animar las primeras 3 experiencias con ScrollTrigger
+    itemsRef.current.slice(0, 3).forEach((item, index) => {
       if (item) {
         gsap.from(item, {
           x: index % 2 === 0 ? -50 : 50,
@@ -76,7 +122,7 @@ export function ExperienceSection() {
         }
       }
     });
-  }, [displayedExperiences.length]);
+  }, []);
 
   return (
     <SectionWrapper id="experience" title="Work Experience">
@@ -88,11 +134,14 @@ export function ExperienceSection() {
         ></div>
 
         <div className="space-y-12">
-          {displayedExperiences.map((exp, index) => (
+          {experiences.map((exp, index) => (
             <div 
               key={index} 
               ref={(el) => { itemsRef.current[index] = el; }}
-              className="relative flex items-start gap-x-5 md:gap-x-8"
+              className={`relative flex items-start gap-x-5 md:gap-x-8 ${
+                index >= 3 && !showAll ? 'hidden' : ''
+              }`}
+              style={index >= 3 && showAll ? { opacity: 0 } : undefined}
             >
               
               <div className="flex-shrink-0 w-10 flex justify-center relative">
@@ -157,7 +206,7 @@ export function ExperienceSection() {
         <div className='flex justify-end w-full'>
           <Button 
             variant="outline"
-            onClick={() => setShowAll(true)}
+            onClick={handleShowAll}
             className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
           >
             Show all experience
