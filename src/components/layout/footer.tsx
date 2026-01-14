@@ -191,40 +191,95 @@ export function Footer() {
           </div>
         </div>
         
-        <div className="mt-16 mb-12">
-          <div className="max-w-3xl mx-auto relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 rounded-2xl blur-2xl" />
+        <div className="mt-24 mb-20">
+          <div className="max-w-5xl mx-auto relative">
+            {/* Ambient glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-[100px] opacity-20" />
             
-            <div className="relative bg-card/40 backdrop-blur-xl border border-border/50 rounded-2xl p-8 md:p-10 shadow-2xl">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-4 shadow-lg">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
+            <div className="relative">
+              {/* Main card with bento-style design */}
+              <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-card/80 via-card/60 to-card/80 backdrop-blur-3xl border border-border/30">
+                {/* Animated gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50" />
+                
+                {/* Grid pattern overlay */}
+                <div className="absolute inset-0 opacity-[0.02]" style={{
+                  backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+                  backgroundSize: '40px 40px'
+                }} />
+                
+                <div className="relative grid md:grid-cols-2 gap-12 p-10 md:p-16">
+                  {/* Left column - Content */}
+                  <div className="flex flex-col justify-center space-y-6">
+                    <div className="space-y-4">
+                      <div className="inline-flex">
+                        <span className="px-4 py-1.5 text-xs font-bold tracking-widest uppercase bg-primary/10 text-primary rounded-full border border-primary/20">
+                          Newsletter
+                        </span>
+                      </div>
+                      
+                      <h3 className="text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tight">
+                        Stay ahead of
+                        <br />
+                        <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+                          the curve
+                        </span>
+                      </h3>
+                      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Join developers who receive curated insights on modern software engineering, cloud infrastructure, and cutting-edge tech.
+                      </p>
+                    </div>
+                    
+                    {/* Stats or benefits */}
+                    <div className="grid grid-cols-3 gap-6 pt-4">
+                      <div className="space-y-1">
+                        <div className="text-2xl font-bold text-foreground">Weekly</div>
+                        <div className="text-xs text-muted-foreground uppercase tracking-wide">Updates</div>
+                      </div>
+                      <div className="space-y-1">
+                        <div className="text-2xl font-bold text-foreground">0%</div>
+                        <div className="text-xs text-muted-foreground uppercase tracking-wide">Spam</div>
+                      </div>
+                      <div className="space-y-1">
+                        <div className="text-2xl font-bold text-foreground">Free</div>
+                        <div className="text-xs text-muted-foreground uppercase tracking-wide">Forever</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Right column - Form */}
+                  <div className="flex items-center">
+                    <div className="w-full space-y-6">
+                      <NewsletterSubscribe />
+                      
+                      <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground/60">
+                        <span className="flex items-center gap-1.5">
+                          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          Secure
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          Private
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          No spam
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-headline font-bold text-foreground mb-3">
-                  Stay in the Loop
-                </h3>
-                <p className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto">
-                  Get notified when I publish new articles about software development, DevOps, and tech insights.
-                </p>
-              </div>
-              
-              <NewsletterSubscribe />
-              
-              <div className="mt-6 flex items-center justify-center gap-6 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>No spam</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Unsubscribe anytime</span>
-                </div>
+                
+                {/* Subtle corner highlights */}
+                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-tl-[2rem]" />
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-accent/10 to-transparent rounded-br-[2rem]" />
               </div>
             </div>
           </div>

@@ -104,22 +104,21 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Input
-            type="email"
-            placeholder="Enter your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={status === 'loading' || status === 'success'}
-            className="flex-1 h-12 text-base"
-          />
-          <Button 
-            type="submit" 
-            size="lg"
-            disabled={status === 'loading' || status === 'success'}
-            className="h-12 px-8 shrink-0"
-          >
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <Input
+          type="email"
+          placeholder="Enter your email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={status === 'loading' || status === 'success'}
+          className="w-full h-16 text-lg px-6"
+        />
+        <Button 
+          type="submit" 
+          size="lg"
+          disabled={status === 'loading' || status === 'success'}
+          className="w-full h-14"
+        >
             {status === 'loading' ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -137,7 +136,6 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
               </>
             )}
           </Button>
-        </div>
 
         {message && (
           <div className={cn(
