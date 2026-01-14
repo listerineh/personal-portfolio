@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 
+export const runtime = 'edge';
+
 const mockKV = new Map<string, number>();
 
 function getRedisClient() {

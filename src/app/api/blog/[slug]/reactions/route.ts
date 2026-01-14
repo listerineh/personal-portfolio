@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 
+export const runtime = 'edge';
+
 export type ReactionType = 'like' | 'love' | 'fire' | 'idea';
 
 interface Reactions {
