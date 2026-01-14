@@ -91,7 +91,6 @@ export function SkillsSection() {
     const row1 = row1Ref.current;
     const row2 = row2Ref.current;
 
-    // Detectar si es un dispositivo táctil
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 

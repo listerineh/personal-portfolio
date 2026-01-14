@@ -21,13 +21,11 @@ export function BackToTopButton() {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       
-      // Si llegamos arriba, marcar que hemos llegado
       if (scrollY < 100 && isAnimating) {
         setHasReachedTop(true);
         setIsAnimating(false);
       }
       
-      // Solo mostrar el botón si no estamos animando y hemos llegado arriba (o nunca hemos animado)
       if (!isAnimating && hasReachedTop && scrollY > 800) {
         setIsVisible(true);
         setHasReachedTop(false);
@@ -64,7 +62,6 @@ export function BackToTopButton() {
     }
   }, [isVisible, isAnimating]);
 
-  // Hover effect
   useEffect(() => {
     if (!buttonRef.current) return;
 
@@ -111,12 +108,10 @@ export function BackToTopButton() {
   const scrollToTop = () => {
     if (!buttonRef.current || isAnimating) return;
 
-    // Ocultar inmediatamente
     setIsVisible(false);
     setIsAnimating(true);
     setHasReachedTop(false);
 
-    // Animar el botón saliendo hacia arriba
     gsap.to(buttonRef.current, {
       y: -100,
       scale: 0,
@@ -130,7 +125,6 @@ export function BackToTopButton() {
       }
     });
 
-    // Scroll inmediato sin delay
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

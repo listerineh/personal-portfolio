@@ -21,10 +21,8 @@ export default function BlogListingPage() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Limpiar ScrollTriggers previos
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-    // Animación del título
     if (titleRef.current) {
       gsap.fromTo(titleRef.current, 
         { y: 50, opacity: 0 },
@@ -37,7 +35,6 @@ export default function BlogListingPage() {
       );
     }
 
-    // Animación de las cards
     cardsRef.current.forEach((card, index) => {
       if (!card) return;
 
@@ -58,7 +55,6 @@ export default function BlogListingPage() {
         }
       );
 
-      // Hover effects solo en desktop
       const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
       
       if (!isTouchDevice) {
@@ -84,7 +80,6 @@ export default function BlogListingPage() {
     });
 
     return () => {
-      // Cleanup
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);

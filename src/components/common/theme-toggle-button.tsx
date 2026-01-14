@@ -38,7 +38,6 @@ export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!buttonRef.current) return;
 
-    // Crear overlay elegante
     const overlay = document.createElement('div');
     const newTheme = theme === 'light' ? 'dark' : 'light';
     
@@ -55,31 +54,26 @@ export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
     `;
     document.body.appendChild(overlay);
 
-    // Timeline de animación elegante
     const tl = gsap.timeline({
       onComplete: () => {
         document.body.removeChild(overlay);
       }
     });
 
-    // Fade in del overlay
     tl.to(overlay, {
       opacity: 1,
       duration: 0.3,
       ease: 'power2.inOut',
     })
-    // Cambiar el tema en el punto medio
     .call(() => {
       toggleTheme();
     })
-    // Fade out del overlay
     .to(overlay, {
       opacity: 0,
       duration: 0.3,
       ease: 'power2.inOut',
     });
 
-    // Animación del icono
     gsap.to(iconRef.current, {
       rotation: 360,
       scale: 0.8,

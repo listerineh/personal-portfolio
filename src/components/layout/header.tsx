@@ -46,7 +46,6 @@ export function Header() {
     const logo = logoRef.current;
     const icon = logo.querySelector('svg');
     
-    // Detectar si es un dispositivo táctil
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 
@@ -78,8 +77,6 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    // Hover simple en los links
-    // Detectar si es un dispositivo táctil
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 

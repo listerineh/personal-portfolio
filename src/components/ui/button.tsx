@@ -50,10 +50,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       const button = buttonRef.current;
       if (!button || button.disabled || asChild) return;
 
-      // Detectar si es un dispositivo táctil
       const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-      
-      // Solo añadir hover effects en dispositivos no táctiles
+
       if (isTouchDevice) return;
 
       const handleMouseEnter = () => {

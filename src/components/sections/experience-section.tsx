@@ -30,14 +30,12 @@ export function ExperienceSection() {
   const handleShowAll = () => {
     setShowAll(true);
     
-    // Configurar ScrollTrigger para las nuevas experiencias
     setTimeout(() => {
       const newItems = itemsRef.current.slice(3);
       newItems.forEach((item, index) => {
         if (item) {
           const actualIndex = index + 3;
           
-          // Establecer opacidad inicial en 1 para que el elemento sea visible
           gsap.set(item, { opacity: 1 });
           
           gsap.from(item, {
@@ -89,7 +87,6 @@ export function ExperienceSection() {
       });
     }
 
-    // Solo animar las primeras 3 experiencias con ScrollTrigger
     itemsRef.current.slice(0, 3).forEach((item, index) => {
       if (item) {
         gsap.from(item, {

@@ -64,12 +64,9 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
   }, [post]);
 
   useEffect(() => {
-    // Limpiar ScrollTriggers previos
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-    // Pequeño delay para asegurar que el DOM esté listo
     const timer = setTimeout(() => {
-      // Animación del header con efecto de entrada más dramático
       if (headerRef.current && headerRef.current.children.length > 0) {
         gsap.fromTo(headerRef.current.children,
           { y: 50, opacity: 0, scale: 0.95 },
@@ -84,9 +81,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
         );
       }
 
-      // Parallax sutil en la imagen
       if (imageRef.current) {
-        // Movimiento vertical suave y fade out
         gsap.to(imageRef.current, {
           y: 80,
           opacity: 0.3,
@@ -100,7 +95,6 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
         });
       }
 
-      // Animación de párrafos con efectos variados
       if (proseRef.current) {
         const paragraphs = proseRef.current.querySelectorAll('p');
         const headings = proseRef.current.querySelectorAll('h2, h3');
@@ -108,7 +102,6 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
         const blockquotes = proseRef.current.querySelectorAll('blockquote');
         const codeBlocks = proseRef.current.querySelectorAll('pre');
         
-        // Párrafos con fade desde la izquierda
         paragraphs.forEach((paragraph) => {
           gsap.fromTo(paragraph,
             { x: -30, opacity: 0 },
@@ -126,7 +119,6 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           );
         });
 
-        // Headings con scale y fade
         headings.forEach((heading) => {
           gsap.fromTo(heading,
             { scale: 0.9, opacity: 0 },
@@ -144,7 +136,6 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           );
         });
 
-        // Listas con stagger de items
         lists.forEach((list) => {
           const items = list.querySelectorAll('li');
           gsap.fromTo(items,
@@ -164,7 +155,6 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           );
         });
 
-        // Blockquotes con efecto de slide desde la derecha
         blockquotes.forEach((blockquote) => {
           gsap.fromTo(blockquote,
             { x: 50, opacity: 0 },
@@ -182,7 +172,6 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           );
         });
 
-        // Code blocks con fade y scale
         codeBlocks.forEach((codeBlock) => {
           gsap.fromTo(codeBlock,
             { scale: 0.95, opacity: 0 },

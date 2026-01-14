@@ -19,15 +19,12 @@ export function Footer() {
   const copyrightRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  // Animación de entrada on scroll - se ejecuta cada vez que cambia la ruta
   useEffect(() => {
     if (!footerRef.current) return;
 
-    // Pequeño delay para asegurar que los refs estén listos
     const timer = setTimeout(() => {
       if (!footerRef.current) return;
 
-      // Limpiar ScrollTriggers previos del footer
       ScrollTrigger.getAll().forEach(trigger => {
         if (trigger.vars.trigger === footerRef.current) {
           trigger.kill();
@@ -80,7 +77,6 @@ export function Footer() {
 
     return () => {
       clearTimeout(timer);
-      // Cleanup
       ScrollTrigger.getAll().forEach(trigger => {
         if (trigger.vars.trigger === footerRef.current) {
           trigger.kill();
@@ -89,9 +85,7 @@ export function Footer() {
     };
   }, [pathname]);
 
-  // Efectos hover en iconos sociales
   useEffect(() => {
-    // Detectar si es un dispositivo táctil
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 
@@ -123,9 +117,7 @@ export function Footer() {
     });
   }, []);
 
-  // Hover simple en nav links
   useEffect(() => {
-    // Detectar si es un dispositivo táctil
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 

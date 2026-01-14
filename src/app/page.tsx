@@ -19,7 +19,6 @@ if (typeof window !== 'undefined') {
 
 export default function HomePage() {
   useEffect(() => {
-    // Refrescar ScrollTrigger después de que todo cargue
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 100);
