@@ -129,76 +129,108 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
   const totalReactions = Object.values(reactions).reduce((sum, count) => sum + count, 0);
 
   return (
-    <div className="space-y-4 p-6 bg-gradient-to-br from-muted/30 to-muted/10 rounded-xl border border-border/50">
-      <div className="flex items-center gap-2">
-        <Sparkles className="h-4 w-4 text-primary" />
-        <span className="text-sm font-semibold text-foreground">
-          {totalReactions > 0 
-            ? `${totalReactions} ${totalReactions === 1 ? 'person' : 'people'} reacted` 
-            : 'Be the first to react!'}
-        </span>
-      </div>
+    <div className="relative my-12">
+      {/* Ambient glow */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 blur-[60px] opacity-20" />
       
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {(Object.keys(reactionConfig) as Array<keyof Reactions>).map((type) => {
-          const config = reactionConfig[type];
-          const Icon = config.icon;
-          const count = reactions[type];
-          const hasReacted = userReactions.has(type);
-
-          return (
-            <button
-              key={type}
-              onClick={() => handleReaction(type)}
-              disabled={hasReacted}
-              className={cn(
-                'group relative flex flex-col items-center gap-2 p-4 rounded-lg border-2 transition-all duration-200',
-                'hover:shadow-md active:scale-95',
-                hasReacted 
-                  ? `${config.activeBg} ${config.color} border-current cursor-default` 
-                  : `border-border/50 ${config.hoverBg} hover:border-border hover:-translate-y-1`,
-                !hasReacted && 'hover:shadow-lg'
+      <div className="relative">
+        {/* Main card */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/60 via-card/40 to-card/60 backdrop-blur-xl border border-border/30">
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-50" />
+          
+          {/* Grid pattern */}
+          <div className="absolute inset-0 opacity-[0.01]" style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+            backgroundSize: '24px 24px'
+          }} />
+          
+          <div className="relative p-6 md:p-8">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <span className="text-base font-semibold text-foreground">
+                  {totalReactions > 0 
+                    ? `${totalReactions} ${totalReactions === 1 ? 'reaction' : 'reactions'}` 
+                    : 'Share your reaction'}
+                </span>
+              </div>
+              {userReactions.size > 0 && (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 rounded-full border border-primary/20">
+                  <span className="text-xs font-medium text-primary">
+                    You: {Array.from(userReactions).map(r => reactionConfig[r].emoji).join(' ')}
+                  </span>
+                </div>
               )}
-            >
-              <div className="relative">
-                <span className="text-2xl transition-transform group-hover:scale-110">
-                  {config.emoji}
-                </span>
-                {hasReacted && (
-                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-                    ✓
-                  </span>
-                )}
-              </div>
-              
-              <div className="flex flex-col items-center gap-1">
-                <span className={cn(
-                  'text-xs font-medium transition-colors',
-                  hasReacted ? config.color : 'text-muted-foreground group-hover:text-foreground'
-                )}>
-                  {config.label}
-                </span>
-                {count > 0 && (
-                  <span className={cn(
-                    'text-xs font-bold',
-                    hasReacted ? config.color : 'text-muted-foreground'
-                  )}>
-                    {count}
-                  </span>
-                )}
-              </div>
-            </button>
-          );
-        })}
-      </div>
+            </div>
+            
+            {/* Reactions grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {(Object.keys(reactionConfig) as Array<keyof Reactions>).map((type) => {
+                const config = reactionConfig[type];
+                const Icon = config.icon;
+                const count = reactions[type];
+                const hasReacted = userReactions.has(type);
 
-      {userReactions.size > 0 && (
-        <div className="flex items-center gap-2 pt-2 border-t border-border/30">
-          <span className="text-xs text-muted-foreground">
-            You reacted: {Array.from(userReactions).map(r => reactionConfig[r].emoji).join(' ')}
-          </span>
+                return (
+                  <button
+                    key={type}
+                    onClick={() => handleReaction(type)}
+                    disabled={hasReacted}
+                    className={cn(
+                      'group relative flex flex-col items-center gap-3 p-5 rounded-xl transition-all duration-300',
+                      'bg-background/40 backdrop-blur-sm border',
+                      hasReacted 
+                        ? `${config.activeBg} ${config.color} border-current shadow-lg scale-105` 
+                        : 'border-border/40 hover:border-border hover:bg-background/60 hover:shadow-md hover:-translate-y-0.5 active:scale-95',
+                    )}
+                  >
+                    {/* Emoji */}
+                    <div className="relative">
+                      <span className="text-3xl transition-transform duration-300 group-hover:scale-110">
+                        {config.emoji}
+                      </span>
+                      {hasReacted && (
+                        <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-md">
+                          ✓
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Label and count */}
+                    <div className="flex flex-col items-center gap-1">
+                      <span className={cn(
+                        'text-xs font-semibold transition-colors',
+                        hasReacted ? config.color : 'text-muted-foreground group-hover:text-foreground'
+                      )}>
+                        {config.label}
+                      </span>
+                      {count > 0 && (
+                        <span className={cn(
+                          'text-sm font-bold tabular-nums',
+                          hasReacted ? config.color : 'text-muted-foreground/60'
+                        )}>
+                          {count}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* Hover glow effect */}
+                    {!hasReacted && (
+                      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          
+          {/* Corner highlights */}
+          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/5 to-transparent rounded-tr-2xl" />
+          <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-accent/5 to-transparent rounded-bl-2xl" />
         </div>
-      )}
+      </div>
     </div>
   );
 }

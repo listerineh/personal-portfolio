@@ -76,51 +76,99 @@ export function ProjectsSection() {
     <SectionWrapper id="projects" title="Featured Projects">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
-          <Card 
-            key={project.id} 
+          <div
+            key={project.id}
             ref={(el) => { cardsRef.current[index] = el; }}
-            className="group flex flex-col overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="group relative"
           >
-            <div className="relative w-full h-48 md:h-56 overflow-hidden">
-              <Image
-                src={project.imageUrl}
-                alt={project.title}
-                data-ai-hint={project.imageAiHint}
-                className="project-image transition-transform duration-300 group-hover:scale-105"
-                fill
-                sizes="100vw"
-                style={{
-                  objectFit: "cover"
-                }} />
-            </div>
-            <CardHeader>
-              <CardTitle className="text-xl font-headline">{project.title}</CardTitle>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {project.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>
-                ))}
+            {/* Ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            {/* Card */}
+            <Card className="relative overflow-hidden bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-xl border-border/40 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40 pointer-events-none" />
+              
+              {/* Grid pattern */}
+              <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
+                backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+                backgroundSize: '24px 24px'
+              }} />
+              
+              {/* Image container */}
+              <div className="relative w-full h-48 md:h-56 overflow-hidden">
+                <Image
+                  src={project.imageUrl}
+                  alt={project.title}
+                  data-ai-hint={project.imageAiHint}
+                  className="project-image transition-transform duration-500 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  style={{
+                    objectFit: "cover"
+                  }} />
+                {/* Image overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-60" />
               </div>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <CardDescription>{project.description}</CardDescription>
-            </CardContent>
-            <CardFooter className="flex justify-start gap-3">
-              {project.liveDemoUrl && (
-                <Button asChild variant="outline" size="sm" className="border-accent text-accent hover:bg-accent/10 hover:text-accent">
-                  <Link href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
-                  </Link>
-                </Button>
-              )}
-              {project.sourceCodeUrl && (
-                <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-                  <Link href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
-                    <Github className="mr-2 h-4 w-4" /> Source Code
-                  </Link>
-                </Button>
-              )}
-            </CardFooter>
-          </Card>
+              
+              {/* Content */}
+              <div className="relative flex flex-col flex-grow">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-xl font-headline font-bold group-hover:text-primary transition-colors">
+                    {project.title}
+                  </CardTitle>
+                  <div className="flex flex-wrap gap-2 pt-3">
+                    {project.tags.map((tag) => (
+                      <Badge 
+                        key={tag} 
+                        variant="secondary" 
+                        className="text-xs bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardHeader>
+                
+                <CardContent className="flex-grow pb-4">
+                  <CardDescription className="text-sm leading-relaxed">
+                    {project.description}
+                  </CardDescription>
+                </CardContent>
+                
+                <CardFooter className="flex justify-start gap-3 pt-4 border-t border-border/30">
+                  {project.liveDemoUrl && (
+                    <Button 
+                      asChild 
+                      variant="outline" 
+                      size="sm" 
+                      className="border-primary/50 text-primary hover:bg-primary/10 hover:border-primary transition-all"
+                    >
+                      <Link href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                      </Link>
+                    </Button>
+                  )}
+                  {project.sourceCodeUrl && (
+                    <Button 
+                      asChild 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all"
+                    >
+                      <Link href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="mr-2 h-4 w-4" /> Source
+                      </Link>
+                    </Button>
+                  )}
+                </CardFooter>
+              </div>
+              
+              {/* Corner highlights */}
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/10 to-transparent rounded-tr-xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-xl pointer-events-none" />
+            </Card>
+          </div>
         ))}
       </div>
     </SectionWrapper>

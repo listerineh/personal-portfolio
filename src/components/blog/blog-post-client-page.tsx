@@ -225,8 +225,8 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
       <main className="pt-20 bg-background">
         <Progress value={readingProgress} className="fixed top-20 left-0 right-0 h-1 z-50 rounded-none bg-primary/20 transition-all duration-150" />
         <div className="container mx-auto px-4 py-12 md:py-16">
-          <div className="grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-12 max-w-7xl mx-auto">
-            <article key={post.slug} ref={contentRef} className="max-w-4xl">
+          <div className="relative max-w-7xl mx-auto">
+            <article key={post.slug} ref={contentRef} className="max-w-4xl mx-auto">
           <header ref={headerRef} className="mb-8 md:mb-12">
             <Button asChild variant="ghost" className="mb-6 text-accent hover:text-primary pl-0">
               <Link href="/blog">
@@ -329,10 +329,6 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
           <Separator className="my-12" />
 
-          <div className="mb-12">
-            <NewsletterSubscribe />
-          </div>
-
           <div className="text-center">
             <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
               <Link href="/blog">
@@ -343,8 +339,10 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
         </article>
             
-            <aside className="hidden xl:block">
-              <TableOfContents content={post.content} />
+            <aside className="hidden xl:block absolute top-0 right-0 w-[280px]">
+              <div className="sticky top-24">
+                <TableOfContents content={post.content} />
+              </div>
             </aside>
           </div>
         </div>

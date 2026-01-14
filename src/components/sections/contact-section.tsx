@@ -107,65 +107,119 @@ export function ContactSection() {
   return (
     <SectionWrapper id="contact" title="Get In Touch" className="bg-background">
       <div className="max-w-2xl mx-auto">
-        <p ref={descriptionRef} className="text-center text-muted-foreground mb-10">
-          Have a project in mind, a question, or just want to say hi? Feel free to reach out!
-        </p>
+        {/* Description */}
+        <div className="text-center mb-12">
+          <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            Have a project in mind, a question, or just want to say hi? Feel free to reach out!
+          </p>
+        </div>
+
+        {/* Form */}
         <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div ref={(el) => { fieldsRef.current[0] = el; }}>
-            <Label htmlFor="name" className="flex items-center mb-1">
-              <User className="mr-2 h-4 w-4 text-muted-foreground" /> Your Name
-            </Label>
-            <Input
-              id="name"
-              type="text"
-              placeholder="e.g. Jane Doe"
-              {...register("name")}
-              className={errors.name ? "border-destructive" : ""}
-              aria-invalid={errors.name ? "true" : "false"}
-            />
-            {errors.name && <p className="text-sm text-destructive mt-1">{errors.name.message}</p>}
-          </div>
+                {/* Name field */}
+                <div ref={(el) => { fieldsRef.current[0] = el; }}>
+                  <Label htmlFor="name" className="flex items-center gap-2 mb-3 text-sm font-semibold text-foreground">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <User className="h-4 w-4 text-primary" />
+                    </div>
+                    Your Name
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="e.g. Jane Doe"
+                    {...register("name")}
+                    className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.name ? "border-destructive focus:border-destructive" : ""}`}
+                    aria-invalid={errors.name ? "true" : "false"}
+                  />
+                  {errors.name && (
+                    <p className="text-sm text-destructive mt-2 flex items-center gap-1.5">
+                      <span className="inline-block w-1 h-1 rounded-full bg-destructive" />
+                      {errors.name.message}
+                    </p>
+                  )}
+                </div>
 
-          <div ref={(el) => { fieldsRef.current[1] = el; }}>
-            <Label htmlFor="email" className="flex items-center mb-1">
-              <Mail className="mr-2 h-4 w-4 text-muted-foreground" /> Your Email
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="e.g. jane.doe@example.com"
-              {...register("email")}
-              className={errors.email ? "border-destructive" : ""}
-              aria-invalid={errors.email ? "true" : "false"}
-            />
-            {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
-          </div>
+                {/* Email field */}
+                <div ref={(el) => { fieldsRef.current[1] = el; }}>
+                  <Label htmlFor="email" className="flex items-center gap-2 mb-3 text-sm font-semibold text-foreground">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <Mail className="h-4 w-4 text-primary" />
+                    </div>
+                    Your Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="e.g. jane.doe@example.com"
+                    {...register("email")}
+                    className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.email ? "border-destructive focus:border-destructive" : ""}`}
+                    aria-invalid={errors.email ? "true" : "false"}
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-destructive mt-2 flex items-center gap-1.5">
+                      <span className="inline-block w-1 h-1 rounded-full bg-destructive" />
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
 
-          <div ref={(el) => { fieldsRef.current[2] = el; }}>
-            <Label htmlFor="message" className="flex items-center mb-1">
-              <MessageSquare className="mr-2 h-4 w-4 text-muted-foreground" /> Your Message
-            </Label>
-            <Textarea
-              id="message"
-              placeholder="Tell me about your project or inquiry..."
-              rows={5}
-              {...register("message")}
-              className={errors.message ? "border-destructive" : ""}
-              aria-invalid={errors.message ? "true" : "false"}
-            />
-            {errors.message && <p className="text-sm text-destructive mt-1">{errors.message.message}</p>}
-          </div>
+                {/* Message field */}
+                <div ref={(el) => { fieldsRef.current[2] = el; }}>
+                  <Label htmlFor="message" className="flex items-center gap-2 mb-3 text-sm font-semibold text-foreground">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <MessageSquare className="h-4 w-4 text-primary" />
+                    </div>
+                    Your Message
+                  </Label>
+                  <Textarea
+                    id="message"
+                    placeholder="Tell me about your project or inquiry..."
+                    rows={6}
+                    {...register("message")}
+                    className={`text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all resize-none ${errors.message ? "border-destructive focus:border-destructive" : ""}`}
+                    aria-invalid={errors.message ? "true" : "false"}
+                  />
+                  {errors.message && (
+                    <p className="text-sm text-destructive mt-2 flex items-center gap-1.5">
+                      <span className="inline-block w-1 h-1 rounded-full bg-destructive" />
+                      {errors.message.message}
+                    </p>
+                  )}
+                </div>
 
-          <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-primary-foreground" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...
-              </>
-            ) : (
-              "Send Message"
-            )}
-          </Button>
-        </form>
+                {/* Submit button */}
+                <Button 
+                  type="submit" 
+                  size="lg"
+                  className="w-full h-14 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all" 
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Sending Message...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="mr-2 h-5 w-5" />
+                      Send Message
+                    </>
+                  )}
+                </Button>
+
+                {/* Trust badges */}
+                <div className="flex items-center justify-center gap-6 pt-4 text-xs text-muted-foreground/60">
+                  <span className="flex items-center gap-1.5">
+                    <div className="w-1 h-1 rounded-full bg-primary" />
+                    Quick response
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <div className="w-1 h-1 rounded-full bg-primary" />
+                    Secure & private
+                  </span>
+                </div>
+              </form>
       </div>
     </SectionWrapper>
   );
