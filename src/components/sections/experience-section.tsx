@@ -1,16 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import { Briefcase } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { experiences } from '@/lib/data';
 import { SectionWrapper } from '@/components/common';
 import { Button } from '@/components/ui/button';
+import { useGSAP } from '@/hooks/use-gsap';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export function ExperienceSection() {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const [showAll, setShowAll] = useState(false);
   const displayedExperiences = showAll ? experiences : experiences.slice(0, 3);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const toggleExpand = (index: number) => {
     setExpandedItems(prev => ({
@@ -19,17 +28,75 @@ export function ExperienceSection() {
     }));
   };
 
+  useGSAP(() => {
+    if (timelineRef.current) {
+      gsap.from(timelineRef.current, {
+        scaleY: 0,
+        transformOrigin: 'top',
+        duration: 1.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: timelineRef.current,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+    }
+
+    itemsRef.current.forEach((item, index) => {
+      if (item) {
+        gsap.from(item, {
+          x: index % 2 === 0 ? -50 : 50,
+          opacity: 0,
+          duration: 0.8,
+          delay: index * 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+
+        const logo = item.querySelector('.experience-logo');
+        if (logo) {
+          gsap.from(logo, {
+            scale: 0,
+            rotation: 180,
+            duration: 0.6,
+            delay: index * 0.15 + 0.2,
+            ease: 'back.out(1.7)',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          });
+        }
+      }
+    });
+  }, [displayedExperiences.length]);
+
   return (
     <SectionWrapper id="experience" title="Work Experience">
       <div className="relative max-w-3xl mx-auto py-4">
-        <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-primary/30 -translate-x-px" aria-hidden="true"></div>
+        <div 
+          ref={timelineRef}
+          className="absolute left-5 top-0 bottom-0 w-0.5 bg-primary/30 -translate-x-px" 
+          aria-hidden="true"
+        ></div>
 
         <div className="space-y-12">
           {displayedExperiences.map((exp, index) => (
-            <div key={index} className="relative flex items-start gap-x-5 md:gap-x-8">
+            <div 
+              key={index} 
+              ref={(el) => { itemsRef.current[index] = el; }}
+              className="relative flex items-start gap-x-5 md:gap-x-8"
+            >
               
               <div className="flex-shrink-0 w-10 flex justify-center relative">
-                <div className="h-12 flex items-center" aria-hidden="true">
+                <div className="h-12 flex items-center experience-logo" aria-hidden="true">
                   {exp.logoUrl ? (
                     <Image
                       src={exp.logoUrl}
@@ -91,7 +158,7 @@ export function ExperienceSection() {
           <Button 
             variant="outline"
             onClick={() => setShowAll(true)}
-            className="text-right hover:text-white"
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
           >
             Show all experience
           </Button>

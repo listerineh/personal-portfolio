@@ -1,3 +1,8 @@
+'use client';
+
+import { useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Header, Footer } from '@/components/layout';
 import { 
   HeroSection, 
@@ -8,7 +13,20 @@ import {
   ContactSection 
 } from '@/components/sections';
 
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function HomePage() {
+  useEffect(() => {
+    // Refrescar ScrollTrigger después de que todo cargue
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />

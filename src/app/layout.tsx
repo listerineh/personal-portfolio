@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
-import { AnimatedBackground } from '@/components/common';
+import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton } from '@/components/common';
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next"
 
@@ -20,6 +20,7 @@ const fontSpaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev'),
   title: 'Sebastian Alvarez | Full-Stack Software Engineer',
   description: 'Portfolio showcasing Sebastian Alvarez\'s expertise in modern web development, including React, Next.js, Node.js, and cloud technologies. View projects, experience, and technical blog.',
   generator: "Next.js",
@@ -72,7 +73,10 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <ThemeProvider>
           <AnimatedBackground />
-          {children}
+          <SmoothScrollWrapper>
+            {children}
+          </SmoothScrollWrapper>
+          <BackToTopButton />
           <Analytics /> 
         </ThemeProvider>
         <Toaster />

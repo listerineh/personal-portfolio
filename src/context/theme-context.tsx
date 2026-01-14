@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import { gsap } from 'gsap';
 
 type Theme = 'light' | 'dark';
 

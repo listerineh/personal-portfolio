@@ -4,8 +4,8 @@ import type { Experience, Skill, Project, BlogPost, NavItem, Hero } from '@/type
 export const hero: Hero = {
   href: '/images/sebastian_alvarez_photo.webp',
   title: 'Sebastian Alvarez',
-  subtitle: 'Software Engineer & Full-Stack Developer',
-  description: 'Passionate about crafting elegant, efficient solutions to real-world problems. I specialize in modern web technologies to build scalable, user-friendly applications across web and mobile platforms.',
+  subtitle: 'Senior Software Engineer & Full-Stack Developer',
+  description: 'Specialized in cloud infrastructure, backend architecture, and modern frontend development. I design and build scalable, high-performance applications leveraging cloud-native technologies and best practices across the full stack.',
 }
 
 export const navItems: NavItem[] = [
@@ -19,7 +19,7 @@ export const navItems: NavItem[] = [
 export const experiences: Experience[] = [
   {
     company: 'Uwigo/Informat',
-    logoUrl: '/images/Informat_s_a_logo.jpeg',
+    logoUrl: '/images/Informat_s_a_logo.webp',
     companyAiHint: 'Uwigo/Informat logo',
     jobTitle: 'Senior Fullstack Engineer',
     employmentDates: 'Aug 2025 - Present',
@@ -33,9 +33,9 @@ export const experiences: Experience[] = [
   },
   {
     company: 'Google Developer Groups Quito',
-    logoUrl: '/images/gdg_quito_logo.jpeg',
+    logoUrl: '/images/gdg_quito_logo.webp',
     companyAiHint: 'Google Developer Groups Quito logo',
-    jobTitle: 'Organizer | Community Builder | Tech Advocate',
+    jobTitle: 'Organizer',
     employmentDates: 'Apr 2023 - Present',
     location: 'Quito, EC',
     responsibilities: [
@@ -49,7 +49,7 @@ export const experiences: Experience[] = [
   },
   {
     company: 'Blue Express',
-    logoUrl: '/images/blue_express_s_a_logo.jpeg',
+    logoUrl: '/images/blue_express_s_a_logo.webp',
     companyAiHint: 'Blue Express logo',
     jobTitle: 'Senior Fullstack Engineer',
     employmentDates: 'Aug 2024 - Aug 2025',
@@ -63,7 +63,7 @@ export const experiences: Experience[] = [
   },
   {
     company: 'IOET',
-    logoUrl: '/images/ioet_logo.jpeg',
+    logoUrl: '/images/ioet_logo.webp',
     companyAiHint: 'IOET logo',
     jobTitle: 'Software Engineer',
     employmentDates: 'Apr 2022 - Jan 2025',
@@ -148,6 +148,7 @@ export const skills: Skill[] = [
   { name: 'GitHub', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" },
   { name: 'Git', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" },
   { name: 'Amazon Web Services', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" },
+  { name: 'Azure', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/azure/azure-original.svg" },
   { name: 'Angular', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/angular/angular-original.svg" },
   { name: 'Airflow', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/apacheairflow/apacheairflow-original.svg" },
   { name: 'Kafka', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/apachekafka/apachekafka-original.svg" },
@@ -156,6 +157,7 @@ export const skills: Skill[] = [
   { name: 'CSS', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" },
   { name: 'Github Actions', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/githubactions/githubactions-original.svg" },
   { name: 'Graphql', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/graphql/graphql-plain.svg" },
+  { name: 'GSAP', iconUrl: "https://gsap.com/favicon-32x32.png" },
   { name: 'HTML', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" },
   { name: 'Java', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" },
   { name: 'Jira', iconUrl: "https://raw.githubusercontent.com/devicons/devicon/master/icons/jira/jira-original.svg" },
@@ -233,6 +235,605 @@ export const projects: Project[] = [
 ];
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: 'terraform-scaling-infrastructure',
+    title: 'Terraform: Scaling Infrastructure Without Breaking the Bank',
+    date: 'January 14, 2026',
+    excerpt: "How Terraform helped me build scalable, cost-effective infrastructure by cloning environments, creating reusable modules, and growing systems gradually from dev to production.",
+    imageUrl: '/blog/terraform-scaling-infrastructure.webp',
+    imageAiHint: 'terraform infrastructure as code, cloud architecture diagram, dev staging production environments, microservices deployment',
+    content: `
+
+  ## Introduction
+
+  When I first started working with cloud infrastructure, deployments felt like walking through a minefield. One wrong click in the AWS console, one misconfigured security group, and suddenly production was down.
+
+  Then I discovered **Terraform** — and everything changed.
+
+  Terraform isn't just about "infrastructure as code." It's about **building systems that scale intelligently**, environments that clone effortlessly, and infrastructure that grows with your needs instead of your budget.
+
+  In this post, I'll share how Terraform transformed the way I build and manage infrastructure: from rapid environment creation to cost optimization, reusable modules, and gradual scaling strategies.
+
+  ---
+
+  ## The Problem: Manual Infrastructure is a Nightmare
+
+  Before Terraform, setting up a new environment meant:
+
+  - Clicking through cloud consoles for hours
+  - Copy-pasting configurations and hoping nothing broke
+  - Inconsistencies between dev, staging, and production
+  - No version control for infrastructure changes
+  - Fear of touching anything in production
+
+  **The result?** Slow deployments, expensive mistakes, and infrastructure that was impossible to replicate.
+
+  ---
+
+  ## The Solution: Infrastructure as Code
+
+  Terraform changed the game by treating infrastructure the same way we treat application code:
+
+  - **Version controlled** — every change is tracked in Git
+  - **Reproducible** — spin up identical environments with one command
+  - **Testable** — validate changes before applying them
+  - **Collaborative** — teams can review infrastructure changes like code reviews
+
+  But the real power comes from how you **architect** your Terraform setup.
+
+  ---
+
+  ## Environment Cloning: Dev → Staging → Production
+
+  One of the biggest wins with Terraform is how easy it becomes to clone environments.
+
+  ### The Strategy
+
+  **1. Start with Dev** 🛠️
+
+  Build your infrastructure in a development environment first:
+  - Minimal resources (smaller instances, lower limits)
+  - Fast iteration
+  - Safe to break
+
+  **2. Clone to Staging** 📋
+
+  Once dev is stable, clone it to staging:
+  \`\`\`hcl
+  # Simply change the environment variable
+  terraform workspace select staging
+  terraform apply
+  \`\`\`
+
+  Same architecture, different namespace. Perfect for testing deployments.
+
+  **3. Enhance for Production** 🚀
+
+  Clone staging to production, but with upgrades:
+  - Larger instances
+  - Auto-scaling enabled
+  - Enhanced monitoring
+  - Stricter security rules
+  - Multi-AZ redundancy
+
+  ### The Beauty of This Approach
+
+  You're not maintaining three separate infrastructures — you're maintaining **one codebase with environment-specific variables**.
+
+  Changes flow naturally: Dev → Staging → Production, with confidence at each step.
+
+  ---
+
+  ## Resource Versioning: Right-Sized for Each Environment
+
+  Not every environment needs production-grade resources. Terraform makes it easy to scale resources based on the environment.
+
+  ### Example: Database Sizing
+
+  \`\`\`hcl
+  variable "db_instance_class" {
+    type = map(string)
+    default = {
+      dev        = "db.t3.micro"    # Cheap, minimal
+      staging    = "db.t3.small"    # Mid-tier
+      production = "db.r5.large"    # High performance
+    }
+  }
+
+  resource "aws_db_instance" "main" {
+    instance_class = var.db_instance_class[var.environment]
+    # ... other config
+  }
+  \`\`\`
+
+  ### Why This Matters
+
+  - **Dev** runs on cheap resources → saves money during development
+  - **Staging** mirrors production architecture but at lower scale
+  - **Production** gets the performance it needs
+
+  This approach saved me **thousands of dollars** by not over-provisioning dev and staging.
+
+  ---
+
+  ## Complete Infrastructure Configuration
+
+  Terraform isn't just for compute instances. I use it to configure **everything**:
+
+  ### Microservices Architecture
+
+  - Container orchestration (ECS, Kubernetes)
+  - Service discovery
+  - Load balancers
+  - Auto-scaling groups
+
+  ### API Gateways
+
+  - Route configurations
+  - Request/response transformations
+  - CORS policies
+  - Custom domain mappings
+
+  ### Security
+
+  - Security groups and firewall rules
+  - IAM roles and policies
+  - Secrets management
+  - VPC configurations
+
+  ### Traffic Management
+
+  - Rate limiting
+  - Throttling policies
+  - WAF rules
+  - DDoS protection
+
+  ### Domains & DNS
+
+  - Route53 configurations
+  - SSL/TLS certificates
+  - CDN distributions
+
+  ### Redundancy
+
+  - Multi-AZ deployments
+  - Failover configurations
+  - Backup policies
+
+  **Everything in code. Everything versioned. Everything reproducible.**
+
+  ---
+
+  ## Reusable Modules: The Real Power Move
+
+  After building a few environments, patterns emerge. That's where **Terraform modules** shine.
+
+  ### Example: Microservice Module
+
+  \`\`\`hcl
+  module "user_service" {
+    source = "./modules/microservice"
+    
+    service_name     = "user-service"
+    environment      = var.environment
+    container_image  = "myapp/user-service:latest"
+    cpu              = var.environment == "production" ? 1024 : 256
+    memory           = var.environment == "production" ? 2048 : 512
+    
+    enable_autoscaling = var.environment == "production"
+    min_instances      = var.environment == "production" ? 2 : 1
+    max_instances      = var.environment == "production" ? 10 : 2
+  }
+  \`\`\`
+
+  ### Benefits
+
+  - **DRY principle** — write once, use everywhere
+  - **Consistency** — every microservice follows the same pattern
+  - **Rapid deployment** — spin up new services in minutes
+  - **Centralized updates** — fix a bug in the module, all services benefit
+
+  I built modules for:
+  - Microservices (ECS/Fargate)
+  - Databases (RDS, DynamoDB)
+  - API Gateways
+  - Monitoring & Logging
+  - Networking (VPC, Subnets, NAT)
+
+  Now deploying a new microservice takes **5 minutes instead of 5 hours**.
+
+  ---
+
+  ## Testing Infrastructure Changes
+
+  One of the scariest parts of infrastructure work is applying changes to production. Terraform makes this safer.
+
+  ### The Workflow
+
+  **1. Plan Before Apply**
+  \`\`\`bash
+  terraform plan -out=tfplan
+  \`\`\`
+
+  See exactly what will change before it happens.
+
+  **2. Review Changes**
+
+  Terraform shows you:
+  - Resources to be created (green +)
+  - Resources to be modified (yellow ~)
+  - Resources to be destroyed (red -)
+
+  **3. Apply with Confidence**
+  \`\`\`bash
+  terraform apply tfplan
+  \`\`\`
+
+  **4. Automated Testing**
+
+  I use \`terraform validate\` and \`tflint\` in CI/CD to catch errors before they reach production.
+
+  ---
+
+  ## Gradual Scaling: Start Small, Grow Smart
+
+  Here's the strategy that saved me the most money: **start small and scale gradually**.
+
+  ### The Approach
+
+  **Phase 1: MVP (Minimal Viable Production)**
+  - Single instance
+  - Basic monitoring
+  - Manual scaling
+  - Cost: ~$50/month
+
+  **Phase 2: Growth (When Traffic Increases)**
+  - Auto-scaling enabled
+  - Load balancer added
+  - Enhanced monitoring
+  - Cost: ~$200/month
+
+  **Phase 3: Scale (When Revenue Justifies It)**
+  - Multi-AZ deployment
+  - CDN integration
+  - Advanced caching
+  - Cost: ~$800/month
+
+  ### How Terraform Enables This
+
+  \`\`\`hcl
+  variable "scaling_tier" {
+    type    = string
+    default = "mvp"  # or "growth" or "scale"
+  }
+
+  locals {
+    instance_count = {
+      mvp    = 1
+      growth = 2
+      scale  = 5
+    }
+  }
+
+  resource "aws_instance" "app" {
+    count = local.instance_count[var.scaling_tier]
+    # ... config
+  }
+  \`\`\`
+
+  Change one variable, run \`terraform apply\`, and your infrastructure scales.
+
+  **No over-provisioning. No wasted money. Just right-sized infrastructure.**
+
+  ---
+
+  ## Real-World Example: Microservices Platform
+
+  Let me share a real project where Terraform transformed our workflow.
+
+  ### The Challenge
+
+  Build a microservices platform with:
+  - 8 microservices
+  - API Gateway
+  - 3 databases
+  - Message queue
+  - Monitoring stack
+  - 3 environments (dev, staging, prod)
+
+  ### The Terraform Solution
+
+  **1. Created Reusable Modules**
+  - \`modules/microservice\`
+  - \`modules/database\`
+  - \`modules/api-gateway\`
+  - \`modules/monitoring\`
+
+  **2. Environment-Specific Variables**
+  - \`environments/dev/terraform.tfvars\`
+  - \`environments/staging/terraform.tfvars\`
+  - \`environments/prod/terraform.tfvars\`
+
+  **3. One Command Deployment**
+  \`\`\`bash
+  cd environments/dev
+  terraform apply
+  \`\`\`
+
+  ### The Results
+
+  - **Setup time**: 2 hours (vs. 2 weeks manually)
+  - **Consistency**: 100% identical across environments
+  - **Cost savings**: 60% reduction by right-sizing resources
+  - **Deployment speed**: New microservice in 10 minutes
+  - **Confidence**: Every change reviewed and tested
+
+  ---
+
+  ## Best Practices I Learned
+
+  ### 1. **Use Remote State** 🗄️
+
+  Store Terraform state in S3 with DynamoDB locking:
+  \`\`\`hcl
+  terraform {
+    backend "s3" {
+      bucket         = "my-terraform-state"
+      key            = "prod/terraform.tfstate"
+      region         = "us-east-1"
+      dynamodb_table = "terraform-locks"
+    }
+  }
+  \`\`\`
+
+  ### 2. **Separate Environments** 📁
+
+  Don't mix dev and prod in the same state file. Use workspaces or separate directories.
+
+  ### 3. **Version Your Modules** 🏷️
+
+  Pin module versions to avoid breaking changes:
+  \`\`\`hcl
+  module "vpc" {
+    source  = "terraform-aws-modules/vpc/aws"
+    version = "3.14.0"
+  }
+  \`\`\`
+
+  ### 4. **Use Variables for Everything** 🔧
+
+  Never hardcode values. Everything should be configurable.
+
+  ### 5. **Document Your Modules** 📚
+
+  Good documentation makes modules reusable across teams.
+
+  ---
+
+  ## Conclusion
+
+  Terraform isn't just a tool — it's a **mindset shift** in how you approach infrastructure.
+
+  Instead of clicking through consoles and hoping for the best, you:
+  - **Write code** that defines your infrastructure
+  - **Version control** every change
+  - **Test** before applying
+  - **Scale gradually** as needs grow
+  - **Reuse modules** to move faster
+
+  The result? Infrastructure that's:
+  - ✅ Reproducible
+  - ✅ Scalable
+  - ✅ Cost-effective
+  - ✅ Testable
+  - ✅ Collaborative
+
+  If you're still managing infrastructure manually, you're leaving money and time on the table.
+
+  **Start small:**
+  1. Pick one service
+  2. Write Terraform for it
+  3. Clone it to staging
+  4. Refine and promote to production
+  5. Extract patterns into modules
+  6. Repeat
+
+  Before you know it, you'll have infrastructure that scales with your business, not your budget.
+
+  🚀 **Infrastructure as code isn't the future — it's the present. And Terraform makes it accessible.**
+
+`,
+    author: 'Sebastian Alvarez',
+    tags: ['Terraform', 'Infrastructure as Code', 'DevOps', 'Cloud', 'AWS', 'Scaling', 'Cost Optimization']
+  },
+  {
+    slug: 'from-junior-to-senior-engineer',
+    title: 'From Junior to Senior: The Shift Nobody Tells You About',
+    date: 'December 21, 2025',
+    excerpt: "Becoming a senior engineer isn't just about writing better code. It's about making better decisions, leading without authority, and navigating interviews that feel more like strategic conversations than coding tests.",
+    imageUrl: '/blog/from-junior-to-senior-engineer.webp',
+    imageAiHint: 'career growth ladder, leadership, technical decisions, mentorship, senior engineer working with team',
+    content: `
+
+  ## Introduction
+
+  I remember the exact moment I realized I had become a senior engineer — and it wasn't when my title changed.
+
+  It was during a technical discussion where I found myself not arguing for my solution, but **asking questions to understand the problem better**. I was thinking about trade-offs, team velocity, and long-term maintenance instead of just "what's the coolest tech stack."
+
+  That shift — from **"how do I solve this?"** to **"should we even solve this?"** — is what separates junior and mid-level engineers from senior ones.
+
+  In this post, I want to share what I've learned about this transition: the technical decisions that matter, the soft skills that become critical, and how the interview process completely changes when you're being evaluated as a senior.
+
+  ---
+
+  ## The Technical Shift: From Execution to Decision-Making
+
+  As a junior or mid-level engineer, your job is mostly about **execution**: take a ticket, implement it well, get it reviewed, ship it.
+
+  As a senior, your job becomes about **decision-making**: choosing the right approach, weighing trade-offs, and thinking about consequences months or years down the line.
+
+  ### What This Looks Like in Practice
+
+  **Junior/Mid mindset:**
+  > "I'll use GraphQL because it's modern and I want to learn it."
+
+  **Senior mindset:**
+  > "Do we need GraphQL's flexibility, or will REST be simpler to maintain? What's our team's experience with it? What's the learning curve vs. the actual benefit?"
+
+  The difference isn't technical knowledge — it's **context awareness**.
+
+  Seniors understand that every technical decision is a trade-off:
+  - **Performance vs. Maintainability**
+  - **Speed to market vs. Technical debt**
+  - **Innovation vs. Stability**
+
+  You stop optimizing for "cool" and start optimizing for **impact**.
+
+  ---
+
+  ## The Leadership Shift: Leading Without Authority
+
+  Here's the thing nobody tells you: **senior engineers are leaders, even without the title**.
+
+  You don't need to be a manager to lead. In fact, some of the best technical leadership happens **without formal authority**.
+
+  ### What Senior Leadership Looks Like
+
+  - **Mentoring juniors** — not just answering questions, but teaching them *how to think* about problems
+  - **Driving technical decisions** — proposing solutions, facilitating discussions, building consensus
+  - **Unblocking the team** — stepping in when something is stuck, even if it's not your responsibility
+  - **Setting standards** — writing docs, creating templates, establishing best practices
+
+  I learned this the hard way. Early in my career, I thought leadership meant telling people what to do. But real leadership is about **enabling others to succeed**.
+
+  When a junior engineer comes to you with a problem, you don't just give them the answer — you ask questions that help them discover it themselves. That's how you scale your impact.
+
+  ---
+
+  ## The Soft Skills That Actually Matter
+
+  Technical skills get you in the door. Soft skills get you promoted.
+
+  As a senior, you'll spend more time:
+  - **Communicating** than coding
+  - **Reviewing** than writing
+  - **Planning** than executing
+
+  ### The Skills That Became Critical for Me
+
+  **1. Communication 🗣️**
+
+  You need to explain complex technical concepts to non-technical stakeholders. You need to write clear documentation. You need to give feedback that's constructive, not crushing.
+
+  **2. Empathy 🤝**
+
+  Understanding what your teammates are struggling with. Recognizing when someone is overwhelmed. Knowing when to push and when to support.
+
+  **3. Pragmatism ⚖️**
+
+  Knowing when "good enough" is actually good enough. Understanding that perfect is the enemy of shipped.
+
+  **4. Strategic Thinking 🎯**
+
+  Seeing the bigger picture. Asking "why are we building this?" before asking "how should we build this?"
+
+  These aren't "nice to have" — they're **essential**. I've seen brilliant engineers plateau because they couldn't communicate their ideas or work well with others.
+
+  ---
+
+  ## The Interview Process Changes Completely
+
+  This was one of the biggest surprises for me: **senior interviews are nothing like junior interviews**.
+
+  ### Junior/Mid Interviews
+  - LeetCode-style coding challenges
+  - "Implement this algorithm"
+  - Focus on syntax and problem-solving speed
+
+  ### Senior Interviews
+  - System design discussions
+  - Architecture decisions and trade-offs
+  - Conversations with CTOs and engineering leaders
+  - "Tell me about a time you made a difficult technical decision"
+
+  ### What They're Really Evaluating
+
+  When you interview for senior roles, they're not testing if you can code — they assume you can. They're evaluating:
+
+  - **Decision-making**: How do you approach ambiguous problems?
+  - **Experience**: What have you built? What went wrong? What did you learn?
+  - **Leadership**: How do you influence without authority?
+  - **Communication**: Can you explain complex ideas clearly?
+
+  I've had interviews where I barely wrote any code. Instead, I spent an hour whiteboarding a system design, discussing trade-offs, and explaining why I'd choose Postgres over MongoDB for a specific use case.
+
+  The conversation was deep, technical, and strategic — not about syntax, but about **judgment**.
+
+  ---
+
+  ## How to Actually Make the Transition
+
+  So how do you go from mid-level to senior? Here's what worked for me:
+
+  ### 1. Take Ownership Beyond Your Tickets 📋
+
+  Don't just complete tasks — **own outcomes**. If you see a problem, propose a solution. If something is unclear, clarify it for everyone.
+
+  ### 2. Mentor Someone 👨‍🏫
+
+  Teaching forces you to think deeper. When you explain concepts to others, you solidify your own understanding — and you build leadership skills.
+
+  ### 3. Make Technical Decisions (Even Small Ones) 🛠️
+
+  Start documenting your decisions. Write ADRs (Architecture Decision Records). Practice explaining *why* you chose one approach over another.
+
+  ### 4. Improve Your Communication 💬
+
+  Write more. Speak up in meetings. Give presentations. The better you communicate, the more impact you'll have.
+
+  ### 5. Think About the Business, Not Just the Code 💼
+
+  Understand *why* you're building what you're building. Talk to product managers. Learn about the business goals. Code is a means to an end, not the end itself.
+
+  ### 6. Build Relationships Across Teams 🤝
+
+  Senior engineers are connectors. They know who to talk to, how to navigate the organization, and how to get things done.
+
+  ---
+
+  ## The Mindset Shift
+
+  Ultimately, becoming senior is a **mindset shift**:
+
+  - From "I need to prove I'm smart" → "I need to make the team successful"
+  - From "I want to use the latest tech" → "I want to use the right tech"
+  - From "I can do this alone" → "How can we do this together?"
+
+  It's less about your individual output and more about your **multiplier effect** on the team.
+
+  ---
+
+  ## Conclusion
+
+  The transition from junior/mid to senior isn't a straight line. It's messy, non-linear, and different for everyone.
+
+  But if I could summarize it in one sentence: **Senior engineers make everyone around them better**.
+
+  They make better decisions. They lead without needing a title. They communicate clearly. They think strategically. And they understand that their job isn't just to write code — it's to **deliver value**.
+
+  If you're on this journey, remember:
+  - 🎯 Focus on impact, not just output
+  - 🗣️ Communicate more than you think you need to
+  - 🤝 Lead by enabling others
+  - 📚 Learn the business, not just the tech
+
+  The title will come. But the mindset shift? That's what really matters.
+
+`,
+    author: 'Sebastian Alvarez',
+    tags: ['Career Growth', 'Leadership', 'Senior Engineer', 'Soft Skills', 'Interviews', 'Mentorship']
+  },
   {
     slug: 'lets-talk-microservices',
     title: 'Let’s Talk Microservices: Lessons Learned in the Real World',
