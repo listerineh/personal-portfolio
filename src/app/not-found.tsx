@@ -1,22 +1,17 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, ArrowLeft, Search } from 'lucide-react';
+import { Home, ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="max-w-2xl w-full text-center space-y-8">
-        {/* 404 Number */}
-        <div className="relative">
-          <h1 className="text-9xl md:text-[12rem] font-headline font-bold text-primary/10 select-none">
+        <div className="py-8">
+          <h1 className="text-[clamp(8rem,25vw,16rem)] font-headline font-bold text-primary/10 select-none leading-none">
             404
           </h1>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Search className="h-24 w-24 md:h-32 md:w-32 text-primary/30" />
-          </div>
         </div>
 
-        {/* Message */}
         <div className="space-y-3">
           <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
             Page Not Found
@@ -26,7 +21,6 @@ export default function NotFound() {
           </p>
         </div>
 
-        {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
           <Button asChild variant="outline" size="lg">
             <Link href="javascript:history.back()">
@@ -42,7 +36,6 @@ export default function NotFound() {
           </Button>
         </div>
 
-        {/* Helpful Links */}
         <div className="pt-8 border-t border-border/30">
           <p className="text-sm text-muted-foreground mb-4">
             You might be interested in:
