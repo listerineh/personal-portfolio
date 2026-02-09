@@ -16,6 +16,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { ShareButtons } from './share-buttons';
 import { BlogStructuredData } from '@/components/blog/blog-structured-data';
+import { ArticleSchema } from '@/components/blog/article-schema';
 import { BlogViews } from './blog-views';
 import { BlogReactions } from './blog-reactions';
 import { TableOfContents } from './table-of-contents';
@@ -223,6 +224,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
   return (
     <>
       <BlogStructuredData post={post} />
+      <ArticleSchema post={post} />
       <Header />
       <main className="pt-20 bg-background">
         <Progress value={readingProgress} className="fixed top-20 left-0 right-0 h-1 z-50 rounded-none bg-primary/20 transition-all duration-150" />
