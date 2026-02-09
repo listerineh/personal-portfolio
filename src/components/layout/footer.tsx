@@ -3,11 +3,13 @@
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { Music } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { navItems, socialLinks } from '@/lib/data';
 import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
+import { Button } from '@/components/ui/button';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -159,7 +161,7 @@ export function Footer() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <nav aria-label="Footer navigation">
+          <nav aria-label="Footer navigation" className="flex flex-col items-center gap-4">
             <ul className="flex flex-wrap justify-center gap-6">
               {navItems.map((link, index) => (
                 <li key={link.label}>
@@ -174,6 +176,10 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+            <Link href="/music" className="text-[#1DB954]/60 hover:text-[#1DB954] transition-colors flex items-center gap-1.5 text-sm font-medium">
+              <Music className="w-3.5 h-3.5" />
+              Why Listerineh?
+            </Link>
           </nav>
           
           <div className="flex justify-center gap-4" aria-label="Social media links">

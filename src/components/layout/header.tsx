@@ -3,17 +3,19 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { Menu, X, CodeXml, Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import { Menu, X, CodeXml, Mail, Github, Linkedin, Twitter, Music } from 'lucide-react';
 import { gsap } from 'gsap';
 import { navItems, socialLinks } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { ThemeToggleButton } from '@/components/common';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useTheme } from '@/context/theme-context';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { theme } = useTheme();
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -211,6 +213,12 @@ export function Header() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
+          <Link href="/music" className="ml-2 flex items-center">
+            <Button size="sm" variant="ghost" className="text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-300 flex items-center gap-1.5 dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5">
+              <Music className="w-3.5 h-3.5" />
+              <span className="text-xs font-medium">Why Listerineh?</span>
+            </Button>
+          </Link>
           <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent ml-2" />
         </nav>
 
@@ -251,6 +259,16 @@ export function Header() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link
+                    href="/music"
+                    onClick={() => handleNavLinkClick('/music')}
+                    className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
+                  >
+                    <Music className="w-4 h-4" />
+                    Why Listerineh?
+                  </Link>
+                </li>
               </ul>
             </nav>
 
@@ -281,8 +299,7 @@ export function Header() {
               {/* Theme Toggle Section */}
               <div className="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-border/20">
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-semibold text-foreground">Dark Mode</span>
-                  <span className="text-xs text-muted-foreground">Toggle theme</span>
+                  <span className="text-sm font-semibold text-foreground">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
                 </div>
                 <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
               </div>
