@@ -14,7 +14,7 @@ if (typeof window !== 'undefined') {
 
 export function BackToTopButton() {
   const pathname = usePathname();
-  const isOnMusicPage = pathname === '/listerineh';
+  const isOnMusicPage = pathname === '/why';
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [hasReachedTop, setHasReachedTop] = useState(false);

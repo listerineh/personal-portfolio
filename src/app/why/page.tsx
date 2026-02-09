@@ -62,11 +62,11 @@ export default function MusicPage() {
     '@graph': [
       {
         '@type': 'MusicGroup',
-        '@id': 'https://listerineh.dev/music#musicgroup',
+        '@id': 'https://listerineh.dev/why#musicgroup',
         name: 'Listerineh',
         alternateName: 'Sebastian Alvarez',
         description: 'Musician and software engineer exploring Lo-Fi Hip-Hop and experimental soundscapes',
-        url: 'https://listerineh.dev/listerineh',
+        url: 'https://listerineh.dev/why',
         image: {
           '@type': 'ImageObject',
           url: 'https://listerineh.dev/images/sebastian_alvarez_photo.webp',
@@ -88,10 +88,10 @@ export default function MusicPage() {
       },
       {
         '@type': 'WebPage',
-        '@id': 'https://listerineh.dev/listerineh#webpage',
+        '@id': 'https://listerineh.dev/why#webpage',
         name: 'Why Listerineh? | Lo-Fi Hip-Hop Artist & Software Engineer',
         description: 'Discover Listerineh - a musician and software engineer exploring Lo-Fi Hip-Hop, electronic, and ambient soundscapes.',
-        url: 'https://listerineh.dev/listerineh',
+        url: 'https://listerineh.dev/why',
         isPartOf: {
           '@id': 'https://listerineh.dev#website',
         },

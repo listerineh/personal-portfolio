@@ -201,7 +201,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6" aria-label="Main navigation">
-          <Link href="/listerineh" className="flex items-center h-full">
+          <Link href="/why" className="flex items-center h-full">
             <Button size="sm" variant="ghost" className="text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-300 flex items-center gap-1.5 px-2 py-1 dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5">
               <Music className="w-3.5 h-3.5" />
               <span className="text-xs font-medium">Why Listerineh?</span>
@@ -261,8 +261,8 @@ export function Header() {
                 ))}
                 <li>
                   <Link
-                    href="/listerineh"
-                    onClick={() => handleNavLinkClick('/listerineh')}
+                    href="/why"
+                    onClick={() => handleNavLinkClick('/why')}
                     className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
                   >
                     <Music className="w-4 h-4" />
