@@ -151,7 +151,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://listerineh.dev',
+    languages: {
+      'en-US': 'https://listerineh.dev',
+    },
   },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
