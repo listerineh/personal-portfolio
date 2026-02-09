@@ -1,4 +1,10 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: 'Why Listerineh? | Lo-Fi Hip-Hop Artist & Software Engineer',
@@ -61,11 +67,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://listerineh.dev/listerineh',
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
   },
   appleWebApp: {
     capable: true,
