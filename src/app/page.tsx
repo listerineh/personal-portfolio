@@ -29,7 +29,10 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-foreground">
+        Skip to main content
+      </a>
+      <main id="main-content" className="flex-grow">
         <HeroSection />
         <ExperienceSection />
         <SkillsSection />

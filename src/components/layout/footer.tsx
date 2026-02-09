@@ -159,21 +159,24 @@ export function Footer() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex flex-wrap justify-center gap-6">
-            {navItems.map((link, index) => (
-              <Link 
-                key={link.label}
-                ref={(el) => { navLinksRef.current[index] = el; }}
-                href={link.href}
-                className="relative text-sm font-medium hover:text-primary transition-colors group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
-          </div>
+          <nav aria-label="Footer navigation">
+            <ul className="flex flex-wrap justify-center gap-6">
+              {navItems.map((link, index) => (
+                <li key={link.label}>
+                  <Link 
+                    ref={(el) => { navLinksRef.current[index] = el; }}
+                    href={link.href}
+                    className="relative text-sm font-medium hover:text-primary transition-colors group"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
           
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-4" aria-label="Social media links">
             {socialLinks.map((link, index) => (
               <Link 
                 key={link.name}
@@ -181,7 +184,7 @@ export function Footer() {
                 href={link.url} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                aria-label={link.name} 
+                aria-label={`Visit ${link.name}`}
                 className="relative p-3 rounded-full bg-card/30 backdrop-blur-sm border border-border/50 text-secondary-foreground hover:text-primary hover:border-primary/50 transition-colors group"
               >
                 <link.icon className="w-5 h-5" />

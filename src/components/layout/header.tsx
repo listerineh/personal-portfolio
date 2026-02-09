@@ -154,12 +154,13 @@ export function Header() {
           <span className="text-lg sm:text-2xl">Sebastian Alvarez</span>
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-6" aria-label="Main navigation">
           {navItems.map((item, index) => (
             <Link
               key={item.label}
               ref={(el) => { navLinksRef.current[index] = el; }}
               href={item.href}
+              aria-current={pathname === item.href ? "page" : undefined}
               className="relative text-foreground hover:text-primary font-medium transition-colors group"
             >
               {item.label}

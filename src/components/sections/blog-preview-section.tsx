@@ -20,7 +20,7 @@ if (typeof window !== 'undefined') {
 
 export function BlogPreviewSection() {
   const displayedPosts = blogPosts.slice(0, 3);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cardsRef = useRef<(HTMLElement | null)[]>([]);
   const buttonRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -91,7 +91,7 @@ export function BlogPreviewSection() {
     <SectionWrapper id="blog" title="Latest Thoughts" className="bg-gradient-to-t from-background via-background/90 to-background/0">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {displayedPosts.map((post, index) => (
-          <div
+          <article
             key={post.slug}
             ref={(el) => { cardsRef.current[index] = el; }}
             className="group relative"
@@ -121,6 +121,7 @@ export function BlogPreviewSection() {
                       className="blog-image transition-transform duration-500 group-hover:scale-110"
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
                       placeholder="blur"
                       blurDataURL={getBlogImageBlur()}
                       style={{
@@ -140,7 +141,7 @@ export function BlogPreviewSection() {
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground pt-2">
                       <div className="flex items-center gap-1.5">
                         <CalendarDays className="h-3.5 w-3.5" />
-                        <span>{post.date}</span>
+                        <time dateTime={post.date}>{post.date}</time>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Clock className="h-3.5 w-3.5" />
@@ -168,7 +169,7 @@ export function BlogPreviewSection() {
                 <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-xl pointer-events-none" />
               </Card>
             </Link>
-          </div>
+          </article>
         ))}
       </div>
       {blogPosts.length > 3 && (
