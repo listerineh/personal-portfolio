@@ -216,7 +216,7 @@ export function Footer() {
                         </span>
                       </div>
                       
-                      <h3 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tight">
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-headline font-bold text-foreground tracking-tight leading-tight">
                         Stay ahead of
                         <br />
                         <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
@@ -224,23 +224,23 @@ export function Footer() {
                         </span>
                       </h3>
                       
-                      <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                      <p className="text-sm sm:text-base md:text-base lg:text-lg text-muted-foreground leading-relaxed">
                         Join developers who receive curated insights on modern software engineering, cloud infrastructure, and cutting-edge tech.
                       </p>
                     </div>
                     
-                    <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-2 md:pt-4">
+                    <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 pt-2 md:pt-4">
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">Monthly</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Updates</div>
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">Monthly</div>
+                        <div className="text-[9px] sm:text-xs text-muted-foreground uppercase tracking-wide">Updates</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">0%</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Spam</div>
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">0%</div>
+                        <div className="text-[9px] sm:text-xs text-muted-foreground uppercase tracking-wide">Spam</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">Free</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Forever</div>
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">Free</div>
+                        <div className="text-[9px] sm:text-xs text-muted-foreground uppercase tracking-wide">Forever</div>
                       </div>
                     </div>
                   </div>
