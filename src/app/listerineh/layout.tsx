@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://listerineh.dev/music',
+    url: 'https://listerineh.dev/listerineh',
     siteName: 'Listerineh - Musician & Developer',
     title: 'Why Listerineh? | Lo-Fi Hip-Hop Artist & Software Engineer',
     description: 'Discover Listerineh - exploring Lo-Fi Hip-Hop, electronic, and ambient soundscapes. Listen on Spotify.',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     images: ['/images/sebastian_alvarez_photo.webp'],
   },
   alternates: {
-    canonical: 'https://listerineh.dev/music',
+    canonical: 'https://listerineh.dev/listerineh',
   },
   viewport: {
     width: 'device-width',

@@ -201,6 +201,12 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6" aria-label="Main navigation">
+          <Link href="/listerineh" className="flex items-center h-full">
+            <Button size="sm" variant="ghost" className="text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-300 flex items-center gap-1.5 px-2 py-1 dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5">
+              <Music className="w-3.5 h-3.5" />
+              <span className="text-xs font-medium">Why Listerineh?</span>
+            </Button>
+          </Link>
           {navItems.map((item, index) => (
             <Link
               key={item.label}
@@ -213,12 +219,6 @@ export function Header() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
-          <Link href="/music" className="ml-2 flex items-center">
-            <Button size="sm" variant="ghost" className="text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-300 flex items-center gap-1.5 dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5">
-              <Music className="w-3.5 h-3.5" />
-              <span className="text-xs font-medium">Why Listerineh?</span>
-            </Button>
-          </Link>
           <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent ml-2" />
         </nav>
 
@@ -261,8 +261,8 @@ export function Header() {
                 ))}
                 <li>
                   <Link
-                    href="/music"
-                    onClick={() => handleNavLinkClick('/music')}
+                    href="/listerineh"
+                    onClick={() => handleNavLinkClick('/listerineh')}
                     className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
                   >
                     <Music className="w-4 h-4" />

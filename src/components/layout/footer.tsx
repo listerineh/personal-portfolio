@@ -175,11 +175,13 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link href="/listerineh" className="text-[#1DB954]/60 hover:text-[#1DB954] transition-colors flex items-center gap-1.5">
+                  <Music className="w-4 h-4" />
+                  <span className="text-sm font-medium">Why Listerineh?</span>
+                </Link>
+              </li>
             </ul>
-            <Link href="/music" className="text-[#1DB954]/60 hover:text-[#1DB954] transition-colors flex items-center gap-1.5 text-sm font-medium">
-              <Music className="w-3.5 h-3.5" />
-              Why Listerineh?
-            </Link>
           </nav>
           
           <div className="flex justify-center gap-4" aria-label="Social media links">
