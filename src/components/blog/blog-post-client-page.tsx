@@ -20,6 +20,8 @@ import { BlogViews } from './blog-views';
 import { BlogReactions } from './blog-reactions';
 import { TableOfContents } from './table-of-contents';
 import { NewsletterSubscribe } from './newsletter-subscribe';
+import { RelatedPosts } from '@/components/common/related-posts';
+import { NewsletterSignup } from '@/components/common/newsletter-signup';
 import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { getBlogImageBlur } from '@/lib/image-blur';
@@ -326,6 +328,14 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
               url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
             />
           </div>
+
+          <Separator className="my-12" />
+
+          <RelatedPosts currentSlug={post.slug} limit={3} />
+
+          <Separator className="my-12" />
+
+          <NewsletterSignup />
 
           <Separator className="my-12" />
 

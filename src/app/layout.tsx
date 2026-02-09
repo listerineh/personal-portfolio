@@ -178,8 +178,35 @@ export default function RootLayout({
         <PersonSchema />
         <WebsiteSchema />
         <BreadcrumbSchema />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
+        {process.env.NEXT_PUBLIC_HOTJAR_SCRIPT && (
+          <script src={process.env.NEXT_PUBLIC_HOTJAR_SCRIPT} />
+        )}
       </head>
       <body className="font-body antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+              }
+            `,
+          }}
+        />
         <ThemeProvider>
           <AnimatedBackground />
           <SmoothScrollWrapper>
