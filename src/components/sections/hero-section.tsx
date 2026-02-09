@@ -145,7 +145,7 @@ export function HeroSection() {
         </div>
         <h1 
           ref={titleRef}
-          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-headline font-bold text-foreground mb-4"
+          className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-headline font-bold text-foreground mb-4"
         >
           {splitText(hero.title)}
         </h1>

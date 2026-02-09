@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,10 +16,6 @@ import { Label } from '@/components/ui/label';
 import { useToast } from "@/hooks/use-toast";
 import { useGSAP } from '@/hooks/use-gsap';
 import type { ContactFormData } from "@/types";
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -42,6 +38,10 @@ export function ContactSection() {
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
   });
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+  }, []);
 
   useGSAP(() => {
     if (descriptionRef.current) {
