@@ -131,6 +131,8 @@ export function HeroSection() {
               height={200}
               className="object-cover w-full h-full"
               priority
+              fetchPriority="high"
+              quality={85}
             />
           </div>
           <div ref={badgeRef}>
