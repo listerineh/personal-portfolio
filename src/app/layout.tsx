@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Unbounded, Outfit } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
 import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton, CookieBanner } from '@/components/common';
@@ -9,15 +9,15 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import './globals.css';
 
-const fontInter = Inter({
+const fontUnbounded = Unbounded({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-unbounded',
+  weight: ['400', '500', '600', '700'],
 });
 
-const fontSpaceGrotesk = Space_Grotesk({
+const fontOutfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
-  weight: ['400', '500', '700'],
+  variable: '--font-outfit',
 });
 
 export const metadata: Metadata = {
@@ -66,7 +66,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(fontInter.variable, fontSpaceGrotesk.variable)}>
+    <html lang="en" className={cn(fontUnbounded.variable, fontOutfit.variable)}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
