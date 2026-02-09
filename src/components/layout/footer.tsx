@@ -175,12 +175,6 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/listerineh" className="text-[#1DB954]/60 hover:text-[#1DB954] transition-colors flex items-center gap-1.5">
-                  <Music className="w-4 h-4" />
-                  <span className="text-sm font-medium">Why Listerineh?</span>
-                </Link>
-              </li>
             </ul>
           </nav>
           
@@ -283,6 +277,10 @@ export function Footer() {
             <span>•</span>
             <Link href="/terms" className="hover:text-primary transition-colors underline">
               Terms of Use
+            </Link>
+            <span>•</span>
+            <Link href="/listerineh" className="hover:text-[#1DB954] transition-colors underline">
+              Why Listerineh?
             </Link>
           </p>
         </div>
