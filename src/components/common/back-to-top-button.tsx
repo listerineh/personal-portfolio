@@ -51,7 +51,7 @@ export function BackToTopButton() {
         scale: 1,
         opacity: 1,
         y: 0,
-        duration: 0.3,
+        duration: 0.25,
         ease: 'power2.out',
       });
     } else {
@@ -59,7 +59,7 @@ export function BackToTopButton() {
         scale: 0,
         opacity: 0,
         y: 0,
-        duration: 0.3,
+        duration: 0.2,
         ease: 'power2.in',
       });
     }
@@ -70,32 +70,39 @@ export function BackToTopButton() {
 
     const button = buttonRef.current;
     const icon = button.querySelector('svg');
+    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    
+    if (isTouchDevice) return;
 
     const handleMouseEnter = () => {
       gsap.to(button, {
-        scale: 1.1,
-        duration: 0.3,
+        scale: 1.08,
+        duration: 0.2,
         ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(icon, {
-        y: -3,
-        duration: 0.3,
+        y: -2,
+        duration: 0.2,
         ease: 'power2.out',
+        overwrite: 'auto',
       });
     };
 
     const handleMouseLeave = () => {
       gsap.to(button, {
         scale: 1,
-        duration: 0.3,
+        duration: 0.2,
         ease: 'power2.out',
+        overwrite: 'auto',
       });
 
       gsap.to(icon, {
         y: 0,
-        duration: 0.3,
+        duration: 0.2,
         ease: 'power2.out',
+        overwrite: 'auto',
       });
     };
 
@@ -119,7 +126,7 @@ export function BackToTopButton() {
       y: -100,
       scale: 0,
       opacity: 0,
-      duration: 0.4,
+      duration: 0.3,
       ease: 'power2.in',
       onComplete: () => {
         if (buttonRef.current) {

@@ -138,22 +138,22 @@ export function Header() {
       if (mobileMenuRef.current) {
         gsap.fromTo(mobileMenuRef.current,
           { opacity: 0 },
-          { opacity: 1, duration: 0.3, ease: 'power2.out' }
+          { opacity: 1, duration: 0.2, ease: 'power2.out' }
         );
       }
 
       if (menuHeaderRef.current) {
         gsap.fromTo(menuHeaderRef.current,
-          { y: -30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out', delay: 0.1 }
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out', delay: 0.05 }
         );
       }
 
       const navItems = navItemsRef.current.filter(Boolean);
       if (navItems.length > 0) {
         gsap.fromTo(navItems,
-          { x: -30, opacity: 0 },
-          { x: 0, opacity: 1, stagger: 0.08, duration: 0.4, ease: 'power2.out', delay: 0.2 }
+          { x: -20, opacity: 0 },
+          { x: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 }
         );
       }
 
@@ -161,7 +161,7 @@ export function Header() {
       if (socialIcons.length > 0) {
         gsap.fromTo(socialIcons,
           { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, stagger: 0.06, duration: 0.3, ease: 'back.out(1.7)', delay: 0.4 }
+          { scale: 1, opacity: 1, stagger: 0.04, duration: 0.25, ease: 'power2.out', delay: 0.2 }
         );
       }
       
@@ -175,7 +175,7 @@ export function Header() {
     } else if (!isMobileMenuOpen && mobileMenuRef.current) {
       gsap.to(mobileMenuRef.current, {
         opacity: 0,
-        duration: 0.2,
+        duration: 0.15,
         ease: 'power2.in'
       });
     }

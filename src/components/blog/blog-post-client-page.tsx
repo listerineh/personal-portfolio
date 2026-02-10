@@ -92,29 +92,30 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
     const timer = setTimeout(() => {
       if (headerRef.current && headerRef.current.children.length > 0) {
+        const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
         gsap.fromTo(headerRef.current.children,
-          { y: 50, opacity: 0, scale: 0.95 },
+          { y: 30, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            scale: 1,
-            stagger: 0.15,
-            duration: 0.8,
-            ease: 'power3.out',
+            stagger: 0.08,
+            duration: isLowEnd ? 0.4 : 0.6,
+            ease: 'power2.out',
           }
         );
       }
 
       if (imageRef.current) {
+        const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
         gsap.to(imageRef.current, {
-          y: 80,
+          y: 60,
           opacity: 0.3,
           ease: 'none',
           scrollTrigger: {
             trigger: imageRef.current,
             start: 'top top',
             end: 'bottom top',
-            scrub: 1,
+            scrub: isLowEnd ? 0 : 1,
           },
         });
       }
@@ -126,13 +127,16 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
         const blockquotes = proseRef.current.querySelectorAll('blockquote');
         const codeBlocks = proseRef.current.querySelectorAll('pre');
         
+        const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
+        const baseDuration = isLowEnd ? 0.3 : 0.5;
+
         paragraphs.forEach((paragraph) => {
           gsap.fromTo(paragraph,
-            { x: -30, opacity: 0 },
+            { x: -20, opacity: 0 },
             {
               x: 0,
               opacity: 1,
-              duration: 0.8,
+              duration: baseDuration,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: paragraph,
@@ -145,12 +149,12 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
         headings.forEach((heading) => {
           gsap.fromTo(heading,
-            { scale: 0.9, opacity: 0 },
+            { scale: 0.95, opacity: 0 },
             {
               scale: 1,
               opacity: 1,
-              duration: 0.6,
-              ease: 'back.out(1.2)',
+              duration: baseDuration,
+              ease: 'power2.out',
               scrollTrigger: {
                 trigger: heading,
                 start: 'top 85%',
@@ -163,12 +167,12 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
         lists.forEach((list) => {
           const items = list.querySelectorAll('li');
           gsap.fromTo(items,
-            { x: -20, opacity: 0 },
+            { x: -15, opacity: 0 },
             {
               x: 0,
               opacity: 1,
-              stagger: 0.1,
-              duration: 0.5,
+              stagger: 0.05,
+              duration: baseDuration * 0.8,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: list,
@@ -181,12 +185,12 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
         blockquotes.forEach((blockquote) => {
           gsap.fromTo(blockquote,
-            { x: 50, opacity: 0 },
+            { x: 30, opacity: 0 },
             {
               x: 0,
               opacity: 1,
-              duration: 0.8,
-              ease: 'power3.out',
+              duration: baseDuration,
+              ease: 'power2.out',
               scrollTrigger: {
                 trigger: blockquote,
                 start: 'top 85%',
@@ -198,11 +202,11 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
         codeBlocks.forEach((codeBlock) => {
           gsap.fromTo(codeBlock,
-            { scale: 0.95, opacity: 0 },
+            { scale: 0.98, opacity: 0 },
             {
               scale: 1,
               opacity: 1,
-              duration: 0.6,
+              duration: baseDuration,
               ease: 'power2.out',
               scrollTrigger: {
                 trigger: codeBlock,

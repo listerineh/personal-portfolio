@@ -51,13 +51,13 @@ export function Footer() {
       });
 
       tl.fromTo(navLinks,
-        { y: 30, opacity: 0 },
+        { y: 20, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          stagger: 0.08,
-          duration: 0.5,
-          ease: 'power3.out',
+          stagger: 0.05,
+          duration: 0.4,
+          ease: 'power2.out',
         }
       )
       .fromTo(socialIcons,
@@ -65,18 +65,18 @@ export function Footer() {
         {
           scale: 1,
           opacity: 1,
-          stagger: 0.1,
-          duration: 0.4,
-          ease: 'back.out(1.7)',
-        }, '-=0.3')
+          stagger: 0.06,
+          duration: 0.3,
+          ease: 'power2.out',
+        }, '-=0.2')
       .fromTo(copyrightRef.current,
-        { y: 20, opacity: 0 },
+        { y: 15, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.5,
+          duration: 0.3,
           ease: 'power2.out',
-        }, '-=0.2');
+        }, '-=0.15');
     }, 100);
 
     return () => {
@@ -98,11 +98,11 @@ export function Footer() {
 
       const handleMouseEnter = () => {
         gsap.to(icon, {
-          y: -6,
-          scale: 1.1,
-          rotation: 360,
-          duration: 0.4,
+          y: -4,
+          scale: 1.08,
+          duration: 0.25,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
@@ -110,9 +110,9 @@ export function Footer() {
         gsap.to(icon, {
           y: 0,
           scale: 1,
-          rotation: 0,
-          duration: 0.3,
+          duration: 0.2,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
@@ -131,16 +131,18 @@ export function Footer() {
       const handleMouseEnter = () => {
         gsap.to(link, {
           y: -2,
-          duration: 0.3,
+          duration: 0.2,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
       const handleMouseLeave = () => {
         gsap.to(link, {
           y: 0,
-          duration: 0.3,
+          duration: 0.2,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 

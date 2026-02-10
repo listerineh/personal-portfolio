@@ -27,80 +27,89 @@ export function HeroSection() {
   const badgeRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
+    const baseDuration = prefersReducedMotion ? 0 : (isLowEnd ? 0.4 : 0.6);
+    
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
     tl.from(imageRef.current, {
-      scale: 0,
-      rotation: -180,
+      scale: 0.8,
+      rotation: -90,
       opacity: 0,
-      duration: 1.2,
-      ease: 'back.out(1.7)',
+      duration: baseDuration,
+      ease: 'power2.out',
     })
     .from(badgeRef.current, {
-      y: 20,
+      y: 15,
       opacity: 0,
-      duration: 0.6,
-    }, '-=0.4')
-    .from(titleRef.current, {
-      y: 50,
-      opacity: 0,
-      duration: 0.8,
+      duration: baseDuration * 0.7,
     }, '-=0.3')
-    .from(titleRef.current?.querySelectorAll('span') || [], {
-      y: 20,
-      opacity: 0,
-      stagger: 0.05,
-      duration: 0.5,
-    }, '-=0.6')
-    .from(subtitleRef.current, {
+    .from(titleRef.current, {
       y: 30,
       opacity: 0,
-      duration: 0.7,
+      duration: baseDuration,
+    }, '-=0.2')
+    .from(titleRef.current?.querySelectorAll('span') || [], {
+      y: 15,
+      opacity: 0,
+      stagger: 0.03,
+      duration: baseDuration * 0.6,
     }, '-=0.4')
-    .from(descriptionRef.current, {
+    .from(subtitleRef.current, {
       y: 20,
       opacity: 0,
-      duration: 0.6,
+      duration: baseDuration * 0.9,
     }, '-=0.3')
-    .from(buttonsRef.current?.children || [], {
-      y: 20,
+    .from(descriptionRef.current, {
+      y: 15,
       opacity: 0,
-      stagger: 0.15,
-      duration: 0.5,
-    }, '-=0.2');
+      duration: baseDuration * 0.8,
+    }, '-=0.2')
+    .from(buttonsRef.current?.children || [], {
+      y: 15,
+      opacity: 0,
+      stagger: 0.08,
+      duration: baseDuration * 0.7,
+    }, '-=0.15');
 
     if (sectionRef.current) {
       gsap.to(sectionRef.current, {
-        y: 150,
+        y: 100,
         opacity: 0.3,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: true,
+          scrub: isLowEnd ? false : 1,
         },
       });
     }
 
     if (imageRef.current) {
-      imageRef.current.addEventListener('mouseenter', () => {
-        gsap.to(imageRef.current, {
-          scale: 1.1,
-          rotation: 5,
-          duration: 0.4,
-          ease: 'power2.out',
+      const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      if (!isTouchDevice) {
+        imageRef.current.addEventListener('mouseenter', () => {
+          gsap.to(imageRef.current, {
+            scale: 1.05,
+            rotation: 3,
+            duration: 0.25,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
         });
-      });
 
-      imageRef.current.addEventListener('mouseleave', () => {
-        gsap.to(imageRef.current, {
-          scale: 1,
-          rotation: 0,
-          duration: 0.4,
-          ease: 'power2.out',
+        imageRef.current.addEventListener('mouseleave', () => {
+          gsap.to(imageRef.current, {
+            scale: 1,
+            rotation: 0,
+            duration: 0.25,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
         });
-      });
+      }
     }
   }, []);
 

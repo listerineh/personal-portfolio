@@ -72,11 +72,13 @@ export function ExperienceSection() {
   };
 
   useGSAP(() => {
+    const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
+    
     if (timelineRef.current) {
       gsap.from(timelineRef.current, {
         scaleY: 0,
         transformOrigin: 'top',
-        duration: 1.5,
+        duration: isLowEnd ? 0.6 : 1,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: timelineRef.current,
@@ -90,11 +92,11 @@ export function ExperienceSection() {
     itemsRef.current.slice(0, 3).forEach((item, index) => {
       if (item) {
         gsap.from(item, {
-          x: index % 2 === 0 ? -50 : 50,
+          x: index % 2 === 0 ? -40 : 40,
           opacity: 0,
-          duration: 0.8,
-          delay: index * 0.15,
-          ease: 'power3.out',
+          duration: isLowEnd ? 0.4 : 0.6,
+          delay: index * 0.1,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: item,
             start: 'top 85%',
@@ -106,10 +108,10 @@ export function ExperienceSection() {
         if (logo) {
           gsap.from(logo, {
             scale: 0,
-            rotation: 180,
-            duration: 0.6,
-            delay: index * 0.15 + 0.2,
-            ease: 'back.out(1.7)',
+            rotation: -90,
+            duration: isLowEnd ? 0.3 : 0.5,
+            delay: index * 0.1 + 0.15,
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: item,
               start: 'top 85%',
