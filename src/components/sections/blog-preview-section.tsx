@@ -88,7 +88,7 @@ export function BlogPreviewSection() {
   }, [displayedPosts.length]);
 
   return (
-    <SectionWrapper id="blog" title="Latest Thoughts" className="bg-gradient-to-t from-background via-background/90 to-background/0">
+    <SectionWrapper id="blog" title="Latest Thoughts" badge='Blog' className="bg-gradient-to-t from-background via-background/90 to-background/0">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {displayedPosts.map((post, index) => (
           <article

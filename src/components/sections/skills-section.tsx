@@ -173,7 +173,7 @@ export function SkillsSection() {
   );
 
   return (
-    <SectionWrapper title="Technologies I Work With" id='skills' className="bg-secondary/85" isInfinite>   
+    <SectionWrapper title="Technologies I Work With" id='skills' className="bg-secondary/85" isInfinite badge='Tech Stack'>   
       <div ref={containerRef} className="relative py-4 overflow-hidden" style={{ perspective: '1500px' }}>
         <div className="overflow-hidden mb-3 md:mb-4 w-full">
           <div ref={row1Ref} className="marquee-row flex will-change-transform">

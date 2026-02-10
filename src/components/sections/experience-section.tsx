@@ -124,7 +124,7 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <SectionWrapper id="experience" title="Work Experience">
+    <SectionWrapper id="experience" title="Work Experience" badge='Career'>
       <div className="max-w-4xl mx-auto">
         <div className="space-y-6">
           {experiences.map((exp, index) => (

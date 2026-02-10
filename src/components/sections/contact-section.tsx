@@ -105,7 +105,7 @@ export function ContactSection() {
   };
 
   return (
-    <SectionWrapper id="contact" title="Get In Touch" className="bg-background">
+    <SectionWrapper id="contact" title="Get In Touch" badge='Contact' className="bg-background">
       <div className="max-w-2xl mx-auto">
         {/* Description */}
         <div className="text-center mb-12">
