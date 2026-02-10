@@ -193,7 +193,7 @@ export function ContactSection() {
                 <Button 
                   type="submit" 
                   size="lg"
-                  className="w-full h-14 text-base font-semibold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all" 
+                  className="w-full h-12 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50" 
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
