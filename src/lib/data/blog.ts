@@ -2,12 +2,304 @@ import type { BlogPost } from '@/types';
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'adapting-to-new-jobs',
+    title: 'Adapting to New Jobs: From Well-Structured Teams to Chaotic Startups',
+    date: 'February 10, 2026',
+    excerpt: 'Every company is different. Some have perfect processes, documentation, and clear roles. Others are complete chaos. Here\'s how to spot the red flags early, adapt quickly, and improve things without burning out.',
+    imageUrl: '/blog/adapting-to-new-jobs.webp',
+    imageAiHint: 'split screen showing two contrasting developer work environments: left side shows organized modern office with clear processes, documentation, structured meetings, clean code reviews, automated pipelines; right side shows chaotic startup with scattered notes, endless meetings, micromanagement, manual deployments, confusion; developer in center navigating between both worlds, professional illustration',
+    content: `
+## Introduction
+
+I've worked at companies on both ends of the spectrum. Some had beautifully documented processes, clear roles, automated deployments, and structured sprints. Others had documentation scattered across Slack messages, micromanaging leaders, endless meetings, and zero testing infrastructure.
+
+The shocking part? The technical work was often similar. The difference was **everything else** — the culture, processes, communication, and how decisions get made.
+
+In this post, I want to share what I've learned about spotting these differences **before you join**, how to adapt quickly once you're in, and how to improve things without burning out. Because adapting to a new job isn't just about learning the codebase — it's about understanding the **organizational DNA** and finding your place in it.
+
+---
+
+## The Two Extremes
+
+Let me paint two pictures of what a developer's day looks like at different companies.
+
+### The Well-Structured Company
+
+You arrive on day one and immediately notice:
+- Clear onboarding documentation
+- A tech lead who has time to mentor you
+- Well-defined roles and responsibilities
+- Automated CI/CD pipelines
+- Code reviews that are constructive, not gatekeeping
+- Meetings are scheduled with clear agendas
+- Testing is expected, not optional
+- Infrastructure is managed as code
+- Decisions are documented in ADRs (Architecture Decision Records)
+- You can actually focus on building features
+
+Your first week is smooth. By week two, you're contributing. By week four, you're productive.
+
+### The Chaotic Startup
+
+You arrive and notice:
+- Onboarding is "ask someone if you get stuck"
+- The tech lead is drowning in meetings and has no time for you
+- Roles are unclear — everyone does everything
+- Deployments are manual and stressful
+- Code reviews are either non-existent or brutally nitpicky
+- Meetings are constant and often pointless
+- Testing is "nice to have" but never prioritized
+- Infrastructure is a mystery (who knows how it works?)
+- Decisions are made in Slack and forgotten by tomorrow
+- You spend half your time in meetings, half your time context-switching
+
+Your first week is confusing. By week two, you're frustrated. By week four, you're considering leaving.
+
+Both companies might be building the same product. But the **experience** is completely different.
+
+---
+
+## Red Flags During the Interview Process
+
+The good news? You can spot these differences **before you accept the offer**. Here's what to watch for:
+
+### Red Flag #1: Vague Job Descriptions
+
+If the JD is generic ("We're looking for a fullstack developer who can wear many hats"), that's a sign of unclear roles. Well-structured companies have specific JDs because they know what they need.
+
+**What to ask:** "Can you describe a typical day for someone in this role?"
+
+### Red Flag #2: They Ask You to Do Too Much During the Interview
+
+Some companies ask you to build a full project, debug production issues, or solve complex system design problems in a single interview. That's not assessing your skills — that's **testing your desperation**.
+
+Well-structured companies have clear interview processes. Chaotic ones are just throwing everything at you to see what sticks.
+
+**What to watch:** If the interview feels disorganized or the scope keeps expanding, that's how the job will feel too.
+
+### Red Flag #3: Vague Answers About Process
+
+When you ask "How do you handle deployments?" or "What's your testing strategy?", listen carefully.
+
+- **Good answer:** "We have automated CI/CD pipelines. Every PR requires tests and code review. We deploy to staging first, then production."
+- **Bad answer:** "Uh, we just deploy when things are ready. Testing is important but we're always in a rush."
+
+### Red Flag #4: The Tech Lead Seems Overworked
+
+If the person interviewing you is clearly drowning in meetings and can barely focus on the conversation, that's a sign. They won't have time to mentor you.
+
+### Red Flag #5: Inconsistent Information
+
+If different people give you different answers about the same question, that's a red flag. It means there's no alignment on how things work.
+
+---
+
+## The First Two Weeks: Assess and Adapt
+
+You've accepted the offer. Now what?
+
+### Week 1: Observe, Don't Judge
+
+Your job in week one is **information gathering**, not productivity.
+
+- Read the documentation (or lack thereof)
+- Attend meetings and listen to how decisions are made
+- Ask questions, but don't try to fix things yet
+- Notice the communication patterns
+- Understand who actually makes decisions (it's often not who you think)
+
+### Week 2: Identify the Real Process
+
+By week two, you'll see the **actual process**, not the official one.
+
+- Is the documentation accurate or outdated?
+- Do people follow the process or work around it?
+- Where are the bottlenecks?
+- Who are the key people (not by title, but by influence)?
+- What's actually blocking progress?
+
+---
+
+## Scenario 1: The Well-Structured Company
+
+If you're lucky enough to land here, your job is simple: **follow the process and contribute**.
+
+### What to Do
+
+- Read the documentation thoroughly
+- Respect the code review process — it exists for a reason
+- Ask for help when you need it — people have time
+- Contribute to improving processes, but incrementally
+- Focus on learning the codebase and delivering features
+
+### The Risk
+
+The risk here is **complacency**. It's easy to get comfortable and stop growing. Don't fall into that trap.
+
+---
+
+## Scenario 2: The Chaotic Company
+
+This is where it gets tricky. You're in a company with poor processes, unclear roles, and constant chaos.
+
+### First: Don't Try to Fix Everything
+
+Your instinct will be to "improve things." Resist that urge. You're new. You don't understand the full context yet.
+
+### Second: Understand Why It's Chaotic
+
+There are usually reasons:
+
+- **Early-stage startup:** They're moving fast and haven't had time to build processes yet.
+- **Poor leadership:** The tech lead or manager doesn't value process.
+- **Resource constraints:** They're understaffed and everyone is in survival mode.
+- **Technical debt:** They've been shipping fast for years and now it's catching up.
+
+Understanding the root cause helps you decide how to respond.
+
+### Third: Establish Your Own Boundaries
+
+In chaotic companies, people will try to pull you in all directions. You need to protect your focus.
+
+- **Limit meeting attendance:** Ask "Is my attendance critical?" If not, skip it.
+- **Batch communication:** Check Slack at specific times, not constantly.
+- **Clarify your role:** Ask your manager exactly what you're responsible for.
+- **Push back on unclear work:** "I need a clearer description of what success looks like."
+
+### Fourth: Improve Incrementally
+
+Once you understand the situation, you can start improving things. But do it **incrementally and with buy-in**.
+
+**Example:** "I noticed we don't have automated tests for the payment module. This is risky. Can I spend a few hours this week setting up a basic test suite?"
+
+This shows:
+- You understand the problem
+- You're not criticizing, you're solving
+- You're asking permission, not demanding change
+- You're taking initiative (which improves seniority)
+
+### Fifth: Document Everything
+
+In chaotic companies, documentation is often missing. Start documenting:
+- How to set up the dev environment
+- How deployments work
+- Architecture decisions
+- Common gotchas
+
+This helps the next person and makes you invaluable.
+
+---
+
+## Communication: The Universal Skill
+
+Whether you're in a well-structured company or chaos, **communication is everything**.
+
+### In Well-Structured Companies
+
+- Respect the process for communication (Slack, email, meetings)
+- Ask clarifying questions in the right channels
+- Document your decisions
+- Participate in code reviews constructively
+
+### In Chaotic Companies
+
+- **Over-communicate:** Because there's no process, you need to be explicit.
+- **Write things down:** Don't rely on Slack conversations. Create documents.
+- **Clarify expectations:** "So, to confirm, I'm responsible for X, Y, and Z. Is that right?"
+- **Propose solutions, not problems:** "I noticed we don't have a deployment process. Here's what I propose..."
+
+---
+
+## Reading the Room: Understanding Your Company's DNA
+
+Every company has a DNA. Understanding it helps you adapt.
+
+### Questions to Ask Yourself
+
+- How are decisions made? (By the CEO? By consensus? By whoever shouts loudest?)
+- What's valued? (Speed? Quality? Stability? Innovation?)
+- How do people communicate? (Formal meetings? Slack? Hallway conversations?)
+- What happens when someone disagrees? (Healthy debate? Conflict avoidance? Hierarchy wins?)
+- How is failure handled? (Learning opportunity? Career damage? Ignored?)
+
+Your answers to these questions will tell you **how to operate** in that company.
+
+---
+
+## Proactivity: The Seniority Accelerator
+
+Here's a secret: **proactivity is what separates mid-level engineers from senior ones**, especially in chaotic companies.
+
+In a well-structured company, you can be productive by following the process. In a chaotic company, you need to **create structure**.
+
+### Examples of Proactivity
+
+**Bad:** "The codebase is a mess and nobody documents anything."
+
+**Good:** "I'm going to spend a few hours this week documenting the architecture. Here's what I'm planning to cover. Does that help?"
+
+**Bad:** "We have no testing and deployments are scary."
+
+**Good:** "I noticed we don't have automated tests for critical paths. Can I set up a basic test suite for the payment module? It would take about 4 hours."
+
+**Bad:** "Meetings are out of control."
+
+**Good:** "I've noticed we have 15 meetings a week. Can we audit which ones are actually necessary? I'm happy to help organize this."
+
+Notice the pattern: **You're not complaining, you're proposing solutions.**
+
+---
+
+## When to Stay, When to Leave
+
+Sometimes, no amount of adaptation will help. You need to know when to leave.
+
+### Stay If
+
+- The chaos is temporary (early-stage startup scaling up)
+- Leadership is open to improvement
+- The technical work is interesting
+- You're learning a lot
+- The compensation is good enough to justify the stress
+
+### Leave If
+
+- Leadership actively resists improvement
+- You're burning out
+- The technical work is boring
+- You're not learning anything
+- The compensation doesn't justify the stress
+- Your mental health is suffering
+
+There's no shame in leaving. Sometimes the company isn't a fit, and that's okay.
+
+---
+
+## Conclusion
+
+Adapting to a new job is about more than learning the codebase. It's about understanding the **organizational culture**, spotting red flags early, and knowing how to operate effectively in different environments.
+
+The best developers aren't just technically skilled — they're **adaptable**. They can thrive in a well-structured company by respecting the process. They can improve a chaotic company by being proactive and communicating clearly.
+
+Remember:
+- **Assess before you act.** Understand the company's DNA first.
+- **Communicate clearly.** Especially in chaotic environments.
+- **Be proactive.** Propose solutions, not problems.
+- **Protect your energy.** Don't burn out trying to fix everything.
+- **Know when to leave.** Not every company is worth your time.
+
+Your career is long. You'll work at many companies. Some will be amazing, some will be terrible, most will be somewhere in between. The skill isn't finding the perfect company — it's **adapting to any company** while protecting your own growth and well-being.
+`,
+    author: 'Sebastian Alvarez',
+    tags: ['Career', 'Company Culture', 'Onboarding', 'Communication', 'Adaptation', 'Seniority']
+  },
+  {
     slug: 'terraform-scaling-infrastructure',
     title: 'Terraform: Scaling Infrastructure Without Breaking the Bank',
     date: 'January 14, 2026',
     excerpt: "How Terraform helped me build scalable, cost-effective infrastructure by cloning environments, creating reusable modules, and growing systems gradually from dev to production.",
     imageUrl: '/blog/terraform-scaling-infrastructure.webp',
-    imageAiHint: 'terraform infrastructure as code, cloud architecture diagram, dev staging production environments, microservices deployment',
+    imageAiHint: 'terraform infrastructure as code visualization: three parallel cloud environments (dev, staging, production) flowing from left to right, each showing infrastructure components like servers, databases, load balancers; terraform code blocks and git version control symbols; cost optimization graph showing decreasing expenses; professional tech illustration with blue and green colors',
     content: `
 ## Introduction
 
@@ -416,7 +708,7 @@ Infrastructure as code isn't the future — it's the present. And Terraform make
     date: 'December 21, 2025',
     excerpt: "Becoming a senior engineer isn't just about writing better code. It's about making better decisions, leading without authority, and navigating interviews that feel more like strategic conversations than coding tests.",
     imageUrl: '/blog/from-junior-to-senior-engineer.webp',
-    imageAiHint: 'career growth ladder, leadership, technical decisions, mentorship, senior engineer working with team',
+    imageAiHint: 'career progression visualization: engineer climbing upward path from junior to senior level; left side shows junior developer at desk coding alone; middle shows mid-level engineer in code review; right side shows senior engineer mentoring team, making architectural decisions, leading discussions; growth arrows and skill badges (communication, leadership, decision-making) appearing along the path; professional tech illustration with warm colors',
     content: `
 ## Introduction
 
@@ -602,7 +894,7 @@ The title will come. But the mindset shift? That's what really matters.
     date: 'September 1, 2025',
     excerpt: 'Microservices can be powerful, but they\'re not always the right tool. Using a banking system as an example, let\'s explore when they shine, when they fail, and how to design them responsibly.',
     imageUrl: '/blog/lets-talk-microservices.webp',
-    imageAiHint: 'distributed banking system diagram, docker containers, api gateway, cloud infrastructure, modern microservices architecture',
+    imageAiHint: 'microservices architecture diagram: banking system with multiple independent services (transactions, user profile, notifications) as separate containers; docker containers stacked and connected; api gateway in center routing requests; databases isolated per service; communication flows between services with arrows; scaling indicators showing horizontal scaling; professional tech illustration with purple and blue tones, clean modern design',
     content: `
 ## Introduction
 
@@ -755,7 +1047,7 @@ If you design them with scalability, standards, and testing in mind, microservic
     date: 'July 31, 2025',
     excerpt: 'Burnout is real — especially when code is both your job and your hobby. Here\'s how I navigated it using rest, rhythm, and side projects that gave me purpose beyond productivity.',
     imageUrl: '/blog/coding-through-burnout.webp',
-    imageAiHint: 'developer relaxing, cat on lap, music notes, burnout recovery, dual life of coder and musician',
+    imageAiHint: 'split scene showing developer burnout recovery journey: left side shows exhausted developer at desk surrounded by code, endless meetings, stress indicators; right side shows same developer relaxed with cat on lap, guitar nearby, music notes floating, peaceful environment; center shows transition with healing elements like meditation, nature, creative tools; warm comforting colors with soft lighting, illustrative style',
     content: `
 ## Introduction
 
@@ -852,7 +1144,7 @@ Try [Cadenza](https://cadenza-app.vercel.app) if you're into music too — maybe
     date: 'July 7, 2025',
     excerpt: 'Discover how Kanban boards help organize software projects, increase personal productivity, and why UI/UX — like drag and drop — makes all the difference.',
     imageUrl: '/blog/from-chaos-to-clarity-kanban.webp',
-    imageAiHint: 'kanban board, drag and drop, software productivity, organized workspace',
+    imageAiHint: 'kanban board interface visualization: three columns (backlog, in progress, done) with colorful task cards; cards being dragged between columns with smooth motion lines; developer at desk interacting with board on screen; productivity metrics and progress indicators; calendar and time management elements; modern clean design with blue and green accent colors, professional tech illustration',
     content: `
 ## Introduction
 
@@ -976,7 +1268,7 @@ And remember: **the best software doesn't just work — it feels great to use**.
     date: 'June 15, 2025',
     excerpt: 'Explore why Markdown is a powerful and flexible format for blog content — from developer ergonomics to performance and long-term maintainability.',
     imageUrl: '/blog/markdown-basics.webp',
-    imageAiHint: 'markdown file, minimal blog, developer writing',
+    imageAiHint: 'markdown writing workflow visualization: code editor showing markdown syntax with headers, lists, code blocks; markdown symbols (#, -, *, `) floating around; transformation arrow showing markdown converting to beautiful rendered blog post; git version control symbols indicating version history; comparison showing markdown simplicity vs complex JSON structure; developer typing at keyboard; clean minimalist design with monospace font aesthetic, professional tech illustration',
     content: `
 ## Introduction
 
