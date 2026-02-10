@@ -235,10 +235,10 @@ export function Header() {
       </div>
 
       {isMobile && isMobileMenuOpen && (
-        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/98 backdrop-blur-sm overflow-y-auto" style={{ height: '100dvh' }}>
-          <div className="flex flex-col" style={{ minHeight: '100dvh' }}>
-            {/* Header with close button */}
-            <div ref={menuHeaderRef} className="flex items-center justify-between p-6 border-b border-border/20">
+        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/98 backdrop-blur-sm" style={{ height: '100dvh' }}>
+          <div className="flex flex-col h-full">
+            {/* Header with close button - Fixed */}
+            <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between p-6 border-b border-border/20">
               <span className="text-2xl font-headline font-bold text-primary">Menu</span>
               <button
                 onClick={closeMobileMenu}
@@ -249,72 +249,74 @@ export function Header() {
               </button>
             </div>
 
-            {/* Navigation items */}
-            <nav className="flex-1 py-8 px-4" aria-label="Mobile navigation">
-              <ul className="space-y-3">
-                {navItems.map((item, index) => (
-                  <li key={item.label} ref={(el) => { navItemsRef.current[index] = el; }}>
+            {/* Scrollable content - Navigation items and Social links */}
+            <div className="flex-1 overflow-y-auto">
+              {/* Navigation items */}
+              <nav className="py-8 px-4" aria-label="Mobile navigation">
+                <ul className="space-y-3">
+                  {navItems.map((item, index) => (
+                    <li key={item.label} ref={(el) => { navItemsRef.current[index] = el; }}>
+                      <Link
+                        href={item.href}
+                        onClick={() => handleNavLinkClick(item.href)}
+                        className="flex items-center px-6 py-4 rounded-lg text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-200"
+                      >
+                        <span className="font-semibold text-xl">{item.label}</span>
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
                     <Link
-                      href={item.href}
-                      onClick={() => handleNavLinkClick(item.href)}
-                      className="flex items-center px-6 py-4 rounded-lg text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-200"
+                      href="/why"
+                      onClick={() => handleNavLinkClick('/why')}
+                      className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
                     >
-                      <span className="font-semibold text-xl">{item.label}</span>
+                      <Music className="w-4 h-4" />
+                      Why Listerineh?
                     </Link>
                   </li>
-                ))}
-                <li>
-                  <Link
-                    href="/why"
-                    onClick={() => handleNavLinkClick('/why')}
-                    className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
-                  >
-                    <Music className="w-4 h-4" />
-                    Why Listerineh?
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+                </ul>
+              </nav>
 
-
-            {/* Social links and theme toggle */}
-            <div className="px-4 py-6 border-t border-border/20 space-y-6">
-              {/* Follow Me Section */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">Follow Me</h3>
-                <div className="flex gap-3 flex-wrap" aria-label="Social media links">
-                  {socialLinks.map((link, index) => (
-                    <Link
-                      key={link.name}
-                      ref={(el) => { socialLinksRef.current[index] = el; }}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Visit ${link.name}`}
-                      className="relative p-3 rounded-full bg-card/30 backdrop-blur-sm border border-border/50 text-secondary-foreground hover:text-primary hover:border-primary/50 transition-colors group"
-                    >
-                      <link.icon className="w-5 h-5" />
-                      <div className="absolute inset-0 bg-primary/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity blur-md" />
-                    </Link>
-                  ))}
+              {/* Social links and theme toggle */}
+              <div className="px-4 py-6 border-t border-border/20 space-y-6">
+                {/* Follow Me Section */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Follow Me</h3>
+                  <div className="flex gap-3 flex-wrap" aria-label="Social media links">
+                    {socialLinks.map((link, index) => (
+                      <Link
+                        key={link.name}
+                        ref={(el) => { socialLinksRef.current[index] = el; }}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Visit ${link.name}`}
+                        className="relative p-3 rounded-full bg-card/30 backdrop-blur-sm border border-border/50 text-secondary-foreground hover:text-primary hover:border-primary/50 transition-colors group"
+                      >
+                        <link.icon className="w-5 h-5" />
+                        <div className="absolute inset-0 bg-primary/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity blur-md" />
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Theme Toggle Section */}
-              <div className="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-border/20">
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-semibold text-foreground">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+                {/* Theme Toggle Section */}
+                <div className="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-border/20">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm font-semibold text-foreground">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+                  </div>
+                  <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
                 </div>
-                <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="px-4 py-4 text-center border-t border-border/20">
+            {/* Footer - Fixed */}
+            <footer className="flex-shrink-0 px-4 py-4 text-center border-t border-border/20">
               <p className="text-xs text-muted-foreground">
                 © {new Date().getFullYear()} Sebastian Alvarez. All rights reserved.
               </p>
-            </div>
+            </footer>
           </div>
         </div>
       )}
