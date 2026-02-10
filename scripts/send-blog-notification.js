@@ -64,6 +64,12 @@ const req = (url.protocol === 'https:' ? https : require('http')).request(option
   });
 
   res.on('end', () => {
+    if (!responseData) {
+      console.error('❌ Empty response from server');
+      console.error('   Status Code:', res.statusCode);
+      process.exit(1);
+    }
+
     try {
       const response = JSON.parse(responseData);
       
@@ -74,11 +80,13 @@ const req = (url.protocol === 'https:' ? https : require('http')).request(option
           console.log(`   Sent: ${response.stats.successful}/${response.stats.total} emails`);
         }
       } else {
-        console.error('❌ Error:', response.error || response.message);
+        console.error('❌ Error (Status', res.statusCode + '):', response.error || response.message || 'Unknown error');
         process.exit(1);
       }
     } catch (error) {
-      console.error('❌ Failed to parse response:', responseData);
+      console.error('❌ Failed to parse response');
+      console.error('   Status Code:', res.statusCode);
+      console.error('   Response:', responseData);
       process.exit(1);
     }
   });
@@ -86,6 +94,7 @@ const req = (url.protocol === 'https:' ? https : require('http')).request(option
 
 req.on('error', (error) => {
   console.error('❌ Request failed:', error.message);
+  console.error('   Details:', error);
   process.exit(1);
 });
 
