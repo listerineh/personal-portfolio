@@ -55,11 +55,11 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           <Button 
             variant="outline" 
             size="lg"
-            className="relative gap-2 group bg-background/60 backdrop-blur-sm border-border/50 hover:bg-background/80 hover:border-primary/50 hover:shadow-lg transition-all duration-300"
+            className="relative gap-2 group bg-background/60 backdrop-blur-sm border-border/50 hover:bg-background/80 hover:border-primary/50 hover:shadow-lg transition-all duration-200"
           >
-            <Share2 className="h-4 w-4 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
+            <Share2 className="h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
             <span className="font-semibold">Share Article</span>
-            <Sparkles className="h-3 w-3 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Sparkles className="h-3 w-3 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent 

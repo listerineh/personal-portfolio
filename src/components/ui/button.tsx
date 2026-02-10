@@ -56,10 +56,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
       const handleMouseEnter = () => {
         gsap.to(button, {
-          scale: 1.05,
-          y: -2,
-          duration: 0.3,
+          scale: 1.03,
+          y: -1,
+          duration: 0.15,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
@@ -67,24 +68,27 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         gsap.to(button, {
           scale: 1,
           y: 0,
-          duration: 0.3,
+          duration: 0.15,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
       const handleMouseDown = () => {
         gsap.to(button, {
-          scale: 0.95,
-          duration: 0.1,
+          scale: 0.97,
+          duration: 0.08,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
       const handleMouseUp = () => {
         gsap.to(button, {
-          scale: 1.05,
-          duration: 0.1,
+          scale: 1.03,
+          duration: 0.08,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 

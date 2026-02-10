@@ -59,8 +59,9 @@ export function Header() {
       gsap.to(icon, {
         rotation: 360,
         scale: 1.05,
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power2.out',
+        overwrite: 'auto',
       });
     };
 
@@ -68,8 +69,9 @@ export function Header() {
       gsap.to(icon, {
         rotation: 0,
         scale: 1,
-        duration: 0.3,
+        duration: 0.25,
         ease: 'power2.out',
+        overwrite: 'auto',
       });
     };
 
@@ -92,16 +94,18 @@ export function Header() {
       const handleMouseEnter = () => {
         gsap.to(link, {
           y: -2,
-          duration: 0.3,
+          duration: 0.2,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
       const handleMouseLeave = () => {
         gsap.to(link, {
           y: 0,
-          duration: 0.3,
+          duration: 0.2,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
@@ -184,7 +188,7 @@ export function Header() {
   return (
     <header 
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-background/60 backdrop-blur-md shadow-sm border-b border-border/30' : 'bg-transparent'}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${isScrolled ? 'bg-background/60 backdrop-blur-sm shadow-sm border-b border-border/30' : 'bg-transparent'}`}
     >
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <Link 
@@ -195,7 +199,7 @@ export function Header() {
         >
           <div className="relative">
             <CodeXml className="w-6 h-6 sm:w-8 sm:h-8" />
-            <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </div>
           <span className="text-xs sm:text-sm md:text-lg">Sebastian Alvarez</span>
         </Link>
@@ -231,7 +235,7 @@ export function Header() {
       </div>
 
       {isMobile && isMobileMenuOpen && (
-        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/98 backdrop-blur-lg overflow-y-auto" style={{ height: '100dvh' }}>
+        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/98 backdrop-blur-sm overflow-y-auto" style={{ height: '100dvh' }}>
           <div className="flex flex-col" style={{ minHeight: '100dvh' }}>
             {/* Header with close button */}
             <div ref={menuHeaderRef} className="flex items-center justify-between p-6 border-b border-border/20">

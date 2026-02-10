@@ -21,25 +21,35 @@ export function BackToTopButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      
-      if (scrollY < 100 && isAnimating) {
-        setHasReachedTop(true);
-        setIsAnimating(false);
-      }
-      
-      if (!isAnimating && hasReachedTop && scrollY > 800) {
-        setIsVisible(true);
-        setHasReachedTop(false);
-      } else if (!isAnimating && !hasReachedTop && scrollY > 800) {
-        setIsVisible(true);
-      } else if (scrollY <= 800 && !isAnimating) {
-        setIsVisible(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          
+          if (scrollY < 100 && isAnimating) {
+            setHasReachedTop(true);
+            setIsAnimating(false);
+          }
+          
+          if (!isAnimating && hasReachedTop && scrollY > 800) {
+            setIsVisible(true);
+            setHasReachedTop(false);
+          } else if (!isAnimating && !hasReachedTop && scrollY > 800) {
+            setIsVisible(true);
+          } else if (scrollY <= 800 && !isAnimating) {
+            setIsVisible(false);
+          }
+
+          ticking = false;
+        });
+
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isAnimating, hasReachedTop]);
 

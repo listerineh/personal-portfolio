@@ -154,11 +154,11 @@ export function Footer() {
   return (
     <footer 
       ref={footerRef}
-      className="relative bg-gradient-to-t from-secondary/60 via-secondary/40 to-secondary/20 text-secondary-foreground py-16 overflow-hidden backdrop-blur-md"
+      className="relative bg-gradient-to-t from-secondary/60 via-secondary/40 to-secondary/20 text-secondary-foreground py-16 overflow-hidden backdrop-blur-sm"
     >
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-accent rounded-full blur-3xl" />
+        <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full blur-2xl" />
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-accent rounded-full blur-2xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">

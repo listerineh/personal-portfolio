@@ -94,56 +94,54 @@ export function SkillsSection() {
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 
+    const handlers = new Map();
+
     skillElements.forEach((item) => {
       const handleMouseEnter = () => {
         const parentRow = item.closest('.marquee-row');
         if (parentRow) {
-          gsap.to(parentRow, { timeScale: 0.3, duration: 0.5 });
+          gsap.to(parentRow, { timeScale: 0.3, duration: 0.3 });
         }
 
         const img = item.querySelector('img');
         gsap.to(img, {
-          scale: 1.15,
-          rotation: 360,
-          duration: 0.6,
+          scale: 1.1,
+          duration: 0.4,
           ease: 'power2.out',
-        });
-
-        gsap.to(img, {
-          rotation: '+=10',
-          duration: 0.8,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: 0.6,
+          overwrite: 'auto',
         });
       };
 
       const handleMouseLeave = () => {
         const parentRow = item.closest('.marquee-row');
         if (parentRow) {
-          gsap.to(parentRow, { timeScale: 1, duration: 0.5 });
+          gsap.to(parentRow, { timeScale: 1, duration: 0.3 });
         }
 
         const img = item.querySelector('img');
         gsap.killTweensOf(img);
         gsap.to(img, {
           scale: 1,
-          rotation: 0,
-          duration: 0.4,
+          duration: 0.3,
           ease: 'power2.out',
+          overwrite: 'auto',
         });
       };
 
+      handlers.set(item, { enter: handleMouseEnter, leave: handleMouseLeave });
       item.addEventListener('mouseenter', handleMouseEnter);
       item.addEventListener('mouseleave', handleMouseLeave);
     });
 
     return () => {
       skillElements.forEach((item) => {
-        item.removeEventListener('mouseenter', () => {});
-        item.removeEventListener('mouseleave', () => {});
+        const handler = handlers.get(item);
+        if (handler) {
+          item.removeEventListener('mouseenter', handler.enter);
+          item.removeEventListener('mouseleave', handler.leave);
+        }
       });
+      handlers.clear();
     };
   }, [mounted]);
 
@@ -177,7 +175,6 @@ export function SkillsSection() {
   return (
     <SectionWrapper title="Technologies I Work With" id='skills' className="bg-secondary/85" isInfinite>   
       <div ref={containerRef} className="relative py-4 overflow-hidden" style={{ perspective: '1500px' }}>
-        {/* Primera fila - Izquierda a Derecha */}
         <div className="overflow-hidden mb-3 md:mb-4 w-full">
           <div ref={row1Ref} className="marquee-row flex will-change-transform">
             {[...shuffledArrayLtR, ...shuffledArrayLtR].map((skill, index) => (
@@ -186,7 +183,6 @@ export function SkillsSection() {
           </div>
         </div>
 
-        {/* Segunda fila - Derecha a Izquierda */}
         <div className="overflow-hidden w-full">
           <div ref={row2Ref} className="marquee-row flex will-change-transform">
             {[...shuffledArrayRtL, ...shuffledArrayRtL].map((skill, index) => (
