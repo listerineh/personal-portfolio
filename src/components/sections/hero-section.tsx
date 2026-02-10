@@ -20,6 +20,7 @@ export function HeroSection() {
   const { toast } = useToast();
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
@@ -33,7 +34,7 @@ export function HeroSection() {
     
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-    tl.from(imageRef.current, {
+    tl.from(imageContainerRef.current, {
       scale: 0.8,
       rotation: -90,
       opacity: 0,
@@ -87,30 +88,6 @@ export function HeroSection() {
       });
     }
 
-    if (imageRef.current) {
-      const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-      if (!isTouchDevice) {
-        imageRef.current.addEventListener('mouseenter', () => {
-          gsap.to(imageRef.current, {
-            scale: 1.05,
-            rotation: 3,
-            duration: 0.25,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        });
-
-        imageRef.current.addEventListener('mouseleave', () => {
-          gsap.to(imageRef.current, {
-            scale: 1,
-            rotation: 0,
-            duration: 0.25,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        });
-      }
-    }
   }, []);
 
   const splitText = (text: string) => {
@@ -144,8 +121,9 @@ export function HeroSection() {
               quality={85}
             />
           </div>
-          <div ref={badgeRef}>
+          <div ref={badgeRef} className="relative z-20">
             <Badge 
+              disableHover
               className="w-max absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 bg-primary text-primary-foreground text-xs font-bold py-1.5 px-4 shadow-lg"
             >
               +5 Years Experience
@@ -154,7 +132,7 @@ export function HeroSection() {
         </div>
         <h1 
           ref={titleRef}
-          className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-headline font-bold text-foreground mb-4"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-headline font-bold text-foreground mb-6"
         >
           {splitText(hero.title)}
         </h1>
