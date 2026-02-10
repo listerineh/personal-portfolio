@@ -3,15 +3,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
+  gsap.config({ autoSleep: 60 });
 }
 
-// Detect if device prefers reduced motion
 const prefersReducedMotion = () => {
   if (typeof window === 'undefined') return false;
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 };
 
-// Detect low-end device (slow CPU/GPU)
 const isLowEndDevice = () => {
   if (typeof window === 'undefined') return false;
   const cores = (navigator as any).hardwareConcurrency || 4;
@@ -19,7 +18,6 @@ const isLowEndDevice = () => {
   return cores <= 2 || memory <= 2;
 };
 
-// Get animation duration based on device performance
 const getDuration = (baseDuration: number) => {
   if (prefersReducedMotion()) return 0;
   if (isLowEndDevice()) return baseDuration * 0.6;

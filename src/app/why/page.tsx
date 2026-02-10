@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
-import { Music, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Script from 'next/script';
 import { Button } from '@/components/ui/button';
 import { SpotifyPlayer } from '@/components/common/spotify-player';
@@ -23,24 +23,28 @@ export default function MusicPage() {
   const spotifyButtonRef = useRef<HTMLAnchorElement>(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
+    const baseDuration = prefersReducedMotion ? 0 : (isLowEnd ? 0.3 : 0.5);
+    
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
     tl.from(titleRef.current, {
-      y: 50,
+      y: 40,
       opacity: 0,
-      duration: 0.8,
+      duration: baseDuration,
     })
     .from(descriptionRef.current, {
-      y: 30,
+      y: 25,
       opacity: 0,
-      duration: 0.6,
-    }, '-=0.3')
+      duration: baseDuration * 0.8,
+    }, '-=0.2')
     .from(contentRef.current?.querySelectorAll('button, [role="button"]') || [], {
-      y: 20,
+      y: 15,
       opacity: 0,
-      stagger: 0.15,
-      duration: 0.5,
-    }, '-=0.2');
+      stagger: 0.08,
+      duration: baseDuration * 0.7,
+    }, '-=0.15');
 
     if (heroRef.current) {
       gsap.to(heroRef.current, {
@@ -51,7 +55,7 @@ export default function MusicPage() {
           trigger: heroRef.current,
           start: 'top top',
           end: 'bottom top',
-          scrub: true,
+          scrub: isLowEnd ? 0 : 1,
         },
       });
     }
