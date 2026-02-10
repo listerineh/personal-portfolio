@@ -137,10 +137,10 @@ export function ExperienceSection() {
               style={index >= 3 && showAll ? { opacity: 0 } : undefined}
             >
               {/* Ambient glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
               
               {/* Content card */}
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/60 via-card/40 to-card/60 backdrop-blur-xl border border-border/30 shadow-lg hover:shadow-xl transition-all duration-300 p-6 md:p-8">
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/60 via-card/40 to-card/60 backdrop-blur-sm border border-border/30 shadow-lg hover:shadow-xl transition-all duration-300 p-6 md:p-8">
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-40 pointer-events-none" />
                   

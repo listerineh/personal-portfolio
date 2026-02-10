@@ -200,10 +200,10 @@ export function Footer() {
         
         <div className="mt-24 mb-20">
           <div className="max-w-5xl mx-auto relative px-4 sm:px-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-[100px] opacity-20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-3xl opacity-20" />
             
             <div className="relative">
-              <div className="relative overflow-hidden rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-card/80 via-card/60 to-card/80 backdrop-blur-3xl border border-border/30">
+              <div className="relative overflow-hidden rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-card/80 via-card/60 to-card/80 backdrop-blur-sm border border-border/30">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50" />
                 
                 <div className="absolute inset-0 opacity-[0.02]" style={{

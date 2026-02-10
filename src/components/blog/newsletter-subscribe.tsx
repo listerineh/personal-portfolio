@@ -90,10 +90,10 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
 
   return (
     <div className="w-full max-w-3xl mx-auto relative my-8 sm:my-16">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/15 via-accent/15 to-primary/15 blur-[80px] opacity-30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/15 via-accent/15 to-primary/15 blur-3xl opacity-30" />
       
       <div className="relative">
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-2xl border border-border/40">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-sm border border-border/40">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40" />
           
           <div className="absolute inset-0 opacity-[0.015]" style={{
