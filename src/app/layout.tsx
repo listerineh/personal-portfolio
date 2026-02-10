@@ -3,6 +3,7 @@ import { Unbounded, Outfit } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
 import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton, CookieBanner } from '@/components/common';
+import { BuildVersionSync } from '@/components/common/build-version-sync';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next"
@@ -210,6 +211,7 @@ export default function RootLayout({
             `,
           }}
         />
+        <BuildVersionSync />
         <ThemeProvider>
           <AnimatedBackground />
           <SmoothScrollWrapper>
