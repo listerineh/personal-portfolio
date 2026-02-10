@@ -26,24 +26,6 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/build-id.txt',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
-        ],
-      },
-      {
-        source: '/((?!_next/static|images|.*\\.webp).*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate, s-maxage=0',
-          },
-        ],
-      },
-      {
         source: '/_next/static/:path*',
         headers: [
           {
@@ -53,20 +35,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: '/images/:path*',
+        source: '/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
-          },
-        ],
-      },
-      {
-        source: '/:path*.webp',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, must-revalidate',
+            value: 'public, max-age=600, s-maxage=600',
           },
         ],
       },

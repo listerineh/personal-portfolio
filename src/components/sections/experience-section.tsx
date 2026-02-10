@@ -9,7 +9,6 @@ import { experiences } from '@/lib/data';
 import { SectionWrapper } from '@/components/common';
 import { Button } from '@/components/ui/button';
 import { useGSAP } from '@/hooks/use-gsap';
-import { getImageUrl } from '@/lib/get-build-version';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -148,7 +147,7 @@ export function ExperienceSection() {
                         {exp.logoUrl ? (
                           <div className="relative">
                             <Image
-                              src={getImageUrl(exp.logoUrl)}
+                              src={exp.logoUrl}
                               alt={`${exp.company} logo`}
                               width={56}
                               height={56}

@@ -26,7 +26,6 @@ import { NewsletterSignup } from '@/components/common/newsletter-signup';
 import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { getBlogImageBlur } from '@/lib/image-blur';
-import { getImageUrl } from '@/lib/get-build-version';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -289,7 +288,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           {post.imageUrl && (
             <div ref={imageRef} className="relative w-full h-72 md:h-[500px] mb-12 md:mb-16 rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src={getImageUrl(post.imageUrl)}
+                src={post.imageUrl}
                 alt={post.title}
                 fill
                 style={{ objectFit: 'cover' }}

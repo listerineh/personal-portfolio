@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { getBlogImageBlur } from '@/lib/image-blur';
-import { getImageUrl } from '@/lib/get-build-version';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { blogPosts } from '@/lib/data';
@@ -185,7 +184,7 @@ export default function BlogListingPage() {
                         {post.imageUrl && (
                           <div className="relative w-full h-64 overflow-hidden">
                             <Image
-                              src={getImageUrl(post.imageUrl)}
+                              src={post.imageUrl}
                               alt={post.title}
                               data-ai-hint={post.imageAiHint || 'blog post image'}
                               className="transition-transform duration-300 group-hover:scale-110"
