@@ -198,10 +198,10 @@ export function Header() {
           onClick={closeMobileMenu}
         >
           <div className="relative">
-            <CodeXml className="w-6 h-6 sm:w-8 sm:h-8" />
+            <CodeXml className="w-10 h-10 md:w-6 md:h-6" />
             <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           </div>
-          <span className="text-xs sm:text-sm md:text-lg">Sebastian Alvarez</span>
+          <span className="text-xs sm:text-sm md:text-lg hidden lg:block">Sebastian Alvarez</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6" aria-label="Main navigation">
