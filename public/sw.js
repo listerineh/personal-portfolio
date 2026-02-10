@@ -10,6 +10,16 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(urlsToCache);
+    }).then(() => {
+      return caches.keys().then((names) => {
+        return Promise.all(
+          names.map((name) => {
+            if (name !== CACHE_NAME) {
+              return caches.delete(name);
+            }
+          })
+        );
+      });
     })
   );
 });
