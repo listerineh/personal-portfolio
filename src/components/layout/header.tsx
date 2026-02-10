@@ -227,8 +227,8 @@ export function Header() {
         </nav>
 
         <div className="md:hidden flex items-center gap-2">
-          <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
-          <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle mobile menu" className="text-foreground hover:text-primary hover:bg-transparent">
+          <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent [&_svg]:w-6 [&_svg]:h-6" />
+          <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle mobile menu" className="text-foreground hover:text-primary hover:bg-transparent [&_svg]:w-6 [&_svg]:h-6">
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
@@ -245,7 +245,7 @@ export function Header() {
                 className="p-2 text-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
                 aria-label="Close menu"
               >
-                <X className="h-8 w-8" />
+                <X className="h-6 w-6" />
               </button>
             </div>
 
