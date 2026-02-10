@@ -7,7 +7,6 @@ import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/comm
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { CacheBuster } from '@/components/common/cache-buster';
 
 import './globals.css';
 
@@ -167,6 +166,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(fontUnbounded.variable, fontOutfit.variable)}>
       <head>
+        <meta httpEquiv="cache-control" content="no-cache, no-store, must-revalidate" />
+        <meta httpEquiv="pragma" content="no-cache" />
+        <meta httpEquiv="expires" content="0" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#3F51B5" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -208,7 +210,6 @@ export default function RootLayout({
             `,
           }}
         />
-        <CacheBuster />
         <ThemeProvider>
           <AnimatedBackground />
           <SmoothScrollWrapper>

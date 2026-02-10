@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useGSAP } from '@/hooks/use-gsap';
+import { getImageUrl } from '@/lib/get-build-version';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -93,7 +94,7 @@ export function ProjectsSection() {
               
               <div className="relative w-full h-48 md:h-56 overflow-hidden rounded-t-xl">
                 <Image
-                  src={project.imageUrl}
+                  src={getImageUrl(project.imageUrl)}
                   alt={project.title}
                   data-ai-hint={project.imageAiHint}
                   className="project-image transition-transform duration-500 group-hover:scale-110"
