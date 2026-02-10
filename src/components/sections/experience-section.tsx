@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Image from "next/image";
 import { Briefcase } from 'lucide-react';
 import { gsap } from 'gsap';
@@ -136,100 +136,84 @@ export function ExperienceSection() {
               }`}
               style={index >= 3 && showAll ? { opacity: 0 } : undefined}
             >
-              {/* Ambient glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-transparent to-accent/8 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
               
-              {/* Content card */}
-              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/60 via-card/40 to-card/60 backdrop-blur-sm border border-border/30 shadow-lg hover:shadow-xl transition-all duration-300 p-6 md:p-8">
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 opacity-40 pointer-events-none" />
+              <div className="relative overflow-hidden rounded-xl bg-card/50 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-md transition-all duration-300 p-6 md:p-7">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/2 via-transparent to-accent/2 opacity-30 pointer-events-none" />
                   
-                  {/* Grid pattern */}
-                  <div className="absolute inset-0 opacity-[0.01] pointer-events-none" style={{
-                    backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-                    backgroundSize: '24px 24px'
-                  }} />
-                  
-                  <div className="relative">
-                    {/* Header with logo */}
-                    <div className="flex items-start gap-4 mb-4">
-                      {/* Logo */}
+                  <div className="relative space-y-4">
+                    <div className="flex items-start gap-4">
                       <div className="flex-shrink-0 experience-logo">
                         {exp.logoUrl ? (
                           <div className="relative">
-                            <div className="absolute inset-0 bg-primary/20 rounded-full blur-md" />
                             <Image
                               src={exp.logoUrl}
                               alt={`${exp.company} logo`}
-                              width={64}
-                              height={64}
-                              className="relative rounded-full border-2 border-background ring-4 ring-primary/20 shadow-lg"
+                              width={56}
+                              height={56}
+                              className="rounded-full border border-border/50 shadow-sm group-hover:shadow-md transition-shadow"
                               style={{
                                 maxWidth: "100%",
                                 height: "auto"
                               }} />
                           </div>
                         ) : (
-                          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 border-2 border-primary/20 text-primary shadow-lg">
-                            <Briefcase className="h-8 w-8" />
+                          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 border border-primary/20 text-primary shadow-sm">
+                            <Briefcase className="h-7 w-7" />
                           </div>
                         )}
                       </div>
 
-                      {/* Title and company */}
-                      <div className="flex-grow">
-                        <h3 className="text-xl md:text-2xl font-headline font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                      <div className="flex-grow min-w-0">
+                        <h3 className="text-lg md:text-xl font-headline font-bold text-foreground group-hover:text-primary transition-colors duration-300 truncate">
                           {exp.jobTitle}
                         </h3>
-                        <p className="text-base md:text-lg font-semibold text-primary/80">
+                        <p className="text-sm md:text-base font-medium text-primary/70 truncate">
                           {exp.company}
                         </p>
-                        <div className="flex flex-wrap items-center gap-2 mt-2 text-sm text-muted-foreground">
-                          <span className="px-2 py-1 bg-primary/10 rounded-md border border-primary/20">
-                            {exp.employmentDates}
-                          </span>
-                          {exp.location && (
-                            <span className="px-2 py-1 bg-accent/10 rounded-md border border-accent/20">
-                              {exp.location}
-                            </span>
-                          )}
-                        </div>
                       </div>
                     </div>
 
-                    {/* Responsibilities */}
-                    <ul className="space-y-2 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm">
+                      <span className="px-2.5 py-1 bg-primary/8 text-primary/80 rounded-md border border-primary/15 font-medium">
+                        {exp.employmentDates}
+                      </span>
+                      {exp.location && (
+                        <span className="px-2.5 py-1 bg-accent/8 text-accent/80 rounded-md border border-accent/15 font-medium">
+                          {exp.location}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="pt-2 space-y-2">
                       {exp.responsibilities
                         .slice(0, expandedItems[index] ? exp.responsibilities.length : 3)
                         .map((responsibility, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                            <span className="leading-relaxed">{responsibility}</span>
-                          </li>
+                          <div key={i} className="flex items-start gap-3 text-sm text-muted-foreground group/item">
+                            <span className="inline-block w-1 h-1 rounded-full bg-primary/60 mt-2.5 flex-shrink-0 group-hover/item:bg-primary transition-colors" />
+                            <span className="leading-relaxed text-foreground/70">{responsibility}</span>
+                          </div>
                       ))}
-                    </ul>
+                    </div>
 
-                    {/* Expand button */}
                     {exp.responsibilities.length > 3 && (
-                      <Button 
-                        variant="link"
-                        onClick={() => toggleExpand(index)}
-                        className="text-primary hover:text-accent text-sm font-semibold p-0 h-auto mt-3"
-                      >
-                        {expandedItems[index] ? '← Show less' : 'See more →'}
-                      </Button>
+                      <div className="pt-1">
+                        <Button 
+                          variant="ghost"
+                          onClick={() => toggleExpand(index)}
+                          className="text-primary hover:text-accent hover:bg-primary/5 text-xs font-semibold p-0 h-auto"
+                        >
+                          {expandedItems[index] ? '← Show less' : 'See more →'}
+                        </Button>
+                      </div>
                     )}
                   </div>
-
-                  {/* Corner highlight */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/5 to-transparent rounded-tr-2xl pointer-events-none" />
                 </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Show all button */}
       {experiences.length > 3 && !showAll && (
         <div className="flex justify-center mt-12">
           <Button 

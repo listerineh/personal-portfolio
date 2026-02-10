@@ -86,22 +86,12 @@ export function ProjectsSection() {
             ref={(el) => { cardsRef.current[index] = el; }}
             className="group relative"
           >
-            {/* Ambient glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-accent/8 to-primary/8 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
             
-            {/* Card */}
-            <Card className="relative overflow-hidden bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-sm border-border/40 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40 pointer-events-none" />
+            <Card className="relative overflow-hidden bg-card/50 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full rounded-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/2 via-transparent to-accent/2 opacity-30 pointer-events-none" />
               
-              {/* Grid pattern */}
-              <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
-                backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-                backgroundSize: '24px 24px'
-              }} />
-              
-              {/* Image container */}
-              <div className="relative w-full h-48 md:h-56 overflow-hidden">
+              <div className="relative w-full h-48 md:h-56 overflow-hidden rounded-t-xl">
                 <Image
                   src={project.imageUrl}
                   alt={project.title}
@@ -113,45 +103,40 @@ export function ProjectsSection() {
                   style={{
                     objectFit: "cover"
                   }} />
-                {/* Image overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-background/10 to-transparent opacity-40" />
               </div>
               
-              {/* Content */}
-              <div className="relative flex flex-col flex-grow">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-xl font-headline font-bold group-hover:text-primary transition-colors">
-                    {project.title}
-                  </CardTitle>
-                  <div className="flex flex-wrap gap-2 pt-3">
-                    {project.tags.map((tag) => (
-                      <Badge 
-                        key={tag} 
-                        variant="secondary" 
-                        className="text-xs bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardHeader>
+              <div className="relative flex flex-col flex-grow p-6">
+                <h3 className="text-lg md:text-xl font-headline font-bold text-foreground mb-3">
+                  {project.title}
+                </h3>
                 
-                <CardContent className="flex-grow pb-4">
-                  <CardDescription className="text-sm leading-relaxed">
-                    {project.description}
-                  </CardDescription>
-                </CardContent>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tags.map((tag) => (
+                    <Badge 
+                      key={tag} 
+                      variant="secondary" 
+                      className="text-xs bg-primary/8 text-primary/80 border border-primary/15 font-medium"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
                 
-                <CardFooter className="flex justify-start gap-3 pt-4 border-t border-border/30">
+                <p className="text-sm text-foreground/70 leading-relaxed mb-4 flex-grow">
+                  {project.description}
+                </p>
+                
+                <div className="flex justify-between gap-2 pt-4 border-t border-border/20">
                   {project.liveDemoUrl && (
                     <Button 
                       asChild 
-                      variant="outline" 
+                      variant="ghost" 
                       size="sm" 
-                      className="border-primary/50 text-primary hover:bg-primary/10 hover:border-primary transition-all"
+                      className="text-primary hover:text-accent text-xs font-semibold p-0 h-auto"
                     >
                       <Link href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                        <ExternalLink className="mr-1.5 h-3.5 w-3.5" /> Live Demo
                       </Link>
                     </Button>
                   )}
@@ -160,19 +145,15 @@ export function ProjectsSection() {
                       asChild 
                       variant="ghost" 
                       size="sm" 
-                      className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all"
+                      className="text-muted-foreground hover:text-foreground text-xs font-semibold p-0 h-auto"
                     >
                       <Link href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="mr-2 h-4 w-4" /> Source
+                        <Github className="mr-1.5 h-3.5 w-3.5" /> Source
                       </Link>
                     </Button>
                   )}
-                </CardFooter>
+                </div>
               </div>
-              
-              {/* Corner highlights */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/10 to-transparent rounded-tr-xl pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-xl pointer-events-none" />
             </Card>
           </div>
         ))}
