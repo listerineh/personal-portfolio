@@ -15,12 +15,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from "@/hooks/use-toast";
 import { useGSAP } from '@/hooks/use-gsap';
+import { contactSection } from '@/lib/data';
 import type { ContactFormData } from "@/types";
 
 const contactFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  message: z.string().min(10, { message: "Message must be at least 10 characters long." }),
+  name: z.string().min(2, { message: contactSection.form.nameError }),
+  email: z.string().email({ message: contactSection.form.emailError }),
+  message: z.string().min(10, { message: contactSection.form.messageError }),
 });
 
 export function ContactSection() {
@@ -82,21 +83,21 @@ export function ContactSection() {
       const result = await submitContactForm(data);
       if (result.success) {
         toast({
-          title: "Message Sent!",
+          title: contactSection.toast.successTitle,
           description: result.message,
         });
         reset();
       } else {
         toast({
-          title: "Error",
-          description: result.message || "Failed to send message. Please try again.",
+          title: contactSection.toast.errorTitle,
+          description: result.message || contactSection.toast.errorMessage,
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
+        title: contactSection.toast.errorTitle,
+        description: contactSection.toast.unexpectedError,
         variant: "destructive",
       });
     } finally {
@@ -105,12 +106,12 @@ export function ContactSection() {
   };
 
   return (
-    <SectionWrapper id="contact" title="Get In Touch" badge='Contact' className="bg-background">
+    <SectionWrapper id="contact" title={contactSection.title} badge={contactSection.badge} className="bg-background">
       <div className="max-w-2xl mx-auto">
         {/* Description */}
         <div className="text-center mb-12">
           <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Have a project in mind, a question, or just want to say hi? Feel free to reach out!
+            {contactSection.description}
           </p>
         </div>
 
@@ -122,12 +123,12 @@ export function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <User className="h-4 w-4 text-primary" />
                     </div>
-                    Your Name
+                    {contactSection.form.nameLabel}
                   </Label>
                   <Input
                     id="name"
                     type="text"
-                    placeholder="e.g. Jane Doe"
+                    placeholder={contactSection.form.namePlaceholder}
                     {...register("name")}
                     className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.name ? "border-destructive focus:border-destructive" : ""}`}
                     aria-invalid={errors.name ? "true" : "false"}
@@ -146,12 +147,12 @@ export function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <Mail className="h-4 w-4 text-primary" />
                     </div>
-                    Your Email
+                    {contactSection.form.emailLabel}
                   </Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="e.g. jane.doe@example.com"
+                    placeholder={contactSection.form.emailPlaceholder}
                     {...register("email")}
                     className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.email ? "border-destructive focus:border-destructive" : ""}`}
                     aria-invalid={errors.email ? "true" : "false"}
@@ -170,11 +171,11 @@ export function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <MessageSquare className="h-4 w-4 text-primary" />
                     </div>
-                    Your Message
+                    {contactSection.form.messageLabel}
                   </Label>
                   <Textarea
                     id="message"
-                    placeholder="Tell me about your project or inquiry..."
+                    placeholder={contactSection.form.messagePlaceholder}
                     rows={6}
                     {...register("message")}
                     className={`text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all resize-none ${errors.message ? "border-destructive focus:border-destructive" : ""}`}
@@ -198,12 +199,12 @@ export function ContactSection() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Sending Message...
+                      {contactSection.form.submittingButton}
                     </>
                   ) : (
                     <>
                       <Mail className="mr-2 h-5 w-5" />
-                      Send Message
+                      {contactSection.form.submitButton}
                     </>
                   )}
                 </Button>

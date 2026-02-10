@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Music } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { navItems, socialLinks } from '@/lib/data';
+import { navItems, socialLinks, footerConfig } from '@/lib/data';
 import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 import { Button } from '@/components/ui/button';
@@ -216,35 +216,35 @@ export function Footer() {
                     <div className="space-y-3 md:space-y-4">
                       <div className="inline-flex">
                         <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-primary/10 text-primary rounded-full border border-primary/20">
-                          Newsletter
+                          {footerConfig.newsletter.badge}
                         </span>
                       </div>
                       
                       <h3 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tight">
-                        Stay ahead of
+                        {footerConfig.newsletter.title}
                         <br />
                         <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                          the curve
+                          {footerConfig.newsletter.titleGradient}
                         </span>
                       </h3>
                       
                       <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                        Join developers who receive curated insights on modern software engineering, cloud infrastructure, and cutting-edge tech.
+                        {footerConfig.newsletter.description}
                       </p>
                     </div>
                     
                     <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-2 md:pt-4">
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">Monthly</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Updates</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">{footerConfig.newsletter.monthlyLabel}</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{footerConfig.newsletter.monthlyValue}</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">0%</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Spam</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">{footerConfig.newsletter.spamLabel}</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{footerConfig.newsletter.spamValue}</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">Free</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">Forever</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">{footerConfig.newsletter.freeLabel}</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{footerConfig.newsletter.freeValue}</div>
                       </div>
                     </div>
                   </div>
@@ -265,24 +265,24 @@ export function Footer() {
         
         <div ref={copyrightRef} className="text-center mt-12 pt-8 border-t border-border/30">
           <p className="text-sm font-medium mb-2">
-            &copy; {currentYear} Sebastian Alvarez. All rights reserved.
+            &copy; {currentYear} Sebastian Alvarez. {footerConfig.copyright.text}
           </p>
           <p className="text-xs text-muted-foreground flex items-center justify-center gap-2">
-            Built with <span className="text-primary">❤️</span> using Next.js, GSAP & Tailwind CSS
+            {footerConfig.copyright.builtWith} <span className="text-primary">❤️</span> {footerConfig.copyright.builtWithTech}
           </p>
           <p className="text-xs text-muted-foreground mt-2 flex flex-wrap items-center justify-center gap-3">
             <CookieSettingsLink />
             <span>•</span>
             <Link href="/privacy" className="hover:text-primary transition-colors underline">
-              Privacy Policy
+              {footerConfig.copyright.privacyPolicy}
             </Link>
             <span>•</span>
             <Link href="/terms" className="hover:text-primary transition-colors underline">
-              Terms of Use
+              {footerConfig.copyright.termsOfUse}
             </Link>
             <span>•</span>
             <Link href="/listerineh" className="hover:text-[#1DB954] transition-colors underline">
-              Why Listerineh?
+              {footerConfig.copyright.whyListerineh}
             </Link>
           </p>
         </div>

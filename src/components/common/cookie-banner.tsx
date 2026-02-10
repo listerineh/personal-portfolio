@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Cookie, X, Settings } from 'lucide-react';
+import { cookieConfig } from '@/lib/data';
 import {
   Dialog,
   DialogContent,
@@ -66,10 +67,9 @@ export function CookieBanner() {
             <div className="flex items-start gap-3 flex-1">
               <Cookie className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div className="space-y-1">
-                <p className="text-sm font-medium">We use cookies</p>
+                <p className="text-sm font-medium">{cookieConfig.banner.title}</p>
                 <p className="text-xs text-muted-foreground">
-                  We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
-                  You can choose which cookies to accept.
+                  {cookieConfig.banner.description}
                 </p>
               </div>
             </div>
@@ -82,21 +82,21 @@ export function CookieBanner() {
                 className="gap-2"
               >
                 <Settings className="h-4 w-4" />
-                Customize
+                {cookieConfig.banner.customizeButton}
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleRejectAll}
               >
-                Reject All
+                {cookieConfig.banner.rejectAllButton}
               </Button>
               <Button
                 size="sm"
                 onClick={handleAcceptAll}
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                Accept All
+                {cookieConfig.banner.acceptAllButton}
               </Button>
             </div>
           </div>
@@ -106,18 +106,18 @@ export function CookieBanner() {
       <Dialog open={showSettings} onOpenChange={setShowSettings}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Cookie Preferences</DialogTitle>
+            <DialogTitle>{cookieConfig.preferences.title}</DialogTitle>
             <DialogDescription>
-              Choose which cookies you want to accept. You can change these settings at any time.
+              {cookieConfig.preferences.description}
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
-                <Label className="text-sm font-medium">Necessary Cookies</Label>
+                <Label className="text-sm font-medium">{cookieConfig.preferences.necessary.label}</Label>
                 <p className="text-xs text-muted-foreground">
-                  Required for the website to function properly. Cannot be disabled.
+                  {cookieConfig.preferences.necessary.description}
                 </p>
               </div>
               <Switch
@@ -130,10 +130,10 @@ export function CookieBanner() {
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="analytics" className="text-sm font-medium">
-                  Analytics Cookies
+                  {cookieConfig.preferences.analytics.label}
                 </Label>
                 <p className="text-xs text-muted-foreground">
-                  Help us understand how visitors interact with our website.
+                  {cookieConfig.preferences.analytics.description}
                 </p>
               </div>
               <Switch
@@ -149,10 +149,10 @@ export function CookieBanner() {
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="preferences" className="text-sm font-medium">
-                  Preference Cookies
+                  {cookieConfig.preferences.preferences.label}
                 </Label>
                 <p className="text-xs text-muted-foreground">
-                  Remember your settings and preferences (e.g., theme, language).
+                  {cookieConfig.preferences.preferences.description}
                 </p>
               </div>
               <Switch
@@ -168,10 +168,10 @@ export function CookieBanner() {
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => setShowSettings(false)}>
-              Cancel
+              {cookieConfig.preferences.cancelButton}
             </Button>
             <Button onClick={handleSavePreferences}>
-              Save Preferences
+              {cookieConfig.preferences.saveButton}
             </Button>
           </div>
         </DialogContent>
