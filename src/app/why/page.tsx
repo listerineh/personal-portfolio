@@ -134,11 +134,12 @@ export default function MusicPage() {
         {/* Hero Section */}
         <section
           ref={heroRef}
-          className="hero-section relative min-h-[80dvh] flex items-center justify-center py-20 pt-28 md:pt-20 overflow-hidden bg-transparent dark:bg-transparent"
+          className="hero-section relative min-h-[90dvh] flex items-center justify-center py-20 pt-28 md:pt-20 overflow-hidden bg-gradient-to-b from-white via-[#fafcfb] to-transparent dark:from-[#0a0f0d] dark:via-[#0f1410] dark:to-transparent"
         >
-          {/* Gradient background elements */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#1DB954]/20 rounded-full blur-3xl opacity-10 -z-10 dark:opacity-30" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#1DB954]/10 rounded-full blur-3xl opacity-5 -z-10 dark:opacity-20" />
+          {/* Enhanced gradient background elements */}
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#1DB954]/25 rounded-full blur-3xl opacity-20 -z-10 dark:opacity-40" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#1DB954]/15 rounded-full blur-3xl opacity-15 -z-10 dark:opacity-30" />
+          <div className="absolute top-1/2 right-0 w-80 h-80 bg-[#1DB954]/10 rounded-full blur-3xl opacity-10 -z-10 dark:opacity-20" />
 
           <div className="container mx-auto px-4 text-center z-10">
             <Link href="/" className="inline-flex items-center gap-2 mb-8 text-[#1DB954] hover:text-[#1ed760] transition-colors">
@@ -146,14 +147,21 @@ export default function MusicPage() {
               <span className="text-sm font-medium">Back to Portfolio</span>
             </Link>
 
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-12">
               <style>{`
                 @keyframes spin {
                   from { transform: rotate(0deg); }
                   to { transform: rotate(360deg); }
                 }
+                @keyframes pulse-glow {
+                  0%, 100% { box-shadow: 0 0 20px rgba(29, 185, 84, 0.3); }
+                  50% { box-shadow: 0 0 40px rgba(29, 185, 84, 0.5); }
+                }
                 .vinyl-record {
                   animation: spin 3s linear infinite;
+                }
+                .vinyl-container {
+                  animation: pulse-glow 3s ease-in-out infinite;
                 }
                 :root {
                   --vinyl-main: #0d6b3a;
@@ -170,7 +178,7 @@ export default function MusicPage() {
                   --vinyl-dot: #0a0f0d;
                 }
               `}</style>
-              <div className="p-4 bg-[#1DB954]/5 rounded-full border border-[#1DB954]/40 dark:bg-[#1DB954]/10 dark:border-[#1DB954]/30">
+              <div className="vinyl-container p-6 bg-gradient-to-br from-[#1DB954]/10 to-[#1DB954]/5 rounded-full border border-[#1DB954]/50 dark:bg-gradient-to-br dark:from-[#1DB954]/20 dark:to-[#1DB954]/10 dark:border-[#1DB954]/40 shadow-lg">
                 <svg className="vinyl-record w-12 h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                   {/* Vinyl record background */}
                   <circle cx="50" cy="50" r="48" fill="var(--vinyl-main)" />
@@ -208,28 +216,28 @@ export default function MusicPage() {
 
             <h1
               ref={titleRef}
-              className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold text-gray-900 dark:text-white mb-6"
+              className="text-5xl sm:text-6xl md:text-8xl font-headline font-bold bg-gradient-to-r from-gray-900 via-[#1DB954] to-gray-900 dark:from-white dark:via-[#1DB954] dark:to-white bg-clip-text text-transparent mb-8"
             >
               Why Listerineh?
             </h1>
 
             <p
               ref={descriptionRef}
-              className="max-w-3xl mx-auto text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-12 leading-relaxed"
+              className="max-w-3xl mx-auto text-lg md:text-2xl text-gray-700 dark:text-gray-300 mb-16 leading-relaxed font-light"
             >
               Beyond code and algorithms, I'm a passionate musician. <span className="text-[#1DB954] font-semibold">Listerineh</span> is my artistic identity—where creativity meets sound, and the same problem-solving mindset I apply to software is expressed through music.
             </p>
 
             <div
               ref={contentRef}
-              className="flex flex-col sm:flex-row justify-center items-center gap-4"
+              className="flex flex-col sm:flex-row justify-center items-center gap-6"
             >
               <a
                 ref={spotifyButtonRef}
                 href="https://open.spotify.com/artist/0BdmyZL99TkXwGT5FiPNmt?si=igQ5Eh2gS_6_xmBRPrmC8w"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-[#1DB954] text-black font-bold rounded-full hover:bg-[#1ed760] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-[#1DB954] to-[#1ed760] text-black font-bold rounded-full hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-110 active:scale-95"
               >
                 <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
                   <path fill="currentColor" d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8Z"/>
@@ -241,7 +249,7 @@ export default function MusicPage() {
                 href="https://instagram.com/__listerineh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 border border-[#1DB954] text-[#1DB954] font-bold rounded-full hover:bg-[#1DB954]/10 hover:text-[#0d7a3a] transition-all duration-300 dark:hover:bg-[#1DB954]/10 dark:hover:text-[#1ed760]"
+                className="inline-flex items-center gap-3 px-10 py-5 border-2 border-[#1DB954] text-[#1DB954] font-bold rounded-full hover:bg-[#1DB954]/15 hover:border-[#1ed760] hover:text-[#1ed760] transition-all duration-300 dark:hover:bg-[#1DB954]/20 dark:hover:text-[#1ed760] shadow-md hover:shadow-lg"
               >
                 <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -255,13 +263,16 @@ export default function MusicPage() {
         </section>
 
         {/* Story Section */}
-        <section id="story" className="story-section py-20 md:py-32 px-4 bg-transparent">
-          <div className="container mx-auto max-w-4xl">
-            <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-              <div className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-headline font-bold text-gray-900 dark:text-white">
-                  The Artist Behind the Code
-                </h2>
+        <section id="story" className="story-section py-20 md:py-32 px-4 bg-gradient-to-b from-transparent via-[#1DB954]/3 to-transparent dark:via-[#1DB954]/5">
+          <div className="container mx-auto max-w-5xl">
+            <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
+              <div className="space-y-8">
+                <div>
+                  <span className="inline-block px-4 py-2 bg-[#1DB954]/10 text-[#1DB954] rounded-full text-sm font-semibold mb-4">The Story</span>
+                  <h2 className="text-4xl md:text-5xl font-headline font-bold text-gray-900 dark:text-white">
+                    The Artist Behind the Code
+                  </h2>
+                </div>
                 <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
                   Music and software development share the same DNA—both require precision, creativity, and the ability to solve complex problems in elegant ways. What started in 2020 as a simple escape during the pandemic has evolved into something much deeper.
                 </p>
@@ -273,39 +284,39 @@ export default function MusicPage() {
                 </p>
               </div>
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1DB954]/20 to-[#1DB954]/5 rounded-2xl blur-2xl opacity-30 dark:opacity-100" />
-                <div className="relative bg-[#1DB954]/5 border border-[#1DB954]/20 rounded-2xl p-8 backdrop-blur-sm dark:bg-gradient-to-br dark:from-[#1DB954]/10 dark:to-transparent dark:border-[#1DB954]/30">
-                  <div className="space-y-5 text-gray-700 dark:text-gray-300">
-                    <div className="flex items-start gap-4">
-                      <div className="w-2 h-2 bg-[#1DB954] rounded-full mt-2 flex-shrink-0" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#1DB954]/25 to-[#1DB954]/5 rounded-3xl blur-3xl opacity-40 dark:opacity-60" />
+                <div className="relative bg-gradient-to-br from-[#1DB954]/8 via-[#1DB954]/3 to-transparent border border-[#1DB954]/30 rounded-3xl p-10 backdrop-blur-md dark:bg-gradient-to-br dark:from-[#1DB954]/15 dark:via-[#1DB954]/5 dark:to-transparent dark:border-[#1DB954]/40 shadow-xl">
+                  <div className="space-y-6 text-gray-700 dark:text-gray-300">
+                    <div className="flex items-start gap-4 p-4 rounded-xl bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+                      <div className="w-3 h-3 bg-gradient-to-br from-[#1DB954] to-[#1ed760] rounded-full mt-1.5 flex-shrink-0" />
                       <div>
-                        <h3 className="text-gray-900 dark:text-white font-semibold mb-2">Instruments</h3>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">Guitar • Bass • Piano • Production</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Multiinstrumentalist with experience in rock bands</p>
+                        <h3 className="text-gray-900 dark:text-white font-bold mb-2">Instruments</h3>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Guitar • Bass • Piano • Production</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Multiinstrumentalist with experience in rock bands</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-2 h-2 bg-[#1DB954] rounded-full mt-2 flex-shrink-0" />
+                    <div className="flex items-start gap-4 p-4 rounded-xl bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+                      <div className="w-3 h-3 bg-gradient-to-br from-[#1DB954] to-[#1ed760] rounded-full mt-1.5 flex-shrink-0" />
                       <div>
-                        <h3 className="text-gray-900 dark:text-white font-semibold mb-2">Production Style</h3>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">Lo-Fi Hip-Hop • Electronic • Ambient</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Blending instrumental depth with experimental soundscapes</p>
+                        <h3 className="text-gray-900 dark:text-white font-bold mb-2">Production Style</h3>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Lo-Fi Hip-Hop • Electronic • Ambient</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Blending instrumental depth with experimental soundscapes</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-2 h-2 bg-[#1DB954] rounded-full mt-2 flex-shrink-0" />
+                    <div className="flex items-start gap-4 p-4 rounded-xl bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+                      <div className="w-3 h-3 bg-gradient-to-br from-[#1DB954] to-[#1ed760] rounded-full mt-1.5 flex-shrink-0" />
                       <div>
-                        <h3 className="text-gray-900 dark:text-white font-semibold mb-2">Inspiration</h3>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">Tech • Nature • Human Connection • Late-night Thoughts</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Capturing emotions and memories through sound</p>
+                        <h3 className="text-gray-900 dark:text-white font-bold mb-2">Inspiration</h3>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Tech • Nature • Human Connection • Late-night Thoughts</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Capturing emotions and memories through sound</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-2 h-2 bg-[#1DB954] rounded-full mt-2 flex-shrink-0" />
+                    <div className="flex items-start gap-4 p-4 rounded-xl bg-white/40 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 transition-colors">
+                      <div className="w-3 h-3 bg-gradient-to-br from-[#1DB954] to-[#1ed760] rounded-full mt-1.5 flex-shrink-0" />
                       <div>
-                        <h3 className="text-gray-900 dark:text-white font-semibold mb-2">Vision</h3>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">Creating meaningful auditory experiences</p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Still exploring, still figuring things out</p>
+                        <h3 className="text-gray-900 dark:text-white font-bold mb-2">Vision</h3>
+                        <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Creating meaningful auditory experiences</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Still exploring, still figuring things out</p>
                       </div>
                     </div>
                   </div>
@@ -316,15 +327,18 @@ export default function MusicPage() {
         </section>
 
         {/* Spotify Embed Section */}
-        <section className="spotify-section py-20 md:py-32 px-4 bg-gradient-to-b from-transparent via-[#1DB954]/5 to-transparent dark:bg-gradient-to-b dark:from-transparent dark:via-[#1DB954]/5 dark:to-transparent">
-          <div className="container mx-auto max-w-4xl">
-            <h2 className="text-3xl md:text-4xl font-headline font-bold text-gray-900 dark:text-white text-center mb-12">
-              Latest Releases
-            </h2>
-            <div>
-              <p className="text-gray-700 dark:text-gray-300 text-center mb-8">
-                Listen to my latest tracks and explore my music on Spotify
+        <section className="spotify-section py-20 md:py-32 px-4 bg-gradient-to-b from-transparent via-[#1DB954]/8 to-transparent dark:bg-gradient-to-b dark:from-transparent dark:via-[#1DB954]/10 dark:to-transparent">
+          <div className="container mx-auto max-w-5xl">
+            <div className="text-center mb-16">
+              <span className="inline-block px-4 py-2 bg-[#1DB954]/10 text-[#1DB954] rounded-full text-sm font-semibold mb-4">Music</span>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold text-gray-900 dark:text-white text-center mb-6">
+                Top Tracks
+              </h2>
+              <p className="text-lg text-gray-700 dark:text-gray-300 text-center max-w-2xl mx-auto">
+                Listen to my top tracks and explore my music on Spotify. Each release is a journey through sound and emotion.
               </p>
+            </div>
+            <div>
               
               <SpotifyPlayer artistId="0BdmyZL99TkXwGT5FiPNmt" artistName="Listerineh" />
             </div>
@@ -332,19 +346,26 @@ export default function MusicPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="cta-section py-20 md:py-32 px-4 bg-transparent">
-          <div className="container mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl md:text-4xl font-headline font-bold text-gray-900 dark:text-white mb-6">
-              Let's Create Something Together
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300 text-lg mb-8">
-              Whether it's a software project or a musical collaboration, I'm always open to new opportunities.
+        <section className="cta-section py-20 md:py-32 px-4 bg-gradient-to-b from-transparent via-[#1DB954]/5 to-transparent dark:via-[#1DB954]/8 relative overflow-hidden">
+          {/* Background gradient orbs */}
+          <div className="absolute top-0 left-0 w-96 h-96 bg-[#1DB954]/15 rounded-full blur-3xl opacity-20 -z-10 dark:opacity-30" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#1DB954]/10 rounded-full blur-3xl opacity-15 -z-10 dark:opacity-25" />
+          
+          <div className="container mx-auto max-w-3xl text-center relative z-10">
+            <div className="mb-8">
+              <span className="inline-block px-4 py-2 bg-[#1DB954]/10 text-[#1DB954] rounded-full text-sm font-semibold mb-6">Let's Collaborate</span>
+              <h2 className="text-4xl md:text-5xl font-headline font-bold bg-gradient-to-r from-gray-900 via-[#1DB954] to-gray-900 dark:from-white dark:via-[#1DB954] dark:to-white bg-clip-text text-transparent mb-6">
+                Let's Create Something Together
+              </h2>
+            </div>
+            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-12 leading-relaxed max-w-2xl mx-auto">
+              Whether it's a software project or a musical collaboration, I'm always open to new opportunities. Let's build something meaningful together.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
               <Link href="/#contact">
                 <Button
                   size="lg"
-                  className="bg-[#1DB954] text-black font-bold hover:bg-[#1ed760] transition-all duration-300"
+                  className="bg-gradient-to-r from-[#1DB954] to-[#1ed760] text-black font-bold hover:shadow-2xl transition-all duration-300 shadow-lg px-10 py-6 text-lg"
                 >
                   Get in Touch
                 </Button>
@@ -353,7 +374,7 @@ export default function MusicPage() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-[#1DB954] text-[#1DB954] hover:bg-[#1DB954]/10 hover:text-[#0d7a3a] dark:hover:text-[#1ed760]"
+                  className="border-2 border-[#1DB954] text-[#1DB954] font-bold hover:bg-[#1DB954]/15 hover:border-[#1ed760] hover:text-[#1ed760] dark:hover:bg-[#1DB954]/20 dark:hover:text-[#1ed760] transition-all duration-300 shadow-md hover:shadow-lg px-10 py-6 text-lg"
                 >
                   Back to Portfolio
                 </Button>
