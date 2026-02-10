@@ -55,29 +55,29 @@ export async function POST(request: Request) {
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
               <title>New Blog Post</title>
             </head>
-            <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f9fafb;">
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9fafb; padding: 40px 20px;">
+            <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f0f2f5;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f0f2f5; padding: 40px 20px;">
                 <tr>
                   <td align="center">
-                    <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
                       ${blogImageUrl ? `
                         <tr>
-                          <td>
-                            <img src="${blogImageUrl}" alt="${blogTitle}" style="width: 100%; height: auto; display: block;">
+                          <td style="overflow: hidden; border-radius: 12px 12px 0 0;">
+                            <img src="${blogImageUrl}" alt="${blogTitle}" style="width: 100%; height: auto; display: block; max-height: 300px; object-fit: cover;">
                           </td>
                         </tr>
                       ` : ''}
                       <tr>
                         <td style="padding: 40px;">
-                          <h1 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #111827; line-height: 1.3;">
+                          <h1 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #2d2d2d; line-height: 1.3;">
                             ${blogTitle}
                           </h1>
-                          <p style="margin: 0 0 24px; font-size: 16px; color: #6b7280; line-height: 1.6;">
+                          <p style="margin: 0 0 24px; font-size: 16px; color: #666666; line-height: 1.6;">
                             ${blogExcerpt || 'I just published a new blog post that you might find interesting.'}
                           </p>
                           <table cellpadding="0" cellspacing="0" style="margin: 0;">
                             <tr>
-                              <td style="border-radius: 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                              <td style="border-radius: 8px; background: linear-gradient(135deg, #c2185b 0%, #d81b60 100%);">
                                 <a href="https://listerineh.dev/blog/${blogSlug}" style="display: inline-block; padding: 14px 32px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none;">
                                   Read the Article →
                                 </a>
@@ -92,7 +92,8 @@ export async function POST(request: Request) {
                             You're receiving this email because you subscribed to my newsletter.
                           </p>
                           <p style="margin: 0; font-size: 14px; color: #9ca3af;">
-                            If you no longer wish to receive these emails, please contact me.
+                            Best regards,<br/>
+                            <strong>Sebastian Alvarez</strong>
                           </p>
                         </td>
                       </tr>
