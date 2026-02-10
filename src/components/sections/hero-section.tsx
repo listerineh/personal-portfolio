@@ -109,7 +109,7 @@ export function HeroSection() {
           ref={imageRef}
           className="relative w-36 h-36 md:w-48 md:h-48 mx-auto mb-8"
         >
-          <div className="w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-primary">
+          <div ref={imageContainerRef} className="w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-primary">
             <Image
               src={hero.href}
               alt={hero.title}

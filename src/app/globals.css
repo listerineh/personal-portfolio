@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
     --muted-foreground: 220 10% 45%;
 
     --accent: 307 61% 37%;      /* Refined Rose */
-    --accent-foreground: 220 15% 50%;  /* White text on accent */
+    --accent-foreground: 0 0% 100%;  /* White text on accent */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -121,6 +121,11 @@ h1, h2, h3, h4, h5, h6 {
   body {
     @apply bg-background text-foreground;
     @apply antialiased;
+  }
+
+  ::selection {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
   }
 }
 
