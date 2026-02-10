@@ -5,3 +5,4 @@ export { ThemeToggleButton } from './theme-toggle-button';
 export { BackToTopButton } from './back-to-top-button';
 export { ErrorBoundary } from './error-boundary';
 export { CookieBanner } from './cookie-banner';
+export { CacheBuster } from './cache-buster';
