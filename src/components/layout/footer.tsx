@@ -281,7 +281,7 @@ export function Footer() {
               {footerConfig.copyright.termsOfUse}
             </Link>
             <span>•</span>
-            <Link href="/listerineh" className="hover:text-[#1DB954] transition-colors underline">
+            <Link href="/why" className="hover:text-[#1DB954] transition-colors underline">
               {footerConfig.copyright.whyListerineh}
             </Link>
           </p>
