@@ -20,6 +20,7 @@ import { ArticleSchema } from '@/components/blog/article-schema';
 import { BlogViews } from './blog-views';
 import { BlogReactions } from './blog-reactions';
 import { TableOfContents } from './table-of-contents';
+import { CodeBlockCopyButton } from './code-block-copy-button';
 import { NewsletterSubscribe } from './newsletter-subscribe';
 import { RelatedPosts } from '@/components/common/related-posts';
 import { NewsletterSignup } from '@/components/common/newsletter-signup';
@@ -38,9 +39,10 @@ interface BlogPostClientPageProps {
 export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const proseRef = useRef<HTMLDivElement>(null);
+  const asideRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -88,9 +90,101 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
   }, []);
 
   useEffect(() => {
+    if (proseRef.current) {
+      const headings = proseRef.current.querySelectorAll('h2, h3');
+      
+      headings.forEach((heading, index) => {
+        if (!heading.id) {
+          const text = heading.textContent || '';
+          const id = text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+          heading.id = id || `heading-${index}`;
+        }
+      });
+
+      const codeBlocks = proseRef.current.querySelectorAll('pre');
+      codeBlocks.forEach((codeBlock) => {
+        if (!codeBlock.querySelector('[data-copy-button]')) {
+          const codeElement = codeBlock.querySelector('code');
+          const code = codeElement?.textContent || '';
+          
+          const wrapper = document.createElement('div');
+          wrapper.className = 'relative';
+          codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
+          wrapper.appendChild(codeBlock);
+          
+          const button = document.createElement('button');
+          button.setAttribute('data-copy-button', 'true');
+          button.className = 'absolute top-3 right-3 p-2 rounded-lg transition-all duration-200 bg-primary/10 hover:bg-primary/20 text-foreground/70 hover:text-foreground border border-border/50 hover:border-primary/50 flex items-center gap-2 text-xs font-medium';
+          button.innerHTML = '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg><span>Copy</span>';
+          
+          button.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(code);
+              button.innerHTML = '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Copied!</span>';
+              button.classList.add('bg-green-500/20', 'border-green-500/50', 'text-green-600', 'dark:text-green-400');
+              setTimeout(() => {
+                button.innerHTML = '<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg><span>Copy</span>';
+                button.classList.remove('bg-green-500/20', 'border-green-500/50', 'text-green-600', 'dark:text-green-400');
+              }, 2000);
+            } catch (err) {
+              console.error('Failed to copy code:', err);
+            }
+          });
+          
+          wrapper.appendChild(button);
+        }
+      });
+    }
+  }, [post.content]);
+
+  useEffect(() => {
+    const handleAsideVisibility = () => {
+      if (!asideRef.current) return;
+
+      const footer = document.querySelector('footer');
+      if (!footer) {
+        gsap.to(asideRef.current, {
+          opacity: 1,
+          duration: 0.3,
+          pointerEvents: 'auto',
+        });
+        return;
+      }
+
+      const footerRect = footer.getBoundingClientRect();
+      const asideRect = asideRef.current.getBoundingClientRect();
+
+      if (asideRect.bottom > footerRect.top) {
+        gsap.to(asideRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          pointerEvents: 'none',
+        });
+      } else {
+        gsap.to(asideRef.current, {
+          opacity: 1,
+          duration: 0.3,
+          pointerEvents: 'auto',
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleAsideVisibility);
+    handleAsideVisibility();
+
+    return () => {
+      window.removeEventListener('scroll', handleAsideVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-    const timer = setTimeout(() => {
+    const ctx = gsap.context(() => {
       if (headerRef.current && headerRef.current.children.length > 0) {
         const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
         gsap.fromTo(headerRef.current.children,
@@ -217,10 +311,10 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           );
         });
       }
-    }, 100);
+    });
 
     return () => {
-      clearTimeout(timer);
+      ctx.revert();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, [post.slug]);
@@ -230,11 +324,16 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
       <BlogStructuredData post={post} />
       <ArticleSchema post={post} />
       <Header />
+      <aside ref={asideRef} className="fixed right-4 top-24 w-[280px] max-h-[calc(100vh-6rem)] overflow-y-auto z-40 pointer-events-auto">
+        <div className="pr-2">
+          <TableOfContents content={post.content} />
+        </div>
+      </aside>
       <main className="pt-20 bg-background">
         <Progress value={readingProgress} className="fixed top-20 left-0 right-0 h-1 z-50 rounded-none bg-primary/20 transition-all duration-150" />
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="relative max-w-7xl mx-auto">
-            <article key={post.slug} ref={contentRef} className="max-w-4xl mx-auto">
+            <article key={post.slug} ref={contentRef} className="max-w-4xl">
           <header ref={headerRef} className="mb-8 md:mb-12">
             <Button asChild variant="ghost" className="mb-6 text-accent hover:text-primary pl-0">
               <Link href="/blog">
@@ -353,13 +452,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
             </Button>
           </div>
 
-        </article>
-            
-            <aside className="hidden xl:block absolute top-0 right-0 w-[280px]">
-              <div className="sticky top-24">
-                <TableOfContents content={post.content} />
-              </div>
-            </aside>
+            </article>
           </div>
         </div>
       </main>
