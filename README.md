@@ -51,46 +51,14 @@ Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 
 ## ✨ Features
 
-### 🎯 Core Features
-✅ Fully responsive design (mobile-first approach)
+| Category | Features |
+|----------|----------|
+| **🎯 Core** | Fully responsive design • Dark/light mode toggle • Contact form with Resend API • Technical blog with markdown • Downloadable resume • SEO optimized |
+| **🎬 Animations** | GSAP scroll animations • Parallax effects • Theme toggle curtain effect • Mesh gradient background • Page transitions • Back to top button |
+| **📱 Sections** | Hero with intro • Work experience timeline • Skills showcase • Projects gallery • Blog preview • Contact form |
+| **🚀 Performance** | WebP optimization • Static site generation • Font optimization • Code splitting • Lighthouse 95+ • Smart cache strategy |
 
-✅ Dark/light mode toggle with smooth transitions
-
-✅ Contact form with email integration (Resend API)
-
-✅ Technical blog with markdown support
-
-✅ Downloadable resume
-
-✅ SEO optimized with metadata and Open Graph tags
-
-### 🎬 Animations & UX
-✅ Smooth scroll-based animations with GSAP
-
-✅ Parallax effects and scroll triggers
-
-✅ Elegant theme toggle with curtain effect
-
-✅ Animated background with mesh gradients
-
-✅ Smooth page transitions
-
-✅ Back to top button with progress indicator
-
-### 📱 Sections
-✅ Hero section with animated introduction
-
-✅ Work experience timeline with expandable details
-
-✅ Skills showcase with animated skill cards
-
-✅ Projects gallery with live demos and source code
-
-✅ Blog preview with featured posts
-
-✅ Contact form with validation
-
-### 🚀 Performance
+### 🚀 Performance & Caching
 ✅ WebP image optimization
 
 ✅ Static site generation (SSG) for blog posts
@@ -100,6 +68,12 @@ Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 ✅ Code splitting and lazy loading
 
 ✅ Lighthouse score: 95+ on all metrics
+
+✅ Smart cache invalidation strategy:
+- HTML pages: `max-age=0, must-revalidate` (always fresh)
+- Images: `max-age=3600, stale-while-revalidate=86400` (1 hour cache)
+- Static assets: `max-age=31536000, immutable` (1 year, content-hashed)
+- Service Worker auto-cleanup of old caches on deployment
 
 ---
 
@@ -151,7 +125,10 @@ Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 | `npm run build` | Build the application for production |
 | `npm start` | Start the production server |
 | `npm run lint` | Run ESLint to check code quality |
+| `npm run typecheck` | Run TypeScript type checking |
 | `npm run convert-images` | Convert JPEG/PNG images to WebP format recursively in `/public` |
+| `npm run convert-heic` | Convert HEIC images to WebP format |
+| `npm run notify-blog` | Send blog notification emails to subscribers |
 
 ### 🖼️ Image Optimization Script
 
@@ -170,19 +147,39 @@ npm run convert-images
 
 See `scripts/README.md` for more details.
 
+### 🔄 Cache Strategy & Service Worker
+
+The application implements a sophisticated cache invalidation strategy:
+
+**HTTP Headers Configuration** (`next.config.ts`):
+- **HTML Pages** (`/:path*`): `max-age=0, must-revalidate` - Always validates with server, never cached
+- **Images** (`/images/`, `/blog/*.webp`): `max-age=3600, stale-while-revalidate=86400` - Cached 1 hour, serves stale while revalidating
+- **Static Assets** (`/_next/static/`): `max-age=31536000, immutable` - Cached 1 year (content-hashed, safe)
+
+**Service Worker** (`public/sw.js`):
+- Automatically cleans up old caches on installation
+- Implements cache-first strategy for offline support
+- Removes outdated cache entries on deployment
+
+This ensures:
+✅ New deployments are reflected immediately in HTML
+✅ Images are cached for performance but updated within 1 hour
+✅ Static assets are aggressively cached (1 year) due to content hashing
+✅ No stale cache issues after deployment
+
 ---
 
 ## 🔄 Customization Guide
 
 ### 1. **Update Personal Information**
 
-Edit `src/lib/data.ts` to customize:
-- Hero section (name, title, description)
-- Work experience
-- Skills
-- Projects
-- Blog posts
-- Contact information
+Edit `src/lib/data/` files to customize:
+- `hero.ts` - Hero section (name, title, description)
+- `experience.ts` - Work experience timeline
+- `skills.ts` - Skills showcase
+- `projects.ts` - Projects gallery
+- `blog.ts` - Blog posts content
+- `social.ts` - Social media links
 
 ### 2. **Customize Design**
 
@@ -195,6 +192,7 @@ Modify `src/app/globals.css` for:
 ### 3. **Update Theme Colors**
 
 Edit the theme colors in `tailwind.config.ts`:
+
 ```typescript
 colors: {
   primary: "...",
@@ -205,7 +203,8 @@ colors: {
 
 ### 4. **Add Blog Posts**
 
-Add new blog posts in `src/lib/data.ts`:
+Add new blog posts in `src/lib/data/blog.ts`:
+
 ```typescript
 {
   slug: 'your-post-slug',
@@ -213,6 +212,7 @@ Add new blog posts in `src/lib/data.ts`:
   date: 'Month Day, Year',
   excerpt: 'Brief description...',
   imageUrl: '/blog/your-image.webp',
+  imageAiHint: 'Image description for AI',
   content: `Your markdown content...`,
   author: 'Your Name',
   tags: ['Tag1', 'Tag2']
@@ -222,6 +222,13 @@ Add new blog posts in `src/lib/data.ts`:
 ### 5. **Configure Contact Form**
 
 Get a free API key from [Resend](https://resend.com) and add it to your `.env.local` file.
+
+### 6. **Cache Configuration**
+
+Modify cache headers in `next.config.ts`:
+- HTML pages: `max-age=0, must-revalidate`
+- Images: `max-age=3600, stale-while-revalidate=86400`
+- Static assets: `max-age=31536000, immutable`
 
 ---
 
