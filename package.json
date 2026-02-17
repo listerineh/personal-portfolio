@@ -1,13 +1,19 @@
 {
   "name": "listerineh-portfolio",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "private": true,
   "scripts": {
+    "postinstall": "node scripts/setup-playwright.js",
     "dev": "next dev --turbopack -p 9002",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:server": "next dev --turbopack -p 3001",
+    "test": "playwright test --reporter=list",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
     "convert-images": "node scripts/convert-images-to-webp.js",
     "convert-heic": "node scripts/convert-heic-to-webp.js",
     "notify-blog": "node scripts/send-blog-notification.js"
@@ -48,6 +54,7 @@
     "marked": "^15.0.12",
     "next": "^15.5.9",
     "patch-package": "^8.0.0",
+    "playwright": "^1.58.2",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
@@ -60,6 +67,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
