@@ -22,7 +22,8 @@ console.log('Installing Playwright browsers...');
 console.log('This may take a few minutes on first run.\n');
 
 try {
-  execSync('npx playwright install', { stdio: 'inherit' });
+  const env = { ...process.env, PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS: '1' };
+  execSync('npx playwright install', { stdio: 'inherit', env });
   console.log('\n✓ Playwright setup complete!');
   process.exit(0);
 } catch (error) {
