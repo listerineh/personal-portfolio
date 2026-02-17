@@ -73,7 +73,6 @@ export function TableOfContents({ content }: TableOfContentsProps) {
 
     extractHeadings();
 
-    // Setup MutationObserver to detect when IDs are added to headings
     const proseContainer = document.querySelector('.prose');
     if (proseContainer) {
       const observer = new MutationObserver(() => {
@@ -107,10 +106,8 @@ export function TableOfContents({ content }: TableOfContentsProps) {
     const proseContainer = document.querySelector('.prose');
     if (!proseContainer) return;
     
-    // First try to find by ID
     let element = document.getElementById(id);
     
-    // If not found by ID, search by text content
     if (!element) {
       const allHeadings = proseContainer.querySelectorAll('h2, h3');
       element = Array.from(allHeadings).find((h: any) => h.textContent === text) as HTMLElement;
