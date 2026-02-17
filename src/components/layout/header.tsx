@@ -235,7 +235,7 @@ export function Header() {
       </div>
 
       {isMobile && isMobileMenuOpen && (
-        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/98 backdrop-blur-sm" style={{ height: '100dvh' }}>
+        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/99 backdrop-blur-xl" style={{ height: '100dvh' }}>
           <div className="flex flex-col h-full">
             {/* Header with close button - Fixed */}
             <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between p-6 border-b border-border/20">
