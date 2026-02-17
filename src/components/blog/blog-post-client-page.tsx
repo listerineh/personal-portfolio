@@ -300,24 +300,24 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
         <div className="container mx-auto px-4 py-12 md:py-16 xl:mr-[320px]">
           <div className="relative max-w-7xl mx-auto">
             <article key={post.slug} ref={contentRef} className="max-w-4xl">
-          <header ref={headerRef} className="mb-8 md:mb-12">
-            <Button asChild variant="ghost" className="mb-6 text-accent hover:text-primary pl-0">
+          <header ref={headerRef} className="mb-6 md:mb-12">
+            <Button asChild variant="ghost" className="mb-4 md:mb-6 text-accent hover:text-primary pl-0">
               <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
               </Link>
             </Button>
-            <div className="flex items-start justify-between gap-4 mb-6">
-              <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary leading-tight flex-1">
+            <div className="flex flex-col gap-4 mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-headline font-bold text-primary leading-tight">
                 {post.title}
               </h1>
-              <div className="hidden md:block pt-2">
+              <div className="hidden md:block">
                 <ShareButtons 
                   title={post.title} 
                   url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
                 />
               </div>
             </div>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base text-muted-foreground mb-4">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-6 sm:gap-y-2 text-sm sm:text-base text-muted-foreground mb-4">
               <div className="flex items-center">
                 <CalendarDays className="mr-2 h-5 w-5" />
                 <span>{post.date}</span>
@@ -332,12 +332,12 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
               </div>
               <BlogViews slug={post.slug} />
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div className="flex flex-col gap-4 mb-4">
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2">
-                  <Tag className="mr-1.5 h-5 w-5 text-muted-foreground" />
+                  <Tag className="mr-1.5 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                   {post.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="font-normal text-sm px-3 py-1">{tag}</Badge>
+                    <Badge key={tag} variant="secondary" className="font-normal text-xs sm:text-sm px-2 sm:px-3 py-1">{tag}</Badge>
                   ))}
                 </div>
               )}
@@ -351,7 +351,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           </header>
 
           {post.imageUrl && (
-            <div ref={imageRef} className="relative w-full h-72 md:h-[500px] mb-12 md:mb-16 rounded-2xl overflow-hidden shadow-2xl">
+            <div ref={imageRef} className="relative w-full h-48 sm:h-72 md:h-[500px] mb-8 md:mb-16 rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl">
               <Image
                 src={post.imageUrl}
                 alt={post.title}
@@ -365,7 +365,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
             </div>
           )}
 
-          <Separator className="my-8 md:my-12" />
+          <Separator className="my-6 md:my-12" />
 
           <div
             ref={proseRef}
@@ -392,15 +392,15 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
           <Separator className="my-8" />
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+          <div className="flex flex-col gap-4 mb-8">
             <p className="text-muted-foreground">Found this article helpful? Share it!</p>
-            <ShareButtons 
-              title={post.title} 
-              url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
-            />
+            <div className="w-full sm:w-auto">
+              <ShareButtons 
+                title={post.title} 
+                url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
+              />
+            </div>
           </div>
-
-          <Separator className="my-12" />
 
           <RelatedPosts currentSlug={post.slug} limit={3} />
 
