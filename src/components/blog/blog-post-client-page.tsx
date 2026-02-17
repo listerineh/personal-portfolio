@@ -20,6 +20,7 @@ import { ArticleSchema } from '@/components/blog/article-schema';
 import { BlogViews } from './blog-views';
 import { BlogReactions } from './blog-reactions';
 import { TableOfContents } from './table-of-contents';
+import { CodeBlockCopyButton } from './code-block-copy-button';
 import { NewsletterSubscribe } from './newsletter-subscribe';
 import { RelatedPosts } from '@/components/common/related-posts';
 import { NewsletterSignup } from '@/components/common/newsletter-signup';
@@ -38,9 +39,10 @@ interface BlogPostClientPageProps {
 export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const proseRef = useRef<HTMLDivElement>(null);
+  const asideRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -88,9 +90,67 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
   }, []);
 
   useEffect(() => {
+    if (proseRef.current) {
+      const headings = proseRef.current.querySelectorAll('h2, h3');
+      
+      headings.forEach((heading, index) => {
+        if (!heading.id) {
+          const text = heading.textContent || '';
+          const id = text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+          heading.id = id || `heading-${index}`;
+        }
+      });
+    }
+  }, [post.content]);
+
+  useEffect(() => {
+    const handleAsideVisibility = () => {
+      if (!asideRef.current) return;
+
+      const footer = document.querySelector('footer');
+      if (!footer) {
+        gsap.to(asideRef.current, {
+          opacity: 1,
+          duration: 0.3,
+          pointerEvents: 'auto',
+        });
+        return;
+      }
+
+      const footerRect = footer.getBoundingClientRect();
+      const asideRect = asideRef.current.getBoundingClientRect();
+
+      if (asideRect.bottom > footerRect.top) {
+        gsap.to(asideRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          pointerEvents: 'none',
+        });
+      } else {
+        gsap.to(asideRef.current, {
+          opacity: 1,
+          duration: 0.3,
+          pointerEvents: 'auto',
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleAsideVisibility);
+    handleAsideVisibility();
+
+    return () => {
+      window.removeEventListener('scroll', handleAsideVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
 
-    const timer = setTimeout(() => {
+    const ctx = gsap.context(() => {
       if (headerRef.current && headerRef.current.children.length > 0) {
         const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
         gsap.fromTo(headerRef.current.children,
@@ -217,10 +277,10 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           );
         });
       }
-    }, 100);
+    });
 
     return () => {
-      clearTimeout(timer);
+      ctx.revert();
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, [post.slug]);
@@ -230,29 +290,34 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
       <BlogStructuredData post={post} />
       <ArticleSchema post={post} />
       <Header />
+      <aside ref={asideRef} className="hidden xl:block xl:fixed xl:right-4 xl:top-24 xl:w-[280px] xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto xl:z-40 xl:pointer-events-auto">
+        <div className="pr-2">
+          <TableOfContents content={post.content} />
+        </div>
+      </aside>
       <main className="pt-20 bg-background">
         <Progress value={readingProgress} className="fixed top-20 left-0 right-0 h-1 z-50 rounded-none bg-primary/20 transition-all duration-150" />
-        <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="container mx-auto px-4 py-12 md:py-16 xl:mr-[320px]">
           <div className="relative max-w-7xl mx-auto">
-            <article key={post.slug} ref={contentRef} className="max-w-4xl mx-auto">
-          <header ref={headerRef} className="mb-8 md:mb-12">
-            <Button asChild variant="ghost" className="mb-6 text-accent hover:text-primary pl-0">
+            <article key={post.slug} ref={contentRef} className="max-w-4xl">
+          <header ref={headerRef} className="mb-6 md:mb-12">
+            <Button asChild variant="ghost" className="mb-4 md:mb-6 text-accent hover:text-primary pl-0">
               <Link href="/blog">
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
               </Link>
             </Button>
-            <div className="flex items-start justify-between gap-4 mb-6">
-              <h1 className="text-4xl md:text-6xl font-headline font-bold text-primary leading-tight flex-1">
+            <div className="flex flex-col gap-4 mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-headline font-bold text-primary leading-tight">
                 {post.title}
               </h1>
-              <div className="hidden md:block pt-2">
+              <div className="hidden md:block">
                 <ShareButtons 
                   title={post.title} 
                   url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
                 />
               </div>
             </div>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base text-muted-foreground mb-4">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-6 sm:gap-y-2 text-sm sm:text-base text-muted-foreground mb-4">
               <div className="flex items-center">
                 <CalendarDays className="mr-2 h-5 w-5" />
                 <span>{post.date}</span>
@@ -267,12 +332,12 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
               </div>
               <BlogViews slug={post.slug} />
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div className="flex flex-col gap-4 mb-4">
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2">
-                  <Tag className="mr-1.5 h-5 w-5 text-muted-foreground" />
+                  <Tag className="mr-1.5 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                   {post.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="font-normal text-sm px-3 py-1">{tag}</Badge>
+                    <Badge key={tag} variant="secondary" className="font-normal text-xs sm:text-sm px-2 sm:px-3 py-1">{tag}</Badge>
                   ))}
                 </div>
               )}
@@ -286,7 +351,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           </header>
 
           {post.imageUrl && (
-            <div ref={imageRef} className="relative w-full h-72 md:h-[500px] mb-12 md:mb-16 rounded-2xl overflow-hidden shadow-2xl">
+            <div ref={imageRef} className="relative w-full h-48 sm:h-72 md:h-[500px] mb-8 md:mb-16 rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl">
               <Image
                 src={post.imageUrl}
                 alt={post.title}
@@ -300,7 +365,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
             </div>
           )}
 
-          <Separator className="my-8 md:my-12" />
+          <Separator className="my-6 md:my-12" />
 
           <div
             ref={proseRef}
@@ -327,15 +392,15 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
 
           <Separator className="my-8" />
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+          <div className="flex flex-col gap-4 mb-8">
             <p className="text-muted-foreground">Found this article helpful? Share it!</p>
-            <ShareButtons 
-              title={post.title} 
-              url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
-            />
+            <div className="w-full sm:w-auto">
+              <ShareButtons 
+                title={post.title} 
+                url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
+              />
+            </div>
           </div>
-
-          <Separator className="my-12" />
 
           <RelatedPosts currentSlug={post.slug} limit={3} />
 
@@ -353,13 +418,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
             </Button>
           </div>
 
-        </article>
-            
-            <aside className="hidden xl:block absolute top-0 right-0 w-[280px]">
-              <div className="sticky top-24">
-                <TableOfContents content={post.content} />
-              </div>
-            </aside>
+            </article>
           </div>
         </div>
       </main>

@@ -16,67 +16,103 @@ interface TableOfContentsProps {
 
 export function TableOfContents({ content }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<Heading[]>([]);
-  const [activeId, setActiveId] = useState<string>('');
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const extractIntervalRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
-    
-    const headingElements = tempDiv.querySelectorAll('h2, h3');
-    const extractedHeadings: Heading[] = [];
-    
-    headingElements.forEach((heading, index) => {
-      const text = heading.textContent || '';
-      const level = parseInt(heading.tagName.substring(1));
-      const id = heading.id || `heading-${index}`;
+    let attempts = 0;
+    const maxAttempts = 200;
+
+    const extractHeadings = () => {
+      const proseContainer = document.querySelector('.prose');
       
-      if (!heading.id) {
-        heading.id = id;
+      if (!proseContainer) {
+        if (attempts < maxAttempts) {
+          attempts++;
+          extractIntervalRef.current = setTimeout(extractHeadings, 20);
+        }
+        return;
       }
       
-      extractedHeadings.push({ id, text, level });
-    });
-    
-    setHeadings(extractedHeadings);
-    
-    const contentContainer = document.querySelector('.prose');
-    if (contentContainer) {
-      contentContainer.innerHTML = tempDiv.innerHTML;
+      const headingElements = proseContainer.querySelectorAll('h2, h3');
+      
+      if (headingElements.length === 0) {
+        if (attempts < maxAttempts) {
+          attempts++;
+          extractIntervalRef.current = setTimeout(extractHeadings, 20);
+        }
+        return;
+      }
+
+      const extractedHeadings: Heading[] = [];
+      let headingsWithIds = 0;
+      
+      headingElements.forEach((heading) => {
+        const text = heading.textContent || '';
+        const level = parseInt(heading.tagName.substring(1));
+        const id = heading.id;
+        
+        if (id) {
+          headingsWithIds++;
+        }
+        
+        if (id && text) {
+          extractedHeadings.push({ id, text, level });
+        }
+      });
+      
+      if (extractedHeadings.length > 0) {
+        setHeadings(extractedHeadings);
+        if (extractIntervalRef.current) {
+          clearTimeout(extractIntervalRef.current);
+        }
+      } else if (attempts < maxAttempts) {
+        attempts++;
+        extractIntervalRef.current = setTimeout(extractHeadings, 20);
+      }
+    };
+
+    extractHeadings();
+
+    const proseContainer = document.querySelector('.prose');
+    if (proseContainer) {
+      const observer = new MutationObserver(() => {
+        attempts = 0;
+        extractHeadings();
+      });
+
+      observer.observe(proseContainer, {
+        attributes: true,
+        attributeFilter: ['id'],
+        subtree: true,
+      });
+
+      return () => {
+        observer.disconnect();
+        if (extractIntervalRef.current) {
+          clearTimeout(extractIntervalRef.current);
+        }
+      };
     }
-  }, [content]);
-
-  useEffect(() => {
-    if (headings.length === 0) return;
-
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-80px 0px -80% 0px',
-        threshold: 1.0,
-      }
-    );
-
-    headings.forEach(({ id }) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observerRef.current?.observe(element);
-      }
-    });
 
     return () => {
-      observerRef.current?.disconnect();
+      if (extractIntervalRef.current) {
+        clearTimeout(extractIntervalRef.current);
+      }
     };
-  }, [headings]);
+  }, [content]);
 
-  const handleClick = (id: string) => {
-    const element = document.getElementById(id);
+
+  const handleHeadingClick = (id: string, text: string) => {
+    const proseContainer = document.querySelector('.prose');
+    if (!proseContainer) return;
+    
+    let element = document.getElementById(id);
+    
+    if (!element) {
+      const allHeadings = proseContainer.querySelectorAll('h2, h3');
+      element = Array.from(allHeadings).find((h: any) => h.textContent === text) as HTMLElement;
+    }
+    
     if (element) {
       const offset = 100;
       const elementPosition = element.getBoundingClientRect().top;
@@ -94,7 +130,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
   }
 
   return (
-    <nav className="hidden xl:block sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
+    <nav className="space-y-3">
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground mb-4">
           <List className="h-4 w-4" />
@@ -111,13 +147,10 @@ export function TableOfContents({ content }: TableOfContentsProps) {
               )}
             >
               <button
-                onClick={() => handleClick(heading.id)}
+                onClick={() => handleHeadingClick(heading.id, heading.text)}
                 className={cn(
                   'block w-full text-left py-1 px-4 -ml-[2px] border-l-2 transition-all duration-200',
-                  'hover:text-primary hover:border-primary',
-                  activeId === heading.id
-                    ? 'text-primary border-primary font-medium'
-                    : 'text-muted-foreground border-transparent'
+                  'text-muted-foreground border-transparent hover:text-primary hover:border-primary cursor-pointer'
                 )}
               >
                 {heading.text}
