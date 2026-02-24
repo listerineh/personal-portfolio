@@ -194,7 +194,7 @@ export function Header() {
         <Link 
           ref={logoRef}
           href="/" 
-          className="flex items-center gap-2 font-headline font-bold text-primary hover:text-accent transition-colors group" 
+          className="flex items-center gap-2 font-headline font-bold text-primary transition-colors group" 
           onClick={closeMobileMenu}
         >
           <div className="relative">
