@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { ThumbsUp, Heart, Flame, Lightbulb, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -16,10 +17,10 @@ interface BlogReactionsProps {
   slug: string;
 }
 
-const reactionConfig = {
+const getReactionConfig = (t: any) => ({
   like: { 
     icon: ThumbsUp, 
-    label: 'Helpful', 
+    label: t('reactionHelpful'), 
     emoji: '👍',
     color: 'text-blue-500',
     bgColor: 'bg-blue-500/10',
@@ -28,7 +29,7 @@ const reactionConfig = {
   },
   love: { 
     icon: Heart, 
-    label: 'Loved it', 
+    label: t('reactionLoved'), 
     emoji: '❤️',
     color: 'text-red-500',
     bgColor: 'bg-red-500/10',
@@ -37,7 +38,7 @@ const reactionConfig = {
   },
   fire: { 
     icon: Flame, 
-    label: 'Amazing', 
+    label: t('reactionAmazing'), 
     emoji: '🔥',
     color: 'text-orange-500',
     bgColor: 'bg-orange-500/10',
@@ -46,16 +47,18 @@ const reactionConfig = {
   },
   idea: { 
     icon: Lightbulb, 
-    label: 'Insightful', 
+    label: t('reactionInsightful'), 
     emoji: '💡',
     color: 'text-yellow-500',
     bgColor: 'bg-yellow-500/10',
     hoverBg: 'hover:bg-yellow-500/20',
     activeBg: 'bg-yellow-500/20',
   },
-};
+});
 
 export function BlogReactions({ slug }: BlogReactionsProps) {
+  const t = useTranslations('blog');
+  const reactionConfig = getReactionConfig(t);
   const [reactions, setReactions] = useState<Reactions>({ like: 0, love: 0, fire: 0, idea: 0 });
   const [userReactions, setUserReactions] = useState<Set<keyof Reactions>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
@@ -121,7 +124,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
     return (
       <div className="flex items-center gap-3 p-6 bg-muted/30 rounded-xl border border-border/50">
         <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-        <span className="text-sm text-muted-foreground">Loading reactions...</span>
+        <span className="text-sm text-muted-foreground">{t('loadingReactions')}</span>
       </div>
     );
   }
@@ -152,14 +155,14 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
                 <Sparkles className="h-5 w-5 text-primary" />
                 <span className="text-base font-semibold text-foreground">
                   {totalReactions > 0 
-                    ? `${totalReactions} ${totalReactions === 1 ? 'reaction' : 'reactions'}` 
-                    : 'Share your reaction'}
+                    ? `${totalReactions} ${totalReactions === 1 ? t('reaction') : t('reactions')}` 
+                    : t('shareYourReaction')}
                 </span>
               </div>
               {userReactions.size > 0 && (
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 rounded-full border border-primary/20">
                   <span className="text-xs font-medium text-primary">
-                    You: {Array.from(userReactions).map(r => reactionConfig[r].emoji).join(' ')}
+                    {t('you')}: {Array.from(userReactions).map(r => reactionConfig[r].emoji).join(' ')}
                   </span>
                 </div>
               )}

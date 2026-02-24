@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Header, Footer } from '@/components/layout';
@@ -18,6 +19,8 @@ if (typeof window !== 'undefined') {
 }
 
 export default function HomePage() {
+  const t = useTranslations('common');
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
@@ -30,7 +33,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-foreground">
-        Skip to main content
+        {t('skipToContent')}
       </a>
       <main id="main-content" className="flex-grow">
         <HeroSection />

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Search, X, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -21,6 +22,7 @@ interface BlogSearchProps {
 }
 
 export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
+  const t = useTranslations('blog');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
@@ -54,7 +56,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
     return filtered;
   }, [posts, searchQuery, selectedTags]);
 
-  useMemo(() => {
+  useEffect(() => {
     onFilteredPostsChange(filteredPosts);
   }, [filteredPosts, onFilteredPostsChange]);
 
@@ -80,7 +82,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Search articles by title, content, or tags..."
+            placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10 pr-10"
@@ -99,7 +101,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="gap-2 shrink-0">
               <Filter className="h-4 w-4" />
-              Tags
+              {t('tags')}
               {selectedTags.length > 0 && (
                 <Badge variant="secondary" className="ml-1 px-1.5 py-0 text-xs">
                   {selectedTags.length}
@@ -108,7 +110,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Filter by tags</DropdownMenuLabel>
+            <DropdownMenuLabel>{t('filterByTags')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <div className="max-h-[300px] overflow-y-auto">
               {allTags.map(tag => (
@@ -131,7 +133,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
                     onClick={clearFilters}
                     className="w-full text-xs"
                   >
-                    Clear all
+                    {t('clearAll')}
                   </Button>
                 </div>
               </>
@@ -142,7 +144,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
 
       {selectedTags.length > 0 && (
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-xs text-muted-foreground">Filtering by:</span>
+          <span className="text-xs text-muted-foreground">{t('filteringBy')}</span>
           {selectedTags.map(tag => (
             <Badge
               key={tag}
@@ -159,7 +161,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
 
       {hasActiveFilters && (
         <div className="text-sm text-muted-foreground">
-          Found {filteredPosts.length} {filteredPosts.length === 1 ? 'article' : 'articles'}
+          {t('foundArticles', { count: filteredPosts.length })}
         </div>
       )}
     </div>

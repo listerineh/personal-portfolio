@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
 import { Briefcase } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { experiences } from '@/lib/data';
+import { experiencesData } from '@/lib/data';
+import { getLocalizedData } from '@/lib/i18n-data';
+import { useLocale } from '@/context/locale-context';
 import { SectionWrapper } from '@/components/common';
 import { Button } from '@/components/ui/button';
 import { useGSAP } from '@/hooks/use-gsap';
@@ -15,6 +18,10 @@ if (typeof window !== 'undefined') {
 }
 
 export function ExperienceSection() {
+  const t = useTranslations('experience');
+  const tCommon = useTranslations('common');
+  const { locale } = useLocale();
+  const experiences = getLocalizedData(experiencesData, locale);
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const [showAll, setShowAll] = useState(false);
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -124,7 +131,7 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <SectionWrapper id="experience" title="Work Experience" badge='Career'>
+    <SectionWrapper id="experience" title={t('title')} badge={t('badge')}>
       <div className="max-w-4xl mx-auto">
         <div className="space-y-6">
           {experiences.map((exp, index) => (
@@ -203,7 +210,7 @@ export function ExperienceSection() {
                           onClick={() => toggleExpand(index)}
                           className="text-primary hover:text-accent hover:bg-primary/5 text-xs font-semibold p-0 h-auto"
                         >
-                          {expandedItems[index] ? '← Show less' : 'See more →'}
+                          {expandedItems[index] ? `← ${tCommon('showLess')}` : `${tCommon('seeMore')} →`}
                         </Button>
                       </div>
                     )}
@@ -222,7 +229,7 @@ export function ExperienceSection() {
             onClick={handleShowAll}
             className="border-primary/50 text-primary hover:bg-primary/10 hover:border-primary hover:shadow-lg transition-all"
           >
-            Show All Experience
+            {t('showAll')}
           </Button>
         </div>
       )}

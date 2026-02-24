@@ -2,11 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { Music } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { navItems, socialLinks, footerConfig } from '@/lib/data';
+import { socialLinks } from '@/lib/data';
 import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 import { Button } from '@/components/ui/button';
@@ -16,12 +17,23 @@ if (typeof window !== 'undefined') {
 }
 
 export function Footer() {
+  const t = useTranslations('nav');
+  const tNewsletter = useTranslations('newsletter');
+  const tCommon = useTranslations('common');
   const currentYear = new Date().getFullYear();
   const footerRef = useRef<HTMLElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const socialIconsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const copyrightRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  
+  const navItems = [
+    { label: t('experience'), href: '/#experience' },
+    { label: t('skills'), href: '/#skills' },
+    { label: t('projects'), href: '/#projects' },
+    { label: t('blog'), href: '/blog' },
+    { label: t('contact'), href: '/#contact' },
+  ];
 
   useEffect(() => {
     if (!footerRef.current) return;
@@ -188,7 +200,7 @@ export function Footer() {
                 href={link.url} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                aria-label={`Visit ${link.name}`}
+                aria-label={`${tCommon('visitSocial')} ${link.name}`}
                 className="relative p-3 rounded-full bg-card/30 backdrop-blur-sm border border-border/50 text-secondary-foreground hover:text-primary hover:border-primary/50 transition-colors group"
               >
                 <link.icon className="w-5 h-5" />
@@ -216,35 +228,35 @@ export function Footer() {
                     <div className="space-y-3 md:space-y-4">
                       <div className="inline-flex">
                         <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-primary/10 text-primary rounded-full border border-primary/20">
-                          {footerConfig.newsletter.badge}
+                          {tNewsletter('badge')}
                         </span>
                       </div>
                       
                       <h3 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tight">
-                        {footerConfig.newsletter.title}
+                        {tNewsletter('title')}
                         <br />
                         <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                          {footerConfig.newsletter.titleGradient}
+                          {tNewsletter('titleGradient')}
                         </span>
                       </h3>
                       
                       <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                        {footerConfig.newsletter.description}
+                        {tNewsletter('description')}
                       </p>
                     </div>
                     
                     <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-2 md:pt-4">
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">{footerConfig.newsletter.monthlyLabel}</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{footerConfig.newsletter.monthlyValue}</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">{tNewsletter('monthlyLabel')}</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{tNewsletter('monthlyValue')}</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">{footerConfig.newsletter.spamLabel}</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{footerConfig.newsletter.spamValue}</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">{tNewsletter('spamLabel')}</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{tNewsletter('spamValue')}</div>
                       </div>
                       <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">{footerConfig.newsletter.freeLabel}</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{footerConfig.newsletter.freeValue}</div>
+                        <div className="text-xl sm:text-2xl font-bold text-foreground">{tNewsletter('freeLabel')}</div>
+                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{tNewsletter('freeValue')}</div>
                       </div>
                     </div>
                   </div>
@@ -265,24 +277,24 @@ export function Footer() {
         
         <div ref={copyrightRef} className="text-center mt-12 pt-8 border-t border-border/30">
           <p className="text-sm font-medium mb-2">
-            &copy; {currentYear} Sebastian Alvarez. {footerConfig.copyright.text}
+            &copy; {currentYear} Sebastian Alvarez. {tCommon('allRightsReserved')}
           </p>
           <p className="text-xs text-muted-foreground flex items-center justify-center gap-2">
-            {footerConfig.copyright.builtWith} <span className="text-primary">❤️</span> {footerConfig.copyright.builtWithTech}
+            {tCommon('builtWith')} <span className="text-primary">❤️</span> {tCommon('builtWithTech')}
           </p>
           <p className="text-xs text-muted-foreground mt-2 flex flex-wrap items-center justify-center gap-3">
             <CookieSettingsLink />
             <span>•</span>
             <Link href="/privacy" className="hover:text-primary transition-colors underline">
-              {footerConfig.copyright.privacyPolicy}
+              {t('privacyPolicy')}
             </Link>
             <span>•</span>
             <Link href="/terms" className="hover:text-primary transition-colors underline">
-              {footerConfig.copyright.termsOfUse}
+              {t('termsOfUse')}
             </Link>
             <span>•</span>
             <Link href="/why" className="hover:text-[#1DB954] transition-colors underline">
-              {footerConfig.copyright.whyListerineh}
+              {t('whyListerineh')}
             </Link>
           </p>
         </div>

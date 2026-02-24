@@ -1,12 +1,15 @@
 'use client';
 
 import { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
 import Link from 'next/link';
 import { ExternalLink, Github } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { projects } from '@/lib/data';
+import { projectsData } from '@/lib/data';
+import { getLocalizedData } from '@/lib/i18n-data';
+import { useLocale } from '@/context/locale-context';
 import { SectionWrapper } from '@/components/common';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,6 +21,10 @@ if (typeof window !== 'undefined') {
 }
 
 export function ProjectsSection() {
+  const t = useTranslations('projects');
+  const tCommon = useTranslations('common');
+  const { locale } = useLocale();
+  const projects = getLocalizedData(projectsData, locale);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
@@ -78,7 +85,7 @@ export function ProjectsSection() {
   }, [projects.length]);
 
   return (
-    <SectionWrapper id="projects" title="Featured Projects" badge='Hobbies'>
+    <SectionWrapper id="projects" title={t('title')} badge={t('badge')}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
           <div
@@ -136,7 +143,7 @@ export function ProjectsSection() {
                       className="text-primary hover:text-accent text-xs font-semibold p-0 h-auto"
                     >
                       <Link href={project.liveDemoUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="mr-1.5 h-3.5 w-3.5" /> Live Demo
+                        <ExternalLink className="mr-1.5 h-3.5 w-3.5" /> {tCommon('liveDemo')}
                       </Link>
                     </Button>
                   )}
@@ -148,7 +155,7 @@ export function ProjectsSection() {
                       className="text-muted-foreground hover:text-foreground text-xs font-semibold p-0 h-auto"
                     >
                       <Link href={project.sourceCodeUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="mr-1.5 h-3.5 w-3.5" /> Source
+                        <Github className="mr-1.5 h-3.5 w-3.5" /> {tCommon('source')}
                       </Link>
                     </Button>
                   )}

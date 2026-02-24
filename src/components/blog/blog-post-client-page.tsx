@@ -1,7 +1,9 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
+import { useLocale } from '@/context/locale-context';
+import { useTranslations } from 'next-intl';
 import type { BlogPost } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,6 +29,7 @@ import { NewsletterSignup } from '@/components/common/newsletter-signup';
 import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { getBlogImageBlur } from '@/lib/image-blur';
+import { getBlogPost } from '@/lib/data';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -36,13 +39,30 @@ interface BlogPostClientPageProps {
   post: BlogPost;
 }
 
-export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
+export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProps) {
+  const { locale } = useLocale();
+  const t = useTranslations('blog');
+  
+  // Obtener el post en el idioma correcto basado en el locale actual
+  const post = useMemo(() => {
+    const localizedPost = getBlogPost(initialPost.slug, locale);
+    return localizedPost || initialPost;
+  }, [initialPost.slug, locale]);
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const proseRef = useRef<HTMLDivElement>(null);
   const asideRef = useRef<HTMLDivElement>(null);
+  
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -94,15 +114,13 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
       const headings = proseRef.current.querySelectorAll('h2, h3');
       
       headings.forEach((heading, index) => {
-        if (!heading.id) {
-          const text = heading.textContent || '';
-          const id = text
-            .toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-');
-          heading.id = id || `heading-${index}`;
-        }
+        const text = heading.textContent || '';
+        const id = text
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-');
+        heading.id = id || `heading-${index}`;
       });
     }
   }, [post.content]);
@@ -303,7 +321,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           <header ref={headerRef} className="mb-6 md:mb-12">
             <Button asChild variant="ghost" className="mb-4 md:mb-6 text-accent hover:text-primary pl-0">
               <Link href="/blog">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
+                <ArrowLeft className="mr-2 h-4 w-4" /> {t('backToBlog')}
               </Link>
             </Button>
             <div className="flex flex-col gap-4 mb-6">
@@ -320,15 +338,15 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
             <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-6 sm:gap-y-2 text-sm sm:text-base text-muted-foreground mb-4">
               <div className="flex items-center">
                 <CalendarDays className="mr-2 h-5 w-5" />
-                <span>{post.date}</span>
+                <span>{formatDate(post.date)}</span>
               </div>
               <div className="flex items-center">
                 <UserCircle className="mr-2 h-5 w-5" />
-                <span>By {post.author}</span>
+                <span>{t('by')} {post.author}</span>
               </div>
               <div className="flex items-center">
                 <Clock className="mr-2 h-5 w-5" />
-                <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content))}</span>
+                <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
               </div>
               <BlogViews slug={post.slug} />
             </div>
@@ -386,14 +404,14 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           <Separator className="my-8 md:my-12" />
 
           <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">What did you think?</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('whatDidYouThink')}</h3>
             <BlogReactions slug={post.slug} />
           </div>
 
           <Separator className="my-8" />
 
           <div className="flex flex-col gap-4 mb-8">
-            <p className="text-muted-foreground">Found this article helpful? Share it!</p>
+            <p className="text-muted-foreground">{t('foundHelpful')}</p>
             <div className="w-full sm:w-auto">
               <ShareButtons 
                 title={post.title} 
@@ -413,7 +431,7 @@ export function BlogPostClientPage({ post }: BlogPostClientPageProps) {
           <div className="text-center">
             <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
               <Link href="/blog">
-                <ArrowLeft className="mr-2 h-4 w-4" /> More Articles
+                <ArrowLeft className="mr-2 h-4 w-4" /> {t('moreArticles')}
               </Link>
             </Button>
           </div>

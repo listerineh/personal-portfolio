@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useLocale } from '@/context/locale-context';
+import { useTranslations } from 'next-intl';
 import { Eye } from 'lucide-react';
 
 interface BlogViewsProps {
@@ -8,6 +10,8 @@ interface BlogViewsProps {
 }
 
 export function BlogViews({ slug }: BlogViewsProps) {
+  const { locale } = useLocale();
+  const t = useTranslations('blog');
   const [views, setViews] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -50,7 +54,7 @@ export function BlogViews({ slug }: BlogViewsProps) {
     return (
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Eye className="h-4 w-4 animate-pulse" />
-        <span className="animate-pulse">Loading...</span>
+        <span className="animate-pulse">{t('loading')}</span>
       </div>
     );
   }
@@ -61,10 +65,10 @@ export function BlogViews({ slug }: BlogViewsProps) {
       <span>
         {views !== null ? (
           <>
-            <strong className="text-foreground">{views.toLocaleString()}</strong> view{views !== 1 ? 's' : ''}
+            <strong className="text-foreground">{views.toLocaleString(locale)}</strong> {views !== 1 ? t('views') : t('view')}
           </>
         ) : (
-          '0 views'
+          `0 ${t('views')}`
         )}
       </span>
     </div>

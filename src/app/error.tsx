@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle } from 'lucide-react';
 
@@ -11,6 +12,8 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations('error');
+  
   useEffect(() => {
     console.error('Error:', error);
   }, [error]);
@@ -26,10 +29,10 @@ export default function Error({
         
         <div className="space-y-2">
           <h1 className="text-3xl font-headline font-bold text-primary">
-            Something went wrong!
+            {t('title')}
           </h1>
           <p className="text-muted-foreground">
-            We encountered an unexpected error. Don't worry, we're working on fixing it.
+            {t('description')}
           </p>
         </div>
 
@@ -46,13 +49,13 @@ export default function Error({
             onClick={reset}
             variant="outline"
           >
-            Try again
+            {t('tryAgain')}
           </Button>
           <Button
             onClick={() => window.location.href = '/'}
             className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
-            Go to homepage
+            {t('goHome')}
           </Button>
         </div>
       </div>
