@@ -35,6 +35,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
   const postUrl = `${siteUrl}/blog/${post.slug}`;
   const imageUrl = post.imageUrl ? `${siteUrl}${post.imageUrl}` : `${siteUrl}/og-default.png`;
+  
+  const ogLocale = locale === 'es' ? 'es_ES' : 'en_US';
+  const alternateLocale = locale === 'es' ? 'en' : 'es';
 
   return {
     title: `${post.title} | Sebastian Alvarez`,
@@ -54,7 +57,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
           alt: post.title,
         },
       ],
-      locale: 'en_US',
+      locale: ogLocale,
+      alternateLocale: alternateLocale === 'es' ? 'es_ES' : 'en_US',
       type: 'article',
       publishedTime: new Date(post.date).toISOString(),
       authors: [post.author],
@@ -69,6 +73,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     },
     alternates: {
       canonical: postUrl,
+      languages: {
+        'en': `${siteUrl}/blog/${post.slug}`,
+        'es': `${siteUrl}/blog/${post.slug}`,
+      },
     },
   };
 }

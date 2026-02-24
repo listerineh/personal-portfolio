@@ -9,6 +9,10 @@ import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/comm
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { generatePageMetadata } from '@/lib/metadata';
+import { cookies } from 'next/headers';
+import { defaultLocale, locales, type Locale } from '@/i18n/config';
+import type { Metadata } from 'next';
 
 import './globals.css';
 
@@ -23,142 +27,39 @@ const fontOutfit = Outfit({
   variable: '--font-outfit',
 });
 
-export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev'),
-  title: 'Sebastian Alvarez | Full-Stack Software Engineer & Web Developer',
-  description: 'Full-stack software engineer specializing in React, Next.js, Python, and cloud technologies. View my portfolio, projects, and technical blog on modern web development.',
-  generator: "Next.js",
-  referrer: "origin",
-  publisher: "Vercel",
-  authors: [{ name: 'Sebastian Alvarez', url: 'https://listerineh.dev' }],
-  creator: 'Sebastian Alvarez',
-  keywords: [
-    'full-stack engineer',
-    'full-stack developer',
-    'web developer',
-    'software engineer',
-    'React developer',
-    'React.js',
-    'Next.js expert',
-    'Next.js developer',
-    'Python developer',
-    'Python backend',
-    'Node.js developer',
-    'TypeScript developer',
-    'JavaScript developer',
-    'web development',
-    'software development',
-    'cloud technologies',
-    'AWS developer',
-    'cloud computing',
-    'modern web development',
-    'responsive web design',
-    'frontend development',
-    'backend development',
-    'full-stack web developer',
-    'software engineer portfolio',
-    'developer portfolio',
-    'tech portfolio',
-    'programming portfolio',
-    'web application development',
-    'REST API',
-    'GraphQL',
-    'database design',
-    'SQL',
-    'NoSQL',
-    'MongoDB',
-    'PostgreSQL',
-    'Docker',
-    'Kubernetes',
-    'DevOps',
-    'CI/CD',
-    'agile development',
-    'software architecture',
-    'system design',
-    'scalable applications',
-    'performance optimization',
-    'SEO optimization',
-    'web performance',
-    'accessibility',
-    'WCAG',
-    'responsive design',
-    'mobile development',
-    'cross-platform development',
-    'technical blog',
-    'coding tutorials',
-    'web development blog',
-    'Quito developer',
-    'Ecuador software engineer',
-    'Quito web developer',
-    'Ecuador full-stack developer',
-    'Quito tech talent',
-    'Ecuador tech community',
-    'Quito freelance developer',
-    'Ecuador remote developer',
-    'Quito software development',
-    'Ecuador web development',
-    'Quito programmer',
-    'Ecuador programmer',
-    'Quito coding',
-    'Ecuador coding',
-    'Quito tech professional',
-    'Ecuador tech professional',
-  ],
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies();
+  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
+  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+
+  const baseMetadata = generatePageMetadata('home', locale);
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev'),
+    ...baseMetadata,
+    generator: "Next.js",
+    referrer: "origin",
+    publisher: "Vercel",
+    authors: [{ name: 'Sebastian Alvarez', url: 'https://listerineh.dev' }],
+    creator: 'Sebastian Alvarez',
+    robots: {
       index: true,
       follow: true,
-      'max-snippet': -1,
-      'max-image-preview': 'large',
-      'max-video-preview': -1,
-    },
-  },
-  openGraph: {
-    title: 'Sebastian Alvarez | Full-Stack Software Engineer',
-    description: 'Explore my portfolio of web development projects and technical expertise in React, Next.js, and Python',
-    url: 'https://listerineh.dev',
-    siteName: 'Sebastian Alvarez - Full-Stack Developer',
-    images: [
-      {
-        url: '/images/website_screenshot.webp',
-        width: 1200,
-        height: 630,
-        alt: 'Sebastian Alvarez Portfolio Preview - Full-Stack Developer',
-        type: 'image/webp',
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-snippet': -1,
+        'max-image-preview': 'large',
+        'max-video-preview': -1,
       },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Sebastian Alvarez | Full-Stack Software Engineer',
-    description: 'Explore my portfolio of web development projects and technical expertise',
-    images: [
-      {
-        url: '/images/website_screenshot.webp',
-        width: 1200,
-        height: 630,
-        alt: 'Sebastian Alvarez Portfolio Preview',
-      },
-    ],
-    creator: '@listerineh',
-    site: '@listerineh',
-  },
-  verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
-  },
-  alternates: {
-    canonical: 'https://listerineh.dev',
-    languages: {
-      'en-US': 'https://listerineh.dev',
     },
-  },
-  manifest: '/manifest.json',
-};
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+    },
+    manifest: '/manifest.json',
+  };
+}
 
 export default async function RootLayout({
   children,
