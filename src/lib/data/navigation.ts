@@ -1,13 +1,4 @@
 import { Linkedin, Github, Instagram, Mail } from 'lucide-react';
-import type { NavItem } from '@/types';
-
-export const navItems: NavItem[] = [
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Skills', href: '/#skills' },
-  { label: 'Projects', href: '/#projects' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/#contact' },
-];
 
 export const socialLinks = [
   { name: 'GitHub', url: 'https://github.com/listerineh', icon: Github },
