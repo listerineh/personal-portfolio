@@ -6,14 +6,23 @@
 
 ### Purpose
 
-Automatically detects when a new blog post is added to the repository and sends email notifications to all newsletter subscribers.
+Automatically detects when a new blog post is added to the repository and sends email notifications to all newsletter subscribers (on `main` branch) or shows a preview summary (on `develop` branch).
 
 ### How It Works
 
-1. **Trigger:** Runs when changes are pushed to the `main` branch in `src/lib/data/blog/*.ts`
+**On `main` branch (Production):**
+1. **Trigger:** Runs when changes are pushed to `main` in `src/lib/data/blog/*.ts`
 2. **Detection:** Identifies newly added blog files (not modified files)
 3. **Extraction:** Extracts blog metadata (title, slug, excerpt, image) from the new file
 4. **Notification:** Calls the newsletter API to send emails to all subscribers
+5. **Summary:** Shows confirmation that emails were sent
+
+**On `develop` branch (Preview):**
+1. **Trigger:** Runs when changes are pushed to `develop` in `src/lib/data/blog/*.ts`
+2. **Detection:** Identifies newly added blog files (not modified files)
+3. **Extraction:** Extracts blog metadata (title, slug, excerpt, image) from the new file
+4. **Preview:** Shows what will happen when merged to main (NO emails sent)
+5. **Summary:** Displays blog details and pending actions
 
 ### Workflow Steps
 
@@ -43,7 +52,9 @@ The workflow uses the following environment variable:
 
 ### Usage
 
-Simply create a new blog post file in `src/lib/data/blog/` and push to main:
+#### Testing in Develop (Preview Mode)
+
+Create and test your blog post in the `develop` branch first:
 
 ```bash
 # Create new blog post
@@ -51,17 +62,34 @@ touch src/lib/data/blog/my-awesome-post.ts
 
 # Add content to the file (title, excerpt, etc.)
 
-# Commit and push
+# Commit and push to develop
 git add src/lib/data/blog/my-awesome-post.ts
 git commit -m "feat: add new blog post about awesome topic"
+git push origin develop
+```
+
+The workflow will automatically:
+- ✅ Detect the new file
+- ✅ Extract the blog data
+- ✅ Show a preview summary
+- ⚠️ **NOT send emails** (preview mode)
+
+#### Publishing to Production
+
+Once you're happy with the preview, merge to main:
+
+```bash
+# Merge develop to main
+git checkout main
+git merge develop
 git push origin main
 ```
 
 The workflow will automatically:
-- Detect the new file
-- Extract the blog data
-- Send notifications to all subscribers
-- Show a summary in the GitHub Actions run
+- ✅ Detect the new file
+- ✅ Extract the blog data
+- ✅ **Send notifications to all subscribers**
+- ✅ Show a confirmation summary
 
 ### Monitoring
 
@@ -90,14 +118,35 @@ You can monitor the workflow execution in:
 
 ### Example Output
 
-When successful, you'll see in the GitHub Actions summary:
+**On `develop` branch (Preview Mode):**
+
+```
+📝 New Blog Post Detected (Preview Mode)
+
+Environment: Preview (develop)
+Title: Building Modern Web Apps with Next.js
+Slug: building-with-nextjs
+Excerpt: Learn how to build scalable applications...
+Image URL: https://listerineh.dev/images/blog/nextjs-guide.webp
+
+📋 What will happen when merged to main:
+
+- ✉️ Email notifications will be sent to all subscribers
+- 🔗 Blog will be available at: https://listerineh.dev/blog/building-with-nextjs
+- 📊 Notification stats will be tracked
+
+⚠️ Note: No emails were sent in preview mode
+```
+
+**On `main` branch (Production):**
 
 ```
 📧 Blog Notification Sent
 
+Environment: Production
 Title: Building Modern Web Apps with Next.js
 Slug: building-with-nextjs
 URL: https://listerineh.dev/blog/building-with-nextjs
 
-Subscribers have been notified! 🎉
+✅ Subscribers have been notified! 🎉
 ```
