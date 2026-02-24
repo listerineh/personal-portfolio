@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { skills } from '@/lib/data';
@@ -13,6 +14,7 @@ if (typeof window !== 'undefined') {
 }
 
 export function SkillsSection() {
+  const t = useTranslations('skills');
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
@@ -147,7 +149,7 @@ export function SkillsSection() {
 
   if (!mounted) {
     return (
-      <SectionWrapper title="Technologies I Work With" id='skills' className="bg-secondary/85" isInfinite>
+      <SectionWrapper title={t('title')} id='skills' className="bg-secondary/85" isInfinite>
         <div className="min-h-[200px]" />
       </SectionWrapper>
     );
@@ -173,7 +175,7 @@ export function SkillsSection() {
   );
 
   return (
-    <SectionWrapper title="Technologies I Work With" id='skills' className="bg-secondary/85" isInfinite badge='Tech Stack'>   
+    <SectionWrapper title={t('title')} id='skills' className="bg-secondary/85" isInfinite badge={t('badge')}>   
       <div ref={containerRef} className="relative py-4 overflow-hidden" style={{ perspective: '1500px' }}>
         <div className="overflow-hidden mb-3 md:mb-4 w-full">
           <div ref={row1Ref} className="marquee-row flex will-change-transform">
@@ -195,7 +197,7 @@ export function SkillsSection() {
           ref={descriptionRef}
           className="text-center text-muted-foreground mt-8 md:mt-10 text-sm md:text-base px-4 max-w-3xl mx-auto"
         >
-          Proficient with a diverse range of modern development tools and frameworks, always keen to explore emerging technologies.
+          {t('description')}
         </p>
       </div>
     </SectionWrapper>

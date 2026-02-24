@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useTranslations } from 'next-intl';
 import { z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,18 +16,18 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { useToast } from "@/hooks/use-toast";
 import { useGSAP } from '@/hooks/use-gsap';
-import { contactSection } from '@/lib/data';
 import type { ContactFormData } from "@/types";
 
-const contactFormSchema = z.object({
-  name: z.string().min(2, { message: contactSection.form.nameError }),
-  email: z.string().email({ message: contactSection.form.emailError }),
-  message: z.string().min(10, { message: contactSection.form.messageError }),
-});
-
 export function ContactSection() {
+  const t = useTranslations('contact');
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const contactFormSchema = z.object({
+    name: z.string().min(2, { message: t('nameError') }),
+    email: z.string().email({ message: t('emailError') }),
+    message: z.string().min(10, { message: t('messageError') }),
+  });
   const formRef = useRef<HTMLFormElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const fieldsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -83,21 +84,21 @@ export function ContactSection() {
       const result = await submitContactForm(data);
       if (result.success) {
         toast({
-          title: contactSection.toast.successTitle,
+          title: t('successTitle'),
           description: result.message,
         });
         reset();
       } else {
         toast({
-          title: contactSection.toast.errorTitle,
-          description: result.message || contactSection.toast.errorMessage,
+          title: t('errorTitle'),
+          description: result.message || t('errorMessage'),
           variant: "destructive",
         });
       }
     } catch (error) {
       toast({
-        title: contactSection.toast.errorTitle,
-        description: contactSection.toast.unexpectedError,
+        title: t('errorTitle'),
+        description: t('unexpectedError'),
         variant: "destructive",
       });
     } finally {
@@ -106,12 +107,12 @@ export function ContactSection() {
   };
 
   return (
-    <SectionWrapper id="contact" title={contactSection.title} badge={contactSection.badge} className="bg-background">
+    <SectionWrapper id="contact" title={t('title')} badge={t('badge')} className="bg-background">
       <div className="max-w-2xl mx-auto">
         {/* Description */}
         <div className="text-center mb-12">
           <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            {contactSection.description}
+            {t('description')}
           </p>
         </div>
 
@@ -123,12 +124,12 @@ export function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <User className="h-4 w-4 text-primary" />
                     </div>
-                    {contactSection.form.nameLabel}
+                    {t('nameLabel')}
                   </Label>
                   <Input
                     id="name"
                     type="text"
-                    placeholder={contactSection.form.namePlaceholder}
+                    placeholder={t('namePlaceholder')}
                     {...register("name")}
                     className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.name ? "border-destructive focus:border-destructive" : ""}`}
                     aria-invalid={errors.name ? "true" : "false"}
@@ -147,12 +148,12 @@ export function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <Mail className="h-4 w-4 text-primary" />
                     </div>
-                    {contactSection.form.emailLabel}
+                    {t('emailLabel')}
                   </Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder={contactSection.form.emailPlaceholder}
+                    placeholder={t('emailPlaceholder')}
                     {...register("email")}
                     className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.email ? "border-destructive focus:border-destructive" : ""}`}
                     aria-invalid={errors.email ? "true" : "false"}
@@ -171,11 +172,11 @@ export function ContactSection() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                       <MessageSquare className="h-4 w-4 text-primary" />
                     </div>
-                    {contactSection.form.messageLabel}
+                    {t('messageLabel')}
                   </Label>
                   <Textarea
                     id="message"
-                    placeholder={contactSection.form.messagePlaceholder}
+                    placeholder={t('messagePlaceholder')}
                     rows={6}
                     {...register("message")}
                     className={`text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all resize-none ${errors.message ? "border-destructive focus:border-destructive" : ""}`}
@@ -199,12 +200,12 @@ export function ContactSection() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      {contactSection.form.submittingButton}
+                      {t('submittingButton')}
                     </>
                   ) : (
                     <>
                       <Mail className="mr-2 h-5 w-5" />
-                      {contactSection.form.submitButton}
+                      {t('submitButton')}
                     </>
                   )}
                 </Button>

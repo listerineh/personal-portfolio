@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from "next/image";
 import { ArrowDown, FileText } from 'lucide-react';
@@ -17,6 +18,7 @@ if (typeof window !== 'undefined') {
 }
 
 export function HeroSection() {
+  const t = useTranslations('hero');
   const { toast } = useToast();
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -126,7 +128,7 @@ export function HeroSection() {
               disableHover
               className="w-max absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 bg-primary text-primary-foreground text-xs font-bold py-1.5 px-4 shadow-lg"
             >
-              +5 Years Experience
+              {t('badge')}
             </Badge>
           </div>
         </div>
@@ -140,13 +142,13 @@ export function HeroSection() {
           ref={subtitleRef}
           className="text-xl md:text-2xl text-primary font-medium mb-8"
         >
-          {hero.subtitle}
+          {t('subtitle')}
         </p>
         <p 
           ref={descriptionRef}
           className="max-w-2xl mx-auto text-muted-foreground mb-12 text-base md:text-lg"
         >
-          {hero.description}
+          {t('description')}
         </p>
         <div 
           ref={buttonsRef}
@@ -159,19 +161,19 @@ export function HeroSection() {
               link.download = 'CV_SebastianAlvarez_EN.pdf';
               link.click();
               toast({
-                title: "CV Downloaded!",
-                description: "Thank you for downloading my CV. I hope you find it useful.",
+                title: t('cvDownloadedTitle'),
+                description: t('cvDownloadedDescription'),
               });
             }}
             size="lg" 
             variant="ghost" 
             className="text-accent hover:bg-accent/10 hover:text-accent w-fit sm:w-auto"
           >
-            Download CV <FileText className="ml-2 h-5 w-5" />
+            {t('downloadCV')} <FileText className="ml-2 h-5 w-5" />
           </Button>
           <Link href="#contact">
             <Button size="lg" variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10">
-              Get in Touch <ArrowDown className="ml-2 h-5 w-5" />
+              {t('getInTouch')} <ArrowDown className="ml-2 h-5 w-5" />
             </Button>
           </Link>
         </div>

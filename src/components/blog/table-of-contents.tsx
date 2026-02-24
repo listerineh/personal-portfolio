@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { List } from 'lucide-react';
 
@@ -15,6 +16,7 @@ interface TableOfContentsProps {
 }
 
 export function TableOfContents({ content }: TableOfContentsProps) {
+  const t = useTranslations('blog');
   const [headings, setHeadings] = useState<Heading[]>([]);
   const extractIntervalRef = useRef<NodeJS.Timeout>();
 
@@ -44,15 +46,19 @@ export function TableOfContents({ content }: TableOfContentsProps) {
       }
 
       const extractedHeadings: Heading[] = [];
-      let headingsWithIds = 0;
       
       headingElements.forEach((heading) => {
         const text = heading.textContent || '';
         const level = parseInt(heading.tagName.substring(1));
-        const id = heading.id;
+        let id = heading.id;
         
-        if (id) {
-          headingsWithIds++;
+        // Si no tiene ID, generarlo temporalmente
+        if (!id && text) {
+          id = text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
         }
         
         if (id && text) {
@@ -71,30 +77,32 @@ export function TableOfContents({ content }: TableOfContentsProps) {
       }
     };
 
-    extractHeadings();
+    // Resetear headings y extraer después de un pequeño delay
+    setHeadings([]);
+    const initialTimeout = setTimeout(() => extractHeadings(), 100);
 
     const proseContainer = document.querySelector('.prose');
+    let observer: MutationObserver | null = null;
+    
     if (proseContainer) {
-      const observer = new MutationObserver(() => {
+      observer = new MutationObserver(() => {
         attempts = 0;
         extractHeadings();
       });
 
       observer.observe(proseContainer, {
         attributes: true,
-        attributeFilter: ['id'],
+        childList: true,
+        characterData: true,
         subtree: true,
       });
-
-      return () => {
-        observer.disconnect();
-        if (extractIntervalRef.current) {
-          clearTimeout(extractIntervalRef.current);
-        }
-      };
     }
 
     return () => {
+      clearTimeout(initialTimeout);
+      if (observer) {
+        observer.disconnect();
+      }
       if (extractIntervalRef.current) {
         clearTimeout(extractIntervalRef.current);
       }
@@ -134,7 +142,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
       <div className="space-y-3">
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground mb-4">
           <List className="h-4 w-4" />
-          <span>Table of Contents</span>
+          <span>{t('tableOfContents')}</span>
         </div>
         
         <ul className="space-y-2 text-sm border-l-2 border-border/50">

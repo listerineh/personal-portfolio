@@ -3,19 +3,35 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Menu, X, CodeXml, Mail, Github, Linkedin, Twitter, Music } from 'lucide-react';
 import { gsap } from 'gsap';
-import { navItems, socialLinks } from '@/lib/data';
+import { socialLinks } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { ThemeToggleButton } from '@/components/common';
+import { ThemeToggleButton, LanguageSwitcher } from '@/components/common';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useTheme } from '@/context/theme-context';
+import { useLocale } from '@/context/locale-context';
+import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
+import { cn } from '@/lib/utils';
 
 export function Header() {
+  const t = useTranslations('nav');
+  const tCommon = useTranslations('common');
+  const tTheme = useTranslations('theme');
+  const { locale, setLocale } = useLocale();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme } = useTheme();
+  
+  const navItems = [
+    { label: t('experience'), href: '/#experience' },
+    { label: t('skills'), href: '/#skills' },
+    { label: t('projects'), href: '/#projects' },
+    { label: t('blog'), href: '/blog' },
+    { label: t('contact'), href: '/#contact' },
+  ];
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -208,7 +224,7 @@ export function Header() {
           <Link href="/why" className="flex items-center h-full">
             <Button size="sm" variant="ghost" className="text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-300 flex items-center gap-1.5 px-2 py-1 dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5">
               <Music className="w-3.5 h-3.5" />
-              <span className="text-xs font-medium">Why Listerineh?</span>
+              <span className="text-xs font-medium">{t('whyListerineh')}</span>
             </Button>
           </Link>
           {navItems.map((item, index) => (
@@ -223,11 +239,17 @@ export function Header() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
-          <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent ml-2" />
+          <div className="flex items-center gap-0.5 ml-4 p-1 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
+            <LanguageSwitcher />
+            <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
+          </div>
         </nav>
 
         <div className="md:hidden flex items-center gap-2">
-          <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent [&_svg]:w-6 [&_svg]:h-6" />
+          <div className="flex items-center gap-0.5 p-0.5 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
+            <LanguageSwitcher />
+            <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent [&_svg]:w-5 [&_svg]:h-5" />
+          </div>
           <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle mobile menu" className="text-foreground hover:text-primary hover:bg-transparent [&_svg]:w-6 [&_svg]:h-6">
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
@@ -239,11 +261,11 @@ export function Header() {
           <div className="flex flex-col h-full">
             {/* Header with close button - Fixed */}
             <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between p-6 border-b border-border/20">
-              <span className="text-2xl font-headline font-bold text-primary">Menu</span>
-              <button
+              <span className="text-2xl font-headline font-bold text-primary">{tCommon('menu')}</span>
+                <button
                 onClick={closeMobileMenu}
                 className="p-2 text-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
-                aria-label="Close menu"
+                aria-label={tCommon('close')}
               >
                 <X className="h-6 w-6" />
               </button>
@@ -272,17 +294,63 @@ export function Header() {
                       className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
                     >
                       <Music className="w-4 h-4" />
-                      Why Listerineh?
+                      {t('whyListerineh')}
                     </Link>
                   </li>
                 </ul>
               </nav>
 
-              {/* Social links and theme toggle */}
+              {/* Settings and Social links */}
               <div className="px-4 py-6 border-t border-border/20 space-y-6">
+                {/* Settings Section */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">{tCommon('settings')}</h3>
+                  <div className="flex flex-col gap-3">
+                    {/* Language Selector */}
+                    <div className="flex items-center justify-between p-4 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{localeFlags[locale]}</span>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">{tCommon('language')}</p>
+                          <p className="text-xs text-muted-foreground">{localeNames[locale]}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        {locales.map((loc) => (
+                          <button
+                            key={loc}
+                            onClick={() => {
+                              if (loc !== locale) {
+                                setLocale(loc);
+                              }
+                            }}
+                            className={cn(
+                              "px-3 py-1.5 rounded-md text-xs font-medium transition-all",
+                              locale === loc
+                                ? "bg-primary text-primary-foreground shadow-sm"
+                                : "bg-card/50 text-muted-foreground hover:bg-card hover:text-foreground"
+                            )}
+                          >
+                            {loc.toUpperCase()}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    {/* Theme Toggle */}
+                    <div className="flex items-center justify-between p-4 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
+                      <div className="flex flex-col gap-1">
+                        <p className="text-sm font-medium text-foreground">{tCommon('theme')}</p>
+                        <p className="text-xs text-muted-foreground">{theme === 'dark' ? tTheme('lightMode') : tTheme('darkMode')}</p>
+                      </div>
+                      <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
+                    </div>
+                  </div>
+                </div>
+
                 {/* Follow Me Section */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Follow Me</h3>
+                  <h3 className="text-lg font-semibold text-foreground">{tCommon('followMe')}</h3>
                   <div className="flex gap-3 flex-wrap" aria-label="Social media links">
                     {socialLinks.map((link, index) => (
                       <Link
@@ -299,14 +367,6 @@ export function Header() {
                       </Link>
                     ))}
                   </div>
-                </div>
-
-                {/* Theme Toggle Section */}
-                <div className="flex items-center justify-between p-4 rounded-lg bg-primary/5 border border-border/20">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-sm font-semibold text-foreground">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-                  </div>
-                  <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
                 </div>
               </div>
             </div>

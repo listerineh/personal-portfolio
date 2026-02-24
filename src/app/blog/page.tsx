@@ -8,7 +8,9 @@ import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { getBlogImageBlur } from '@/lib/image-blur';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { blogPosts } from '@/lib/data';
+import { getBlogPosts } from '@/lib/data';
+import { useLocale } from '@/context/locale-context';
+import { useTranslations } from 'next-intl';
 import { BlogSearch } from '@/components/blog/blog-search';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,12 +24,25 @@ if (typeof window !== 'undefined') {
 }
 
 export default function BlogListingPage() {
+  const { locale } = useLocale();
+  const t = useTranslations('blog');
+  const tCommon = useTranslations('common');
+  const blogPosts = getBlogPosts(locale);
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(blogPosts);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const rssButtonRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
   useEffect(() => {
     ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -141,10 +156,10 @@ export default function BlogListingPage() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-8">
               <h1 ref={titleRef} className="text-4xl md:text-5xl font-headline font-bold mb-4 text-primary">
-                My Dev Blog
+                {t('pageTitle')}
               </h1>
               <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-                Technical articles about software engineering, cloud infrastructure, and modern web development
+                {t('pageDescription')}
               </p>
             </div>
             
@@ -154,8 +169,8 @@ export default function BlogListingPage() {
 
             {filteredPosts.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-xl text-muted-foreground">No articles found matching your search.</p>
-                <p className="text-sm text-muted-foreground mt-2">Try adjusting your filters or search query.</p>
+                <p className="text-xl text-muted-foreground">{t('noArticles')}</p>
+                <p className="text-sm text-muted-foreground mt-2">{t('tryAdjusting')}</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -210,11 +225,11 @@ export default function BlogListingPage() {
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground pt-2">
                               <div className="flex items-center gap-1.5">
                                 <CalendarDays className="h-3.5 w-3.5" />
-                                <span>{post.date}</span>
+                                <span>{formatDate(post.date)}</span>
                               </div>
                               <div className="flex items-center gap-1.5">
                                 <Clock className="h-3.5 w-3.5" />
-                                <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content))}</span>
+                                <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
                               </div>
                             </div>
                           </CardHeader>
@@ -227,7 +242,7 @@ export default function BlogListingPage() {
                           
                           <CardFooter className="pt-4 border-t border-border/30">
                             <div className="flex items-center text-sm font-semibold text-primary group-hover:text-accent transition-colors">
-                              Read More
+                              {tCommon('readMore')}
                               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                             </div>
                           </CardFooter>

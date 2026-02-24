@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
 import Link from 'next/link';
 import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
@@ -8,7 +9,8 @@ import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { getBlogImageBlur } from '@/lib/image-blur';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { blogPosts } from '@/lib/data';
+import { getBlogPosts } from '@/lib/data';
+import { useLocale } from '@/context/locale-context';
 import { SectionWrapper } from '@/components/common';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,7 +21,11 @@ if (typeof window !== 'undefined') {
 }
 
 export function BlogPreviewSection() {
-  const displayedPosts = blogPosts.slice(0, 3);
+  const t = useTranslations('blog');
+  const tCommon = useTranslations('common');
+  const { locale } = useLocale();
+  const allPosts = getBlogPosts(locale);
+  const displayedPosts = allPosts.slice(0, 3);
   const cardsRef = useRef<(HTMLElement | null)[]>([]);
   const buttonRef = useRef<HTMLDivElement>(null);
 
@@ -88,7 +94,7 @@ export function BlogPreviewSection() {
   }, [displayedPosts.length]);
 
   return (
-    <SectionWrapper id="blog" title="Latest Thoughts" badge='Blog' className="bg-gradient-to-t from-background via-background/90 to-background/0">
+    <SectionWrapper id="blog" title={t('title')} badge={t('badge')} className="bg-gradient-to-t from-background via-background/90 to-background/0">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {displayedPosts.map((post, index) => (
           <article
@@ -145,7 +151,7 @@ export function BlogPreviewSection() {
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Clock className="h-3.5 w-3.5" />
-                        <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content))}</span>
+                        <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
                       </div>
                     </div>
                   </CardHeader>
@@ -158,7 +164,7 @@ export function BlogPreviewSection() {
                   
                   <CardFooter className="pt-4 border-t border-border/30">
                     <div className="flex items-center text-sm font-semibold text-primary group-hover:text-accent transition-colors">
-                      Read More
+                      {tCommon('readMore')}
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </CardFooter>
@@ -172,11 +178,11 @@ export function BlogPreviewSection() {
           </article>
         ))}
       </div>
-      {blogPosts.length > 3 && (
+      {allPosts.length > 3 && (
          <div ref={buttonRef} className="text-center mt-12">
             <Button asChild variant="outline" size="lg" className="border-primary/50 text-primary hover:bg-primary/10 hover:border-primary hover:shadow-lg transition-all">
               <Link href="/blog">
-                View All Posts
+                {t('viewAllPosts')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

@@ -1,8 +1,10 @@
 
 import { Metadata } from 'next';
-import { blogPosts } from '@/lib/data';
+import { getBlogPosts, getBlogPost } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { BlogPostClientPage } from '@/components/blog/blog-post-client-page';
+import { cookies } from 'next/headers';
+import { defaultLocale, locales, type Locale } from '@/i18n/config';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -11,6 +13,7 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
+  const blogPosts = getBlogPosts('en');
   return blogPosts.map((post) => ({
     slug: post.slug,
   }));
@@ -18,7 +21,10 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const cookieStore = await cookies();
+  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
+  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const post = getBlogPost(slug, locale);
 
   if (!post) {
     return {
@@ -69,7 +75,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const cookieStore = await cookies();
+  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
+  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const post = getBlogPost(slug, locale);
 
   if (!post) {
     notFound();

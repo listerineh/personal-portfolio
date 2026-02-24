@@ -1,4 +1,6 @@
-import type { Metadata } from 'next';
+import { getMessages } from 'next-intl/server';
+import { LocaleProvider } from '@/context/locale-context';
+import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrapper';
 import { Unbounded, Outfit } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
@@ -21,7 +23,7 @@ const fontOutfit = Outfit({
   variable: '--font-outfit',
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev'),
   title: 'Sebastian Alvarez | Full-Stack Software Engineer & Web Developer',
   description: 'Full-stack software engineer specializing in React, Next.js, Python, and cloud technologies. View my portfolio, projects, and technical blog on modern web development.',
@@ -158,11 +160,12 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages();
   return (
     <html lang="en" className={cn(fontUnbounded.variable, fontOutfit.variable)}>
       <head>
@@ -207,15 +210,19 @@ export default function RootLayout({
             `,
           }}
         />
-        <ThemeProvider>
-          <AnimatedBackground />
-          <SmoothScrollWrapper>
-            {children}
-          </SmoothScrollWrapper>
-          <BackToTopButton />
-          <CookieBanner />
-          <Analytics /> 
-        </ThemeProvider>
+        <LocaleProvider>
+          <IntlProviderWrapper initialMessages={messages}>
+            <ThemeProvider>
+              <AnimatedBackground />
+              <SmoothScrollWrapper>
+                {children}
+              </SmoothScrollWrapper>
+              <BackToTopButton />
+              <CookieBanner />
+              <Analytics /> 
+            </ThemeProvider>
+          </IntlProviderWrapper>
+        </LocaleProvider>
         <Toaster />
         <SpeedInsights />
       </body>

@@ -53,6 +53,7 @@
     "lucide-react": "^0.475.0",
     "marked": "^15.0.12",
     "next": "^15.5.9",
+    "next-intl": "^4.8.3",
     "patch-package": "^8.0.0",
     "playwright": "^1.58.2",
     "react": "^18.3.1",

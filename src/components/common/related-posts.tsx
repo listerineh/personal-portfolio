@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { blogPosts } from '@/lib/data';
+import { useTranslations } from 'next-intl';
+import { useLocale } from '@/context/locale-context';
+import { getBlogPosts } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 
 interface RelatedPostsProps {
@@ -11,7 +13,9 @@ interface RelatedPostsProps {
 }
 
 export function RelatedPosts({ currentSlug, limit = 3 }: RelatedPostsProps) {
-  const relatedPosts = blogPosts
+  const t = useTranslations('blog');
+  const { locale } = useLocale();
+  const relatedPosts = getBlogPosts(locale)
     .filter((post) => post.slug !== currentSlug)
     .slice(0, limit);
 
@@ -21,7 +25,7 @@ export function RelatedPosts({ currentSlug, limit = 3 }: RelatedPostsProps) {
 
   return (
     <section className="mt-16 pt-8 border-t border-border">
-      <h3 className="text-2xl font-headline font-bold mb-8">Related Articles</h3>
+      <h3 className="text-2xl font-headline font-bold mb-8">{t('relatedArticles')}</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {relatedPosts.map((post) => (
           <Link
@@ -36,7 +40,7 @@ export function RelatedPosts({ currentSlug, limit = 3 }: RelatedPostsProps) {
               {post.excerpt}
             </p>
             <div className="flex items-center text-sm text-primary font-semibold">
-              Read More <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              {t('readMore')} <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </Link>
         ))}
