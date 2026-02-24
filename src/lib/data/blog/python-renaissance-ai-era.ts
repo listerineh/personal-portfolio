@@ -515,7 +515,7 @@ The companies building the future — OpenAI, Google, Meta, Anthropic — are be
 
 If you want to work in AI, you need to know Python. Not because it's trendy, but because it's the **infrastructure** of modern AI.
 
-And honestly? After a decade of writing Python, I'm more excited about it now than ever. The language is getting faster, the ecosystem is getting richer, and the problems we're solving are getting more interesting.
+And honestly? After more than half a decade of writing Python, I'm more excited about it now than ever. The language is getting faster, the ecosystem is getting richer, and the problems we're solving are getting more interesting.
 
 **Python isn't just surviving the AI era — it's defining it.**
 
@@ -1036,7 +1036,7 @@ Las compañías construyendo el futuro — OpenAI, Google, Meta, Anthropic — e
 
 Si quieres trabajar en IA, necesitas conocer Python. No porque esté de moda, sino porque es la **infraestructura** de la IA moderna.
 
-Y honestamente? Después de una década escribiendo Python, estoy más emocionado por él ahora que nunca. El lenguaje se está volviendo más rápido, el ecosistema se está volviendo más rico, y los problemas que estamos resolviendo se están volviendo más interesantes.
+Y honestamente? Después de más de media década escribiendo Python, estoy más emocionado por él ahora que nunca. El lenguaje se está volviendo más rápido, el ecosistema se está volviendo más rico, y los problemas que estamos resolviendo se están volviendo más interesantes.
 
 **Python no solo está sobreviviendo la era de la IA — la está definiendo.**
 
