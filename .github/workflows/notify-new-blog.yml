@@ -1,0 +1,109 @@
+name: Notify New Blog Post
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/lib/data/blog/*.ts'
+
+jobs:
+  notify-subscribers:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Fetch last 2 commits to compare
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Detect new blog files
+        id: detect
+        run: |
+          # Get list of added files in src/lib/data/blog/
+          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD | grep '^src/lib/data/blog/.*\.ts$' || true)
+          
+          if [ -z "$NEW_FILES" ]; then
+            echo "No new blog files detected"
+            echo "has_new_blog=false" >> $GITHUB_OUTPUT
+          else
+            echo "New blog file(s) detected:"
+            echo "$NEW_FILES"
+            # Take the first new file (in case multiple were added)
+            BLOG_FILE=$(echo "$NEW_FILES" | head -n 1)
+            echo "blog_file=$BLOG_FILE" >> $GITHUB_OUTPUT
+            echo "has_new_blog=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Extract blog data
+        if: steps.detect.outputs.has_new_blog == 'true'
+        id: extract
+        run: |
+          BLOG_FILE="${{ steps.detect.outputs.blog_file }}"
+          echo "Extracting data from: $BLOG_FILE"
+          
+          # Extract blog data using the script
+          BLOG_DATA=$(node scripts/extract-blog-data.js "$BLOG_FILE")
+          
+          # Parse JSON and set outputs
+          TITLE=$(echo "$BLOG_DATA" | jq -r '.title')
+          SLUG=$(echo "$BLOG_DATA" | jq -r '.slug')
+          EXCERPT=$(echo "$BLOG_DATA" | jq -r '.excerpt')
+          IMAGE_URL=$(echo "$BLOG_DATA" | jq -r '.imageUrl')
+          
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+          echo "slug=$SLUG" >> $GITHUB_OUTPUT
+          echo "excerpt=$EXCERPT" >> $GITHUB_OUTPUT
+          echo "image_url=$IMAGE_URL" >> $GITHUB_OUTPUT
+          
+          echo "📧 Blog data extracted:"
+          echo "   Title: $TITLE"
+          echo "   Slug: $SLUG"
+          echo "   Excerpt: ${EXCERPT:0:50}..."
+          echo "   Image: $IMAGE_URL"
+      
+      - name: Send notification to subscribers
+        if: steps.detect.outputs.has_new_blog == 'true'
+        env:
+          SITE_URL: ${{ secrets.SITE_URL || 'https://listerineh.dev' }}
+        run: |
+          echo "📧 Sending notification to subscribers..."
+          
+          # Call the notification API endpoint
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+            "$SITE_URL/api/newsletter/send-blog-notification" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "blogTitle": "${{ steps.extract.outputs.title }}",
+              "blogSlug": "${{ steps.extract.outputs.slug }}",
+              "blogExcerpt": "${{ steps.extract.outputs.excerpt }}",
+              "blogImageUrl": "${{ steps.extract.outputs.image_url }}"
+            }')
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "✅ Notification sent successfully!"
+            echo "$BODY" | jq '.'
+          else
+            echo "❌ Failed to send notification (HTTP $HTTP_CODE)"
+            echo "$BODY"
+            exit 1
+          fi
+      
+      - name: Summary
+        if: steps.detect.outputs.has_new_blog == 'true'
+        run: |
+          echo "## 📧 Blog Notification Sent" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Title:** ${{ steps.extract.outputs.title }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Slug:** ${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** https://listerineh.dev/blog/${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Subscribers have been notified! 🎉" >> $GITHUB_STEP_SUMMARY
