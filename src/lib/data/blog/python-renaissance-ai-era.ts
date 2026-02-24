@@ -1046,4 +1046,3 @@ Y honestamente? Después de una década escribiendo Python, estoy más emocionad
 `,
   },
 };
-// Trigger notification workflow
