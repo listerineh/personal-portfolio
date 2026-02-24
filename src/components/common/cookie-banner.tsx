@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Cookie, X, Settings } from 'lucide-react';
-import { cookieConfig } from '@/lib/data';
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,7 @@ import {
 } from '@/lib/cookies';
 
 export function CookieBanner() {
+  const t = useTranslations('cookies');
   const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [preferences, setPreferences] = useState({
@@ -67,9 +68,9 @@ export function CookieBanner() {
             <div className="flex items-start gap-3 flex-1">
               <Cookie className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div className="space-y-1">
-                <p className="text-sm font-medium">{cookieConfig.banner.title}</p>
+                <p className="text-sm font-medium">{t('bannerTitle')}</p>
                 <p className="text-xs text-muted-foreground">
-                  {cookieConfig.banner.description}
+                  {t('bannerDescription')}
                 </p>
               </div>
             </div>
@@ -82,21 +83,21 @@ export function CookieBanner() {
                 className="gap-2"
               >
                 <Settings className="h-4 w-4" />
-                {cookieConfig.banner.customizeButton}
+                {t('customize')}
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleRejectAll}
               >
-                {cookieConfig.banner.rejectAllButton}
+                {t('rejectAll')}
               </Button>
               <Button
                 size="sm"
                 onClick={handleAcceptAll}
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                {cookieConfig.banner.acceptAllButton}
+                {t('acceptAll')}
               </Button>
             </div>
           </div>
@@ -106,18 +107,18 @@ export function CookieBanner() {
       <Dialog open={showSettings} onOpenChange={setShowSettings}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{cookieConfig.preferences.title}</DialogTitle>
+            <DialogTitle>{t('preferencesTitle')}</DialogTitle>
             <DialogDescription>
-              {cookieConfig.preferences.description}
+              {t('preferencesDescription')}
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
-                <Label className="text-sm font-medium">{cookieConfig.preferences.necessary.label}</Label>
+                <Label className="text-sm font-medium">{t('necessaryLabel')}</Label>
                 <p className="text-xs text-muted-foreground">
-                  {cookieConfig.preferences.necessary.description}
+                  {t('necessaryDescription')}
                 </p>
               </div>
               <Switch
@@ -130,10 +131,10 @@ export function CookieBanner() {
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="analytics" className="text-sm font-medium">
-                  {cookieConfig.preferences.analytics.label}
+                  {t('analyticsLabel')}
                 </Label>
                 <p className="text-xs text-muted-foreground">
-                  {cookieConfig.preferences.analytics.description}
+                  {t('analyticsDescription')}
                 </p>
               </div>
               <Switch
@@ -149,10 +150,10 @@ export function CookieBanner() {
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="preferences" className="text-sm font-medium">
-                  {cookieConfig.preferences.preferences.label}
+                  {t('preferencesLabel')}
                 </Label>
                 <p className="text-xs text-muted-foreground">
-                  {cookieConfig.preferences.preferences.description}
+                  {t('preferencesDescription')}
                 </p>
               </div>
               <Switch
@@ -168,10 +169,10 @@ export function CookieBanner() {
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => setShowSettings(false)}>
-              {cookieConfig.preferences.cancelButton}
+              {t('cancel')}
             </Button>
             <Button onClick={handleSavePreferences}>
-              {cookieConfig.preferences.saveButton}
+              {t('savePreferences')}
             </Button>
           </div>
         </DialogContent>

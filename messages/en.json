@@ -157,26 +157,6 @@
     "shareOnLinkedIn": "Share on LinkedIn",
     "shareOnFacebook": "Share on Facebook"
   },
-  "cookies": {
-    "bannerTitle": "We use cookies",
-    "bannerDescription": "We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. You can choose which cookies to accept.",
-    "customizeButton": "Customize",
-    "rejectAllButton": "Reject All",
-    "acceptAllButton": "Accept All",
-    "preferencesTitle": "Cookie Preferences",
-    "preferencesDescription": "Choose which cookies you want to accept. You can change these settings at any time.",
-    "necessaryLabel": "Necessary Cookies",
-    "necessaryDescription": "Required for the website to function properly. Cannot be disabled.",
-    "analyticsLabel": "Analytics Cookies",
-    "analyticsDescription": "Help us understand how visitors interact with our website.",
-    "preferencesCookiesLabel": "Preference Cookies",
-    "preferencesCookiesDescription": "Remember your settings and preferences (e.g., theme, language).",
-    "cancelButton": "Cancel",
-    "saveButton": "Save Preferences",
-    "revokeAllButton": "Revoke All",
-    "cookieSettings": "Cookie Settings",
-    "settingsDescription": "Manage your cookie preferences. Changes will take effect after saving."
-  },
   "theme": {
     "lightMode": "Light Mode",
     "darkMode": "Dark Mode",
@@ -336,5 +316,28 @@
     "description": "We encountered an unexpected error. Don't worry, we're working on fixing it.",
     "tryAgain": "Try again",
     "goHome": "Go to homepage"
+  },
+  "cookies": {
+    "bannerTitle": "We use cookies",
+    "bannerDescription": "We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. You can choose which cookies to accept.",
+    "customize": "Customize",
+    "rejectAll": "Reject All",
+    "acceptAll": "Accept All",
+    "preferencesTitle": "Cookie Preferences",
+    "preferencesDescription": "Choose which cookies you want to accept. You can change these settings at any time.",
+    "necessaryLabel": "Necessary Cookies",
+    "necessaryDescription": "Required for the website to function properly. Cannot be disabled.",
+    "analyticsLabel": "Analytics Cookies",
+    "analyticsDescription": "Help us understand how visitors interact with our website.",
+    "preferencesLabel": "Preference Cookies",
+    "cancel": "Cancel",
+    "savePreferences": "Save Preferences",
+    "cookieSettings": "Cookie Settings",
+    "settingsDescription": "Manage your cookie preferences. Changes will take effect after saving.",
+    "preferencesCookiesLabel": "Preference Cookies",
+    "preferencesCookiesDescription": "Remember your settings and preferences (e.g., theme, language).",
+    "cancelButton": "Cancel",
+    "saveButton": "Save Preferences",
+    "revokeAllButton": "Revoke All"
   }
 }

@@ -157,26 +157,6 @@
     "shareOnLinkedIn": "Compartir en LinkedIn",
     "shareOnFacebook": "Compartir en Facebook"
   },
-  "cookies": {
-    "bannerTitle": "Usamos cookies",
-    "bannerDescription": "Usamos cookies para mejorar tu experiencia de navegación, analizar el tráfico del sitio y personalizar el contenido. Puedes elegir qué cookies aceptar.",
-    "customizeButton": "Personalizar",
-    "rejectAllButton": "Rechazar Todas",
-    "acceptAllButton": "Aceptar Todas",
-    "preferencesTitle": "Preferencias de Cookies",
-    "preferencesDescription": "Elige qué cookies deseas aceptar. Puedes cambiar estas configuraciones en cualquier momento.",
-    "necessaryLabel": "Cookies Necesarias",
-    "necessaryDescription": "Requeridas para que el sitio web funcione correctamente. No se pueden desactivar.",
-    "analyticsLabel": "Cookies de Análisis",
-    "analyticsDescription": "Nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web.",
-    "preferencesCookiesLabel": "Cookies de Preferencias",
-    "preferencesCookiesDescription": "Recuerdan tus configuraciones y preferencias (ej. tema, idioma).",
-    "cancelButton": "Cancelar",
-    "saveButton": "Guardar Preferencias",
-    "revokeAllButton": "Revocar Todas",
-    "cookieSettings": "Configuración de Cookies",
-    "settingsDescription": "Administra tus preferencias de cookies. Los cambios tendrán efecto después de guardar."
-  },
   "theme": {
     "lightMode": "Modo Claro",
     "darkMode": "Modo Oscuro",
@@ -336,5 +316,28 @@
     "description": "Encontramos un error inesperado. No te preocupes, estamos trabajando en solucionarlo.",
     "tryAgain": "Intentar de nuevo",
     "goHome": "Ir al inicio"
+  },
+  "cookies": {
+    "bannerTitle": "Usamos cookies",
+    "bannerDescription": "Usamos cookies para mejorar tu experiencia de navegación, analizar el tráfico del sitio y personalizar el contenido. Puedes elegir qué cookies aceptar.",
+    "customize": "Personalizar",
+    "rejectAll": "Rechazar Todas",
+    "acceptAll": "Aceptar Todas",
+    "preferencesTitle": "Preferencias de Cookies",
+    "preferencesDescription": "Elige qué cookies quieres aceptar. Puedes cambiar estas configuraciones en cualquier momento.",
+    "necessaryLabel": "Cookies Necesarias",
+    "necessaryDescription": "Requeridas para que el sitio web funcione correctamente. No se pueden desactivar.",
+    "analyticsLabel": "Cookies de Análisis",
+    "analyticsDescription": "Nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web.",
+    "preferencesLabel": "Cookies de Preferencias",
+    "cancel": "Cancelar",
+    "savePreferences": "Guardar Preferencias",
+    "cookieSettings": "Configuración de Cookies",
+    "settingsDescription": "Administra tus preferencias de cookies. Los cambios tendrán efecto después de guardar.",
+    "preferencesCookiesLabel": "Cookies de Preferencias",
+    "preferencesCookiesDescription": "Recuerdan tus configuraciones y preferencias (ej., tema, idioma).",
+    "cancelButton": "Cancelar",
+    "saveButton": "Guardar Preferencias",
+    "revokeAllButton": "Revocar Todas"
   }
 }
