@@ -31,20 +31,46 @@ try {
   const fileName = path.basename(blogFilePath, '.ts');
   const slug = fileName;
   
-  // Extract title from English version (en object)
-  const titleMatch = fileContent.match(/en:\s*{[^}]*title:\s*['"]([^'"]+)['"]/s);
-  const title = titleMatch ? titleMatch[1] : '';
+  // Helper function to extract string value from TypeScript string literal
+  function extractStringValue(content, fieldName) {
+    // Match field: 'value' or field: "value", handling escaped quotes
+    const singleQuoteRegex = new RegExp(`${fieldName}:\\s*'((?:[^'\\\\]|\\\\.)*)'`, 's');
+    const doubleQuoteRegex = new RegExp(`${fieldName}:\\s*"((?:[^"\\\\]|\\\\.)*)"`, 's');
+    
+    const singleMatch = content.match(singleQuoteRegex);
+    const doubleMatch = content.match(doubleQuoteRegex);
+    
+    let value = singleMatch ? singleMatch[1] : (doubleMatch ? doubleMatch[1] : '');
+    
+    // Unescape common escape sequences
+    value = value
+      .replace(/\\'/g, "'")
+      .replace(/\\"/g, '"')
+      .replace(/\\\\/g, '\\')
+      .replace(/\\n/g, '\n')
+      .replace(/\\t/g, '\t');
+    
+    return value;
+  }
   
-  // Extract excerpt from English version
-  const excerptMatch = fileContent.match(/en:\s*{[^}]*excerpt:\s*['"]([^'"]+)['"]/s);
-  const excerpt = excerptMatch ? excerptMatch[1] : '';
+  // Find the 'en' object section
+  const enSectionMatch = fileContent.match(/en:\s*\{([\s\S]*?)(?:\},\s*es:|$)/);
+  if (!enSectionMatch) {
+    console.error('❌ Error: Could not find "en" section in blog file');
+    process.exit(1);
+  }
   
-  // Extract imageUrl from English version
-  const imageMatch = fileContent.match(/en:\s*{[^}]*imageUrl:\s*['"]([^'"]+)['"]/s);
-  const imageUrl = imageMatch ? imageMatch[1] : '';
+  const enSection = enSectionMatch[1];
+  
+  // Extract fields from en section
+  const title = extractStringValue(enSection, 'title');
+  const excerpt = extractStringValue(enSection, 'excerpt');
+  const imageUrl = extractStringValue(enSection, 'imageUrl');
   
   if (!title || !slug) {
     console.error('❌ Error: Could not extract required blog data (title and slug)');
+    console.error(`   Title: "${title}"`);
+    console.error(`   Slug: "${slug}"`);
     process.exit(1);
   }
   
