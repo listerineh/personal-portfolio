@@ -83,19 +83,26 @@ jobs:
         if: steps.detect.outputs.has_new_blog == 'true' && steps.env.outputs.is_production == 'true'
         env:
           SITE_URL: ${{ secrets.SITE_URL || 'https://listerineh.dev' }}
+          BLOG_TITLE: ${{ steps.extract.outputs.title }}
+          BLOG_SLUG: ${{ steps.extract.outputs.slug }}
+          BLOG_EXCERPT: ${{ steps.extract.outputs.excerpt }}
+          BLOG_IMAGE: ${{ steps.extract.outputs.image_url }}
         run: |
           echo "📧 Sending notification to subscribers..."
+          
+          # Build JSON payload using jq to properly escape special characters
+          JSON_PAYLOAD=$(jq -n \
+            --arg title "$BLOG_TITLE" \
+            --arg slug "$BLOG_SLUG" \
+            --arg excerpt "$BLOG_EXCERPT" \
+            --arg image "$BLOG_IMAGE" \
+            '{blogTitle: $title, blogSlug: $slug, blogExcerpt: $excerpt, blogImageUrl: $image}')
           
           # Call the notification API endpoint
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
             "$SITE_URL/api/newsletter/send-blog-notification" \
             -H "Content-Type: application/json" \
-            -d '{
-              "blogTitle": "${{ steps.extract.outputs.title }}",
-              "blogSlug": "${{ steps.extract.outputs.slug }}",
-              "blogExcerpt": "${{ steps.extract.outputs.excerpt }}",
-              "blogImageUrl": "${{ steps.extract.outputs.image_url }}"
-            }')
+            -d "$JSON_PAYLOAD")
           
           HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
           BODY=$(echo "$RESPONSE" | sed '$d')
