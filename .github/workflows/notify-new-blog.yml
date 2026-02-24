@@ -111,31 +111,51 @@ jobs:
       
       - name: Summary - Production
         if: steps.detect.outputs.has_new_blog == 'true' && steps.env.outputs.is_production == 'true'
+        env:
+          BLOG_TITLE: ${{ steps.extract.outputs.title }}
+          BLOG_SLUG: ${{ steps.extract.outputs.slug }}
+          ENVIRONMENT: ${{ steps.env.outputs.environment }}
         run: |
-          echo "## 📧 Blog Notification Sent" >> $GITHUB_STEP_SUMMARY
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## 📧 Blog Notification Sent
+          
+          EOF
+          echo "**Environment:** $ENVIRONMENT" >> $GITHUB_STEP_SUMMARY
+          echo "**Title:** $BLOG_TITLE" >> $GITHUB_STEP_SUMMARY
+          echo "**Slug:** $BLOG_SLUG" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** https://listerineh.dev/blog/$BLOG_SLUG" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Environment:** ${{ steps.env.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Title:** ${{ steps.extract.outputs.title }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Slug:** ${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
-          echo "**URL:** https://listerineh.dev/blog/${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Subscribers have been notified! 🎉" >> $GITHUB_STEP_SUMMARY
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ✅ Subscribers have been notified! 🎉
+          EOF
       
       - name: Summary - Preview (Develop)
         if: steps.detect.outputs.has_new_blog == 'true' && steps.env.outputs.is_production == 'false'
+        env:
+          BLOG_TITLE: ${{ steps.extract.outputs.title }}
+          BLOG_SLUG: ${{ steps.extract.outputs.slug }}
+          BLOG_EXCERPT: ${{ steps.extract.outputs.excerpt }}
+          BLOG_IMAGE: ${{ steps.extract.outputs.image_url }}
+          ENVIRONMENT: ${{ steps.env.outputs.environment }}
         run: |
-          echo "## 📝 New Blog Post Detected (Preview Mode)" >> $GITHUB_STEP_SUMMARY
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## 📝 New Blog Post Detected (Preview Mode)
+          
+          EOF
+          echo "**Environment:** $ENVIRONMENT" >> $GITHUB_STEP_SUMMARY
+          echo "**Title:** $BLOG_TITLE" >> $GITHUB_STEP_SUMMARY
+          echo "**Slug:** $BLOG_SLUG" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Environment:** ${{ steps.env.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Title:** ${{ steps.extract.outputs.title }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Slug:** ${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Excerpt:** ${{ steps.extract.outputs.excerpt }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Image URL:** ${{ steps.extract.outputs.image_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Excerpt:** $BLOG_EXCERPT" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📋 What will happen when merged to main:" >> $GITHUB_STEP_SUMMARY
+          echo "**Image URL:** $BLOG_IMAGE" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- ✉️ Email notifications will be sent to all subscribers" >> $GITHUB_STEP_SUMMARY
-          echo "- 🔗 Blog will be available at: https://listerineh.dev/blog/${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
-          echo "- 📊 Notification stats will be tracked" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "⚠️ **Note:** No emails were sent in preview mode" >> $GITHUB_STEP_SUMMARY
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ### � What will happen when merged to main:
+          
+          - ✉️ Email notifications will be sent to all subscribers
+          - 📊 Notification stats will be tracked
+          
+          ⚠️ **Note:** No emails were sent in preview mode
+          EOF
+          echo "- 🔗 Blog will be available at: https://listerineh.dev/blog/$BLOG_SLUG" >> $GITHUB_STEP_SUMMARY

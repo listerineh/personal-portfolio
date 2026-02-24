@@ -1,5 +1,6 @@
 import type { BlogPost } from '@/types';
 import type { Locale } from '@/i18n/config';
+import { pythonRenaissanceAiEra } from './python-renaissance-ai-era';
 import { adaptingToNewJobs } from './adapting-to-new-jobs';
 import { terraformScalingInfrastructure } from './terraform-scaling-infrastructure';
 import { fromJuniorToSenior } from './from-junior-to-senior-engineer';
@@ -10,6 +11,7 @@ import { whyMarkdownForBlogs } from './why-markdown-for-blogs';
 
 const allBlogPosts = {
   en: [
+    pythonRenaissanceAiEra.en,
     adaptingToNewJobs.en,
     terraformScalingInfrastructure.en,
     fromJuniorToSenior.en,
@@ -19,6 +21,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    pythonRenaissanceAiEra.es,
     adaptingToNewJobs.es,
     terraformScalingInfrastructure.es,
     fromJuniorToSenior.es,
