@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
     paths:
       - 'src/lib/data/blog/*.ts'
 
@@ -15,7 +16,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Fetch last 2 commits to compare
+          fetch-depth: 2
+      
+      - name: Set environment based on branch
+        id: env
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "is_production=true" >> $GITHUB_OUTPUT
+            echo "environment=Production" >> $GITHUB_OUTPUT
+          else
+            echo "is_production=false" >> $GITHUB_OUTPUT
+            echo "environment=Preview (develop)" >> $GITHUB_OUTPUT
+          fi
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -67,8 +79,8 @@ jobs:
           echo "   Excerpt: ${EXCERPT:0:50}..."
           echo "   Image: $IMAGE_URL"
       
-      - name: Send notification to subscribers
-        if: steps.detect.outputs.has_new_blog == 'true'
+      - name: Send notification to subscribers (Production only)
+        if: steps.detect.outputs.has_new_blog == 'true' && steps.env.outputs.is_production == 'true'
         env:
           SITE_URL: ${{ secrets.SITE_URL || 'https://listerineh.dev' }}
         run: |
@@ -97,13 +109,33 @@ jobs:
             exit 1
           fi
       
-      - name: Summary
-        if: steps.detect.outputs.has_new_blog == 'true'
+      - name: Summary - Production
+        if: steps.detect.outputs.has_new_blog == 'true' && steps.env.outputs.is_production == 'true'
         run: |
           echo "## 📧 Blog Notification Sent" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ steps.env.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
           echo "**Title:** ${{ steps.extract.outputs.title }}" >> $GITHUB_STEP_SUMMARY
           echo "**Slug:** ${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
           echo "**URL:** https://listerineh.dev/blog/${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Subscribers have been notified! 🎉" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Subscribers have been notified! 🎉" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Summary - Preview (Develop)
+        if: steps.detect.outputs.has_new_blog == 'true' && steps.env.outputs.is_production == 'false'
+        run: |
+          echo "## 📝 New Blog Post Detected (Preview Mode)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ steps.env.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Title:** ${{ steps.extract.outputs.title }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Slug:** ${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Excerpt:** ${{ steps.extract.outputs.excerpt }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Image URL:** ${{ steps.extract.outputs.image_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📋 What will happen when merged to main:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- ✉️ Email notifications will be sent to all subscribers" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔗 Blog will be available at: https://listerineh.dev/blog/${{ steps.extract.outputs.slug }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 📊 Notification stats will be tracked" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ **Note:** No emails were sent in preview mode" >> $GITHUB_STEP_SUMMARY
