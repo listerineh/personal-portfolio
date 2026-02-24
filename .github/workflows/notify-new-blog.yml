@@ -34,19 +34,19 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Detect new blog files
+      - name: Detect new or modified blog files
         id: detect
         run: |
-          # Get list of added files in src/lib/data/blog/
-          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD | grep '^src/lib/data/blog/.*\.ts$' || true)
+          # Get list of added or modified files in src/lib/data/blog/
+          NEW_FILES=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD | grep '^src/lib/data/blog/.*\.ts$' || true)
           
           if [ -z "$NEW_FILES" ]; then
-            echo "No new blog files detected"
+            echo "No new or modified blog files detected"
             echo "has_new_blog=false" >> $GITHUB_OUTPUT
           else
-            echo "New blog file(s) detected:"
+            echo "New or modified blog file(s) detected:"
             echo "$NEW_FILES"
-            # Take the first new file (in case multiple were added)
+            # Take the first file (in case multiple were changed)
             BLOG_FILE=$(echo "$NEW_FILES" | head -n 1)
             echo "blog_file=$BLOG_FILE" >> $GITHUB_OUTPUT
             echo "has_new_blog=true" >> $GITHUB_OUTPUT

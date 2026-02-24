@@ -1044,5 +1044,6 @@ Y honestamente? Después de una década escribiendo Python, estoy más emocionad
 
 *¿Cuál es tu experiencia con Python? ¿Lo estás usando para IA, desarrollo web, o algo más? Me encantaría escuchar sobre tus proyectos y qué estás construyendo.*
 `,
-},
+  },
 };
+// Trigger notification workflow
