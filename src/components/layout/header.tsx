@@ -39,13 +39,14 @@ export function Header() {
   const menuHeaderRef = useRef<HTMLDivElement>(null);
   const navItemsRef = useRef<(HTMLLIElement | null)[]>([]);
   const socialLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
+  const scrollYRef = useRef<number>(0);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -135,71 +136,81 @@ export function Header() {
     });
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const openMobileMenu = () => {
+    // Save scroll position
+    scrollYRef.current = window.scrollY;
+    
+    // Lock body scroll
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollYRef.current}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+
+    // Animate menu elements
+    if (mobileMenuRef.current) {
+      gsap.fromTo(mobileMenuRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.2, ease: 'power2.out' }
+      );
+    }
+
+    if (menuHeaderRef.current) {
+      gsap.fromTo(menuHeaderRef.current,
+        { y: -20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out', delay: 0.05 }
+      );
+    }
+
+    const navItems = navItemsRef.current.filter(Boolean);
+    if (navItems.length > 0) {
+      gsap.fromTo(navItems,
+        { x: -20, opacity: 0 },
+        { x: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 }
+      );
+    }
+
+    const socialIcons = socialLinksRef.current.filter(Boolean);
+    if (socialIcons.length > 0) {
+      gsap.fromTo(socialIcons,
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, stagger: 0.04, duration: 0.25, ease: 'power2.out', delay: 0.2 }
+      );
+    }
+
+    setIsMobileMenuOpen(true);
   };
 
   const closeMobileMenu = () => {
+    if (mobileMenuRef.current) {
+      gsap.to(mobileMenuRef.current, {
+        opacity: 0,
+        duration: 0.15,
+        ease: 'power2.in',
+        onComplete: () => {
+          // Restore body scroll
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.width = '';
+          document.body.style.overflow = '';
+          window.scrollTo({ top: scrollYRef.current, behavior: 'instant' });
+        }
+      });
+    }
+
     setIsMobileMenuOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    if (isMobileMenuOpen) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
   };
 
   const handleNavLinkClick = (href: string) => {
     closeMobileMenu();
   };
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      const scrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      document.body.style.overflow = 'hidden';
-
-      if (mobileMenuRef.current) {
-        gsap.fromTo(mobileMenuRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.2, ease: 'power2.out' }
-        );
-      }
-
-      if (menuHeaderRef.current) {
-        gsap.fromTo(menuHeaderRef.current,
-          { y: -20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out', delay: 0.05 }
-        );
-      }
-
-      const navItems = navItemsRef.current.filter(Boolean);
-      if (navItems.length > 0) {
-        gsap.fromTo(navItems,
-          { x: -20, opacity: 0 },
-          { x: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 }
-        );
-      }
-
-      const socialIcons = socialLinksRef.current.filter(Boolean);
-      if (socialIcons.length > 0) {
-        gsap.fromTo(socialIcons,
-          { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, stagger: 0.04, duration: 0.25, ease: 'power2.out', delay: 0.2 }
-        );
-      }
-      
-      return () => {
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        document.body.style.overflow = '';
-        window.scrollTo({ top: scrollY, behavior: 'instant' });
-      };
-    } else if (!isMobileMenuOpen && mobileMenuRef.current) {
-      gsap.to(mobileMenuRef.current, {
-        opacity: 0,
-        duration: 0.15,
-        ease: 'power2.in'
-      });
-    }
-  }, [isMobileMenuOpen]);
 
   return (
     <header 
