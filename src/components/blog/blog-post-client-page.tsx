@@ -5,30 +5,22 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
 import type { BlogPost } from '@/types';
-import Image from 'next/image';
 import Link from 'next/link';
-import { marked } from 'marked';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { ShareButtons } from './share-buttons';
 import { BlogStructuredData } from '@/components/blog/blog-structured-data';
 import { ArticleSchema } from '@/components/blog/article-schema';
-import { BlogViews } from './blog-views';
-import { BlogReactions } from './blog-reactions';
 import { TableOfContents } from './table-of-contents';
-import { CodeBlockCopyButton } from './code-block-copy-button';
-import { NewsletterSubscribe } from './newsletter-subscribe';
-import { RelatedPosts } from '@/components/common/related-posts';
-import { NewsletterSignup } from '@/components/common/newsletter-signup';
-import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
-import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
-import { getBlogImageBlur } from '@/lib/image-blur';
+import { BlogPostHeader } from './blog-post-header';
+import { BlogPostHeroImage } from './blog-post-hero-image';
+import { BlogPostContent } from './blog-post-content';
+import { BlogPostActions } from './blog-post-actions';
+import { ArrowLeft } from 'lucide-react';
 import { getBlogPost } from '@/lib/data';
 
 if (typeof window !== 'undefined') {
@@ -81,19 +73,15 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
           const scrollDepth = window.scrollY - element.offsetTop;
           const totalScrollableHeight = element.scrollHeight - viewportHeight;
 
+          // Calculate progress once and set state once
+          let progress: number;
           if (totalScrollableHeight <= 0) {
-            if (top < viewportHeight) {
-              setReadingProgress(100);
-            } else {
-              setReadingProgress(0);
-            }
-            ticking = false;
-            return;
+            progress = top < viewportHeight ? 100 : 0;
+          } else {
+            progress = (scrollDepth / totalScrollableHeight) * 100;
           }
-
-          const progress = (scrollDepth / totalScrollableHeight) * 100;
-          setReadingProgress(Math.min(100, Math.max(0, progress)));
           
+          setReadingProgress(Math.min(100, Math.max(0, progress)));
           ticking = false;
         });
 
@@ -157,7 +145,7 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
       }
     };
 
-    window.addEventListener('scroll', handleAsideVisibility);
+    window.addEventListener('scroll', handleAsideVisibility, { passive: true });
     handleAsideVisibility();
 
     return () => {
@@ -318,113 +306,31 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
         <div className="container mx-auto px-4 py-12 md:py-16 xl:mr-[320px]">
           <div className="relative max-w-7xl mx-auto">
             <article key={post.slug} ref={contentRef} className="max-w-4xl">
-          <header ref={headerRef} className="mb-6 md:mb-12">
-            <Button asChild variant="ghost" className="mb-4 md:mb-6 text-accent hover:text-primary pl-0">
-              <Link href="/blog">
-                <ArrowLeft className="mr-2 h-4 w-4" /> {t('backToBlog')}
-              </Link>
-            </Button>
-            <div className="flex flex-col gap-4 mb-6">
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-headline font-bold text-primary leading-tight">
-                {post.title}
-              </h1>
-              <div className="hidden md:block">
-                <ShareButtons 
-                  title={post.title} 
-                  url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
-                />
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-6 sm:gap-y-2 text-sm sm:text-base text-muted-foreground mb-4">
-              <div className="flex items-center">
-                <CalendarDays className="mr-2 h-5 w-5" />
-                <span>{formatDate(post.date)}</span>
-              </div>
-              <div className="flex items-center">
-                <UserCircle className="mr-2 h-5 w-5" />
-                <span>{t('by')} {post.author}</span>
-              </div>
-              <div className="flex items-center">
-                <Clock className="mr-2 h-5 w-5" />
-                <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
-              </div>
-              <BlogViews slug={post.slug} />
-            </div>
-            <div className="flex flex-col gap-4 mb-4">
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2">
-                  <Tag className="mr-1.5 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
-                  {post.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="font-normal text-xs sm:text-sm px-2 sm:px-3 py-1">{tag}</Badge>
-                  ))}
-                </div>
-              )}
-              <div className="md:hidden">
-                <ShareButtons 
-                  title={post.title} 
-                  url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
-                />
-              </div>
-            </div>
-          </header>
+          <BlogPostHeader 
+            ref={headerRef}
+            post={post}
+            locale={locale}
+            formatDate={formatDate}
+          />
 
           {post.imageUrl && (
-            <div ref={imageRef} className="relative w-full h-48 sm:h-72 md:h-[500px] mb-8 md:mb-16 rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl">
-              <Image
-                src={post.imageUrl}
-                alt={post.title}
-                fill
-                style={{ objectFit: 'cover' }}
-                data-ai-hint={post.imageAiHint || 'blog post header'}
-                placeholder="blur"
-                blurDataURL={getBlogImageBlur()}
-                priority
-              />
-            </div>
+            <BlogPostHeroImage
+              ref={imageRef}
+              imageUrl={post.imageUrl}
+              title={post.title}
+              imageAiHint={post.imageAiHint}
+            />
           )}
 
           <Separator className="my-6 md:my-12" />
 
-          <div
-            ref={proseRef}
-            className="prose prose-xl dark:prose-invert max-w-none 
-                       prose-headings:font-headline prose-headings:text-primary prose-headings:mb-6 prose-headings:mt-12
-                       prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-6
-                       prose-a:text-accent hover:prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                       prose-strong:text-foreground prose-strong:font-semibold
-                       prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:pl-6 prose-blockquote:italic
-                       prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded-md prose-code:font-code prose-code:text-sm
-                       prose-code:text-foreground prose-code:before:content-none prose-code:after:content-none
-                       prose-pre:bg-muted prose-pre:p-6 prose-pre:rounded-xl prose-pre:font-code prose-pre:shadow-lg
-                       prose-ul:my-6 prose-ol:my-6 prose-li:my-2
-                       prose-img:rounded-xl prose-img:shadow-lg"
-            dangerouslySetInnerHTML={{ __html: marked(post.content) as string }}
+          <BlogPostContent ref={proseRef} content={post.content} />
+
+          <BlogPostActions 
+            slug={post.slug}
+            title={post.title}
+            url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`}
           />
-
-          <Separator className="my-8 md:my-12" />
-
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">{t('whatDidYouThink')}</h3>
-            <BlogReactions slug={post.slug} />
-          </div>
-
-          <Separator className="my-8" />
-
-          <div className="flex flex-col gap-4 mb-8">
-            <p className="text-muted-foreground">{t('foundHelpful')}</p>
-            <div className="w-full sm:w-auto">
-              <ShareButtons 
-                title={post.title} 
-                url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`} 
-              />
-            </div>
-          </div>
-
-          <RelatedPosts currentSlug={post.slug} limit={3} />
-
-          <Separator className="my-12" />
-
-          <NewsletterSignup />
 
           <Separator className="my-12" />
 
