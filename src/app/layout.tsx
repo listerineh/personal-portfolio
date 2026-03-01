@@ -13,6 +13,7 @@ import { generatePageMetadata } from '@/lib/metadata';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 import './globals.css';
 
@@ -76,41 +77,11 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         <PersonSchema />
         <WebsiteSchema />
         <BreadcrumbSchema />
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <>
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-                `,
-              }}
-            />
-          </>
-        )}
-        {process.env.NEXT_PUBLIC_HOTJAR_SCRIPT && (
-          <script src={process.env.NEXT_PUBLIC_HOTJAR_SCRIPT} />
-        )}
       </head>
       <body className="font-body antialiased">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js').catch(() => {});
-              }
-            `,
-          }}
-        />
         <LocaleProvider>
           <IntlProviderWrapper initialMessages={messages}>
             <ThemeProvider>
@@ -126,6 +97,49 @@ export default async function RootLayout({
         </LocaleProvider>
         <Toaster />
         <SpeedInsights />
+        
+        {/* Service Worker - lazy load after page is interactive */}
+        <Script
+          id="service-worker"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+              }
+            `,
+          }}
+        />
+        
+        {/* Google Analytics - load after page is interactive */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
+        
+        {/* Hotjar - lazy load for better performance */}
+        {process.env.NEXT_PUBLIC_HOTJAR_SCRIPT && (
+          <Script
+            src={process.env.NEXT_PUBLIC_HOTJAR_SCRIPT}
+            strategy="lazyOnload"
+          />
+        )}
       </body>
     </html>
   );
