@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -13,6 +13,16 @@ interface BlogPostContentProps {
 
 export const BlogPostContent = forwardRef<HTMLDivElement, BlogPostContentProps>(
   ({ content }, ref) => {
+    useEffect(() => {
+      if (ref && 'current' in ref && ref.current) {
+        const links = ref.current.querySelectorAll('a');
+        links.forEach((link) => {
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        });
+      }
+    }, [content, ref]);
+
     return (
       <div 
         ref={ref}
