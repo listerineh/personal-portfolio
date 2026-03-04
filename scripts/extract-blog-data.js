@@ -53,19 +53,34 @@ try {
     return value;
   }
   
-  // Find the 'en' object section
-  const enSectionMatch = fileContent.match(/en:\s*\{([\s\S]*?)(?:\},\s*es:|$)/);
-  if (!enSectionMatch) {
-    console.error('❌ Error: Could not find "en" section in blog file');
-    process.exit(1);
+  let enSection = '';
+  let title = '';
+  let excerpt = '';
+  let imageUrl = '';
+  
+  // Try new structure first: const enContent = `...`; export const blogName: Record<Locale, BlogPost> = { en: { ... } }
+  const newStructureMatch = fileContent.match(/export\s+const\s+\w+:\s*Record<Locale,\s*BlogPost>\s*=\s*\{[\s\S]*?en:\s*\{([\s\S]*?)(?:\},\s*es:|$)/);
+  
+  if (newStructureMatch) {
+    // New structure: extract from en object within export
+    enSection = newStructureMatch[1];
+    title = extractStringValue(enSection, 'title');
+    excerpt = extractStringValue(enSection, 'excerpt');
+    imageUrl = extractStringValue(enSection, 'imageUrl');
+  } else {
+    // Try old structure: direct en: { ... } object
+    const oldStructureMatch = fileContent.match(/en:\s*\{([\s\S]*?)(?:\},\s*es:|$)/);
+    if (oldStructureMatch) {
+      enSection = oldStructureMatch[1];
+      title = extractStringValue(enSection, 'title');
+      excerpt = extractStringValue(enSection, 'excerpt');
+      imageUrl = extractStringValue(enSection, 'imageUrl');
+    } else {
+      console.error('❌ Error: Could not find "en" section in blog file');
+      console.error('   Tried both new structure (const enContent with export) and old structure (direct en object)');
+      process.exit(1);
+    }
   }
-  
-  const enSection = enSectionMatch[1];
-  
-  // Extract fields from en section
-  const title = extractStringValue(enSection, 'title');
-  const excerpt = extractStringValue(enSection, 'excerpt');
-  const imageUrl = extractStringValue(enSection, 'imageUrl');
   
   if (!title || !slug) {
     console.error('❌ Error: Could not extract required blog data (title and slug)');
