@@ -522,7 +522,7 @@ export const theFirstDigitalDeath: Record<Locale, BlogPost> = {
     imageUrl: '/blog/the-first-digital-death.webp',
     imageAiHint: 'dystopian sci-fi illustration: split screen showing a human brain with neural implants on left side glowing with digital connections, and a virus-like digital entity spreading through neural networks on right side; dark red and blue color scheme; cyberpunk aesthetic; warning symbols; interconnected nodes showing data flow; professional technical illustration style',
     author: 'Sebastian Alvarez',
-    tags: ['AI', 'Neurotechnology', 'Cybersecurity', 'Ethics', 'Future', 'Black Mirror'],
+    tags: ['AI', 'Neurotechnology', 'Cybersecurity', 'Ethics', 'Future', 'Black Mirror', 'Science Fiction', 'Predictions'],
     content: enContent,
   },
   es: {
@@ -533,7 +533,7 @@ export const theFirstDigitalDeath: Record<Locale, BlogPost> = {
     imageUrl: '/blog/the-first-digital-death.webp',
     imageAiHint: 'ilustración distópica de ciencia ficción: pantalla dividida mostrando un cerebro humano con implantes neurales en el lado izquierdo brillando con conexiones digitales, y una entidad viral digital propagándose a través de redes neuronales en el lado derecho; esquema de colores rojo oscuro y azul; estética cyberpunk; símbolos de advertencia; nodos interconectados mostrando flujo de datos; estilo de ilustración técnica profesional',
     author: 'Sebastian Alvarez',
-    tags: ['IA', 'Neurotecnología', 'Ciberseguridad', 'Ética', 'Futuro', 'Black Mirror'],
+    tags: ['IA', 'Neurotecnología', 'Ciberseguridad', 'Ética', 'Futuro', 'Black Mirror', 'Ciencia Ficción', 'Predicciones'],
     content: esContent,
   },
 };
