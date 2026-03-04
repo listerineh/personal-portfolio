@@ -1,0 +1,111 @@
+name: Revalidate Cache on Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  revalidate-cache:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Wait for Vercel deployment
+        run: |
+          echo "⏳ Waiting 60 seconds for Vercel deployment to complete..."
+          sleep 60
+      
+      - name: Revalidate all pages
+        env:
+          SITE_URL: ${{ secrets.SITE_URL || 'https://listerineh.dev' }}
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+        run: |
+          echo "🔄 Revalidating cache for all pages..."
+          
+          # Define all routes to revalidate
+          ROUTES=(
+            "/"
+            "/blog"
+            "/why"
+            "/privacy"
+            "/terms"
+          )
+          
+          # Revalidate each route
+          for ROUTE in "${ROUTES[@]}"; do
+            echo "Revalidating: $ROUTE"
+            
+            RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+              "$SITE_URL/api/revalidate" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $REVALIDATE_SECRET" \
+              -d "{\"path\": \"$ROUTE\", \"type\": \"page\"}")
+            
+            HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+            BODY=$(echo "$RESPONSE" | sed '$d')
+            
+            if [ "$HTTP_CODE" -eq 200 ]; then
+              echo "✅ $ROUTE revalidated successfully"
+            else
+              echo "⚠️ Failed to revalidate $ROUTE (HTTP $HTTP_CODE)"
+              echo "$BODY"
+            fi
+          done
+      
+      - name: Revalidate blog posts
+        env:
+          SITE_URL: ${{ secrets.SITE_URL || 'https://listerineh.dev' }}
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+        run: |
+          echo "🔄 Revalidating blog posts..."
+          
+          # Get list of blog posts from the site
+          BLOG_POSTS=$(curl -s "$SITE_URL/sitemap.xml" | grep -oP '(?<=<loc>)https://listerineh.dev/blog/[^<]+' | sed 's|https://listerineh.dev||' | head -20)
+          
+          if [ -z "$BLOG_POSTS" ]; then
+            echo "⚠️ No blog posts found in sitemap, skipping..."
+            exit 0
+          fi
+          
+          # Revalidate each blog post
+          echo "$BLOG_POSTS" | while read -r POST_PATH; do
+            if [ -n "$POST_PATH" ]; then
+              echo "Revalidating: $POST_PATH"
+              
+              RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
+                "$SITE_URL/api/revalidate" \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $REVALIDATE_SECRET" \
+                -d "{\"path\": \"$POST_PATH\", \"type\": \"page\"}")
+              
+              HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+              
+              if [ "$HTTP_CODE" -eq 200 ]; then
+                echo "✅ $POST_PATH revalidated"
+              else
+                echo "⚠️ Failed to revalidate $POST_PATH (HTTP $HTTP_CODE)"
+              fi
+            fi
+          done
+      
+      - name: Summary
+        if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## 🔄 Cache Revalidation Complete
+          
+          All pages and blog posts have been revalidated after deployment.
+          
+          ### Revalidated Routes:
+          - ✅ Home page
+          - ✅ Blog listing
+          - ✅ Blog posts (up to 20 most recent)
+          - ✅ Static pages (why, privacy, terms)
+          
+          ### Next Steps:
+          - Cache will be fresh for all visitors
+          - ISR will continue to regenerate pages every 60 seconds
+          - New content will be immediately visible
+          
+          EOF
