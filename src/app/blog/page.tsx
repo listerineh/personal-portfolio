@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: 'Sebastian Alvarez - Dev Blog',
       images: [
         {
-          url: `${siteUrl}/website_screenshot.webp`,
+          url: `${siteUrl}/images/website_screenshot.webp`,
           width: 1200,
           height: 630,
           alt: title,
@@ -56,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}/website_screenshot.webp`],
+      images: [`${siteUrl}/images/website_screenshot.webp`],
       creator: '@listerineh',
       site: '@listerineh',
     },
