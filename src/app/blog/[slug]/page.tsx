@@ -12,6 +12,8 @@ interface BlogPostPageProps {
   }>;
 }
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const blogPosts = getBlogPosts('en');
   return blogPosts.map((post) => ({
