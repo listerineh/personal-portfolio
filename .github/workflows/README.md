@@ -150,3 +150,157 @@ URL: https://listerineh.dev/blog/building-with-nextjs
 
 ✅ Subscribers have been notified! 🎉
 ```
+
+---
+
+## Revalidate Cache on Deploy
+
+**File:** `revalidate-on-deploy.yml`
+
+### Purpose
+
+Automatically revalidates all cached pages after every deployment to ensure visitors always see the latest content without needing to hard refresh.
+
+### How It Works
+
+**On every push to `main`:**
+1. **Wait:** Waits 60 seconds for Vercel deployment to complete
+2. **Revalidate Main Pages:** Invalidates cache for home, blog listing, and static pages
+3. **Revalidate Blog Posts:** Fetches blog posts from sitemap and revalidates up to 20 most recent
+4. **Summary:** Shows confirmation of all revalidated routes
+
+### Workflow Steps
+
+```yaml
+1. Wait for Vercel deployment (60 seconds)
+2. Revalidate main pages (/, /blog, /why, /privacy, /terms)
+3. Fetch blog posts from sitemap.xml
+4. Revalidate each blog post
+5. Generate summary in GitHub Actions UI
+```
+
+### Environment Variables
+
+Required secrets:
+
+- `SITE_URL` (optional): The base URL of your site
+  - Default: `https://listerineh.dev`
+  - Can be set as a GitHub secret
+
+- `REVALIDATE_SECRET` (required): Secret token for revalidation API
+  - Must be set in GitHub secrets
+  - Same value as in Vercel environment variables
+
+### Setting Up
+
+1. **Generate a revalidation secret:**
+   ```bash
+   openssl rand -base64 32
+   ```
+
+2. **Add to GitHub Secrets:**
+   - Go to Repository Settings → Secrets and variables → Actions
+   - Add new secret: `REVALIDATE_SECRET` with the generated value
+
+3. **Add to Vercel:**
+   - Go to Vercel Project Settings → Environment Variables
+   - Add: `REVALIDATE_SECRET` with the same value
+
+### Manual Revalidation
+
+You can also trigger revalidation manually:
+
+#### Using GitHub Actions UI:
+1. Go to Actions tab
+2. Select "Revalidate Cache on Deploy"
+3. Click "Run workflow"
+4. Select branch (main)
+5. Click "Run workflow"
+
+#### Using the Script:
+```bash
+# Set your secret
+export REVALIDATE_SECRET=your-secret-here
+
+# Revalidate all main pages
+./scripts/revalidate-cache.sh
+
+# Revalidate specific blog post
+./scripts/revalidate-cache.sh the-first-digital-death
+
+# Revalidate everything (including all blog posts)
+./scripts/revalidate-cache.sh --all
+```
+
+### What Gets Revalidated
+
+**Main Pages:**
+- `/` - Home page
+- `/blog` - Blog listing
+- `/why` - Why page
+- `/privacy` - Privacy policy
+- `/terms` - Terms of service
+
+**Blog Posts:**
+- Up to 20 most recent blog posts from sitemap
+- Automatically detected and revalidated
+
+### Benefits
+
+✅ **No Hard Refresh Needed**
+- Visitors see latest content immediately
+- No cache staleness issues
+
+✅ **Automatic**
+- Runs on every deploy
+- No manual intervention required
+
+✅ **Comprehensive**
+- Revalidates all important pages
+- Includes blog posts
+
+✅ **Fast**
+- Parallel revalidation
+- Completes in ~30 seconds
+
+### Monitoring
+
+Monitor revalidation in:
+- **GitHub Actions tab** → "Revalidate Cache on Deploy"
+- **Summary page** shows all revalidated routes
+- **Logs** show detailed status for each route
+
+### Troubleshooting
+
+**Revalidation fails:**
+- Verify `REVALIDATE_SECRET` is set correctly in both GitHub and Vercel
+- Check that the API endpoint `/api/revalidate` is accessible
+- Ensure the secret matches in both places
+
+**Some routes not revalidated:**
+- Check sitemap.xml is accessible
+- Verify routes exist in the application
+- Check workflow logs for specific errors
+
+**Deployment timing issues:**
+- Increase wait time in workflow if Vercel takes longer
+- Default is 60 seconds, adjust if needed
+
+### Example Output
+
+```
+🔄 Cache Revalidation Complete
+
+All pages and blog posts have been revalidated after deployment.
+
+Revalidated Routes:
+- ✅ Home page
+- ✅ Blog listing
+- ✅ Blog posts (up to 20 most recent)
+- ✅ Static pages (why, privacy, terms)
+
+Next Steps:
+- Cache will be fresh for all visitors
+- ISR will continue to regenerate pages every 60 seconds
+- New content will be immediately visible
+```
