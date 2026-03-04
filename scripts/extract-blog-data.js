@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const blogFilePath = process.argv[2];
+let blogFilePath = process.argv[2];
 
 if (!blogFilePath) {
   console.error('❌ Error: Blog file path is required');
@@ -17,6 +17,35 @@ if (!blogFilePath) {
   console.log('\nExample:');
   console.log('  node scripts/extract-blog-data.js src/lib/data/blog/my-new-post.ts');
   process.exit(1);
+}
+
+// If the provided file is get-blog-posts.ts (index file), find the most recently modified blog post
+if (blogFilePath.endsWith('get-blog-posts.ts') || blogFilePath.endsWith('get-blog-posts.js')) {
+  const blogDir = path.dirname(blogFilePath);
+  
+  if (!fs.existsSync(blogDir)) {
+    console.error(`❌ Error: Blog directory not found: ${blogDir}`);
+    process.exit(1);
+  }
+  
+  // Get all .ts files in the blog directory (excluding get-blog-posts.ts)
+  const files = fs.readdirSync(blogDir)
+    .filter(file => file.endsWith('.ts') && file !== 'get-blog-posts.ts')
+    .map(file => ({
+      name: file,
+      path: path.join(blogDir, file),
+      mtime: fs.statSync(path.join(blogDir, file)).mtime.getTime()
+    }))
+    .sort((a, b) => b.mtime - a.mtime);
+  
+  if (files.length === 0) {
+    console.error('❌ Error: No blog post files found in the blog directory');
+    process.exit(1);
+  }
+  
+  // Use the most recently modified file
+  blogFilePath = files[0].path;
+  console.error(`ℹ️  Using most recently modified blog post: ${files[0].name}`);
 }
 
 if (!fs.existsSync(blogFilePath)) {
