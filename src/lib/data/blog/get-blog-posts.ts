@@ -8,9 +8,11 @@ import { letsTalkMicroservices } from './lets-talk-microservices';
 import { codingThroughBurnout } from './coding-through-burnout';
 import { fromChaosToClarity } from './from-chaos-to-clarity-kanban';
 import { whyMarkdownForBlogs } from './why-markdown-for-blogs';
+import { theFirstDigitalDeath } from './the-first-digital-death';
 
 const allBlogPosts = {
   en: [
+    theFirstDigitalDeath.en,
     pythonRenaissanceAiEra.en,
     adaptingToNewJobs.en,
     terraformScalingInfrastructure.en,
@@ -21,6 +23,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    theFirstDigitalDeath.es,
     pythonRenaissanceAiEra.es,
     adaptingToNewJobs.es,
     terraformScalingInfrastructure.es,
