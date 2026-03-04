@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: Wait for Vercel deployment
         run: |
-          echo "⏳ Waiting 60 seconds for Vercel deployment to complete..."
-          sleep 60
+          echo "⏳ Waiting 120 seconds for Vercel deployment to complete..."
+          sleep 120
       
       - name: Revalidate all pages
         env:
