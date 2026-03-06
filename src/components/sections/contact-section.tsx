@@ -48,14 +48,13 @@ export function ContactSection() {
   useGSAP(() => {
     if (descriptionRef.current) {
       gsap.from(descriptionRef.current, {
-        y: 30,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
+        duration: 0.5,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: descriptionRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
+          start: 'top 90%',
+          toggleActions: 'play none none none',
         },
       });
     }
@@ -63,15 +62,14 @@ export function ContactSection() {
     fieldsRef.current.forEach((field, index) => {
       if (field) {
         gsap.from(field, {
-          x: index % 2 === 0 ? -50 : 50,
           opacity: 0,
-          duration: 0.8,
-          delay: index * 0.15,
-          ease: 'power3.out',
+          duration: 0.4,
+          delay: index * 0.1,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: field,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: 'top 90%',
+            toggleActions: 'play none none none',
           },
         });
       }

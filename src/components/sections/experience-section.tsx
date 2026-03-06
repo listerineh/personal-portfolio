@@ -39,38 +39,15 @@ export function ExperienceSection() {
     
     setTimeout(() => {
       const newItems = itemsRef.current.slice(3);
-      newItems.forEach((item, index) => {
+      newItems.forEach((item) => {
         if (item) {
-          const actualIndex = index + 3;
-          
           gsap.set(item, { opacity: 1 });
           
           gsap.from(item, {
-            x: actualIndex % 2 === 0 ? -50 : 50,
             opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
+            duration: 0.4,
+            ease: 'power2.out',
           });
-
-          const logo = item.querySelector('.experience-logo');
-          if (logo) {
-            gsap.from(logo, {
-              scale: 0,
-              rotation: 180,
-              duration: 0.6,
-              ease: 'back.out(1.7)',
-              scrollTrigger: {
-                trigger: item,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            });
-          }
         }
       });
       
@@ -79,19 +56,15 @@ export function ExperienceSection() {
   };
 
   useGSAP(() => {
-    const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
-    
     if (timelineRef.current) {
       gsap.from(timelineRef.current, {
-        scaleY: 0,
-        transformOrigin: 'top',
-        duration: isLowEnd ? 0.6 : 1,
+        opacity: 0,
+        duration: 0.5,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: timelineRef.current,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
         },
       });
     }
@@ -99,33 +72,16 @@ export function ExperienceSection() {
     itemsRef.current.slice(0, 3).forEach((item, index) => {
       if (item) {
         gsap.from(item, {
-          x: index % 2 === 0 ? -40 : 40,
           opacity: 0,
-          duration: isLowEnd ? 0.4 : 0.6,
-          delay: index * 0.1,
+          duration: 0.4,
+          delay: index * 0.08,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: item,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: 'top 90%',
+            toggleActions: 'play none none none',
           },
         });
-
-        const logo = item.querySelector('.experience-logo');
-        if (logo) {
-          gsap.from(logo, {
-            scale: 0,
-            rotation: -90,
-            duration: isLowEnd ? 0.3 : 0.5,
-            delay: index * 0.1 + 0.15,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: item,
-              start: 'top 85%',
-              toggleActions: 'play none none reverse',
-            },
-          });
-        }
       }
     });
   }, []);

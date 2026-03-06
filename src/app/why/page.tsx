@@ -27,41 +27,24 @@ export default function MusicPage() {
 
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
-    const baseDuration = prefersReducedMotion ? 0 : (isLowEnd ? 0.3 : 0.5);
+    if (prefersReducedMotion) return;
     
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
     tl.from(titleRef.current, {
-      y: 40,
+      y: 20,
       opacity: 0,
-      duration: baseDuration,
+      duration: 0.5,
     })
     .from(descriptionRef.current, {
-      y: 25,
       opacity: 0,
-      duration: baseDuration * 0.8,
+      duration: 0.4,
     }, '-=0.2')
     .from(contentRef.current?.querySelectorAll('button, [role="button"]') || [], {
-      y: 15,
       opacity: 0,
-      stagger: 0.08,
-      duration: baseDuration * 0.7,
+      stagger: 0.05,
+      duration: 0.3,
     }, '-=0.15');
-
-    if (heroRef.current) {
-      gsap.to(heroRef.current, {
-        y: 100,
-        opacity: 0.5,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: isLowEnd ? 0 : 1,
-        },
-      });
-    }
   }, []);
 
   const structuredData = {

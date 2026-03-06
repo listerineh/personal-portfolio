@@ -31,65 +31,39 @@ export function HeroSection() {
 
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
-    const baseDuration = prefersReducedMotion ? 0 : (isLowEnd ? 0.4 : 0.6);
+    if (prefersReducedMotion) return;
     
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
     tl.from(imageContainerRef.current, {
-      scale: 0.8,
-      rotation: -90,
+      scale: 0.95,
       opacity: 0,
-      duration: baseDuration,
-      ease: 'power2.out',
+      duration: 0.5,
     })
     .from(badgeRef.current, {
-      y: 15,
       opacity: 0,
-      duration: baseDuration * 0.7,
-    }, '-=0.3')
-    .from(titleRef.current, {
-      y: 30,
-      opacity: 0,
-      duration: baseDuration,
+      duration: 0.3,
     }, '-=0.2')
     .from(titleRef.current?.querySelectorAll('span') || [], {
-      y: 15,
-      opacity: 0,
-      stagger: 0.03,
-      duration: baseDuration * 0.6,
-    }, '-=0.4')
-    .from(subtitleRef.current, {
       y: 20,
       opacity: 0,
-      duration: baseDuration * 0.9,
+      stagger: 0.03,
+      duration: 0.4,
+    }, '-=0.1')
+    .from(subtitleRef.current, {
+      y: 15,
+      opacity: 0,
+      duration: 0.4,
     }, '-=0.3')
     .from(descriptionRef.current, {
-      y: 15,
       opacity: 0,
-      duration: baseDuration * 0.8,
+      duration: 0.3,
     }, '-=0.2')
     .from(buttonsRef.current?.children || [], {
-      y: 15,
       opacity: 0,
-      stagger: 0.08,
-      duration: baseDuration * 0.7,
-    }, '-=0.15');
-
-    if (sectionRef.current) {
-      gsap.to(sectionRef.current, {
-        y: 100,
-        opacity: 0.3,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: isLowEnd ? false : 1,
-        },
-      });
-    }
-
+      stagger: 0.05,
+      duration: 0.3,
+    }, '-=0.1');
   }, []);
 
   const splitText = (text: string) => {

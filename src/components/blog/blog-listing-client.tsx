@@ -42,42 +42,40 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
   };
 
   useEffect(() => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-
     if (titleRef.current) {
       gsap.fromTo(titleRef.current, 
-        { y: 50, opacity: 0 },
+        { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
+          duration: 0.6,
+          ease: 'power2.out',
         }
       );
     }
 
     if (descriptionRef.current) {
       gsap.fromTo(descriptionRef.current,
-        { y: 20, opacity: 0 },
+        { y: 15, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.6,
+          duration: 0.5,
           delay: 0.1,
-          ease: 'power3.out',
+          ease: 'power2.out',
         }
       );
     }
 
     if (searchRef.current) {
       gsap.fromTo(searchRef.current,
-        { y: 30, opacity: 0 },
+        { y: 15, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.6,
-          delay: 0.25,
-          ease: 'power3.out',
+          duration: 0.5,
+          delay: 0.15,
+          ease: 'power2.out',
         }
       );
     }
@@ -86,49 +84,15 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
       if (!card) return;
 
       gsap.fromTo(card,
-        { y: 60, opacity: 0, scale: 0.9 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
-          scale: 1,
-          duration: 0.6,
-          delay: index * 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
+          duration: 0.4,
+          delay: Math.min(index * 0.05, 0.3),
+          ease: 'power2.out',
         }
       );
-
-      const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-      
-      if (!isTouchDevice) {
-        const handleMouseEnter = () => {
-          gsap.to(card, {
-            y: -10,
-            duration: 0.3,
-            ease: 'power2.out',
-          });
-        };
-
-        const handleMouseLeave = () => {
-          gsap.to(card, {
-            y: 0,
-            duration: 0.3,
-            ease: 'power2.out',
-          });
-        };
-
-        card.addEventListener('mouseenter', handleMouseEnter);
-        card.addEventListener('mouseleave', handleMouseLeave);
-      }
     });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
   }, []);
 
   return (
