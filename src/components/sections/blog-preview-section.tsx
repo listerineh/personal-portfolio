@@ -33,61 +33,28 @@ export function BlogPreviewSection() {
     cardsRef.current.forEach((card, index) => {
       if (card) {
         gsap.from(card, {
-          y: 60,
           opacity: 0,
-          scale: 0.95,
-          duration: 0.8,
-          delay: index * 0.2,
-          ease: 'power3.out',
+          duration: 0.5,
+          delay: index * 0.1,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: 'top 90%',
+            toggleActions: 'play none none none',
           },
-        });
-
-        const image = card.querySelector('.blog-image');
-        if (image) {
-          gsap.to(image, {
-            y: -15,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1,
-            },
-          });
-        }
-
-        card.addEventListener('mouseenter', () => {
-          gsap.to(card, {
-            y: -8,
-            duration: 0.3,
-            ease: 'power2.out',
-          });
-        });
-
-        card.addEventListener('mouseleave', () => {
-          gsap.to(card, {
-            y: 0,
-            duration: 0.3,
-            ease: 'power2.out',
-          });
         });
       }
     });
 
     if (buttonRef.current) {
       gsap.from(buttonRef.current, {
-        y: 30,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
+        duration: 0.5,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: buttonRef.current,
           start: 'top 90%',
-          toggleActions: 'play none none reverse',
+          toggleActions: 'play none none none',
         },
       });
     }

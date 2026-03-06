@@ -63,28 +63,25 @@ export function Footer() {
       });
 
       tl.fromTo(navLinks,
-        { y: 20, opacity: 0 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
-          stagger: 0.05,
-          duration: 0.4,
+          stagger: 0.03,
+          duration: 0.3,
           ease: 'power2.out',
         }
       )
       .fromTo(socialIcons,
-        { scale: 0, opacity: 0 },
+        { opacity: 0 },
         {
-          scale: 1,
           opacity: 1,
-          stagger: 0.06,
+          stagger: 0.03,
           duration: 0.3,
           ease: 'power2.out',
         }, '-=0.2')
       .fromTo(copyrightRef.current,
-        { y: 15, opacity: 0 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
           duration: 0.3,
           ease: 'power2.out',

@@ -158,130 +158,16 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
 
     const ctx = gsap.context(() => {
       if (headerRef.current && headerRef.current.children.length > 0) {
-        const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
         gsap.fromTo(headerRef.current.children,
-          { y: 30, opacity: 0 },
+          { y: 20, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            stagger: 0.08,
-            duration: isLowEnd ? 0.4 : 0.6,
+            stagger: 0.06,
+            duration: 0.5,
             ease: 'power2.out',
           }
         );
-      }
-
-      if (imageRef.current) {
-        const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
-        gsap.to(imageRef.current, {
-          y: 60,
-          opacity: 0.3,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: imageRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: isLowEnd ? 0 : 1,
-          },
-        });
-      }
-
-      if (proseRef.current) {
-        const paragraphs = proseRef.current.querySelectorAll('p');
-        const headings = proseRef.current.querySelectorAll('h2, h3');
-        const lists = proseRef.current.querySelectorAll('ul, ol');
-        const blockquotes = proseRef.current.querySelectorAll('blockquote');
-        const codeBlocks = proseRef.current.querySelectorAll('pre');
-        
-        const isLowEnd = (navigator as any).hardwareConcurrency <= 2;
-        const baseDuration = isLowEnd ? 0.3 : 0.5;
-
-        paragraphs.forEach((paragraph) => {
-          gsap.fromTo(paragraph,
-            { x: -20, opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              duration: baseDuration,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: paragraph,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            }
-          );
-        });
-
-        headings.forEach((heading) => {
-          gsap.fromTo(heading,
-            { scale: 0.95, opacity: 0 },
-            {
-              scale: 1,
-              opacity: 1,
-              duration: baseDuration,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: heading,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            }
-          );
-        });
-
-        lists.forEach((list) => {
-          const items = list.querySelectorAll('li');
-          gsap.fromTo(items,
-            { x: -15, opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              stagger: 0.05,
-              duration: baseDuration * 0.8,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: list,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            }
-          );
-        });
-
-        blockquotes.forEach((blockquote) => {
-          gsap.fromTo(blockquote,
-            { x: 30, opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              duration: baseDuration,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: blockquote,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            }
-          );
-        });
-
-        codeBlocks.forEach((codeBlock) => {
-          gsap.fromTo(codeBlock,
-            { scale: 0.98, opacity: 0 },
-            {
-              scale: 1,
-              opacity: 1,
-              duration: baseDuration,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: codeBlock,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-            }
-          );
-        });
       }
     });
 

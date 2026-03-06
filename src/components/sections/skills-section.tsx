@@ -73,14 +73,13 @@ export function SkillsSection() {
 
     if (descriptionRef.current) {
       gsap.from(descriptionRef.current, {
-        y: 30,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
+        duration: 0.5,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: descriptionRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
+          start: 'top 90%',
+          toggleActions: 'play none none none',
         },
       });
     }

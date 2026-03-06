@@ -31,55 +31,16 @@ export function ProjectsSection() {
     cardsRef.current.forEach((card, index) => {
       if (card) {
         gsap.from(card, {
-          y: 80,
           opacity: 0,
-          scale: 0.9,
-          duration: 0.8,
-          delay: (index % 3) * 0.15,
-          ease: 'power3.out',
+          duration: 0.5,
+          delay: (index % 3) * 0.08,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: 'top 90%',
+            toggleActions: 'play none none none',
           },
         });
-
-        const image = card.querySelector('.project-image');
-        if (image) {
-          gsap.to(image, {
-            y: -20,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1,
-            },
-          });
-        }
-
-        const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-        if (!isTouchDevice) {
-          card.addEventListener('mouseenter', () => {
-            gsap.to(card, {
-              y: -8,
-              scale: 1.02,
-              duration: 0.3,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-          });
-
-          card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-              y: 0,
-              scale: 1,
-              duration: 0.25,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-          });
-        }
       }
     });
   }, [projects.length]);
