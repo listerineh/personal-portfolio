@@ -12,14 +12,7 @@ interface BlogPostPageProps {
   }>;
 }
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  const blogPosts = getBlogPosts('en');
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
