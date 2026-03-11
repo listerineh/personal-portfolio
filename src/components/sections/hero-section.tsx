@@ -30,9 +30,6 @@ export function HeroSection() {
   const badgeRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-    
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
     tl.from(imageContainerRef.current, {
