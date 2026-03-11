@@ -1,5 +1,43 @@
 # Scripts
 
+## Service Worker Cache Management
+
+### Update Service Worker Version
+
+Automatically updates the Service Worker cache version with a timestamp to force cache invalidation for all users.
+
+**Usage:**
+```bash
+npm run update-sw
+```
+
+**What it does:**
+- Updates `CACHE_NAME` in `public/sw.js` with current timestamp
+- Format: `listerineh-portfolio-2026-03-11T00-40-30`
+- Forces all browsers to download fresh content on next visit
+
+**Automatic execution:**
+- Runs automatically before every `npm run build` (via `prebuild` script)
+- Ensures cache is busted on every deployment
+
+**Manual execution:**
+```bash
+node scripts/update-sw-version.js
+```
+
+**When to use:**
+- Automatically: Every deployment (already configured)
+- Manually: When you want to force cache refresh without deploying
+
+**Example output:**
+```
+✅ Service Worker cache version updated
+   Old: listerineh-portfolio-v2-2026-03-11
+   New: listerineh-portfolio-2026-03-11T00-40-30
+```
+
+---
+
 ## Blog Notification Scripts
 
 ### Extract Blog Data
