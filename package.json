@@ -5,6 +5,7 @@
   "scripts": {
     "postinstall": "node scripts/setup-playwright.js",
     "dev": "next dev --turbopack -p 9002",
+    "prebuild": "node scripts/update-sw-version.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -16,7 +17,8 @@
     "test:report": "playwright show-report",
     "convert-images": "node scripts/convert-images-to-webp.js",
     "convert-heic": "node scripts/convert-heic-to-webp.js",
-    "notify-blog": "node scripts/send-blog-notification.js"
+    "notify-blog": "node scripts/send-blog-notification.js",
+    "update-sw": "node scripts/update-sw-version.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

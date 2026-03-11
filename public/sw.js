@@ -1,4 +1,4 @@
-const CACHE_NAME = 'listerineh-portfolio-v2-2026-03-11';
+const CACHE_NAME = 'listerineh-portfolio-2026-03-11T05-41-10';
 const urlsToCache = [
   '/offline.html',
   '/manifest.json',

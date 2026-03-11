@@ -118,7 +118,7 @@ export function HeroSection() {
         </div>
         <h1 
           ref={titleRef}
-          className="text-2xl sm:text-2xl md:text-6xl lg:text-8xl font-headline font-bold text-foreground mb-6 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text hover:text-transparent transition-all duration-500"
+          className="text-2xl sm:text-2xl md:text-6xl lg:text-8xl font-headline font-bold text-foreground mb-6 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text"
         >
           {splitText(hero.title)}
         </h1>
