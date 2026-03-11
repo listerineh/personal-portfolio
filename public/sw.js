@@ -1,6 +1,5 @@
-const CACHE_NAME = 'listerineh-portfolio-v1';
+const CACHE_NAME = 'listerineh-portfolio-v2-2026-03-11';
 const urlsToCache = [
-  '/',
   '/offline.html',
   '/manifest.json',
   '/favicon.svg',
@@ -29,6 +28,22 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  const url = new URL(event.request.url);
+  
+  // Never cache HTML pages (blog posts, pages, etc.)
+  const isHTMLPage = event.request.headers.get('accept')?.includes('text/html');
+  
+  // Network-first strategy for HTML pages
+  if (isHTMLPage) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => response)
+        .catch(() => caches.match('/offline.html'))
+    );
+    return;
+  }
+
+  // Cache-first strategy for static assets only
   event.respondWith(
     caches.match(event.request).then((response) => {
       if (response) {
@@ -40,10 +55,15 @@ self.addEventListener('fetch', (event) => {
           return response;
         }
 
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
+        // Only cache static assets (images, fonts, etc.)
+        const shouldCache = url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg|woff|woff2|ttf|eot|ico|css|js)$/);
+        
+        if (shouldCache) {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
 
         return response;
       });
