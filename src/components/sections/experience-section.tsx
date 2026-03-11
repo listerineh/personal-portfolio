@@ -101,7 +101,7 @@ export function ExperienceSection() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-transparent to-accent/8 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
               
-              <div className="relative overflow-hidden rounded-xl bg-card/50 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-md transition-all duration-300 p-6 md:p-7">
+              <div className="relative overflow-hidden rounded-xl bg-card/50 backdrop-blur-md border-2 border-border/40 hover:border-primary shadow-sm hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 p-6 md:p-7">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/2 via-transparent to-accent/2 opacity-30 pointer-events-none" />
                   
                   <div className="relative space-y-4">
@@ -128,7 +128,7 @@ export function ExperienceSection() {
                       </div>
 
                       <div className="flex-grow min-w-0">
-                        <h3 className="text-lg md:text-xl font-headline font-bold text-foreground group-hover:text-primary transition-colors duration-300 truncate">
+                        <h3 className="text-lg md:text-xl font-headline font-bold text-foreground truncate">
                           {exp.jobTitle}
                         </h3>
                         <p className="text-sm md:text-base font-medium text-primary/70 truncate">

@@ -56,29 +56,11 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: '/blog/:slug',
+        source: '/:path((?!_next|images|blog/.*\\.webp).*)',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, s-maxage=60, must-revalidate',
-          },
-        ],
-      },
-      {
-        source: '/blog',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, s-maxage=60, must-revalidate',
-          },
-        ],
-      },
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, s-maxage=3600, must-revalidate',
+            value: 'no-store, no-cache, must-revalidate, max-age=0',
           },
         ],
       },

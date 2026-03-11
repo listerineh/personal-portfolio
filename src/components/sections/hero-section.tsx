@@ -80,18 +80,28 @@ export function HeroSection() {
       id="hero" 
       className="relative min-h-[100dvh] flex items-center justify-center bg-secondary/0 py-20 pt-28 md:pt-20 overflow-hidden"
     >
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse-glow delay-500" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+      </div>
+
       <div className="container mx-auto px-4 text-center z-10">
         <div 
           ref={imageRef}
-          className="relative w-36 h-36 md:w-48 md:h-48 mx-auto mb-8"
+          className="relative w-36 h-36 md:w-48 md:h-48 mx-auto mb-8 group"
         >
-          <div ref={imageContainerRef} className="w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-primary">
+          {/* Glow effect behind image */}
+          <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl group-hover:bg-primary/30 transition-all duration-500" />
+          
+          <div ref={imageContainerRef} className="relative w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-primary hover:border-accent transition-all duration-300 hover:scale-105">
             <Image
               src={hero.href}
               alt={hero.title}
               width={200}
               height={200}
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
               priority
               fetchPriority="high"
               quality={85}
@@ -100,7 +110,7 @@ export function HeroSection() {
           <div ref={badgeRef} className="relative z-20">
             <Badge 
               disableHover
-              className="w-max absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 bg-primary text-primary-foreground text-xs font-bold py-1.5 px-4 shadow-lg"
+              className="w-max absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 bg-primary text-primary-foreground text-xs font-bold py-1.5 px-4 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
             >
               {t('badge')}
             </Badge>
@@ -108,19 +118,19 @@ export function HeroSection() {
         </div>
         <h1 
           ref={titleRef}
-          className="text-2xl sm:text-2xl md:text-6xl lg:text-8xl font-headline font-bold text-foreground mb-6"
+          className="text-2xl sm:text-2xl md:text-6xl lg:text-8xl font-headline font-bold text-foreground mb-6 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text hover:text-transparent transition-all duration-500"
         >
           {splitText(hero.title)}
         </h1>
         <p 
           ref={subtitleRef}
-          className="text-xl md:text-2xl text-primary font-medium mb-8"
+          className="text-xl md:text-2xl text-primary font-medium mb-8 hover:text-accent transition-colors duration-300"
         >
           {t('subtitle')}
         </p>
         <p 
           ref={descriptionRef}
-          className="max-w-2xl mx-auto text-muted-foreground mb-12 text-base md:text-lg"
+          className="max-w-2xl mx-auto text-muted-foreground mb-12 text-base md:text-lg hover:text-foreground/80 transition-colors duration-300"
         >
           {t('description')}
         </p>
@@ -146,8 +156,8 @@ export function HeroSection() {
             {t('downloadCV')} <FileText className="ml-2 h-5 w-5" />
           </Button>
           <Link href="#contact">
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10">
-              {t('getInTouch')} <ArrowDown className="ml-2 h-5 w-5" />
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10 hover:scale-105 transition-all duration-300 hover:shadow-lg group">
+              {t('getInTouch')} <ArrowDown className="ml-2 h-5 w-5 group-hover:translate-y-1 transition-transform duration-300" />
             </Button>
           </Link>
         </div>

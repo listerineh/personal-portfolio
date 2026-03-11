@@ -1,5 +1,6 @@
 import type { BlogPost } from '@/types';
 import type { Locale } from '@/i18n/config';
+import { firebaseVsSupabase } from './firebase-vs-supabase';
 import { pythonRenaissanceAiEra } from './python-renaissance-ai-era';
 import { adaptingToNewJobs } from './adapting-to-new-jobs';
 import { terraformScalingInfrastructure } from './terraform-scaling-infrastructure';
@@ -12,6 +13,7 @@ import { theFirstDigitalDeath } from './the-first-digital-death';
 
 const allBlogPosts = {
   en: [
+    firebaseVsSupabase.en,
     theFirstDigitalDeath.en,
     pythonRenaissanceAiEra.en,
     adaptingToNewJobs.en,
@@ -23,6 +25,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    firebaseVsSupabase.es,
     theFirstDigitalDeath.es,
     pythonRenaissanceAiEra.es,
     adaptingToNewJobs.es,
