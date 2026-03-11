@@ -6,3 +6,4 @@ export { LanguageSwitcher } from './language-switcher';
 export { BackToTopButton } from './back-to-top-button';
 export { ErrorBoundary } from './error-boundary';
 export { CookieBanner } from './cookie-banner';
+export { PageTransition } from './page-transition';
