@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { getCookieConsent, setCookie, getCookie } from '@/lib/cookies';
 
@@ -33,7 +33,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.classList.toggle('dark', savedTheme === 'dark');
   }, []);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
 
@@ -47,10 +47,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
 
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
-  };
+  }, [theme]);
+
+  const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

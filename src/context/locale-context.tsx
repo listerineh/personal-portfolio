@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useCallback, type ReactNode } from 'react';
 import { type Locale, defaultLocale, locales } from '@/i18n/config';
 
 interface LocaleContextType {
@@ -26,17 +26,19 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     setMounted(true);
   }, []);
 
-  const setLocale = (newLocale: Locale) => {
+  const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-  };
+  }, []);
+
+  const value = useMemo(() => ({ locale, setLocale }), [locale, setLocale]);
 
   if (!mounted) {
     return null;
   }
 
   return (
-    <LocaleContext.Provider value={{ locale, setLocale }}>
+    <LocaleContext.Provider value={value}>
       {children}
     </LocaleContext.Provider>
   );

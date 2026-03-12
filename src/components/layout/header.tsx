@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Menu, X, CodeXml, Mail, Github, Linkedin, Twitter, Music } from 'lucide-react';
@@ -14,6 +14,7 @@ import { useTheme } from '@/context/theme-context';
 import { useLocale } from '@/context/locale-context';
 import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
 import { cn } from '@/lib/utils';
+import { throttle } from '@/lib/performance-utils';
 
 export function Header() {
   const t = useTranslations('nav');
@@ -25,13 +26,13 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme } = useTheme();
   
-  const navItems = [
+  const navItems = useMemo(() => [
     { label: t('experience'), href: '/#experience' },
     { label: t('skills'), href: '/#skills' },
     { label: t('projects'), href: '/#projects' },
     { label: t('blog'), href: '/blog' },
     { label: t('contact'), href: '/#contact' },
-  ];
+  ], [t]);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -43,9 +44,10 @@ export function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       setIsScrolled(window.scrollY > 50);
-    };
+    }, 100);
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
