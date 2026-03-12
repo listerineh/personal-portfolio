@@ -90,9 +90,9 @@ export function ExperienceSection() {
 
   return (
     <SectionWrapper id="experience" title={t('title')} badge={t('badge')}>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div ref={timelineRef} className="relative">          
-          <div className="space-y-8 md:space-y-12">
+          <div className="space-y-8">
             {experiences.map((exp, index) => (
               <div 
                 key={index} 
@@ -102,10 +102,8 @@ export function ExperienceSection() {
                 }`}
                 style={index >= 3 && showAll ? { opacity: 0 } : undefined}
               >
-                {/* Content card - alternating sides on desktop */}
-                <div className={`md:w-[calc(50%-3rem)] ml-20 md:ml-0 ${
-                  index % 2 === 0 ? 'md:mr-auto md:pr-12' : 'md:ml-auto md:pl-12'
-                }`}>
+                {/* Content card - full width */}
+                <div className="w-full">
                   {/* Ambient glow */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
                   
