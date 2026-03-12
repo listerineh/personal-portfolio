@@ -13,6 +13,7 @@ import {
   BlogPreviewSection, 
   ContactSection 
 } from '@/components/sections';
+import { useHashScroll } from '@/hooks/use-hash-scroll';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -20,6 +21,9 @@ if (typeof window !== 'undefined') {
 
 export default function HomePage() {
   const t = useTranslations('common');
+  
+  // Handle hash navigation from other pages
+  useHashScroll();
   
   useEffect(() => {
     const timer = setTimeout(() => {

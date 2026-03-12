@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { Button } from '@/components/ui/button';
+import { rafThrottle } from '@/lib/performance-utils';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -20,38 +21,28 @@ export function BackToTopButton() {
   const [hasReachedTop, setHasReachedTop] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  const handleScroll = useCallback(rafThrottle(() => {
+    const scrollY = window.scrollY;
+    
+    if (scrollY < 100 && isAnimating) {
+      setHasReachedTop(true);
+      setIsAnimating(false);
+    }
+    
+    if (!isAnimating && hasReachedTop && scrollY > 800) {
+      setIsVisible(true);
+      setHasReachedTop(false);
+    } else if (!isAnimating && !hasReachedTop && scrollY > 800) {
+      setIsVisible(true);
+    } else if (scrollY <= 800 && !isAnimating) {
+      setIsVisible(false);
+    }
+  }), [isAnimating, hasReachedTop]);
+
   useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-          
-          if (scrollY < 100 && isAnimating) {
-            setHasReachedTop(true);
-            setIsAnimating(false);
-          }
-          
-          if (!isAnimating && hasReachedTop && scrollY > 800) {
-            setIsVisible(true);
-            setHasReachedTop(false);
-          } else if (!isAnimating && !hasReachedTop && scrollY > 800) {
-            setIsVisible(true);
-          } else if (scrollY <= 800 && !isAnimating) {
-            setIsVisible(false);
-          }
-
-          ticking = false;
-        });
-
-        ticking = true;
-      }
-    };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isAnimating, hasReachedTop]);
+  }, [handleScroll]);
 
   useEffect(() => {
     if (!buttonRef.current || isAnimating) return;

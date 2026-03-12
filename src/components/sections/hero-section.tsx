@@ -30,39 +30,48 @@ export function HeroSection() {
   const badgeRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-    
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+    const tl = gsap.timeline({ 
+      defaults: { ease: 'power2.out' },
+      onComplete: () => {
+        // Ensure all elements have final opacity set
+        gsap.set([imageContainerRef.current, badgeRef.current, subtitleRef.current, descriptionRef.current], { clearProps: 'all' });
+      }
+    });
 
     tl.from(imageContainerRef.current, {
       scale: 0.95,
       opacity: 0,
       duration: 0.5,
+      clearProps: 'opacity,transform',
     })
     .from(badgeRef.current, {
       opacity: 0,
       duration: 0.3,
+      clearProps: 'opacity',
     }, '-=0.2')
     .from(titleRef.current?.querySelectorAll('span') || [], {
       y: 20,
       opacity: 0,
       stagger: 0.03,
       duration: 0.4,
+      clearProps: 'opacity,transform',
     }, '-=0.1')
     .from(subtitleRef.current, {
       y: 15,
       opacity: 0,
       duration: 0.4,
+      clearProps: 'opacity,transform',
     }, '-=0.3')
     .from(descriptionRef.current, {
       opacity: 0,
       duration: 0.3,
+      clearProps: 'opacity',
     }, '-=0.2')
     .from(buttonsRef.current?.children || [], {
       opacity: 0,
       stagger: 0.05,
       duration: 0.3,
+      clearProps: 'opacity',
     }, '-=0.1');
   }, []);
 
@@ -124,7 +133,7 @@ export function HeroSection() {
         </h1>
         <p 
           ref={subtitleRef}
-          className="text-xl md:text-2xl text-primary font-medium mb-8 hover:text-accent transition-colors duration-300"
+          className="text-xl md:text-2xl text-primary font-medium mb-8"
         >
           {t('subtitle')}
         </p>

@@ -4,7 +4,7 @@ import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrappe
 import { Unbounded, Outfit } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
-import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton, CookieBanner } from '@/components/common';
+import { AnimatedBackground, SmoothScrollWrapper, BackToTopButton, CookieBanner, PageTransition, ScrollRestoration } from '@/components/common';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/next"
@@ -86,6 +86,8 @@ export default async function RootLayout({
           <IntlProviderWrapper initialMessages={messages}>
             <ThemeProvider>
               <AnimatedBackground />
+              <PageTransition />
+              <ScrollRestoration />
               <SmoothScrollWrapper>
                 {children}
               </SmoothScrollWrapper>

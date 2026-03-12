@@ -54,12 +54,24 @@ export function ProjectsSection() {
             ref={(el) => { cardsRef.current[index] = el; }}
             className="group relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-accent/8 to-primary/8 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+            {/* Ambient glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
             
-            <Card className="relative overflow-hidden bg-card/50 backdrop-blur-md border border-border/40 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full rounded-xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/2 via-transparent to-accent/2 opacity-30 pointer-events-none" />
+            <Card className="relative overflow-hidden bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-sm border border-border/40 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full rounded-2xl">
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40 pointer-events-none" />
               
-              <div className="relative w-full h-48 md:h-56 overflow-hidden rounded-t-xl">
+              {/* Grid pattern */}
+              <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
+                backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
+                backgroundSize: '24px 24px'
+              }} />
+              
+              {/* Corner highlights */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/10 to-transparent rounded-tr-2xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-2xl pointer-events-none" />
+              
+              <div className="relative w-full h-48 md:h-56 overflow-hidden rounded-t-2xl">
                 <Image
                   src={project.imageUrl}
                   alt={project.title}
@@ -71,7 +83,7 @@ export function ProjectsSection() {
                   style={{
                     objectFit: "cover"
                   }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-background/10 to-transparent opacity-40" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-60" />
               </div>
               
               <div className="relative flex flex-col flex-grow p-6">
@@ -81,13 +93,15 @@ export function ProjectsSection() {
                 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag) => (
-                    <Badge 
-                      key={tag} 
-                      variant="secondary" 
-                      className="text-xs bg-primary/8 text-primary/80 border border-primary/15 font-medium"
-                    >
-                      {tag}
-                    </Badge>
+                    <div key={tag} className="relative group/badge">
+                      <div className="absolute inset-0 bg-primary/20 blur-md rounded-lg opacity-0 group-hover/badge:opacity-100 transition-opacity" />
+                      <Badge 
+                        variant="secondary" 
+                        className="relative text-xs bg-primary/10 text-primary border border-primary/20 backdrop-blur-sm font-medium"
+                      >
+                        {tag}
+                      </Badge>
+                    </div>
                   ))}
                 </div>
                 
@@ -95,7 +109,7 @@ export function ProjectsSection() {
                   {project.description}
                 </p>
                 
-                <div className="flex justify-between gap-2 pt-4 border-t border-border/20">
+                <div className="flex justify-between gap-2 pt-4 border-t border-border/30">
                   {project.liveDemoUrl && (
                     <Button 
                       asChild 

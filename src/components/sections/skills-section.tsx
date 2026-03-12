@@ -21,21 +21,17 @@ export function SkillsSection() {
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
 
-  const { shuffledArrayLtR, shuffledArrayRtL } = useMemo(() => {
-    if (!mounted) {
-      const midpoint = Math.ceil(skills.length / 2);
-      return {
-        shuffledArrayLtR: skills.slice(0, midpoint),
-        shuffledArrayRtL: skills.slice(midpoint),
-      };
-    }
+  // Shuffle only once on mount - no need to recalculate
+  const [shuffledArrays] = useState(() => {
     const shuffledSkills = shuffleArray([...skills]);
     const midpoint = Math.ceil(shuffledSkills.length / 2);
     return {
       shuffledArrayLtR: shuffledSkills.slice(0, midpoint),
       shuffledArrayRtL: shuffledSkills.slice(midpoint),
     };
-  }, [mounted]);
+  });
+
+  const { shuffledArrayLtR, shuffledArrayRtL } = shuffledArrays;
 
   useEffect(() => {
     setMounted(true);
@@ -89,44 +85,50 @@ export function SkillsSection() {
     if (!mounted) return;
 
     const skillElements = document.querySelectorAll('.skill-card');
-    const row1 = row1Ref.current;
-    const row2 = row2Ref.current;
-
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isTouchDevice) return;
 
     const handlers = new Map();
+    // Cache parent row references to avoid repeated querySelector
+    const rowCache = new WeakMap<Element, Element | null>();
 
     skillElements.forEach((item) => {
+      // Cache the parent row
+      const parentRow = item.closest('.marquee-row');
+      rowCache.set(item, parentRow);
+      const img = item.querySelector('img');
+
       const handleMouseEnter = () => {
-        const parentRow = item.closest('.marquee-row');
-        if (parentRow) {
-          gsap.to(parentRow, { timeScale: 0.3, duration: 0.3 });
+        const cachedRow = rowCache.get(item);
+        if (cachedRow) {
+          gsap.to(cachedRow, { timeScale: 0.3, duration: 0.3 });
         }
 
-        const img = item.querySelector('img');
-        gsap.to(img, {
-          scale: 1.1,
-          duration: 0.4,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
+        if (img) {
+          gsap.to(img, {
+            scale: 1.1,
+            duration: 0.4,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        }
       };
 
       const handleMouseLeave = () => {
-        const parentRow = item.closest('.marquee-row');
-        if (parentRow) {
-          gsap.to(parentRow, { timeScale: 1, duration: 0.3 });
+        const cachedRow = rowCache.get(item);
+        if (cachedRow) {
+          gsap.to(cachedRow, { timeScale: 1, duration: 0.3 });
         }
 
-        const img = item.querySelector('img');
-        gsap.killTweensOf(img);
-        gsap.to(img, {
-          scale: 1,
-          duration: 0.3,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
+        if (img) {
+          gsap.killTweensOf(img);
+          gsap.to(img, {
+            scale: 1,
+            duration: 0.3,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        }
       };
 
       handlers.set(item, { enter: handleMouseEnter, leave: handleMouseLeave });
