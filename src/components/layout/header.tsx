@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Menu, X, CodeXml, Mail, Github, Linkedin, Twitter, Music } from 'lucide-react';
 import { gsap } from 'gsap';
@@ -25,6 +25,8 @@ export function Header() {
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme } = useTheme();
+  const router = useRouter();
+  const pathname = usePathname();
   
   const navItems = useMemo(() => [
     { label: t('experience'), href: '/#experience' },
@@ -41,7 +43,6 @@ export function Header() {
   const navItemsRef = useRef<(HTMLLIElement | null)[]>([]);
   const socialLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const scrollYRef = useRef<number>(0);
-  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = throttle(() => {
@@ -139,57 +140,32 @@ export function Header() {
   }, []);
 
   const openMobileMenu = () => {
-    // Save scroll position
     scrollYRef.current = window.scrollY;
     
-    // Lock body scroll
     document.body.style.position = 'fixed';
     document.body.style.top = `-${scrollYRef.current}px`;
     document.body.style.width = '100%';
     document.body.style.overflow = 'hidden';
 
-    // Animate menu elements
+    setIsMobileMenuOpen(true);
+    
     if (mobileMenuRef.current) {
       gsap.fromTo(mobileMenuRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.2, ease: 'power2.out' }
+        { opacity: 1, duration: 0.15, ease: 'power2.out' }
       );
     }
-
-    if (menuHeaderRef.current) {
-      gsap.fromTo(menuHeaderRef.current,
-        { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out', delay: 0.05 }
-      );
-    }
-
-    const navItems = navItemsRef.current.filter(Boolean);
-    if (navItems.length > 0) {
-      gsap.fromTo(navItems,
-        { x: -20, opacity: 0 },
-        { x: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: 'power2.out', delay: 0.1 }
-      );
-    }
-
-    const socialIcons = socialLinksRef.current.filter(Boolean);
-    if (socialIcons.length > 0) {
-      gsap.fromTo(socialIcons,
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, stagger: 0.04, duration: 0.25, ease: 'power2.out', delay: 0.2 }
-      );
-    }
-
-    setIsMobileMenuOpen(true);
   };
 
   const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    
     if (mobileMenuRef.current) {
       gsap.to(mobileMenuRef.current, {
         opacity: 0,
-        duration: 0.15,
+        duration: 0.1,
         ease: 'power2.in',
         onComplete: () => {
-          // Restore body scroll
           document.body.style.position = '';
           document.body.style.top = '';
           document.body.style.width = '';
@@ -198,8 +174,6 @@ export function Header() {
         }
       });
     }
-
-    setIsMobileMenuOpen(false);
   };
 
   const toggleMobileMenu = () => {
@@ -210,8 +184,31 @@ export function Header() {
     }
   };
 
-  const handleNavLinkClick = (href: string) => {
-    closeMobileMenu();
+  const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/#')) {
+      e.preventDefault();
+      const sectionId = href.substring(2);
+      
+      if (pathname === '/') {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          closeMobileMenu();
+          setTimeout(() => {
+            const headerOffset = 100;
+            const elementPosition = section.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          }, 100);
+        }
+      } else {
+        closeMobileMenu();
+        setTimeout(() => {
+          router.push(href, { scroll: false });
+        }, 150);
+      }
+    } else {
+      closeMobileMenu();
+    }
   };
 
   return (
@@ -245,6 +242,24 @@ export function Header() {
               key={item.label}
               ref={(el) => { navLinksRef.current[index] = el; }}
               href={item.href}
+              onClick={(e) => {
+                if (item.href.startsWith('/#')) {
+                  e.preventDefault();
+                  const sectionId = item.href.substring(2);
+                  
+                  if (pathname === '/') {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                      const headerOffset = 100;
+                      const elementPosition = section.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                  } else {
+                    router.push(item.href, { scroll: false });
+                  }
+                }
+              }}
               aria-current={pathname === item.href ? "page" : undefined}
               className="relative text-foreground hover:text-primary font-medium transition-colors group"
             >
@@ -270,7 +285,7 @@ export function Header() {
       </div>
 
       {isMobile && isMobileMenuOpen && (
-        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/99 backdrop-blur-xl" style={{ height: '100dvh' }}>
+        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/95 backdrop-blur-md" style={{ height: '100dvh' }}>
           <div className="flex flex-col h-full">
             {/* Header with close button - Fixed */}
             <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between p-6 border-b border-border/20">
@@ -293,7 +308,7 @@ export function Header() {
                     <li key={item.label} ref={(el) => { navItemsRef.current[index] = el; }}>
                       <Link
                         href={item.href}
-                        onClick={() => handleNavLinkClick(item.href)}
+                        onClick={(e) => handleNavLinkClick(e, item.href)}
                         className="flex items-center px-6 py-4 rounded-lg text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-200"
                       >
                         <span className="font-semibold text-xl">{item.label}</span>
@@ -303,7 +318,7 @@ export function Header() {
                   <li>
                     <Link
                       href="/why"
-                      onClick={() => handleNavLinkClick('/why')}
+                      onClick={(e) => handleNavLinkClick(e, '/why')}
                       className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
                     >
                       <Music className="w-4 h-4" />

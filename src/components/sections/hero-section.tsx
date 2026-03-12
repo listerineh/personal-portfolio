@@ -133,7 +133,7 @@ export function HeroSection() {
         </h1>
         <p 
           ref={subtitleRef}
-          className="text-xl md:text-2xl text-primary font-medium mb-8 hover:text-accent transition-colors duration-300"
+          className="text-xl md:text-2xl text-primary font-medium mb-8"
         >
           {t('subtitle')}
         </p>
