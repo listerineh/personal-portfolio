@@ -70,11 +70,11 @@ export function BlogPreviewSection() {
             className="group relative"
           >
             {/* Ambient glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
             
             {/* Card */}
             <Link href={`/blog/${post.slug}`} className="block h-full">
-              <Card className="relative overflow-hidden bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-sm border-border/40 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full">
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-sm border-border/40 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full rounded-2xl">
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40 pointer-events-none" />
                 
@@ -86,7 +86,7 @@ export function BlogPreviewSection() {
                 
                 {/* Image container */}
                 {post.imageUrl && (
-                  <div className="relative w-full h-64 overflow-hidden">
+                  <div className="relative w-full h-64 overflow-hidden rounded-t-2xl">
                     <Image
                       src={post.imageUrl}
                       alt={post.title}
@@ -111,14 +111,20 @@ export function BlogPreviewSection() {
                     <CardTitle className="text-xl font-headline font-bold group-hover:text-primary transition-colors">
                       {post.title}
                     </CardTitle>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground pt-2">
-                      <div className="flex items-center gap-1.5">
-                        <CalendarDays className="h-3.5 w-3.5" />
-                        <time dateTime={post.date}>{post.date}</time>
+                    <div className="flex flex-wrap items-center gap-4 pt-2">
+                      <div className="relative group/badge">
+                        <div className="absolute inset-0 bg-primary/20 blur-md rounded-lg opacity-0 group-hover/badge:opacity-100 transition-opacity" />
+                        <div className="relative flex items-center gap-1.5 text-muted-foreground group-hover/badge:text-primary transition-colors">
+                          <CalendarDays className="h-3.5 w-3.5" />
+                          <time dateTime={post.date} className="text-xs font-medium">{post.date}</time>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5" />
-                        <span>{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
+                      <div className="relative group/badge">
+                        <div className="absolute inset-0 bg-accent/20 blur-md rounded-lg opacity-0 group-hover/badge:opacity-100 transition-opacity" />
+                        <div className="relative flex items-center gap-1.5 text-muted-foreground group-hover/badge:text-accent transition-colors">
+                          <Clock className="h-3.5 w-3.5" />
+                          <span className="text-xs font-medium">{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
+                        </div>
                       </div>
                     </div>
                   </CardHeader>
@@ -138,8 +144,8 @@ export function BlogPreviewSection() {
                 </div>
                 
                 {/* Corner highlights */}
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-primary/10 to-transparent rounded-tr-xl pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/10 to-transparent rounded-tr-2xl pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-2xl pointer-events-none" />
               </Card>
             </Link>
           </article>
