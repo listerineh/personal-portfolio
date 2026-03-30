@@ -10,9 +10,11 @@ import { codingThroughBurnout } from './coding-through-burnout';
 import { fromChaosToClarity } from './from-chaos-to-clarity-kanban';
 import { whyMarkdownForBlogs } from './why-markdown-for-blogs';
 import { theFirstDigitalDeath } from './the-first-digital-death';
+import { vibeCodingCursorWorkshop } from './vibe-coding-cursor-workshop';
 
 const allBlogPosts = {
   en: [
+    vibeCodingCursorWorkshop.en,
     firebaseVsSupabase.en,
     theFirstDigitalDeath.en,
     pythonRenaissanceAiEra.en,
@@ -25,6 +27,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    vibeCodingCursorWorkshop.es,
     firebaseVsSupabase.es,
     theFirstDigitalDeath.es,
     pythonRenaissanceAiEra.es,
