@@ -320,7 +320,7 @@ Decisiones de diseño clave:
 
 ## La Verificación de Realidad: Aún Necesitas Conocimiento Técnico
 
-Aquí es donde cuestiono la premisa del workshop.
+Aquí es donde yo cuestiono la premisa del workshop.
 
 El mensaje del workshop era: **"No necesitas ser técnico para construir una landing page con IA."**
 
