@@ -37,8 +37,8 @@ jobs:
       - name: Detect new or modified blog files
         id: detect
         run: |
-          # Get list of added or modified files in src/lib/data/blog/
-          NEW_FILES=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD | grep '^src/lib/data/blog/.*\.ts$' || true)
+          # Get list of added or modified files in src/lib/data/blog/ (excluding get-blog-posts.ts)
+          NEW_FILES=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD | grep '^src/lib/data/blog/.*\.ts$' | grep -v 'get-blog-posts\.ts$' || true)
           
           if [ -z "$NEW_FILES" ]; then
             echo "No new or modified blog files detected"
