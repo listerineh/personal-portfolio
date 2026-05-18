@@ -12,9 +12,11 @@ import { whyMarkdownForBlogs } from './why-markdown-for-blogs';
 import { theFirstDigitalDeath } from './the-first-digital-death';
 import { vibeCodingCursorWorkshop } from './vibe-coding-cursor-workshop';
 import { controlledObservabilityModernDevelopment } from './controlled-observability-modern-development';
+import { aiSecurityDoubleEdgedSword } from './ai-security-double-edged-sword';
 
 const allBlogPosts = {
   en: [
+    aiSecurityDoubleEdgedSword.en,
     controlledObservabilityModernDevelopment.en,
     vibeCodingCursorWorkshop.en,
     firebaseVsSupabase.en,
@@ -29,6 +31,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    aiSecurityDoubleEdgedSword.es,
     controlledObservabilityModernDevelopment.es,
     vibeCodingCursorWorkshop.es,
     firebaseVsSupabase.es,
