@@ -40,7 +40,7 @@ export const BlogPostContent = forwardRef<HTMLDivElement, BlogPostContentProps>(
                    prose-code:text-foreground prose-code:before:content-none prose-code:after:content-none
                    prose-pre:bg-muted prose-pre:p-6 prose-pre:rounded-xl prose-pre:font-code prose-pre:shadow-lg
                    prose-ul:my-6 prose-ol:my-6 prose-li:my-2
-                   prose-img:rounded-xl prose-img:shadow-lg"
+                   prose-img:rounded-xl prose-img:shadow-lg prose-img:h-full prose-img:w-full prose-img:object-cover"
       >
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}

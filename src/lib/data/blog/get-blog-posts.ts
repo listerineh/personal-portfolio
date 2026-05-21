@@ -13,9 +13,11 @@ import { theFirstDigitalDeath } from './the-first-digital-death';
 import { vibeCodingCursorWorkshop } from './vibe-coding-cursor-workshop';
 import { controlledObservabilityModernDevelopment } from './controlled-observability-modern-development';
 import { aiSecurityDoubleEdgedSword } from './ai-security-double-edged-sword';
+import { flociAwsLocalDevelopmentRevolution } from './floci-aws-local-development-revolution';
 
 const allBlogPosts = {
   en: [
+    flociAwsLocalDevelopmentRevolution.en,
     aiSecurityDoubleEdgedSword.en,
     controlledObservabilityModernDevelopment.en,
     vibeCodingCursorWorkshop.en,
@@ -31,6 +33,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    flociAwsLocalDevelopmentRevolution.es,
     aiSecurityDoubleEdgedSword.es,
     controlledObservabilityModernDevelopment.es,
     vibeCodingCursorWorkshop.es,

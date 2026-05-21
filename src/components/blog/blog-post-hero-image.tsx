@@ -15,14 +15,15 @@ export const BlogPostHeroImage = forwardRef<HTMLDivElement, BlogPostHeroImagePro
     return (
       <div 
         ref={ref} 
-        className="relative w-full h-48 sm:h-72 md:h-[500px] mb-8 md:mb-16 rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl"
+        className="relative w-full h-auto mb-8 md:mb-16 rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl"
       >
         <Image
           src={imageUrl}
           alt={title}
-          fill
+          width={1200}
+          height={630}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 1200px"
-          style={{ objectFit: 'cover' }}
+          style={{ width: '100%', height: 'auto' }}
           data-ai-hint={imageAiHint || 'blog post header'}
           placeholder="blur"
           blurDataURL={getBlogImageBlur()}
