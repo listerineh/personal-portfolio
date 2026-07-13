@@ -37,13 +37,20 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: `${post.title} | Sebastian Alvarez`,
     description: post.excerpt,
-    authors: [{ name: post.author }],
+    authors: [{ name: post.author, url: siteUrl }],
+    creator: 'Sebastian Alvarez',
+    publisher: 'Sebastian Alvarez',
     keywords: post.tags,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       url: postUrl,
-      siteName: 'Sebastian Alvarez - Dev Blog',
+      siteName: 'listerineh.dev',
       images: [
         {
           url: imageUrl,
@@ -56,8 +63,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       alternateLocale: alternateLocale === 'es' ? 'es_ES' : 'en_US',
       type: 'article',
       publishedTime: new Date(post.date).toISOString(),
+      modifiedTime: new Date(post.date).toISOString(),
       authors: [post.author],
       tags: post.tags,
+      section: post.tags[0] ?? 'Engineering',
     },
     twitter: {
       card: 'summary_large_image',
@@ -65,13 +74,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       description: post.excerpt,
       images: [imageUrl],
       creator: '@listerineh',
+      site: '@listerineh',
     },
     alternates: {
       canonical: postUrl,
-      languages: {
-        'en': `${siteUrl}/blog/${post.slug}`,
-        'es': `${siteUrl}/blog/${post.slug}`,
-      },
     },
   };
 }

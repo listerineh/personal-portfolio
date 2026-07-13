@@ -17,12 +17,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const blogUrl = `${siteUrl}/blog`;
   
   const title = locale === 'es' 
-    ? 'Blog | Sebastian Alvarez - Desarrollo, IA y Tecnología'
-    : 'Blog | Sebastian Alvarez - Development, AI & Technology';
+    ? 'Blog Técnico | Sebastian Alvarez — Desarrollo, IA & Arquitectura'
+    : 'Technical Blog | Sebastian Alvarez — Engineering, AI & Architecture';
   
   const description = locale === 'es'
-    ? 'Artículos sobre desarrollo de software, inteligencia artificial, arquitectura de sistemas y las últimas tendencias en tecnología. Comparto experiencias, tutoriales y reflexiones sobre el mundo tech.'
-    : 'Articles about software development, artificial intelligence, system architecture, and the latest technology trends. I share experiences, tutorials, and insights from the tech world.';
+    ? 'Artículos sobre desarrollo web, IA, arquitectura de sistemas, DevOps y cloud computing. Experiencias reales, guías prácticas y reflexiones de un ingeniero fullstack senior con base en Ecuador.'
+    : 'Articles on web development, AI, system architecture, DevOps and cloud. Real-world experience, practical guides and engineering insights from a senior fullstack engineer based in Ecuador.';
   
   const keywords = locale === 'es'
     ? ['blog tecnología', 'desarrollo software', 'inteligencia artificial', 'programación', 'arquitectura software', 'DevOps', 'cloud computing', 'tutoriales programación', 'Sebastian Alvarez']
@@ -39,10 +39,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url: blogUrl,
-      siteName: 'Sebastian Alvarez - Dev Blog',
+      siteName: 'listerineh.dev',
       images: [
         {
-          url: `${siteUrl}/images/website_screenshot.webp`,
+          url: `${siteUrl}/images/blog-og.webp`,
           width: 1200,
           height: 630,
           alt: title,
@@ -56,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}/images/website_screenshot.webp`],
+      images: [`${siteUrl}/images/blog-og.webp`],
       creator: '@listerineh',
       site: '@listerineh',
     },
