@@ -203,20 +203,6 @@ export function AboutContent() {
 
           <div className="scroll-reveal space-y-8">
 
-            {/* GDG org chip */}
-            <div className="inline-flex items-center gap-4 px-5 py-4 rounded-2xl bg-card border border-border/50 pr-4">
-              <div className="flex flex-wrap w-[27px] flex-shrink-0 gap-1 p-4">
-                <div className="w-3 h-3 rounded-2xl" style={{ backgroundColor: '#4285F4' }} />
-                <div className="w-3 h-3 rounded-2xl" style={{ backgroundColor: '#EA4335' }} />
-                <div className="w-3 h-3 rounded-2xl" style={{ backgroundColor: '#FBBC04' }} />
-                <div className="w-3 h-3 rounded-2xl" style={{ backgroundColor: '#34A853' }} />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-foreground leading-none mb-1">Google Developer Groups</p>
-                <p className="text-xs text-muted-foreground leading-none">Quito / Ecuador</p>
-              </div>
-            </div>
-
             {/* Description */}
             <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
               {t('communityBody')}
