@@ -79,7 +79,7 @@ export function SkillsSection() {
         },
       });
     }
-  }, [mounted]);
+  }, [mounted], { skipPerformanceCheck: true });
 
   useEffect(() => {
     if (!mounted) return;

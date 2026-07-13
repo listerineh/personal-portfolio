@@ -91,7 +91,7 @@ export function BlogPreviewSection() {
                       src={post.imageUrl}
                       alt={post.title}
                       data-ai-hint={post.imageAiHint || 'blog post image'}
-                      className="blog-image transition-transform duration-500 group-hover:scale-110"
+                      className="blog-image transition-transform duration-500"
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       loading="lazy"

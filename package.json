@@ -19,7 +19,8 @@
     "convert-images": "node scripts/convert-images-to-webp.js",
     "convert-heic": "node scripts/convert-heic-to-webp.js",
     "notify-blog": "node scripts/send-blog-notification.js",
-    "update-sw": "node scripts/update-sw-version.js"
+    "update-sw": "node scripts/update-sw-version.js",
+    "generate-project-images": "node scripts/generate-project-images.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
