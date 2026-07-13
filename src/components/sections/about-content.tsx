@@ -128,7 +128,7 @@ export function AboutContent() {
       </section>
 
       {/* ─── Journey ───────────────────────────────────────────────────── */}
-      <section className="py-20 md:py-32 px-4 bg-secondary/30">
+      <section className="py-20 md:py-32 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="scroll-reveal mb-12 md:mb-16">
             <SectionBadge>{t('journeyBadge')}</SectionBadge>
@@ -194,7 +194,7 @@ export function AboutContent() {
       </section>
 
       {/* ─── Community ─────────────────────────────────────────────────── */}
-      <section className="py-20 md:py-32 px-4 bg-secondary/30">
+      <section className="py-20 md:py-32 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="scroll-reveal mb-12 md:mb-16">
             <SectionBadge>{t('communityBadge')}</SectionBadge>
@@ -282,7 +282,7 @@ export function AboutContent() {
       </section>
 
       {/* ─── CTA ───────────────────────────────────────────────────────── */}
-      <section className="py-20 md:py-32 px-4 bg-secondary/30">
+      <section className="py-20 md:py-32 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="scroll-reveal text-center">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold mb-4">{t('ctaTitle')}</h2>
