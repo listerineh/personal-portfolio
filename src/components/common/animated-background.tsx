@@ -3,70 +3,101 @@
 export default function AnimatedBackground() {
   return (
     <div className="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
-      {/* Modern Mesh Gradient - Static */}
-      <div 
-        className="absolute inset-0 opacity-75"
+
+      {/* Blob 1 — primary/indigo, top-left */}
+      <div
         style={{
-          background: `
-            radial-gradient(circle at 15% 25%, hsl(var(--primary) / 0.5) 0px, transparent 35%),
-            radial-gradient(circle at 85% 15%, hsl(var(--accent) / 0.45) 0px, transparent 35%),
-            radial-gradient(circle at 45% 75%, hsl(var(--primary) / 0.4) 0px, transparent 35%),
-            radial-gradient(circle at 90% 85%, hsl(var(--accent) / 0.42) 0px, transparent 35%),
-            radial-gradient(circle at 10% 90%, hsl(var(--primary) / 0.35) 0px, transparent 35%)
-          `,
+          position: 'absolute',
+          top: '-10%',
+          left: '-10%',
+          width: '62%',
+          height: '72%',
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse at center, hsl(var(--primary) / 0.52) 0%, transparent 68%)',
+          animation: 'blob1 20s ease-in-out infinite',
+          willChange: 'transform',
         }}
       />
 
-      {/* Subtle Grid Pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.06]"
+      {/* Blob 2 — accent/rose, top-right */}
+      <div
         style={{
-          backgroundImage: `
-            linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)
-          `,
-          backgroundSize: '100px 100px',
+          position: 'absolute',
+          top: '-15%',
+          right: '-10%',
+          width: '56%',
+          height: '66%',
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse at center, hsl(var(--accent) / 0.46) 0%, transparent 68%)',
+          animation: 'blob2 25s ease-in-out infinite',
+          willChange: 'transform',
+        }}
+      />
+
+      {/* Blob 3 — primary, bottom-center */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '-20%',
+          left: '18%',
+          width: '56%',
+          height: '60%',
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse at center, hsl(var(--primary) / 0.38) 0%, transparent 68%)',
+          animation: 'blob3 30s ease-in-out infinite',
+          willChange: 'transform',
+        }}
+      />
+
+      {/* Blob 4 — accent, bottom-right */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '-12%',
+          right: '-8%',
+          width: '46%',
+          height: '56%',
+          borderRadius: '50%',
+          background: 'radial-gradient(ellipse at center, hsl(var(--accent) / 0.40) 0%, transparent 68%)',
+          animation: 'blob4 22s ease-in-out infinite',
+          willChange: 'transform',
         }}
       />
 
       {/* Noise Texture for depth */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.025]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       />
 
-      {/* Gradient Overlays for depth */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-transparent to-accent/12" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/25 to-transparent" />
-      
-      {/* Subtle animated gradient (CSS only) */}
-      <div 
-        className="absolute inset-0 opacity-50"
-        style={{
-          background: `
-            linear-gradient(125deg, 
-              hsl(var(--primary) / 0.18) 0%, 
-              transparent 40%, 
-              transparent 60%, 
-              hsl(var(--accent) / 0.18) 100%
-            )
-          `,
-          animation: 'gradient-shift 15s ease infinite',
-        }}
-      />
+      {/* Gradient overlays for depth */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
 
       <style jsx>{`
-        @keyframes gradient-shift {
-          0%, 100% {
-            opacity: 0.3;
-            transform: translateY(0) scale(1);
-          }
-          50% {
-            opacity: 0.4;
-            transform: translateY(-20px) scale(1.05);
-          }
+        @keyframes blob1 {
+          0%, 100% { transform: translate(0%, 0%) scale(1); }
+          25%       { transform: translate(4%, 5%) scale(1.05); }
+          50%       { transform: translate(2%, 2%) scale(0.97); }
+          75%       { transform: translate(-3%, 4%) scale(1.03); }
+        }
+        @keyframes blob2 {
+          0%, 100% { transform: translate(0%, 0%) scale(1); }
+          30%       { transform: translate(-5%, 5%) scale(1.06); }
+          60%       { transform: translate(-2%, -3%) scale(0.96); }
+          80%       { transform: translate(3%, 2%) scale(1.02); }
+        }
+        @keyframes blob3 {
+          0%, 100% { transform: translate(0%, 0%) scale(1); }
+          35%       { transform: translate(4%, -5%) scale(1.07); }
+          65%       { transform: translate(-4%, -2%) scale(0.95); }
+        }
+        @keyframes blob4 {
+          0%, 100% { transform: translate(0%, 0%) scale(1); }
+          40%       { transform: translate(-4%, -5%) scale(1.05); }
+          70%       { transform: translate(3%, -2%) scale(0.97); }
         }
       `}</style>
     </div>
