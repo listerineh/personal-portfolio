@@ -116,6 +116,40 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
       image: '/images/sebastian_alvarez_photo.webp',
     },
   },
+  about: {
+    en: {
+      title: 'About Me | Sebastian Alvarez — Senior Fullstack & Platform Engineer',
+      description: 'Learn about Sebastian Alvarez — from tinkering with hardware as a kid to leading engineering teams at US companies. Senior fullstack engineer, tech lead, GDG Ecuador speaker, and musician.',
+      keywords: [
+        'Sebastian Alvarez',
+        'about me',
+        'senior software engineer',
+        'tech lead',
+        'fullstack engineer',
+        'GDG Ecuador',
+        'Google Developer Groups',
+        'Ecuador developer',
+        'software engineer biography',
+      ],
+      image: '/images/website_screenshot.webp',
+    },
+    es: {
+      title: 'Sobre mí | Sebastian Alvarez — Senior Fullstack & Platform Engineer',
+      description: 'Conoce a Sebastian Alvarez — desde curiosear con hardware de niño hasta liderar equipos de ingeniería en empresas de EEUU. Ingeniero fullstack senior, tech lead, speaker en GDG Ecuador y músico.',
+      keywords: [
+        'Sebastian Alvarez',
+        'sobre mí',
+        'ingeniero de software senior',
+        'tech lead',
+        'ingeniero fullstack',
+        'GDG Ecuador',
+        'Google Developer Groups',
+        'desarrollador Ecuador',
+        'biografía ingeniero de software',
+      ],
+      image: '/images/website_screenshot.webp',
+    },
+  },
   privacy: {
     en: {
       title: 'Privacy Policy | Sebastian Alvarez',
