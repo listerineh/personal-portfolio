@@ -10,9 +10,9 @@ interface AccentCardProps {
 }
 
 const cardMap: Record<Accent, string> = {
-  amber:   'border-amber-500/25 bg-amber-500/8 dark:border-amber-400/10 dark:bg-amber-400/4 hover:bg-amber-400/8',
-  indigo:  'border-indigo-500/25 bg-indigo-500/10 dark:border-indigo-400/10 dark:bg-indigo-400/4 hover:bg-indigo-400/8',
-  green:   'border-emerald-500/25 bg-emerald-500/8 dark:border-emerald-400/10 dark:bg-emerald-400/4 hover:bg-emerald-400/8',
+  amber:   'border-amber-500/25 bg-amber-500/10 dark:border-amber-400/20 dark:bg-amber-400/10 hover:bg-amber-400/15',
+  indigo:  'border-indigo-500/25 bg-indigo-500/10 dark:border-indigo-400/20 dark:bg-indigo-400/10 hover:bg-indigo-400/15',
+  green:   'border-emerald-500/25 bg-emerald-500/10 dark:border-emerald-400/20 dark:bg-emerald-400/10 hover:bg-emerald-400/15',
   neutral: 'border-gray-200 bg-gray-50 dark:border-white/10 dark:bg-white/[0.03] hover:bg-white/[0.06]',
 }
 

@@ -264,7 +264,7 @@ export default function WhyPage() {
                     href={musicLinks.mn.linktree}
                     external
                     gradient="linear-gradient(90deg, #f59e0b, #fcd34d)"
-                    className="gap-3 text-black hover:shadow-[0_0_40px_rgba(245,158,11,0.35)] hover:scale-[1.03]"
+                    className="gap-3 text-black hover:shadow-[0_0_40px_rgba(245,158,11,0.35)] hover:scale-[1.03] w-full sm:w-auto justify-center"
                   >
                     {t('mnLinktree')}
                     <ExternalLink className="w-4 h-4" />
@@ -339,12 +339,12 @@ export default function WhyPage() {
                   <Text size="sm" strength="secondary" accent="indigo">{t('ssAlbumDesc')}</Text>
                 </AccentCard>
                 <div className="reveal-up">
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <BrandLink
                       href={musicLinks.ss.spotifyUrl}
                       color="#818cf8"
                       variant="solid"
-                      className="font-bold"
+                      className="font-bold w-full justify-center sm:w-auto"
                     >
                       <SpotifyIcon className="w-4 h-4" accentColor="#818cf8" />
                       {t('ssSpotify')}
@@ -353,6 +353,7 @@ export default function WhyPage() {
                       href={musicLinks.ss.instagram}
                       color="#818cf8"
                       variant="outline"
+                      className="w-full justify-center sm:w-auto"
                     >
                       <InstagramIcon className="w-4 h-4" />
                       {t('soloIG')}
@@ -420,12 +421,12 @@ export default function WhyPage() {
 
             <div>
               <Text size="lg" strength="primary" accent="green" animate className="mb-10">{t('soloDescription')}</Text>
-              <div className="reveal-up flex flex-wrap gap-3 mb-14">
+              <div className="reveal-up flex flex-col sm:flex-row gap-3 mb-14">
                 <BrandLink
                   href={musicLinks.solo.spotifyUrl}
                   color="#1DB954"
                   variant="solid"
-                  className="font-bold"
+                  className="font-bold w-full justify-center sm:w-auto"
                 >
                   <SpotifyIcon className="w-4 h-4" />
                   {t('soloSpotify')}
@@ -434,6 +435,7 @@ export default function WhyPage() {
                   href={musicLinks.solo.instagram}
                   color="#1DB954"
                   variant="outline"
+                  className="w-full justify-center sm:w-auto"
                 >
                   <InstagramIcon className="w-4 h-4" />
                   {t('soloIG')}
