@@ -458,20 +458,24 @@ export default function WhyPage() {
         </section>
 
         {/* ── CTA ───────────────────────────────────────────────────────────── */}
-        <section ref={ctaRef} className="relative py-40 md:py-60 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+        <section
+          ref={ctaRef}
+          className="relative overflow-hidden flex items-center justify-center px-6 sm:px-10 md:px-16 lg:px-24"
+          style={{ minHeight: '90vh' }}
+        >
           {/* Parallax background */}
-          <div ref={ctaBgRef} className="absolute inset-[-20%] scale-[1.1] origin-center">
+          <div ref={ctaBgRef} className="absolute inset-0 scale-[1.25] origin-center">
             <Image
               src="/images/sebas-playing-footer.webp"
               alt="Sebastian Alvarez performing"
               fill
               className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30" />
+            <div className="absolute inset-0 bg-black/40" />
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <div className="relative z-10 max-w-3xl mx-auto text-center py-24">
             <SectionLabel animate className="mb-8 text-white/60">{t('ctaBadge')}</SectionLabel>
             <Title as="h2" animate className="mb-6 text-white" style={{ fontSize: 'clamp(2rem, 5.5vw, 4.5rem)' }}>
               {t('ctaTitle')}
