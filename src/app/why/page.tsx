@@ -184,7 +184,7 @@ export default function WhyPage() {
               {t('heroEyebrow')}
             </span>
             <h1 ref={heroTitleRef} className="font-headline font-bold leading-[0.9] text-white">
-              <span className="block" style={{ fontSize: 'clamp(3.5rem, 11vw, 10rem)' }}>Why</span>
+              <span className="block" style={{ fontSize: 'clamp(3.5rem, 11vw, 10rem)' }}>{t('heroWhy')}</span>
               <span
                 className="block text-transparent bg-clip-text"
                 style={{
@@ -289,8 +289,9 @@ export default function WhyPage() {
           </div>
 
           <div
-            className="absolute right-[-2vw] top-1/2 -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
+            className="absolute right-[-2vw] -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
             style={{
+              top: 'clamp(18rem, calc(14rem + 15vw), 28rem)',
               fontSize: 'clamp(10rem, 28vw, 28rem)',
               color: theme === 'dark' ? 'rgba(251,191,36,0.04)' : 'rgba(217,119,6,0.1)',
             }}
@@ -384,8 +385,9 @@ export default function WhyPage() {
           </div>
 
           <div
-            className="absolute left-[-2vw] top-1/2 -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
+            className="absolute right-[-2vw] -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
             style={{
+              top: 'clamp(18rem, calc(14rem + 15vw), 28rem)',
               fontSize: 'clamp(10rem, 28vw, 28rem)',
               color: theme === 'dark' ? 'rgba(129,140,248,0.04)' : 'rgba(99,102,241,0.1)',
             }}
@@ -449,13 +451,14 @@ export default function WhyPage() {
           </div>
 
           <div
-            className="absolute right-[-1vw] top-1/2 -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
+            className="absolute right-[-2vw] -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
             style={{
-              fontSize: 'clamp(12rem, 32vw, 32rem)',
+              top: 'clamp(18rem, calc(14rem + 15vw), 28rem)',
+              fontSize: 'clamp(10rem, 28vw, 28rem)',
               color: theme === 'dark' ? 'rgba(29,185,84,0.05)' : 'rgba(29,185,84,0.1)',
             }}
           >
-            L
+            LH
           </div>
         </section>
 
@@ -473,16 +476,18 @@ export default function WhyPage() {
               fill
               className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30" />
-            <div className="absolute inset-0 bg-black/40" />
           </div>
+          {/* Overlays — static, outside parallax div */}
+          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center py-24">
-            <SectionLabel animate className="mb-8 text-white/60">{t('ctaBadge')}</SectionLabel>
+            <SectionLabel animate className="mb-8 text-white/80">{t('ctaBadge')}</SectionLabel>
             <Title as="h2" animate className="mb-6 text-white" style={{ fontSize: 'clamp(2rem, 5.5vw, 4.5rem)' }}>
               {t('ctaTitle')}
             </Title>
-            <p className="reveal-up text-lg text-white/60 leading-relaxed mb-12">{t('ctaDescription')}</p>
+            <p className="reveal-up text-lg text-white/80 leading-relaxed mb-12">{t('ctaDescription')}</p>
             <div className="reveal-up flex flex-col sm:flex-row justify-center items-center gap-4">
               <Button variant="primary" accent="neutral" href="/#contact">
                 {t('getInTouch')}
