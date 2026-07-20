@@ -117,7 +117,7 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
         'software engineer',
         'Spotify artist',
       ],
-      image: '/images/sebastian_alvarez_photo.webp',
+      image: '/images/why-og.webp',
     },
     es: {
       title: '¿Por qué Listerineh? | Artista Lo-Fi Hip-Hop e Ingeniero de Software',
@@ -131,7 +131,7 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
         'ingeniero de software',
         'artista Spotify',
       ],
-      image: '/images/sebastian_alvarez_photo.webp',
+      image: '/images/why-og.webp',
     },
   },
   about: {

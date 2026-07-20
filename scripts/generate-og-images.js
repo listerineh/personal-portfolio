@@ -257,15 +257,136 @@ function htmlHome() {
 </body></html>`;
 }
 
+// ─── 4. Why ──────────────────────────────────────────────────────────────
+
+function htmlWhy() {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  ${baseStyles()}
+  <style>
+    body {
+      background: #080808;
+      display: flex; align-items: center;
+    }
+    .top-border {
+      background: linear-gradient(90deg, transparent 0%, rgba(29,185,84,0.8) 30%, rgba(129,140,248,0.5) 70%, transparent 100%);
+    }
+    .dot-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0);
+      background-size: 28px 28px;
+    }
+    .layout {
+      position: relative; z-index: 1;
+      display: flex; align-items: center;
+      width: 100%; height: 100%;
+      padding: 60px 72px 60px 80px;
+      gap: 56px;
+    }
+    .left { flex: 0 0 54%; display: flex; flex-direction: column; }
+    .right { flex: 1; display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+    .badge {
+      background: rgba(29,185,84,0.12);
+      border: 1px solid rgba(29,185,84,0.4);
+      color: #1DB954;
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+    .title {
+      font-size: 72px; font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.04em; margin-bottom: 20px;
+      background: linear-gradient(90deg, #1DB954 0%, #86efac 50%, #1DB954 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      font-size: 19px; color: rgba(255,255,255,0.45);
+      font-weight: 400; line-height: 1.5; margin-bottom: 36px;
+    }
+    .genres { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 44px; }
+    .genre {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px; padding: 5px 14px;
+      color: rgba(255,255,255,0.4); font-size: 13px; font-weight: 500;
+    }
+    .domain { color: rgba(29,185,84,0.45); font-size: 15px; font-weight: 600; letter-spacing: 0.04em; }
+    .band-card {
+      border-radius: 14px; padding: 18px 22px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .band-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .band-name { font-size: 20px; font-weight: 700; }
+    .band-role { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-top: 2px; }
+    .band-mn {
+      background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.22);
+      color: #f59e0b;
+    }
+    .band-ss {
+      background: rgba(129,140,248,0.08); border: 1px solid rgba(129,140,248,0.22);
+      color: #818cf8;
+    }
+    .band-solo {
+      background: rgba(29,185,84,0.08); border: 1px solid rgba(29,185,84,0.22);
+      color: #1DB954;
+    }
+  </style>
+</head><body>
+  <div class="top-border"></div>
+  <div class="dot-grid"></div>
+  <div class="glow" style="width:640px;height:640px;top:-200px;right:-60px;background:radial-gradient(circle, rgba(29,185,84,0.15), transparent 68%);"></div>
+  <div class="glow" style="width:440px;height:440px;bottom:-160px;left:-40px;background:radial-gradient(circle, rgba(245,158,11,0.10), transparent 70%);"></div>
+  <div class="glow" style="width:360px;height:360px;top:-80px;left:30%;background:radial-gradient(circle, rgba(129,140,248,0.08), transparent 70%);"></div>
+
+  <div class="layout">
+    <div class="left">
+      <span class="badge">Music &amp; Software Engineering</span>
+      <div class="title">Why<br>Listerineh?</div>
+      <div class="subtitle">The story behind the alias — music producer,<br>engineer, and collaborator from Ecuador.</div>
+      <div class="genres">
+        <span class="genre">Lo-Fi Hip-Hop</span>
+        <span class="genre">Electronic</span>
+        <span class="genre">Ambient</span>
+        <span class="genre">Indie Rock</span>
+        <span class="genre">Funk</span>
+      </div>
+      <span class="domain">listerineh.dev/why</span>
+    </div>
+
+    <div class="right">
+      <div class="band-card band-mn">
+        <div class="band-dot" style="background:#f59e0b;"></div>
+        <div>
+          <div class="band-name">Margarita Nugget</div>
+          <div class="band-role">Indie Rock · Funk · Cumbia</div>
+        </div>
+      </div>
+      <div class="band-card band-ss">
+        <div class="band-dot" style="background:#818cf8;"></div>
+        <div>
+          <div class="band-name">Sofones Solares</div>
+          <div class="band-role">Electronic · Dream Pop</div>
+        </div>
+      </div>
+      <div class="band-card band-solo">
+        <div class="band-dot" style="background:#1DB954;"></div>
+        <div>
+          <div class="band-name">Listerineh</div>
+          <div class="band-role">Lo-Fi Hip-Hop · Ambient</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body></html>`;
+}
+
 // ─── Runner ────────────────────────────────────────────────────────────────
 
-const PAGE_IDS = ['home', 'about', 'blog'];
+const PAGE_IDS = ['home', 'about', 'blog', 'why'];
 
 async function generateImages() {
   const ALL_PAGES = [
     { id: 'home',  filename: 'home-og.webp',  html: htmlHome() },
     { id: 'about', filename: 'about-og.webp', html: htmlAbout() },
     { id: 'blog',  filename: 'blog-og.webp',  html: htmlBlog() },
+    { id: 'why',   filename: 'why-og.webp',   html: htmlWhy() },
   ];
 
   const pages = FILTER

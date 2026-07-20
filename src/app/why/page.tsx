@@ -24,6 +24,8 @@ export default function WhyPage() {
   const { theme } = useTheme();
   const heroRef = useRef<HTMLElement>(null);
   const heroBgRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLElement>(null);
+  const ctaBgRef = useRef<HTMLDivElement>(null);
   const heroEyebrowRef = useRef<HTMLSpanElement>(null);
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroSubtitleRef = useRef<HTMLParagraphElement>(null);
@@ -42,6 +44,22 @@ export default function WhyPage() {
           scrub: true,
         },
       });
+    }
+
+    if (!prefersReducedMotion && ctaBgRef.current && ctaRef.current) {
+      gsap.fromTo(ctaBgRef.current,
+        { yPercent: -12 },
+        {
+          yPercent: 12,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: ctaRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        }
+      );
     }
 
     if (!prefersReducedMotion) {
@@ -440,20 +458,32 @@ export default function WhyPage() {
         </section>
 
         {/* ── CTA ───────────────────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 border-t border-gray-200 dark:border-white/[0.05]">
-          <div className="max-w-3xl mx-auto text-center">
-            <SectionLabel animate className="mb-8">{t('ctaBadge')}</SectionLabel>
-            <Title as="h2" animate className="mb-6" style={{ fontSize: 'clamp(2rem, 5.5vw, 4.5rem)' }}>
+        <section ref={ctaRef} className="relative py-40 md:py-60 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+          {/* Parallax background */}
+          <div ref={ctaBgRef} className="absolute inset-[-20%] scale-[1.1] origin-center">
+            <Image
+              src="/images/sebas-playing-footer.webp"
+              alt="Sebastian Alvarez performing"
+              fill
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/50" />
+          </div>
+
+          <div className="relative z-10 max-w-3xl mx-auto text-center">
+            <SectionLabel animate className="mb-8 text-white/60">{t('ctaBadge')}</SectionLabel>
+            <Title as="h2" animate className="mb-6 text-white" style={{ fontSize: 'clamp(2rem, 5.5vw, 4.5rem)' }}>
               {t('ctaTitle')}
             </Title>
-            <Text size="lg" strength="secondary" animate className="mb-12">{t('ctaDescription')}</Text>
+            <p className="reveal-up text-lg text-white/60 leading-relaxed mb-12">{t('ctaDescription')}</p>
             <div className="reveal-up flex flex-col sm:flex-row justify-center items-center gap-4">
               <Button variant="primary" accent="neutral" href="/#contact">
                 {t('getInTouch')}
               </Button>
-              <Button variant="secondary" href="/">
+              <Link href="/" className="font-headline font-bold text-sm text-white/60 hover:text-white transition-colors duration-300 underline-offset-4 hover:underline">
                 {t('backToPortfolio')}
-              </Button>
+              </Link>
             </div>
           </div>
         </section>
