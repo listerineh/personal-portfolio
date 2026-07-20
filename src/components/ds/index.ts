@@ -8,5 +8,6 @@ export { MemberCard } from './MemberCard'
 export { SpotifyIcon } from './SpotifyIcon'
 export { InstagramIcon } from './InstagramIcon'
 export { BrandLink } from './BrandLink'
+export { SpotifyTopTracks } from './SpotifyTopTracks'
 
 export type { Accent, TextStrength, TextSize, ButtonVariant, ButtonSize, TitleGradient } from './types'

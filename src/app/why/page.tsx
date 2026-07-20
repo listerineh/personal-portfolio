@@ -13,7 +13,7 @@ import { useTheme } from '@/context/theme-context';
 import { LanguageSwitcher } from '@/components/common/language-switcher';
 import { useGSAP } from '@/hooks/use-gsap';
 import { musicLinks } from '@/lib/data';
-import { Pill, Button, SectionLabel, Title, Text, AccentCard, MemberCard, SpotifyIcon, InstagramIcon, BrandLink } from '@/components/ds';
+import { Pill, Button, SectionLabel, Title, Text, AccentCard, MemberCard, SpotifyIcon, InstagramIcon, BrandLink, SpotifyTopTracks } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -286,6 +286,24 @@ export default function WhyPage() {
                 </div>
               </div>
             </div>
+
+            {/* Featured video */}
+            <div className="reveal-up mt-16">
+              <SectionLabel accent="amber" className="mb-5">{t('mnVideoTitle')}</SectionLabel>
+              <div
+                className="relative w-full overflow-hidden rounded-2xl"
+                style={{ aspectRatio: '16/9', border: '1px solid rgba(245,158,11,0.2)' }}
+              >
+                <iframe
+                  src={`https://www.youtube.com/embed/${musicLinks.mn.featuredVideoId}?rel=0&modestbranding=1`}
+                  title="Margarita Nugget"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+            </div>
           </div>
 
           <div
@@ -380,7 +398,7 @@ export default function WhyPage() {
 
             <div className="reveal-up mt-12">
               <SectionLabel accent="indigo" className="mb-5">{t('topTracksTitle')}</SectionLabel>
-              <SpotifyPlayer artistId={musicLinks.ss.spotifyArtistId} artistName="Sofones Solares" />
+              <SpotifyTopTracks trackIds={musicLinks.ss.topTrackIds} accentColor="#818cf8" />
             </div>
           </div>
 
@@ -445,7 +463,7 @@ export default function WhyPage() {
               </div>
               <div className="reveal-up mt-16">
                 <SectionLabel accent="green" className="mb-5">{t('topTracksTitle')}</SectionLabel>
-                <SpotifyPlayer artistId={musicLinks.solo.spotifyArtistId} artistName="Listerineh" />
+                <SpotifyTopTracks trackIds={musicLinks.solo.topTrackIds} accentColor="#1DB954" />
               </div>
             </div>
           </div>
