@@ -2,18 +2,8 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+import { Button, Modal, ModalTrigger, ModalContent, ModalHeader, ModalTitle, ModalDescription, Switch } from '@/components/ds';
 import { Cookie } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 import {
   getCookieConsent,
   saveCookieConsent,
@@ -55,28 +45,27 @@ export function CookieSettingsLink() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Modal open={open} onOpenChange={setOpen}>
+      <ModalTrigger asChild>
         <button className="text-xs text-muted-foreground hover:text-primary transition-colors underline">
           {t('cookieSettings')}
         </button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Cookie className="h-5 w-5" />
-            {t('preferencesTitle')}
-          </DialogTitle>
-          <DialogDescription>
-            {t('settingsDescription')}
-          </DialogDescription>
-        </DialogHeader>
+      </ModalTrigger>
+      <ModalContent>
+        <ModalHeader>
+          <ModalTitle>
+            <span className="flex items-center gap-2">
+              <Cookie className="h-5 w-5" />
+              {t('preferencesTitle')}
+            </span>
+          </ModalTitle>
+          <ModalDescription>{t('settingsDescription')}</ModalDescription>
+        </ModalHeader>
         
         <div className="space-y-4 py-4">
-          {/* Necessary Cookies */}
           <div className="flex items-start justify-between space-x-4">
             <div className="flex-1 space-y-1">
-              <Label className="text-sm font-medium">{t('necessaryLabel')}</Label>
+              <label className="text-sm font-medium">{t('necessaryLabel')}</label>
               <p className="text-xs text-muted-foreground">
                 {t('necessaryDescription')}
               </p>
@@ -88,12 +77,11 @@ export function CookieSettingsLink() {
             />
           </div>
 
-          {/* Analytics Cookies */}
           <div className="flex items-start justify-between space-x-4">
             <div className="flex-1 space-y-1">
-              <Label htmlFor="analytics-settings" className="text-sm font-medium">
+              <label htmlFor="analytics-settings" className="text-sm font-medium">
                 {t('analyticsLabel')}
-              </Label>
+              </label>
               <p className="text-xs text-muted-foreground">
                 {t('analyticsDescription')}
               </p>
@@ -108,12 +96,11 @@ export function CookieSettingsLink() {
             />
           </div>
 
-          {/* Preference Cookies */}
           <div className="flex items-start justify-between space-x-4">
             <div className="flex-1 space-y-1">
-              <Label htmlFor="preferences-settings" className="text-sm font-medium">
+              <label htmlFor="preferences-settings" className="text-sm font-medium">
                 {t('preferencesCookiesLabel')}
-              </Label>
+              </label>
               <p className="text-xs text-muted-foreground">
                 {t('preferencesCookiesDescription')}
               </p>
@@ -130,19 +117,19 @@ export function CookieSettingsLink() {
         </div>
 
         <div className="flex justify-between gap-2">
-          <Button variant="outline" onClick={handleRevokeAll} className="text-destructive">
+          <Button variant="ghost" accent="neutral" size="md" onClick={handleRevokeAll}>
             {t('revokeAllButton')}
           </Button>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setOpen(false)}>
+            <Button variant="secondary" accent="neutral" size="md" onClick={() => setOpen(false)}>
               {t('cancelButton')}
             </Button>
-            <Button onClick={handleSavePreferences}>
+            <Button variant="primary" accent="indigo" size="md" onClick={handleSavePreferences}>
               {t('saveButton')}
             </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </ModalContent>
+    </Modal>
   );
 }

@@ -9,3 +9,9 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 export type TitleGradient = 'amber' | 'indigo' | 'green' | false
+
+export type SectionAlign = 'left' | 'center'
+
+export type InputSize = 'sm' | 'md' | 'lg'
+
+export type CardVariant = 'default' | 'ghost' | 'outline'

@@ -17,6 +17,7 @@ interface ButtonProps {
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
   gradient?: string
+  disabled?: boolean
 }
 
 type ColorTriple = [bg: string, text: string, hoverBg: string]
@@ -48,6 +49,7 @@ export function Button({
   onClick,
   type = 'button',
   gradient,
+  disabled = false,
 }: ButtonProps) {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
@@ -121,7 +123,7 @@ export function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} {...sharedProps}>
+    <button type={type} onClick={onClick} disabled={disabled} {...sharedProps} style={{ ...sharedProps.style, opacity: disabled ? 0.5 : 1, cursor: disabled ? 'not-allowed' : 'pointer' }}>
       {children}
     </button>
   )

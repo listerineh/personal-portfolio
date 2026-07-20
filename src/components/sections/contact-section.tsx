@@ -5,18 +5,14 @@ import { useTranslations } from 'next-intl';
 import { z } from "zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Mail, MessageSquare, User } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { submitContactForm } from "@/lib/actions";
-import { SectionWrapper } from '@/components/common/section-wrapper';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { useToast } from "@/hooks/use-toast";
 import { useGSAP } from '@/hooks/use-gsap';
 import type { ContactFormData } from "@/types";
+import { SectionLabel, Title, Input, Textarea, FormField, Button } from '@/components/ds';
 
 export function ContactSection() {
   const t = useTranslations('contact');
@@ -105,110 +101,84 @@ export function ContactSection() {
   };
 
   return (
-    <SectionWrapper id="contact" title={t('title')} badge={t('badge')} className="bg-background">
-      <div className="max-w-2xl mx-auto">
-        {/* Description */}
-        <div className="text-center mb-12">
-          <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+    <section id="contact" className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+      {/* Dark tinted background */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to bottom, transparent, rgba(245,158,11,0.03), transparent)' }} />
+
+      <div className="max-w-2xl mx-auto relative z-10">
+        <div className="text-center mb-14">
+          <SectionLabel accent="amber" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
+          <Title as="h2" animate className="mb-6" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+            {t('title')}
+          </Title>
+          <p
+            ref={descriptionRef}
+            className="text-foreground/50 leading-relaxed"
+            style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)' }}
+          >
             {t('description')}
           </p>
         </div>
 
-        {/* Form */}
-        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Name field */}
-                <div ref={(el) => { fieldsRef.current[0] = el; }}>
-                  <Label htmlFor="name" className="flex items-center gap-2 mb-3 text-sm font-semibold text-foreground">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <User className="h-4 w-4 text-primary" />
-                    </div>
-                    {t('nameLabel')}
-                  </Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder={t('namePlaceholder')}
-                    {...register("name")}
-                    className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.name ? "border-destructive focus:border-destructive" : ""}`}
-                    aria-invalid={errors.name ? "true" : "false"}
-                  />
-                  {errors.name && (
-                    <p className="text-sm text-destructive mt-2 flex items-center gap-1.5">
-                      <span className="inline-block w-1 h-1 rounded-full bg-destructive" />
-                      {errors.name.message}
-                    </p>
-                  )}
-                </div>
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <div ref={(el) => { fieldsRef.current[0] = el; }}>
+            <FormField label={t('nameLabel')} error={errors.name?.message} required>
+              <Input
+                id="name"
+                type="text"
+                placeholder={t('namePlaceholder')}
+                accent="indigo"
+                error={!!errors.name}
+                aria-invalid={errors.name ? 'true' : 'false'}
+                {...register('name')}
+              />
+            </FormField>
+          </div>
 
-                {/* Email field */}
-                <div ref={(el) => { fieldsRef.current[1] = el; }}>
-                  <Label htmlFor="email" className="flex items-center gap-2 mb-3 text-sm font-semibold text-foreground">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Mail className="h-4 w-4 text-primary" />
-                    </div>
-                    {t('emailLabel')}
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder={t('emailPlaceholder')}
-                    {...register("email")}
-                    className={`h-12 text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all ${errors.email ? "border-destructive focus:border-destructive" : ""}`}
-                    aria-invalid={errors.email ? "true" : "false"}
-                  />
-                  {errors.email && (
-                    <p className="text-sm text-destructive mt-2 flex items-center gap-1.5">
-                      <span className="inline-block w-1 h-1 rounded-full bg-destructive" />
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
+          <div ref={(el) => { fieldsRef.current[1] = el; }}>
+            <FormField label={t('emailLabel')} error={errors.email?.message} required>
+              <Input
+                id="email"
+                type="email"
+                placeholder={t('emailPlaceholder')}
+                accent="indigo"
+                error={!!errors.email}
+                aria-invalid={errors.email ? 'true' : 'false'}
+                {...register('email')}
+              />
+            </FormField>
+          </div>
 
-                {/* Message field */}
-                <div ref={(el) => { fieldsRef.current[2] = el; }}>
-                  <Label htmlFor="message" className="flex items-center gap-2 mb-3 text-sm font-semibold text-foreground">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <MessageSquare className="h-4 w-4 text-primary" />
-                    </div>
-                    {t('messageLabel')}
-                  </Label>
-                  <Textarea
-                    id="message"
-                    placeholder={t('messagePlaceholder')}
-                    rows={6}
-                    {...register("message")}
-                    className={`text-base bg-background/50 backdrop-blur-sm border-border/50 focus:border-primary/50 transition-all resize-none ${errors.message ? "border-destructive focus:border-destructive" : ""}`}
-                    aria-invalid={errors.message ? "true" : "false"}
-                  />
-                  {errors.message && (
-                    <p className="text-sm text-destructive mt-2 flex items-center gap-1.5">
-                      <span className="inline-block w-1 h-1 rounded-full bg-destructive" />
-                      {errors.message.message}
-                    </p>
-                  )}
-                </div>
+          <div ref={(el) => { fieldsRef.current[2] = el; }}>
+            <FormField label={t('messageLabel')} error={errors.message?.message} required>
+              <Textarea
+                id="message"
+                placeholder={t('messagePlaceholder')}
+                rows={6}
+                accent="indigo"
+                error={!!errors.message}
+                aria-invalid={errors.message ? 'true' : 'false'}
+                {...register('message')}
+              />
+            </FormField>
+          </div>
 
-                {/* Submit button */}
-                <Button 
-                  type="submit" 
-                  size="lg"
-                  className="w-full h-12 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50" 
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      {t('submittingButton')}
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="mr-2 h-5 w-5" />
-                      {t('submitButton')}
-                    </>
-                  )}
-                </Button>
-              </form>
+          <Button
+            type="submit"
+            variant="primary"
+            accent="amber"
+            size="lg"
+            disabled={isSubmitting}
+            className="w-full justify-center"
+          >
+            {isSubmitting ? (
+              <><Loader2 className="w-4 h-4 animate-spin" />{t('submittingButton')}</>
+            ) : (
+              <><Mail className="w-4 h-4" />{t('submitButton')}</>
+            )}
+          </Button>
+        </form>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }

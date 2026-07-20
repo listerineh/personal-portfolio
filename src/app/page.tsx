@@ -22,19 +22,36 @@ if (typeof window !== 'undefined') {
 export default function HomePage() {
   const t = useTranslations('common');
   
-  // Handle hash navigation from other pages
   useHashScroll();
   
   useEffect(() => {
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 100);
-
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="homepage-page flex flex-col min-h-screen overflow-x-hidden">
+      <style>{`
+        .homepage-page {
+          background-color: #f5f4f0;
+          color: #111111;
+        }
+        .dark .homepage-page {
+          background-color: #080808;
+          color: #f0f0f0;
+        }
+        .grain-overlay {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+          background-repeat: repeat;
+          background-size: 200px 200px;
+        }
+      `}</style>
+
+      {/* Grain overlay */}
+      <div className="grain-overlay fixed inset-0 pointer-events-none z-[9998] opacity-[0.025] mix-blend-overlay" />
+
       <Header />
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-foreground">
         {t('skipToContent')}

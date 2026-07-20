@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button, Input } from '@/components/ds';
 import { Mail, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -56,18 +55,21 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
     return (
       <div className="w-full max-w-md">
         <form onSubmit={handleSubmit} className="flex gap-2">
-          <Input
-            type="email"
-            placeholder={t('compactPlaceholder')}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+          <div className="flex-1">
+            <Input
+              type="email"
+              placeholder={t('compactPlaceholder')}
+              accent="indigo"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <Button
+            type="submit"
+            variant="primary"
+            accent="indigo"
+            size="md"
             disabled={status === 'loading' || status === 'success'}
-            className="flex-1"
-          />
-          <Button 
-            type="submit" 
-            disabled={status === 'loading' || status === 'success'}
-            className="shrink-0"
           >
             {status === 'loading' ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -114,32 +116,24 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
               <Input
                 type="email"
                 placeholder={t('emailPlaceholder')}
+                accent="indigo"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={status === 'loading' || status === 'success'}
-                className="w-full h-12 sm:h-14 md:h-16 text-base sm:text-lg px-4 sm:px-6 bg-background/50 backdrop-blur-sm"
               />
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
+                variant="primary"
+                accent="amber"
                 size="lg"
                 disabled={status === 'loading' || status === 'success'}
-                className="w-full h-12 sm:h-14 text-sm sm:text-base font-semibold"
+                className="w-full justify-center"
               >
                 {status === 'loading' ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    {t('subscribingButton')}
-                  </>
+                  <><Loader2 className="h-5 w-5 animate-spin" />{t('subscribingButton')}</>
                 ) : status === 'success' ? (
-                  <>
-                    <CheckCircle2 className="mr-2 h-5 w-5" />
-                    {t('subscribedButton')}
-                  </>
+                  <><CheckCircle2 className="h-5 w-5" />{t('subscribedButton')}</>
                 ) : (
-                  <>
-                    <Mail className="mr-2 h-5 w-5" />
-                    {t('subscribeButton')}
-                  </>
+                  <><Mail className="h-5 w-5" />{t('subscribeButton')}</>
                 )}
               </Button>
 

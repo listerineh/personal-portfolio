@@ -5,7 +5,6 @@ import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from '@/context/locale-context';
 import { getBlogPosts } from '@/lib/data';
-import { Button } from '@/components/ui/button';
 
 interface RelatedPostsProps {
   currentSlug: string;

@@ -8,9 +8,7 @@ import type { BlogPost } from '@/types';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ds';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { BlogStructuredData } from '@/components/blog/blog-structured-data';
@@ -188,7 +186,9 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
         </div>
       </aside>
       <main className="pt-20 bg-background">
-        <Progress value={readingProgress} className="fixed top-20 left-0 right-0 h-1 z-50 rounded-none bg-primary/20 transition-all duration-150" />
+        <div className="fixed top-20 left-0 right-0 h-0.5 z-50" style={{ background: 'rgba(255,255,255,0.08)' }}>
+          <div className="h-full bg-primary transition-all duration-150" style={{ width: `${readingProgress}%` }} />
+        </div>
         <div className="container mx-auto px-4 py-12 md:py-16 xl:mr-[320px]">
           <div className="relative max-w-7xl mx-auto">
             <article key={post.slug} ref={contentRef} className="max-w-4xl">
@@ -208,7 +208,7 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
             />
           )}
 
-          <Separator className="my-6 md:my-12" />
+          <div className="my-6 md:my-12" style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
 
           <BlogPostContent ref={proseRef} content={post.content} />
 
@@ -218,13 +218,11 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
             url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`}
           />
 
-          <Separator className="my-12" />
+          <div className="my-12" style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
 
           <div className="text-center">
-            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              <Link href="/blog">
-                <ArrowLeft className="mr-2 h-4 w-4" /> {t('moreArticles')}
-              </Link>
+            <Button variant="secondary" accent="neutral" size="md" href="/blog">
+              <ArrowLeft className="w-4 h-4" /> {t('moreArticles')}
             </Button>
           </div>
 

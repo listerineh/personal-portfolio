@@ -4,13 +4,13 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { Music } from 'lucide-react';
+import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { socialLinks } from '@/lib/data';
 import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
-import { Button } from '@/components/ui/button';
+import { Pill } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -22,6 +22,7 @@ export function Footer() {
   const tCommon = useTranslations('common');
   const currentYear = new Date().getFullYear();
   const footerRef = useRef<HTMLElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const socialIconsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const copyrightRef = useRef<HTMLDivElement>(null);
@@ -35,6 +36,23 @@ export function Footer() {
     { label: t('blog'), href: '/blog' },
     { label: t('contact'), href: '/#contact' },
   ];
+
+  useEffect(() => {
+    if (!bgRef.current || !footerRef.current) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      gsap.to(bgRef.current, {
+        yPercent: 18,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (!footerRef.current) return;
@@ -162,139 +180,145 @@ export function Footer() {
   }, []);
 
   return (
-    <footer 
-      ref={footerRef}
-      className="relative bg-gradient-to-t from-secondary/60 via-secondary/40 to-secondary/20 text-secondary-foreground py-16 overflow-hidden backdrop-blur-sm"
-    >
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full blur-2xl" />
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-accent rounded-full blur-2xl" />
+    <footer ref={footerRef} className="relative overflow-hidden" style={{ background: '#080808' }}>
+
+      {/* Parallax photo background */}
+      <div ref={bgRef} className="absolute inset-0 scale-[1.18] origin-bottom pointer-events-none">
+        <Image
+          src="/images/sebas-playing-footer.webp"
+          alt=""
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(8,8,8,0.72) 0%, rgba(8,8,8,0.55) 40%, rgba(8,8,8,0.88) 100%)' }} />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <nav aria-label="Footer navigation" className="flex flex-col items-center gap-4">
-            <ul className="flex flex-wrap justify-center gap-6">
-              {navItems.map((link, index) => (
-                <li key={link.label}>
-                  <Link 
-                    ref={(el) => { navLinksRef.current[index] = el; }}
-                    href={link.href}
-                    className="relative text-sm font-medium hover:text-primary transition-colors group"
-                  >
-                    {link.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          
-          <div className="flex justify-center gap-4" aria-label="Social media links">
-            {socialLinks.map((link, index) => (
-              <Link 
-                key={link.name}
-                ref={(el) => { socialIconsRef.current[index] = el; }}
-                href={link.url} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                className="relative p-3 rounded-full bg-card/30 backdrop-blur-sm border border-border/50 text-secondary-foreground hover:text-primary hover:border-primary/50 transition-colors group"
+      {/* Newsletter section */}
+      <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 pt-28 md:pt-36 pb-20 md:pb-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-start">
+
+            {/* Left — copy */}
+            <div className="space-y-6">
+              <Pill variant="outline" accent="amber">{tNewsletter('badge')}</Pill>
+              <h2
+                className="font-headline font-black leading-[0.9] text-transparent bg-clip-text"
+                style={{
+                  fontSize: 'clamp(2.4rem, 6vw, 5rem)',
+                  backgroundImage: 'linear-gradient(90deg, #f59e0b, #fcd34d, #f59e0b)',
+                }}
               >
-                <link.icon className="w-5 h-5" />
-                <div className="absolute inset-0 bg-primary/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity blur-md" />
-              </Link>
-            ))}
-          </div>
-        </div>
-        
-        <div className="mt-24 mb-20">
-          <div className="max-w-5xl mx-auto relative px-4 sm:px-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-3xl opacity-20" />
-            
-            <div className="relative">
-              <div className="relative overflow-hidden rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-card/80 via-card/60 to-card/80 backdrop-blur-sm border border-border/30">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-50" />
-                
-                <div className="absolute inset-0 opacity-[0.02]" style={{
-                  backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-                  backgroundSize: '40px 40px'
-                }} />
-                
-                <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 p-6 sm:p-8 md:p-16">
-                  <div className="flex flex-col justify-center space-y-4 md:space-y-6">
-                    <div className="space-y-3 md:space-y-4">
-                      <div className="inline-flex">
-                        <span className="px-3 py-1 text-xs font-bold tracking-widest uppercase bg-primary/10 text-primary rounded-full border border-primary/20">
-                          {tNewsletter('badge')}
-                        </span>
-                      </div>
-                      
-                      <h3 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tight">
-                        {tNewsletter('title')}
-                        <br />
-                        <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                          {tNewsletter('titleGradient')}
-                        </span>
-                      </h3>
-                      
-                      <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                        {tNewsletter('description')}
-                      </p>
-                    </div>
-                    
-                    <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-2 md:pt-4">
-                      <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">{tNewsletter('monthlyLabel')}</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{tNewsletter('monthlyValue')}</div>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">{tNewsletter('spamLabel')}</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{tNewsletter('spamValue')}</div>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="text-xl sm:text-2xl font-bold text-foreground">{tNewsletter('freeLabel')}</div>
-                        <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wide">{tNewsletter('freeValue')}</div>
-                      </div>
-                    </div>
+                {tNewsletter('title')}{' '}
+                <span className="text-amber-400/60">{tNewsletter('titleGradient')}</span>
+              </h2>
+              <p className="text-white/45 leading-relaxed max-w-sm" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)' }}>
+                {tNewsletter('description')}
+              </p>
+              <div className="flex gap-8 pt-2">
+                {[
+                  { label: tNewsletter('monthlyLabel'), sub: tNewsletter('monthlyValue') },
+                  { label: tNewsletter('spamLabel'), sub: tNewsletter('spamValue') },
+                  { label: tNewsletter('freeLabel'), sub: tNewsletter('freeValue') },
+                ].map(({ label, sub }) => (
+                  <div key={label}>
+                    <div className="font-headline font-black text-2xl text-amber-400">{label}</div>
+                    <div className="text-[10px] text-white/30 uppercase tracking-[0.2em] mt-1">{sub}</div>
                   </div>
-                  
-                  <div className="flex items-center">
-                    <div className="w-full">
-                      <NewsletterSubscribe />
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="absolute top-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-tl-2xl sm:rounded-tl-[2rem]" />
-                <div className="absolute bottom-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-tl from-accent/10 to-transparent rounded-br-2xl sm:rounded-br-[2rem]" />
+                ))}
+              </div>
+            </div>
+
+            {/* Right — form */}
+            <div className="flex items-center">
+              <div className="w-full">
+                <NewsletterSubscribe />
               </div>
             </div>
           </div>
         </div>
-        
-        <div ref={copyrightRef} className="text-center mt-12 pt-8 border-t border-border/30">
-          <p className="text-sm font-medium mb-2">
-            &copy; {currentYear} Sebastian Alvarez. {tCommon('allRightsReserved')}
+      </div>
+
+      {/* Divider */}
+      <div className="relative z-10 mx-6 sm:mx-10 md:mx-16 lg:mx-24 h-px bg-white/8" />
+
+      {/* Big name + nav */}
+      <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-14 md:py-20">
+        <div className="max-w-6xl mx-auto">
+
+          {/* Giant name watermark */}
+          <div
+            className="font-headline font-black leading-none mb-12 text-white/[0.05] select-none"
+            style={{ fontSize: 'clamp(3.5rem, 12vw, 11rem)' }}
+          >
+            SEBASTIAN<br />ALVAREZ
+          </div>
+
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
+
+            {/* Nav links — 2 row grid */}
+            <nav aria-label="Footer navigation">
+              <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-4">
+                {navItems.map((link, index) => (
+                  <li key={link.label}>
+                    <Link
+                      ref={(el) => { navLinksRef.current[index] = el; }}
+                      href={link.href}
+                      className="font-headline text-xs tracking-[0.12em] uppercase text-white/35 hover:text-white transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    href="/why"
+                    className="font-headline text-xs tracking-[0.12em] uppercase transition-colors duration-200"
+                    style={{ color: 'rgba(29,185,84,0.45)' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = '#1DB954')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(29,185,84,0.45)')}
+                  >
+                    {t('whyListerineh')}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+
+            {/* Social icons */}
+            <div className="flex gap-3" aria-label="Social media links">
+              {socialLinks.map((link, index) => (
+                <Link
+                  key={link.name}
+                  ref={(el) => { socialIconsRef.current[index] = el; }}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${tCommon('visitSocial')} ${link.name}`}
+                  className="p-2.5 rounded-xl border border-white/10 text-white/30 hover:text-amber-400 hover:border-amber-400/30 transition-colors duration-200"
+                >
+                  <link.icon className="w-4 h-4" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div ref={copyrightRef} className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-5 border-t border-white/[0.06]">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="font-headline text-xs text-white/25">
+            &copy; {currentYear} Sebastian Alvarez — {tCommon('allRightsReserved')}
           </p>
-          <p className="text-xs text-muted-foreground flex items-center justify-center gap-2">
-            {tCommon('builtWith')} <span className="text-primary">❤️</span> {tCommon('builtWithTech')}
-          </p>
-          <p className="text-xs text-muted-foreground mt-2 flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-white/25">
             <CookieSettingsLink />
-            <span>•</span>
-            <Link href="/privacy" className="hover:text-primary transition-colors underline">
+            <Link href="/privacy" className="hover:text-amber-400 transition-colors">
               {t('privacyPolicy')}
             </Link>
-            <span>•</span>
-            <Link href="/terms" className="hover:text-primary transition-colors underline">
+            <Link href="/terms" className="hover:text-amber-400 transition-colors">
               {t('termsOfUse')}
             </Link>
-            <span>•</span>
-            <Link href="/why" className="hover:text-[#1DB954] transition-colors underline">
-              {t('whyListerineh')}
-            </Link>
-          </p>
+          </div>
         </div>
       </div>
     </footer>

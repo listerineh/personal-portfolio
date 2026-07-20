@@ -3,17 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search, X, Filter } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { Input, Pill, Dropdown, DropdownTrigger, DropdownContent, DropdownCheckboxItem, DropdownLabel, DropdownSeparator } from '@/components/ds';
 import type { BlogPost } from '@/types';
 
 interface BlogSearchProps {
@@ -79,13 +69,14 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
     <div className="space-y-4 mb-8">
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/40 pointer-events-none z-10" />
           <Input
             type="text"
             placeholder={t('searchPlaceholder')}
+            accent="indigo"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-10"
+            className="pl-9"
           />
           {searchQuery && (
             <button
@@ -97,64 +88,58 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
           )}
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="gap-2 shrink-0">
+        <Dropdown>
+          <DropdownTrigger asChild>
+            <button className="flex items-center gap-2 shrink-0 px-3 py-2 rounded-lg border border-foreground/15 text-sm font-medium text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-colors">
               <Filter className="h-4 w-4" />
               {t('tags')}
               {selectedTags.length > 0 && (
-                <Badge variant="secondary" className="ml-1 px-1.5 py-0 text-xs">
+                <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded-full bg-indigo-500/20 text-indigo-400">
                   {selectedTags.length}
-                </Badge>
+                </span>
               )}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>{t('filterByTags')}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            </button>
+          </DropdownTrigger>
+          <DropdownContent align="end" className="w-56">
+            <DropdownLabel>{t('filterByTags')}</DropdownLabel>
+            <DropdownSeparator className="h-px mx-2 my-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
             <div className="max-h-[300px] overflow-y-auto">
               {allTags.map(tag => (
-                <DropdownMenuCheckboxItem
+                <DropdownCheckboxItem
                   key={tag}
                   checked={selectedTags.includes(tag)}
                   onCheckedChange={() => toggleTag(tag)}
                 >
                   {tag}
-                </DropdownMenuCheckboxItem>
+                </DropdownCheckboxItem>
               ))}
             </div>
             {selectedTags.length > 0 && (
               <>
-                <DropdownMenuSeparator />
+                <DropdownSeparator className="h-px mx-2 my-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
                 <div className="px-2 py-1.5">
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                  <button
                     onClick={clearFilters}
-                    className="w-full text-xs"
+                    className="w-full text-xs px-2 py-1.5 rounded text-foreground/50 hover:text-foreground hover:bg-foreground/5 transition-colors"
                   >
                     {t('clearAll')}
-                  </Button>
+                  </button>
                 </div>
               </>
             )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </DropdownContent>
+        </Dropdown>
       </div>
 
       {selectedTags.length > 0 && (
         <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-xs text-muted-foreground">{t('filteringBy')}</span>
+          <span className="text-xs text-foreground/40">{t('filteringBy')}</span>
           {selectedTags.map(tag => (
-            <Badge
-              key={tag}
-              variant="secondary"
-              className="cursor-pointer hover:bg-destructive/20 transition-colors gap-1"
-              onClick={() => toggleTag(tag)}
-            >
-              {tag}
-              <X className="h-3 w-3" />
-            </Badge>
+            <button key={tag} onClick={() => toggleTag(tag)} className="flex items-center gap-1">
+              <Pill variant="solid" accent="indigo">
+                {tag} <X className="h-3 w-3" />
+              </Pill>
+            </button>
           ))}
         </div>
       )}

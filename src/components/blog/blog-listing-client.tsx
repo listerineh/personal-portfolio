@@ -1,17 +1,12 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import Image from "next/image";
-import Link from 'next/link';
-import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
-import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
-import { getBlogImageBlur } from '@/lib/image-blur';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
 import { BlogSearch } from '@/components/blog/blog-search';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { SectionHeader, BlogCard } from '@/components/ds';
 import type { BlogPost } from '@/types';
 
 if (typeof window !== 'undefined') {
@@ -27,181 +22,71 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
   const t = useTranslations('blog');
   const tCommon = useTranslations('common');
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
 
   useEffect(() => {
-    if (titleRef.current) {
-      gsap.fromTo(titleRef.current, 
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: 'power2.out',
-        }
+    if (headerRef.current) {
+      gsap.fromTo(headerRef.current,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' }
       );
     }
-
-    if (descriptionRef.current) {
-      gsap.fromTo(descriptionRef.current,
-        { y: 15, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.5,
-          delay: 0.1,
-          ease: 'power2.out',
-        }
-      );
-    }
-
     if (searchRef.current) {
       gsap.fromTo(searchRef.current,
-        { y: 15, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.5,
-          delay: 0.15,
-          ease: 'power2.out',
-        }
+        { y: 12, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, delay: 0.12, ease: 'power2.out' }
       );
     }
-
     cardsRef.current.forEach((card, index) => {
       if (!card) return;
-
       gsap.fromTo(card,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.4,
-          delay: Math.min(index * 0.05, 0.3),
-          ease: 'power2.out',
-        }
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.4, delay: Math.min(index * 0.05, 0.3), ease: 'power2.out' }
       );
     });
   }, []);
 
   return (
-    <section className="py-16 md:py-24 bg-background/10">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 ref={titleRef} className="text-4xl md:text-5xl font-headline font-bold mb-4 text-primary">
-            {t('pageTitle')}
-          </h1>
-          <p ref={descriptionRef} className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            {t('pageDescription')}
-          </p>
+    <section className="py-20 md:py-32 px-6 md:px-10">
+      <div className="max-w-6xl mx-auto">
+        <div ref={headerRef} className="mb-8">
+          <SectionHeader
+            label={t('badge')}
+            labelAccent="indigo"
+            title={t('pageTitle')}
+            description={t('pageDescription')}
+            align="center"
+            className="mb-0"
+          />
         </div>
-        
+
         <div ref={searchRef} className="max-w-3xl mx-auto mb-12">
           <BlogSearch posts={posts} onFilteredPostsChange={setFilteredPosts} />
         </div>
 
         {filteredPosts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-xl text-muted-foreground">{t('noArticles')}</p>
-            <p className="text-sm text-muted-foreground mt-2">{t('tryAdjusting')}</p>
+          <div className="text-center py-16">
+            <p className="text-foreground/50" style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)' }}>{t('noArticles')}</p>
+            <p className="text-sm text-foreground/35 mt-2">{t('tryAdjusting')}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPosts.map((post, index) => (
               <div
                 key={post.slug}
                 ref={(el) => { cardsRef.current[index] = el; }}
-                className="group relative"
               >
-                {/* Ambient glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                
-                <Link href={`/blog/${post.slug}`} className="block h-full">
-                  <Card className="relative overflow-hidden bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-sm border-border/40 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full rounded-2xl">
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40 pointer-events-none" />
-                    
-                    {/* Grid pattern */}
-                    <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
-                      backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-                      backgroundSize: '24px 24px'
-                    }} />
-                    
-                    {/* Corner highlights */}
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/10 to-transparent rounded-tr-2xl pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-2xl pointer-events-none" />
-                    
-                    {/* Image container */}
-                    {post.imageUrl && (
-                      <div className="relative w-full h-64 overflow-hidden rounded-t-2xl">
-                        <Image
-                          src={post.imageUrl}
-                          alt={post.title}
-                          data-ai-hint={post.imageAiHint || 'blog post image'}
-                          className="transition-transform duration-500 group-hover:scale-110"
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          loading="lazy"
-                          placeholder="blur"
-                          blurDataURL={getBlogImageBlur()}
-                          style={{
-                            objectFit: "cover"
-                          }} />
-                        {/* Image overlay gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-60" />
-                      </div>
-                    )}
-                    
-                    <div className="relative flex flex-col flex-grow">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-xl font-headline font-bold group-hover:text-primary transition-colors">
-                          {post.title}
-                        </CardTitle>
-                        <div className="flex flex-wrap items-center gap-4 pt-2">
-                          <div className="relative group/badge">
-                            <div className="absolute inset-0 bg-primary/20 blur-md rounded-lg opacity-0 group-hover/badge:opacity-100 transition-opacity" />
-                            <div className="relative flex items-center gap-1.5 text-muted-foreground group-hover/badge:text-primary transition-colors">
-                              <CalendarDays className="h-3.5 w-3.5" />
-                              <span className="text-xs font-medium">{formatDate(post.date)}</span>
-                            </div>
-                          </div>
-                          <div className="relative group/badge">
-                            <div className="absolute inset-0 bg-accent/20 blur-md rounded-lg opacity-0 group-hover/badge:opacity-100 transition-opacity" />
-                            <div className="relative flex items-center gap-1.5 text-muted-foreground group-hover/badge:text-accent transition-colors">
-                              <Clock className="h-3.5 w-3.5" />
-                              <span className="text-xs font-medium">{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      
-                      <CardContent className="flex-grow pb-4">
-                        <CardDescription className="text-sm leading-relaxed line-clamp-3">
-                          {post.excerpt}
-                        </CardDescription>
-                      </CardContent>
-                      
-                      <CardFooter className="pt-4 border-t border-border/30">
-                        <div className="flex items-center text-sm font-semibold text-primary group-hover:text-accent transition-colors">
-                          {tCommon('readMore')}
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </CardFooter>
-                    </div>
-                    
-                  </Card>
-                </Link>
+                <BlogCard
+                  title={post.title}
+                  slug={post.slug}
+                  excerpt={post.excerpt}
+                  date={post.date}
+                  tags={post.tags}
+                  coverImage={post.imageUrl}
+                  readMoreLabel={tCommon('readMore')}
+                />
               </div>
             ))}
           </div>

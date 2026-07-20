@@ -3,7 +3,6 @@
 import { useRef, useEffect } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { gsap } from 'gsap';
-import { Button } from '@/components/ui/button';
 import { useTheme } from '@/context/theme-context';
 
 interface ThemeToggleButtonProps {
@@ -88,13 +87,11 @@ export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
   };
 
   return (
-    <Button
+    <button
       ref={buttonRef}
-      variant="ghost"
-      size="icon"
       onClick={handleClick}
       aria-label="Toggle theme"
-      className={className}
+      className={`p-2 rounded-lg transition-colors hover:bg-foreground/8 ${className ?? ''}`}
     >
       <div ref={iconRef}>
         {theme === 'dark' ? (
@@ -103,6 +100,6 @@ export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
           <Moon className="h-5 w-5" />
         )}
       </div>
-    </Button>
+    </button>
   );
 }

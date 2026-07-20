@@ -4,27 +4,22 @@ import Link from 'next/link';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Menu, X, CodeXml, Mail, Github, Linkedin, Twitter, Music } from 'lucide-react';
+import { Menu, X, Music } from 'lucide-react';
 import { gsap } from 'gsap';
-import { socialLinks } from '@/lib/data';
-import { Button } from '@/components/ui/button';
 import { ThemeToggleButton, LanguageSwitcher } from '@/components/common';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useTheme } from '@/context/theme-context';
 import { useLocale } from '@/context/locale-context';
-import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
+import { locales } from '@/i18n/config';
 import { cn } from '@/lib/utils';
 import { throttle } from '@/lib/performance-utils';
 
 export function Header() {
   const t = useTranslations('nav');
   const tCommon = useTranslations('common');
-  const tTheme = useTranslations('theme');
   const { locale, setLocale } = useLocale();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
   
@@ -212,32 +207,33 @@ export function Header() {
     }
   };
 
+  const atTop = !isScrolled;
+
   return (
-    <header 
+    <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${isScrolled ? 'bg-background/60 backdrop-blur-sm shadow-sm border-b border-border/30' : 'bg-transparent'}`}
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        atTop
+          ? 'bg-transparent'
+          : 'bg-[#f5f4f0]/92 dark:bg-[#080808]/92 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.06]'
+      )}
     >
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link 
+      <div className="px-6 sm:px-10 md:px-16 lg:px-24 h-20 flex items-center justify-between">
+
+        {/* Logo */}
+        <Link
           ref={logoRef}
-          href="/" 
-          className="flex items-center gap-2 font-headline font-bold text-primary transition-colors group" 
+          href="/"
           onClick={closeMobileMenu}
+          className="font-headline font-black text-amber-400 tracking-tight leading-none select-none"
+          style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)' }}
         >
-          <div className="relative">
-            <CodeXml className="w-10 h-10 md:w-6 md:h-6" />
-            <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-          </div>
-          <span className="text-xs sm:text-sm md:text-lg hidden lg:block">Sebastian Alvarez</span>
+          S·A
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-6" aria-label="Main navigation">
-          <Link href="/why" className="flex items-center h-full">
-            <Button size="sm" variant="ghost" className="text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-300 flex items-center gap-1.5 px-2 py-1 dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5">
-              <Music className="w-3.5 h-3.5" />
-              <span className="text-xs font-medium">{t('whyListerineh')}</span>
-            </Button>
-          </Link>
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
           {navItems.map((item, index) => (
             <Link
               key={item.label}
@@ -247,13 +243,11 @@ export function Header() {
                 if (item.href.startsWith('/#')) {
                   e.preventDefault();
                   const sectionId = item.href.substring(2);
-                  
                   if (pathname === '/') {
                     const section = document.getElementById(sectionId);
                     if (section) {
                       const headerOffset = 100;
-                      const elementPosition = section.getBoundingClientRect().top;
-                      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                      const offsetPosition = section.getBoundingClientRect().top + window.scrollY - headerOffset;
                       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                     }
                   } else {
@@ -261,151 +255,134 @@ export function Header() {
                   }
                 }
               }}
-              aria-current={pathname === item.href ? "page" : undefined}
-              className="relative text-foreground hover:text-primary font-medium transition-colors group"
+              aria-current={pathname === item.href ? 'page' : undefined}
+              className={cn(
+                'font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
+                atTop
+                  ? 'text-white/55 hover:text-white'
+                  : 'text-foreground/55 hover:text-foreground'
+              )}
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
             </Link>
           ))}
-          <div className="flex items-center gap-0.5 ml-4 p-1 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
-            <LanguageSwitcher />
-            <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
-          </div>
+          <Link
+            href="/why"
+            className={cn(
+              'flex items-center gap-1.5 font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
+              atTop ? 'text-[#1DB954]/60 hover:text-[#1DB954]' : 'text-[#1DB954]/60 hover:text-[#1DB954]'
+            )}
+          >
+            <Music className="w-3 h-3" />
+            {t('whyListerineh')}
+          </Link>
         </nav>
 
-        <div className="md:hidden flex items-center gap-2">
-          <div className="flex items-center gap-0.5 p-0.5 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
-            <LanguageSwitcher />
-            <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent [&_svg]:w-5 [&_svg]:h-5" />
-          </div>
-          <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Toggle mobile menu" className="text-foreground hover:text-primary hover:bg-transparent [&_svg]:w-6 [&_svg]:h-6">
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
+        {/* Right controls */}
+        <div className="hidden md:flex items-center gap-1">
+          <LanguageSwitcher />
+          <ThemeToggleButton className={cn(
+            'transition-colors',
+            atTop ? 'text-white/55 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
+          )} />
+        </div>
+
+        {/* Mobile: controls + burger */}
+        <div className="md:hidden flex items-center gap-1">
+          <LanguageSwitcher />
+          <ThemeToggleButton className={cn(
+            'transition-colors [&_svg]:w-5 [&_svg]:h-5',
+            atTop ? 'text-white/55 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
+          )} />
+          <button
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+            className={cn(
+              'p-2 rounded-lg transition-colors',
+              atTop ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-foreground/70 hover:text-foreground hover:bg-foreground/8'
+            )}
+          >
+            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
         </div>
       </div>
 
+      {/* Mobile menu — always cinematic dark */}
       {isMobile && isMobileMenuOpen && (
-        <div ref={mobileMenuRef} className="md:hidden fixed inset-0 z-[60] bg-background/95 backdrop-blur-md" style={{ height: '100dvh' }}>
-          <div className="flex flex-col h-full">
-            {/* Header with close button - Fixed */}
-            <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between p-6 border-b border-border/20">
-              <span className="text-2xl font-headline font-bold text-primary">{tCommon('menu')}</span>
-                <button
-                onClick={closeMobileMenu}
-                className="p-2 text-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
-                aria-label={tCommon('close')}
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
+        <div
+          ref={mobileMenuRef}
+          className="md:hidden fixed inset-0 z-[60] flex flex-col"
+          style={{ height: '100dvh', background: '#080808' }}
+        >
+          {/* Top bar */}
+          <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between px-6 py-5">
+            <span className="font-headline font-black text-amber-400 text-xl">S·A</span>
+            <button
+              onClick={closeMobileMenu}
+              className="p-2 text-white/40 hover:text-white transition-colors rounded-lg"
+              aria-label={tCommon('close')}
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
 
-            {/* Scrollable content - Navigation items and Social links */}
-            <div className="flex-1 overflow-y-auto">
-              {/* Navigation items */}
-              <nav className="py-8 px-4" aria-label="Mobile navigation">
-                <ul className="space-y-3">
-                  {navItems.map((item, index) => (
-                    <li key={item.label} ref={(el) => { navItemsRef.current[index] = el; }}>
-                      <Link
-                        href={item.href}
-                        onClick={(e) => handleNavLinkClick(e, item.href)}
-                        className="flex items-center px-6 py-4 rounded-lg text-foreground hover:bg-primary/10 hover:text-primary transition-all duration-200"
-                      >
-                        <span className="font-semibold text-xl">{item.label}</span>
-                      </Link>
-                    </li>
-                  ))}
-                  <li>
-                    <Link
-                      href="/why"
-                      onClick={(e) => handleNavLinkClick(e, '/why')}
-                      className="flex items-center gap-2 px-6 py-4 rounded-lg text-[#1DB954]/60 hover:text-[#1DB954] hover:bg-[#1DB954]/5 transition-all duration-200 font-medium dark:text-[#1DB954]/60 dark:hover:text-[#1DB954] dark:hover:bg-[#1DB954]/5"
-                    >
-                      <Music className="w-4 h-4" />
-                      {t('whyListerineh')}
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
+          {/* Nav items */}
+          <nav className="flex-1 overflow-y-auto px-6 pt-8" aria-label="Mobile navigation">
+            <ul className="space-y-1">
+              {navItems.map((item, index) => (
+                <li key={item.label} ref={(el) => { navItemsRef.current[index] = el; }}>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => handleNavLinkClick(e, item.href)}
+                    className="block py-4 font-headline font-black text-white/40 hover:text-white transition-colors duration-200"
+                    style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', lineHeight: 1 }}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/why"
+                  onClick={(e) => handleNavLinkClick(e, '/why')}
+                  className="flex items-center gap-2 py-4 font-headline font-black transition-colors duration-200"
+                  style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', lineHeight: 1, color: 'rgba(29,185,84,0.4)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = '#1DB954')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(29,185,84,0.4)')}
+                >
+                  <Music className="w-6 h-6 shrink-0" />
+                  {t('whyListerineh')}
+                </Link>
+              </li>
+            </ul>
 
-              {/* Settings and Social links */}
-              <div className="px-4 py-6 border-t border-border/20 space-y-6">
-                {/* Settings Section */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">{tCommon('settings')}</h3>
-                  <div className="flex flex-col gap-3">
-                    {/* Language Selector */}
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{localeFlags[locale]}</span>
-                        <div>
-                          <p className="text-sm font-medium text-foreground">{tCommon('language')}</p>
-                          <p className="text-xs text-muted-foreground">{localeNames[locale]}</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        {locales.map((loc) => (
-                          <button
-                            key={loc}
-                            onClick={() => {
-                              if (loc !== locale) {
-                                setLocale(loc);
-                              }
-                            }}
-                            className={cn(
-                              "px-3 py-1.5 rounded-md text-xs font-medium transition-all",
-                              locale === loc
-                                ? "bg-primary text-primary-foreground shadow-sm"
-                                : "bg-card/50 text-muted-foreground hover:bg-card hover:text-foreground"
-                            )}
-                          >
-                            {loc.toUpperCase()}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* Theme Toggle */}
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-card/30 backdrop-blur-sm border border-border/50">
-                      <div className="flex flex-col gap-1">
-                        <p className="text-sm font-medium text-foreground">{tCommon('theme')}</p>
-                        <p className="text-xs text-muted-foreground">{theme === 'dark' ? tTheme('lightMode') : tTheme('darkMode')}</p>
-                      </div>
-                      <ThemeToggleButton className="text-foreground hover:text-primary hover:bg-transparent" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Follow Me Section */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">{tCommon('followMe')}</h3>
-                  <div className="flex gap-3 flex-wrap" aria-label="Social media links">
-                    {socialLinks.map((link, index) => (
-                      <Link
-                        key={link.name}
-                        ref={(el) => { socialLinksRef.current[index] = el; }}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Visit ${link.name}`}
-                        className="relative p-3 rounded-full bg-card/30 backdrop-blur-sm border border-border/50 text-secondary-foreground hover:text-primary hover:border-primary/50 transition-colors group"
-                      >
-                        <link.icon className="w-5 h-5" />
-                        <div className="absolute inset-0 bg-primary/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity blur-md" />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+            {/* Bottom controls */}
+            <div className="mt-16 pb-8 flex items-center justify-between">
+              <div className="flex gap-2">
+                {locales.map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => { if (loc !== locale) setLocale(loc); }}
+                    className={cn(
+                      'px-3 py-1.5 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all',
+                      locale === loc
+                        ? 'bg-amber-400 text-black'
+                        : 'text-white/30 hover:text-white border border-white/10 hover:border-white/30'
+                    )}
+                  >
+                    {loc.toUpperCase()}
+                  </button>
+                ))}
               </div>
+              <ThemeToggleButton className="text-white/40 hover:text-white hover:bg-white/10" />
             </div>
+          </nav>
 
-            {/* Footer - Fixed */}
-            <footer className="flex-shrink-0 px-4 py-4 text-center border-t border-border/20">
-              <p className="text-xs text-muted-foreground">
-                © {new Date().getFullYear()} Sebastian Alvarez. All rights reserved.
-              </p>
-            </footer>
+          {/* Footer */}
+          <div className="flex-shrink-0 px-6 py-4 border-t border-white/5">
+            <p className="text-xs text-white/20 font-headline">
+              © {new Date().getFullYear()} Sebastian Alvarez
+            </p>
           </div>
         </div>
       )}

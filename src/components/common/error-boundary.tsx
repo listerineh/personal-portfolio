@@ -1,7 +1,7 @@
 'use client';
 
 import { Component, ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ds';
 import { AlertTriangle } from 'lucide-react';
 
 interface ErrorBoundaryProps {
@@ -61,16 +61,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             )}
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                onClick={() => this.setState({ hasError: false, error: null })}
-                variant="outline"
-              >
+              <Button variant="secondary" accent="neutral" size="md" onClick={() => this.setState({ hasError: false, error: null })}>
                 Try again
               </Button>
-              <Button
-                onClick={() => window.location.href = '/'}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-              >
+              <Button variant="primary" accent="indigo" size="md" onClick={() => { window.location.href = '/'; }}>
                 Go to homepage
               </Button>
             </div>

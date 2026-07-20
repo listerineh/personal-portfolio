@@ -6,7 +6,6 @@ import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { Button } from '@/components/ui/button';
 import { rafThrottle } from '@/lib/performance-utils';
 
 if (typeof window !== 'undefined') {
@@ -140,17 +139,17 @@ export function BackToTopButton() {
   };
 
   return (
-    <Button
+    <button
       ref={buttonRef}
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 z-40 h-12 w-12 rounded-full shadow-lg p-0 opacity-0 scale-0 transition-all duration-300 font-bold ${
-        isOnMusicPage
-          ? 'bg-[#1DB954] hover:bg-[#1ed760] text-black dark:bg-[#1DB954] dark:hover:bg-[#1ed760] dark:text-black'
-          : 'bg-primary hover:bg-primary/90 text-primary-foreground dark:bg-primary dark:hover:bg-primary/90 dark:text-primary-foreground'
-      }`}
       aria-label="Back to top"
+      className={`fixed bottom-8 right-8 z-40 h-11 w-11 rounded-full shadow-xl flex items-center justify-center opacity-0 scale-0 font-bold border-0 transition-colors duration-200 ${
+        isOnMusicPage
+          ? 'bg-[#1DB954] hover:bg-[#1ed760] text-black'
+          : 'bg-amber-400 hover:bg-amber-300 text-black'
+      }`}
     >
       <ArrowUp className="h-5 w-5" />
-    </Button>
+    </button>
   );
 }

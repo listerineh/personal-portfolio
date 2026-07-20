@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ds';
 import { AlertTriangle } from 'lucide-react';
 
 export default function Error({
@@ -45,16 +45,10 @@ export default function Error({
         )}
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button
-            onClick={reset}
-            variant="outline"
-          >
+          <Button variant="secondary" accent="neutral" size="md" onClick={reset}>
             {t('tryAgain')}
           </Button>
-          <Button
-            onClick={() => window.location.href = '/'}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
-          >
+          <Button variant="primary" accent="indigo" size="md" onClick={() => { window.location.href = '/'; }}>
             {t('goHome')}
           </Button>
         </div>

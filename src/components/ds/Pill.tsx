@@ -26,7 +26,7 @@ const outlineMap: Record<Accent, string> = {
 }
 
 export function Pill({ variant = 'solid', accent = 'neutral', color, className, children }: PillProps) {
-  const base = 'inline-block px-3 py-1 rounded-full text-[10px] font-headline font-semibold tracking-[0.25em] uppercase'
+  const base = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-headline font-semibold tracking-[0.25em] uppercase'
 
   if (color) {
     const inlineStyle: React.CSSProperties =

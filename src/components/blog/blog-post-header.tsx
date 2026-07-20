@@ -1,11 +1,9 @@
 'use client';
 
 import { forwardRef } from 'react';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import type { BlogPost } from '@/types';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Pill, Button } from '@/components/ds';
 import { ShareButtons } from './share-buttons';
 import { BlogViews } from './blog-views';
 import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
@@ -23,10 +21,8 @@ export const BlogPostHeader = forwardRef<HTMLElement, BlogPostHeaderProps>(
 
     return (
       <header ref={ref} className="mb-6 md:mb-12">
-        <Button asChild variant="ghost" className="mb-4 md:mb-6 text-accent hover:text-primary pl-0">
-          <Link href="/blog">
-            <ArrowLeft className="mr-2 h-4 w-4" /> {t('backToBlog')}
-          </Link>
+        <Button variant="ghost" accent="neutral" size="sm" href="/blog" className="mb-4 md:mb-6">
+          <ArrowLeft className="w-4 h-4" /> {t('backToBlog')}
         </Button>
         
         <div className="flex flex-col gap-4 mb-6">
@@ -62,9 +58,7 @@ export const BlogPostHeader = forwardRef<HTMLElement, BlogPostHeaderProps>(
             <div className="flex flex-wrap items-center gap-2">
               <Tag className="mr-1.5 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
               {post.tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="font-normal text-xs sm:text-sm px-2 sm:px-3 py-1">
-                  {tag}
-                </Badge>
+                <Pill key={tag} variant="outline" accent="indigo">{tag}</Pill>
               ))}
             </div>
           )}

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ds';
 import { useToast } from '@/hooks/use-toast';
 
 export function NewsletterSignup() {
@@ -73,8 +73,10 @@ export function NewsletterSignup() {
             </div>
             <Button
               type="submit"
+              variant="primary"
+              accent="amber"
+              size="md"
               disabled={loading || !email}
-              className="px-6"
             >
               {loading ? t('subscribing') : t('subscribe')}
             </Button>

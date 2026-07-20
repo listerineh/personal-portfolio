@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ds';
 import { Home, ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
@@ -27,17 +27,13 @@ export default function NotFound() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-          <Button asChild variant="outline" size="lg">
-            <Link href="javascript:history.back()">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {t('goBack')}
-            </Link>
+          <Button variant="secondary" accent="neutral" size="md" onClick={() => history.back()}>
+            <ArrowLeft className="w-4 h-4" />
+            {t('goBack')}
           </Button>
-          <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            <Link href="/">
-              <Home className="mr-2 h-4 w-4" />
-              {t('goHome')}
-            </Link>
+          <Button variant="primary" accent="indigo" size="md" href="/">
+            <Home className="w-4 h-4" />
+            {t('goHome')}
           </Button>
         </div>
 

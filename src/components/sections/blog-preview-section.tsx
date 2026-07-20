@@ -2,19 +2,13 @@
 
 import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import Image from "next/image";
-import Link from 'next/link';
-import { ArrowRight, CalendarDays, Clock } from 'lucide-react';
-import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
-import { getBlogImageBlur } from '@/lib/image-blur';
+import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getBlogPosts } from '@/lib/data';
 import { useLocale } from '@/context/locale-context';
-import { SectionWrapper } from '@/components/common';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { useGSAP } from '@/hooks/use-gsap';
+import { SectionLabel, Title, BlogCard, Button } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -26,7 +20,7 @@ export function BlogPreviewSection() {
   const { locale } = useLocale();
   const allPosts = getBlogPosts(locale);
   const displayedPosts = allPosts.slice(0, 3);
-  const cardsRef = useRef<(HTMLElement | null)[]>([]);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const buttonRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -34,133 +28,76 @@ export function BlogPreviewSection() {
       if (card) {
         gsap.from(card, {
           opacity: 0,
+          y: 20,
           duration: 0.5,
           delay: index * 0.1,
           ease: 'power2.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-          },
+          scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' },
         });
       }
     });
-
     if (buttonRef.current) {
       gsap.from(buttonRef.current, {
         opacity: 0,
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power2.out',
-        scrollTrigger: {
-          trigger: buttonRef.current,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        },
+        scrollTrigger: { trigger: buttonRef.current, start: 'top 90%', toggleActions: 'play none none none' },
       });
     }
   }, [displayedPosts.length]);
 
   return (
-    <SectionWrapper id="blog" title={t('title')} badge={t('badge')} className="bg-gradient-to-t from-background via-background/90 to-background/0">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {displayedPosts.map((post, index) => (
-          <article
-            key={post.slug}
-            ref={(el) => { cardsRef.current[index] = el; }}
-            className="group relative"
-          >
-            {/* Ambient glow */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-            
-            {/* Card */}
-            <Link href={`/blog/${post.slug}`} className="block h-full">
-              <Card className="relative overflow-hidden bg-gradient-to-br from-card/70 via-card/50 to-card/70 backdrop-blur-sm border-border/40 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full rounded-2xl">
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-40 pointer-events-none" />
-                
-                {/* Grid pattern */}
-                <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
-                  backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)',
-                  backgroundSize: '24px 24px'
-                }} />
-                
-                {/* Image container */}
-                {post.imageUrl && (
-                  <div className="relative w-full h-64 overflow-hidden rounded-t-2xl">
-                    <Image
-                      src={post.imageUrl}
-                      alt={post.title}
-                      data-ai-hint={post.imageAiHint || 'blog post image'}
-                      className="blog-image transition-transform duration-500"
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      loading="lazy"
-                      placeholder="blur"
-                      blurDataURL={getBlogImageBlur()}
-                      style={{
-                        objectFit: "cover"
-                      }} />
-                    {/* Image overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-60" />
-                  </div>
-                )}
-                
-                {/* Content */}
-                <div className="relative flex flex-col flex-grow">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-xl font-headline font-bold group-hover:text-primary transition-colors">
-                      {post.title}
-                    </CardTitle>
-                    <div className="flex flex-wrap items-center gap-4 pt-2">
-                      <div className="relative group/badge">
-                        <div className="absolute inset-0 bg-primary/20 blur-md rounded-lg opacity-0 group-hover/badge:opacity-100 transition-opacity" />
-                        <div className="relative flex items-center gap-1.5 text-muted-foreground group-hover/badge:text-primary transition-colors">
-                          <CalendarDays className="h-3.5 w-3.5" />
-                          <time dateTime={post.date} className="text-xs font-medium">{post.date}</time>
-                        </div>
-                      </div>
-                      <div className="relative group/badge">
-                        <div className="absolute inset-0 bg-accent/20 blur-md rounded-lg opacity-0 group-hover/badge:opacity-100 transition-opacity" />
-                        <div className="relative flex items-center gap-1.5 text-muted-foreground group-hover/badge:text-accent transition-colors">
-                          <Clock className="h-3.5 w-3.5" />
-                          <span className="text-xs font-medium">{formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="flex-grow pb-4">
-                    <CardDescription className="text-sm leading-relaxed line-clamp-3">
-                      {post.excerpt}
-                    </CardDescription>
-                  </CardContent>
-                  
-                  <CardFooter className="pt-4 border-t border-border/30">
-                    <div className="flex items-center text-sm font-semibold text-primary group-hover:text-accent transition-colors">
-                      {tCommon('readMore')}
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </CardFooter>
-                </div>
-                
-                {/* Corner highlights */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/10 to-transparent rounded-tr-2xl pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent/10 to-transparent rounded-bl-2xl pointer-events-none" />
-              </Card>
-            </Link>
-          </article>
-        ))}
-      </div>
-      {allPosts.length > 3 && (
-         <div ref={buttonRef} className="text-center mt-12">
-            <Button asChild variant="outline" size="lg" className="border-primary/50 text-primary hover:bg-primary/10 hover:border-primary hover:shadow-lg transition-all">
-              <Link href="/blog">
-                {t('viewAllPosts')}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+    <section id="blog" className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <SectionLabel accent="indigo" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
+        <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+          {t('title')}
+        </Title>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {displayedPosts.map((post, index) => (
+            <div
+              key={post.slug}
+              className="h-full"
+              ref={(el) => { cardsRef.current[index] = el; }}
+            >
+              <BlogCard
+                title={post.title}
+                slug={post.slug}
+                excerpt={post.excerpt}
+                date={post.date}
+                tags={post.tags}
+                coverImage={post.imageUrl}
+                readMoreLabel={tCommon('readMore')}
+              />
+            </div>
+          ))}
+        </div>
+        {allPosts.length > 3 && (
+          <div ref={buttonRef} className="flex justify-start mt-12 reveal-up">
+            <Button
+              href="/blog"
+              variant="ghost"
+              accent="neutral"
+              size="md"
+              className="border border-foreground/15 hover:border-foreground/30"
+            >
+              {t('viewAllPosts')}
+              <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
-      )}
-    </SectionWrapper>
+        )}
+      </div>
+
+      {/* Watermark */}
+      <div
+        className="absolute right-[-2vw] top-1/3 font-headline font-black pointer-events-none select-none leading-none"
+        style={{
+          fontSize: 'clamp(8rem, 20vw, 18rem)',
+          color: 'rgba(129,140,248,0.04)',
+        }}
+      >
+        BG
+      </div>
+    </section>
   );
 }

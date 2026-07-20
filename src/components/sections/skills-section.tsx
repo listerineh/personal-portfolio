@@ -1,13 +1,13 @@
 'use client';
 
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { skills } from '@/lib/data';
 import { shuffleArray } from '@/lib/utils';
-import { SectionWrapper } from '@/components/common/section-wrapper';
 import { useGSAP } from '@/hooks/use-gsap';
+import { SectionLabel, Title } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -150,16 +150,24 @@ export function SkillsSection() {
 
   if (!mounted) {
     return (
-      <SectionWrapper title={t('title')} id='skills' className="bg-secondary/85" isInfinite>
+      <section id="skills" className="relative py-28 md:py-44 overflow-hidden">
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24 max-w-6xl mx-auto">
+          <SectionLabel accent="green" className="mb-8">{t('badge')}</SectionLabel>
+          <Title as="h2" animate style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>{t('title')}</Title>
+        </div>
         <div className="min-h-[200px]" />
-      </SectionWrapper>
+      </section>
     );
   }
 
   const SkillCard = ({ skill }: { skill: typeof skills[0] }) => (
     <div
-      className="skill-card flex flex-col items-center justify-center p-3 rounded-lg bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/50 cursor-pointer transition-colors min-w-[80px] sm:min-w-[96px] md:min-w-[112px] mx-2 sm:mx-3"
-      style={{ transformStyle: 'preserve-3d' }}
+      className="skill-card flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer transition-all duration-200 min-w-[80px] sm:min-w-[96px] md:min-w-[112px] mx-2 sm:mx-3"
+      style={{
+        border: '1px solid rgba(255,255,255,0.07)',
+        background: 'rgba(255,255,255,0.02)',
+        transformStyle: 'preserve-3d',
+      }}
       title={skill.name}
     >
       {skill.iconUrl && (
@@ -169,14 +177,18 @@ export function SkillsSection() {
           alt={skill.name}
         />
       )}
-      <p className="text-[10px] sm:text-xs font-medium text-center text-foreground/80 truncate max-w-full leading-tight">
+      <p className="text-[10px] sm:text-xs font-medium text-center text-foreground/60 truncate max-w-full leading-tight">
         {skill.name}
       </p>
     </div>
   );
 
   return (
-    <SectionWrapper title={t('title')} id='skills' className="bg-secondary/85" isInfinite badge={t('badge')}>   
+    <section id="skills" className="relative py-28 md:py-44 overflow-hidden">
+      <div className="px-6 sm:px-10 md:px-16 lg:px-24 max-w-6xl mx-auto mb-14">
+        <SectionLabel accent="green" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
+        <Title as="h2" animate style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>{t('title')}</Title>
+      </div>
       <div ref={containerRef} className="relative py-4 overflow-hidden" style={{ perspective: '1500px' }}>
         <div className="overflow-hidden mb-3 md:mb-4 w-full">
           <div ref={row1Ref} className="marquee-row flex will-change-transform">
@@ -194,14 +206,26 @@ export function SkillsSection() {
           </div>
         </div>
         
-        <p 
+        <p
           ref={descriptionRef}
-          className="text-center text-muted-foreground mt-8 md:mt-10 text-sm md:text-base px-4 max-w-3xl mx-auto"
+          className="text-center text-foreground/40 mt-10 md:mt-14 px-6 sm:px-10 max-w-3xl mx-auto"
+          style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)' }}
         >
           {t('description')}
         </p>
       </div>
-    </SectionWrapper>
+
+      {/* Watermark */}
+      <div
+        className="absolute right-[-2vw] top-1/4 font-headline font-black pointer-events-none select-none leading-none"
+        style={{
+          fontSize: 'clamp(8rem, 20vw, 18rem)',
+          color: 'rgba(34,197,94,0.04)',
+        }}
+      >
+        SK
+      </div>
+    </section>
   );
 }
 

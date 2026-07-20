@@ -2,17 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/button';
+import { Button, Modal, ModalContent, ModalHeader, ModalTitle, ModalDescription, Switch } from '@/components/ds';
 import { Cookie, X, Settings } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 import {
   hasUserRespondedToCookies,
   acceptAllCookies,
@@ -76,27 +67,13 @@ export function CookieBanner() {
             </div>
             
             <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSettings(true)}
-                className="gap-2"
-              >
-                <Settings className="h-4 w-4" />
-                {t('customize')}
+              <Button variant="ghost" accent="neutral" size="sm" onClick={() => setShowSettings(true)}>
+                <Settings className="w-4 h-4" />{t('customize')}
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleRejectAll}
-              >
+              <Button variant="secondary" accent="neutral" size="sm" onClick={handleRejectAll}>
                 {t('rejectAll')}
               </Button>
-              <Button
-                size="sm"
-                onClick={handleAcceptAll}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
-              >
+              <Button variant="primary" accent="amber" size="sm" onClick={handleAcceptAll}>
                 {t('acceptAll')}
               </Button>
             </div>
@@ -104,19 +81,17 @@ export function CookieBanner() {
         </div>
       </div>
 
-      <Dialog open={showSettings} onOpenChange={setShowSettings}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{t('preferencesTitle')}</DialogTitle>
-            <DialogDescription>
-              {t('preferencesDescription')}
-            </DialogDescription>
-          </DialogHeader>
+      <Modal open={showSettings} onOpenChange={setShowSettings}>
+        <ModalContent>
+          <ModalHeader>
+            <ModalTitle>{t('preferencesTitle')}</ModalTitle>
+            <ModalDescription>{t('preferencesDescription')}</ModalDescription>
+          </ModalHeader>
           
           <div className="space-y-4 py-4">
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
-                <Label className="text-sm font-medium">{t('necessaryLabel')}</Label>
+                <label className="text-sm font-medium">{t('necessaryLabel')}</label>
                 <p className="text-xs text-muted-foreground">
                   {t('necessaryDescription')}
                 </p>
@@ -130,9 +105,9 @@ export function CookieBanner() {
 
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
-                <Label htmlFor="analytics" className="text-sm font-medium">
+                <label htmlFor="analytics" className="text-sm font-medium">
                   {t('analyticsLabel')}
-                </Label>
+                </label>
                 <p className="text-xs text-muted-foreground">
                   {t('analyticsDescription')}
                 </p>
@@ -149,9 +124,9 @@ export function CookieBanner() {
 
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
-                <Label htmlFor="preferences" className="text-sm font-medium">
+                <label htmlFor="preferences" className="text-sm font-medium">
                   {t('preferencesLabel')}
-                </Label>
+                </label>
                 <p className="text-xs text-muted-foreground">
                   {t('preferencesDescription')}
                 </p>
@@ -168,15 +143,15 @@ export function CookieBanner() {
           </div>
 
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setShowSettings(false)}>
+            <Button variant="secondary" accent="neutral" size="md" onClick={() => setShowSettings(false)}>
               {t('cancel')}
             </Button>
-            <Button onClick={handleSavePreferences}>
+            <Button variant="primary" accent="indigo" size="md" onClick={handleSavePreferences}>
               {t('savePreferences')}
             </Button>
           </div>
-        </DialogContent>
-      </Dialog>
+        </ModalContent>
+      </Modal>
     </>
   );
 }
