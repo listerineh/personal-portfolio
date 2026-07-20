@@ -65,6 +65,26 @@ h1, h2, h3, h4, h5, h6 {
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 220 15% 88%;
     --sidebar-ring: 231 48% 48%;
+
+    /* ── Music / Brand palette ─────────────────────────────── */
+    /* Margarita Nugget — amber/gold (darkened for light bg) */
+    --mn-accent:              33 95% 44%;   /* amber-600  #d97706 */
+    --mn-accent-muted:        38 92% 50%;   /* amber-500  #f59e0b */
+    --mn-accent-foreground:    0  0%  0%;
+
+    /* Sofones Solares — indigo/violet (darkened for light bg) */
+    --ss-accent:             243 75% 59%;   /* indigo-600 #4f46e5 */
+    --ss-accent-muted:       234 89% 75%;   /* indigo-400 #818cf8 */
+    --ss-accent-foreground:    0  0% 100%;
+
+    /* Listerineh solo — Spotify green */
+    --solo-accent:           141 73% 42%;   /* #1DB954 */
+    --solo-accent-hover:     139 70% 49%;   /* #1ed760 */
+    --solo-accent-foreground:  0  0%  0%;
+
+    /* ── /why page surface ─────────────────────────────────── */
+    --why-background:         48 18% 95%;   /* warm off-white #f5f4f0 */
+    --why-foreground:          0  0%  7%;   /* near-black     #111111 */
   }
 
   .dark {
@@ -110,6 +130,26 @@ h1, h2, h3, h4, h5, h6 {
     --sidebar-accent-foreground: 220 10% 15%; /* Dark grey/blue text for accent */
     --sidebar-border: 240 5% 25%;
     --sidebar-ring: 210 40% 75%; /* Elegant Silver-Blue for focus rings */
+
+    /* ── Music / Brand palette ─────────────────────────────── */
+    /* Margarita Nugget — amber/gold (lightened for dark bg) */
+    --mn-accent:              43 96% 56%;   /* amber-400  #fbbf24 */
+    --mn-accent-muted:        38 92% 50%;   /* amber-500  #f59e0b */
+    --mn-accent-foreground:    0  0%  0%;
+
+    /* Sofones Solares — indigo/violet (lighter for dark bg) */
+    --ss-accent:             234 89% 75%;   /* indigo-400 #818cf8 */
+    --ss-accent-muted:       244 75% 65%;   /* indigo-500 #6366f1 */
+    --ss-accent-foreground:    0  0% 100%;
+
+    /* Listerineh solo — Spotify green (unchanged, self-luminous) */
+    --solo-accent:           141 73% 42%;   /* #1DB954 */
+    --solo-accent-hover:     139 70% 49%;   /* #1ed760 */
+    --solo-accent-foreground:  0  0%  0%;
+
+    /* ── /why page surface ─────────────────────────────────── */
+    --why-background:          0  0%  3%;   /* near-black  #080808 */
+    --why-foreground:          0  0% 94%;   /* off-white   #f0f0f0 */
   }
 }
 
