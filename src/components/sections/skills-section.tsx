@@ -221,7 +221,7 @@ export function SkillsSection() {
         style={{
           top: '14%',
           fontSize: 'clamp(5rem, 11vw, 10rem)',
-          color: 'rgba(34,197,94,0.04)',
+          color: 'var(--wm-green)',
         }}
       >
         STACK

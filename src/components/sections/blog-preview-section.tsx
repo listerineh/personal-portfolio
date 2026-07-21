@@ -94,7 +94,7 @@ export function BlogPreviewSection() {
         style={{
           top: '11%',
           fontSize: 'clamp(5rem, 11vw, 10rem)',
-          color: 'rgba(129,140,248,0.04)',
+          color: 'var(--wm-indigo)',
         }}
       >
         BLOG

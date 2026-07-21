@@ -14,10 +14,11 @@ const accentColorMap: Record<Accent, string> = {
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   accent?: Accent;
   error?: boolean;
+  forceDark?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ accent = 'indigo', error = false, style, className = '', ...props }, ref) => {
+  ({ accent = 'indigo', error = false, forceDark = false, style, className = '', ...props }, ref) => {
     const { theme } = useTheme();
     const [focused, setFocused] = useState(false);
     const dark = theme === 'dark';
@@ -34,7 +35,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         ref={ref}
-        className={`w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all duration-200 placeholder:text-foreground/30 ${className}`}
+        className={`w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all duration-200 ${forceDark ? 'placeholder:text-white/35' : 'placeholder:text-foreground/30'} ${className}`}
         style={{
           background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
           border: `1px solid ${borderColor}`,

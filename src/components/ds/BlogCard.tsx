@@ -35,8 +35,8 @@ export function BlogCard({
       href={`/blog/${slug}`}
       className="group flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300"
       style={{
-        border: `1px solid ${hovered ? (dark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)') : (dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)')}`,
-        background: hovered ? (dark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)') : 'transparent',
+        border: `1px solid ${hovered ? (dark ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.18)') : (dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.11)')}`,
+        background: hovered ? (dark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)') : (dark ? 'transparent' : 'rgba(255,255,255,0.6)'),
         transform: hovered ? 'translateY(-2px)' : 'none',
         textDecoration: 'none',
       }}
@@ -82,7 +82,7 @@ export function BlogCard({
           className="font-headline font-bold text-foreground leading-tight transition-colors duration-200"
           style={{
             fontSize: 'clamp(1.05rem, 2vw, 1.3rem)',
-            color: hovered ? 'rgba(255,255,255,1)' : undefined,
+            color: hovered ? (dark ? 'rgba(255,255,255,1)' : 'rgba(0,0,0,0.9)') : undefined,
           }}
         >
           {title}
@@ -99,7 +99,9 @@ export function BlogCard({
         <div
           className="flex items-center gap-1.5 text-xs font-headline font-semibold uppercase tracking-wider transition-all duration-200 mt-1"
           style={{
-            color: hovered ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.3)',
+            color: hovered
+              ? (dark ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.75)')
+              : (dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.35)'),
           }}
         >
           {readMoreLabel}

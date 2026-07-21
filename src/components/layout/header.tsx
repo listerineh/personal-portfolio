@@ -216,7 +216,7 @@ export function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         atTop
-          ? 'bg-transparent'
+          ? 'bg-gradient-to-b from-black/60 via-black/20 to-transparent dark:from-black/40 dark:via-black/15 dark:to-transparent'
           : 'bg-[#f5f4f0]/92 dark:bg-[#080808]/92 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.06]'
       )}
     >
@@ -269,7 +269,7 @@ export function Header() {
               className={cn(
                 'font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
                 atTop
-                  ? 'text-white/55 hover:text-white'
+                  ? 'text-white/85 hover:text-white'
                   : 'text-foreground/55 hover:text-foreground'
               )}
             >
@@ -280,19 +280,25 @@ export function Header() {
 
         {/* Right controls */}
         <div className="hidden md:flex items-center gap-1">
-          <LanguageSwitcher />
+          <LanguageSwitcher className={cn(
+            'transition-colors',
+            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
+          )} />
           <ThemeToggleButton className={cn(
             'transition-colors',
-            atTop ? 'text-white/55 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
+            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
           )} />
         </div>
 
         {/* Mobile: controls + burger */}
         <div className="md:hidden flex items-center gap-1">
-          <LanguageSwitcher />
+          <LanguageSwitcher className={cn(
+            'transition-colors',
+            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
+          )} />
           <ThemeToggleButton className={cn(
             'transition-colors [&_svg]:w-5 [&_svg]:h-5',
-            atTop ? 'text-white/55 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
+            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
           )} />
           <button
             onClick={toggleMobileMenu}

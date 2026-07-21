@@ -36,8 +36,8 @@ export function ProjectCard({
     <div
       className="flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300"
       style={{
-        border: `1px solid ${hovered ? (dark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)') : (dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)')}`,
-        background: hovered ? (dark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)') : 'transparent',
+        border: `1px solid ${hovered ? (dark ? 'rgba(255,255,255,0.14)' : 'rgba(0,0,0,0.18)') : (dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.11)')}`,
+        background: hovered ? (dark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)') : (dark ? 'transparent' : 'rgba(255,255,255,0.6)'),
         transform: hovered ? 'translateY(-2px)' : 'none',
       }}
       onMouseEnter={() => setHovered(true)}

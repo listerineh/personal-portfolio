@@ -20,7 +20,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         <button
           aria-label="Switch language"
           className={cn(
-            "flex items-center gap-1.5 px-2 h-9 rounded-md text-foreground/70 hover:text-foreground transition-colors",
+            "flex items-center gap-1.5 px-2 h-9 rounded-md transition-colors",
             className
           )}
         >

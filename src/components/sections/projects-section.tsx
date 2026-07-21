@@ -71,7 +71,7 @@ export function ProjectsSection() {
         style={{
           top: '8%',
           fontSize: 'clamp(5rem, 11vw, 10rem)',
-          color: 'rgba(245,158,11,0.04)',
+          color: 'var(--wm-amber)',
         }}
       >
         HOBBIES

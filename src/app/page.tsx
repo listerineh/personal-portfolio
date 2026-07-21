@@ -31,6 +31,44 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const timer = setTimeout(() => {
+      gsap.utils.toArray<HTMLElement>('.reveal-up').forEach((el) => {
+        gsap.from(el, {
+          opacity: 0,
+          y: 50,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+
+      gsap.utils.toArray<HTMLElement>('.reveal-stagger').forEach((container) => {
+        gsap.from(Array.from(container.children), {
+          opacity: 0,
+          y: 36,
+          duration: 0.6,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
+      });
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="homepage-page flex flex-col min-h-screen overflow-x-hidden">
       <style>{`

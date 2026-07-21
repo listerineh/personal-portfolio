@@ -39,23 +39,6 @@ export function Footer() {
   ];
 
   useEffect(() => {
-    if (!bgRef.current || !footerRef.current) return;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!prefersReducedMotion) {
-      gsap.to(bgRef.current, {
-        yPercent: 18,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    }
-  }, []);
-
-  useEffect(() => {
     if (!footerRef.current) return;
 
     const timer = setTimeout(() => {
@@ -66,6 +49,23 @@ export function Footer() {
           trigger.kill();
         }
       });
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReducedMotion && bgRef.current) {
+        gsap.fromTo(bgRef.current,
+          { yPercent: -12 },
+          {
+            yPercent: 12,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          }
+        );
+      }
 
       const navLinks = navLinksRef.current.filter(Boolean);
       const socialIcons = socialIconsRef.current.filter(Boolean);
@@ -184,7 +184,7 @@ export function Footer() {
     <footer ref={footerRef} className="relative overflow-hidden" style={{ background: '#080808' }}>
 
       {/* Parallax photo background */}
-      <div ref={bgRef} className="absolute inset-0 scale-[1.18] origin-bottom pointer-events-none">
+      <div ref={bgRef} className="absolute inset-0 scale-[1.25] origin-center pointer-events-none">
         <Image
           src="/images/footer-photo.webp"
           alt=""

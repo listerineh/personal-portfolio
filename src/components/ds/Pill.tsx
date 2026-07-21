@@ -26,7 +26,7 @@ const outlineMap: Record<Accent, string> = {
   amber:   'border border-amber-500/30 text-amber-600/75 dark:border-amber-400/20 dark:text-amber-400/50',
   indigo:  'border border-indigo-500/30 text-indigo-600/75 dark:border-indigo-400/20 dark:text-indigo-400/50',
   green:   'border border-emerald-500/30 text-emerald-600/75 dark:border-emerald-400/20 dark:text-emerald-400/50',
-  neutral: 'border border-gray-300 text-gray-500 dark:border-white/15 dark:text-white/50',
+  neutral: 'border border-gray-400/60 text-gray-600 dark:border-white/15 dark:text-white/50',
 }
 
 const sizeMap: Record<PillSize, string> = {

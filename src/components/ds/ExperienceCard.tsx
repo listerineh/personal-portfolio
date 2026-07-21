@@ -40,22 +40,22 @@ export function ExperienceCard({
     <div
       className="rounded-2xl overflow-hidden"
       style={{
-        border: `1px solid ${dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)'}`,
-        background: dark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+        border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.12)'}`,
+        background: dark ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.7)',
       }}
     >
       {/* Header */}
-      <div className="flex items-center gap-4 p-6 pb-4" style={{ borderBottom: `1px solid ${dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}` }}>
+      <div className="flex items-center gap-4 p-6 pb-4" style={{ borderBottom: `1px solid ${dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.09)'}` }}>
         {/* Logo */}
         <div className="shrink-0">
           {logoUrl ? (
-            <div className="w-14 h-14 rounded-full overflow-hidden relative" style={{ border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}` }}>
+            <div className="w-14 h-14 rounded-full overflow-hidden relative" style={{ border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.13)'}` }}>
               <Image src={logoUrl} alt={`${company} logo`} fill className="object-cover" />
             </div>
           ) : (
             <div
               className="w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ background: dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)', border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}` }}
+              style={{ background: dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)', border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.13)'}` }}
             >
               <Briefcase className="w-6 h-6 text-foreground/40" />
             </div>
