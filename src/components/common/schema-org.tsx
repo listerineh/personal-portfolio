@@ -28,6 +28,7 @@ export function PersonSchema() {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      suppressHydrationWarning
     />
   );
 }
@@ -53,6 +54,7 @@ export function WebsiteSchema() {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      suppressHydrationWarning
     />
   );
 }
@@ -81,6 +83,7 @@ export function BreadcrumbSchema() {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      suppressHydrationWarning
     />
   );
 }

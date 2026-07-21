@@ -3,10 +3,14 @@ import { type Accent } from './types'
 
 type PillVariant = 'solid' | 'outline'
 
+type PillSize = 'sm' | 'md'
+
 interface PillProps {
   variant?: PillVariant
   accent?: Accent
   color?: string
+  size?: PillSize
+  uppercase?: boolean
   className?: string
   children: React.ReactNode
 }
@@ -25,8 +29,17 @@ const outlineMap: Record<Accent, string> = {
   neutral: 'border border-gray-300 text-gray-500 dark:border-white/15 dark:text-white/50',
 }
 
-export function Pill({ variant = 'solid', accent = 'neutral', color, className, children }: PillProps) {
-  const base = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-headline font-semibold tracking-[0.25em] uppercase'
+const sizeMap: Record<PillSize, string> = {
+  md: 'px-3 py-1 text-[10px] tracking-[0.25em]',
+  sm: 'px-2 py-0.5 text-[10px] tracking-wide',
+}
+
+export function Pill({ variant = 'solid', accent = 'neutral', color, size = 'md', uppercase = true, className, children }: PillProps) {
+  const base = cn(
+    'inline-flex items-center gap-1.5 rounded-full font-headline font-semibold',
+    sizeMap[size],
+    uppercase && 'uppercase',
+  )
 
   if (color) {
     const inlineStyle: React.CSSProperties =

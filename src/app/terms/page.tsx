@@ -11,143 +11,96 @@ export default function TermsPage() {
   return (
     <>
       <Header />
-      <main className="pt-20 pb-16">
-        <article className="container mx-auto px-4 py-12 max-w-4xl">
-          <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary mb-4">
-            {t('title')}
-          </h1>
-          <p className="text-muted-foreground mb-8">
-            {t('lastUpdated')} {new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
-          </p>
+      <main>
+        {/* Hero */}
+        <div className="pt-36 pb-20 px-6 sm:px-10 md:px-16 lg:px-24 border-b border-foreground/[0.06]">
+          <div className="max-w-4xl mx-auto">
+            <Link href="/" className="inline-flex items-center gap-2 text-[11px] font-headline tracking-[0.2em] uppercase text-foreground/35 hover:text-amber-500 transition-colors mb-10">
+              ← Back
+            </Link>
+            <p className="text-[11px] font-headline tracking-[0.25em] uppercase text-amber-500/70 mb-4">Legal</p>
+            <h1
+              className="font-headline font-black leading-[0.9] text-foreground mb-6"
+              style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}
+            >
+              {t('title')}
+            </h1>
+            <p className="text-foreground/40 text-sm font-headline tracking-wide">
+              {t('lastUpdated')} {new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
+            </p>
+          </div>
+        </div>
 
-          <div className="prose prose-lg dark:prose-invert max-w-none">
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('agreementTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('agreementText')}
-              </p>
-            </section>
+        {/* Content */}
+        <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-20">
+          <div className="max-w-4xl mx-auto space-y-16">
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('licenseTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('licenseText')}
-              </p>
-              
-              <h3 className="text-xl font-semibold text-foreground mb-3">{t('licenseNotAllowedTitle')}</h3>
-              <ul className="list-disc pl-6 mb-4 text-foreground space-y-2">
-                <li>{t('modifyMaterials')}</li>
-                <li>{t('commercialUse')}</li>
-                <li>{t('reverseEngineer')}</li>
-                <li>{t('removeCopyright')}</li>
-                <li>{t('transferMaterials')}</li>
+            {/* Generic sections */}
+            {[
+              [t('agreementTitle'), t('agreementText')],
+              [t('disclaimerTitle'), `${t('disclaimerText1')} ${t('disclaimerText2')}`],
+              [t('limitationsTitle'), t('limitationsText')],
+              [t('externalLinksTitle'), t('externalLinksText')],
+              [t('userCommentsTitle'), t('userCommentsText')],
+              [t('intellectualPropertyTitle'), t('intellectualPropertyText')],
+              [t('modificationsTitle'), t('modificationsText')],
+              [t('governingLawTitle'), t('governingLawText')],
+            ].map(([title, content]) => (
+              <section key={title}>
+                <h2 className="font-headline font-black text-amber-500 mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>{title}</h2>
+                <p className="text-foreground/55 leading-relaxed">{content}</p>
+              </section>
+            ))}
+
+            {/* License with not-allowed list */}
+            <section>
+              <h2 className="font-headline font-black text-amber-500 mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+                {t('licenseTitle')}
+              </h2>
+              <p className="text-foreground/55 leading-relaxed mb-4">{t('licenseText')}</p>
+              <h3 className="font-headline font-semibold text-foreground/70 text-sm uppercase tracking-widest mb-3">{t('licenseNotAllowedTitle')}</h3>
+              <ul className="space-y-2 pl-4 border-l-2 border-amber-500/20">
+                {[t('modifyMaterials'), t('commercialUse'), t('reverseEngineer'), t('removeCopyright'), t('transferMaterials')].map((item) => (
+                  <li key={item} className="text-foreground/50 text-sm leading-relaxed">{item}</li>
+                ))}
               </ul>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('blogContentTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('blogContentText')}
-              </p>
-              
-              <div className="bg-muted p-4 rounded-lg mb-4">
-                <p className="text-sm font-medium mb-2">{t('codeExamplesLabel')}</p>
-                <p className="text-sm text-muted-foreground">
-                  {t('codeExamplesText')}
-                </p>
+            {/* Blog content with callout box */}
+            <section>
+              <h2 className="font-headline font-black text-amber-500 mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+                {t('blogContentTitle')}
+              </h2>
+              <p className="text-foreground/55 leading-relaxed mb-4">{t('blogContentText')}</p>
+              <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.02] p-5">
+                <p className="text-xs font-headline tracking-widest uppercase text-foreground/40 mb-2">{t('codeExamplesLabel')}</p>
+                <p className="text-sm text-foreground/50">{t('codeExamplesText')}</p>
               </div>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('disclaimerTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('disclaimerText1')}
-              </p>
-              <p className="text-foreground mb-4">
-                {t('disclaimerText2')}
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('limitationsTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('limitationsText')}
+            {/* Note callout */}
+            <section className="rounded-xl border border-amber-500/15 bg-amber-500/[0.03] p-6">
+              <p className="text-sm text-foreground/55 leading-relaxed">
+                <span className="font-semibold text-amber-500">{t('noteLabel')} </span>
+                {t('noteText', { privacyPolicy: 'Privacy Policy' }).split('Privacy Policy').map((part, i, arr) =>
+                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/privacy" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">Privacy Policy</Link></span> : part
+                )}
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('externalLinksTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('externalLinksText')}
+            {/* Contact */}
+            <section className="rounded-xl border border-amber-500/15 bg-amber-500/[0.03] p-8">
+              <h2 className="font-headline font-black text-amber-500 mb-4" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+                {t('contactInfoTitle')}
+              </h2>
+              <p className="text-foreground/55 leading-relaxed">
+                {t('contactInfoText', { contactForm: 'contact form' }).split('contact form').map((part, i, arr) =>
+                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/#contact" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">contact form</Link></span> : part
+                )}
               </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('userCommentsTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('userCommentsText')}
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('intellectualPropertyTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('intellectualPropertyText')}
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('modificationsTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('modificationsText')}
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('governingLawTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('governingLawText')}
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-headline font-semibold text-primary mb-4">{t('contactInfoTitle')}</h2>
-              <p className="text-foreground mb-4">
-                {t('contactInfoText', {
-                  contactForm: 'contact form'
-                }).split('contact form').map((part, index, array) => (
-                  index < array.length - 1 ? (
-                    <span key={index}>
-                      {part}
-                      <Link href="/#contact" className="text-accent hover:text-primary underline">
-                        contact form
-                      </Link>
-                    </span>
-                  ) : part
-                ))}
-              </p>
-            </section>
-
-            <section className="mb-8">
-              <div className="bg-primary/10 border-l-4 border-primary p-4 rounded">
-                <p className="text-sm text-foreground">
-                  <strong>{t('noteLabel')}</strong> {t('noteText', {
-                    privacyPolicy: 'Privacy Policy'
-                  }).split('Privacy Policy').map((part, index, array) => (
-                    index < array.length - 1 ? (
-                      <span key={index}>
-                        {part}
-                        <Link href="/privacy" className="text-accent hover:text-primary underline">
-                          Privacy Policy
-                        </Link>
-                      </span>
-                    ) : part
-                  ))}
-                </p>
-              </div>
             </section>
           </div>
-        </article>
+        </div>
       </main>
       <Footer />
     </>

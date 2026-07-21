@@ -485,7 +485,7 @@ Observability isn't just about monitoring. It's about **control in the chaos**.
 And in modern software development, that's everything.
 `,
     author: 'Sebastian Alvarez',
-    tags: ['Observability', 'DevOps', 'Monitoring', 'Datadog', 'Splunk', 'Sentry', 'Backend', 'Frontend', 'AI Development']
+    tags: ['Observability', 'DevOps', 'Monitoring', 'Datadog', 'Splunk', 'Sentry', 'Backend', 'Frontend']
   },
   es: {
     slug: 'controlled-observability-modern-development',
@@ -970,6 +970,6 @@ La observabilidad no se trata solo de monitoreo. Se trata de **control en el cao
 Y en el desarrollo de software moderno, eso es todo.
 `,
     author: 'Sebastian Alvarez',
-    tags: ['Observabilidad', 'DevOps', 'Monitoreo', 'Datadog', 'Splunk', 'Sentry', 'Backend', 'Frontend', 'Desarrollo IA']
+    tags: ['Observabilidad', 'DevOps', 'Monitoreo', 'Datadog', 'Splunk', 'Sentry', 'Backend', 'Frontend']
   }
 };

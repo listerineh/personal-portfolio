@@ -72,7 +72,7 @@ export default async function RootLayout({
     <html lang="en" className={cn(fontUnbounded.variable, fontOutfit.variable)}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#3F51B5" />
+        <meta name="theme-color" content="#f59e0b" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

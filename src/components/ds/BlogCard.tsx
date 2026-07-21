@@ -71,7 +71,7 @@ export function BlogCard({
             </span>
           )}
           {tags.map((tag) => (
-            <Pill key={tag} variant="outline" accent="neutral">
+            <Pill key={tag} variant="outline" accent="neutral" size="sm" uppercase={false}>
               {tag}
             </Pill>
           ))}

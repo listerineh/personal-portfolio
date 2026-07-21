@@ -8,7 +8,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@/hooks/use-gsap';
 import { useToast } from '@/hooks/use-toast';
-import { Button, Pill } from '@/components/ds';
+import { Button } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -56,7 +56,7 @@ export function HeroSection() {
       {/* Parallax background photo */}
       <div ref={bgRef} className="absolute inset-0 scale-[1.12] origin-top">
         <Image
-          src="/images/sebastian_alvarez_photo.webp"
+          src="/images/hero-photo.webp"
           alt="Sebastian Alvarez"
           fill
           priority
@@ -103,7 +103,7 @@ export function HeroSection() {
         </p>
 
         {/* Stats row */}
-        <div className="flex items-center gap-6 mb-8">
+        <div className="flex items-center gap-8 mb-8 flex-wrap">
           <div className="flex items-center gap-2">
             <span className="font-headline font-black text-amber-400" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>6+</span>
             <span className="text-[10px] font-headline tracking-[0.2em] uppercase text-white/35 leading-tight">
@@ -112,13 +112,11 @@ export function HeroSection() {
           </div>
           <div className="w-px h-8 bg-white/15" />
           <div className="flex items-center gap-2">
-            <span className="font-headline font-black text-white/80" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>∞</span>
+            <span className="font-headline font-black text-white/70" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>100%</span>
             <span className="text-[10px] font-headline tracking-[0.2em] uppercase text-white/35 leading-tight">
-              Full<br />Stack
+              Remote<br />Ready
             </span>
           </div>
-          <div className="w-px h-8 bg-white/15" />
-          <Pill variant="solid" accent="green">{t('badge')}</Pill>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">

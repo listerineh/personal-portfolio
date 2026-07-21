@@ -7,7 +7,7 @@ import { Mail, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NewsletterSubscribeProps {
-  variant?: 'default' | 'compact';
+  variant?: 'default' | 'compact' | 'bare';
 }
 
 export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribeProps) {
@@ -50,6 +50,57 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
       setMessage(t('failedMessage'));
     }
   };
+
+  if (variant === 'bare') {
+    return (
+      <form onSubmit={handleSubmit} className="space-y-3 w-full">
+        <Input
+          type="email"
+          placeholder={t('emailPlaceholder')}
+          accent="amber"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Button
+          type="submit"
+          variant="primary"
+          accent="amber"
+          size="lg"
+          disabled={status === 'loading' || status === 'success'}
+          className="w-full justify-center text-black"
+        >
+          {status === 'loading' ? (
+            <><Loader2 className="h-5 w-5 animate-spin" />{t('subscribingButton')}</>
+          ) : status === 'success' ? (
+            <><CheckCircle2 className="h-5 w-5" />{t('subscribedButton')}</>
+          ) : (
+            <><Mail className="h-5 w-5" />{t('subscribeButton')}</>
+          )}
+        </Button>
+        {message && (
+          <div className={cn(
+            'flex items-center gap-2 p-3 rounded-xl text-sm',
+            status === 'success'
+              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+              : 'bg-red-500/10 text-red-400 border border-red-500/20'
+          )}>
+            {status === 'success' ? <CheckCircle2 className="h-4 w-4 shrink-0" /> : <AlertCircle className="h-4 w-4 shrink-0" />}
+            <p>{message}</p>
+          </div>
+        )}
+        <div className="flex items-center gap-8 pt-1 text-[11px] text-white/25">
+          <span className="flex items-center gap-1.5">
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+            {t('secureLabel')}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+            {t('privateLabel')}
+          </span>
+        </div>
+      </form>
+    );
+  }
 
   if (variant === 'compact') {
     return (

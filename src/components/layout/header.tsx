@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Menu, X, Music } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ThemeToggleButton, LanguageSwitcher } from '@/components/common';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -30,6 +30,7 @@ export function Header() {
     { label: t('projects'), href: '/#projects' },
     { label: t('blog'), href: '/blog' },
     { label: t('contact'), href: '/#contact' },
+    { label: 'Why', href: '/why' },
   ], [t]);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
@@ -226,10 +227,19 @@ export function Header() {
           ref={logoRef}
           href="/"
           onClick={closeMobileMenu}
-          className="font-headline font-black text-amber-400 tracking-tight leading-none select-none"
-          style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)' }}
+          className="flex items-center gap-2.5 select-none"
         >
-          S·A
+          <svg viewBox="0 0 64 64" className="w-8 h-8 shrink-0" xmlns="http://www.w3.org/2000/svg">
+            <circle fill="#f59e0b" cx="32" cy="32" r="32" />
+            <g opacity="0.2">
+              <path fill="#231F20" d="M42.5,44c-0.7,0-1.3-0.3-1.7-1c-0.6-0.9-0.3-2.2,0.7-2.8l10.1-6.2c0,0,0,0,0-0.1s0,0,0-0.1l-10.1-6.2c-0.9-0.6-1.2-1.8-0.7-2.8c0.6-0.9,1.8-1.2,2.8-0.7l10.6,6.6l0.2,0.2c0.8,0.8,1.2,1.9,1.2,3c0,1.1-0.4,2.2-1.2,3l-0.2,0.2l-10.6,6.6C43.2,43.9,42.8,44,42.5,44z" />
+              <path fill="#231F20" d="M21.5,44c-0.4,0-0.7-0.1-1-0.3L9.9,37.1L9.7,37c-0.8-0.8-1.2-1.9-1.2-3c0-1.1,0.4-2.2,1.2-3l0.2-0.2l10.6-6.6c0.9-0.6,2.2-0.3,2.8,0.7c0.6,0.9,0.3,2.2-0.7,2.8l-10.1,6.2c0,0,0,0,0,0.1s0,0,0,0.1l10.1,6.2c0.9,0.6,1.2,1.8,0.7,2.8C22.9,43.7,22.2,44,21.5,44z" />
+              <path fill="#231F20" d="M25.5,53c-0.2,0-0.5,0-0.7-0.1c-1-0.4-1.5-1.6-1.2-2.6l13-34c0.4-1,1.6-1.5,2.6-1.2c1,0.4,1.5,1.6,1.2,2.6l-13,34C27.1,52.5,26.3,53,25.5,53z" />
+            </g>
+            <path fill="#ffffff" d="M42.5,42c-0.7,0-1.3-0.3-1.7-1c-0.6-0.9-0.3-2.2,0.7-2.8l10.1-6.2c0,0,0-0.1,0-0.1l-10.1-6.2c-0.9-0.6-1.2-1.8-0.7-2.8c0.6-0.9,1.8-1.2,2.8-0.7l10.6,6.6l0.2,0.2c1.6,1.6,1.6,4.3,0,6l-0.2,0.2l-10.6,6.6C43.2,41.9,42.8,42,42.5,42z" />
+            <path fill="#ffffff" d="M21.5,42c-0.4,0-0.7-0.1-1-0.3L9.9,35.1L9.7,35c-1.6-1.6-1.6-4.3,0-6l0.2-0.2l10.6-6.6c0.9-0.6,2.2-0.3,2.8,0.7c0.6,0.9,0.3,2.2-0.7,2.8l-10.1,6.2c0,0,0,0.1,0,0.1l10.1,6.2c0.9,0.6,1.2,1.8,0.7,2.8C22.9,41.7,22.2,42,21.5,42z" />
+            <path fill="#ffffff" d="M25.5,51c-0.2,0-0.5,0-0.7-0.1c-1-0.4-1.5-1.6-1.2-2.6l13-34c0.4-1,1.6-1.5,2.6-1.2c1,0.4,1.5,1.6,1.2,2.6l-13,34C27.1,50.5,26.3,51,25.5,51z" />
+          </svg>
         </Link>
 
         {/* Desktop nav */}
@@ -266,16 +276,6 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/why"
-            className={cn(
-              'flex items-center gap-1.5 font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
-              atTop ? 'text-[#1DB954]/60 hover:text-[#1DB954]' : 'text-[#1DB954]/60 hover:text-[#1DB954]'
-            )}
-          >
-            <Music className="w-3 h-3" />
-            {t('whyListerineh')}
-          </Link>
         </nav>
 
         {/* Right controls */}
@@ -341,19 +341,6 @@ export function Header() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link
-                  href="/why"
-                  onClick={(e) => handleNavLinkClick(e, '/why')}
-                  className="flex items-center gap-2 py-4 font-headline font-black transition-colors duration-200"
-                  style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', lineHeight: 1, color: 'rgba(29,185,84,0.4)' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = '#1DB954')}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(29,185,84,0.4)')}
-                >
-                  <Music className="w-6 h-6 shrink-0" />
-                  {t('whyListerineh')}
-                </Link>
-              </li>
             </ul>
 
             {/* Bottom controls */}

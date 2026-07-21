@@ -9,9 +9,10 @@ interface DSSwitchProps {
   onCheckedChange?: (checked: boolean) => void;
   disabled?: boolean;
   className?: string;
+  accentColor?: string;
 }
 
-export function Switch({ id, checked, onCheckedChange, disabled, className = '' }: DSSwitchProps) {
+export function Switch({ id, checked, onCheckedChange, disabled, className = '', accentColor = '#818cf8' }: DSSwitchProps) {
   const { theme } = useTheme();
   const dark = theme === 'dark';
 
@@ -24,7 +25,7 @@ export function Switch({ id, checked, onCheckedChange, disabled, className = '' 
       className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
       style={{
         background: checked
-          ? '#818cf8'
+          ? accentColor
           : dark
             ? 'rgba(255,255,255,0.12)'
             : 'rgba(0,0,0,0.12)',

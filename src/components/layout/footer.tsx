@@ -35,6 +35,7 @@ export function Footer() {
     { label: t('projects'), href: '/#projects' },
     { label: t('blog'), href: '/blog' },
     { label: t('contact'), href: '/#contact' },
+    { label: 'Why', href: '/why' },
   ];
 
   useEffect(() => {
@@ -185,7 +186,7 @@ export function Footer() {
       {/* Parallax photo background */}
       <div ref={bgRef} className="absolute inset-0 scale-[1.18] origin-bottom pointer-events-none">
         <Image
-          src="/images/sebas-playing-footer.webp"
+          src="/images/footer-photo.webp"
           alt=""
           fill
           className="object-cover object-center"
@@ -197,7 +198,7 @@ export function Footer() {
       {/* Newsletter section */}
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 pt-28 md:pt-36 pb-20 md:pb-24">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-start">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
 
             {/* Left — copy */}
             <div className="space-y-6">
@@ -232,7 +233,7 @@ export function Footer() {
             {/* Right — form */}
             <div className="flex items-center">
               <div className="w-full">
-                <NewsletterSubscribe />
+                <NewsletterSubscribe variant="bare" />
               </div>
             </div>
           </div>
@@ -246,41 +247,27 @@ export function Footer() {
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-14 md:py-20">
         <div className="max-w-6xl mx-auto">
 
-          {/* Giant name watermark */}
-          <div
-            className="font-headline font-black leading-none mb-12 text-white/[0.05] select-none"
-            style={{ fontSize: 'clamp(3.5rem, 12vw, 11rem)' }}
-          >
-            SEBASTIAN<br />ALVAREZ
-          </div>
-
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
 
-            {/* Nav links — 2 row grid */}
+            {/* Nav links — horizontal with separators */}
             <nav aria-label="Footer navigation">
-              <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-4">
+              <ul className="flex flex-wrap items-center gap-x-1 gap-y-3">
                 {navItems.map((link, index) => (
-                  <li key={link.label}>
-                    <Link
-                      ref={(el) => { navLinksRef.current[index] = el; }}
-                      href={link.href}
-                      className="font-headline text-xs tracking-[0.12em] uppercase text-white/35 hover:text-white transition-colors duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+                  <>
+                    <li key={link.label}>
+                      <Link
+                        ref={(el) => { navLinksRef.current[index] = el; }}
+                        href={link.href}
+                        className="font-headline text-xs tracking-[0.12em] uppercase text-white/35 hover:text-white transition-colors duration-200 px-2"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                    {index < navItems.length - 1 && (
+                      <li key={`sep-${index}`} className="text-white/15 select-none text-xs">·</li>
+                    )}
+                  </>
                 ))}
-                <li>
-                  <Link
-                    href="/why"
-                    className="font-headline text-xs tracking-[0.12em] uppercase transition-colors duration-200"
-                    style={{ color: 'rgba(29,185,84,0.45)' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#1DB954')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(29,185,84,0.45)')}
-                  >
-                    {t('whyListerineh')}
-                  </Link>
-                </li>
               </ul>
             </nav>
 
@@ -311,7 +298,7 @@ export function Footer() {
             &copy; {currentYear} Sebastian Alvarez — {tCommon('allRightsReserved')}
           </p>
           <div className="flex flex-wrap items-center gap-4 text-xs text-white/25">
-            <CookieSettingsLink />
+            <CookieSettingsLink className="text-xs text-white/25 hover:text-amber-400 transition-colors" />
             <Link href="/privacy" className="hover:text-amber-400 transition-colors">
               {t('privacyPolicy')}
             </Link>

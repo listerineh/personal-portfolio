@@ -90,13 +90,14 @@ export function BlogPreviewSection() {
 
       {/* Watermark */}
       <div
-        className="absolute right-[-2vw] top-1/3 font-headline font-black pointer-events-none select-none leading-none"
+        className="absolute right-[-2vw] font-headline font-black pointer-events-none select-none leading-none whitespace-nowrap"
         style={{
-          fontSize: 'clamp(8rem, 20vw, 18rem)',
+          top: '11%',
+          fontSize: 'clamp(5rem, 11vw, 10rem)',
           color: 'rgba(129,140,248,0.04)',
         }}
       >
-        BG
+        BLOG
       </div>
     </section>
   );
