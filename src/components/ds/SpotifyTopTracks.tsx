@@ -124,7 +124,7 @@ export function SpotifyTopTracks({
 
                 {/* Reproducir en Spotify */}
                 <span
-                  className="relative z-10 shrink-0 text-xs font-headline font-semibold"
+                  className="relative z-10 hidden sm:inline shrink-0 text-xs font-headline font-semibold"
                   style={{
                     color: '#1DB954',
                     opacity: hovered ? 1 : 0,
