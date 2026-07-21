@@ -1,118 +1,66 @@
-# 🚀 Personal Portfolio
+# 🚀 Personal Portfolio — listerineh.dev
 
-✨ A modern, high-performance personal portfolio website built with Next.js 15, TypeScript, and Tailwind CSS. Features smooth GSAP animations, a technical blog, and a comprehensive showcase of professional experience and projects.
+✨ A modern, high-performance personal portfolio built with Next.js 15, TypeScript, and Tailwind CSS. Features a custom design system, GSAP-powered animations with parallax effects, bilingual (EN/ES) support via `next-intl`, a full technical blog with newsletter, and a `/why` storytelling page.
 
 ---
 
 ## 🌍 Deployment
 
-Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
+Deployed on Vercel with automatic CI/CD.
 
-| Environment | URL |
-|-------------|-----|
-| Production  | [listerineh.dev](https://listerineh.dev) |
-| Development | [listerineh.vercel.app](https://listerineh.vercel.app) |
+| Environment | Branch | URL |
+|-------------|--------|-----|
+| Production  | `main` | [listerineh.dev](https://listerineh.dev) |
+| Staging     | `develop` | [listerineh.vercel.app](https://listerineh.vercel.app) |
 
 ---
 
 ## 🛠 Tech Stack
 
-### 🔧 Core Technologies
+### 🔧 Core
 
 | Technology | Description |
 |------------|-------------|
-| ![Next.js](https://img.shields.io/badge/-Next.js_15-000000?logo=next.js) | React framework with App Router and Server Components |
-| ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript) | Type-safe JavaScript with strict mode |
-| ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css) | Utility-first CSS framework |
-| ![React](https://img.shields.io/badge/-React_19-61DAFB?logo=react) | JavaScript UI library |
+| ![Next.js](https://img.shields.io/badge/-Next.js_15-000000?logo=next.js) | App Router, Server Components, SSG |
+| ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript) | Strict mode throughout |
+| ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css) | Utility-first, CSS variables for theming |
+| ![React](https://img.shields.io/badge/-React_19-61DAFB?logo=react) | Client/server component split |
+| ![next-intl](https://img.shields.io/badge/-next--intl-7C3AED) | EN/ES internationalization |
 
 ### 🎨 UI & Animations
 
-- ![GSAP](https://img.shields.io/badge/-GSAP-88CE02) - Professional-grade animation library
-- ![ScrollTrigger](https://img.shields.io/badge/-ScrollTrigger-88CE02) - Scroll-based animations
-- ![Radix UI](https://img.shields.io/badge/-Radix_UI-161618) - Unstyled, accessible UI components
-- ![Lucide](https://img.shields.io/badge/-Lucide-FFD43B) - Beautiful, consistent icon set
-- ![shadcn/ui](https://img.shields.io/badge/-shadcn/ui-000000) - Re-usable component library
+- **GSAP + ScrollTrigger** — parallax effects, `reveal-up`/`reveal-stagger` scroll animations, timeline sequences
+- **Custom Design System** (`src/components/ds/`) — `Button`, `Input`, `Pill`, `Title`, `Text`, `SectionLabel`, `AccentCard`, `MemberCard`
+- **shadcn/ui** (`src/components/ui/`) — accessible primitives (Radix UI based)
+- **Lucide** — icon set
 
 ### 📦 Key Dependencies
 
-- ![Zod](https://img.shields.io/badge/-Zod-3E63DD) - TypeScript-first schema validation
-- ![Resend](https://img.shields.io/badge/-Resend-3ECF8E) - Email API for contact form
-- ![Sharp](https://img.shields.io/badge/-Sharp-99CC00) - High-performance image processing
-- ![Vercel Analytics](https://img.shields.io/badge/-Vercel_Analytics-000000) - Web analytics
+- **Resend** — email API for contact form and newsletter
+- **Zod** — schema validation
+- **Sharp** — image processing (WebP conversion)
+- **Vercel Analytics** — web analytics
+- **gray-matter / remark** — markdown processing for blog
 
 ### 🛠 Development Tools
 
-- ![ESLint](https://img.shields.io/badge/-ESLint-4B32C3) - JavaScript linter
-- ![Prettier](https://img.shields.io/badge/-Prettier-F7B93E) - Code formatter
-- ![Turbopack](https://img.shields.io/badge/-Turbopack-000000) - Next.js bundler for faster builds
+- **Turbopack** — fast dev server (port 9002)
+- **ESLint + Prettier** — linting and formatting
 
 ---
 
 ## ✨ Features
 
-| Category | Features |
-|----------|----------|
-| **🎯 Core** | Fully responsive design • Dark/light mode toggle • Contact form with Resend API • Technical blog with markdown • Downloadable resume • SEO optimized |
-| **🎬 Animations** | GSAP scroll animations • Parallax effects • Theme toggle curtain effect • Mesh gradient background • Page transitions • Back to top button |
-| **📱 Sections** | Hero with intro • Work experience timeline • Skills showcase • Projects gallery • Blog preview • Contact form |
-| **🚀 Performance** | WebP optimization • Static site generation • Font optimization • Code splitting • Lighthouse 95+ • Smart cache strategy |
-
-### 🚀 Performance & Caching
-✅ WebP image optimization
-
-✅ Static site generation (SSG) for blog posts
-
-✅ Optimized fonts with Next.js font optimization
-
-✅ Code splitting and lazy loading
-
-✅ Lighthouse score: 95+ on all metrics
-
-✅ Smart cache invalidation strategy:
-- HTML pages: `max-age=0, must-revalidate` (always fresh)
-- Images: `max-age=3600, stale-while-revalidate=86400` (1 hour cache)
-- Static assets: `max-age=31536000, immutable` (1 year, content-hashed)
-- Service Worker auto-cleanup of old caches on deployment
-
-✅ SEO optimized with metadata and Open Graph tags
-
-### 🎬 Animations & UX
-✅ Smooth scroll-based animations with GSAP
-
-✅ Parallax effects and scroll triggers
-
-✅ Elegant theme toggle with curtain effect
-
-✅ Animated background with mesh gradients
-
-✅ Smooth page transitions
-
-✅ Back to top button with progress indicator
-
-### 📱 Sections
-✅ Hero section with animated introduction
-
-✅ Work experience timeline with expandable details
-
-✅ Skills showcase with animated skill cards
-
-✅ Projects gallery with live demos and source code
-
-✅ Blog preview with featured posts
-
-✅ Contact form with validation
-
-### 🚀 Performance
-✅ WebP image optimization
-
-✅ Static site generation (SSG) for blog posts
-
-✅ Optimized fonts with Next.js font optimization
-
-✅ Code splitting and lazy loading
-
-✅ Lighthouse score: 95+ on all metrics
+| Category | Details |
+|----------|---------|
+| **� Internationalization** | Full EN/ES support via `next-intl`; language switcher in header |
+| **🎭 Theme** | Dark/light mode with CSS variable theming; curtain-effect toggle; mode-adaptive component colors |
+| **🎬 Animations** | GSAP parallax on hero, footer, and `/why` backgrounds; `reveal-up` scroll entrances; stagger grids; hover micro-interactions |
+| **📝 Blog** | Markdown blog with SSG; tag filtering; reading time; newsletter subscription (Resend); blog post notification via GitHub Actions |
+| **📱 Homepage Sections** | Hero · Experience · Skills · Projects · Blog preview · Contact |
+| **� Pages** | `/` Homepage · `/about` · `/blog` · `/blog/[slug]` · `/why` · `/privacy` · `/terms` |
+| **🚀 Performance** | WebP images · SSG · font optimization · code splitting · Lighthouse 95+ · smart caching |
+| **♿ Accessibility** | Skip-to-content link · `aria` labels · reduced-motion support throughout GSAP hooks |
 
 ---
 
@@ -120,175 +68,72 @@ Deployed on Vercel with automatic CI/CD from the `main` and `develop` branches.
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/listerineh/personal-portfolio.git
-   cd personal-portfolio
-   ```
+```bash
+git clone https://github.com/listerineh/personal-portfolio.git
+cd personal-portfolio
+npm install
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### Environment Variables
 
-3. **Set up environment variables**
-   
-   Create a `.env.local` file in the root directory:
-   ```bash
-   RESEND_API_KEY=your_resend_api_key
-   EMAIL_FROM=your@email.com
-   EMAIL_TO=recipient@email.com
-   NEXT_PUBLIC_SITE_URL=http://localhost:9002
-   ```
+Create `.env.local`:
 
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
+```bash
+# Contact form
+RESEND_API_KEY=your_resend_api_key
+EMAIL_FROM=noreply@yourdomain.com
+EMAIL_TO=your@email.com
 
-5. **Open your browser**
-   
-   Navigate to [http://localhost:9002](http://localhost:9002)
+# Newsletter
+NEWSLETTER_FROM=newsletter@yourdomain.com
+
+# App
+NEXT_PUBLIC_SITE_URL=http://localhost:9002
+```
+
+### Run
+
+```bash
+npm run dev        # http://localhost:9002
+```
 
 ---
 
-## 📜 Available Scripts
+## 📜 Scripts
 
 | Script | Description |
 |--------|-------------|
-| `npm run dev` | Start development server with Turbopack on port 9002 |
-| `npm run build` | Build the application for production |
-| `npm start` | Start the production server |
-| `npm run lint` | Run ESLint to check code quality |
-| `npm run typecheck` | Run TypeScript type checking |
-| `npm run convert-images` | Convert JPEG/PNG images to WebP format recursively in `/public` |
-| `npm run convert-heic` | Convert HEIC images to WebP format |
-| `npm run notify-blog` | Send blog notification emails to subscribers |
+| `npm run dev` | Dev server with Turbopack on port 9002 |
+| `npm run build` | Production build (also runs `update-sw`) |
+| `npm start` | Start production server |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript type check |
+| `npm run convert-images` | Batch convert JPEG/PNG → WebP in `/public` |
+| `npm run convert-heic` | Convert HEIC → WebP |
+| `npm run notify-blog` | Send blog notification to subscribers |
+| `npm run update-sw` | Bump Service Worker cache version |
 
-### 🖼️ Image Optimization Script
+> See `scripts/README.md` for detailed usage of each script.
 
-The project includes a custom script to convert images to WebP format for better performance:
+---
 
-```bash
-npm run convert-images
-```
+## 🔄 Cache Strategy
 
-**Features:**
-- Recursively scans all subdirectories in `/public`
-- Converts `.jpg`, `.jpeg`, and `.png` files to `.webp`
-- Automatically deletes original files after conversion
-- Skips files if WebP version already exists
-- Uses Sharp for high-quality compression (85% quality)
+**HTTP Headers** (`next.config.ts`):
 
-See `scripts/README.md` for more details.
-
-### 🔄 Cache Strategy & Service Worker
-
-The application implements a sophisticated cache invalidation strategy:
-
-**HTTP Headers Configuration** (`next.config.ts`):
-- **HTML Pages** (`/:path*`): `max-age=0, must-revalidate` - Always validates with server, never cached
-- **Images** (`/images/`, `/blog/*.webp`): `max-age=3600, stale-while-revalidate=86400` - Cached 1 hour, serves stale while revalidating
-- **Static Assets** (`/_next/static/`): `max-age=31536000, immutable` - Cached 1 year (content-hashed, safe)
+| Path | Strategy |
+|------|----------|
+| `/:path*` (HTML) | `max-age=0, must-revalidate` — always fresh |
+| `/images/`, `/blog/*.webp` | `max-age=3600, stale-while-revalidate=86400` |
+| `/_next/static/` | `max-age=31536000, immutable` |
 
 **Service Worker** (`public/sw.js`):
-- Automatically cleans up old caches on installation
-- Implements cache-first strategy for offline support
-- Removes outdated cache entries on deployment
-
-This ensures:
-✅ New deployments are reflected immediately in HTML
-✅ Images are cached for performance but updated within 1 hour
-✅ Static assets are aggressively cached (1 year) due to content hashing
-✅ No stale cache issues after deployment
-
----
-
-## 🔄 Customization Guide
-
-### 1. **Update Personal Information**
-
-Edit `src/lib/data/` files to customize:
-- `hero.ts` - Hero section (name, title, description)
-- `experience.ts` - Work experience timeline
-- `skills.ts` - Skills showcase
-- `projects.ts` - Projects gallery
-- `blog.ts` - Blog posts content
-- `social.ts` - Social media links
-
-### 2. **Customize Design**
-
-Modify `src/app/globals.css` for:
-- Color scheme (CSS variables)
-- Typography
-- Spacing
-- Custom animations
-
-### 3. **Update Theme Colors**
-
-Edit the theme colors in `tailwind.config.ts`:
-```typescript
-colors: {
-  primary: "...",
-  secondary: "...",
-  accent: "...",
-}
-```
-
-### 4. **Add Blog Posts**
-
-Add new blog posts in `src/lib/data/blog.ts`:
-
-```typescript
-{
-  slug: 'your-post-slug',
-  title: 'Your Post Title',
-  date: 'Month Day, Year',
-  excerpt: 'Brief description...',
-  imageUrl: '/blog/your-image.webp',
-  imageAiHint: 'Image description for AI',
-  content: `Your markdown content...`,
-  author: 'Your Name',
-  tags: ['Tag1', 'Tag2']
-}
-```
-
-### 5. **Configure Contact Form**
-
-Get a free API key from [Resend](https://resend.com) and add it to your `.env.local` file.
-
-### 6. **Cache Configuration**
-
-Modify cache headers in `next.config.ts`:
-- HTML pages: `max-age=0, must-revalidate`
-- Images: `max-age=3600, stale-while-revalidate=86400`
-- Static assets: `max-age=31536000, immutable`
-
----
-
-## 🚀 Deployment
-
-### Deploy to Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import your repository on [Vercel](https://vercel.com)
-3. Add environment variables in Vercel dashboard
-4. Deploy!
-
-Vercel will automatically deploy on every push to `main` branch.
-
-### Environment Variables for Production
-
-```bash
-RESEND_API_KEY=your_production_key
-EMAIL_FROM=noreply@yourdomain.com
-EMAIL_TO=your@email.com
-NEXT_PUBLIC_SITE_URL=https://yourdomain.com
-```
+- Cache-first strategy for offline support
+- Auto-bumped version on every `npm run build` via `update-sw` script
 
 ---
 
@@ -296,57 +141,139 @@ NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 
 ```
 personal-portfolio/
-├── public/              # Static assets (images, resume, etc.)
-│   ├── blog/           # Blog post images
-│   ├── images/         # General images
-│   └── projects/       # Project screenshots
-├── scripts/            # Utility scripts
+├── public/
+│   ├── images/              # Site images (hero-photo.webp, footer-photo.webp, etc.)
+│   ├── blog/                # Blog post images
+│   ├── projects/            # Project screenshots
+│   ├── docs/                # Downloadable resume PDF
+│   └── sw.js                # Service Worker
+├── scripts/
 │   ├── convert-images-to-webp.js
+│   ├── convert-heic-to-webp.js
+│   ├── send-blog-notification.js
+│   ├── update-sw-version.js
 │   └── README.md
 ├── src/
-│   ├── app/            # Next.js App Router
-│   │   ├── blog/       # Blog pages
-│   │   ├── globals.css # Global styles
-│   │   ├── layout.tsx  # Root layout
-│   │   └── page.tsx    # Home page
-│   ├── components/     # React components
-│   │   ├── common/     # Shared components
-│   │   ├── layout/     # Layout components
-│   │   ├── sections/   # Page sections
-│   │   └── ui/         # UI components (shadcn/ui)
-│   ├── context/        # React context providers
-│   ├── hooks/          # Custom React hooks
-│   ├── lib/            # Utility functions and data
-│   └── types/          # TypeScript type definitions
-├── .env.local          # Environment variables (not in git)
-├── next.config.ts      # Next.js configuration
-├── tailwind.config.ts  # Tailwind CSS configuration
-└── tsconfig.json       # TypeScript configuration
+│   ├── app/
+│   │   ├── about/           # /about page
+│   │   ├── api/             # API routes (contact, newsletter, etc.)
+│   │   ├── blog/            # /blog list + /blog/[slug] detail
+│   │   ├── feed.xml/        # RSS feed
+│   │   ├── privacy/         # /privacy page
+│   │   ├── terms/           # /terms page
+│   │   ├── why/             # /why storytelling page
+│   │   ├── globals.css      # CSS variables (light/dark themes)
+│   │   ├── layout.tsx       # Root layout with providers
+│   │   ├── page.tsx         # Homepage
+│   │   ├── robots.ts        # robots.txt
+│   │   └── sitemap.ts       # sitemap.xml
+│   ├── components/
+│   │   ├── blog/            # Blog-specific components (PostCard, NewsletterSubscribe, etc.)
+│   │   ├── common/          # Shared UI (Header, Footer, ThemeToggle, LanguageSwitcher, etc.)
+│   │   ├── ds/              # Custom Design System (Button, Input, Pill, Title, Text, AccentCard…)
+│   │   ├── email/           # Email templates (React Email)
+│   │   ├── layout/          # Header + Footer layout components
+│   │   ├── providers/       # React context providers wrapper
+│   │   ├── sections/        # Homepage sections (Hero, Experience, Skills, Projects, Blog, Contact)
+│   │   └── ui/              # shadcn/ui primitives (do NOT add DS components here)
+│   ├── context/             # ThemeContext, LocaleContext
+│   ├── hooks/               # useGSAP, useScrollTrigger, useIsMobile, useHashScroll, etc.
+│   ├── i18n/                # next-intl config + locale message files (en.json, es.json)
+│   ├── lib/
+│   │   ├── data/            # Static data (experience, projects, skills, blog posts, social links)
+│   │   ├── gsap-animations.ts  # Reusable GSAP utilities (parallaxEffect, staggerFadeIn, etc.)
+│   │   ├── metadata.ts      # SEO metadata helpers
+│   │   ├── performance.ts   # supportsAnimations, isLowEndDevice, prefersReducedMotion
+│   │   └── utils.ts         # cn() and general helpers
+│   └── types/               # Shared TypeScript types
+├── .env.local               # Environment variables (not in git)
+├── next.config.ts           # Next.js config + cache headers
+├── tailwind.config.ts       # Tailwind config
+└── tsconfig.json
 ```
 
 ---
 
-## 🤝 Contributing
+## 🎨 Design System (`src/components/ds/`)
 
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
+The project uses a hand-crafted design system. All components use inline styles + `useTheme` (not `dark:` Tailwind prefix) for theme-aware rendering.
+
+| Component | Props |
+|-----------|-------|
+| `Button` | `variant`: primary/secondary/ghost · `accent`: amber/indigo/green/neutral · `size` · `href` · `gradient` |
+| `Input` | `accent` · `error` · `forceDark` (for always-dark contexts like footer) |
+| `Pill` | `variant`: solid/outline · `accent` · `color` (hex override) |
+| `Title` | `as` · `gradient`: amber/indigo/green · `animate` (adds `reveal-up` class) |
+| `Text` | `strength`: primary/secondary/accent/muted · `accent` · `animate` |
+| `SectionLabel` | `accent` · `animate` |
+| `AccentCard` | Bordered card with accent tint |
+
+> Import from `@/components/ds`. Never add DS components to `src/components/ui/`.
+
+---
+
+## 🌐 Internationalization
+
+Translations live in `src/i18n/` as `en.json` and `es.json`. The `LanguageSwitcher` component in the header lets users toggle between locales. All page content and section copy is translated.
+
+---
+
+## 🔄 Customization Guide
+
+### Personal Information
+
+Edit files in `src/lib/data/`:
+
+| File | Content |
+|------|---------|
+| `experience.ts` | Work history |
+| `projects.ts` | Project showcase |
+| `skills.ts` | Skills & technologies |
+| `social.ts` | Social media links |
+| `blog/` | Blog posts (one file per post) |
+| `music.ts` | Music project links |
+
+Also update translations in `src/i18n/en.json` and `src/i18n/es.json` for hero copy, section labels, etc.
+
+### Theme Colors
+
+CSS variables in `src/app/globals.css` — separate `:root` (light) and `.dark` blocks. Key variables:
+
+```css
+--background, --foreground, --primary, --accent
+--why-background, --why-foreground   /* /why page */
+--wm-indigo, --wm-amber, --wm-green  /* section watermarks */
+```
+
+### Blog Posts
+
+Add a new `.ts` file to `src/lib/data/blog/` following the existing post schema, then export it from the index. Run `npm run notify-blog` to notify subscribers.
+
+### Adding Animations
+
+Use `animate` prop on `Title`, `Text`, `SectionLabel` DS components to add the `reveal-up` class. The homepage and `/why` page automatically initialize scroll-triggered entrance animations for these elements.
+
+---
+
+## 🚀 Deployment
+
+1. Push to `main` (production) or `develop` (staging)
+2. Vercel auto-deploys both branches
+3. Set environment variables in Vercel dashboard (same keys as `.env.local`)
 
 ---
 
 ## 📝 License
 
-This project is licensed under the MIT License - feel free to use it for your own portfolio!
+MIT — feel free to adapt for your own portfolio.
 
 ---
 
 ## 👨‍💻 Author
 
-**Sebastian Alvarez**
-- Website: [listerineh.dev](https://listerineh.dev)
-- GitHub: [@listerineh](https://github.com/listerineh)
+**Sebastian Alvarez**  
+[listerineh.dev](https://listerineh.dev) · [@listerineh](https://github.com/listerineh)
 
 ---
 
-⭐ If you found this project helpful, please consider giving it a star!
+⭐ If this helped you, a star is appreciated!
