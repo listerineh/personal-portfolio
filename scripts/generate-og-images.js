@@ -180,80 +180,140 @@ function htmlBlog() {
 
 function htmlHome() {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
-  ${baseStyles()}
   <style>
-    body { display: flex; align-items: center; }
-    .layout {
-      position: relative; z-index: 1; display: flex;
-      align-items: center; height: 100%;
-      padding: 56px 60px 56px 80px; gap: 52px; width: 100%;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: ${WIDTH}px; height: ${HEIGHT}px; overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #080808; color: #fff; position: relative;
     }
-    .left { flex: 0 0 52%; display: flex; flex-direction: column; }
-    .right { flex: 1; display: flex; align-items: center; justify-content: center; }
-    .site-url { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #5e6eb8; margin-bottom: 22px; }
-    .name { font-size: 76px; font-weight: 800; color: #eaedf5; line-height: 0.98; letter-spacing: -0.035em; margin-bottom: 18px; }
-    .role { font-size: 21px; color: #7880d0; font-weight: 600; margin-bottom: 28px; line-height: 1.4; }
-    .tagline { font-size: 15px; color: #484e72; font-weight: 400; margin-bottom: 36px; line-height: 1.6; }
-    .stack { display: flex; gap: 8px; flex-wrap: wrap; }
-    .pill { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid rgba(255,255,255,0.11); background: rgba(255,255,255,0.055); color: rgba(255,255,255,0.6); }
-    .pill.p { background: rgba(98,114,212,0.14); border-color: rgba(98,114,212,0.35); color: #8b9ae8; }
-    .panel { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 20px; padding: 24px; width: 100%; display: flex; flex-direction: column; gap: 0; }
-    .row { display: flex; align-items: center; gap: 14px; padding: 15px 14px; border-radius: 12px; }
-    .row:hover { background: transparent; }
-    .ico { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; }
-    .val { font-size: 26px; font-weight: 800; color: #eaedf5; line-height: 1; }
-    .lbl { font-size: 11.5px; color: rgba(255,255,255,0.4); margin-top: 2px; }
-    .sep { height: 1px; background: rgba(255,255,255,0.05); margin: 0 4px; }
+    /* Noise texture */
+    .noise {
+      position: absolute; inset: 0; opacity: 0.025; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 150px 150px;
+    }
+    /* Amber glow */
+    .glow-amber {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      filter: blur(100px);
+    }
+    /* Amber top border */
+    .top-border {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 10;
+      background: linear-gradient(90deg, transparent 0%, #f59e0b 35%, #fcd34d 60%, transparent 100%);
+    }
+    /* Vertical separator */
+    .v-sep {
+      position: absolute; left: 55%; top: 64px; bottom: 64px; width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.07) 25%, rgba(255,255,255,0.07) 75%, transparent);
+    }
+    /* Left column */
+    .left {
+      position: absolute; left: 80px; top: 0; bottom: 0; width: 46%;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.28em;
+      text-transform: uppercase; color: rgba(245,158,11,0.7); margin-bottom: 28px;
+    }
+    .name-first { font-size: 90px; font-weight: 800; line-height: 0.88; letter-spacing: -0.04em; color: rgba(255,255,255,0.92); }
+    .name-last {
+      font-size: 90px; font-weight: 800; line-height: 0.88; letter-spacing: -0.04em;
+      background: linear-gradient(90deg, #f59e0b, #fcd34d, #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .role {
+      font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.4);
+      margin-top: 28px; line-height: 1.5; letter-spacing: 0.01em;
+    }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px; }
+    .tag {
+      padding: 5px 14px; border-radius: 100px; font-size: 11.5px; font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.04);
+    }
+    .tag.amber {
+      border-color: rgba(245,158,11,0.3); color: #f59e0b;
+      background: rgba(245,158,11,0.08);
+    }
+    /* Right column – stats */
+    .right {
+      position: absolute; left: 58%; right: 64px; top: 0; bottom: 0;
+      display: flex; flex-direction: column; justify-content: center; gap: 0;
+    }
+    .stats-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.22); margin-bottom: 24px;
+    }
+    .stat-row {
+      display: flex; align-items: flex-start; gap: 0;
+      padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-num {
+      font-size: 44px; font-weight: 800; line-height: 1; letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.88); min-width: 130px;
+    }
+    .stat-num.amber { color: #f59e0b; }
+    .stat-info { display: flex; flex-direction: column; justify-content: center; padding-top: 6px; }
+    .stat-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.65); line-height: 1.3; }
+    .stat-sub { font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.28); margin-top: 3px; }
+    .domain {
+      position: absolute; bottom: 56px; left: 80px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.18);
+    }
   </style>
 </head><body>
+  <div class="noise"></div>
   <div class="top-border"></div>
-  <div class="dot-grid"></div>
-  <div class="glow" style="width:620px;height:620px;top:-200px;right:-80px;background:radial-gradient(circle, rgba(98,114,212,0.24), transparent 68%);"></div>
-  <div class="glow" style="width:420px;height:420px;bottom:-160px;left:-40px;background:radial-gradient(circle, rgba(140,60,190,0.14), transparent 70%);"></div>
+  <div class="glow-amber" style="width:500px;height:500px;top:-180px;left:-60px;background:radial-gradient(circle, rgba(245,158,11,0.12), transparent 68%);"></div>
+  <div class="glow-amber" style="width:380px;height:380px;bottom:-140px;right:80px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+  <div class="v-sep"></div>
 
-  <div class="layout">
-    <div class="left">
-      <div class="site-url">listerineh.dev</div>
-      <div class="name">Sebastian<br>Alvarez</div>
-      <div class="role">Senior Fullstack &amp;<br>Platform Engineer</div>
-      <div class="tagline">Building fast, scalable systems from Ecuador<br>for the global tech ecosystem.</div>
-      <div class="stack">
-        <span class="pill p">React</span>
-        <span class="pill p">Next.js</span>
-        <span class="pill p">Python</span>
-        <span class="pill">AWS</span>
-        <span class="pill">Kubernetes</span>
-        <span class="pill">AI Agents</span>
-        <span class="pill">GDG Organizer</span>
+  <!-- Left: identity -->
+  <div class="left">
+    <div class="eyebrow">Full-Stack Engineer</div>
+    <div class="name-first">Sebastian</div>
+    <div class="name-last">Alvarez</div>
+    <div class="role">Senior Platform Engineer &amp;<br>Open Source Contributor</div>
+    <div class="tags">
+      <span class="tag amber">React &amp; Next.js</span>
+      <span class="tag amber">Python</span>
+      <span class="tag">AWS · Azure · GCP</span>
+      <span class="tag">AI Agents</span>
+      <span class="tag">GDG Quito</span>
+    </div>
+  </div>
+
+  <!-- Right: stats -->
+  <div class="right">
+    <div class="stats-label">At a glance</div>
+    <div class="stat-row">
+      <div class="stat-num amber">6+</div>
+      <div class="stat-info">
+        <div class="stat-title">Years of engineering</div>
+        <div class="stat-sub">Production systems at scale</div>
       </div>
     </div>
-
-    <div class="right">
-      <div class="panel">
-        <div style="font-size:10.5px;color:rgba(255,255,255,0.28);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;padding:0 4px;">Highlights</div>
-
-        <div class="row">
-          <div class="ico" style="background:rgba(98,114,212,0.14);border:1px solid rgba(98,114,212,0.25);">⚡</div>
-          <div><div class="val">6+</div><div class="lbl">Years of professional engineering</div></div>
-        </div>
-        <div class="sep"></div>
-        <div class="row">
-          <div class="ico" style="background:rgba(52,168,83,0.12);border:1px solid rgba(52,168,83,0.22);">🌍</div>
-          <div><div class="val">4.6K+</div><div class="lbl">GDG Quito community members</div></div>
-        </div>
-        <div class="sep"></div>
-        <div class="row">
-          <div class="ico" style="background:rgba(251,188,4,0.12);border:1px solid rgba(251,188,4,0.22);">🚀</div>
-          <div><div class="val">6+</div><div class="lbl">Open source projects shipped</div></div>
-        </div>
-        <div class="sep"></div>
-        <div class="row">
-          <div class="ico" style="background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.22);">☁️</div>
-          <div><div class="val">Multi-cloud</div><div class="lbl">AWS · Azure · GCP</div></div>
-        </div>
+    <div class="stat-row">
+      <div class="stat-num">100%</div>
+      <div class="stat-info">
+        <div class="stat-title">Remote track record</div>
+        <div class="stat-sub">US-based companies from Ecuador</div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-num">4.6K+</div>
+      <div class="stat-info">
+        <div class="stat-title">GDG Quito community</div>
+        <div class="stat-sub">DevFests, workshops, tech talks</div>
       </div>
     </div>
   </div>
+
+  <div class="domain">listerineh.dev</div>
 </body></html>`;
 }
 

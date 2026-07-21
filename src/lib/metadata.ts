@@ -14,8 +14,8 @@ interface PageMetadata {
 const metadata: Record<string, Record<Locale, PageMetadata>> = {
   home: {
     en: {
-      title: 'Sebastian Alvarez | Senior Fullstack & Platform Engineer',
-      description: 'Senior fullstack & platform engineer building scalable systems with React, Next.js, Python and AWS. GDG Quito organizer, open source contributor & technical blogger based in Ecuador.',
+      title: 'Sebastian Alvarez | Full-Stack Engineer & Platform Builder',
+      description: 'Full-stack engineer crafting scalable cloud systems with React, Next.js, Python and AWS. 6+ years of remote experience, GDG Quito organizer, open source contributor and technical blogger from Ecuador.',
       keywords: [
         'Sebastian Alvarez',
         'listerineh',
@@ -43,8 +43,8 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
       image: '/images/home-og.webp',
     },
     es: {
-      title: 'Sebastian Alvarez | Ingeniero Fullstack Senior & Platform Engineer',
-      description: 'Ingeniero fullstack senior construyendo sistemas escalables con React, Next.js, Python y AWS. Organizador de GDG Quito, contribuidor open source y blogger técnico desde Ecuador.',
+      title: 'Sebastian Alvarez | Ingeniero Full-Stack & Platform Builder',
+      description: 'Ingeniero full-stack que diseña sistemas cloud escalables con React, Next.js, Python y AWS. Más de 6 años de experiencia remota, organizador de GDG Quito, contribuidor open source y blogger técnico desde Ecuador.',
       keywords: [
         'Sebastian Alvarez',
         'listerineh',
