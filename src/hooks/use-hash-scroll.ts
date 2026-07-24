@@ -26,23 +26,14 @@ export function useHashScroll() {
       const section = document.getElementById(sectionId);
       
       if (section) {
-        // Mark as scrolled to prevent multiple executions
         hasScrolledRef.current = true;
-        
-        // Wait a bit more to ensure GSAP animations are set up
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           const headerOffset = 100;
           const elementPosition = section.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.scrollY - headerOffset;
-          
-          // Use instant scroll when coming from another page
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'instant'
-          });
-        }, 300);
+          window.scrollTo({ top: offsetPosition, behavior: 'instant' });
+        });
       } else if (attempts < maxAttempts) {
-        // Section not found yet, try again
         attempts++;
         setTimeout(scrollToSection, 100);
       }

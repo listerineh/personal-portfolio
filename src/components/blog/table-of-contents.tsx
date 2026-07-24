@@ -140,12 +140,12 @@ export function TableOfContents({ content }: TableOfContentsProps) {
   return (
     <nav className="space-y-3">
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground mb-4">
-          <List className="h-4 w-4" />
-          <span>{t('tableOfContents')}</span>
+        <div className="flex items-center gap-2 mb-4">
+          <List className="h-3.5 w-3.5 text-foreground/35" />
+          <p className="font-headline text-[10px] tracking-[0.3em] uppercase text-foreground/35">{t('tableOfContents')}</p>
         </div>
         
-        <ul className="space-y-2 text-sm border-l-2 border-border/50">
+        <ul className="space-y-1 text-sm border-l-2 border-foreground/[0.07]">
           {headings.map((heading) => (
             <li
               key={heading.id}
@@ -158,7 +158,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                 onClick={() => handleHeadingClick(heading.id, heading.text)}
                 className={cn(
                   'block w-full text-left py-1 px-4 -ml-[2px] border-l-2 transition-all duration-200',
-                  'text-muted-foreground border-transparent hover:text-primary hover:border-primary cursor-pointer'
+                  'text-foreground/40 border-transparent hover:text-amber-500 dark:hover:text-amber-400 hover:border-amber-400 cursor-pointer'
                 )}
               >
                 {heading.text}

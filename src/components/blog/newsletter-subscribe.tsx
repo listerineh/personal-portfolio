@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Button, Input } from '@/components/ds';
 import { Mail, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -12,6 +12,7 @@ interface NewsletterSubscribeProps {
 
 export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribeProps) {
   const t = useTranslations('newsletter');
+  const locale = useLocale();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
@@ -32,7 +33,7 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
 
       const data = await response.json();

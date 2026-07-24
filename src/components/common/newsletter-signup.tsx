@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ds';
 import { useToast } from '@/hooks/use-toast';
 
 export function NewsletterSignup() {
   const t = useTranslations('blog');
+  const locale = useLocale();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -22,7 +23,7 @@ export function NewsletterSignup() {
       const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale }),
       });
 
       if (!response.ok) {

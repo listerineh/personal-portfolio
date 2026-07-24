@@ -3,7 +3,7 @@
 import { forwardRef } from 'react';
 import { useTranslations } from 'next-intl';
 import type { BlogPost } from '@/types';
-import { Pill, Button } from '@/components/ds';
+import { Pill, Button, Title, SectionLabel } from '@/components/ds';
 import { ShareButtons } from './share-buttons';
 import { BlogViews } from './blog-views';
 import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
@@ -26,9 +26,9 @@ export const BlogPostHeader = forwardRef<HTMLElement, BlogPostHeaderProps>(
         </Button>
         
         <div className="flex flex-col gap-4 mb-6">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-headline font-bold text-primary leading-tight">
+          <Title as="h1" style={{ fontSize: 'clamp(1.9rem, 5vw, 3.8rem)' }} className="leading-[1.1]">
             {post.title}
-          </h1>
+          </Title>
           <div className="hidden md:block">
             <ShareButtons 
               title={post.title} 
@@ -37,7 +37,7 @@ export const BlogPostHeader = forwardRef<HTMLElement, BlogPostHeaderProps>(
           </div>
         </div>
         
-        <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-6 sm:gap-y-2 text-sm sm:text-base text-muted-foreground mb-4">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-6 sm:gap-y-2 text-sm text-foreground/45 mb-4">
           <div className="flex items-center">
             <CalendarDays className="mr-2 h-5 w-5" />
             <span>{formatDate(post.date)}</span>
@@ -58,7 +58,7 @@ export const BlogPostHeader = forwardRef<HTMLElement, BlogPostHeaderProps>(
             <div className="flex flex-wrap items-center gap-2">
               <Tag className="mr-1.5 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
               {post.tags.map((tag) => (
-                <Pill key={tag} variant="outline" accent="indigo">{tag}</Pill>
+                <Pill key={tag} variant="outline" accent="amber" uppercase={false}>{tag}</Pill>
               ))}
             </div>
           )}

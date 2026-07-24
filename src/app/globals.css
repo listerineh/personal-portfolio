@@ -348,3 +348,9 @@ h1, h2, h3, h4, h5, h6 {
 .delay-800 {
   animation-delay: 800ms;
 }
+
+.prose h2 {
+  margin-top: 2.5rem !important;
+  margin-bottom: 2rem !important;
+  padding-bottom: 1rem !important;
+}

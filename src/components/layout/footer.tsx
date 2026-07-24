@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -253,8 +253,8 @@ export function Footer() {
             <nav aria-label="Footer navigation">
               <ul className="flex flex-wrap items-center gap-x-1 gap-y-3">
                 {navItems.map((link, index) => (
-                  <>
-                    <li key={link.label}>
+                  <Fragment key={link.label}>
+                    <li>
                       <Link
                         ref={(el) => { navLinksRef.current[index] = el; }}
                         href={link.href}
@@ -264,9 +264,9 @@ export function Footer() {
                       </Link>
                     </li>
                     {index < navItems.length - 1 && (
-                      <li key={`sep-${index}`} className="text-white/15 select-none text-xs">·</li>
+                      <li className="text-white/15 select-none text-xs">·</li>
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </ul>
             </nav>

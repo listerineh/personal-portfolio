@@ -42,25 +42,30 @@
   "experience": {
     "title": "Experiencia Laboral",
     "badge": "Carrera",
-    "showAll": "Mostrar Toda la Experiencia"
+    "showAll": "Mostrar Toda la Experiencia",
+    "watermark": "CARRERA"
   },
   "skills": {
     "title": "Tecnologías con las que Trabajo",
     "badge": "Stack Tecnológico",
-    "description": "Competente con una amplia gama de herramientas y frameworks de desarrollo modernos, siempre dispuesto a explorar tecnologías emergentes."
+    "description": "Competente con una amplia gama de herramientas y frameworks de desarrollo modernos, siempre dispuesto a explorar tecnologías emergentes.",
+    "watermark": "STACK"
   },
   "projects": {
     "title": "Proyectos Destacados",
-    "badge": "Pasatiempos"
+    "badge": "Pasatiempos",
+    "watermark": "PROYECTOS"
   },
   "blog": {
     "title": "Últimos Pensamientos",
     "badge": "Blog",
+    "watermark": "BLOG",
     "viewAllPosts": "Ver Todos los Posts",
     "pageTitle": "Mi Blog de Desarrollo",
     "pageDescription": "Artículos técnicos sobre ingeniería de software, infraestructura en la nube y desarrollo web moderno",
     "noArticles": "No se encontraron artículos que coincidan con tu búsqueda.",
     "tryAdjusting": "Intenta ajustar tus filtros o consulta de búsqueda.",
+    "endOfList": "Eso es todo por ahora",
     "readingTime": "{minutes} min de lectura",
     "by": "Por",
     "views": "vistas",
@@ -181,6 +186,12 @@
     "skipToContent": "Saltar al contenido principal",
     "heroBadge": "+6 Años de Experiencia",
     "heroTitle": "Hola, soy Sebastian",
+    "heroGreeting": "Hola, soy",
+    "wmStory": "HISTORIA",
+    "wmJourney": "RECORRIDO",
+    "wmCode": "CÓDIGO",
+    "wmGdg": "GDG",
+    "wmMusic": "MÚSICA",
     "heroRole": "Senior Fullstack & Platform Engineer",
     "heroDescription": "Ingeniero de software de Quito, Ecuador, apasionado por construir sistemas robustos, liderar equipos de ingeniería y explorar la intersección entre IA y arquitectura distribuida. Cuando no estoy en el código, estoy haciendo música.",
     "heroCTA": "Contáctame",
@@ -385,6 +396,7 @@
     "contact": "Contacto"
   },
   "error": {
+    "errorCode": "Error",
     "title": "¡Algo salió mal!",
     "description": "Encontramos un error inesperado. No te preocupes, estamos trabajando en solucionarlo.",
     "tryAgain": "Intentar de nuevo",

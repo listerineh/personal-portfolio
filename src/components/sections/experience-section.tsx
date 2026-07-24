@@ -52,8 +52,8 @@ export function ExperienceSection() {
   const visible = showAll ? experiences : experiences.slice(0, 3);
 
   return (
-    <section id="experience" className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
-      <div ref={sectionRef} className="max-w-5xl mx-auto relative z-10">
+    <section id="experience" className="relative py-28 md:py-44 overflow-hidden">
+      <div ref={sectionRef} className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
         <SectionLabel accent="indigo" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
         <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
           {t('title')}
@@ -91,14 +91,10 @@ export function ExperienceSection() {
 
       {/* Watermark */}
       <div
-        className="absolute right-[-2vw] font-headline font-black pointer-events-none select-none leading-none whitespace-nowrap"
-        style={{
-          top: '8%',
-          fontSize: 'clamp(5rem, 11vw, 10rem)',
-          color: 'var(--wm-indigo)',
-        }}
+        className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
+        style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-indigo)' }}
       >
-        CAREER
+        {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
       </div>
     </section>
   );

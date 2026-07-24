@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ds';
+import { Button, Title, Text, SectionLabel } from '@/components/ds';
 import { AlertTriangle } from 'lucide-react';
 
 export default function Error({
@@ -19,26 +19,25 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="max-w-md w-full text-center space-y-6">
-        <div className="flex justify-center">
-          <div className="rounded-full bg-destructive/10 p-6">
-            <AlertTriangle className="h-12 w-12 text-destructive" />
+    <div className="min-h-screen flex items-center justify-center bg-background px-6">
+      <div className="max-w-lg w-full text-center">
+        <div className="flex justify-center mb-8">
+          <div className="rounded-full bg-amber-400/10 border border-amber-400/20 p-5">
+            <AlertTriangle className="h-10 w-10 text-amber-400" />
           </div>
         </div>
-        
-        <div className="space-y-2">
-          <h1 className="text-3xl font-headline font-bold text-primary">
-            {t('title')}
-          </h1>
-          <p className="text-muted-foreground">
-            {t('description')}
-          </p>
-        </div>
+
+        <SectionLabel accent="amber" className="mb-5">{t('errorCode')}</SectionLabel>
+        <Title as="h1" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)' }} className="mb-4">
+          {t('title')}
+        </Title>
+        <Text size="base" strength="secondary" className="max-w-sm mx-auto mb-10">
+          {t('description')}
+        </Text>
 
         {process.env.NODE_ENV === 'development' && (
-          <div className="bg-muted p-4 rounded-lg text-left">
-            <p className="text-xs font-mono text-destructive break-all">
+          <div className="bg-muted/50 p-4 rounded-xl border border-foreground/[0.06] text-left mb-8">
+            <p className="text-xs font-mono text-amber-500/80 break-all">
               {error.message}
             </p>
           </div>
@@ -48,7 +47,7 @@ export default function Error({
           <Button variant="secondary" accent="neutral" size="md" onClick={reset}>
             {t('tryAgain')}
           </Button>
-          <Button variant="primary" accent="indigo" size="md" onClick={() => { window.location.href = '/'; }}>
+          <Button variant="primary" accent="amber" size="md" onClick={() => { window.location.href = '/'; }}>
             {t('goHome')}
           </Button>
         </div>

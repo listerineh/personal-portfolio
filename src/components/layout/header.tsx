@@ -200,6 +200,7 @@ export function Header() {
       } else {
         closeMobileMenu();
         setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
           router.push(href, { scroll: false });
         }, 150);
       }
@@ -261,6 +262,7 @@ export function Header() {
                       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                     }
                   } else {
+                    window.scrollTo({ top: 0, behavior: 'instant' });
                     router.push(item.href, { scroll: false });
                   }
                 }

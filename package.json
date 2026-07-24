@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "node scripts/setup-playwright.js",
-    "dev": "next dev --turbopack -p 9004",
+    "dev": "next dev --turbopack -p 9005",
     "prebuild": "node scripts/update-sw-version.js",
     "build": "next build",
     "analyze": "ANALYZE=true npm run build",

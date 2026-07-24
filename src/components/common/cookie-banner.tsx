@@ -46,7 +46,6 @@ export function CookieBanner() {
     saveCookieConsent(consent);
     setShowSettings(false);
     setShowBanner(false);
-    window.location.reload();
   };
 
   if (!showBanner) return null;

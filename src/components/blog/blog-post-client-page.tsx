@@ -186,12 +186,12 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
         </div>
       </aside>
       <main className="pt-20 bg-background">
-        <div className="fixed top-20 left-0 right-0 h-0.5 z-50" style={{ background: 'rgba(255,255,255,0.08)' }}>
-          <div className="h-full bg-primary transition-all duration-150" style={{ width: `${readingProgress}%` }} />
+        <div className="fixed top-20 left-0 right-0 h-0.5 z-50 bg-foreground/[0.06]">
+          <div className="h-full bg-amber-400 transition-all duration-150" style={{ width: `${readingProgress}%` }} />
         </div>
-        <div className="container mx-auto px-4 py-12 md:py-16 xl:mr-[320px]">
-          <div className="relative max-w-7xl mx-auto">
-            <article key={post.slug} ref={contentRef} className="max-w-4xl">
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 py-12 md:py-16 xl:mr-[320px]">
+          <div className="relative">
+            <article key={post.slug} ref={contentRef}>
           <BlogPostHeader 
             ref={headerRef}
             post={post}
@@ -208,7 +208,7 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
             />
           )}
 
-          <div className="my-6 md:my-12" style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+          <div className="my-6 md:my-12 h-px bg-foreground/[0.06]" />
 
           <BlogPostContent ref={proseRef} content={post.content} />
 
@@ -218,7 +218,7 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
             url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`}
           />
 
-          <div className="my-12" style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+          <div className="my-12 h-px bg-foreground/[0.06]" />
 
           <div className="text-center">
             <Button variant="secondary" accent="neutral" size="md" href="/blog">

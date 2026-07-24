@@ -210,8 +210,8 @@ export default function WhyPage() {
         </section>
 
         {/* ── ORIGIN / THE NAME ─────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24">
-          <div className="max-w-5xl mx-auto">
+        <section className="relative py-28 md:py-44 overflow-hidden">
+          <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24">
             <SectionLabel animate className="mb-8">{t('originBadge')}</SectionLabel>
             <Title as="h2" animate className="mb-12" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
               {t('originHeadline')}
@@ -221,21 +221,12 @@ export default function WhyPage() {
               <Text size="lg" strength="secondary" animate className="md:text-xl">{t('originParagraph2')}</Text>
             </div>
           </div>
-          <div
-            className="absolute right-0 top-1/2 -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
-            style={{
-              fontSize: 'clamp(8rem, 22vw, 22rem)',
-              color: theme === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(80,80,80,0.08)',
-            }}
-          >
-            ?
-          </div>
         </section>
 
         {/* ── MARGARITA NUGGET ──────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+        <section className="relative py-28 md:py-44 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.07] to-amber-950/0 pointer-events-none" />
-          <div className="max-w-6xl mx-auto relative z-10">
+          <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
 
             <div className="reveal-up flex flex-wrap items-center gap-3 mb-10">
               <Pill color="#f59e0b">{t('mnBadge')}</Pill>
@@ -307,21 +298,21 @@ export default function WhyPage() {
           </div>
 
           <div
-            className="absolute right-[-2vw] -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
+            className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
             style={{
-              top: 'clamp(18rem, calc(14rem + 15vw), 28rem)',
-              fontSize: 'clamp(10rem, 28vw, 28rem)',
-              color: theme === 'dark' ? 'rgba(251,191,36,0.04)' : 'rgba(217,119,6,0.1)',
+              top: '8%',
+              fontSize: 'clamp(7rem, 18vw, 14rem)',
+              color: theme === 'dark' ? 'rgba(251,191,36,0.05)' : 'rgba(217,119,6,0.1)',
             }}
           >
-            MN
+            {Array.from({ length: 12 }, (_, i) => <span key={i}>MN&nbsp;&nbsp;</span>)}
           </div>
         </section>
 
         {/* ── SOFONES SOLARES ───────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+        <section className="relative py-28 md:py-44 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/0 via-indigo-950/[0.07] to-indigo-950/0 pointer-events-none" />
-          <div className="max-w-6xl mx-auto relative z-10">
+          <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
 
             <div className="reveal-up flex flex-wrap items-center gap-3 mb-10">
               <Pill color="#818cf8">{t('ssBadge')}</Pill>
@@ -403,21 +394,21 @@ export default function WhyPage() {
           </div>
 
           <div
-            className="absolute right-[-2vw] -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
+            className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
             style={{
-              top: 'clamp(18rem, calc(14rem + 15vw), 28rem)',
-              fontSize: 'clamp(10rem, 28vw, 28rem)',
-              color: theme === 'dark' ? 'rgba(129,140,248,0.04)' : 'rgba(99,102,241,0.1)',
+              top: '8%',
+              fontSize: 'clamp(7rem, 18vw, 14rem)',
+              color: theme === 'dark' ? 'rgba(129,140,248,0.05)' : 'rgba(99,102,241,0.1)',
             }}
           >
-            SS
+            {Array.from({ length: 12 }, (_, i) => <span key={i}>SS&nbsp;&nbsp;</span>)}
           </div>
         </section>
 
         {/* ── LISTERINEH SOLO ───────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+        <section className="relative py-28 md:py-44 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-green-950/0 via-green-950/[0.07] to-green-950/0 pointer-events-none" />
-          <div className="max-w-6xl mx-auto relative z-10">
+          <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
 
             <div className="reveal-up flex flex-wrap items-center gap-3 mb-10">
               <Pill color="#1DB954">{t('soloBadge')}</Pill>
@@ -469,14 +460,14 @@ export default function WhyPage() {
           </div>
 
           <div
-            className="absolute right-[-2vw] -translate-y-1/2 font-headline font-black pointer-events-none select-none leading-none"
+            className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
             style={{
-              top: 'clamp(18rem, calc(14rem + 15vw), 28rem)',
-              fontSize: 'clamp(10rem, 28vw, 28rem)',
-              color: theme === 'dark' ? 'rgba(29,185,84,0.05)' : 'rgba(29,185,84,0.1)',
+              top: '8%',
+              fontSize: 'clamp(7rem, 18vw, 14rem)',
+              color: theme === 'dark' ? 'rgba(29,185,84,0.06)' : 'rgba(29,185,84,0.1)',
             }}
           >
-            LH
+            {Array.from({ length: 12 }, (_, i) => <span key={i}>LH&nbsp;&nbsp;</span>)}
           </div>
         </section>
 
@@ -496,9 +487,9 @@ export default function WhyPage() {
             />
           </div>
           {/* Overlays — static, outside parallax div */}
-          <div className="absolute inset-0 bg-black/70" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50" />
+          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center py-24">
             <SectionLabel animate className="mb-8 text-white/80">{t('ctaBadge')}</SectionLabel>

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { usePathname } from 'next/navigation';
 import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,8 +12,6 @@ if (typeof window !== 'undefined') {
 }
 
 export function BackToTopButton() {
-  const pathname = usePathname();
-  const isOnMusicPage = pathname === '/why';
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [hasReachedTop, setHasReachedTop] = useState(false);
@@ -143,11 +140,7 @@ export function BackToTopButton() {
       ref={buttonRef}
       onClick={scrollToTop}
       aria-label="Back to top"
-      className={`fixed bottom-8 right-8 z-40 h-11 w-11 rounded-full shadow-xl flex items-center justify-center opacity-0 scale-0 font-bold border-0 transition-colors duration-200 ${
-        isOnMusicPage
-          ? 'bg-[#1DB954] hover:bg-[#1ed760] text-black'
-          : 'bg-amber-400 hover:bg-amber-300 text-black'
-      }`}
+      className="fixed bottom-8 right-8 z-40 h-11 w-11 rounded-full shadow-xl flex items-center justify-center opacity-0 scale-0 font-bold border-0 transition-colors duration-200 bg-amber-400 hover:bg-amber-300 text-black"
     >
       <ArrowUp className="h-5 w-5" />
     </button>

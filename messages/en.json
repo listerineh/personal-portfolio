@@ -42,26 +42,31 @@
   "experience": {
     "title": "Work Experience",
     "badge": "Career",
-    "showAll": "Show All Experience"
+    "showAll": "Show All Experience",
+    "watermark": "CAREER"
   },
   "skills": {
     "title": "Technologies I Work With",
     "badge": "Tech Stack",
-    "description": "Proficient with a diverse range of modern development tools and frameworks, always keen to explore emerging technologies."
+    "description": "Proficient with a diverse range of modern development tools and frameworks, always keen to explore emerging technologies.",
+    "watermark": "STACK"
   },
   "projects": {
     "title": "Featured Projects",
-    "badge": "Hobbies"
+    "badge": "Hobbies",
+    "watermark": "HOBBIES"
   },
   "blog": {
     "title": "Latest Thoughts",
     "badge": "Blog",
+    "watermark": "BLOG",
     "readingTime": "{minutes} min read",
     "viewAllPosts": "View All Posts",
     "pageTitle": "My Dev Blog",
     "pageDescription": "Technical articles about software engineering, cloud infrastructure, and modern web development",
     "noArticles": "No articles found matching your search.",
     "tryAdjusting": "Try adjusting your filters or search query.",
+    "endOfList": "You've seen it all",
     "by": "By",
     "views": "views",
     "view": "view",
@@ -181,6 +186,12 @@
     "skipToContent": "Skip to main content",
     "heroBadge": "+6 Years of Experience",
     "heroTitle": "Hey, I'm Sebastian",
+    "heroGreeting": "Hey, I'm",
+    "wmStory": "STORY",
+    "wmJourney": "JOURNEY",
+    "wmCode": "CODE",
+    "wmGdg": "GDG",
+    "wmMusic": "MUSIC",
     "heroRole": "Senior Fullstack & Platform Engineer",
     "heroDescription": "A software engineer from Quito, Ecuador with a deep love for building robust systems, leading engineering teams, and exploring the frontier of AI and distributed architecture. When I'm not in the code, I'm making music.",
     "heroCTA": "Get in Touch",
@@ -385,6 +396,7 @@
     "contact": "Contact"
   },
   "error": {
+    "errorCode": "Error",
     "title": "Something went wrong!",
     "description": "We encountered an unexpected error. Don't worry, we're working on fixing it.",
     "tryAgain": "Try again",

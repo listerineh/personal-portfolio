@@ -3,113 +3,194 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline - Sebastian Alvarez</title>
+  <title>Offline — Sebastian Alvarez</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-      background: linear-gradient(135deg, #f0f2f5 0%, #e8eaed 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 1.5rem;
+      overflow: hidden;
+      position: relative;
     }
-    
+
+    .watermark {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(8rem, 35vw, 28rem);
+      font-weight: 900;
+      color: rgba(251, 191, 36, 0.04);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
     .container {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      width: 100%;
       text-align: center;
-      max-width: 500px;
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     }
-    
-    .icon {
-      font-size: 64px;
-      margin-bottom: 20px;
+
+    .icon-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 9999px;
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      margin-bottom: 2rem;
     }
-    
+
+    .icon-wrap svg {
+      width: 2rem;
+      height: 2rem;
+      color: #fbbf24;
+      stroke: #fbbf24;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .label {
+      font-size: 0.625rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(251, 191, 36, 0.6);
+      margin-bottom: 1.25rem;
+    }
+
     h1 {
-      font-size: 28px;
-      color: #1a1a1a;
-      margin-bottom: 12px;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 1rem;
     }
-    
+
     p {
-      color: #666;
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 30px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1.7;
+      max-width: 340px;
+      margin: 0 auto 2.5rem;
     }
-    
-    .button {
-      display: inline-block;
-      background: #3F51B5;
-      color: white;
-      padding: 12px 30px;
-      border-radius: 6px;
-      text-decoration: none;
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 240px;
+      padding: 0.625rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
       font-weight: 600;
-      transition: background 0.3s ease;
+      cursor: pointer;
+      transition: opacity 0.2s;
     }
-    
-    .button:hover {
-      background: #303f9f;
+    .btn:hover { opacity: 0.85; }
+
+    .btn-primary {
+      background: #f59e0b;
+      color: #000;
+      border: none;
     }
-    
-    .cached-content {
-      margin-top: 40px;
-      padding-top: 30px;
-      border-top: 1px solid #eee;
-      text-align: left;
+
+    .btn-secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.12);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-    
-    .cached-content h2 {
-      font-size: 16px;
-      color: #1a1a1a;
-      margin-bottom: 15px;
+
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 1.75rem;
     }
-    
+
+    .cached-label {
+      font-size: 0.625rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 1.25rem;
+    }
+
     .cached-links {
       list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
     }
-    
-    .cached-links li {
-      margin-bottom: 10px;
-    }
-    
+
     .cached-links a {
-      color: #3F51B5;
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
       text-decoration: none;
-      font-size: 14px;
+      transition: color 0.2s;
     }
-    
-    .cached-links a:hover {
-      text-decoration: underline;
-    }
+    .cached-links a:hover { color: #f59e0b; }
   </style>
 </head>
 <body>
+  <div class="watermark">OFFLINE</div>
+
   <div class="container">
-    <div class="icon">📡</div>
+    <div class="icon-wrap">
+      <svg viewBox="0 0 24 24">
+        <line x1="1" y1="1" x2="23" y2="23"/>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/>
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/>
+        <path d="M10.71 5.05A16 16 0 0 1 22.56 9"/>
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+        <line x1="12" y1="20" x2="12.01" y2="20"/>
+      </svg>
+    </div>
+
+    <p class="label">No connection</p>
     <h1>You're Offline</h1>
     <p>It looks like you've lost your internet connection. Some features may not be available right now.</p>
-    
-    <button class="button" onclick="location.reload()">Try Again</button>
-    
-    <div class="cached-content">
-      <h2>Cached Pages</h2>
-      <ul class="cached-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/blog">Blog</a></li>
-      </ul>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
+      <a href="/" class="btn btn-secondary">Go to Homepage</a>
     </div>
+
+    <hr class="divider">
+    <p class="cached-label">Cached pages</p>
+    <ul class="cached-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
   </div>
 </body>
 </html>

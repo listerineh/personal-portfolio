@@ -11,148 +11,121 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   email,
   message,
 }) => (
-  <div style={{ 
+  <div style={{
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    maxWidth: '600px', 
-    margin: '0 auto', 
-    backgroundColor: '#ffffff',
-    border: '1px solid #e5e7eb',
-    borderRadius: '12px',
-    overflow: 'hidden'
+    maxWidth: '600px',
+    margin: '0 auto',
+    backgroundColor: '#111113',
+    border: '1px solid rgba(255,255,255,0.07)',
+    borderRadius: '16px',
+    overflow: 'hidden',
   }}>
-    {/* Header with gradient */}
-    <div style={{ 
-      background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-      padding: '40px 30px',
-      textAlign: 'center'
-    }}>
-      <h1 style={{ 
-        fontSize: '28px', 
-        fontWeight: '700',
-        margin: '0 0 8px 0',
-        color: '#ffffff',
-        letterSpacing: '-0.5px'
+    {/* Amber top accent bar */}
+    <div style={{ height: '3px', background: '#f59e0b' }} />
+
+    {/* Header */}
+    <div style={{ padding: '36px 32px 28px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+      <p style={{
+        margin: '0 0 12px 0',
+        fontSize: '10px',
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        letterSpacing: '0.3em',
+        color: 'rgba(251,191,36,0.7)',
       }}>
-        📬 New Contact Message
-      </h1>
-      <p style={{ 
-        margin: '0',
-        color: 'rgba(255, 255, 255, 0.9)',
-        fontSize: '14px',
-        fontWeight: '500'
-      }}>
-        Someone reached out through your portfolio
+        New Message
       </p>
+      <h1 style={{
+        fontSize: '22px',
+        fontWeight: '700',
+        margin: '0',
+        color: '#ffffff',
+        lineHeight: '1.2',
+      }}>
+        Contact from Portfolio
+      </h1>
     </div>
 
     {/* Content */}
-    <div style={{ padding: '30px' }}>
-      {/* Sender Info Card */}
-      <div style={{ 
-        backgroundColor: '#f9fafb',
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
+    <div style={{ padding: '28px 32px' }}>
+
+      {/* Sender info */}
+      <div style={{
+        backgroundColor: 'rgba(255,255,255,0.03)',
+        border: '1px solid rgba(255,255,255,0.06)',
+        borderRadius: '10px',
         padding: '20px',
-        marginBottom: '24px'
+        marginBottom: '24px',
       }}>
-        <div style={{ marginBottom: '12px' }}>
-          <span style={{ 
-            fontSize: '12px',
+        <div style={{ marginBottom: '16px' }}>
+          <span style={{
+            fontSize: '10px',
             fontWeight: '600',
             textTransform: 'uppercase',
-            letterSpacing: '0.5px',
-            color: '#6b7280'
-          }}>
-            From
-          </span>
-          <p style={{ 
-            fontSize: '18px',
-            fontWeight: '600',
-            margin: '4px 0 0 0',
-            color: '#111827'
-          }}>
+            letterSpacing: '0.3em',
+            color: 'rgba(255,255,255,0.3)',
+          }}>From</span>
+          <p style={{ fontSize: '17px', fontWeight: '600', margin: '5px 0 0', color: '#ffffff' }}>
             {name}
           </p>
         </div>
-        
         <div>
-          <span style={{ 
-            fontSize: '12px',
+          <span style={{
+            fontSize: '10px',
             fontWeight: '600',
             textTransform: 'uppercase',
-            letterSpacing: '0.5px',
-            color: '#6b7280'
-          }}>
-            Email
-          </span>
-          <p style={{ 
-            fontSize: '16px',
-            margin: '4px 0 0 0',
-            color: '#3b82f6',
-            fontWeight: '500'
-          }}>
-            <a href={`mailto:${email}`} style={{ 
-              color: '#3b82f6',
-              textDecoration: 'none'
-            }}>
+            letterSpacing: '0.3em',
+            color: 'rgba(255,255,255,0.3)',
+          }}>Email</span>
+          <p style={{ fontSize: '15px', margin: '5px 0 0', fontWeight: '500' }}>
+            <a href={`mailto:${email}`} style={{ color: '#f59e0b', textDecoration: 'none' }}>
               {email}
             </a>
           </p>
         </div>
       </div>
 
-      {/* Message Card */}
-      <div style={{ marginBottom: '24px' }}>
-        <div style={{ 
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          marginBottom: '12px'
-        }}>
-          <span style={{ fontSize: '20px' }}>💬</span>
-          <h2 style={{ 
-            fontSize: '16px',
-            fontWeight: '600',
-            margin: '0',
-            color: '#111827',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px'
-          }}>
-            Message
-          </h2>
-        </div>
-        
-        <div style={{ 
-          backgroundColor: '#ffffff',
-          border: '2px solid #e5e7eb',
+      {/* Message */}
+      <div style={{ marginBottom: '28px' }}>
+        <p style={{
+          fontSize: '10px',
+          fontWeight: '600',
+          textTransform: 'uppercase',
+          letterSpacing: '0.3em',
+          color: 'rgba(255,255,255,0.3)',
+          margin: '0 0 10px',
+        }}>Message</p>
+        <div style={{
+          backgroundColor: 'rgba(255,255,255,0.02)',
+          border: '1px solid rgba(255,255,255,0.06)',
+          borderLeft: '3px solid #f59e0b',
           borderRadius: '8px',
-          padding: '20px'
+          padding: '18px 20px',
         }}>
-          <p style={{ 
+          <p style={{
             fontSize: '15px',
-            lineHeight: '1.7',
+            lineHeight: '1.75',
             margin: '0',
-            color: '#374151',
-            whiteSpace: 'pre-wrap'
+            color: 'rgba(255,255,255,0.75)',
+            whiteSpace: 'pre-wrap',
           }}>
             {message}
           </p>
         </div>
       </div>
 
-      {/* Action Button */}
-      <div style={{ textAlign: 'center', marginTop: '32px' }}>
+      {/* CTA */}
+      <div style={{ textAlign: 'center', paddingTop: '4px' }}>
         <a href={`mailto:${email}?subject=Re: Contact from Portfolio`} style={{
           display: 'inline-block',
-          backgroundColor: '#3b82f6',
-          color: '#ffffff',
+          backgroundColor: '#f59e0b',
+          color: '#000000',
           padding: '12px 32px',
           borderRadius: '8px',
           textDecoration: 'none',
-          fontWeight: '600',
-          fontSize: '14px',
-          letterSpacing: '0.3px',
-          transition: 'background-color 0.2s'
+          fontWeight: '700',
+          fontSize: '13px',
+          letterSpacing: '0.05em',
         }}>
           Reply to {name}
         </a>
@@ -160,31 +133,21 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
     </div>
 
     {/* Footer */}
-    <div style={{ 
-      backgroundColor: '#f9fafb',
-      padding: '20px 30px',
-      borderTop: '1px solid #e5e7eb',
-      textAlign: 'center'
+    <div style={{
+      padding: '20px 32px',
+      borderTop: '1px solid rgba(255,255,255,0.06)',
+      textAlign: 'center',
     }}>
-      <p style={{ 
-        margin: '0 0 8px 0',
-        fontSize: '13px',
-        color: '#6b7280',
-        fontWeight: '500'
-      }}>
-        Sent via <strong style={{ color: '#3b82f6' }}>listerineh.dev</strong> contact form
+      <p style={{ margin: '0 0 6px', fontSize: '12px', color: 'rgba(255,255,255,0.3)' }}>
+        Sent via <strong style={{ color: 'rgba(251,191,36,0.6)' }}>listerineh.dev</strong> contact form
       </p>
-      <p style={{ 
-        margin: '0',
-        fontSize: '12px',
-        color: '#9ca3af'
-      }}>
-        {new Date().toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
+      <p style={{ margin: '0', fontSize: '11px', color: 'rgba(255,255,255,0.2)' }}>
+        {new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
           day: 'numeric',
           hour: '2-digit',
-          minute: '2-digit'
+          minute: '2-digit',
         })}
       </p>
     </div>

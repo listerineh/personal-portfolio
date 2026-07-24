@@ -2,61 +2,54 @@
 
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Button } from '@/components/ds';
+import { Button, Title, Text, SectionLabel } from '@/components/ds';
 import { Home, ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
   const t = useTranslations('notFound');
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="max-w-2xl w-full text-center space-y-8">
-        <div className="py-8">
-          <h1 className="text-[clamp(8rem,25vw,16rem)] font-headline font-bold text-primary/10 select-none leading-none">
-            404
-          </h1>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-background px-6 overflow-hidden relative">
+      <div
+        className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-headline font-black pointer-events-none select-none leading-none overflow-hidden"
+        style={{ fontSize: 'clamp(12rem, 45vw, 32rem)', color: 'rgba(251,191,36,0.04)' }}
+      >
+        404
+      </div>
 
-        <div className="space-y-3">
-          <h2 className="text-3xl md:text-4xl font-headline font-bold text-primary">
-            {t('title')}
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            {t('description')}
-          </p>
-        </div>
+      <div className="relative z-10 max-w-2xl w-full text-center">
+        <SectionLabel accent="amber" className="mb-6">404</SectionLabel>
+        <Title as="h1" style={{ fontSize: 'clamp(2rem, 5vw, 3.8rem)' }} className="mb-4">
+          {t('title')}
+        </Title>
+        <Text size="base" strength="secondary" className="max-w-md mx-auto mb-10">
+          {t('description')}
+        </Text>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
           <Button variant="secondary" accent="neutral" size="md" onClick={() => history.back()}>
             <ArrowLeft className="w-4 h-4" />
             {t('goBack')}
           </Button>
-          <Button variant="primary" accent="indigo" size="md" href="/">
+          <Button variant="primary" accent="amber" size="md" href="/">
             <Home className="w-4 h-4" />
             {t('goHome')}
           </Button>
         </div>
 
-        <div className="pt-8 border-t border-border/30">
-          <p className="text-sm text-muted-foreground mb-4">
+        <div className="border-t border-foreground/[0.07] pt-8">
+          <p className="font-headline text-[10px] tracking-[0.3em] uppercase text-foreground/25 mb-6">
             {t('interestedIn')}
           </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Link href="/blog" className="text-sm text-accent hover:text-primary hover:underline">
-              {t('blog')}
-            </Link>
-            <span className="text-muted-foreground">•</span>
-            <Link href="/#projects" className="text-sm text-accent hover:text-primary hover:underline">
-              {t('projects')}
-            </Link>
-            <span className="text-muted-foreground">•</span>
-            <Link href="/#experience" className="text-sm text-accent hover:text-primary hover:underline">
-              {t('experience')}
-            </Link>
-            <span className="text-muted-foreground">•</span>
-            <Link href="/#contact" className="text-sm text-accent hover:text-primary hover:underline">
-              {t('contact')}
-            </Link>
+          <div className="flex flex-wrap gap-6 justify-center">
+            {(['/blog', '/#projects', '/#experience', '/#contact'] as const).map((href) => {
+              const key = href.replace('/#', '').replace('/', '') as 'blog' | 'projects' | 'experience' | 'contact';
+              return (
+                <Link key={href} href={href} className="font-headline text-[11px] tracking-widest uppercase text-foreground/35 hover:text-amber-500 transition-colors duration-200">
+                  {t(key)}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

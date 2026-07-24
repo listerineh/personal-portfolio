@@ -30,7 +30,6 @@ export function CookieSettingsLink({ className }: { className?: string }) {
     };
     saveCookieConsent(consent);
     setOpen(false);
-    window.location.reload();
   };
 
   const handleRevokeAll = () => {
@@ -41,7 +40,6 @@ export function CookieSettingsLink({ className }: { className?: string }) {
       preferences: false,
     });
     setOpen(false);
-    window.location.reload();
   };
 
   return (

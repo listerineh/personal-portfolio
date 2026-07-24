@@ -7,7 +7,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    const { email, locale } = await request.json();
+    const isEs = locale === 'es';
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
@@ -49,67 +50,63 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: 'Sebastian Alvarez <hello@listerineh.dev>',
       to: email,
-      subject: 'Welcome to my newsletter!',
+      subject: isEs ? '¡Bienvenido a mi newsletter!' : 'Welcome to my newsletter!',
       html: `
         <!DOCTYPE html>
-        <html>
+        <html lang="${isEs ? 'es' : 'en'}">
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Welcome to my newsletter</title>
+            <title>${isEs ? 'Bienvenido a mi newsletter' : 'Welcome to my newsletter'}</title>
           </head>
-          <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f0f2f5;">
-            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f0f2f5; padding: 40px 20px;">
+          <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #0a0a0a;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0a0a0a; padding: 40px 20px;">
               <tr>
                 <td align="center">
-                  <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
+                  <table width="600" cellpadding="0" cellspacing="0" style="background-color: #111113; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.07);">
+                    <!-- Amber top bar -->
+                    <tr><td style="height: 3px; background-color: #f59e0b; font-size: 0;">&nbsp;</td></tr>
+                    <!-- Header -->
                     <tr>
-                      <td style="padding: 40px; background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);">
-                        <h1 style="margin: 0; font-size: 32px; font-weight: 700; color: #ffffff; line-height: 1.2;">
-                          Welcome aboard! 🚀
-                        </h1>
+                      <td style="padding: 36px 32px 28px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                        <p style="margin: 0 0 12px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(251,191,36,0.7);">Newsletter</p>
+                        <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ffffff; line-height: 1.2;">${isEs ? 'Bienvenido a bordo' : 'Welcome aboard'}</h1>
                       </td>
                     </tr>
+                    <!-- Body -->
                     <tr>
-                      <td style="padding: 40px;">
-                        <p style="margin: 0 0 24px; font-size: 16px; color: #2d2d2d; line-height: 1.6;">
-                          Thanks for subscribing! I'm excited to share my latest blog posts, insights, and updates with you.
+                      <td style="padding: 28px 32px;">
+                        <p style="margin: 0 0 20px; font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7;">
+                          ${isEs
+                            ? '¡Gracias por suscribirte! Voy a compartir mis últimos posts, insights de ingeniería y novedades contigo directamente.'
+                            : "Thanks for subscribing! I'll share my latest blog posts, engineering insights, and updates with you directly."}
                         </p>
-                        
-                        <p style="margin: 0 0 16px; font-size: 16px; color: #2d2d2d; line-height: 1.6; font-weight: 600;">
-                          You'll receive notifications about:
-                        </p>
-                        
-                        <ul style="margin: 0 0 24px; padding-left: 20px; font-size: 16px; color: #2d2d2d; line-height: 1.8;">
-                          <li style="margin-bottom: 8px;">Software Development & Engineering</li>
-                          <li style="margin-bottom: 8px;">DevOps & Infrastructure</li>
-                          <li style="margin-bottom: 8px;">Career Growth & Leadership</li>
-                          <li>Tech Insights & Best Practices</li>
-                        </ul>
-                        
-                        <p style="margin: 0 0 32px; font-size: 16px; color: #2d2d2d; line-height: 1.6;">
-                          Stay tuned for great content!
-                        </p>
-                        
-                        <table cellpadding="0" cellspacing="0" style="margin: 0;">
+                        <p style="margin: 0 0 12px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(255,255,255,0.3);">${isEs ? 'Recibirás' : "You'll receive"}</p>
+                        <table cellpadding="0" cellspacing="0" style="margin: 0 0 28px; width: 100%;">
+                          <tr><td style="padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.05);">&#8594;&nbsp; ${isEs ? 'Desarrollo de Software e Ingeniería' : 'Software Development &amp; Engineering'}</td></tr>
+                          <tr><td style="padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.05);">&#8594;&nbsp; ${isEs ? 'DevOps e Infraestructura' : 'DevOps &amp; Infrastructure'}</td></tr>
+                          <tr><td style="padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.05);">&#8594;&nbsp; ${isEs ? 'Crecimiento Profesional y Liderazgo' : 'Career Growth &amp; Leadership'}</td></tr>
+                          <tr><td style="padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.6);">&#8594;&nbsp; ${isEs ? 'Tecnología y Mejores Prácticas' : 'Tech Insights &amp; Best Practices'}</td></tr>
+                        </table>
+                        <table cellpadding="0" cellspacing="0">
                           <tr>
-                            <td style="border-radius: 8px; background: linear-gradient(135deg, #c2185b 0%, #d81b60 100%);">
-                              <a href="https://listerineh.dev/blog" style="display: inline-block; padding: 14px 32px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none;">
-                                Explore the Blog →
+                            <td style="border-radius: 8px; background-color: #f59e0b;">
+                              <a href="https://listerineh.dev/blog" style="display: inline-block; padding: 12px 28px; font-size: 13px; font-weight: 700; color: #000000; text-decoration: none; letter-spacing: 0.05em;">
+                                ${isEs ? 'Explorar el Blog' : 'Explore the Blog'}
                               </a>
                             </td>
                           </tr>
                         </table>
                       </td>
                     </tr>
+                    <!-- Footer -->
                     <tr>
-                      <td style="padding: 24px 40px; background-color: #f9fafb; border-top: 1px solid #e5e7eb;">
-                        <p style="margin: 0 0 8px; font-size: 14px; color: #6b7280;">
-                          You're receiving this email because you subscribed to my newsletter.
+                      <td style="padding: 20px 32px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center;">
+                        <p style="margin: 0 0 6px; font-size: 12px; color: rgba(255,255,255,0.25);">
+                          ${isEs ? 'Recibes esto porque te suscribiste en' : "You're receiving this because you subscribed at"} <strong style="color: rgba(251,191,36,0.5);">listerineh.dev</strong>
                         </p>
-                        <p style="margin: 0; font-size: 14px; color: #9ca3af;">
-                          Best regards,<br/>
-                          <strong>Sebastian Alvarez</strong>
+                        <p style="margin: 0; font-size: 12px; color: rgba(255,255,255,0.2);">
+                          — Sebastian Alvarez
                         </p>
                       </td>
                     </tr>
