@@ -45,14 +45,14 @@ function baseStyles() {
       }
       .top-border {
         position: absolute; top: 0; left: 0; right: 0; height: 3px;
-        background: linear-gradient(90deg, transparent 0%, rgba(98,114,212,0.75) 30%, rgba(140,60,190,0.55) 70%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, #f59e0b 35%, #fcd34d 65%, transparent 100%);
         z-index: 10;
       }
       .badge {
         display: inline-block;
-        background: rgba(98,114,212,0.14); border: 1px solid rgba(98,114,212,0.4);
+        background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.35);
         border-radius: 100px; padding: 8px 22px;
-        color: #8b9ae8; font-size: 13px; font-weight: 700;
+        color: #f59e0b; font-size: 13px; font-weight: 700;
         letter-spacing: 0.13em; text-transform: uppercase;
       }
       .tag {
@@ -60,7 +60,7 @@ function baseStyles() {
         border-radius: 6px; padding: 6px 14px;
         color: #8a90aa; font-size: 13px; font-weight: 500;
       }
-      .domain { color: #3a4070; font-size: 17px; font-weight: 500; letter-spacing: 0.03em; }
+      .domain { color: rgba(255,255,255,0.2); font-size: 17px; font-weight: 500; letter-spacing: 0.03em; }
     </style>
   `;
 }
@@ -71,56 +71,41 @@ function htmlAbout() {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
   ${baseStyles()}
   <style>
-    .layout {
-      position: relative; z-index: 1; display: flex;
-      align-items: center; height: 100%;
-      padding: 64px 72px 64px 80px; gap: 48px;
+    body { display: flex; align-items: center; justify-content: center; }
+    .content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 80px;
     }
-    .left { flex: 0 0 60%; display: flex; flex-direction: column; }
-    .right { flex: 1; display: flex; align-items: center; justify-content: center; }
     .name {
-      font-size: 64px; font-weight: 800; color: #eaedf5;
-      line-height: 1.05; letter-spacing: -0.025em;
-      margin-top: 24px; margin-bottom: 14px;
+      font-size: 76px; font-weight: 800; color: #eaedf5;
+      line-height: 1.0; letter-spacing: -0.03em;
+      margin-top: 24px; margin-bottom: 16px;
     }
     .role {
-      font-size: 24px; color: #7880d0; font-weight: 600;
-      margin-bottom: 36px; line-height: 1.35;
+      font-size: 22px; color: rgba(255,255,255,0.42); font-weight: 500;
+      margin-bottom: 36px; line-height: 1.4;
     }
-    .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px; }
-    .photo-ring {
-      width: 228px; height: 228px; border-radius: 50%;
-      border: 3px solid rgba(98,114,212,0.5);
-      overflow: hidden;
-    }
-    .photo-ring img { width: 228px; height: 228px; object-fit: cover; }
+    .tags { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 52px; }
   </style>
 </head><body>
   <div class="top-border"></div>
   <div class="dot-grid"></div>
-  <div class="glow" style="width:520px;height:520px;top:-160px;right:-80px;background:radial-gradient(circle, rgba(98,114,212,0.3), transparent 70%);"></div>
-  <div class="glow" style="width:400px;height:400px;bottom:-140px;left:180px;background:radial-gradient(circle, rgba(140,60,190,0.18), transparent 70%);"></div>
+  <div class="glow" style="width:540px;height:540px;top:-180px;right:-80px;background:radial-gradient(circle, rgba(245,158,11,0.16), transparent 70%);"></div>
+  <div class="glow" style="width:420px;height:420px;bottom:-150px;left:-60px;background:radial-gradient(circle, rgba(245,158,11,0.08), transparent 70%);"></div>
 
-  <div class="layout">
-    <div class="left">
-      <span class="badge">About Me</span>
-      <div class="name">Sebastian Alvarez</div>
-      <div class="role">Senior Fullstack &amp; Platform Engineer</div>
-      <div class="tags">
-        <span class="tag">React &amp; Next.js</span>
-        <span class="tag">Python</span>
-        <span class="tag">Cloud &amp; DevOps</span>
-        <span class="tag">AI &amp; Agents</span>
-        <span class="tag">GDG Organizer</span>
-      </div>
-      <span class="domain">listerineh.dev/about</span>
+  <div class="content">
+    <span class="badge">About Me</span>
+    <div class="name">Sebastian Alvarez</div>
+    <div class="role">Senior Fullstack &amp; Platform Engineer · GDG Quito Organizer</div>
+    <div class="tags">
+      <span class="tag">React &amp; Next.js</span>
+      <span class="tag">Python</span>
+      <span class="tag">Cloud &amp; DevOps</span>
+      <span class="tag">AI &amp; Agents</span>
+      <span class="tag">GDG Quito</span>
     </div>
-
-    <div class="right">
-      <div class="photo-ring">
-        <img src="http://local-assets/profile-photo.jpg" />
-      </div>
-    </div>
+    <span class="domain">listerineh.dev/about</span>
   </div>
 </body></html>`;
 }
@@ -143,7 +128,7 @@ function htmlBlog() {
       margin-top: 26px; margin-bottom: 18px;
     }
     .tagline {
-      font-size: 22px; color: #6870a8; font-weight: 500;
+      font-size: 22px; color: rgba(255,255,255,0.4); font-weight: 500;
       margin-bottom: 40px; line-height: 1.4;
     }
     .topics { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
@@ -156,8 +141,8 @@ function htmlBlog() {
 </head><body>
   <div class="top-border"></div>
   <div class="dot-grid"></div>
-  <div class="glow" style="width:560px;height:560px;top:-160px;right:-100px;background:radial-gradient(circle, rgba(98,114,212,0.25), transparent 68%);"></div>
-  <div class="glow" style="width:480px;height:480px;bottom:-140px;left:-80px;background:radial-gradient(circle, rgba(140,60,190,0.18), transparent 70%);"></div>
+  <div class="glow" style="width:560px;height:560px;top:-160px;right:-100px;background:radial-gradient(circle, rgba(245,158,11,0.16), transparent 68%);"></div>
+  <div class="glow" style="width:480px;height:480px;bottom:-140px;left:-80px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
 
   <div class="content">
     <span class="badge">Technical Blog</span>
@@ -176,7 +161,79 @@ function htmlBlog() {
 </body></html>`;
 }
 
-// ─── 3. Home ─────────────────────────────────────────────────────────────
+// ─── 3. Privacy ─────────────────────────────────────────────────────────
+
+function htmlPrivacy() {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  ${baseStyles()}
+  <style>
+    body { display: flex; align-items: center; justify-content: center; }
+    .content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 100px;
+    }
+    .title {
+      font-size: 80px; font-weight: 800; color: #eaedf5;
+      line-height: 1.0; letter-spacing: -0.03em;
+      margin-top: 24px; margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 20px; color: rgba(255,255,255,0.38); font-weight: 400;
+      line-height: 1.5; margin-bottom: 52px; max-width: 620px;
+    }
+  </style>
+</head><body>
+  <div class="top-border"></div>
+  <div class="dot-grid"></div>
+  <div class="glow" style="width:500px;height:500px;top:-180px;left:-80px;background:radial-gradient(circle, rgba(245,158,11,0.1), transparent 70%);"></div>
+  <div class="glow" style="width:400px;height:400px;bottom:-140px;right:-60px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+  <div class="content">
+    <span class="badge">Legal</span>
+    <div class="title">Privacy Policy</div>
+    <div class="subtitle">How we collect, use, and protect your personal information on listerineh.dev</div>
+    <span class="domain">listerineh.dev/privacy</span>
+  </div>
+</body></html>`;
+}
+
+// ─── 4. Terms ────────────────────────────────────────────────────────────
+
+function htmlTerms() {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  ${baseStyles()}
+  <style>
+    body { display: flex; align-items: center; justify-content: center; }
+    .content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 100px;
+    }
+    .title {
+      font-size: 80px; font-weight: 800; color: #eaedf5;
+      line-height: 1.0; letter-spacing: -0.03em;
+      margin-top: 24px; margin-bottom: 20px;
+    }
+    .subtitle {
+      font-size: 20px; color: rgba(255,255,255,0.38); font-weight: 400;
+      line-height: 1.5; margin-bottom: 52px; max-width: 620px;
+    }
+  </style>
+</head><body>
+  <div class="top-border"></div>
+  <div class="dot-grid"></div>
+  <div class="glow" style="width:500px;height:500px;top:-180px;right:-80px;background:radial-gradient(circle, rgba(245,158,11,0.1), transparent 70%);"></div>
+  <div class="glow" style="width:400px;height:400px;bottom:-140px;left:-60px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+  <div class="content">
+    <span class="badge">Legal</span>
+    <div class="title">Terms of Service</div>
+    <div class="subtitle">Terms and conditions for using listerineh.dev — your go-to engineering portfolio &amp; blog</div>
+    <span class="domain">listerineh.dev/terms</span>
+  </div>
+</body></html>`;
+}
+
+// ─── 5. Home ─────────────────────────────────────────────────────────────
 
 function htmlHome() {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
@@ -317,7 +374,7 @@ function htmlHome() {
 </body></html>`;
 }
 
-// ─── 4. Why ──────────────────────────────────────────────────────────────
+// ─── 6. Why ──────────────────────────────────────────────────────────────
 
 function htmlWhy() {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
@@ -412,14 +469,16 @@ function htmlWhy() {
 
 // ─── Runner ────────────────────────────────────────────────────────────────
 
-const PAGE_IDS = ['home', 'about', 'blog', 'why'];
+const PAGE_IDS = ['home', 'about', 'blog', 'why', 'privacy', 'terms'];
 
 async function generateImages() {
   const ALL_PAGES = [
-    { id: 'home',  filename: 'home-og.webp',  html: htmlHome() },
-    { id: 'about', filename: 'about-og.webp', html: htmlAbout() },
-    { id: 'blog',  filename: 'blog-og.webp',  html: htmlBlog() },
-    { id: 'why',   filename: 'why-og.webp',   html: htmlWhy() },
+    { id: 'home',    filename: 'home-og.webp',    html: htmlHome() },
+    { id: 'about',   filename: 'about-og.webp',   html: htmlAbout() },
+    { id: 'blog',    filename: 'blog-og.webp',    html: htmlBlog() },
+    { id: 'why',     filename: 'why-og.webp',     html: htmlWhy() },
+    { id: 'privacy', filename: 'privacy-og.webp', html: htmlPrivacy() },
+    { id: 'terms',   filename: 'terms-og.webp',   html: htmlTerms() },
   ];
 
   const pages = FILTER

@@ -4,9 +4,14 @@ export function PersonSchema() {
     '@type': 'Person',
     name: 'Sebastian Alvarez',
     url: 'https://listerineh.dev',
-    image: 'https://listerineh.dev/images/website_screenshot.webp',
-    description: 'Full-stack software engineer specializing in React, Next.js, Python, and cloud technologies',
-    jobTitle: 'Full-Stack Software Engineer',
+    image: 'https://listerineh.dev/images/home-og.webp',
+    description: 'Senior Fullstack & Platform Engineer with 6+ years building scalable cloud systems. React, Next.js, Python, AWS. GDG Quito organizer and open source contributor based in Ecuador.',
+    jobTitle: 'Senior Fullstack & Platform Engineer',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'GDG Quito',
+      url: 'https://gdg.community.dev/gdg-quito/',
+    },
     sameAs: [
       'https://github.com/listerineh',
       'https://linkedin.com/in/listerineh',
@@ -21,6 +26,10 @@ export function PersonSchema() {
       'Web Development',
       'Full-Stack Development',
       'Cloud Technologies',
+      'DevOps',
+      'Kubernetes',
+      'AWS',
+      'AI Agents',
     ],
   };
 
@@ -37,15 +46,18 @@ export function WebsiteSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Sebastian Alvarez - Full-Stack Developer',
+    name: 'listerineh.dev',
+    alternateName: 'Sebastian Alvarez — Portfolio & Blog',
     url: 'https://listerineh.dev',
-    description: 'Portfolio of a full-stack software engineer',
+    description: 'Engineering portfolio and technical blog of Sebastian Alvarez — Senior Fullstack & Platform Engineer, GDG Quito organizer.',
+    author: {
+      '@type': 'Person',
+      name: 'Sebastian Alvarez',
+      url: 'https://listerineh.dev',
+    },
     potentialAction: {
       '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: 'https://listerineh.dev/blog?q={search_term_string}',
-      },
+      target: 'https://listerineh.dev/blog?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   };
@@ -73,8 +85,20 @@ export function BreadcrumbSchema() {
       {
         '@type': 'ListItem',
         position: 2,
+        name: 'About',
+        item: 'https://listerineh.dev/about',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
         name: 'Blog',
         item: 'https://listerineh.dev/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: 'Why Listerineh?',
+        item: 'https://listerineh.dev/why',
       },
     ],
   };

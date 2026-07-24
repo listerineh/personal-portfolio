@@ -13,7 +13,36 @@ export async function generateMetadata(): Promise<Metadata> {
     ? savedLocale
     : defaultLocale) as Locale;
 
-  return generatePageMetadata('about', locale);
+  const baseMetadata = generatePageMetadata('about', locale);
+
+  return {
+    ...baseMetadata,
+    authors: [{ name: 'Sebastian Alvarez', url: 'https://listerineh.dev' }],
+    creator: 'Sebastian Alvarez',
+    publisher: 'Listerineh',
+    formatDetection: {
+      email: false,
+      telephone: false,
+      address: false,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'black-translucent',
+      title: 'About — Listerineh',
+    },
+  };
 }
 
 export default function AboutPage() {

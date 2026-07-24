@@ -171,25 +171,29 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
   privacy: {
     en: {
       title: 'Privacy Policy | Sebastian Alvarez',
-      description: 'Privacy policy for listerineh.dev - Learn how we collect, use, and protect your personal information.',
-      image: '/images/website_screenshot.webp',
+      description: 'Privacy policy for listerineh.dev — learn how we collect, use, and protect your personal information.',
+      keywords: ['privacy policy', 'data protection', 'cookies', 'personal information', 'listerineh.dev'],
+      image: '/images/privacy-og.webp',
     },
     es: {
       title: 'Política de Privacidad | Sebastian Alvarez',
-      description: 'Política de privacidad para listerineh.dev - Aprende cómo recopilamos, usamos y protegemos tu información personal.',
-      image: '/images/website_screenshot.webp',
+      description: 'Política de privacidad de listerineh.dev — cómo recopilamos, usamos y protegemos tu información personal.',
+      keywords: ['política de privacidad', 'protección de datos', 'cookies', 'información personal', 'listerineh.dev'],
+      image: '/images/privacy-og.webp',
     },
   },
   terms: {
     en: {
       title: 'Terms of Service | Sebastian Alvarez',
-      description: 'Terms of service for listerineh.dev - Read our terms and conditions for using this website.',
-      image: '/images/website_screenshot.webp',
+      description: 'Terms and conditions for using listerineh.dev — the engineering portfolio and technical blog of Sebastian Alvarez.',
+      keywords: ['terms of service', 'terms and conditions', 'legal', 'listerineh.dev'],
+      image: '/images/terms-og.webp',
     },
     es: {
       title: 'Términos de Servicio | Sebastian Alvarez',
-      description: 'Términos de servicio para listerineh.dev - Lee nuestros términos y condiciones para usar este sitio web.',
-      image: '/images/website_screenshot.webp',
+      description: 'Términos y condiciones de uso de listerineh.dev — el portfolio de ingeniería y blog técnico de Sebastian Alvarez.',
+      keywords: ['términos de servicio', 'términos y condiciones', 'legal', 'listerineh.dev'],
+      image: '/images/terms-og.webp',
     },
   },
 };
