@@ -42,15 +42,27 @@ export function DropdownItem({
   children,
   onClick,
   className = '',
+  hoverColor,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  hoverColor?: string;
 }) {
+  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.style.background = hoverColor ?? '';
+  };
+  const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.style.background = '';
+  };
+
   return (
     <DropdownMenuPrimitive.Item
       onClick={onClick}
-      className={`relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2 text-sm outline-none transition-colors focus:bg-foreground/6 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ${className}`}
+      onPointerEnter={hoverColor ? handlePointerEnter : undefined}
+      onPointerLeave={hoverColor ? handlePointerLeave : undefined}
+      onPointerDown={hoverColor ? handlePointerLeave : undefined}
+      className={`relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2 text-sm outline-none transition-colors ${hoverColor ? '' : 'focus:bg-foreground/6'} data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ${className}`}
     >
       {children}
     </DropdownMenuPrimitive.Item>

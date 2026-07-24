@@ -45,7 +45,7 @@ export default function NotFound() {
             {(['/blog', '/#projects', '/#experience', '/#contact'] as const).map((href) => {
               const key = href.replace('/#', '').replace('/', '') as 'blog' | 'projects' | 'experience' | 'contact';
               return (
-                <Link key={href} href={href} className="font-headline text-[11px] tracking-widest uppercase text-foreground/35 hover:text-amber-500 transition-colors duration-200">
+                <Link key={href} href={href} className="font-headline text-[11px] tracking-widest uppercase text-foreground/35 hover:text-primary transition-colors duration-200">
                   {t(key)}
                 </Link>
               );

@@ -16,14 +16,14 @@ interface PillProps {
 }
 
 const solidMap: Record<Accent, string> = {
-  amber:   'bg-amber-500/15 text-amber-600 dark:bg-amber-400/10 dark:text-amber-400',
+  amber:   'bg-primary/15 text-primary dark:bg-primary/10 dark:text-primary',
   indigo:  'bg-indigo-500/15 text-indigo-600 dark:bg-indigo-400/10 dark:text-indigo-400',
   green:   'bg-emerald-500/15 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400',
   neutral: 'bg-gray-500/10 text-gray-600 dark:bg-white/10 dark:text-white/60',
 }
 
 const outlineMap: Record<Accent, string> = {
-  amber:   'border border-amber-500/30 text-amber-600/75 dark:border-amber-400/20 dark:text-amber-400/50',
+  amber:   'border border-primary/30 text-primary/75 dark:border-primary/20 dark:text-primary/50',
   indigo:  'border border-indigo-500/30 text-indigo-600/75 dark:border-indigo-400/20 dark:text-indigo-400/50',
   green:   'border border-emerald-500/30 text-emerald-600/75 dark:border-emerald-400/20 dark:text-emerald-400/50',
   neutral: 'border border-gray-400/60 text-gray-600 dark:border-white/15 dark:text-white/50',

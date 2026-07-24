@@ -122,7 +122,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
   if (isLoading) {
     return (
       <div className="flex items-center gap-3 p-6 bg-muted/30 rounded-xl border border-border/50">
-        <Sparkles className="h-5 w-5 text-amber-400 animate-pulse" />
+        <Sparkles className="h-5 w-5 text-primary animate-pulse" />
         <span className="text-sm text-muted-foreground">{t('loadingReactions')}</span>
       </div>
     );
@@ -151,7 +151,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-amber-400" />
+                <Sparkles className="h-5 w-5 text-primary" />
                 <span className="text-base font-semibold text-foreground">
                   {totalReactions > 0 
                     ? `${totalReactions} ${totalReactions === 1 ? t('reaction') : t('reactions')}` 
@@ -159,8 +159,8 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
                 </span>
               </div>
               {userReactions.size > 0 && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-400/10 rounded-full border border-amber-400/20">
-                  <span className="text-xs font-medium text-amber-600 dark:text-amber-400">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 rounded-full border border-primary/20">
+                  <span className="text-xs font-medium text-primary">
                     {t('you')}: {Array.from(userReactions).map(r => reactionConfig[r].emoji).join(' ')}
                   </span>
                 </div>
@@ -194,7 +194,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
                         {config.emoji}
                       </span>
                       {hasReacted && (
-                        <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-black shadow-md">
+                        <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-md">
                           ✓
                         </div>
                       )}

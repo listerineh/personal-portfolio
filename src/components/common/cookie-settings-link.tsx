@@ -53,7 +53,7 @@ export function CookieSettingsLink({ className }: { className?: string }) {
         <ModalHeader>
           <ModalTitle>
             <span className="flex items-center gap-2.5">
-              <Cookie className="h-4 w-4 text-amber-500" />
+              <Cookie className="h-4 w-4 text-primary" />
               <span className="font-headline font-black">{t('preferencesTitle')}</span>
             </span>
           </ModalTitle>
@@ -101,7 +101,7 @@ export function CookieSettingsLink({ className }: { className?: string }) {
                 checked={checked}
                 onCheckedChange={onChange}
                 disabled={disabled}
-                accentColor="#f59e0b"
+                accentColor="var(--primary)"
                 className="mt-0.5 shrink-0"
               />
             </div>

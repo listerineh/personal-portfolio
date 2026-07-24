@@ -207,11 +207,11 @@ export function Footer() {
                 className="font-headline font-black leading-[0.9] text-transparent bg-clip-text"
                 style={{
                   fontSize: 'clamp(2.4rem, 6vw, 5rem)',
-                  backgroundImage: 'linear-gradient(90deg, #f59e0b, #fcd34d, #f59e0b)',
+                  backgroundImage: 'linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, white), var(--primary))',
                 }}
               >
                 {tNewsletter('title')}{' '}
-                <span className="text-amber-400/60">{tNewsletter('titleGradient')}</span>
+                <span className="text-primary/60">{tNewsletter('titleGradient')}</span>
               </h2>
               <p className="text-white/45 leading-relaxed max-w-sm" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)' }}>
                 {tNewsletter('description')}
@@ -223,7 +223,7 @@ export function Footer() {
                   { label: tNewsletter('freeLabel'), sub: tNewsletter('freeValue') },
                 ].map(({ label, sub }) => (
                   <div key={label}>
-                    <div className="font-headline font-black text-2xl text-amber-400">{label}</div>
+                    <div className="font-headline font-black text-2xl text-primary">{label}</div>
                     <div className="text-[10px] text-white/30 uppercase tracking-[0.2em] mt-1">{sub}</div>
                   </div>
                 ))}
@@ -281,7 +281,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                  className="p-2.5 rounded-xl border border-white/10 text-white/30 hover:text-amber-400 hover:border-amber-400/30 transition-colors duration-200"
+                  className="p-2.5 rounded-xl border border-white/10 text-white/30 hover:text-primary hover:border-primary/30 transition-colors duration-200"
                 >
                   <link.icon className="w-4 h-4" />
                 </Link>
@@ -298,11 +298,11 @@ export function Footer() {
             &copy; {currentYear} Sebastian Alvarez — {tCommon('allRightsReserved')}
           </p>
           <div className="flex flex-wrap items-center gap-4 text-xs text-white/25">
-            <CookieSettingsLink className="text-xs text-white/25 hover:text-amber-400 transition-colors" />
-            <Link href="/privacy" className="hover:text-amber-400 transition-colors">
+            <CookieSettingsLink className="text-xs text-white/25 hover:text-primary transition-colors" />
+            <Link href="/privacy" className="hover:text-primary transition-colors">
               {t('privacyPolicy')}
             </Link>
-            <Link href="/terms" className="hover:text-amber-400 transition-colors">
+            <Link href="/terms" className="hover:text-primary transition-colors">
               {t('termsOfUse')}
             </Link>
           </div>

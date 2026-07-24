@@ -22,25 +22,25 @@ const sizeMap: Record<TextSize, string> = {
 
 const colorMap: Record<TextStrength, Record<Accent, string>> = {
   primary: {
-    amber:   'text-amber-950/75 dark:text-white/75',
+    amber:   'text-foreground/75 dark:text-white/75',
     indigo:  'text-indigo-950/75 dark:text-white/70',
     green:   'text-emerald-950/75 dark:text-white/65',
     neutral: 'text-gray-700 dark:text-white/75',
   },
   secondary: {
-    amber:   'text-amber-900/55 dark:text-white/50',
+    amber:   'text-foreground/55 dark:text-white/50',
     indigo:  'text-indigo-900/55 dark:text-white/45',
     green:   'text-emerald-900/55 dark:text-white/50',
     neutral: 'text-gray-500 dark:text-white/50',
   },
   accent: {
-    amber:   'text-amber-600 dark:text-amber-400/50',
+    amber:   'text-primary dark:text-primary/50',
     indigo:  'text-indigo-600 dark:text-indigo-400/50',
     green:   'text-emerald-600 dark:text-emerald-400/50',
     neutral: 'text-gray-600 dark:text-white/40',
   },
   muted: {
-    amber:   'text-amber-700/40 dark:text-white/30',
+    amber:   'text-primary/40 dark:text-foreground/30',
     indigo:  'text-indigo-700/40 dark:text-white/30',
     green:   'text-emerald-700/40 dark:text-white/30',
     neutral: 'text-gray-400 dark:text-white/30',

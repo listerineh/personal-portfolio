@@ -22,8 +22,8 @@ export default function Error({
     <div className="min-h-screen flex items-center justify-center bg-background px-6">
       <div className="max-w-lg w-full text-center">
         <div className="flex justify-center mb-8">
-          <div className="rounded-full bg-amber-400/10 border border-amber-400/20 p-5">
-            <AlertTriangle className="h-10 w-10 text-amber-400" />
+          <div className="rounded-full bg-primary/10 border border-primary/20 p-5">
+            <AlertTriangle className="h-10 w-10 text-primary" />
           </div>
         </div>
 
@@ -37,7 +37,7 @@ export default function Error({
 
         {process.env.NODE_ENV === 'development' && (
           <div className="bg-muted/50 p-4 rounded-xl border border-foreground/[0.06] text-left mb-8">
-            <p className="text-xs font-mono text-amber-500/80 break-all">
+            <p className="text-xs font-mono text-primary/80 break-all">
               {error.message}
             </p>
           </div>

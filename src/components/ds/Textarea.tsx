@@ -5,7 +5,7 @@ import { useTheme } from '@/context/theme-context';
 import type { Accent } from './types';
 
 const accentColorMap: Record<Accent, string> = {
-  amber: '#f59e0b',
+  amber: 'var(--primary)',
   indigo: '#818cf8',
   green: '#1DB954',
   neutral: '#a3a3a3',
@@ -24,7 +24,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     const accentColor = accentColorMap[accent];
     const borderColor = error
-      ? '#f87171'
+      ? 'var(--destructive)'
       : focused
       ? accentColor
       : dark
@@ -39,7 +39,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
           border: `1px solid ${borderColor}`,
           color: dark ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.85)',
-          boxShadow: focused && !error ? `0 0 0 3px ${accentColor}18` : 'none',
+          boxShadow: focused && !error ? `0 0 0 3px color-mix(in srgb, ${accentColor} 10%, transparent)` : 'none',
           ...style,
         }}
         onFocus={(e) => {

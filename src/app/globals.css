@@ -3,179 +3,160 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
-
-body {
-  font-family: var(--font-outfit), sans-serif; /* Updated via layout.tsx and tailwind.config.ts */
-  overflow-x: hidden;
-  max-width: 100vw;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-unbounded), sans-serif;
-}
-
 @layer base {
   :root {
-    --background: 220 20% 96%; /* #F0F2F5 Very light grey */
-    --foreground: 220 10% 20%; /* Dark Grey for text */
+    /* ── Surface ─────────────────────────────────────────── */
+    --background:             #F0F2F5;
+    --foreground:             #2D3241;
+    --card:                   #FFFFFF;
+    --card-foreground:        #2D3241;
+    --popover:                #FFFFFF;
+    --popover-foreground:     #2D3241;
 
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 220 10% 20%;
+    /* ── Brand ──────────────────────────────────────────────── */
+    --primary:                #D97706;  /* amber */
+    --primary-foreground:     #141414;
+    --secondary:              #E3E5EB;
+    --secondary-foreground:   #2D3241;
+    --muted:                  #D3D6E0;
+    --muted-foreground:       #656F8B;
+    --accent:                 #98258A;  /* magenta */
+    --accent-foreground:      #FFFFFF;
+    --destructive:            #EF4444;
+    --destructive-foreground: #FAFAFA;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 20%;
+    /* ── Layout ──────────────────────────────────────────────  */
+    --border:                 #D5D9E4;
+    --input:                  #D5D9E4;
+    --ring:                   #D97706;
+    --radius:                 0.5rem;
 
-    --primary: 231 48% 48%; /* #3F51B5 Deep Indigo */
-    --primary-foreground: 0 0% 100%; /* White text on primary */
+    /* ── Charts ─────────────────────────────────────────────── */
+    --chart-1:                #D97706;  /* amber  */
+    --chart-2:                #4B89CC;  /* blue   */
+    --chart-3:                #4D80B3;
+    --chart-4:                #E87322;  /* orange */
+    --chart-5:                #4DB34D;  /* green  */
 
-    --secondary: 220 15% 90%; /* Lighter grey for secondary elements */
-    --secondary-foreground: 220 10% 20%;
+    /* ── Sidebar ────────────────────────────────────────────── */
+    --sidebar-background:     #F0F2F5;
+    --sidebar-foreground:     #2D3241;
+    --sidebar-primary:        #D97706;
+    --sidebar-primary-foreground: #141414;
+    --sidebar-accent:         #4B89CC;
+    --sidebar-accent-foreground:  #FFFFFF;
+    --sidebar-border:         #D5D9E4;
+    --sidebar-ring:           #D97706;
 
-    --muted: 220 15% 85%;
-    --muted-foreground: 220 10% 45%;
+    /* ── Music / brand ───────────────────────────────────────── */
+    --mn-accent:              #d97706;  /* Margarita Nugget – amber-600 */
+    --mn-accent-muted:        #f59e0b;
+    --mn-accent-foreground:   #000000;
+    --ss-accent:              #4f46e5;  /* Sofones Solares – indigo-600 */
+    --ss-accent-muted:        #818cf8;
+    --ss-accent-foreground:   #ffffff;
+    --solo-accent:            #1DB954;  /* Listerineh solo */
+    --solo-accent-hover:      #1ed760;
+    --solo-accent-foreground: #000000;
 
-    --accent: 307 61% 37%;      /* Refined Rose */
-    --accent-foreground: 0 0% 100%;  /* White text on accent */
+    /* ── /why page ───────────────────────────────────────────── */
+    --why-background:         #f5f4f0;
+    --why-foreground:         #111111;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 231 48% 48%; /* Primary color for rings */
-
-    --chart-1: 231 48% 48%;
-    --chart-2: 215 60% 55%; /* Refined Blue for chart */
-    --chart-3: 210 40% 50%;
-    --chart-4: 30 80% 55%;
-    --chart-5: 120 40% 50%;
-
-    --radius: 0.5rem;
-
-    /* Sidebar colors - adjust if sidebar is used, for now maintain consistency */
-    --sidebar-background: 220 20% 96%;
-    --sidebar-foreground: 220 10% 20%;
-    --sidebar-primary: 231 48% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 60% 55%; /* Refined Blue */
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 15% 88%;
-    --sidebar-ring: 231 48% 48%;
-
-    /* ── Music / Brand palette ─────────────────────────────── */
-    /* Margarita Nugget — amber/gold (darkened for light bg) */
-    --mn-accent:              33 95% 44%;   /* amber-600  #d97706 */
-    --mn-accent-muted:        38 92% 50%;   /* amber-500  #f59e0b */
-    --mn-accent-foreground:    0  0%  0%;
-
-    /* Sofones Solares — indigo/violet (darkened for light bg) */
-    --ss-accent:             243 75% 59%;   /* indigo-600 #4f46e5 */
-    --ss-accent-muted:       234 89% 75%;   /* indigo-400 #818cf8 */
-    --ss-accent-foreground:    0  0% 100%;
-
-    /* Listerineh solo — Spotify green */
-    --solo-accent:           141 73% 42%;   /* #1DB954 */
-    --solo-accent-hover:     139 70% 49%;   /* #1ed760 */
-    --solo-accent-foreground:  0  0%  0%;
-
-    /* ── /why page surface ─────────────────────────────────── */
-    --why-background:         48 18% 95%;   /* warm off-white #f5f4f0 */
-    --why-foreground:          0  0%  7%;   /* near-black     #111111 */
-
-    /* ── Section watermark colors (visible on light bg) ─────── */
-    --wm-indigo: rgba(79, 70, 229, 0.07);
-    --wm-amber:  rgba(161, 97, 0, 0.07);
-    --wm-green:  rgba(22, 163, 74, 0.07);
+    /* ── Watermarks ─────────────────────────────────────────── */
+    --wm-indigo:              rgba( 79,  70, 229, 0.07);
+    --wm-amber:               color-mix(in srgb, var(--primary) 7%, transparent);
+    --wm-green:               rgba( 22, 163,  74, 0.07);
   }
 
   .dark {
-    --background: 240 6% 10%;   /* Very dark cool grey/blue */
-    --foreground: 220 20% 92%;  /* Light grey for text */
+    /* ── Surface ─────────────────────────────────────────────── */
+    --background:             #121218;
+    --foreground:             #E5E7EF;
+    --card:                   #181820;
+    --card-foreground:        #E5E7EF;
+    --popover:                #15151C;
+    --popover-foreground:     #E5E7EF;
 
-    --card: 240 6% 14%;         /* Slightly lighter than background */
-    --card-foreground: 220 20% 92%;
+    /* ── Brand ────────────────────────────────────────────────── */
+    --primary:                #F59E0B;  /* amber */
+    --primary-foreground:     #141414;
+    --secondary:              #2A2A32;
+    --secondary-foreground:   #D3D7E5;
+    --muted:                  #35353D;
+    --muted-foreground:       #939DAF;
+    --accent:                 #98258A;
+    --accent-foreground:      #D3D7E5;
+    --destructive:            #D93636;
+    --destructive-foreground: #FAFAFA;
 
-    --popover: 240 6% 12%;      /* Slightly darker than card for popovers */
-    --popover-foreground: 220 20% 92%;
+    /* ── Layout ───────────────────────────────────────────────── */
+    --border:                 #3A3A40;
+    --input:                  #3A3A40;
+    --ring:                   #F59E0B;
 
-    --primary: 231 48% 58%;    /* Lighter Indigo for dark mode */
-    --primary-foreground: 230 80% 95%; /* Very light text for Indigo */
+    /* ── Charts ───────────────────────────────────────────────── */
+    --chart-1:                #F59E0B;  /* amber   */
+    --chart-2:                #98258A;  /* magenta */
+    --chart-3:                #6BA3CC;
+    --chart-4:                #CC60CC;
+    --chart-5:                #60AABB;
 
-    --secondary: 240 5% 18%;     /* Darker secondary */
-    --secondary-foreground: 220 15% 85%; /* Lighter text for secondary */
+    /* ── Sidebar ──────────────────────────────────────────────── */
+    --sidebar-background:     #121218;
+    --sidebar-foreground:     #E5E7EF;
+    --sidebar-primary:        #F59E0B;
+    --sidebar-primary-foreground: #141414;
+    --sidebar-accent:         #A6BFD9;
+    --sidebar-accent-foreground:  #1F2336;
+    --sidebar-border:         #3A3A40;
+    --sidebar-ring:           #A6BFD9;
 
-    --muted: 240 5% 22%;        /* Darker muted */
-    --muted-foreground: 220 10% 65%; /* Kept existing, good contrast */
+    /* ── Music / brand ────────────────────────────────────────── */
+    --mn-accent:              #fbbf24;  /* Margarita Nugget – amber-400 */
+    --mn-accent-muted:        #f59e0b;
+    --mn-accent-foreground:   #000000;
+    --ss-accent:              #818cf8;  /* Sofones Solares – indigo-400 */
+    --ss-accent-muted:        #6366f1;
+    --ss-accent-foreground:   #ffffff;
+    --solo-accent:            #1DB954;
+    --solo-accent-hover:      #1ed760;
+    --solo-accent-foreground: #000000;
 
-    --accent: 307 61% 37%;      /* Elegant Silver-Blue */
-    --accent-foreground: 220 15% 85%; /* Dark grey/blue text for accent */
+    /* ── /why page ────────────────────────────────────────────── */
+    --why-background:         #080808;
+    --why-foreground:         #f0f0f0;
 
-    --destructive: 0 72% 50%; /* Standard destructive red */
-    --destructive-foreground: 0 0% 98%; /* Light text for destructive */
-
-    --border: 240 5% 25%;       /* Darker border */
-    --input: 240 5% 25%;        /* Darker input background */
-    --ring: 307 61% 37%;        /* Elegant Silver-Blue for focus rings */
-
-    --chart-1: 231 48% 58%;     /* Indigo */
-    --chart-2: 307 61% 37%;     /* Elegant Silver-Blue for chart */
-    --chart-3: 210 50% 65%;     /* Complementary Blue */
-    --chart-4: 300 60% 65%;     /* Magenta/Pink */
-    --chart-5: 190 50% 60%;     /* Cyan/Teal variant */
-    
-    --sidebar-background: 240 6% 10%;
-    --sidebar-foreground: 220 20% 92%;
-    --sidebar-primary: 231 48% 58%;
-    --sidebar-primary-foreground: 230 80% 95%;
-    --sidebar-accent: 210 40% 75%; /* Elegant Silver-Blue */
-    --sidebar-accent-foreground: 220 10% 15%; /* Dark grey/blue text for accent */
-    --sidebar-border: 240 5% 25%;
-    --sidebar-ring: 210 40% 75%; /* Elegant Silver-Blue for focus rings */
-
-    /* ── Music / Brand palette ─────────────────────────────── */
-    /* Margarita Nugget — amber/gold (lightened for dark bg) */
-    --mn-accent:              43 96% 56%;   /* amber-400  #fbbf24 */
-    --mn-accent-muted:        38 92% 50%;   /* amber-500  #f59e0b */
-    --mn-accent-foreground:    0  0%  0%;
-
-    /* Sofones Solares — indigo/violet (lighter for dark bg) */
-    --ss-accent:             234 89% 75%;   /* indigo-400 #818cf8 */
-    --ss-accent-muted:       244 75% 65%;   /* indigo-500 #6366f1 */
-    --ss-accent-foreground:    0  0% 100%;
-
-    /* Listerineh solo — Spotify green (unchanged, self-luminous) */
-    --solo-accent:           141 73% 42%;   /* #1DB954 */
-    --solo-accent-hover:     139 70% 49%;   /* #1ed760 */
-    --solo-accent-foreground:  0  0%  0%;
-
-    /* ── /why page surface ─────────────────────────────────── */
-    --why-background:          0  0%  3%;   /* near-black  #080808 */
-    --why-foreground:          0  0% 94%;   /* off-white   #f0f0f0 */
-
-    /* ── Section watermark colors (subtle on dark bg) ───────── */
-    --wm-indigo: rgba(129, 140, 248, 0.04);
-    --wm-amber:  rgba(245, 158, 11, 0.04);
-    --wm-green:  rgba(34, 197, 94, 0.04);
+    /* ── Watermarks ───────────────────────────────────────────── */
+    --wm-indigo:              rgba(129, 140, 248, 0.04);
+    --wm-amber:               color-mix(in srgb, var(--primary) 4%, transparent);
+    --wm-green:               rgba( 34, 197,  94, 0.04);
   }
-}
 
-@layer base {
+  /* ── Base resets ──────────────────────────────────────────── */
   * {
     @apply border-border;
   }
-  
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
   body {
-    @apply bg-background text-foreground;
-    @apply antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-outfit), sans-serif;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-unbounded), sans-serif;
   }
 
   ::selection {
-    background-color: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    background-color: var(--accent);
+    color: var(--accent-foreground);
   }
 }
 

@@ -158,7 +158,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
                 onClick={() => handleHeadingClick(heading.id, heading.text)}
                 className={cn(
                   'block w-full text-left py-1 px-4 -ml-[2px] border-l-2 transition-all duration-200',
-                  'text-foreground/40 border-transparent hover:text-amber-500 dark:hover:text-amber-400 hover:border-amber-400 cursor-pointer'
+                  'text-foreground/40 border-transparent hover:text-primary hover:border-primary cursor-pointer'
                 )}
               >
                 {heading.text}

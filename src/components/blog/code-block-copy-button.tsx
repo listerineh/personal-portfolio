@@ -26,8 +26,8 @@ export function CodeBlockCopyButton({ code }: CodeBlockCopyButtonProps) {
       onClick={handleCopy}
       className={cn(
         'absolute top-3 right-3 p-2 rounded-lg transition-all duration-200',
-        'bg-amber-400/10 hover:bg-amber-400/20 text-foreground/55 hover:text-foreground',
-        'border border-foreground/10 hover:border-amber-400/50',
+        'bg-primary/10 hover:bg-primary/20 text-foreground/55 hover:text-foreground',
+        'border border-foreground/10 hover:border-primary/50',
         'flex items-center gap-2 text-xs font-medium',
         copied && 'bg-green-500/20 border-green-500/50 text-green-600 dark:text-green-400'
       )}

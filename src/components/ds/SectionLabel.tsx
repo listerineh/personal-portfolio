@@ -10,7 +10,7 @@ interface SectionLabelProps {
 }
 
 const colorMap: Record<Accent, string> = {
-  amber:   'text-amber-700/60 dark:text-white/25',
+  amber:   'text-primary/60 dark:text-primary/40',
   indigo:  'text-indigo-700/60 dark:text-white/25',
   green:   'text-emerald-700/65 dark:text-white/25',
   neutral: 'text-gray-400 dark:text-white/25',

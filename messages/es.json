@@ -162,7 +162,12 @@
     "linkCopied": "¡Enlace copiado!",
     "shareOnX": "Compartir en X",
     "shareOnLinkedIn": "Compartir en LinkedIn",
-    "shareOnFacebook": "Compartir en Facebook"
+    "shareOnFacebook": "Compartir en Facebook",
+    "toastCopied": "¡Enlace copiado!",
+    "toastCopiedDesc": "El enlace del artículo se copió al portapapeles.",
+    "toastOpeningX": "Abriendo en X...",
+    "toastOpeningLinkedIn": "Abriendo en LinkedIn...",
+    "toastOpeningFacebook": "Abriendo en Facebook..."
   },
   "theme": {
     "lightMode": "Modo Claro",

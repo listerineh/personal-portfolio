@@ -14,9 +14,11 @@ import { vibeCodingCursorWorkshop } from './vibe-coding-cursor-workshop';
 import { controlledObservabilityModernDevelopment } from './controlled-observability-modern-development';
 import { aiSecurityDoubleEdgedSword } from './ai-security-double-edged-sword';
 import { flociAwsLocalDevelopmentRevolution } from './floci-aws-local-development-revolution';
+import { visualLanguageDesignSystems } from './visual-language-design-systems';
 
 const allBlogPosts = {
   en: [
+    visualLanguageDesignSystems.en,
     flociAwsLocalDevelopmentRevolution.en,
     aiSecurityDoubleEdgedSword.en,
     controlledObservabilityModernDevelopment.en,
@@ -33,6 +35,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    visualLanguageDesignSystems.es,
     flociAwsLocalDevelopmentRevolution.es,
     aiSecurityDoubleEdgedSword.es,
     controlledObservabilityModernDevelopment.es,

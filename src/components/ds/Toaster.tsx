@@ -31,14 +31,14 @@ export function Toaster() {
           {/* Left accent bar */}
           <div
             className="w-1 self-stretch rounded-l-xl flex-shrink-0"
-            style={{ background: isDestructive(variant) ? '#ef4444' : '#f59e0b' }}
+            style={{ background: isDestructive(variant) ? 'var(--destructive)' : 'var(--primary)' }}
           />
 
           <div className="flex flex-col gap-0.5 py-3.5">
             {title && (
               <ToastPrimitives.Title
                 className="font-headline text-xs tracking-wide font-semibold"
-                style={{ color: isDestructive(variant) ? '#f87171' : dark ? '#fbbf24' : '#d97706' }}
+                style={{ color: isDestructive(variant) ? 'var(--destructive)' : 'var(--primary)' }}
               >
                 {title}
               </ToastPrimitives.Title>

@@ -162,7 +162,12 @@
     "linkCopied": "Link copied!",
     "shareOnX": "Share on X",
     "shareOnLinkedIn": "Share on LinkedIn",
-    "shareOnFacebook": "Share on Facebook"
+    "shareOnFacebook": "Share on Facebook",
+    "toastCopied": "Link copied!",
+    "toastCopiedDesc": "The article link has been copied to your clipboard.",
+    "toastOpeningX": "Opening on X...",
+    "toastOpeningLinkedIn": "Opening on LinkedIn...",
+    "toastOpeningFacebook": "Opening on Facebook..."
   },
   "theme": {
     "lightMode": "Light Mode",

@@ -197,7 +197,7 @@ export function AboutContent() {
 
       {/* ── COMMUNITY ────────────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.06] to-amber-950/0 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/[0.06] to-primary/0 pointer-events-none" />
         <div
           className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black select-none pointer-events-none leading-none"
           style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
@@ -220,8 +220,8 @@ export function AboutContent() {
 
           <div className="reveal-stagger grid grid-cols-3 gap-6 md:gap-10 mb-16">
             {stats.map(({ stat, label }, i) => (
-              <div key={i} className="border-t border-amber-400/20 pt-5">
-                <div className="font-headline font-black text-amber-400 mb-1" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>
+              <div key={i} className="border-t border-primary/20 pt-5">
+                <div className="font-headline font-black text-primary mb-1" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>
                   {stat}
                 </div>
                 <div className="text-[10px] font-headline tracking-[0.15em] uppercase text-foreground/35 leading-tight">

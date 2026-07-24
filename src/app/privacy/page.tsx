@@ -15,10 +15,10 @@ export default function PrivacyPage() {
         {/* Hero */}
         <div className="pt-36 pb-20 px-6 sm:px-10 md:px-16 lg:px-24 border-b border-foreground/[0.06]">
           <div className="max-w-4xl mx-auto">
-            <Link href="/" className="inline-flex items-center gap-2 text-[11px] font-headline tracking-[0.2em] uppercase text-foreground/35 hover:text-amber-500 transition-colors mb-10">
+            <Link href="/" className="inline-flex items-center gap-2 text-[11px] font-headline tracking-[0.2em] uppercase text-foreground/35 hover:text-primary transition-colors mb-10">
               ← Back
             </Link>
-            <p className="text-[11px] font-headline tracking-[0.25em] uppercase text-amber-500/70 mb-4">Legal</p>
+            <p className="text-[11px] font-headline tracking-[0.25em] uppercase text-primary/70 mb-4">Legal</p>
             <h1
               className="font-headline font-black leading-[0.9] text-foreground mb-6"
               style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}
@@ -37,12 +37,12 @@ export default function PrivacyPage() {
 
             {/* Cookies section with list */}
             <section>
-              <h2 className="font-headline font-black text-amber-500 mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+              <h2 className="font-headline font-black text-primary mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
                 {t('infoCollectTitle')}
               </h2>
               <h3 className="font-headline font-semibold text-foreground/70 text-sm uppercase tracking-widest mb-3">{t('autoCollectedTitle')}</h3>
               <p className="text-foreground/55 leading-relaxed mb-4">{t('autoCollectedText')}</p>
-              <ul className="space-y-2 mb-6 pl-4 border-l-2 border-amber-500/20">
+              <ul className="space-y-2 mb-6 pl-4 border-l-2 border-primary/20">
                 {[t('browserType'), t('operatingSystem'), t('ipAddress'), t('pagesVisited'), t('referringWebsite')].map((item) => (
                   <li key={item} className="text-foreground/50 text-sm leading-relaxed">{item}</li>
                 ))}
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
               <h3 className="font-headline font-semibold text-foreground/70 text-sm uppercase tracking-widest mb-3">{t('cookiesTitle')}</h3>
               <p className="text-foreground/55 leading-relaxed mb-4">
                 {t('cookiesText', { cookieSettings: 'cookie settings' }).split('cookie settings').map((part, i, arr) =>
-                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">cookie settings</Link></span> : part
+                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/" className="text-primary hover:text-primary/80 underline underline-offset-2">cookie settings</Link></span> : part
                 )}
               </p>
               <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.02] p-5">
@@ -69,11 +69,11 @@ export default function PrivacyPage() {
 
             {/* How we use + rights with lists */}
             <section>
-              <h2 className="font-headline font-black text-amber-500 mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+              <h2 className="font-headline font-black text-primary mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
                 {t('howUseTitle')}
               </h2>
               <p className="text-foreground/55 leading-relaxed mb-4">{t('howUseText')}</p>
-              <ul className="space-y-2 pl-4 border-l-2 border-amber-500/20">
+              <ul className="space-y-2 pl-4 border-l-2 border-primary/20">
                 {[t('provideWebsite'), t('improveExperience'), t('analyzeUsage'), t('rememberPreferences'), t('detectIssues')].map((item) => (
                   <li key={item} className="text-foreground/50 text-sm leading-relaxed">{item}</li>
                 ))}
@@ -81,11 +81,11 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="font-headline font-black text-amber-500 mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+              <h2 className="font-headline font-black text-primary mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
                 {t('yourRightsTitle')}
               </h2>
               <p className="text-foreground/55 leading-relaxed mb-4">{t('yourRightsText')}</p>
-              <ul className="space-y-2 pl-4 border-l-2 border-amber-500/20">
+              <ul className="space-y-2 pl-4 border-l-2 border-primary/20">
                 {[t('accessInfo'), t('correctInfo'), t('deleteInfo'), t('objectProcessing'), t('withdrawConsent')].map((item) => (
                   <li key={item} className="text-foreground/50 text-sm leading-relaxed">{item}</li>
                 ))}
@@ -100,19 +100,19 @@ export default function PrivacyPage() {
               [t('changesTitle'), t('changesText')],
             ].map(([title, content]) => (
               <section key={title}>
-                <h2 className="font-headline font-black text-amber-500 mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>{title}</h2>
+                <h2 className="font-headline font-black text-primary mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>{title}</h2>
                 <p className="text-foreground/55 leading-relaxed">{content}</p>
               </section>
             ))}
 
             {/* Contact */}
-            <section className="rounded-xl border border-amber-500/15 bg-amber-500/[0.03] p-8">
-              <h2 className="font-headline font-black text-amber-500 mb-4" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+            <section className="rounded-xl border border-primary/15 bg-primary/[0.03] p-8">
+              <h2 className="font-headline font-black text-primary mb-4" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
                 {t('contactTitle')}
               </h2>
               <p className="text-foreground/55 leading-relaxed">
                 {t('contactText', { contactForm: 'contact form' }).split('contact form').map((part, i, arr) =>
-                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/#contact" className="text-amber-500 hover:text-amber-400 underline underline-offset-2">contact form</Link></span> : part
+                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/#contact" className="text-primary hover:text-primary/80 underline underline-offset-2">contact form</Link></span> : part
                 )}
               </p>
             </section>
