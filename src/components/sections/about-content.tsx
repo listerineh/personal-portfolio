@@ -68,7 +68,7 @@ export function AboutContent() {
       <section className="pt-32 pb-20 md:pt-44 md:pb-28 px-6 sm:px-10 md:px-16 lg:px-24">
         <div ref={heroRef} className="max-w-5xl mx-auto">
           <div className="hero-item mb-5">
-            <SectionLabel accent="indigo">{t('heroBadge')}</SectionLabel>
+            <SectionLabel accent="amber">{t('heroBadge')}</SectionLabel>
           </div>
           <h1
             className="hero-item font-headline font-black leading-[0.88] mb-6"
@@ -80,7 +80,7 @@ export function AboutContent() {
               className="block text-transparent bg-clip-text"
               style={{
                 fontSize: 'clamp(3rem, 9.5vw, 8.5rem)',
-                backgroundImage: 'linear-gradient(90deg, #818cf8, #c7d2fe, #818cf8)',
+                backgroundImage: 'linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-light)), rgb(var(--primary)))',
               }}
             >
               Sebastian.
@@ -100,14 +100,14 @@ export function AboutContent() {
       <section className="relative py-28 md:py-44 overflow-hidden">
         <div
           className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black select-none pointer-events-none leading-none"
-          style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-indigo)' }}
+          style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
         >
           {Array.from({ length: 10 }, (_, i) => (
             <span key={i}>{t('wmStory')}&nbsp;&nbsp;</span>
           ))}
         </div>
         <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-          <SectionLabel animate accent="indigo" className="mb-8">
+          <SectionLabel animate accent="amber" className="mb-8">
             {t('journeyBadge')}
           </SectionLabel>
           <Title
@@ -124,10 +124,10 @@ export function AboutContent() {
       {/* ── JOURNEY ──────────────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="max-w-5xl mx-auto">
-          <SectionLabel animate accent="indigo" className="mb-6">
+          <SectionLabel animate accent="amber" className="mb-6">
             {t('journeyBadge')}
           </SectionLabel>
-          <Title as="h2" gradient="indigo" animate className="mb-20" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+          <Title as="h2" gradient="amber" animate className="mb-20" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
             {t('journeyTitle')}
           </Title>
 
@@ -159,17 +159,17 @@ export function AboutContent() {
 
       {/* ── EXPERTISE ────────────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/0 via-indigo-950/[0.06] to-indigo-950/0 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/[0.06] to-primary/0 pointer-events-none" />
         <div
           className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black select-none pointer-events-none leading-none"
-          style={{ top: '14%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-indigo)' }}
+          style={{ top: '14%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
         >
           {Array.from({ length: 10 }, (_, i) => (
             <span key={i}>{t('wmCode')}&nbsp;&nbsp;</span>
           ))}
         </div>
         <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-          <SectionLabel animate accent="indigo" className="mb-6">
+          <SectionLabel animate accent="amber" className="mb-6">
             {t('expertiseBadge')}
           </SectionLabel>
           <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
@@ -178,9 +178,9 @@ export function AboutContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 reveal-stagger">
             {expertise.map(({ Icon, title, body }, i) => (
-              <AccentCard key={i} accent="indigo" className="p-8">
+              <AccentCard key={i} accent="amber" className="p-8">
                 <div className="flex flex-col gap-5">
-                  <Icon className="w-6 h-6 shrink-0" style={{ color: '#818cf8' }} />
+                  <Icon className="w-6 h-6 shrink-0" style={{ color: 'rgb(var(--primary))' }} />
                   <h3
                     className="font-headline font-black text-foreground"
                     style={{ fontSize: 'clamp(1.05rem, 2vw, 1.3rem)' }}
@@ -220,8 +220,8 @@ export function AboutContent() {
 
           <div className="reveal-stagger grid grid-cols-3 gap-6 md:gap-10 mb-16">
             {stats.map(({ stat, label }, i) => (
-              <div key={i} className="border-t border-primary/20 pt-5">
-                <div className="font-headline font-black text-primary mb-1" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>
+              <div key={i} className="border-t pt-5" style={{ borderColor: 'var(--primary-border)' }}>
+                <div className="font-headline font-black mb-1" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', color: 'rgb(var(--primary))' }}>
                   {stat}
                 </div>
                 <div className="text-[10px] font-headline tracking-[0.15em] uppercase text-foreground/35 leading-tight">
@@ -319,7 +319,7 @@ export function AboutContent() {
             {t('ctaBody')}
           </p>
           <div className="flex flex-wrap gap-3">
-            <Button variant="primary" accent="indigo" size="lg" href="/#contact">
+            <Button variant="primary" accent="amber" size="lg" href="/#contact">
               <Mail className="w-4 h-4" />
               {t('ctaPrimary')}
             </Button>

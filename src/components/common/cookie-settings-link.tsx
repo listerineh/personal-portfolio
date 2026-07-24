@@ -101,7 +101,7 @@ export function CookieSettingsLink({ className }: { className?: string }) {
                 checked={checked}
                 onCheckedChange={onChange}
                 disabled={disabled}
-                accentColor="var(--primary)"
+                accentColor="rgb(var(--primary))"
                 className="mt-0.5 shrink-0"
               />
             </div>

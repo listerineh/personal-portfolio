@@ -140,7 +140,8 @@ export function BackToTopButton() {
       ref={buttonRef}
       onClick={scrollToTop}
       aria-label="Back to top"
-      className="fixed bottom-8 right-8 z-40 h-11 w-11 rounded-full shadow-xl flex items-center justify-center opacity-0 scale-0 font-bold border-0 transition-colors duration-200 bg-primary hover:bg-primary/80 text-primary-foreground"
+      className="fixed bottom-8 right-8 z-40 h-11 w-11 rounded-full shadow-xl flex items-center justify-center opacity-0 scale-0 font-bold border-0"
+      style={{ background: 'rgb(var(--primary))', color: 'rgb(var(--primary-foreground))' }}
     >
       <ArrowUp className="h-5 w-5" />
     </button>

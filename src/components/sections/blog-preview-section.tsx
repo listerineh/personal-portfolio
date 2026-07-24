@@ -49,7 +49,7 @@ export function BlogPreviewSection() {
   return (
     <section id="blog" className="relative py-28 md:py-44 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <SectionLabel accent="indigo" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
+        <SectionLabel accent="amber" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
         <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
           {t('title')}
         </Title>
@@ -91,7 +91,7 @@ export function BlogPreviewSection() {
       {/* Watermark */}
       <div
         className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
-        style={{ top: '11%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-indigo)' }}
+        style={{ top: '11%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
       >
         {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
       </div>

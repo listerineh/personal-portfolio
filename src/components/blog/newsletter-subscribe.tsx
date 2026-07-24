@@ -125,7 +125,7 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
             <Input
               type="email"
               placeholder={t('compactPlaceholder')}
-              accent="indigo"
+              accent="amber"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -133,7 +133,7 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
           <Button
             type="submit"
             variant="primary"
-            accent="indigo"
+            accent="amber"
             size="md"
             disabled={status === 'loading' || status === 'success'}
           >
@@ -182,7 +182,7 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
               <Input
                 type="email"
                 placeholder={t('emailPlaceholder')}
-                accent="indigo"
+                accent="amber"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />

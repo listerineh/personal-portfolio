@@ -72,7 +72,8 @@ export function HeroSection() {
       <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 lg:px-24 pb-16 md:pb-28">
         <span
           ref={eyebrowRef}
-          className="block font-headline text-primary text-xs tracking-[0.35em] uppercase mb-5"
+          className="block font-headline text-xs tracking-[0.35em] uppercase mb-5"
+          style={{ color: 'rgb(var(--primary))' }}
         >
           {t('subtitle')}
         </span>
@@ -88,7 +89,7 @@ export function HeroSection() {
             className="block text-transparent bg-clip-text"
             style={{
               fontSize: 'clamp(3rem, 9.5vw, 8.5rem)',
-              backgroundImage: 'linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, white), var(--primary))',
+              backgroundImage: 'linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-light)), rgb(var(--primary)))',
             }}
           >
             Alvarez
@@ -105,7 +106,7 @@ export function HeroSection() {
         {/* Stats row */}
         <div className="flex items-center gap-8 mb-8 flex-wrap">
           <div className="flex items-center gap-2">
-            <span className="font-headline font-black text-primary" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>6+</span>
+            <span className="font-headline font-black" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: 'rgb(var(--primary))' }}>6+</span>
             <span className="text-[10px] font-headline tracking-[0.2em] uppercase text-white/35 leading-tight">
               Years<br />Exp.
             </span>
@@ -124,7 +125,7 @@ export function HeroSection() {
             variant="primary"
             accent="amber"
             size="md"
-            gradient="linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, white))"
+            gradient="linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-light)))"
             onClick={() => {
               const link = document.createElement('a');
               link.href = '/docs/CV_SebastianAlvarez_FS_EN.pdf';
@@ -132,7 +133,7 @@ export function HeroSection() {
               link.click();
               toast({ title: t('cvDownloadedTitle'), description: t('cvDownloadedDescription') });
             }}
-            className="text-black hover:shadow-[0_0_40px_color-mix(in_srgb,var(--primary)_35%,transparent)]"
+            className="text-black hover:shadow-[0_0_40px_rgba(245,158,11,0.35)]"
           >
             <FileText className="w-4 h-4" />
             {t('downloadCV')}

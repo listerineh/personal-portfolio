@@ -64,7 +64,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               <Button variant="secondary" accent="neutral" size="md" onClick={() => this.setState({ hasError: false, error: null })}>
                 Try again
               </Button>
-              <Button variant="primary" accent="indigo" size="md" onClick={() => { window.location.href = '/'; }}>
+              <Button variant="primary" accent="amber" size="md" onClick={() => { window.location.href = '/'; }}>
                 Go to homepage
               </Button>
             </div>

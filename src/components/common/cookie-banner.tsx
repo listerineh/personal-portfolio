@@ -145,7 +145,7 @@ export function CookieBanner() {
             <Button variant="secondary" accent="neutral" size="md" onClick={() => setShowSettings(false)}>
               {t('cancel')}
             </Button>
-            <Button variant="primary" accent="indigo" size="md" onClick={handleSavePreferences}>
+            <Button variant="primary" accent="amber" size="md" onClick={handleSavePreferences}>
               {t('savePreferences')}
             </Button>
           </div>

@@ -6,47 +6,52 @@
 @layer base {
   :root {
     /* ── Surface ─────────────────────────────────────────── */
-    --background:             #F0F2F5;
-    --foreground:             #2D3241;
-    --card:                   #FFFFFF;
-    --card-foreground:        #2D3241;
-    --popover:                #FFFFFF;
-    --popover-foreground:     #2D3241;
+    --background:             240 242 245;   /* #F0F2F5 */
+    --foreground:             45 50 65;      /* #2D3241 */
+    --card:                   255 255 255;   /* #FFFFFF */
+    --card-foreground:        45 50 65;      /* #2D3241 */
+    --popover:                255 255 255;   /* #FFFFFF */
+    --popover-foreground:     45 50 65;      /* #2D3241 */
 
     /* ── Brand ──────────────────────────────────────────────── */
-    --primary:                #D97706;  /* amber */
-    --primary-foreground:     #141414;
-    --secondary:              #E3E5EB;
-    --secondary-foreground:   #2D3241;
-    --muted:                  #D3D6E0;
-    --muted-foreground:       #656F8B;
-    --accent:                 #98258A;  /* magenta */
-    --accent-foreground:      #FFFFFF;
-    --destructive:            #EF4444;
-    --destructive-foreground: #FAFAFA;
+    --primary:                217 119 6;     /* #D97706 amber */
+    --primary-light:          245 158 11;    /* #F59E0B amber lighter */
+    --primary-glow:           rgba(217, 119,   6, 0.10);
+    --primary-border:         rgba(217, 119,   6, 0.25);
+    --primary-bg:             rgba(217, 119,   6, 0.08);
+    --primary-bg-hover:       rgba(217, 119,   6, 0.13);
+    --primary-foreground:     20 20 20;      /* #141414 */
+    --secondary:              227 229 235;   /* #E3E5EB */
+    --secondary-foreground:   45 50 65;      /* #2D3241 */
+    --muted:                  211 214 224;   /* #D3D6E0 */
+    --muted-foreground:       101 111 139;   /* #656F8B */
+    --accent:                 152 37 138;    /* #98258A magenta */
+    --accent-foreground:      255 255 255;   /* #FFFFFF */
+    --destructive:            239 68 68;     /* #EF4444 */
+    --destructive-foreground: 250 250 250;   /* #FAFAFA */
 
     /* ── Layout ──────────────────────────────────────────────  */
-    --border:                 #D5D9E4;
-    --input:                  #D5D9E4;
-    --ring:                   #D97706;
+    --border:                 213 217 228;   /* #D5D9E4 */
+    --input:                  213 217 228;   /* #D5D9E4 */
+    --ring:                   217 119 6;     /* #D97706 */
     --radius:                 0.5rem;
 
     /* ── Charts ─────────────────────────────────────────────── */
-    --chart-1:                #D97706;  /* amber  */
-    --chart-2:                #4B89CC;  /* blue   */
-    --chart-3:                #4D80B3;
-    --chart-4:                #E87322;  /* orange */
-    --chart-5:                #4DB34D;  /* green  */
+    --chart-1:                217 119 6;     /* #D97706 amber  */
+    --chart-2:                75 137 204;    /* #4B89CC blue   */
+    --chart-3:                77 128 179;    /* #4D80B3        */
+    --chart-4:                232 115 34;    /* #E87322 orange */
+    --chart-5:                77 179 77;     /* #4DB34D green  */
 
     /* ── Sidebar ────────────────────────────────────────────── */
-    --sidebar-background:     #F0F2F5;
-    --sidebar-foreground:     #2D3241;
-    --sidebar-primary:        #D97706;
-    --sidebar-primary-foreground: #141414;
-    --sidebar-accent:         #4B89CC;
-    --sidebar-accent-foreground:  #FFFFFF;
-    --sidebar-border:         #D5D9E4;
-    --sidebar-ring:           #D97706;
+    --sidebar-background:     240 242 245;   /* #F0F2F5 */
+    --sidebar-foreground:     45 50 65;      /* #2D3241 */
+    --sidebar-primary:        217 119 6;     /* #D97706 */
+    --sidebar-primary-foreground: 20 20 20;  /* #141414 */
+    --sidebar-accent:         75 137 204;    /* #4B89CC */
+    --sidebar-accent-foreground:  255 255 255; /* #FFFFFF */
+    --sidebar-border:         213 217 228;   /* #D5D9E4 */
+    --sidebar-ring:           217 119 6;     /* #D97706 */
 
     /* ── Music / brand ───────────────────────────────────────── */
     --mn-accent:              #d97706;  /* Margarita Nugget – amber-600 */
@@ -65,52 +70,57 @@
 
     /* ── Watermarks ─────────────────────────────────────────── */
     --wm-indigo:              rgba( 79,  70, 229, 0.07);
-    --wm-amber:               color-mix(in srgb, var(--primary) 7%, transparent);
+    --wm-amber:               rgba(217, 119,   6, 0.07);
     --wm-green:               rgba( 22, 163,  74, 0.07);
   }
 
   .dark {
     /* ── Surface ─────────────────────────────────────────────── */
-    --background:             #121218;
-    --foreground:             #E5E7EF;
-    --card:                   #181820;
-    --card-foreground:        #E5E7EF;
-    --popover:                #15151C;
-    --popover-foreground:     #E5E7EF;
+    --background:             18 18 24;      /* #121218 */
+    --foreground:             229 231 239;   /* #E5E7EF */
+    --card:                   24 24 32;      /* #181820 */
+    --card-foreground:        229 231 239;   /* #E5E7EF */
+    --popover:                21 21 28;      /* #15151C */
+    --popover-foreground:     229 231 239;   /* #E5E7EF */
 
     /* ── Brand ────────────────────────────────────────────────── */
-    --primary:                #F59E0B;  /* amber */
-    --primary-foreground:     #141414;
-    --secondary:              #2A2A32;
-    --secondary-foreground:   #D3D7E5;
-    --muted:                  #35353D;
-    --muted-foreground:       #939DAF;
-    --accent:                 #98258A;
-    --accent-foreground:      #D3D7E5;
-    --destructive:            #D93636;
-    --destructive-foreground: #FAFAFA;
+    --primary:                245 158 11;    /* #F59E0B amber */
+    --primary-light:          252 211 77;    /* #FCD34D amber lighter */
+    --primary-glow:           rgba(245, 158,  11, 0.10);
+    --primary-border:         rgba(245, 158,  11, 0.20);
+    --primary-bg:             rgba(245, 158,  11, 0.08);
+    --primary-bg-hover:       rgba(245, 158,  11, 0.13);
+    --primary-foreground:     20 20 20;      /* #141414 */
+    --secondary:              42 42 50;      /* #2A2A32 */
+    --secondary-foreground:   211 215 229;   /* #D3D7E5 */
+    --muted:                  53 53 61;      /* #35353D */
+    --muted-foreground:       147 157 175;   /* #939DAF */
+    --accent:                 152 37 138;    /* #98258A */
+    --accent-foreground:      211 215 229;   /* #D3D7E5 */
+    --destructive:            217 54 54;     /* #D93636 */
+    --destructive-foreground: 250 250 250;   /* #FAFAFA */
 
     /* ── Layout ───────────────────────────────────────────────── */
-    --border:                 #3A3A40;
-    --input:                  #3A3A40;
-    --ring:                   #F59E0B;
+    --border:                 58 58 64;      /* #3A3A40 */
+    --input:                  58 58 64;      /* #3A3A40 */
+    --ring:                   245 158 11;    /* #F59E0B */
 
     /* ── Charts ───────────────────────────────────────────────── */
-    --chart-1:                #F59E0B;  /* amber   */
-    --chart-2:                #98258A;  /* magenta */
-    --chart-3:                #6BA3CC;
-    --chart-4:                #CC60CC;
-    --chart-5:                #60AABB;
+    --chart-1:                245 158 11;    /* #F59E0B amber   */
+    --chart-2:                152 37 138;    /* #98258A magenta */
+    --chart-3:                107 163 204;   /* #6BA3CC         */
+    --chart-4:                204 96 204;    /* #CC60CC         */
+    --chart-5:                96 170 187;    /* #60AABB         */
 
     /* ── Sidebar ──────────────────────────────────────────────── */
-    --sidebar-background:     #121218;
-    --sidebar-foreground:     #E5E7EF;
-    --sidebar-primary:        #F59E0B;
-    --sidebar-primary-foreground: #141414;
-    --sidebar-accent:         #A6BFD9;
-    --sidebar-accent-foreground:  #1F2336;
-    --sidebar-border:         #3A3A40;
-    --sidebar-ring:           #A6BFD9;
+    --sidebar-background:     18 18 24;      /* #121218 */
+    --sidebar-foreground:     229 231 239;   /* #E5E7EF */
+    --sidebar-primary:        245 158 11;    /* #F59E0B */
+    --sidebar-primary-foreground: 20 20 20;  /* #141414 */
+    --sidebar-accent:         166 191 217;   /* #A6BFD9 */
+    --sidebar-accent-foreground:  31 35 54;  /* #1F2336 */
+    --sidebar-border:         58 58 64;      /* #3A3A40 */
+    --sidebar-ring:           166 191 217;   /* #A6BFD9 */
 
     /* ── Music / brand ────────────────────────────────────────── */
     --mn-accent:              #fbbf24;  /* Margarita Nugget – amber-400 */
@@ -129,7 +139,7 @@
 
     /* ── Watermarks ───────────────────────────────────────────── */
     --wm-indigo:              rgba(129, 140, 248, 0.04);
-    --wm-amber:               color-mix(in srgb, var(--primary) 4%, transparent);
+    --wm-amber:               rgba(245, 158,  11, 0.04);
     --wm-green:               rgba( 34, 197,  94, 0.04);
   }
 
@@ -155,8 +165,8 @@
   }
 
   ::selection {
-    background-color: var(--accent);
-    color: var(--accent-foreground);
+    background-color: rgb(var(--accent));
+    color: rgb(var(--accent-foreground));
   }
 }
 

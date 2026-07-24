@@ -95,7 +95,7 @@ export function ProjectCard({
             {liveDemoUrl && (
               <Button
                 variant="primary"
-                accent="indigo"
+                accent="amber"
                 size="sm"
                 href={liveDemoUrl}
                 external

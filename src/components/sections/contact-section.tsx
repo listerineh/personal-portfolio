@@ -127,7 +127,7 @@ export function ContactSection() {
                 id="name"
                 type="text"
                 placeholder={t('namePlaceholder')}
-                accent="indigo"
+                accent="amber"
                 error={!!errors.name}
                 aria-invalid={errors.name ? 'true' : 'false'}
                 {...register('name')}
@@ -141,7 +141,7 @@ export function ContactSection() {
                 id="email"
                 type="email"
                 placeholder={t('emailPlaceholder')}
-                accent="indigo"
+                accent="amber"
                 error={!!errors.email}
                 aria-invalid={errors.email ? 'true' : 'false'}
                 {...register('email')}
@@ -155,7 +155,7 @@ export function ContactSection() {
                 id="message"
                 placeholder={t('messagePlaceholder')}
                 rows={6}
-                accent="indigo"
+                accent="amber"
                 error={!!errors.message}
                 aria-invalid={errors.message ? 'true' : 'false'}
                 {...register('message')}

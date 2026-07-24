@@ -194,6 +194,8 @@ export function Footer() {
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(8,8,8,0.72) 0%, rgba(8,8,8,0.55) 40%, rgba(8,8,8,0.88) 100%)' }} />
       </div>
+      {/* Extra darkening overlay — static, outside parallax */}
+      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
       {/* Newsletter section */}
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 pt-28 md:pt-36 pb-20 md:pb-24">
@@ -207,7 +209,7 @@ export function Footer() {
                 className="font-headline font-black leading-[0.9] text-transparent bg-clip-text"
                 style={{
                   fontSize: 'clamp(2.4rem, 6vw, 5rem)',
-                  backgroundImage: 'linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, white), var(--primary))',
+                  backgroundImage: 'linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-light)), rgb(var(--primary)))',
                 }}
               >
                 {tNewsletter('title')}{' '}

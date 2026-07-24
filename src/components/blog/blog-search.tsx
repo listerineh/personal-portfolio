@@ -73,7 +73,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
           <Input
             type="text"
             placeholder={t('searchPlaceholder')}
-            accent="indigo"
+            accent="amber"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9"
@@ -94,7 +94,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
               <Filter className="h-4 w-4" />
               {t('tags')}
               {selectedTags.length > 0 && (
-                <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded-full bg-indigo-500/20 text-indigo-400">
+                <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded-full bg-primary/20 text-primary">
                   {selectedTags.length}
                 </span>
               )}
@@ -136,7 +136,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
           <span className="text-xs text-foreground/40">{t('filteringBy')}</span>
           {selectedTags.map(tag => (
             <button key={tag} onClick={() => toggleTag(tag)} className="flex items-center gap-1">
-              <Pill variant="solid" accent="indigo">
+              <Pill variant="solid" accent="amber">
                 {tag} <X className="h-3 w-3" />
               </Pill>
             </button>

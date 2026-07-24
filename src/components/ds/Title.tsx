@@ -12,7 +12,7 @@ interface TitleProps {
 }
 
 const gradientMap: Record<string, string> = {
-  amber:  'linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--primary) 60%, white), var(--primary))',
+  amber:  'linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-light)), rgb(var(--primary)))',
   indigo: 'linear-gradient(90deg, #6366f1, #a5b4fc, #6366f1)',
   green:  'linear-gradient(90deg, #1DB954, #86efac, #1DB954)',
 }

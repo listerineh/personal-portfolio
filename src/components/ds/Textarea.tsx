@@ -5,10 +5,17 @@ import { useTheme } from '@/context/theme-context';
 import type { Accent } from './types';
 
 const accentColorMap: Record<Accent, string> = {
-  amber: 'var(--primary)',
+  amber: 'rgb(var(--primary))',
   indigo: '#818cf8',
   green: '#1DB954',
   neutral: '#a3a3a3',
+};
+
+const accentGlowMap: Record<Accent, string> = {
+  amber: 'var(--primary-glow)',
+  indigo: 'rgba(129,140,248,0.10)',
+  green: 'rgba(29,185,84,0.10)',
+  neutral: 'rgba(163,163,163,0.10)',
 };
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -24,7 +31,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     const accentColor = accentColorMap[accent];
     const borderColor = error
-      ? 'var(--destructive)'
+      ? 'rgb(var(--destructive))'
       : focused
       ? accentColor
       : dark
@@ -39,7 +46,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
           border: `1px solid ${borderColor}`,
           color: dark ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.85)',
-          boxShadow: focused && !error ? `0 0 0 3px color-mix(in srgb, ${accentColor} 10%, transparent)` : 'none',
+          boxShadow: focused && !error ? `0 0 0 3px ${accentGlowMap[accent]}` : 'none',
           ...style,
         }}
         onFocus={(e) => {
