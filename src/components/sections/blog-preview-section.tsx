@@ -21,7 +21,6 @@ export function BlogPreviewSection() {
   const allPosts = getBlogPosts(locale);
   const displayedPosts = allPosts.slice(0, 3);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const buttonRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     cardsRef.current.forEach((card, index) => {
@@ -36,14 +35,6 @@ export function BlogPreviewSection() {
         });
       }
     });
-    if (buttonRef.current) {
-      gsap.from(buttonRef.current, {
-        opacity: 0,
-        duration: 0.4,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: buttonRef.current, start: 'top 90%', toggleActions: 'play none none none' },
-      });
-    }
   }, [displayedPosts.length]);
 
   return (
@@ -72,20 +63,18 @@ export function BlogPreviewSection() {
             </div>
           ))}
         </div>
-        {allPosts.length > 3 && (
-          <div ref={buttonRef} className="flex justify-start mt-12 reveal-up">
-            <Button
-              href="/blog"
-              variant="ghost"
-              accent="neutral"
-              size="md"
-              className="border border-foreground/15 hover:border-foreground/30"
-            >
-              {t('viewAllPosts')}
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
+        <div className="flex justify-start mt-12 reveal-up">
+          <Button
+            href="/blog"
+            variant="ghost"
+            accent="neutral"
+            size="md"
+            className="border border-foreground/15 hover:border-foreground/30"
+          >
+            {t('viewAllPosts')}
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Watermark */}

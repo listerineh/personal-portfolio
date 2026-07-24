@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ds';
+import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Button, Input } from '@/components/ds';
 import { useToast } from '@/hooks/use-toast';
 
 export function NewsletterSignup() {
@@ -26,9 +26,7 @@ export function NewsletterSignup() {
         body: JSON.stringify({ email, locale }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to subscribe');
-      }
+      if (!response.ok) throw new Error('Failed to subscribe');
 
       setStatus('success');
       setEmail('');
@@ -36,9 +34,8 @@ export function NewsletterSignup() {
         title: t('subscribeToastTitle'),
         description: t('subscribeToastDescription'),
       });
-
       setTimeout(() => setStatus('idle'), 5000);
-    } catch (error) {
+    } catch {
       setStatus('error');
       toast({
         title: t('errorToastTitle'),
@@ -51,56 +48,60 @@ export function NewsletterSignup() {
   };
 
   return (
-    <section className="my-12 p-8 rounded-lg bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20">
-      <div className="max-w-md mx-auto">
-        <h3 className="text-2xl font-headline font-bold mb-2">{t('stayUpdated')}</h3>
-        <p className="text-muted-foreground mb-6">
+    <section
+      className="my-12 rounded-2xl p-8"
+      style={{
+        border: '1px solid var(--primary-border)',
+        background: 'var(--primary-bg)',
+      }}
+    >
+      <div className="max-w-md">
+        <h3 className="text-2xl font-headline font-bold mb-2 text-foreground">
+          {t('stayUpdated')}
+        </h3>
+        <p className="text-foreground/50 text-sm leading-relaxed mb-6">
           {t('stayUpdatedDescription')}
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex gap-2">
-            <div className="flex-1 relative">
-              <Mail className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-              <input
-                type="email"
-                placeholder={t('emailPlaceholder')}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
-              />
-            </div>
-            <Button
-              type="submit"
-              variant="primary"
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <div className="flex-1">
+            <Input
+              type="email"
+              placeholder={t('emailPlaceholder')}
               accent="amber"
-              size="md"
-              disabled={loading || !email}
-            >
-              {loading ? t('subscribing') : t('subscribe')}
-            </Button>
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={loading}
+            />
           </div>
-
-          {status === 'success' && (
-            <div className="flex items-center gap-2 text-green-600 text-sm">
-              <CheckCircle className="h-4 w-4" />
-              {t('successfullySubscribed')}
-            </div>
-          )}
-
-          {status === 'error' && (
-            <div className="flex items-center gap-2 text-red-600 text-sm">
-              <AlertCircle className="h-4 w-4" />
-              {t('failedToSubscribe')}
-            </div>
-          )}
+          <Button
+            type="submit"
+            variant="primary"
+            accent="amber"
+            size="md"
+            disabled={loading || !email}
+            className="text-black shrink-0"
+          >
+            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mail className="h-4 w-4" />}
+            {loading ? t('subscribing') : t('subscribe')}
+          </Button>
         </form>
 
-        <p className="text-xs text-muted-foreground mt-4">
-          {t('privacyNote')}
-        </p>
+        {status === 'success' && (
+          <div className="flex items-center gap-2 mt-3 text-sm text-emerald-500">
+            <CheckCircle className="h-4 w-4 shrink-0" />
+            {t('successfullySubscribed')}
+          </div>
+        )}
+        {status === 'error' && (
+          <div className="flex items-center gap-2 mt-3 text-sm text-destructive">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            {t('failedToSubscribe')}
+          </div>
+        )}
+
+        <p className="text-xs text-foreground/30 mt-4">{t('privacyNote')}</p>
       </div>
     </section>
   );
