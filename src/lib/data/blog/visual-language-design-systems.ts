@@ -6,7 +6,7 @@ export const visualLanguageDesignSystems: Record<Locale, BlogPost> = {
     slug: 'visual-language-design-systems',
     title: 'Your Portfolio Speaks Before You Do: On Design Language and Design Systems',
     date: 'July 24, 2026',
-    excerpt: 'Great chefs know: love enters through the eyes. The same is true for software portfolios. Before a recruiter reads a single line of your experience, your visual language has already told them how professional you are.',
+    excerpt: 'Great chefs know: love enters through the eyes. The same is true for software portfolios. A deep dive into typography, mockups, UI/UX principles, component libraries, and the technical decisions behind building a design system that makes redesigns trivially easy.',
     imageUrl: '/blog/visual-language-design-systems.webp',
     imageAiHint: 'split composition showing design system evolution: left side shows chaotic, cartoon-style colorful web interface with mismatched fonts and inconsistent colors; right side shows sleek dark professional portfolio with amber accent color, consistent typography, amber design tokens, component library cards; center shows design tokens and a color palette going from scattered to organized; abstract concept of chef plating food elegantly on one side and developer arranging UI components with the same care on the other; professional tech illustration with warm amber and dark tones',
     content: `
@@ -60,6 +60,70 @@ The difference between a design language and a design system is the difference b
 
 ---
 
+## Typography: The Font You Choose Tells a Story
+
+Of all the design decisions you'll make for your portfolio, typography is simultaneously the most underrated and the most impactful. Most developers pick a font quickly and move on. That's a mistake — **fonts carry personality**.
+
+A geometric sans-serif like *Unbounded* communicates precision and technical authority. A humanist sans like *Inter* feels neutral and professional. A serif like *Playfair Display* signals editorial warmth. Choose wrong and your portfolio sends a mixed signal before anyone reads a word.
+
+### Why There Are So Many
+
+Typography serves radically different purposes. Fonts were designed for specific historical contexts — newspapers, signage, advertising — and carry those same personalities into digital interfaces today. The categories that matter:
+
+- **Display / Headline** — high personality, used large: *Unbounded*, *Space Grotesk*, *Cabinet Grotesk*. These define your brand character.
+- **Body / Reading** — optimized for small sizes: *Outfit*, *Inter*, *DM Sans*. These should disappear into the content.
+- **Monospace** — for code: *JetBrains Mono*, *Geist Mono*. Technical and precise.
+
+### Choosing and Pairing
+
+The rule that works almost every time: **pair a high-personality display font with a neutral, readable body font.** Let the headline carry visual character; let the body carry the words.
+
+For this portfolio: **Unbounded** (headlines) + **Outfit** (body). Unbounded is geometric and bold — "technical but modern." Outfit has a generous x-height and disappears into long-form reading. Together they create hierarchy without competing.
+
+Practical notes:
+- **Two font families maximum.** More creates noise.
+- Test readability at actual body size — 15–16px with 1.6–1.7 line height.
+- Use \`next/font/google\` to self-host and eliminate layout shifts.
+
+Typography accounts for roughly 95% of visual hierarchy. Get it right first.
+
+---
+
+## Before You Write Code: Mockups & Interaction Flows
+
+Here's a workflow mistake I see constantly in developer portfolios: jumping straight into code without any visual plan. The result is a design that evolves randomly — each new section picking up slightly different spacing, inconsistent heading sizes, hover states that don't match anything else.
+
+**The most effective investment before development is a mockup.**
+
+It doesn't need to be pixel-perfect. But some form of visual plan — even rough wireframes — forces decisions that are exponentially cheaper to make in a design tool than in code.
+
+### The Three Levels
+
+- **Wireframes** — low-fidelity structure. Boxes and labels. *What content goes where?*
+- **Mockups** — high-fidelity statics with real colors, fonts, spacing. *What does this actually look like?*
+- **Prototypes** — interactive flows showing transitions. *How does the user move through this?*
+
+For a personal portfolio, wireframes + mockups are the minimum. Prototypes are valuable for anything with complex interactions (navigation drawers, multi-step forms).
+
+### Mapping Interaction Flows
+
+Flows document how users move between screens and states. Key portfolio flows:
+
+- **Hero → Sections**: What visual anchors pull the eye down the page?
+- **Project card → Detail**: Does the transition feel intentional?
+- **Blog listing → Post → Related**: Is the reading experience cohesive?
+- **Mobile navigation**: Where does it live? How does it behave?
+
+Drawing these before coding prevents the expensive discovery that your navigation makes no sense on a 375px screen three weeks in.
+
+### Tools
+
+- **Figma** — industry standard. Free for solo use. Design, prototype, and inspect in one place.
+- **Whimsical** — fast wireframes and flow diagrams. Great before committing Figma fidelity.
+- **Mobbin** — curated UI patterns from real production apps. Outstanding reference for interaction conventions.
+
+---
+
 ## Why It Matters Even More for a Personal Portfolio
 
 Generic business websites can survive with inconsistent design. A portfolio — especially a developer's portfolio — cannot.
@@ -83,6 +147,61 @@ For recruiters especially, a polished, intentional portfolio shortens the trust 
 
 ---
 
+## Your Portfolio Opens Doors — But Only If It Shows the Work
+
+A beautifully designed portfolio with empty or poorly documented projects is like a stunning restaurant with no food. The visual language creates trust; the content has to deliver on it.
+
+Here's the part that developers often get wrong: **listing projects is not the same as presenting them.** A GitHub link and a one-line description is not a project presentation. Recruiters, engineering managers, and CTOs are asking specific questions when they look at your projects — and your portfolio either answers them or doesn't.
+
+### The Questions Every Project Has to Answer
+
+- **What problem did this solve?** Not the technical stack — the actual user or business problem.
+- **What was your specific contribution?** Especially important on team projects.
+- **What were the interesting technical challenges?** This is where you demonstrate seniority.
+- **What does it look like, and does it work?** Screenshots, live demos, and videos are non-negotiable.
+- **What would you do differently?** This signals self-awareness and growth mindset.
+
+A project entry that answers all five of these tells a complete story. Recruiters read dozens of portfolios on the same Tuesday morning — the ones they remember are the ones that told stories.
+
+### The Compounding Career Effect
+
+Every well-documented project is **permanent proof of capability**. It doesn't expire. It doesn't disappear when you leave a company. It doesn't require a recruiter to "take your word for it." It exists, it's accessible, and anyone can evaluate it in 90 seconds.
+
+This matters especially in the current hiring landscape:
+
+- **Remote-first hiring** means your portfolio is often the only tangible artifact before a first call. There's no office visit, no whiteboard session to make a first impression — just your site.
+- **Async screening** means your portfolio is evaluated when you're not in the room. The copy, the structure, and the project presentations have to do all the selling.
+- **International opportunities** open up when your portfolio communicates clearly across languages and cultures. A visually professional, well-written portfolio reaches further.
+
+I've had opportunities come directly from my portfolio being discovered — not from applications I sent, but from people finding the site and reaching out. That only happens when the portfolio is worth finding.
+
+### How to Present Projects Well
+
+- **Lead with the outcome, not the tech.** "Built a real-time collaborative whiteboard used by 3,000+ users" hits harder than "Built with React, WebSockets, and Redis."
+- **Show it running.** A live demo or a screen recording of the product in action is worth ten screenshots.
+- **Be specific about your role.** "Led frontend architecture" is clearer than "worked on the frontend."
+- **Include the messy parts.** The problems you hit, the constraints you worked under, the tradeoffs you made — this is what separates senior engineers from junior ones in how they talk about their work.
+
+---
+
+## The UI/UX Rules That Quietly Govern Everything
+
+You don't need a design degree to follow the principles that make interfaces feel right. But you do need to know they exist.
+
+**Visual hierarchy** — Everything on your page is implicitly ranked by importance. Hierarchy is created through size, weight, color, and position. Your name should be the largest element in the hero. Section labels smaller than headings. Body text smaller than both. If everything is the same size, nothing is important.
+
+**Contrast** — WCAG 2.1 requires minimum 4.5:1 ratio for normal text. Amber on near-black (#f59e0b on #0f0f11) achieves roughly 8:1 — excellent. Pale gray on white often fails. Test every text color against its background.
+
+**Spacing rhythm** — Inconsistent spacing is the most common error in developer portfolios. Use a base unit of 8px and build all spacing from multiples: 8, 16, 24, 32, 48, 64. Tailwind's default scale follows this convention. Stick to it and your layouts will feel settled even before visual polish.
+
+**The fold** — What users see without scrolling is your most valuable real estate. The hero must communicate who you are, what you do, and why they should keep reading — before anyone touches the scroll wheel.
+
+**Mobile-first thinking** — Over 60% of web traffic is mobile. If your portfolio was designed desktop-first and then "adapted," it usually shows. Design the mobile layout first, then expand.
+
+**Cognitive load** — Every element you add costs the user mental energy. Remove anything that doesn't directly serve their goal. Fewer elements, handled well, always beats more elements handled carelessly.
+
+---
+
 ## The Technical Side: Building a Design System from the Start
 
 Here's the honest truth: most developers think about design systems too late. You build the thing first, ship it, and then try to retrofit consistency onto a codebase that was never designed for it. The result is a mess of one-off styles, magic numbers, and components that all look slightly different for no good reason.
@@ -93,43 +212,65 @@ Here's the honest truth: most developers think about design systems too late. Yo
 
 Design tokens are the atomic values of your system: named variables for colors, spacing, font sizes, border radii, etc. In a CSS or Tailwind context, these live in your config and become the shared language between design and code.
 
+The critical decision is *how* you store token values. Using space-separated RGB channels in CSS variables — not hardcoded hex — gives Tailwind automatic opacity composition:
+
+\`\`\`css
+/* globals.css */
+:root {
+  --primary: 217 119 6;     /* amber — channel format */
+  --background: 15 15 17;
+  --foreground: 234 237 245;
+}
+\`\`\`
+
 \`\`\`ts
 // tailwind.config.ts
 colors: {
-  primary: '#f59e0b',      // amber — your accent
-  background: '#0f0f11',   // near-black
-  foreground: '#eaedf5',   // near-white
-  muted: 'rgba(234,237,245,0.5)',
+  primary: 'rgb(var(--primary) / <alpha-value>)',
+  background: 'rgb(var(--background) / <alpha-value>)',
 }
 \`\`\`
 
-Once every color in your codebase references a token instead of a hardcoded value, changing your entire visual language becomes a single edit.
+Now \`bg-primary/10\` gives you a 10% amber tint, \`text-primary/60\` gives 60% opacity text — all without extra tooling. And changing your entire primary color sitewide is a single CSS variable edit.
 
 ### Step 2: Typography Scale
 
-Define your typefaces and a clear hierarchy before you write a single component. Which font is for headings? Which for body? What sizes do you use? Map them to semantic names:
+Define your typefaces and hierarchy before writing a single component. Use \`next/font/google\` for automatic self-hosting and zero layout shifts:
+
+\`\`\`ts
+import { Unbounded, Outfit } from 'next/font/google';
+const headline = Unbounded({ subsets: ['latin'], variable: '--font-headline' });
+const body = Outfit({ subsets: ['latin'], variable: '--font-body' });
+\`\`\`
 
 \`\`\`ts
 fontFamily: {
-  headline: ['Unbounded', 'sans-serif'],  // display / UI labels
-  body: ['Outfit', 'sans-serif'],         // running text
+  headline: ['var(--font-headline)', 'sans-serif'],
+  body: ['var(--font-body)', 'sans-serif'],
 }
 \`\`\`
 
-### Step 3: A Component Library
+### Step 3: A Component Library — The Real Power
 
-Not a massive one — you don't need Ant Design. But a handful of core components that enforce your design rules:
+This is where most tutorials stop at surface level. But a real component library is what transforms a design system from a concept into a compounding advantage.
 
-- **Button** — variants (primary, secondary, ghost), sizes, states
-- **Text** — wraps semantic sizing/weight rules so headings are always consistent
-- **Pill / Tag** — for badges, labels, technology tags
-- **Card** — your content container with defined padding and border behavior
+**What it actually is:** a collection of self-contained UI primitives with fixed, opinionated APIs that enforce your design rules at every usage site. Each component is the single source of truth for how that pattern looks and behaves — everywhere in your application.
 
-The key is that these components *do not accept arbitrary style overrides*. They have a fixed, opinionated API. That's what creates consistency.
+The backbone of this portfolio's design system:
+
+- **\`Button\`** — variants (primary, secondary, ghost), accent tokens, sizes, optional \`href\`. Every CTA flows through this one component.
+- **\`Title\`** — wraps heading tags with consistent font-family, weight, and optional gradient. \`<Title as="h2" gradient="amber">\` handles everything.
+- **\`SectionLabel\`** — the small uppercase tracking text before section headings. One component, consistent everywhere.
+- **\`AccentCard\`** — bordered card with tinted background using CSS token variables directly.
+- **\`Pill\`** — technology tags and status badges with accent token support.
+
+The key rule: **DS components do not accept arbitrary color overrides.** They have variant and accent props. If a new visual state is needed, it's added to the component — never overridden at the call site. This is what actually enforces consistency.
+
+**The compounding return:** When I decided to unify the accent color to amber, I didn't hunt through 40 files. I updated one CSS variable and the token propagated to every component simultaneously. A visual change that could have taken days took minutes. And here's the forward-looking truth: if I want to redesign this site again tomorrow — different color direction, different typographic personality — the architecture makes that trivially easy. Tokens change. Component APIs stay the same. Content stays the same. Only the visual layer updates.
 
 ### Step 4: Document the Rules
 
-Even for a solo project, writing down your design decisions — even just in a README — forces clarity. "We use amber as the only accent color." "All CTAs use the Button DS component." "No inline styles except for dynamic values."
+Even for a solo project, writing down your design decisions forces clarity. "We use amber as the only accent color." "All CTAs use the Button DS component." "No inline styles except for dynamic values."
 
 Rules that aren't written down get forgotten.
 
@@ -165,6 +306,30 @@ Every page — blog posts, privacy policy, error pages, even the offline fallbac
 
 ---
 
+## Working Alongside Designers: What I Actually Learned
+
+My most important design education didn't come from tutorials or books. It came from working side by side with designers and UI/UX specialists on collaborative teams — and those experiences changed how I write frontend code permanently.
+
+There's a particular kind of learning that happens when a designer opens Figma, points to a component, and explains not just *what* it should look like but *why* it was designed that way. The reasoning behind a 4px vs 8px gap. Why that amber shade was chosen over a brighter one. Why the button radius is 12px and not 8px or 16px. These are deliberate decisions with intentional reasoning — and understanding that reasoning changes how you code.
+
+### What Designers See That Developers Miss
+
+Working with designers taught me that they think in **states and transitions** where developers often think in **components and props**. A designer specs a button with hover, active, focus, disabled, and loading states — because those states are part of the user experience. A developer may implement only the default and move on. The result is an interface that works but doesn't *feel right*.
+
+They also treat **whitespace as a design element**, not as the absence of content. Empty space is intentional — it creates breathing room, groups related elements, and guides the eye. Learning to resist the urge to fill every pixel was one of the most valuable things I took from UI/UX collaboration.
+
+### Design Tokens as the Handoff Bridge
+
+In modern collaborative workflows, the design-to-development handoff happens through tokens. Designers define them in Figma variables; developers implement them in CSS. When both sides share the same vocabulary — \`color.primary\`, \`spacing.md\`, \`radius.card\` — the translation from design to code becomes nearly lossless.
+
+This is why building a token-based system pays dividends even working alone. You're learning the same language every modern design team speaks.
+
+### The Shift That Changed My Work
+
+The biggest shift: **design is not decoration**. Every visual decision is a user experience decision. The button color communicates action affordance. The font size communicates hierarchy. The spacing communicates grouping. When you start thinking about design as a communication layer — not an aesthetic one — your code quality improves. You stop making arbitrary visual decisions and start asking: *what does this communicate, and to whom?*
+
+---
+
 ## Good Practices Make It Incremental
 
 Here's the part nobody talks about when they discuss design systems: they don't just make your project look better — they make your project **easier to evolve**.
@@ -186,11 +351,40 @@ None of these are about doing more work. They're about doing the right work once
 
 ---
 
+## Where to Find Design Inspiration
+
+One of the most common questions from developers working on their portfolios: *"How do I know what looks good?"*
+
+The honest answer: **exposure**. You train your eye by looking at a lot of great design. Here are the resources I return to regularly:
+
+**For portfolios and product design:**
+- **Awwwards** (awwwards.com) — award-winning websites with an exceptionally high bar. Spend an hour here and you'll feel the gap between good and great.
+- **Dribbble** — visual shots from designers worldwide. Excellent for color exploration, component ideas, and micro-interaction inspiration. Don't copy — absorb and understand *why* something works.
+- **Behance** — full project case studies, not just final screens. Valuable for understanding design process and decision-making.
+
+**For dark UI and developer portfolios:**
+- **dark.design** — a curated gallery of dark-mode websites. If you're building a dark portfolio (and you probably should), this is your primary reference.
+- **bestfolios.com** — curated developer and designer portfolios filtered by role and style.
+
+**For UI patterns and interactions:**
+- **Mobbin** — real-world UI patterns from top mobile and web apps. Invaluable for researching how specific interactions are handled in production-quality products.
+- **Linear's design** — widely regarded as the best example of dark-mode product design. Study it closely.
+
+**Communities:**
+- Follow designers and engineers at companies known for design quality: Vercel, Linear, Stripe, Notion. Their work sets the current bar.
+- The design community on X/Twitter — designers share process, decisions, and references constantly.
+
+**The meta-lesson:** When you find something that works — a spacing decision, a color treatment, a hover interaction — ask yourself *why* it works. Don't just collect visual references. Understand the underlying principle, and you'll be able to apply it in contexts that look nothing like the original.
+
+---
+
 ## Conclusion
 
 The best chefs I've ever read about — and the ones I most admire — treat plating as an extension of their cooking. The food isn't finished when it's cooked. It's finished when it's presented.
 
 Your portfolio works the same way. Your skills are your cooking. Your design language is your plating. Both matter. Both communicate.
+
+We've covered a lot of ground: choosing typography that carries your brand's personality, planning with mockups before a single line of code, following the UI/UX principles that govern every interface that feels right, building a component library that scales and redesigns easily, learning from designers, and finding inspiration intentionally. None of this is about making things pretty. It's about making things *right* — structurally sound, visually coherent, and built to evolve.
 
 A strong design language backed by a real design system says:
 - *"I think systematically."*
@@ -200,6 +394,18 @@ A strong design language backed by a real design system says:
 In a world where remote hiring decisions happen at a glance, where attention spans are measured in seconds, where recruiters are reviewing 50 portfolios on a Tuesday morning — **your visual language is your handshake**.
 
 Make it count.
+
+---
+
+## This Portfolio is Open Source
+
+Everything discussed in this post — the design system, the token architecture, the component library, the GSAP animations, the bilingual blog — is publicly available. This portfolio is released under the **MIT license**, which means you're free to use it, fork it, adapt it, and build your own version.
+
+**→ [github.com/listerineh/personal-portfolio](https://github.com/listerineh/personal-portfolio)**
+
+If the codebase, this post, or any of the patterns here were useful to you — a ⭐ on the repo goes a long way. It helps others discover it and keeps the motivation going to document and improve it.
+
+Build something great with it.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Design Systems', 'UI/UX', 'Frontend', 'Personal Branding', 'Web Development', 'Career']
@@ -208,7 +414,7 @@ Make it count.
     slug: 'visual-language-design-systems',
     title: 'Tu Portafolio Habla Antes que Tú: Sobre Lenguaje Visual y Design Systems',
     date: 'July 24, 2026',
-    excerpt: 'Los grandes chefs lo saben: el amor entra por los ojos. Lo mismo aplica para portafolios de software. Antes de que un reclutador lea una sola línea de tu experiencia, tu lenguaje visual ya le dijo qué tan profesional eres.',
+    excerpt: 'Los grandes chefs lo saben: el amor entra por los ojos. Lo mismo aplica para portafolios de software. Un análisis profundo de tipografía, mockups, principios de UI/UX, librerías de componentes y las decisiones técnicas detrás de un design system que hace los rediseños trivialmente fáciles.',
     imageUrl: '/blog/visual-language-design-systems.webp',
     imageAiHint: 'composición dividida mostrando evolución de sistema de diseño: lado izquierdo muestra interfaz web caricaturesca y colorida con tipografías desiguales y colores inconsistentes; lado derecho muestra portafolio profesional oscuro con color de acento ámbar, tipografía consistente, tokens de diseño ámbar, tarjetas de librería de componentes; centro muestra tokens de diseño y paleta de colores pasando de dispersa a organizada; concepto abstracto de chef emplatando comida elegantemente en un lado y desarrollador organizando componentes UI con el mismo cuidado en el otro; ilustración técnica profesional con tonos ámbar cálidos y oscuros',
     content: `
@@ -262,6 +468,70 @@ La diferencia entre un lenguaje de diseño y un design system es la diferencia e
 
 ---
 
+## Tipografía: La Fuente que Eliges Cuenta una Historia
+
+De todas las decisiones de diseño que tomarás para tu portafolio, la tipografía es simultáneamente la más subestimada y la más impactante. La mayoría de los desarrolladores eligen una fuente rápidamente y siguen adelante. Eso es un error — **las fuentes cargan personalidad**.
+
+Una sans-serif geométrica como *Unbounded* comunica precisión y autoridad técnica. Una humanista como *Inter* se siente neutra y profesional. Una serif como *Playfair Display* señala calidez editorial. Elegir mal y tu portafolio envía un mensaje mixto antes de que alguien lea una palabra.
+
+### Por Qué Hay Tantas
+
+La tipografía sirve propósitos radicalmente diferentes. Las fuentes fueron diseñadas para contextos históricos específicos — periódicos, señalética, publicidad — y llevan esas mismas personalidades a las interfaces digitales actuales. Las categorías que más importan:
+
+- **Display / Titular** — alta personalidad, usado en grande: *Unbounded*, *Space Grotesk*, *Cabinet Grotesk*. Definen el carácter de tu marca.
+- **Cuerpo / Lectura** — optimizados para tamaños pequeños: *Outfit*, *Inter*, *DM Sans*. Deben desaparecer dentro del contenido.
+- **Monoespaciado** — para código: *JetBrains Mono*, *Geist Mono*. Técnico y preciso.
+
+### Cómo Elegir y Combinar
+
+La regla que funciona casi siempre: **combina una fuente titular de alta personalidad con una fuente de cuerpo neutra y legible.** Deja que el titular lleve el carácter visual; deja que el cuerpo lleve las palabras.
+
+Para este portafolio: **Unbounded** (titulares) + **Outfit** (cuerpo). Unbounded es geométrica y bold — "técnica pero moderna." Outfit tiene una x-height generosa y desaparece en la lectura continua. Juntas crean jerarquía sin competir entre sí.
+
+Notas prácticas:
+- **Máximo dos familias tipográficas.** Más crea ruido visual.
+- Testea la legibilidad en el tamaño real del cuerpo — 15–16px con interlineado de 1.6–1.7.
+- Usa \`next/font/google\` para auto-hospedar y eliminar layout shifts.
+
+La tipografía representa aproximadamente el 95% de la jerarquía visual. Resuélvela primero.
+
+---
+
+## Antes de Escribir Código: Mockups y Flujos de Interacción
+
+Hay un error de workflow que veo constantemente en portafolios de desarrolladores: saltar directo al código sin ningún plan visual. El resultado es un diseño que evoluciona aleatoriamente — cada nueva sección tomando espaciado ligeramente diferente, tamaños de encabezado inconsistentes, estados hover que no coinciden con nada más.
+
+**La inversión más efectiva antes del desarrollo es un mockup.**
+
+No necesita ser pixel-perfect. Pero alguna forma de plan visual — incluso wireframes básicos — fuerza decisiones que son órdenes de magnitud más baratas de tomar en una herramienta de diseño que en código.
+
+### Los Tres Niveles
+
+- **Wireframes** — estructura de baja fidelidad. Cajas y etiquetas. *¿Qué contenido va dónde?*
+- **Mockups** — estáticos de alta fidelidad con colores, fuentes y espaciado reales. *¿Cómo se ve esto realmente?*
+- **Prototipos** — flujos interactivos mostrando transiciones. *¿Cómo se mueve el usuario por esto?*
+
+Para un portafolio personal, wireframes + mockups son el mínimo. Los prototipos son valiosos para interacciones complejas (navegación, formularios de múltiples pasos).
+
+### Mapear Flujos de Interacción
+
+Los flujos documentan cómo los usuarios se mueven entre pantallas y estados. Flujos clave para un portafolio:
+
+- **Hero → Secciones**: ¿Qué anclas visuales guían el ojo hacia abajo?
+- **Tarjeta de proyecto → Detalle**: ¿Se siente la transición intencional?
+- **Listado de blog → Post → Artículos relacionados**: ¿La experiencia de lectura es cohesiva?
+- **Navegación mobile**: ¿Dónde vive? ¿Cómo se comporta?
+
+Dibujar estos flujos antes de codificar previene el costoso descubrimiento de que tu navegación no tiene sentido en una pantalla de 375px tres semanas después.
+
+### Herramientas
+
+- **Figma** — el estándar de la industria. Gratis para uso individual. Diseño, prototipado e inspección en un lugar.
+- **Whimsical** — wireframes y diagramas de flujo rápidos. Ideal antes de comprometerse con la fidelidad de Figma.
+- **Mobbin** — patrones de UI de apps reales de producción. Referencia excepcional para convenciones de interacción.
+
+---
+
 ## Por Qué Importa Más en un Portafolio Personal
 
 Los sitios web de negocios genéricos pueden sobrevivir con diseño inconsistente. Un portafolio — especialmente el de un desarrollador — no puede.
@@ -285,6 +555,61 @@ Para los reclutadores especialmente, un portafolio pulido e intencional acorta l
 
 ---
 
+## Tu Portafolio Abre Puertas — Pero Solo Si Muestra el Trabajo
+
+Un portafolio bellamente diseñado con proyectos vacíos o mal documentados es como un restaurante impresionante sin comida. El lenguaje visual crea confianza; el contenido tiene que respaldarlo.
+
+Aquí está la parte que los desarrolladores frecuentemente hacen mal: **listar proyectos no es lo mismo que presentarlos.** Un link de GitHub y una descripción de una línea no es una presentación de proyecto. Los reclutadores, engineering managers y CTOs están haciendo preguntas específicas cuando ven tus proyectos — y tu portafolio las responde o no las responde.
+
+### Las Preguntas que Todo Proyecto Debe Responder
+
+- **¿Qué problema resolvió esto?** No el stack técnico — el problema real del usuario o del negocio.
+- **¿Cuál fue tu contribución específica?** Especialmente importante en proyectos de equipo.
+- **¿Cuáles fueron los desafíos técnicos interesantes?** Aquí es donde demuestras seniority.
+- **¿Cómo se ve y funciona?** Screenshots, demos en vivo y videos son no-negociables.
+- **¿Qué harías diferente?** Esto señala auto-consciencia y mentalidad de crecimiento.
+
+Una entrada de proyecto que responde estas cinco preguntas cuenta una historia completa. Los reclutadores leen docenas de portafolios en el mismo martes por la mañana — los que recuerdan son los que contaron historias.
+
+### El Efecto Acumulativo en la Carrera
+
+Cada proyecto bien documentado es **prueba permanente de capacidad**. No vence. No desaparece cuando te vas de una empresa. No requiere que un reclutador "confíe en tu palabra." Existe, es accesible, y cualquiera puede evaluarlo en 90 segundos.
+
+Esto importa especialmente en el panorama actual de contratación:
+
+- **La contratación remote-first** significa que tu portafolio frecuentemente es el único artefacto tangible antes de una primera llamada. No hay visita a oficina, no hay pizarrón — solo tu sitio.
+- **El screening asíncrono** significa que tu portafolio es evaluado cuando no estás en la sala. El copy, la estructura y las presentaciones de proyectos tienen que hacer toda la venta.
+- **Las oportunidades internacionales** se abren cuando tu portafolio comunica claramente entre idiomas y culturas. Un portafolio visualmente profesional y bien escrito llega más lejos.
+
+He tenido oportunidades que llegaron directamente por mi portafolio siendo descubierto — no desde aplicaciones que envié, sino desde personas que encontraron el sitio y se comunicaron. Eso solo sucede cuando el portafolio vale la pena encontrar.
+
+### Cómo Presentar Proyectos Bien
+
+- **Lidera con el resultado, no con la tecnología.** "Construí una pizarra colaborativa en tiempo real usada por 3,000+ usuarios" impacta más que "Construido con React, WebSockets y Redis."
+- **Muéstralo funcionando.** Una demo en vivo o una grabación de pantalla vale diez screenshots.
+- **Sé específico sobre tu rol.** "Lideré la arquitectura frontend" es más claro que "trabajé en el frontend."
+- **Incluye las partes complicadas.** Los problemas que enfrentaste, las restricciones bajo las que trabajaste, los tradeoffs que hiciste — esto es lo que separa a los ingenieros senior de los junior en cómo hablan de su trabajo.
+
+---
+
+## Las Reglas de UI/UX que Gobiernan Todo en Silencio
+
+No necesitas un título en diseño para seguir los principios que hacen que las interfaces se sientan bien. Pero sí necesitas saber que existen.
+
+**Jerarquía visual** — Todo en tu página está implícitamente clasificado por importancia. La jerarquía se crea con tamaño, peso, color y posición. Tu nombre debe ser el elemento más grande en el hero. Las etiquetas de sección más pequeñas que los encabezados. El cuerpo del texto más pequeño que ambos. Si todo tiene el mismo tamaño, nada es importante.
+
+**Contraste** — WCAG 2.1 requiere un mínimo de 4.5:1 de contraste para texto normal. Ámbar sobre negro profundo (#f59e0b sobre #0f0f11) logra aproximadamente 8:1 — excelente. Gris claro sobre blanco falla. Testea cada color de texto contra su fondo.
+
+**Ritmo de espaciado** — El espaciado inconsistente es el error de diseño más común en portafolios de desarrolladores. Usa una unidad base de 8px y construye todo el espaciado desde múltiplos: 8, 16, 24, 32, 48, 64. La escala de espaciado predeterminada de Tailwind sigue esta convención. Adhiérete a ella y tus layouts se verán sólidos incluso antes de agregar pulido visual.
+
+**El pliegue** — Lo que los usuarios ven sin hacer scroll es tu bien inmueble más valioso. El hero debe comunicar quién eres, qué haces y por qué deberían seguir leyendo — antes de que alguien toque la rueda de scroll.
+
+**Pensamiento mobile-first** — Más del 60% del tráfico web es mobile. Si tu portafolio fue diseñado desktop-first y luego "adaptado," generalmente se nota. Diseña el layout mobile primero, luego expande.
+
+**Carga cognitiva** — Cada elemento que agregas a una página le cuesta energía mental al usuario. Elimina todo lo que no sirva directamente a su objetivo. Menos elementos, bien manejados, siempre supera a más elementos manejados descuidadamente.
+
+---
+
 ## El Lado Técnico: Construir un Design System desde el Inicio
 
 La verdad honesta: la mayoría de los desarrolladores piensa en los design systems demasiado tarde. Construyes la cosa primero, la lanzas, y luego intentas retrofittear consistencia sobre una codebase que nunca fue diseñada para ello. El resultado es un desastre de estilos únicos, números mágicos y componentes que todos se ven ligeramente diferentes sin razón.
@@ -295,43 +620,65 @@ La verdad honesta: la mayoría de los desarrolladores piensa en los design syste
 
 Los design tokens son los valores atómicos de tu sistema: variables con nombre para colores, espaciado, tamaños de fuente, radios de borde, etc. En un contexto de CSS o Tailwind, estos viven en tu configuración y se convierten en el lenguaje compartido entre diseño y código.
 
+La decisión crítica es *cómo* almacenar los valores de los tokens. Usar canales RGB separados por espacios en variables CSS — no hex hardcodeado — le da a Tailwind composición automática de opacidad:
+
+\`\`\`css
+/* globals.css */
+:root {
+  --primary: 217 119 6;     /* ámbar — formato de canales */
+  --background: 15 15 17;
+  --foreground: 234 237 245;
+}
+\`\`\`
+
 \`\`\`ts
 // tailwind.config.ts
 colors: {
-  primary: '#f59e0b',      // ámbar — tu acento
-  background: '#0f0f11',   // negro profundo
-  foreground: '#eaedf5',   // blanco suave
-  muted: 'rgba(234,237,245,0.5)',
+  primary: 'rgb(var(--primary) / <alpha-value>)',
+  background: 'rgb(var(--background) / <alpha-value>)',
 }
 \`\`\`
 
-Una vez que cada color en tu codebase hace referencia a un token en lugar de un valor hardcodeado, cambiar todo tu lenguaje visual se convierte en una sola edición.
+Ahora \`bg-primary/10\` te da un tinte ámbar al 10%, \`text-primary/60\` te da texto al 60% de opacidad — sin herramientas adicionales. Y cambiar todo el color primario del sitio es una sola edición de variable CSS.
 
 ### Paso 2: Escala Tipográfica
 
-Define tus tipografías y una jerarquía clara antes de escribir un solo componente. ¿Qué fuente es para encabezados? ¿Cuál para el cuerpo? ¿Qué tamaños usas? Mapeálos a nombres semánticos:
+Define tus tipografías y jerarquía antes de escribir un solo componente. Usa \`next/font/google\` para auto-hospedaje y cero layout shifts:
+
+\`\`\`ts
+import { Unbounded, Outfit } from 'next/font/google';
+const headline = Unbounded({ subsets: ['latin'], variable: '--font-headline' });
+const body = Outfit({ subsets: ['latin'], variable: '--font-body' });
+\`\`\`
 
 \`\`\`ts
 fontFamily: {
-  headline: ['Unbounded', 'sans-serif'],  // display / etiquetas UI
-  body: ['Outfit', 'sans-serif'],         // texto corrido
+  headline: ['var(--font-headline)', 'sans-serif'],
+  body: ['var(--font-body)', 'sans-serif'],
 }
 \`\`\`
 
-### Paso 3: Una Librería de Componentes
+### Paso 3: Una Librería de Componentes — El Poder Real
 
-No una enorme — no necesitas Ant Design. Pero un puñado de componentes core que hacen cumplir tus reglas de diseño:
+Aquí es donde la mayoría de los tutoriales se quedan a nivel superficial. Pero una librería de componentes real es lo que transforma un design system de un concepto en una ventaja compuesta.
 
-- **Button** — variantes (primary, secondary, ghost), tamaños, estados
-- **Text** — encapsula reglas semánticas de tamaño/peso para que los encabezados sean siempre consistentes
-- **Pill / Tag** — para badges, etiquetas, tags de tecnología
-- **Card** — tu contenedor de contenido con padding y comportamiento de borde definidos
+**Qué es realmente:** una colección de primitivas de UI autocontenidas con APIs fijas y opinionadas que hacen cumplir tus reglas de diseño en cada punto de uso. Cada componente es la única fuente de verdad sobre cómo se ve y se comporta ese patrón — en toda tu aplicación.
 
-La clave es que estos componentes *no aceptan overrides de estilo arbitrarios*. Tienen una API fija y opinionada. Eso es lo que crea consistencia.
+La columna vertebral del design system de este portafolio:
+
+- **\`Button\`** — variantes (primary, secondary, ghost), tokens de acento, tamaños, \`href\` opcional. Cada CTA del sitio pasa por este componente.
+- **\`Title\`** — envuelve etiquetas de encabezado con font-family, peso y gradiente opcional consistentes.
+- **\`SectionLabel\`** — la pequeña etiqueta uppercase con tracking antes de los encabezados de sección.
+- **\`AccentCard\`** — tarjeta con borde y fondo tintado usando variables CSS de tokens directamente.
+- **\`Pill\`** — tags de tecnología y badges de estado con soporte de tokens de acento.
+
+La regla clave: **los componentes DS no aceptan overrides de color arbitrarios.** Tienen props de variante y acento. Si se necesita un nuevo estado visual, se agrega al componente — nunca se sobreescribe en el sitio de uso. Esto es lo que realmente hace cumplir la consistencia.
+
+**El retorno compuesto:** Cuando decidí unificar el color de acento a ámbar, no busqué en 40 archivos. Actualicé una variable CSS y el token se propagó a cada componente simultáneamente. Un cambio que podría haber tomado días tomó minutos. Y si quiero rediseñar este sitio mañana — diferente dirección de color, diferente personalidad tipográfica — la arquitectura hace eso trivialmente fácil. Los tokens cambian. Las APIs de los componentes permanecen iguales. El contenido permanece igual. Solo la capa visual se actualiza.
 
 ### Paso 4: Documentar las Reglas
 
-Incluso para un proyecto solo, escribir tus decisiones de diseño — aunque sea en un README — fuerza claridad. "Usamos ámbar como el único color de acento." "Todos los CTAs usan el componente Button del DS." "Sin estilos inline excepto para valores dinámicos."
+Incluso para un proyecto solo, escribir tus decisiones de diseño fuerza claridad. "Usamos ámbar como el único color de acento." "Todos los CTAs usan el componente Button del DS." "Sin estilos inline excepto para valores dinámicos."
 
 Las reglas que no están escritas se olvidan.
 
@@ -367,6 +714,30 @@ Cada página — posts de blog, política de privacidad, páginas de error, incl
 
 ---
 
+## Trabajar con Diseñadores: Lo que Realmente Aprendí
+
+Mi educación de diseño más importante no vino de tutoriales ni libros. Vino de trabajar codo a codo con diseñadores y especialistas en UI/UX en equipos colaborativos — y esas experiencias cambiaron permanentemente cómo escribo código frontend.
+
+Hay un tipo particular de aprendizaje que ocurre cuando un diseñador abre Figma, señala un componente y explica no solo *cómo* debería verse sino *por qué* fue diseñado de esa manera. El razonamiento detrás de un gap de 4px vs 8px. Por qué ese tono particular de ámbar fue elegido sobre uno más brillante. Por qué el radio del botón es 12px y no 8px o 16px. Estas son decisiones deliberadas con razonamiento intencional — y entender ese razonamiento cambia cómo codificas.
+
+### Lo que los Diseñadores Ven que los Desarrolladores Se Pierden
+
+Trabajar con diseñadores me enseñó que piensan en **estados y transiciones** donde los desarrolladores frecuentemente piensan en **componentes y props**. Un diseñador especifica un botón con estados hover, active, focus, disabled y loading — porque esos estados son parte de la experiencia del usuario. Un desarrollador puede implementar solo el estado default y seguir adelante. El resultado es una interfaz que funciona pero no se *siente bien*.
+
+También tratan el **espacio en blanco como un elemento de diseño**, no como la ausencia de contenido. El espacio vacío es intencional — crea espacio para respirar, agrupa elementos relacionados y guía el ojo. Aprender a resistir el impulso de llenar cada píxel fue una de las cosas más valiosas que tomé de la colaboración con UI/UX.
+
+### Los Tokens como Puente entre Diseño y Desarrollo
+
+En los workflows colaborativos modernos, el handoff de diseño a desarrollo sucede a través de tokens. Los diseñadores los definen en variables de Figma; los desarrolladores los implementan en CSS. Cuando ambos lados comparten el mismo vocabulario — \`color.primary\`, \`spacing.md\`, \`radius.card\` — la traducción de diseño a código se vuelve casi sin pérdidas.
+
+Por eso construir un sistema basado en tokens desde el inicio paga dividendos incluso trabajando solo. Estás aprendiendo el mismo lenguaje que habla todo equipo de diseño moderno.
+
+### El Cambio que Transformó Mi Trabajo
+
+El mayor cambio: **el diseño no es decoración**. Cada decisión visual es una decisión de experiencia de usuario. El color del botón comunica affordance de acción. El tamaño de fuente comunica jerarquía. El espaciado comunica agrupación. Cuando empiezas a pensar en el diseño como una capa de comunicación — no una estética — la calidad de tu código mejora. Dejas de tomar decisiones visuales arbitrarias y empiezas a preguntar: *¿qué comunica esto, y a quién?*
+
+---
+
 ## Las Buenas Prácticas lo Hacen Incremental
 
 Aquí está la parte que nadie menciona cuando hablan de design systems: no solo hacen que tu proyecto se vea mejor — hacen que tu proyecto sea **más fácil de evolucionar**.
@@ -388,11 +759,40 @@ Nada de esto se trata de hacer más trabajo. Se trata de hacer el trabajo correc
 
 ---
 
+## Dónde Encontrar Inspiración de Diseño
+
+Una de las preguntas más comunes de desarrolladores trabajando en sus portafolios: *"¿Cómo sé qué se ve bien?"*
+
+La respuesta honesta: **exposición**. Entrenas tu ojo mirando mucho diseño excelente. Estos son los recursos a los que vuelvo regularmente:
+
+**Para portafolios y diseño de producto:**
+- **Awwwards** (awwwards.com) — sitios web premiados con un estándar excepcionalmente alto. Pasa una hora aquí y sentirás la diferencia entre diseño bueno y excelente.
+- **Dribbble** — shots visuales de diseñadores de todo el mundo. Excelente para exploración de color, ideas de componentes e inspiración de micro-interacciones. No copies — absorbe y entiende *por qué* algo funciona.
+- **Behance** — casos de estudio completos, no solo pantallas finales. Valioso para entender el proceso de diseño y la toma de decisiones.
+
+**Para UI oscura y portafolios de desarrolladores:**
+- **dark.design** — una galería curada de sitios web en modo oscuro. Si estás construyendo un portafolio oscuro (y probablemente deberías), esta es tu referencia principal.
+- **bestfolios.com** — portafolios curados de desarrolladores y diseñadores filtrados por rol y estilo.
+
+**Para patrones de UI e interacciones:**
+- **Mobbin** — patrones de UI del mundo real de las mejores apps móviles y web. Invaluable para investigar cómo se manejan interacciones específicas en productos de calidad de producción.
+- **El diseño de Linear** — ampliamente considerado el mejor ejemplo de diseño de producto en modo oscuro. Estúdialo con atención.
+
+**Comunidades:**
+- Sigue a diseñadores e ingenieros en empresas conocidas por calidad de diseño: Vercel, Linear, Stripe, Notion. Su trabajo establece el estándar actual.
+- La comunidad de diseño en X/Twitter — los diseñadores comparten proceso, decisiones y referencias constantemente.
+
+**La meta-lección:** Cuando encuentres algo que funciona — una decisión de espaciado, un tratamiento de color, una interacción hover — pregúntate *por qué* funciona. No solo colecciones referencias visuales. Entiende el principio subyacente, y podrás aplicarlo en contextos que no se parecen en nada al original.
+
+---
+
 ## Conclusión
 
 Los mejores chefs que he leído — y los que más admiro — tratan el emplatado como una extensión de su cocina. La comida no está terminada cuando está cocinada. Está terminada cuando está presentada.
 
 Tu portafolio funciona igual. Tus habilidades son tu cocina. Tu lenguaje de diseño es tu emplatado. Ambos importan. Ambos comunican.
+
+Cubrimos mucho terreno: elegir tipografía que lleva la personalidad de tu marca, planificar con mockups antes de una sola línea de código, seguir los principios de UI/UX que gobiernan toda interfaz que se siente bien, construir una librería de componentes que escala y se rediseña fácilmente, aprender de diseñadores, y encontrar inspiración intencionalmente. Nada de esto trata de hacer cosas bonitas. Se trata de hacerlas *bien* — estructuralmente sólidas, visualmente coherentes, y construidas para evolucionar.
 
 Un lenguaje de diseño sólido respaldado por un design system real dice:
 - *"Pienso sistemáticamente."*
@@ -402,6 +802,18 @@ Un lenguaje de diseño sólido respaldado por un design system real dice:
 En un mundo donde las decisiones de contratación remota suceden de un vistazo, donde los tiempos de atención se miden en segundos, donde los reclutadores están revisando 50 portafolios un martes por la mañana — **tu lenguaje visual es tu apretón de manos**.
 
 Hazlo valer.
+
+---
+
+## Este Portafolio es Open Source
+
+Todo lo que se discutió en este post — el design system, la arquitectura de tokens, la librería de componentes, las animaciones GSAP, el blog bilingüe — está disponible públicamente. Este portafolio se distribuye bajo licencia **MIT**, lo que significa que eres libre de usarlo, forkearlo, adaptarlo y construir tu propia versión.
+
+**→ [github.com/listerineh/personal-portfolio](https://github.com/listerineh/personal-portfolio)**
+
+Si el código, este post o cualquiera de los patrones aquí te fueron útiles — una ⭐ en el repo ayuda mucho. Ayuda a que otros lo descubran y mantiene la motivación para seguir documentándolo y mejorándolo.
+
+Construye algo genial con él.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Design Systems', 'UI/UX', 'Frontend', 'Marca Personal', 'Desarrollo Web', 'Carrera']
