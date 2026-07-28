@@ -10,6 +10,7 @@ interface PillProps {
   accent?: Accent
   color?: string
   size?: PillSize
+  shape?: 'pill' | 'rect'
   uppercase?: boolean
   className?: string
   children: React.ReactNode
@@ -34,9 +35,10 @@ const sizeMap: Record<PillSize, string> = {
   sm: 'px-2 py-0.5 text-[10px] tracking-wide',
 }
 
-export function Pill({ variant = 'solid', accent = 'neutral', color, size = 'md', uppercase = true, className, children }: PillProps) {
+export function Pill({ variant = 'solid', accent = 'neutral', color, size = 'md', shape = 'pill', uppercase = true, className, children }: PillProps) {
   const base = cn(
-    'inline-flex items-center gap-1.5 rounded-full font-headline font-semibold',
+    'inline-flex items-center gap-1.5 font-headline font-semibold',
+    shape === 'rect' ? 'rounded-md' : 'rounded-full',
     sizeMap[size],
     uppercase && 'uppercase',
   )

@@ -9,6 +9,7 @@ import { getBlogPosts } from '@/lib/data';
 import { useLocale } from '@/context/locale-context';
 import { useGSAP } from '@/hooks/use-gsap';
 import { SectionLabel, Title, BlogCard, Button } from '@/components/ds';
+import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -48,7 +49,7 @@ export function BlogPreviewSection() {
           {displayedPosts.map((post, index) => (
             <div
               key={post.slug}
-              className="h-full"
+              className="h-full mt-5"
               ref={(el) => { cardsRef.current[index] = el; }}
             >
               <BlogCard
@@ -59,6 +60,9 @@ export function BlogPreviewSection() {
                 tags={post.tags}
                 coverImage={post.imageUrl}
                 readMoreLabel={tCommon('readMore')}
+                newLabel={t('new')}
+                isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
+                recommendedLabel={t('sortRecommended')}
               />
             </div>
           ))}

@@ -108,7 +108,16 @@
     "filteringBy": "Filtering by:",
     "foundArticles": "Found {count} {count, plural, one {article} other {articles}}",
     "article": "article",
-    "articles": "articles"
+    "articles": "articles",
+    "new": "New",
+    "loadMore": "Load more",
+    "sortAll": "All",
+    "sortRecommended": "Recommended",
+    "sortMostViewed": "Most Viewed",
+    "sortAscending": "Oldest First",
+    "sortDescending": "Newest First",
+    "sortBy": "Sort",
+    "loadingViews": "Loading..."
   },
   "contact": {
     "title": "Get In Touch",
