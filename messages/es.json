@@ -108,7 +108,16 @@
     "filteringBy": "Filtrando por:",
     "foundArticles": "Se {count, plural, one {encontró} other {encontraron}} {count} {count, plural, one {artículo} other {artículos}}",
     "article": "artículo",
-    "articles": "artículos"
+    "articles": "artículos",
+    "new": "Nuevo",
+    "loadMore": "Cargar más",
+    "sortAll": "Todos",
+    "sortRecommended": "Recomendados",
+    "sortMostViewed": "Más vistos",
+    "sortAscending": "Más antiguos",
+    "sortDescending": "Más recientes",
+    "sortBy": "Ordenar",
+    "loadingViews": "Cargando..."
   },
   "contact": {
     "title": "Ponte en Contacto",

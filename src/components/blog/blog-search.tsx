@@ -1,20 +1,29 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
-import { Search, X, Filter } from 'lucide-react';
+import { Search, X, Filter, TrendingUp, ArrowUpAZ, ArrowDownAZ, Sparkles, Loader2 } from 'lucide-react';
 import { Input, Pill, Dropdown, DropdownTrigger, DropdownContent, DropdownCheckboxItem, DropdownLabel, DropdownSeparator } from '@/components/ds';
 import type { BlogPost } from '@/types';
+import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
+
+type SortOption = 'all' | 'recommended' | 'most-viewed' | 'asc' | 'desc';
+
+const RECOMMENDED_ORDER = RECOMMENDED_SLUGS;
 
 interface BlogSearchProps {
   posts: BlogPost[];
   onFilteredPostsChange: (posts: BlogPost[]) => void;
+  onLoadingChange?: (loading: boolean) => void;
 }
 
-export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
+export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: BlogSearchProps) {
   const t = useTranslations('blog');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<SortOption>('all');
+  const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
+  const [loadingViews, setLoadingViews] = useState(false);
 
   const allTags = useMemo(() => {
     const tags = new Set<string>();
@@ -24,7 +33,36 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
     return Array.from(tags).sort();
   }, [posts]);
 
-  const filteredPosts = useMemo(() => {
+  const fetchAllViews = useCallback(async () => {
+    if (Object.keys(viewCounts).length > 0) return;
+    setLoadingViews(true);
+    try {
+      const results = await Promise.all(
+        posts.map(async (post) => {
+          const res = await fetch(`/api/blog/${post.slug}/views`);
+          const data = await res.json();
+          return [post.slug, data.views ?? 0] as [string, number];
+        })
+      );
+      setViewCounts(Object.fromEntries(results));
+    } catch {
+      setViewCounts(Object.fromEntries(posts.map(p => [p.slug, 0])));
+    } finally {
+      setLoadingViews(false);
+    }
+  }, [posts, viewCounts]);
+
+  useEffect(() => {
+    if (sortBy === 'most-viewed') {
+      fetchAllViews();
+    }
+  }, [sortBy, fetchAllViews]);
+
+  useEffect(() => {
+    onLoadingChange?.(loadingViews);
+  }, [loadingViews, onLoadingChange]);
+
+  const filteredAndSortedPosts = useMemo(() => {
     let filtered = posts;
 
     if (searchQuery.trim()) {
@@ -43,12 +81,26 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
       );
     }
 
-    return filtered;
-  }, [posts, searchQuery, selectedTags]);
+    if (sortBy === 'recommended') {
+      return filtered.filter(post => RECOMMENDED_ORDER.includes(post.slug))
+        .sort((a, b) => RECOMMENDED_ORDER.indexOf(a.slug) - RECOMMENDED_ORDER.indexOf(b.slug));
+    }
+
+    const sorted = [...filtered];
+    if (sortBy === 'asc') {
+      sorted.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    } else if (sortBy === 'desc') {
+      sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    } else if (sortBy === 'most-viewed' && Object.keys(viewCounts).length > 0) {
+      sorted.sort((a, b) => (viewCounts[b.slug] ?? 0) - (viewCounts[a.slug] ?? 0));
+    }
+
+    return sorted;
+  }, [posts, searchQuery, selectedTags, sortBy, viewCounts]);
 
   useEffect(() => {
-    onFilteredPostsChange(filteredPosts);
-  }, [filteredPosts, onFilteredPostsChange]);
+    onFilteredPostsChange(filteredAndSortedPosts);
+  }, [filteredAndSortedPosts, onFilteredPostsChange]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags(prev =>
@@ -64,6 +116,14 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
   };
 
   const hasActiveFilters = searchQuery.trim() !== '' || selectedTags.length > 0;
+
+  const sortOptions: { key: SortOption; label: string; icon: ReactNode }[] = [
+    { key: 'all',          label: t('sortAll'),         icon: null },
+    { key: 'recommended',  label: t('sortRecommended'), icon: <Sparkles className="h-3 w-3" /> },
+    { key: 'most-viewed',  label: t('sortMostViewed'),  icon: loadingViews && sortBy === 'most-viewed' ? <Loader2 className="h-3 w-3 animate-spin" /> : <TrendingUp className="h-3 w-3" /> },
+    { key: 'desc',         label: t('sortDescending'),  icon: <ArrowDownAZ className="h-3 w-3" /> },
+    { key: 'asc',          label: t('sortAscending'),   icon: <ArrowUpAZ className="h-3 w-3" /> },
+  ];
 
   return (
     <div className="space-y-4 mb-8">
@@ -92,7 +152,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
           <DropdownTrigger asChild>
             <button className="flex items-center gap-2 shrink-0 px-3 py-2 rounded-lg border border-foreground/15 text-sm font-medium text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-colors">
               <Filter className="h-4 w-4" />
-              {t('tags')}
+              <span className="hidden sm:inline">{t('tags')}</span>
               {selectedTags.length > 0 && (
                 <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded-full bg-primary/20 text-primary">
                   {selectedTags.length}
@@ -131,6 +191,26 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
         </Dropdown>
       </div>
 
+      <div className="flex items-center justify-center gap-3 w-full">
+        <span className="text-xs text-foreground/35 font-medium tracking-wide uppercase shrink-0 hidden sm:block">{t('sortBy')}</span>
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none flex-nowrap sm:flex-wrap">
+          {sortOptions.map(({ key, label, icon }) => (
+            <button
+              key={key}
+              onClick={() => setSortBy(key)}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border shrink-0 ${
+                sortBy === key
+                  ? 'bg-primary/15 border-primary/40 text-primary'
+                  : 'bg-transparent border-foreground/10 text-foreground/50 hover:border-foreground/25 hover:text-foreground/80'
+              }`}
+            >
+              {icon}
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {selectedTags.length > 0 && (
         <div className="flex flex-wrap gap-2 items-center">
           <span className="text-xs text-foreground/40">{t('filteringBy')}</span>
@@ -146,7 +226,7 @@ export function BlogSearch({ posts, onFilteredPostsChange }: BlogSearchProps) {
 
       {hasActiveFilters && (
         <div className="text-sm text-muted-foreground">
-          {t('foundArticles', { count: filteredPosts.length })}
+          {t('foundArticles', { count: filteredAndSortedPosts.length })}
         </div>
       )}
     </div>
