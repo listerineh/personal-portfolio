@@ -60,7 +60,16 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: '/:path((?!_next|images|blog/.*\\.webp).*)',
+        source: '/docs/components/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
+        source: '/:path((?!_next|images|blog/.*\\.webp|docs/components).*)',
         headers: [
           {
             key: 'Cache-Control',
