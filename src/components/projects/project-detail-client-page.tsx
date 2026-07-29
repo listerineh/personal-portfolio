@@ -122,12 +122,6 @@ export function ProjectDetailClientPage({ project: initialProject }: ProjectDeta
                       <span className="font-medium">{statusLabel}</span>
                     </div>
                   )}
-                  {project.role && (
-                    <div className="flex items-center gap-2 text-sm text-foreground/60">
-                      <span className="font-medium">{t('role')}:</span>
-                      <span>{project.role}</span>
-                    </div>
-                  )}
                   {project.startDate && (
                     <div className="flex items-center gap-2 text-sm text-foreground/60">
                       <Calendar className="w-4 h-4" />
