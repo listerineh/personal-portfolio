@@ -49,6 +49,6 @@ jobs:
           
           ### Note:
           Storybook is now built as part of the main deployment via prebuild script.
-          Static files will be available at: https://listerineh.dev/blog/components
+          Static files will be available at: https://listerineh.dev/docs/components
           
           EOF

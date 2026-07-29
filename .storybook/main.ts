@@ -11,13 +11,7 @@ const config: StorybookConfig = {
   },
   "staticDirs": [
     "../public"
-  ],
-  viteFinal: async (config) => {
-    if (config.build) {
-      config.build.outDir = 'public/blog/components';
-    }
-    return config;
-  }
+  ]
 };
 
 export default config;

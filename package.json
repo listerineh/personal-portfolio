@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -p 9006",
-    "prebuild": "node scripts/update-sw-version.js && npm run build-storybook",
+    "prebuild": "node scripts/update-sw-version.js && npm run build-storybook && node scripts/move-storybook.js",
     "build": "next build",
     "analyze": "ANALYZE=true npm run build",
     "start": "next start",
@@ -88,6 +88,7 @@
     "eslint": "^10.0.2",
     "eslint-config-next": "^0.2.4",
     "eslint-plugin-storybook": "^10.5.5",
+    "fs-extra": "^11.4.0",
     "genkit-cli": "^0.0.2",
     "postcss": "^8",
     "sharp": "^0.34.5",
