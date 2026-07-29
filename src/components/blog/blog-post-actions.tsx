@@ -28,13 +28,13 @@ export function BlogPostActions({ slug, title, url }: BlogPostActionsProps) {
 
       <div className="my-8 h-px bg-foreground/[0.06]" />
 
-      <AccentCard accent="amber" className="mb-8 p-6 md:p-8">
+      <AccentCard accent="amber" className="mb-8 p-6 md:p-8 text-center md:text-left">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex-1">
             <Text size="base" strength="primary" className="mb-1">{t('foundHelpful')}</Text>
             <Text size="sm" strength="secondary">{t('helpOthersDiscover')}</Text>
           </div>
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 flex justify-center md:justify-start">
             <ShareButtons title={title} url={url} />
           </div>
         </div>

@@ -55,7 +55,7 @@ export function NewsletterSignup() {
         background: 'var(--primary-bg)',
       }}
     >
-      <div className="max-w-md">
+      <div className="">
         <h3 className="text-2xl font-headline font-bold mb-2 text-foreground">
           {t('stayUpdated')}
         </h3>
@@ -63,7 +63,7 @@ export function NewsletterSignup() {
           {t('stayUpdatedDescription')}
         </p>
 
-        <form onSubmit={handleSubmit} className="flex gap-2">
+        <form onSubmit={handleSubmit} className="flex gap-2 flex-col md:flex-row w-full">
           <div className="flex-1">
             <Input
               type="email"

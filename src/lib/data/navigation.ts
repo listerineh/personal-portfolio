@@ -6,3 +6,7 @@ export const socialLinks = [
   { name: 'Instagram', url: 'https://instagram.com/__listerineh', icon: Instagram },
   { name: 'Email', url: 'mailto:sebask8er.alvarez@gmail.com', icon: Mail },
 ];
+
+export const communityLinks = {
+  gdgQuito: 'https://gdg.community.dev/gdg-quito/',
+};

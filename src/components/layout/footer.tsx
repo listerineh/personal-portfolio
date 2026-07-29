@@ -203,8 +203,8 @@ export function Footer() {
           <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
 
             {/* Left — copy */}
-            <div className="space-y-6">
-              <Pill variant="outline" accent="amber">{tNewsletter('badge')}</Pill>
+            <div className="space-y-6 text-center md:text-left">
+              <Pill variant="outline" accent="amber" className="inline-flex">{tNewsletter('badge')}</Pill>
               <h2
                 className="font-headline font-black leading-[0.9] text-transparent bg-clip-text"
                 style={{
@@ -215,10 +215,10 @@ export function Footer() {
                 {tNewsletter('title')}{' '}
                 <span className="text-primary/60">{tNewsletter('titleGradient')}</span>
               </h2>
-              <p className="text-white/45 leading-relaxed max-w-sm" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)' }}>
+              <p className="text-white/45 leading-relaxed max-w-sm mx-auto md:mx-0" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)' }}>
                 {tNewsletter('description')}
               </p>
-              <div className="flex gap-8 pt-2">
+              <div className="flex justify-center md:justify-start gap-8 pt-2">
                 {[
                   { label: tNewsletter('monthlyLabel'), sub: tNewsletter('monthlyValue') },
                   { label: tNewsletter('spamLabel'), sub: tNewsletter('spamValue') },
@@ -246,27 +246,27 @@ export function Footer() {
       <div className="relative z-10 mx-6 sm:mx-10 md:mx-16 lg:mx-24 h-px bg-white/8" />
 
       {/* Big name + nav */}
-      <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-14 md:py-20">
+      <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
 
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
 
-            {/* Nav links — horizontal with separators */}
+            {/* Nav links — list on mobile, horizontal with separators on desktop */}
             <nav aria-label="Footer navigation">
-              <ul className="flex flex-wrap items-center gap-x-1 gap-y-3">
+              <ul className="flex flex-col lg:flex-row lg:flex-wrap items-center gap-2 lg:gap-x-2 lg:gap-y-4">
                 {navItems.map((link, index) => (
                   <Fragment key={link.label}>
                     <li>
                       <Link
                         ref={(el) => { navLinksRef.current[index] = el; }}
                         href={link.href}
-                        className="font-headline text-xs tracking-[0.12em] uppercase text-white/35 hover:text-white transition-colors duration-200 px-2"
+                        className="font-headline text-sm lg:text-xs tracking-[0.12em] uppercase text-white/35 hover:text-white transition-colors duration-200 px-2 py-1.5 lg:py-1"
                       >
                         {link.label}
                       </Link>
                     </li>
                     {index < navItems.length - 1 && (
-                      <li className="text-white/15 select-none text-xs">·</li>
+                      <li className="hidden lg:block text-white/15 select-none text-xs">·</li>
                     )}
                   </Fragment>
                 ))}
@@ -274,7 +274,7 @@ export function Footer() {
             </nav>
 
             {/* Social icons */}
-            <div className="flex gap-3" aria-label="Social media links">
+            <div className="flex justify-center lg:justify-start gap-5 lg:gap-4" aria-label="Social media links">
               {socialLinks.map((link, index) => (
                 <Link
                   key={link.name}
@@ -283,9 +283,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                  className="p-2.5 rounded-xl border border-white/10 text-white/30 hover:text-primary hover:border-primary/30 transition-colors duration-200"
+                  className="p-3 lg:p-2.5 rounded-xl border border-white/10 text-white/30 hover:text-primary hover:border-primary/30 transition-colors duration-200"
                 >
-                  <link.icon className="w-4 h-4" />
+                  <link.icon className="w-5 h-5 lg:w-4 lg:h-4" />
                 </Link>
               ))}
             </div>
@@ -294,17 +294,17 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div ref={copyrightRef} className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-5 border-t border-white/[0.06]">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-headline text-xs text-white/25">
+      <div ref={copyrightRef} className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-6 md:py-5 pb-24 md:pb-5 border-t border-white/[0.06]">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-5">
+          <p className="font-headline text-xs text-white/25 text-center sm:text-left">
             &copy; {currentYear} Sebastian Alvarez — {tCommon('allRightsReserved')}
           </p>
-          <div className="flex flex-wrap items-center gap-4 text-xs text-white/25">
-            <CookieSettingsLink className="text-xs text-white/25 hover:text-primary transition-colors" />
-            <Link href="/privacy" className="hover:text-primary transition-colors">
+          <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center gap-3 sm:gap-5 text-xs sm:text-xs text-white/25">
+            <CookieSettingsLink className="block w-full text-center sm:w-auto text-xs sm:text-xs text-white/25 hover:text-primary transition-colors py-2 sm:py-0" />
+            <Link href="/privacy" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
               {t('privacyPolicy')}
             </Link>
-            <Link href="/terms" className="hover:text-primary transition-colors">
+            <Link href="/terms" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
               {t('termsOfUse')}
             </Link>
           </div>

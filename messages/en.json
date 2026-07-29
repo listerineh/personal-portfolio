@@ -11,7 +11,7 @@
     "viewAll": "View All Posts",
     "showLess": "Show less",
     "seeMore": "See more",
-    "liveDemo": "Live Demo",
+    "liveDemo": "Demo",
     "source": "Source",
     "visitSocial": "Visit",
     "settings": "Settings",
@@ -233,6 +233,7 @@
     "communityBadge": "Community",
     "communityTitle": "Building Tech Culture in Ecuador",
     "communityBody": "For over 3 years I've been an active speaker and contributor at Google Developer Groups in Quito / Ecuador. We've built an amazing community that keeps growing in members and knowledge — DevFests, workshops, tech talks, and the shared love of building things.",
+    "communityCardBody": "Join the GDG Quito community and connect with developers, designers, and tech enthusiasts across Ecuador.",
     "communityStat1": "3+",
     "communityStat1Label": "Years as GDG Organizer",
     "communityStat2": "10+",
@@ -438,5 +439,17 @@
     "cancelButton": "Cancel",
     "saveButton": "Save Preferences",
     "revokeAllButton": "Revoke All"
+  },
+  "unsubscribe": {
+    "badge": "Newsletter",
+    "title": "Unsubscribe from Newsletter",
+    "description": "Enter your email address to unsubscribe from the newsletter. You'll no longer receive updates about new blog posts, engineering insights, and tech content.",
+    "emailLabel": "Email Address",
+    "unsubscribeButton": "Unsubscribe",
+    "unsubscribing": "Unsubscribing...",
+    "successMessage": "You have been successfully unsubscribed from the newsletter.",
+    "errorMessage": "Failed to unsubscribe. Please check your email and try again.",
+    "backToHome": "Back to Home",
+    "tryAgain": "Try Again"
   }
 }

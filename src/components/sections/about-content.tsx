@@ -8,6 +8,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@/hooks/use-gsap';
 import { SectionLabel, Title, Text, Button, BrandLink, AccentCard } from '@/components/ds';
+import { communityLinks } from '@/lib/data';
+import Link from 'next/link';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -254,10 +256,10 @@ export function AboutContent() {
               </h3>
             </div>
             <p className="text-sm text-foreground/45 leading-relaxed">
-              {t('communityBody')}
+              {t('communityCardBody')}
             </p>
-            <div>
-              <BrandLink href="https://gdg.community.dev/gdg-quito/" color="#4285F4" variant="outline">
+            <div className="flex justify-center md:justify-start">
+              <BrandLink href={communityLinks.gdgQuito} color="#4285F4" variant="outline" className="flex w-full md:w-auto justify-center rounded-2xl md:rounded-full">
                 {t('communityJoin')} ↗
               </BrandLink>
             </div>
@@ -297,10 +299,14 @@ export function AboutContent() {
             <Text size="lg" strength="secondary" animate>
               {t('musicBody')}
             </Text>
-            <div className="reveal-up flex items-center justify-start md:justify-center">
-              <BrandLink href="/why" color="#1DB954" variant="solid" className="font-bold">
+            <div className="reveal-up flex items-center justify-center md:justify-start">
+              <Link
+                href="/why"
+                className="flex w-full md:w-auto justify-center items-center gap-2 px-6 py-3 font-bold rounded-2xl md:rounded-full text-sm transition-all duration-300 text-black hover:brightness-110"
+                style={{ backgroundColor: '#1DB954' }}
+              >
                 {t('musicLink')} ↗
-              </BrandLink>
+              </Link>
             </div>
           </div>
         </div>
@@ -318,12 +324,12 @@ export function AboutContent() {
           >
             {t('ctaBody')}
           </p>
-          <div className="flex flex-wrap gap-3">
-            <Button variant="primary" accent="amber" size="lg" href="/#contact">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+            <Button variant="primary" accent="amber" size="lg" href="/#contact" className="w-full sm:w-auto justify-center rounded-2xl sm:rounded-full">
               <Mail className="w-4 h-4" />
               {t('ctaPrimary')}
             </Button>
-            <Button variant="secondary" accent="neutral" size="lg" href="/">
+            <Button variant="secondary" accent="neutral" size="lg" href="/" className="w-full sm:w-auto justify-center rounded-2xl sm:rounded-full">
               {t('ctaSecondary')}
             </Button>
           </div>

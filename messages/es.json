@@ -11,7 +11,7 @@
     "viewAll": "Ver todas las publicaciones",
     "showLess": "Mostrar menos",
     "seeMore": "Ver más",
-    "liveDemo": "Demo en Vivo",
+    "liveDemo": "Demo`",
     "source": "Código",
     "visitSocial": "Visitar",
     "settings": "Configuración",
@@ -233,6 +233,7 @@
     "communityBadge": "Comunidad",
     "communityTitle": "Construyendo Cultura Tech en Ecuador",
     "communityBody": "Por más de 3 años he sido speaker y contribuidor activo en Google Developer Groups en Quito / Ecuador. Hemos construido una comunidad increíble que sigue creciendo en miembros y conocimientos — DevFests, talleres, charlas técnicas y el amor compartido por construir cosas.",
+    "communityCardBody": "Únete a la comunidad GDG Quito y conecta con desarrolladores, diseñadores y entusiastas de la tecnología en Ecuador.",
     "communityStat1": "3+",
     "communityStat1Label": "Años como Organizador GDG",
     "communityStat2": "10+",
@@ -438,5 +439,17 @@
     "cancelButton": "Cancelar",
     "saveButton": "Guardar Preferencias",
     "revokeAllButton": "Revocar Todas"
+  },
+  "unsubscribe": {
+    "badge": "Newsletter",
+    "title": "Cancelar Suscripción al Newsletter",
+    "description": "Ingresa tu correo electrónico para cancelar la suscripción al newsletter. Ya no recibirás actualizaciones sobre nuevos posts, insights de ingeniería y contenido tecnológico.",
+    "emailLabel": "Correo Electrónico",
+    "unsubscribeButton": "Cancelar Suscripción",
+    "unsubscribing": "Cancelando...",
+    "successMessage": "Has sido eliminado exitosamente del newsletter.",
+    "errorMessage": "No se pudo cancelar la suscripción. Por favor verifica tu correo e intenta nuevamente.",
+    "backToHome": "Volver al Inicio",
+    "tryAgain": "Intentar de Nuevo"
   }
 }

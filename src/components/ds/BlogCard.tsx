@@ -162,37 +162,22 @@ export function BlogCard({
 
         {/* Tags */}
         {tags.length > 0 && (
-          <div className="flex items-center gap-2 mt-1 overflow-hidden">
-            {tags.slice(0, 2).map((tag) => (
+          <div
+            className={cn(
+              'flex items-center gap-2 mt-1 transition-all duration-200',
+              tagsTooltipOpen ? 'flex-wrap' : 'flex-nowrap overflow-hidden'
+            )}
+            onMouseEnter={() => tags.length > 2 && setTagsTooltipOpen(true)}
+            onMouseLeave={() => setTagsTooltipOpen(false)}
+          >
+            {(tagsTooltipOpen ? tags : tags.slice(0, 2)).map((tag) => (
               <Pill key={tag} variant="outline" accent="neutral" size="sm" uppercase={false} className="shrink-0">
                 {tag}
               </Pill>
             ))}
-            {tags.length > 2 && (
-              <span
-                className="relative shrink-0 text-xs font-headline font-semibold text-foreground/40 cursor-default select-none hover:text-foreground/70 transition-colors duration-150"
-                onMouseEnter={() => setTagsTooltipOpen(true)}
-                onMouseLeave={() => setTagsTooltipOpen(false)}
-              >
+            {!tagsTooltipOpen && tags.length > 2 && (
+              <span className="shrink-0 text-xs font-headline font-semibold text-foreground/40 select-none hover:text-foreground/70 transition-colors duration-150">
                 +{tags.length - 2}
-                {tagsTooltipOpen && (
-                  <span
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 z-[100] flex flex-wrap gap-2 p-3.5 rounded-xl shadow-2xl min-w-max max-w-[220px] pointer-events-none"
-                    style={{
-                      background: dark ? 'rgba(20,20,25,0.98)' : 'rgba(255,255,255,0.98)',
-                      border: '1px solid rgba(128,128,128,0.2)',
-                      boxShadow: dark
-                        ? '0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4)'
-                        : '0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08)',
-                    }}
-                  >
-                    {tags.slice(2).map((tag) => (
-                      <Pill key={tag} variant="outline" accent="neutral" size="sm" uppercase={false}>
-                        {tag}
-                      </Pill>
-                    ))}
-                  </span>
-                )}
               </span>
             )}
           </div>

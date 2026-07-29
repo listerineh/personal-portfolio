@@ -105,8 +105,11 @@ export async function POST(request: NextRequest) {
                         <p style="margin: 0 0 6px; font-size: 12px; color: rgba(255,255,255,0.25);">
                           ${isEs ? 'Recibes esto porque te suscribiste en' : "You're receiving this because you subscribed at"} <strong style="color: rgba(251,191,36,0.5);">listerineh.dev</strong>
                         </p>
-                        <p style="margin: 0; font-size: 12px; color: rgba(255,255,255,0.2);">
+                        <p style="margin: 0 0 6px; font-size: 12px; color: rgba(255,255,255,0.2);">
                           — Sebastian Alvarez
+                        </p>
+                        <p style="margin: 0; font-size: 11px; color: rgba(255,255,255,0.15);">
+                          <a href="https://listerineh.dev/unsubscribe" style="color: rgba(251,191,36,0.4); text-decoration: none;">${isEs ? 'Cancelar suscripción' : 'Unsubscribe'}</a>
                         </p>
                       </td>
                     </tr>

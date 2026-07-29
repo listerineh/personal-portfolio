@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { supportsAnimations, getGSAPConfig } from '@/lib/performance';
+import { supportsAnimations, getGSAPConfig, debounce } from '@/lib/performance';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -32,7 +32,16 @@ export function useGSAP(
       callback(contextRef.current!);
     });
 
+    const refreshScrollTrigger = debounce(() => {
+      ScrollTrigger.refresh();
+    }, 250);
+
+    window.addEventListener('resize', refreshScrollTrigger);
+    window.addEventListener('orientationchange', refreshScrollTrigger);
+
     return () => {
+      window.removeEventListener('resize', refreshScrollTrigger);
+      window.removeEventListener('orientationchange', refreshScrollTrigger);
       contextRef.current?.revert();
     };
   }, dependencies);
