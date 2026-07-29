@@ -1,4 +1,4 @@
-name: Build Storybook
+name: Verify Storybook Build
 
 on:
   push:
@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-storybook:
+  verify-storybook:
     runs-on: ubuntu-latest
     
     steps:
@@ -31,23 +31,13 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook
       
-      - name: Upload Storybook artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: storybook-static
-          path: public/blog/components
-          retention-days: 7
-      
       - name: Summary
         if: always()
         run: |
           cat >> $GITHUB_STEP_SUMMARY << 'EOF'
-          ## 📚 Storybook Build
+          ## 📚 Storybook Build Verification
           
-          Storybook has been built successfully.
-          
-          ### Location:
-          - **Path:** public/blog/components
+          Storybook build verification completed.
           
           ### What's included:
           - ✅ Common components stories
@@ -58,7 +48,7 @@ jobs:
           - **Branch:** ${{ github.ref_name }}
           
           ### Note:
-          Storybook files are built to public/blog/components and will be included in the main Vercel deployment.
-          Access at: https://listerineh.dev/blog/components
+          Storybook is now built as part of the main deployment via prebuild script.
+          Static files will be available at: https://listerineh.dev/blog/components
           
           EOF
