@@ -49,7 +49,7 @@ export function CookieSettingsLink({ className }: { className?: string }) {
           {t('cookieSettings')}
         </button>
       </ModalTrigger>
-      <ModalContent>
+      <ModalContent className="p-8">
         <ModalHeader>
           <ModalTitle>
             <span className="flex items-center gap-2.5">

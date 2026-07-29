@@ -80,7 +80,7 @@ export function ExperienceSection() {
         </div>
 
         {experiences.length > 3 && !showAll && (
-          <div className="flex justify-start mt-10 reveal-up">
+          <div className="flex justify-center md:justify-start mt-10 reveal-up">
             <Button variant="ghost" accent="neutral" size="md" onClick={handleShowAll}>
               {t('showAll')}
               <ChevronDown className="w-4 h-4" />

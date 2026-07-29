@@ -221,7 +221,7 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
           <div className="my-12 h-px bg-foreground/[0.06]" />
 
           <div className="text-center">
-            <Button variant="secondary" accent="neutral" size="md" href="/blog">
+            <Button variant="secondary" accent="neutral" size="md" href="/blog" className="w-full md:w-auto rounded-2xl md:rounded-full justify-center">
               <ArrowLeft className="w-4 h-4" /> {t('moreArticles')}
             </Button>
           </div>

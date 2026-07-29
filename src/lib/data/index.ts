@@ -1,5 +1,5 @@
 export { hero } from './hero';
-export { socialLinks } from './navigation';
+export { socialLinks, communityLinks } from './navigation';
 export { experiencesData, experiences } from './experiences';
 export { skills } from './skills';
 export { projectsData, projects } from './projects';

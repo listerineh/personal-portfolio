@@ -2,6 +2,7 @@
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { useTheme } from '@/context/theme-context';
 
 export const Modal = DialogPrimitive.Root;
@@ -24,7 +25,10 @@ export function ModalContent({
         style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
       />
       <DialogPrimitive.Content
-        className={`fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-full max-w-md rounded-2xl p-6 shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 ${className}`}
+        className={cn(
+          'fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-full max-w-md rounded-2xl p-6 shadow-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+          className
+        )}
         style={{
           background: dark ? 'rgba(18,18,22,0.98)' : 'rgba(255,255,255,0.98)',
           border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,

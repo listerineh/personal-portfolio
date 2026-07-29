@@ -120,7 +120,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <Button
             variant="primary"
             accent="amber"
@@ -133,21 +133,21 @@ export function HeroSection() {
               link.click();
               toast({ title: t('cvDownloadedTitle'), description: t('cvDownloadedDescription') });
             }}
-            className="text-black hover:shadow-[0_0_40px_rgba(245,158,11,0.35)]"
+            className="w-full sm:w-auto text-black hover:shadow-[0_0_40px_rgba(245,158,11,0.35)] justify-center"
           >
             <FileText className="w-4 h-4" />
             {t('downloadCV')}
           </Button>
-          <Button variant="ghost" accent="neutral" size="md" href="#contact" className="text-white/70 hover:text-white border border-white/20 hover:border-white/40">
+          <Button variant="ghost" accent="neutral" size="md" href="#contact" className="w-full sm:w-auto text-white/70 hover:text-white border border-white/20 hover:border-white/40 justify-center">
             {t('getInTouch')}
           </Button>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 right-8 md:right-14 z-10 flex flex-col items-center gap-3 text-white/30">
-        <span className="text-[10px] tracking-[0.25em] uppercase font-headline">Scroll</span>
-        <ArrowDown className="w-4 h-4 animate-bounce" />
+        {/* Scroll indicator */}
+        <div className="flex flex-col items-center gap-3 text-white/30 mt-8 md:mt-0 md:absolute md:bottom-8 md:right-8 w-full md:w-auto">
+          <span className="text-[10px] tracking-[0.25em] uppercase font-headline">Scroll</span>
+          <ArrowDown className="w-4 h-4 animate-bounce" />
+        </div>
       </div>
     </section>
   );

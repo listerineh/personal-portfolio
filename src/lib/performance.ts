@@ -31,23 +31,24 @@ export function detectDevicePerformance(): DevicePerformance {
   if (deviceMemory && deviceMemory >= 8) return 'high';
 
   // Check hardware concurrency (CPU cores)
-  const cores = navigator.hardwareConcurrency || 2;
-  if (cores < 4) return 'low';
-  if (cores >= 8) return 'high';
+  // Avoid assuming 2 cores when the API is missing; modern phones are capable
+  const cores = navigator.hardwareConcurrency;
+  if (cores && cores < 4) return 'low';
+  if (cores && cores >= 8) return 'high';
 
   // Check if mobile device
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
-  
-  // Check if touch device
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  // Mobile devices get medium or low performance
-  if (isMobile || isTouchDevice) {
-    // Check if it's a high-end mobile (iPad Pro, high-end Android)
-    const isHighEndMobile = cores >= 6 && (deviceMemory ? deviceMemory >= 4 : true);
-    return isHighEndMobile ? 'medium' : 'low';
+  // Mobile devices use actual specs; don't blanket-downgrade touch devices
+  if (isMobile) {
+    const isHighEndMobile = (cores && cores >= 6) || (deviceMemory && deviceMemory >= 4);
+    const isLowEndMobile = (cores && cores < 4) || (deviceMemory && deviceMemory < 4);
+    if (isHighEndMobile) return 'high';
+    if (isLowEndMobile) return 'low';
+    // Unknown/typical mobile defaults to medium (capable of standard GSAP + parallax)
+    return 'medium';
   }
 
   // Check connection speed (if available)
@@ -87,7 +88,7 @@ export function getPerformanceConfig(performance?: DevicePerformance): Performan
       return {
         enableAnimations: !prefersReducedMotion,
         enableComplexAnimations: false,
-        enableParallax: false,
+        enableParallax: !prefersReducedMotion,
         enableBlur: true,
         reducedMotion: prefersReducedMotion,
         animationDuration: 0.8,

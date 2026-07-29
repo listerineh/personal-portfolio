@@ -73,7 +73,7 @@ export function BlogPreviewSection() {
             variant="ghost"
             accent="neutral"
             size="md"
-            className="border border-foreground/15 hover:border-foreground/30"
+            className="w-full md:w-auto rounded-2xl md:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
           >
             {t('viewAllPosts')}
             <ArrowRight className="w-4 h-4" />
