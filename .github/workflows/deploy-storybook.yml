@@ -1,0 +1,101 @@
+name: Deploy Storybook
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'src/stories/**'
+      - 'src/components/**'
+      - '.storybook/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build Storybook
+        run: npm run build-storybook
+      
+      - name: Set environment based on branch
+        id: env
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "is_production=true" >> $GITHUB_OUTPUT
+            echo "environment=Production" >> $GITHUB_OUTPUT
+          else
+            echo "is_production=false" >> $GITHUB_OUTPUT
+            echo "environment=Preview (develop)" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Deploy to Vercel (Production)
+        if: steps.env.outputs.is_production == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "🚀 Deploying Storybook to production..."
+          
+          # Install Vercel CLI
+          npm install -g vercel
+          
+          # Deploy Storybook static files
+          vercel deploy --prod --token=$VERCEL_TOKEN \
+            --scope=$VERCEL_ORG_ID \
+            --yes \
+            public/blog/components
+      
+      - name: Deploy to Vercel (Preview)
+        if: steps.env.outputs.is_production == 'false'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "🚀 Deploying Storybook to preview..."
+          
+          # Install Vercel CLI
+          npm install -g vercel
+          
+          # Deploy Storybook static files as preview
+          vercel deploy --token=$VERCEL_TOKEN \
+            --scope=$VERCEL_ORG_ID \
+            --yes \
+            public/blog/components
+      
+      - name: Summary
+        if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## 📚 Storybook Deployment
+          
+          Storybook has been built and deployed.
+          
+          ### Location:
+          - **URL:** https://listerineh.dev/blog/components
+          - **Path:** public/blog/components
+          
+          ### What's included:
+          - ✅ Common components stories
+          - ✅ Blog components stories
+          - ✅ Theme switcher integration
+          
+          ### Environment:
+          - **Branch:** ${{ github.ref_name }}
+          - **Environment:** ${{ steps.env.outputs.environment }}
+          
+          EOF

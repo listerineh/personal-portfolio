@@ -307,6 +307,9 @@ export function Footer() {
             <Link href="/terms" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
               {t('termsOfUse')}
             </Link>
+            <Link href="/docs/components" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
+              {t('components')}
+            </Link>
           </div>
         </div>
       </div>
