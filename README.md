@@ -31,6 +31,7 @@ Deployed on Vercel with automatic CI/CD.
 
 - **GSAP + ScrollTrigger** — parallax effects, `reveal-up`/`reveal-stagger` scroll animations, timeline sequences
 - **Custom Design System** (`src/components/ds/`) — `Button`, `Input`, `Pill`, `Title`, `Text`, `SectionLabel`, `AccentCard`, `MemberCard`
+- **Storybook** — Component documentation and development environment at `/docs/components`
 - **shadcn/ui** (`src/components/ui/`) — accessible primitives (Radix UI based)
 - **Lucide** — icon set
 
@@ -53,12 +54,13 @@ Deployed on Vercel with automatic CI/CD.
 
 | Category | Details |
 |----------|---------|
-| **� Internationalization** | Full EN/ES support via `next-intl`; language switcher in header |
+| **🌍 Internationalization** | Full EN/ES support via `next-intl`; language switcher in header |
 | **🎭 Theme** | Dark/light mode with CSS variable theming; curtain-effect toggle; mode-adaptive component colors |
 | **🎬 Animations** | GSAP parallax on hero, footer, and `/why` backgrounds; `reveal-up` scroll entrances; stagger grids; hover micro-interactions |
 | **📝 Blog** | Markdown blog with SSG; tag filtering; reading time; newsletter subscription (Resend); blog post notification via GitHub Actions |
 | **📱 Homepage Sections** | Hero · Experience · Skills · Projects · Blog preview · Contact |
-| **� Pages** | `/` Homepage · `/about` · `/blog` · `/blog/[slug]` · `/why` · `/privacy` · `/terms` |
+| **🎨 Component Library** | Storybook documentation at `/docs/components` with interactive examples and theme switching |
+| **📄 Pages** | `/` Homepage · `/about` · `/blog` · `/blog/[slug]` · `/why` · `/privacy` · `/terms` · `/docs/components` |
 | **🚀 Performance** | WebP images · SSG · font optimization · code splitting · Lighthouse 95+ · smart caching |
 | **♿ Accessibility** | Skip-to-content link · `aria` labels · reduced-motion support throughout GSAP hooks |
 
@@ -112,6 +114,8 @@ npm run dev        # http://localhost:9002
 | `npm start` | Start production server |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript type check |
+| `npm run storybook` | Start Storybook dev server on port 6006 |
+| `npm run build-storybook` | Build Storybook for production |
 | `npm run convert-images` | Batch convert JPEG/PNG → WebP in `/public` |
 | `npm run convert-heic` | Convert HEIC → WebP |
 | `npm run notify-blog` | Send blog notification to subscribers |
@@ -153,11 +157,15 @@ personal-portfolio/
 │   ├── send-blog-notification.js
 │   ├── update-sw-version.js
 │   └── README.md
+├── .storybook/
+│   ├── main.ts              # Storybook configuration
+│   └── preview.tsx          # Storybook preview with theme integration
 ├── src/
 │   ├── app/
 │   │   ├── about/           # /about page
 │   │   ├── api/             # API routes (contact, newsletter, etc.)
 │   │   ├── blog/            # /blog list + /blog/[slug] detail
+│   │   ├── docs/            # /docs/components (Storybook)
 │   │   ├── feed.xml/        # RSS feed
 │   │   ├── privacy/         # /privacy page
 │   │   ├── terms/           # /terms page
@@ -185,12 +193,46 @@ personal-portfolio/
 │   │   ├── metadata.ts      # SEO metadata helpers
 │   │   ├── performance.ts   # supportsAnimations, isLowEndDevice, prefersReducedMotion
 │   │   └── utils.ts         # cn() and general helpers
+│   ├── stories/             # Storybook stories
+│   │   ├── blog/            # Blog component stories
+│   │   ├── common/          # Common component stories
+│   │   ├── ds/              # Design System component stories
+│   │   └── Introduction.stories.tsx  # Design system documentation
 │   └── types/               # Shared TypeScript types
 ├── .env.local               # Environment variables (not in git)
 ├── next.config.ts           # Next.js config + cache headers
 ├── tailwind.config.ts       # Tailwind config
 └── tsconfig.json
 ```
+
+---
+
+## 📚 Storybook
+
+Storybook is used for component development and documentation. It provides an interactive environment to develop and test UI components in isolation.
+
+### Running Storybook
+
+```bash
+npm run storybook          # Start dev server on http://localhost:6006
+npm run build-storybook    # Build for production
+```
+
+### Theme Integration
+
+Storybook is integrated with the app's theme system. Use the theme switcher in the Storybook toolbar to toggle between light and dark modes.
+
+### Stories Location
+
+Stories are organized in `src/stories/`:
+- `ds/` — Design System component stories
+- `blog/` — Blog-specific component stories
+- `common/` — Shared UI component stories
+- `Introduction.stories.tsx` — Design system documentation homepage
+
+### Production Deployment
+
+Storybook is automatically deployed to `/docs/components` via GitHub Actions when changes are pushed to `main` or `develop` branches.
 
 ---
 
