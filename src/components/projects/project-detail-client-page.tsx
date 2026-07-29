@@ -134,7 +134,7 @@ export function ProjectDetailClientPage({ project: initialProject }: ProjectDeta
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   {project.liveDemoUrl && (
                     <Button
                       variant="primary"
@@ -142,7 +142,7 @@ export function ProjectDetailClientPage({ project: initialProject }: ProjectDeta
                       size="lg"
                       href={project.liveDemoUrl}
                       external
-                      className="gap-2"
+                      className="gap-2 w-full sm:w-auto"
                     >
                       <ExternalLink className="w-4 h-4" />
                       {t('liveDemo')}
@@ -155,7 +155,7 @@ export function ProjectDetailClientPage({ project: initialProject }: ProjectDeta
                       size="lg"
                       href={project.sourceCodeUrl}
                       external
-                      className="gap-2"
+                      className="gap-2 w-full sm:w-auto"
                     >
                       <Github className="w-4 h-4" />
                       {t('sourceCode')}
