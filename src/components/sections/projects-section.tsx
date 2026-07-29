@@ -1,14 +1,16 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projectsData } from '@/lib/data';
 import { getLocalizedData } from '@/lib/i18n-data';
 import { useLocale } from '@/context/locale-context';
 import { useGSAP } from '@/hooks/use-gsap';
-import { SectionLabel, Title, ProjectCard } from '@/components/ds';
+import { SectionLabel, Title, ProjectCard, Button } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -44,25 +46,39 @@ export function ProjectsSection() {
           {t('title')}
         </Title>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+          {projects.slice(0, 3).map((project, index) => (
             <div
               key={project.id}
               className="h-full"
               ref={(el) => { cardsRef.current[index] = el; }}
             >
               <ProjectCard
+                slug={project.slug}
                 title={project.title}
                 description={project.description}
                 imageUrl={project.imageUrl}
                 tags={[...project.tags]}
-                liveDemoUrl={project.liveDemoUrl}
-                sourceCodeUrl={project.sourceCodeUrl}
-                liveLabel={tCommon('liveDemo')}
-                sourceLabel={tCommon('source')}
+                viewMoreLabel={tCommon('viewProject')}
               />
             </div>
           ))}
         </div>
+
+        {/* View All Button */}
+        {projects.length > 3 && (
+          <div className="flex justify-start mt-12 reveal-up">
+            <Button
+              href="/projects"
+              variant="ghost"
+              accent="neutral"
+              size="md"
+              className="w-full md:w-auto rounded-2xl md:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
+            >
+              {t('viewAll')}
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Watermark */}

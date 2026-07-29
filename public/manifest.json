@@ -51,7 +51,7 @@
       "name": "View Projects",
       "short_name": "Projects",
       "description": "See my featured projects",
-      "url": "/#projects",
+      "url": "/projects",
       "icons": [
         {
           "src": "/favicon.svg",

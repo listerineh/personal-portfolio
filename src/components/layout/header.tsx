@@ -27,7 +27,7 @@ export function Header() {
     { label: t('about'), href: '/about' },
     { label: t('experience'), href: '/#experience' },
     { label: t('skills'), href: '/#skills' },
-    { label: t('projects'), href: '/#projects' },
+    { label: t('projects'), href: '/projects' },
     { label: t('blog'), href: '/blog' },
     { label: t('contact'), href: '/#contact' },
     { label: 'Why', href: '/why' },

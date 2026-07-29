@@ -16,7 +16,8 @@
     "visitSocial": "Visit",
     "settings": "Settings",
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "viewProject": "View project"
   },
   "nav": {
     "experience": "Experience",
@@ -54,7 +55,24 @@
   "projects": {
     "title": "Featured Projects",
     "badge": "Hobbies",
-    "watermark": "HOBBIES"
+    "watermark": "HOBBIES",
+    "viewAll": "View All Projects"
+  },
+  "project": {
+    "featuredProject": "Featured Project",
+    "aboutProject": "About the Project",
+    "relevance": "Relevance",
+    "technologies": "Technologies",
+    "role": "Role",
+    "status": {
+      "completed": "Completed",
+      "in-progress": "In Progress",
+      "archived": "Archived",
+      "on-hold": "On Hold"
+    },
+    "backToProjects": "Back to Projects",
+    "liveDemo": "Live Demo",
+    "sourceCode": "Source Code"
   },
   "blog": {
     "title": "Latest Thoughts",

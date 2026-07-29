@@ -30,13 +30,20 @@ export interface Skill {
 
 export interface Project {
   id: string;
+  slug: string;
   title: string;
   description: string;
+  longDescription?: string;
   imageUrl: string;
   imageAiHint: string;
   liveDemoUrl?: string;
   sourceCodeUrl?: string;
   tags: string[];
+  role?: string;
+  status?: 'completed' | 'in-progress' | 'archived' | 'on-hold';
+  relevance?: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 export interface BlogPost {

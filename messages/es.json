@@ -16,7 +16,8 @@
     "visitSocial": "Visitar",
     "settings": "Configuración",
     "language": "Idioma",
-    "theme": "Tema"
+    "theme": "Tema",
+    "viewProject": "Ver proyecto"
   },
   "nav": {
     "experience": "Experiencia",
@@ -54,7 +55,24 @@
   "projects": {
     "title": "Proyectos Destacados",
     "badge": "Pasatiempos",
-    "watermark": "PROYECTOS"
+    "watermark": "PROYECTOS",
+    "viewAll": "Ver Todos los Proyectos"
+  },
+  "project": {
+    "featuredProject": "Proyecto Destacado",
+    "aboutProject": "Sobre el Proyecto",
+    "relevance": "Relevancia",
+    "technologies": "Tecnologías",
+    "role": "Rol",
+    "status": {
+      "completed": "Completado",
+      "in-progress": "En Progreso",
+      "archived": "Archivado",
+      "on-hold": "En Pausa"
+    },
+    "backToProjects": "Volver a Proyectos",
+    "liveDemo": "Ver Demo",
+    "sourceCode": "Código Fuente"
   },
   "blog": {
     "title": "Últimos Pensamientos",

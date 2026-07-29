@@ -161,7 +161,58 @@ function htmlBlog() {
 </body></html>`;
 }
 
-// ─── 3. Privacy ─────────────────────────────────────────────────────────
+// ─── 3. Projects ─────────────────────────────────────────────────────────
+
+function htmlProjects() {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  ${baseStyles()}
+  <style>
+    body { display: flex; align-items: center; justify-content: center; }
+    .content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 80px;
+    }
+    .title {
+      font-size: 82px; font-weight: 800; color: #eaedf5;
+      line-height: 1.0; letter-spacing: -0.03em;
+      margin-top: 26px; margin-bottom: 18px;
+    }
+    .tagline {
+      font-size: 22px; color: rgba(255,255,255,0.4); font-weight: 500;
+      margin-bottom: 40px; line-height: 1.4;
+    }
+    .topics { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+    .topic {
+      background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 6px; padding: 7px 18px;
+      color: #8a90aa; font-size: 14px; font-weight: 500;
+    }
+  </style>
+</head><body>
+  <div class="top-border"></div>
+  <div class="dot-grid"></div>
+  <div class="glow" style="width:560px;height:560px;top:-160px;right:-100px;background:radial-gradient(circle, rgba(245,158,11,0.16), transparent 68%);"></div>
+  <div class="glow" style="width:480px;height:480px;bottom:-140px;left:-80px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+
+  <div class="content">
+    <span class="badge">Portfolio</span>
+    <div class="title">Projects</div>
+    <div class="tagline">Full Stack Development · AI Tools · Open Source · Web Applications</div>
+    <div class="topics">
+      <span class="topic">Next.js</span>
+      <span class="topic">React</span>
+      <span class="topic">Python</span>
+      <span class="topic">AI</span>
+      <span class="topic">Open Source</span>
+      <span class="topic">Cloud</span>
+    </div>
+    <span class="domain">listerineh.dev/projects</span>
+  </div>
+</body></html>`;
+}
+
+// ─── 4. Privacy ─────────────────────────────────────────────────────────
 
 function htmlPrivacy() {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
@@ -469,13 +520,14 @@ function htmlWhy() {
 
 // ─── Runner ────────────────────────────────────────────────────────────────
 
-const PAGE_IDS = ['home', 'about', 'blog', 'why', 'privacy', 'terms'];
+const PAGE_IDS = ['home', 'about', 'blog', 'projects', 'why', 'privacy', 'terms'];
 
 async function generateImages() {
   const ALL_PAGES = [
     { id: 'home',    filename: 'home-og.webp',    html: htmlHome() },
     { id: 'about',   filename: 'about-og.webp',   html: htmlAbout() },
     { id: 'blog',    filename: 'blog-og.webp',    html: htmlBlog() },
+    { id: 'projects', filename: 'projects-og.webp', html: htmlProjects() },
     { id: 'why',     filename: 'why-og.webp',     html: htmlWhy() },
     { id: 'privacy', filename: 'privacy-og.webp', html: htmlPrivacy() },
     { id: 'terms',   filename: 'terms-og.webp',   html: htmlTerms() },

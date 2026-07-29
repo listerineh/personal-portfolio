@@ -162,23 +162,16 @@ export function BlogCard({
 
         {/* Tags */}
         {tags.length > 0 && (
-          <div
-            className={cn(
-              'flex items-center gap-2 mt-1 transition-all duration-200',
-              tagsTooltipOpen ? 'flex-wrap' : 'flex-nowrap overflow-hidden'
-            )}
-            onMouseEnter={() => tags.length > 2 && setTagsTooltipOpen(true)}
-            onMouseLeave={() => setTagsTooltipOpen(false)}
-          >
-            {(tagsTooltipOpen ? tags : tags.slice(0, 2)).map((tag) => (
+          <div className="flex items-center gap-2 mt-1">
+            {tags.slice(0, 2).map((tag) => (
               <Pill key={tag} variant="outline" accent="neutral" size="sm" uppercase={false} className="shrink-0">
                 {tag}
               </Pill>
             ))}
-            {!tagsTooltipOpen && tags.length > 2 && (
-              <span className="shrink-0 text-xs font-headline font-semibold text-foreground/40 select-none hover:text-foreground/70 transition-colors duration-150">
+            {tags.length > 2 && (
+              <Pill variant="outline" accent="neutral" size="sm" uppercase={false} className="shrink-0">
                 +{tags.length - 2}
-              </span>
+              </Pill>
             )}
           </div>
         )}

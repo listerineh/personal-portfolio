@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 import { blogPosts } from '@/lib/data';
+import { projectsData } from '@/lib/data/projects';
+import { defaultLocale } from '@/i18n/config';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://listerineh.dev';
@@ -13,6 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/projects`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
@@ -50,5 +58,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...blogPages];
+  const projectPages: MetadataRoute.Sitemap = projectsData[defaultLocale].map((project) => ({
+    url: `${baseUrl}/projects/${project.slug}`,
+    lastModified: project.endDate ? new Date(project.endDate) : (project.startDate ? new Date(project.startDate) : new Date()),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...blogPages, ...projectPages];
 }
