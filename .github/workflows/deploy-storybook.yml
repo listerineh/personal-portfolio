@@ -9,6 +9,7 @@ on:
       - 'src/stories/**'
       - 'src/components/**'
       - '.storybook/**'
+      - '.github/workflows/deploy-storybook.yml'
   workflow_dispatch:
 
 jobs:
@@ -55,7 +56,7 @@ jobs:
           
           # Deploy Storybook static files
           vercel deploy --prod --token=$VERCEL_TOKEN \
-            --scope=$VERCEL_ORG_ID \
+            --scope=listerinehs-projects \
             --yes \
             public/blog/components
       
@@ -73,7 +74,7 @@ jobs:
           
           # Deploy Storybook static files as preview
           vercel deploy --token=$VERCEL_TOKEN \
-            --scope=$VERCEL_ORG_ID \
+            --scope=listerinehs-projects \
             --yes \
             public/blog/components
       
