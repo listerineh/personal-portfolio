@@ -1,4 +1,4 @@
-name: Deploy Storybook
+name: Build Storybook
 
 on:
   push:
@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build-storybook:
     runs-on: ubuntu-latest
     
     steps:
@@ -31,63 +31,22 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook
       
-      - name: Set environment based on branch
-        id: env
-        run: |
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "is_production=true" >> $GITHUB_OUTPUT
-            echo "environment=Production" >> $GITHUB_OUTPUT
-          else
-            echo "is_production=false" >> $GITHUB_OUTPUT
-            echo "environment=Preview (develop)" >> $GITHUB_OUTPUT
-          fi
-      
-      - name: Deploy to Vercel (Production)
-        if: steps.env.outputs.is_production == 'true'
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          echo "🚀 Deploying Storybook to production..."
-          
-          # Install Vercel CLI
-          npm install -g vercel
-          
-          # Deploy Storybook static files
-          vercel deploy --prod --token=$VERCEL_TOKEN \
-            --scope=listerinehs-projects \
-            --yes \
-            public/blog/components
-      
-      - name: Deploy to Vercel (Preview)
-        if: steps.env.outputs.is_production == 'false'
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          echo "🚀 Deploying Storybook to preview..."
-          
-          # Install Vercel CLI
-          npm install -g vercel
-          
-          # Deploy Storybook static files as preview
-          vercel deploy --token=$VERCEL_TOKEN \
-            --scope=listerinehs-projects \
-            --yes \
-            public/blog/components
+      - name: Upload Storybook artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-static
+          path: public/blog/components
+          retention-days: 7
       
       - name: Summary
         if: always()
         run: |
           cat >> $GITHUB_STEP_SUMMARY << 'EOF'
-          ## 📚 Storybook Deployment
+          ## 📚 Storybook Build
           
-          Storybook has been built and deployed.
+          Storybook has been built successfully.
           
           ### Location:
-          - **URL:** https://listerineh.dev/blog/components
           - **Path:** public/blog/components
           
           ### What's included:
@@ -97,6 +56,9 @@ jobs:
           
           ### Environment:
           - **Branch:** ${{ github.ref_name }}
-          - **Environment:** ${{ steps.env.outputs.environment }}
+          
+          ### Note:
+          Storybook files are built to public/blog/components and will be included in the main Vercel deployment.
+          Access at: https://listerineh.dev/blog/components
           
           EOF
