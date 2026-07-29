@@ -30,7 +30,7 @@ export function Header() {
     { label: t('projects'), href: '/projects' },
     { label: t('blog'), href: '/blog' },
     { label: t('contact'), href: '/#contact' },
-    { label: 'Why', href: '/why' },
+    { label: t('why'), href: '/why' },
   ], [t]);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
