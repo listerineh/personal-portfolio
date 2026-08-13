@@ -45,8 +45,10 @@
   "experience": {
     "title": "Experiencia Laboral",
     "badge": "Carrera",
-    "showAll": "Mostrar Toda la Experiencia",
-    "watermark": "CARRERA"
+    "viewAll": "Ver Toda la Experiencia",
+    "watermark": "CARRERA",
+    "pageTitle": "Mi Trayectoria Profesional",
+    "pageDescription": "Un vistazo detallado a los roles, empresas y proyectos que han dado forma a mi trayectoria como ingeniero de software."
   },
   "skills": {
     "title": "Tecnologías con las que Trabajo",

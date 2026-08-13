@@ -45,8 +45,10 @@
   "experience": {
     "title": "Work Experience",
     "badge": "Career",
-    "showAll": "Show All Experience",
-    "watermark": "CAREER"
+    "viewAll": "View All Experience",
+    "watermark": "CAREER",
+    "pageTitle": "My Career Journey",
+    "pageDescription": "A detailed look at the roles, companies, and projects that have shaped my journey as a software engineer."
   },
   "skills": {
     "title": "Technologies I Work With",

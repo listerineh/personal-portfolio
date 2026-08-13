@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { ChevronDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { experiencesData } from '@/lib/data';
@@ -20,22 +20,10 @@ export function ExperienceSection() {
   const tCommon = useTranslations('common');
   const { locale } = useLocale();
   const experiences = getLocalizedData(experiencesData, locale);
-  const [showAll, setShowAll] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  const handleShowAll = () => {
-    setShowAll(true);
-    setTimeout(() => {
-      itemsRef.current.slice(3).forEach((item) => {
-        if (item) gsap.from(item, { opacity: 0, y: 20, duration: 0.4, ease: 'power2.out' });
-      });
-      ScrollTrigger.refresh();
-    }, 50);
-  };
-
   useGSAP(() => {
-    itemsRef.current.slice(0, 3).forEach((item, index) => {
+    itemsRef.current.forEach((item, index) => {
       if (item) {
         gsap.from(item, {
           opacity: 0,
@@ -49,11 +37,11 @@ export function ExperienceSection() {
     });
   }, []);
 
-  const visible = showAll ? experiences : experiences.slice(0, 3);
+  const visible = experiences.slice(0, 3);
 
   return (
     <section id="experience" className="relative py-28 md:py-44 overflow-hidden">
-      <div ref={sectionRef} className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
+      <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
         <SectionLabel accent="amber" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
         <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
           {t('title')}
@@ -79,11 +67,17 @@ export function ExperienceSection() {
           ))}
         </div>
 
-        {experiences.length > 3 && !showAll && (
-          <div className="flex justify-center md:justify-start mt-10 reveal-up">
-            <Button variant="ghost" accent="neutral" size="md" onClick={handleShowAll}>
-              {t('showAll')}
-              <ChevronDown className="w-4 h-4" />
+        {experiences.length > 3 && (
+          <div className="flex justify-start mt-12 reveal-up">
+            <Button
+              href="/experience"
+              variant="ghost"
+              accent="neutral"
+              size="md"
+              className="w-full md:w-auto rounded-2xl md:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
+            >
+              {t('viewAll')}
+              <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         )}

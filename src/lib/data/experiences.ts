@@ -243,3 +243,7 @@ export const experiencesData: Record<Locale, Experience[]> = {
 };
 
 export const experiences = experiencesData.en;
+
+export function getExperiences(locale: Locale = 'en'): Experience[] {
+  return experiencesData[locale] || experiencesData.en;
+}
