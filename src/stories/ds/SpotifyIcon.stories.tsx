@@ -31,23 +31,44 @@ export const Large: Story = {
   },
 };
 
-export const CustomColor: Story = {
+export const Base: Story = {
   args: {
     className: 'w-8 h-8',
-    accentColor: '#ff6b6b',
+    base: true,
   },
 };
 
-export const Green: Story = {
+export const AdaptiveOnLightText: Story = {
+  render: (args) => (
+    <div className="p-4 rounded-xl bg-white text-black">
+      <SpotifyIcon {...args} />
+    </div>
+  ),
   args: {
     className: 'w-8 h-8',
-    accentColor: '#1DB954',
   },
 };
 
-export const Amber: Story = {
+export const AdaptiveOnDarkText: Story = {
+  render: (args) => (
+    <div className="p-4 rounded-xl bg-black text-white">
+      <SpotifyIcon {...args} />
+    </div>
+  ),
   args: {
     className: 'w-8 h-8',
-    accentColor: '#f59e0b',
+  },
+};
+
+export const CutOutOnSolidButton: Story = {
+  render: (args) => (
+    <div className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-black" style={{ backgroundColor: '#818cf8' }}>
+      <SpotifyIcon {...args} />
+      Listen on Spotify
+    </div>
+  ),
+  args: {
+    className: 'w-4 h-4',
+    linesColor: '#818cf8',
   },
 };

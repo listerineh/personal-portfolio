@@ -1,6 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { SpotifyIcon } from './SpotifyIcon';
+import { YoutubeIcon } from './YoutubeIcon';
+import { AppleMusicIcon } from './AppleMusicIcon';
+import { SoundcloudIcon } from './SoundcloudIcon';
+import type { TrackPlatformLinks } from '@/lib/data/music';
 
 interface Track {
   id: string;
@@ -8,11 +13,22 @@ interface Track {
   artistName: string;
   albumArt: string | null;
   spotifyUrl: string;
+  youtube?: string;
+  appleMusic?: string;
+  soundcloud?: string;
 }
 
 interface SpotifyTopTracksProps {
-  trackIds: readonly string[];
+  tracks: readonly TrackPlatformLinks[];
   accentColor?: string;
+}
+
+interface PlatformButton {
+  key: string;
+  href: string;
+  label: string;
+  color: string;
+  icon: React.ReactNode;
 }
 
 function TrackSkeleton({ accentColor }: { accentColor: string }) {
@@ -33,7 +49,7 @@ function TrackSkeleton({ accentColor }: { accentColor: string }) {
 }
 
 export function SpotifyTopTracks({
-  trackIds,
+  tracks: trackLinks,
   accentColor = '#818cf8',
 }: SpotifyTopTracksProps) {
   const [tracks, setTracks] = useState<Track[]>([]);
@@ -42,18 +58,31 @@ export function SpotifyTopTracks({
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!trackIds.length) return;
+    if (!trackLinks.length) return;
     setLoading(true);
     setError(false);
-    fetch(`/api/spotify/tracks?ids=${trackIds.join(',')}`)
+    const ids = trackLinks.map((t) => t.spotifyId);
+    fetch(`/api/spotify/tracks?ids=${ids.join(',')}`)
       .then((r) => r.json())
       .then((data) => {
-        if (data.tracks?.length) setTracks(data.tracks);
-        else setError(true);
+        if (data.tracks?.length) {
+          const merged = data.tracks.map((track: Track) => {
+            const links = trackLinks.find((t) => t.spotifyId === track.id);
+            return {
+              ...track,
+              youtube: links?.youtube,
+              appleMusic: links?.appleMusic,
+              soundcloud: links?.soundcloud,
+            };
+          });
+          setTracks(merged);
+        } else {
+          setError(true);
+        }
       })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
-  }, [trackIds]);
+  }, [trackLinks]);
 
   if (error) {
     return <p className="text-sm text-white/30 py-4">No se pudieron cargar las pistas.</p>;
@@ -62,16 +91,45 @@ export function SpotifyTopTracks({
   return (
     <div className="space-y-2">
       {loading
-        ? trackIds.map((id) => <TrackSkeleton key={id} accentColor={accentColor} />)
+        ? trackLinks.map((t) => <TrackSkeleton key={t.spotifyId} accentColor={accentColor} />)
         : tracks.map((track, index) => {
             const hovered = hoveredId === track.id;
+
+            const platforms: PlatformButton[] = [
+              {
+                key: 'spotify',
+                href: track.spotifyUrl,
+                label: 'Spotify',
+                color: '#1DB954',
+                icon: <SpotifyIcon className="w-4 h-4" base />,
+              },
+              track.youtube && {
+                key: 'youtube',
+                href: track.youtube,
+                label: 'YouTube',
+                color: '#FF0000',
+                icon: <YoutubeIcon className="w-4 h-4" accentColor="#FF0000" />,
+              },
+              track.appleMusic && {
+                key: 'appleMusic',
+                href: track.appleMusic,
+                label: 'Apple Music',
+                color: '#FA57C1',
+                icon: <AppleMusicIcon className="w-4 h-4" accentColor="#FA57C1" />,
+              },
+              track.soundcloud && {
+                key: 'soundcloud',
+                href: track.soundcloud,
+                label: 'SoundCloud',
+                color: '#FF5500',
+                icon: <SoundcloudIcon className="w-4 h-4" accentColor="#FF5500" />,
+              },
+            ].filter(Boolean) as PlatformButton[];
+
             return (
-              <a
+              <div
                 key={track.id}
-                href={track.spotifyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative flex items-center gap-4 p-4 rounded-2xl overflow-hidden"
+                className="group relative flex items-center gap-4 p-4 rounded-2xl overflow-hidden"
                 style={{
                   border: `1px solid ${hovered ? accentColor + '30' : accentColor + '15'}`,
                   transition: 'border-color 0.25s',
@@ -111,30 +169,49 @@ export function SpotifyTopTracks({
                   )}
                 </div>
 
-                {/* Track info */}
-                <div className="relative z-10 flex-1 min-w-0">
-                  <p
-                    className="font-headline font-bold truncate leading-tight"
-                    style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', color: 'rgba(255,255,255,0.88)' }}
-                  >
-                    {track.name}
-                  </p>
-                  <p className="text-xs truncate mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{track.artistName}</p>
-                </div>
+                {/* Track info & platform buttons */}
+                <div className="relative z-10 flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <div className="min-w-0">
+                    <p
+                      className="font-headline font-bold truncate leading-tight"
+                      style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', color: 'rgba(255,255,255,0.88)' }}
+                    >
+                      {track.name}
+                    </p>
+                    <p className="text-xs truncate mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{track.artistName}</p>
+                  </div>
 
-                {/* Reproducir en Spotify */}
-                <span
-                  className="relative z-10 hidden sm:inline shrink-0 text-xs font-headline font-semibold"
-                  style={{
-                    color: '#1DB954',
-                    opacity: hovered ? 1 : 0,
-                    transition: 'opacity 0.25s',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Reproducir en Spotify ↗
-                </span>
-              </a>
+                  {/* Platform buttons: always visible on mobile, hover-reveal on pointer-capable screens */}
+                  <div className="flex items-center gap-2 flex-wrap sm:ml-auto sm:flex-nowrap opacity-100 sm:opacity-0 sm:-translate-x-1.5 sm:group-hover:opacity-100 sm:group-hover:translate-x-0 transition-all duration-300">
+                    {platforms.map((platform) => (
+                      <a
+                        key={platform.key}
+                        href={platform.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Escuchar "${track.name}" en ${platform.label}`}
+                        title={platform.label}
+                        className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
+                        style={{
+                          border: `1px solid ${platform.color}40`,
+                          background: `${platform.color}12`,
+                          transition: 'background 0.2s, border-color 0.2s',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = `${platform.color}25`;
+                          e.currentTarget.style.borderColor = `${platform.color}80`;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = `${platform.color}12`;
+                          e.currentTarget.style.borderColor = `${platform.color}40`;
+                        }}
+                      >
+                        {platform.icon}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
             );
           })}
 

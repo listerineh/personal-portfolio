@@ -13,7 +13,7 @@ import { useTheme } from '@/context/theme-context';
 import { LanguageSwitcher } from '@/components/common/language-switcher';
 import { useGSAP } from '@/hooks/use-gsap';
 import { musicLinks } from '@/lib/data';
-import { Pill, Button, SectionLabel, Title, Text, AccentCard, MemberCard, SpotifyIcon, InstagramIcon, BrandLink, SpotifyTopTracks } from '@/components/ds';
+import { Pill, Button, SectionLabel, Title, Text, AccentCard, MemberCard, SpotifyTopTracks } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -295,6 +295,11 @@ export default function WhyPage() {
                 />
               </div>
             </div>
+
+            <div className="reveal-up mt-12">
+              <SectionLabel accent="amber" className="mb-5">{t('topTracksTitle')}</SectionLabel>
+              <SpotifyTopTracks tracks={musicLinks.mn.topTracks} accentColor="#f59e0b" />
+            </div>
           </div>
 
           <div
@@ -348,27 +353,16 @@ export default function WhyPage() {
                   </div>
                   <Text size="sm" strength="secondary" accent="indigo">{t('ssAlbumDesc')}</Text>
                 </AccentCard>
-                <div className="reveal-up">
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <BrandLink
-                      href={musicLinks.ss.spotifyUrl}
-                      color="#818cf8"
-                      variant="solid"
-                      className="font-bold w-full justify-center sm:w-auto"
-                    >
-                      <SpotifyIcon className="w-4 h-4" accentColor="#818cf8" />
-                      {t('ssSpotify')}
-                    </BrandLink>
-                    <BrandLink
-                      href={musicLinks.ss.instagram}
-                      color="#818cf8"
-                      variant="outline"
-                      className="w-full justify-center sm:w-auto"
-                    >
-                      <InstagramIcon className="w-4 h-4" />
-                      {t('soloIG')}
-                    </BrandLink>
-                  </div>
+                <div className="reveal-up pt-2">
+                  <Button
+                    href={musicLinks.ss.instagram}
+                    external
+                    gradient="linear-gradient(90deg, #818cf8, #c4b5fd)"
+                    className="gap-3 text-black hover:shadow-[0_0_40px_rgba(129,140,248,0.35)] hover:scale-[1.03] w-full sm:w-auto justify-center"
+                  >
+                    {t('soloIG')}
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
                 </div>
               </div>
 
@@ -389,7 +383,7 @@ export default function WhyPage() {
 
             <div className="reveal-up mt-12">
               <SectionLabel accent="indigo" className="mb-5">{t('topTracksTitle')}</SectionLabel>
-              <SpotifyTopTracks trackIds={musicLinks.ss.topTrackIds} accentColor="#818cf8" />
+              <SpotifyTopTracks tracks={musicLinks.ss.topTracks} accentColor="#818cf8" />
             </div>
           </div>
 
@@ -432,29 +426,20 @@ export default function WhyPage() {
 
             <div>
               <Text size="lg" strength="primary" accent="green" animate className="mb-10">{t('soloDescription')}</Text>
-              <div className="reveal-up flex flex-col sm:flex-row gap-3 mb-14">
-                <BrandLink
-                  href={musicLinks.solo.spotifyUrl}
-                  color="#1DB954"
-                  variant="solid"
-                  className="font-bold w-full justify-center sm:w-auto"
-                >
-                  <SpotifyIcon className="w-4 h-4" />
-                  {t('soloSpotify')}
-                </BrandLink>
-                <BrandLink
+              <div className="reveal-up mb-14">
+                <Button
                   href={musicLinks.solo.instagram}
-                  color="#1DB954"
-                  variant="outline"
-                  className="w-full justify-center sm:w-auto"
+                  external
+                  gradient="linear-gradient(90deg, #1DB954, #86efac)"
+                  className="gap-3 text-black hover:shadow-[0_0_40px_rgba(29,185,84,0.35)] hover:scale-[1.03] w-full sm:w-auto justify-center"
                 >
-                  <InstagramIcon className="w-4 h-4" />
                   {t('soloIG')}
-                </BrandLink>
+                  <ExternalLink className="w-4 h-4" />
+                </Button>
               </div>
               <div className="reveal-up mt-16">
                 <SectionLabel accent="green" className="mb-5">{t('topTracksTitle')}</SectionLabel>
-                <SpotifyTopTracks trackIds={musicLinks.solo.topTrackIds} accentColor="#1DB954" />
+                <SpotifyTopTracks tracks={musicLinks.solo.topTracks} accentColor="#1DB954" />
               </div>
             </div>
           </div>

@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { SpotifyIcon } from '@/components/ds/SpotifyIcon';
+import { YoutubeIcon } from '@/components/ds/YoutubeIcon';
+import { AppleMusicIcon } from '@/components/ds/AppleMusicIcon';
+import { SoundcloudIcon } from '@/components/ds/SoundcloudIcon';
 import { SpotifyTopTracks } from '@/components/ds/SpotifyTopTracks';
+import type { TrackPlatformLinks } from '@/lib/data/music';
 
 const meta: Meta<typeof SpotifyTopTracks> = {
   title: 'DS/SpotifyTopTracks',
@@ -15,7 +20,7 @@ export default meta;
 type Story = StoryObj<typeof SpotifyTopTracks>;
 
 // Mock component that bypasses API calls
-function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly string[]; accentColor?: string }) {
+function MockSpotifyTopTracks({ tracks: trackLinks, accentColor }: { tracks: readonly TrackPlatformLinks[]; accentColor?: string }) {
   const mockTracks = [
     {
       id: '1',
@@ -23,6 +28,9 @@ function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly st
       artistName: 'The Weeknd',
       albumArt: null,
       spotifyUrl: 'https://open.spotify.com/track/1',
+      youtube: 'https://www.youtube.com/watch?v=1',
+      appleMusic: 'https://music.apple.com/track/1',
+      soundcloud: undefined,
     },
     {
       id: '2',
@@ -30,6 +38,9 @@ function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly st
       artistName: 'Dua Lipa',
       albumArt: null,
       spotifyUrl: 'https://open.spotify.com/track/2',
+      youtube: 'https://www.youtube.com/watch?v=2',
+      appleMusic: undefined,
+      soundcloud: 'https://soundcloud.com/track/2',
     },
     {
       id: '3',
@@ -37,6 +48,9 @@ function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly st
       artistName: 'The Kid LAROI, Justin Bieber',
       albumArt: null,
       spotifyUrl: 'https://open.spotify.com/track/3',
+      youtube: undefined,
+      appleMusic: 'https://music.apple.com/track/3',
+      soundcloud: 'https://soundcloud.com/track/3',
     },
     {
       id: '4',
@@ -44,6 +58,9 @@ function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly st
       artistName: 'Olivia Rodrigo',
       albumArt: null,
       spotifyUrl: 'https://open.spotify.com/track/4',
+      youtube: 'https://www.youtube.com/watch?v=4',
+      appleMusic: 'https://music.apple.com/track/4',
+      soundcloud: 'https://soundcloud.com/track/4',
     },
     {
       id: '5',
@@ -51,23 +68,31 @@ function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly st
       artistName: 'Justin Bieber',
       albumArt: null,
       spotifyUrl: 'https://open.spotify.com/track/5',
+      youtube: undefined,
+      appleMusic: undefined,
+      soundcloud: undefined,
     },
   ];
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const displayTracks = mockTracks.slice(0, trackIds.length);
+  const displayTracks = mockTracks.slice(0, trackLinks.length);
 
   return (
     <div className="space-y-2">
       {displayTracks.map((track, index) => {
         const hovered = hoveredId === track.id;
+
+        const platforms = [
+          { key: 'spotify', href: track.spotifyUrl, label: 'Spotify', color: '#1DB954', icon: <SpotifyIcon className="w-4 h-4" base /> },
+          track.youtube && { key: 'youtube', href: track.youtube, label: 'YouTube', color: '#FF0000', icon: <YoutubeIcon className="w-4 h-4" accentColor="#FF0000" /> },
+          track.appleMusic && { key: 'appleMusic', href: track.appleMusic, label: 'Apple Music', color: '#FA57C1', icon: <AppleMusicIcon className="w-4 h-4" accentColor="#FA57C1" /> },
+          track.soundcloud && { key: 'soundcloud', href: track.soundcloud, label: 'SoundCloud', color: '#FF5500', icon: <SoundcloudIcon className="w-4 h-4" accentColor="#FF5500" /> },
+        ].filter(Boolean) as { key: string; href: string; label: string; color: string; icon: React.ReactNode }[];
+
         return (
-          <a
+          <div
             key={track.id}
-            href={track.spotifyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative flex items-center gap-4 p-4 rounded-2xl overflow-hidden"
+            className="group relative flex items-center gap-4 p-4 rounded-2xl overflow-hidden"
             style={{
               border: `1px solid ${hovered ? accentColor + '30' : accentColor + '15'}`,
               transition: 'border-color 0.25s',
@@ -101,27 +126,46 @@ function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly st
                 <div className="w-14 h-14 rounded-xl" style={{ background: `${accentColor}20` }} />
               )}
             </div>
-            <div className="relative z-10 flex-1 min-w-0">
-              <p
-                className="font-headline font-bold truncate leading-tight"
-                style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', color: 'rgba(255,255,255,0.88)' }}
-              >
-                {track.name}
-              </p>
-              <p className="text-xs truncate mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{track.artistName}</p>
+            <div className="relative z-10 flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+              <div className="min-w-0">
+                <p
+                  className="font-headline font-bold truncate leading-tight"
+                  style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', color: 'rgba(255,255,255,0.88)' }}
+                >
+                  {track.name}
+                </p>
+                <p className="text-xs truncate mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{track.artistName}</p>
+              </div>
+              <div className="flex items-center gap-2 flex-wrap sm:ml-auto sm:flex-nowrap opacity-100 sm:opacity-0 sm:-translate-x-1.5 sm:group-hover:opacity-100 sm:group-hover:translate-x-0 transition-all duration-300">
+                {platforms.map((platform) => (
+                  <a
+                    key={platform.key}
+                    href={platform.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Escuchar "${track.name}" en ${platform.label}`}
+                    title={platform.label}
+                    className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
+                    style={{
+                      border: `1px solid ${platform.color}40`,
+                      background: `${platform.color}12`,
+                      transition: 'background 0.2s, border-color 0.2s',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = `${platform.color}25`;
+                      e.currentTarget.style.borderColor = `${platform.color}80`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = `${platform.color}12`;
+                      e.currentTarget.style.borderColor = `${platform.color}40`;
+                    }}
+                  >
+                    {platform.icon}
+                  </a>
+                ))}
+              </div>
             </div>
-            <span
-              className="relative z-10 hidden sm:inline shrink-0 text-xs font-headline font-semibold"
-              style={{
-                color: '#1DB954',
-                opacity: hovered ? 1 : 0,
-                transition: 'opacity 0.25s',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Reproducir en Spotify ↗
-            </span>
-          </a>
+          </div>
         );
       })}
       <div className="pt-2 px-1 flex items-center gap-2">
@@ -134,26 +178,34 @@ function MockSpotifyTopTracks({ trackIds, accentColor }: { trackIds: readonly st
   );
 }
 
+const trackLinks: TrackPlatformLinks[] = [
+  { spotifyId: '1' },
+  { spotifyId: '2' },
+  { spotifyId: '3' },
+  { spotifyId: '4' },
+  { spotifyId: '5' },
+];
+
 export const Default: Story = {
-  render: () => <MockSpotifyTopTracks trackIds={['1', '2']} accentColor="#818cf8" />,
+  render: () => <MockSpotifyTopTracks tracks={trackLinks.slice(0, 2)} accentColor="#818cf8" />,
 };
 
 export const AmberAccent: Story = {
-  render: () => <MockSpotifyTopTracks trackIds={['1', '2']} accentColor="#f59e0b" />,
+  render: () => <MockSpotifyTopTracks tracks={trackLinks.slice(0, 2)} accentColor="#f59e0b" />,
 };
 
 export const GreenAccent: Story = {
-  render: () => <MockSpotifyTopTracks trackIds={['1', '2']} accentColor="#1DB954" />,
+  render: () => <MockSpotifyTopTracks tracks={trackLinks.slice(0, 2)} accentColor="#1DB954" />,
 };
 
 export const CustomColor: Story = {
-  render: () => <MockSpotifyTopTracks trackIds={['1', '2']} accentColor="#ff6b6b" />,
+  render: () => <MockSpotifyTopTracks tracks={trackLinks.slice(0, 2)} accentColor="#ff6b6b" />,
 };
 
 export const SingleTrack: Story = {
-  render: () => <MockSpotifyTopTracks trackIds={['1']} accentColor="#818cf8" />,
+  render: () => <MockSpotifyTopTracks tracks={trackLinks.slice(0, 1)} accentColor="#818cf8" />,
 };
 
 export const MultipleTracks: Story = {
-  render: () => <MockSpotifyTopTracks trackIds={['1', '2', '3', '4', '5']} accentColor="#818cf8" />,
+  render: () => <MockSpotifyTopTracks tracks={trackLinks} accentColor="#818cf8" />,
 };
