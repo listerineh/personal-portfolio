@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { z } from 'zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2, Mail, Clock } from 'lucide-react';
+import { Loader2, Mail, Clock, ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { submitContactForm } from '@/lib/actions';
@@ -144,20 +144,20 @@ export function ContactListingClient() {
                     </div>
                     <a
                       href={emailLink.url}
-                      className="font-headline font-bold text-foreground hover:text-primary transition-colors break-all"
-                      style={{ fontSize: 'clamp(1rem, 2vw, 1.15rem)' }}
+                      className="inline-flex items-center gap-2 font-headline font-bold text-foreground hover:text-primary transition-colors mb-4"
+                      style={{ fontSize: 'clamp(0.95rem, 2vw, 1.05rem)' }}
                     >
-                      {emailLink.url.replace('mailto:', '')}
+                      {t('directEmailAction')}
+                      <ArrowRight className="w-4 h-4" />
                     </a>
+                    <div className="flex items-center gap-2 pt-4 border-t border-primary/15">
+                      <Clock className="w-3.5 h-3.5 text-foreground/35 shrink-0" />
+                      <span className="text-xs text-foreground/45">{t('responseTime')}</span>
+                    </div>
                   </AccentCard>
                 )}
 
                 <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.02] p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Clock className="w-4 h-4 text-foreground/40" />
-                    <span className="text-sm text-foreground/50">{t('responseTime')}</span>
-                  </div>
-
                   <p className="font-headline text-[10px] tracking-[0.25em] uppercase text-foreground/35 mb-4">
                     {t('connectTitle')}
                   </p>
