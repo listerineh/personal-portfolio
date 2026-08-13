@@ -58,6 +58,8 @@
     "viewAll": "View All Skills",
     "pageTitle": "My Full Tech Stack",
     "pageDescription": "A categorized breakdown of the languages, frameworks, and tools I use to design, build, and ship software.",
+    "filterByCategory": "Filter",
+    "filterAll": "All",
     "categories": {
       "languages": "Languages",
       "frontend": "Frontend",

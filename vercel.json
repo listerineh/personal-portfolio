@@ -1,3 +1,6 @@
 {
-  "buildCommand": "npm run build:prod"
+  "buildCommand": "npm run build:prod",
+  "env": {
+    "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
+  }
 }

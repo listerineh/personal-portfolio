@@ -58,6 +58,8 @@
     "viewAll": "Ver Todas las Habilidades",
     "pageTitle": "Mi Stack Tecnológico Completo",
     "pageDescription": "Un desglose categorizado de los lenguajes, frameworks y herramientas que uso para diseñar, construir y lanzar software.",
+    "filterByCategory": "Filtrar",
+    "filterAll": "Todas",
     "categories": {
       "languages": "Lenguajes",
       "frontend": "Frontend",

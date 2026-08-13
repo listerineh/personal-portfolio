@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -21,6 +21,20 @@ interface SkillsListingClientProps {
 export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
   const t = useTranslations('skills');
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<SkillCategory[]>([]);
+
+  const toggleCategory = (category: SkillCategory) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+    );
+  };
+
+  const visibleGroups = useMemo(
+    () => (selectedCategories.length === 0
+      ? skillGroups
+      : skillGroups.filter((group) => selectedCategories.includes(group.category))),
+    [skillGroups, selectedCategories]
+  );
 
   useGSAP(() => {
     cardsRef.current.forEach((card, index) => {
@@ -35,7 +49,7 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
         });
       }
     });
-  }, [skillGroups]);
+  }, [visibleGroups]);
 
   let cardIndex = 0;
 
@@ -63,8 +77,43 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
               </Text>
             </div>
 
+            <div className="flex items-center justify-center gap-3 w-full mb-14 reveal-up">
+              <span className="text-xs text-foreground/35 font-medium tracking-wide uppercase shrink-0 hidden sm:block">
+                {t('filterByCategory')}
+              </span>
+              <div className="flex items-center gap-2 overflow-x-auto scrollbar-none flex-wrap justify-center">
+                <button
+                  onClick={() => setSelectedCategories([])}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border shrink-0 ${
+                    selectedCategories.length === 0
+                      ? 'bg-emerald-500/15 border-emerald-400/40 text-emerald-500 dark:text-emerald-400'
+                      : 'bg-transparent border-foreground/10 text-foreground/50 hover:border-foreground/25 hover:text-foreground/80'
+                  }`}
+                >
+                  {t('filterAll')}
+                </button>
+                {skillGroups.map((group) => {
+                  const active = selectedCategories.includes(group.category);
+                  return (
+                    <button
+                      key={group.category}
+                      onClick={() => toggleCategory(group.category)}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border shrink-0 ${
+                        active
+                          ? 'bg-emerald-500/15 border-emerald-400/40 text-emerald-500 dark:text-emerald-400'
+                          : 'bg-transparent border-foreground/10 text-foreground/50 hover:border-foreground/25 hover:text-foreground/80'
+                      }`}
+                    >
+                      {t(`categories.${group.category}`)}
+                      <span className="opacity-50">({group.skills.length})</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="space-y-16">
-              {skillGroups.map((group) => (
+              {visibleGroups.map((group) => (
                 <div key={group.category}>
                   <SectionLabel accent="green" className="mb-6 reveal-up">
                     {t(`categories.${group.category}`)}
