@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
-import { getExperiences } from '@/lib/data';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
-import { ExperienceListingClient } from '@/components/experience/experience-listing-client';
+import { ContactListingClient } from '@/components/contact/contact-listing-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,19 +10,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
   const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
-  const experienceUrl = `${siteUrl}/experience`;
+  const contactUrl = `${siteUrl}/contact`;
 
   const title = locale === 'es'
-    ? 'Experiencia | Sebastian Alvarez — Ingeniero de Software Senior'
-    : 'Experience | Sebastian Alvarez — Senior Software Engineer';
+    ? 'Contacto | Sebastian Alvarez — Ingeniero de Software Senior'
+    : 'Contact | Sebastian Alvarez — Senior Software Engineer';
 
   const description = locale === 'es'
-    ? 'Trayectoria profesional completa: roles, empresas y responsabilidades a lo largo de mi carrera como ingeniero de software full stack.'
-    : 'Full career journey: roles, companies, and responsibilities throughout my career as a full stack software engineer.';
+    ? '¿Tienes un proyecto, una pregunta o una oportunidad? Contáctame directamente por correo, redes sociales o el formulario de contacto.'
+    : 'Have a project, a question, or an opportunity? Reach out directly via email, social media, or the contact form.';
 
   const keywords = locale === 'es'
-    ? ['experiencia laboral', 'trayectoria profesional', 'ingeniero de software', 'carrera', 'desarrollo full stack', 'Sebastian Alvarez']
-    : ['work experience', 'career journey', 'software engineer', 'career', 'full stack development', 'Sebastian Alvarez'];
+    ? ['contacto', 'contratar ingeniero de software', 'formulario de contacto', 'Sebastian Alvarez', 'colaboración']
+    : ['contact', 'hire software engineer', 'contact form', 'Sebastian Alvarez', 'collaboration'];
 
   return {
     title,
@@ -35,11 +34,11 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: experienceUrl,
+      url: contactUrl,
       siteName: 'listerineh.dev',
       images: [
         {
-          url: `${siteUrl}/images/experience-og.webp`,
+          url: `${siteUrl}/images/contact-og.webp`,
           width: 1200,
           height: 630,
           alt: title,
@@ -53,15 +52,15 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}/images/experience-og.webp`],
+      images: [`${siteUrl}/images/contact-og.webp`],
       creator: '@listerineh',
       site: '@listerineh',
     },
     alternates: {
-      canonical: experienceUrl,
+      canonical: contactUrl,
       languages: {
-        'en': `${siteUrl}/experience`,
-        'es': `${siteUrl}/experience`,
+        'en': `${siteUrl}/contact`,
+        'es': `${siteUrl}/contact`,
       },
     },
     robots: {
@@ -81,40 +80,31 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function ExperiencePage() {
+export default async function ContactPage() {
   const cookieStore = await cookies();
   const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
   const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
-  const experiences = getExperiences(locale);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'ProfilePage',
-    '@id': `${siteUrl}/experience`,
-    'url': `${siteUrl}/experience`,
-    'name': locale === 'es' ? 'Experiencia de Sebastian Alvarez' : 'Sebastian Alvarez Experience',
+    '@type': 'ContactPage',
+    '@id': `${siteUrl}/contact`,
+    'url': `${siteUrl}/contact`,
+    'name': locale === 'es' ? 'Contacto de Sebastian Alvarez' : 'Sebastian Alvarez Contact',
     'description': locale === 'es'
-      ? 'Trayectoria profesional y experiencia laboral de Sebastian Alvarez'
-      : 'Sebastian Alvarez professional career and work experience',
+      ? 'Página de contacto de Sebastian Alvarez'
+      : 'Sebastian Alvarez contact page',
     'mainEntity': {
       '@type': 'Person',
       'name': 'Sebastian Alvarez',
       'url': siteUrl,
+      'email': 'sebask8er.alvarez@gmail.com',
       'sameAs': [
         'https://github.com/listerineh',
-        'https://twitter.com/listerineh',
         'https://linkedin.com/in/listerineh',
+        'https://instagram.com/__listerineh',
       ],
-      'hasOccupation': experiences.map((exp) => ({
-        '@type': 'Occupation',
-        'name': exp.jobTitle,
-        'occupationLocation': exp.location ? { '@type': 'Place', 'name': exp.location } : undefined,
-        'hiringOrganization': {
-          '@type': 'Organization',
-          'name': exp.company,
-        },
-      })),
     },
     'inLanguage': locale === 'es' ? 'es-ES' : 'en-US',
   };
@@ -125,7 +115,7 @@ export default async function ExperiencePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <ExperienceListingClient experiences={experiences} />
+      <ContactListingClient />
     </>
   );
 }

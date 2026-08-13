@@ -2,12 +2,13 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { skills } from '@/lib/data';
 import { shuffleArray } from '@/lib/utils';
 import { useGSAP } from '@/hooks/use-gsap';
-import { SectionLabel, Title } from '@/components/ds';
+import { SectionLabel, Title, Button } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -213,6 +214,19 @@ export function SkillsSection() {
         >
           {t('description')}
         </p>
+
+        <div className="flex justify-center mt-8 px-6 sm:px-10 md:px-16 lg:px-24 reveal-up">
+          <Button
+            href="/skills"
+            variant="ghost"
+            accent="neutral"
+            size="md"
+            className="w-full sm:w-auto rounded-2xl sm:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
+          >
+            {t('viewAll')}
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Watermark */}

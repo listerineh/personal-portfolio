@@ -212,6 +212,154 @@ function htmlProjects() {
 </body></html>`;
 }
 
+// ─── 3b. Experience ──────────────────────────────────────────────────────
+
+function htmlExperience() {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  ${baseStyles()}
+  <style>
+    body { display: flex; align-items: center; justify-content: center; }
+    .content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 80px;
+    }
+    .title {
+      font-size: 82px; font-weight: 800; color: #eaedf5;
+      line-height: 1.0; letter-spacing: -0.03em;
+      margin-top: 26px; margin-bottom: 18px;
+    }
+    .tagline {
+      font-size: 22px; color: rgba(255,255,255,0.4); font-weight: 500;
+      margin-bottom: 40px; line-height: 1.4;
+    }
+    .topics { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+    .topic {
+      background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 6px; padding: 7px 18px;
+      color: #8a90aa; font-size: 14px; font-weight: 500;
+    }
+  </style>
+</head><body>
+  <div class="top-border"></div>
+  <div class="dot-grid"></div>
+  <div class="glow" style="width:560px;height:560px;top:-160px;right:-100px;background:radial-gradient(circle, rgba(245,158,11,0.16), transparent 68%);"></div>
+  <div class="glow" style="width:480px;height:480px;bottom:-140px;left:-80px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+
+  <div class="content">
+    <span class="badge">Career</span>
+    <div class="title">My Career Journey</div>
+    <div class="tagline">6+ Years · Roles, Companies &amp; Impact Across My Engineering Career</div>
+    <div class="topics">
+      <span class="topic">Galileo Financial Technologies</span>
+      <span class="topic">Blue Express</span>
+      <span class="topic">IOET</span>
+      <span class="topic">GDG Quito</span>
+    </div>
+    <span class="domain">listerineh.dev/experience</span>
+  </div>
+</body></html>`;
+}
+
+// ─── 3c. Skills ──────────────────────────────────────────────────────────
+
+function htmlSkills() {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  ${baseStyles()}
+  <style>
+    body { display: flex; align-items: center; justify-content: center; }
+    .content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 80px;
+    }
+    .title {
+      font-size: 82px; font-weight: 800; color: #eaedf5;
+      line-height: 1.0; letter-spacing: -0.03em;
+      margin-top: 26px; margin-bottom: 18px;
+    }
+    .tagline {
+      font-size: 22px; color: rgba(255,255,255,0.4); font-weight: 500;
+      margin-bottom: 40px; line-height: 1.4;
+    }
+    .topics { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+    .topic {
+      background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 6px; padding: 7px 18px;
+      color: #8a90aa; font-size: 14px; font-weight: 500;
+    }
+  </style>
+</head><body>
+  <div class="top-border"></div>
+  <div class="dot-grid"></div>
+  <div class="glow" style="width:560px;height:560px;top:-160px;right:-100px;background:radial-gradient(circle, rgba(245,158,11,0.16), transparent 68%);"></div>
+  <div class="glow" style="width:480px;height:480px;bottom:-140px;left:-80px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+
+  <div class="content">
+    <span class="badge">Tech Stack</span>
+    <div class="title">My Full Tech Stack</div>
+    <div class="tagline">Languages · Frontend · Backend · Cloud &amp; DevOps · AI/ML</div>
+    <div class="topics">
+      <span class="topic">TypeScript</span>
+      <span class="topic">React &amp; Next.js</span>
+      <span class="topic">Python</span>
+      <span class="topic">AWS · Azure · GCP</span>
+      <span class="topic">AI Agents</span>
+    </div>
+    <span class="domain">listerineh.dev/skills</span>
+  </div>
+</body></html>`;
+}
+
+// ─── 3d. Contact ─────────────────────────────────────────────────────────
+
+function htmlContact() {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  ${baseStyles()}
+  <style>
+    body { display: flex; align-items: center; justify-content: center; }
+    .content {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 0 80px;
+    }
+    .title {
+      font-size: 76px; font-weight: 800; color: #eaedf5;
+      line-height: 1.05; letter-spacing: -0.03em;
+      margin-top: 26px; margin-bottom: 18px;
+    }
+    .tagline {
+      font-size: 22px; color: rgba(255,255,255,0.4); font-weight: 500;
+      margin-bottom: 40px; line-height: 1.4;
+    }
+    .topics { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+    .topic {
+      background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 6px; padding: 7px 18px;
+      color: #8a90aa; font-size: 14px; font-weight: 500;
+    }
+  </style>
+</head><body>
+  <div class="top-border"></div>
+  <div class="dot-grid"></div>
+  <div class="glow" style="width:560px;height:560px;top:-160px;right:-100px;background:radial-gradient(circle, rgba(245,158,11,0.16), transparent 68%);"></div>
+  <div class="glow" style="width:480px;height:480px;bottom:-140px;left:-80px;background:radial-gradient(circle, rgba(245,158,11,0.07), transparent 70%);"></div>
+
+  <div class="content">
+    <span class="badge">Contact</span>
+    <div class="title">Let's Build Something Together</div>
+    <div class="tagline">Projects · Collaborations · Opportunities · Just Say Hi</div>
+    <div class="topics">
+      <span class="topic">sebask8er.alvarez@gmail.com</span>
+      <span class="topic">GitHub</span>
+      <span class="topic">LinkedIn</span>
+      <span class="topic">Instagram</span>
+    </div>
+    <span class="domain">listerineh.dev/contact</span>
+  </div>
+</body></html>`;
+}
+
 // ─── 4. Privacy ─────────────────────────────────────────────────────────
 
 function htmlPrivacy() {
@@ -520,7 +668,7 @@ function htmlWhy() {
 
 // ─── Runner ────────────────────────────────────────────────────────────────
 
-const PAGE_IDS = ['home', 'about', 'blog', 'projects', 'why', 'privacy', 'terms'];
+const PAGE_IDS = ['home', 'about', 'blog', 'projects', 'experience', 'skills', 'contact', 'why', 'privacy', 'terms'];
 
 async function generateImages() {
   const ALL_PAGES = [
@@ -528,6 +676,9 @@ async function generateImages() {
     { id: 'about',   filename: 'about-og.webp',   html: htmlAbout() },
     { id: 'blog',    filename: 'blog-og.webp',    html: htmlBlog() },
     { id: 'projects', filename: 'projects-og.webp', html: htmlProjects() },
+    { id: 'experience', filename: 'experience-og.webp', html: htmlExperience() },
+    { id: 'skills',  filename: 'skills-og.webp',  html: htmlSkills() },
+    { id: 'contact', filename: 'contact-og.webp', html: htmlContact() },
     { id: 'why',     filename: 'why-og.webp',     html: htmlWhy() },
     { id: 'privacy', filename: 'privacy-og.webp', html: htmlPrivacy() },
     { id: 'terms',   filename: 'terms-og.webp',   html: htmlTerms() },

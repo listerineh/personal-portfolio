@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
-import { getExperiences } from '@/lib/data';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
-import { ExperienceListingClient } from '@/components/experience/experience-listing-client';
+import { getSkillsByCategory } from '@/lib/data';
+import { SkillsListingClient } from '@/components/skills/skills-listing-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,19 +11,19 @@ export async function generateMetadata(): Promise<Metadata> {
   const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
   const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
-  const experienceUrl = `${siteUrl}/experience`;
+  const skillsUrl = `${siteUrl}/skills`;
 
   const title = locale === 'es'
-    ? 'Experiencia | Sebastian Alvarez — Ingeniero de Software Senior'
-    : 'Experience | Sebastian Alvarez — Senior Software Engineer';
+    ? 'Habilidades | Sebastian Alvarez — Ingeniero de Software Senior'
+    : 'Skills | Sebastian Alvarez — Senior Software Engineer';
 
   const description = locale === 'es'
-    ? 'Trayectoria profesional completa: roles, empresas y responsabilidades a lo largo de mi carrera como ingeniero de software full stack.'
-    : 'Full career journey: roles, companies, and responsibilities throughout my career as a full stack software engineer.';
+    ? 'Stack tecnológico completo: lenguajes, frameworks, bases de datos, cloud, IA y más herramientas que uso a diario como ingeniero full stack.'
+    : 'Full tech stack: languages, frameworks, databases, cloud, AI, and other tools I use daily as a full stack engineer.';
 
   const keywords = locale === 'es'
-    ? ['experiencia laboral', 'trayectoria profesional', 'ingeniero de software', 'carrera', 'desarrollo full stack', 'Sebastian Alvarez']
-    : ['work experience', 'career journey', 'software engineer', 'career', 'full stack development', 'Sebastian Alvarez'];
+    ? ['habilidades técnicas', 'stack tecnológico', 'lenguajes de programación', 'frameworks', 'cloud', 'DevOps', 'inteligencia artificial', 'Sebastian Alvarez']
+    : ['technical skills', 'tech stack', 'programming languages', 'frameworks', 'cloud', 'DevOps', 'artificial intelligence', 'Sebastian Alvarez'];
 
   return {
     title,
@@ -35,11 +35,11 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: experienceUrl,
+      url: skillsUrl,
       siteName: 'listerineh.dev',
       images: [
         {
-          url: `${siteUrl}/images/experience-og.webp`,
+          url: `${siteUrl}/images/skills-og.webp`,
           width: 1200,
           height: 630,
           alt: title,
@@ -53,15 +53,15 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}/images/experience-og.webp`],
+      images: [`${siteUrl}/images/skills-og.webp`],
       creator: '@listerineh',
       site: '@listerineh',
     },
     alternates: {
-      canonical: experienceUrl,
+      canonical: skillsUrl,
       languages: {
-        'en': `${siteUrl}/experience`,
-        'es': `${siteUrl}/experience`,
+        'en': `${siteUrl}/skills`,
+        'es': `${siteUrl}/skills`,
       },
     },
     robots: {
@@ -81,40 +81,27 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function ExperiencePage() {
+export default async function SkillsPage() {
   const cookieStore = await cookies();
   const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
   const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
-  const experiences = getExperiences(locale);
+  const skillGroups = getSkillsByCategory();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
-    '@id': `${siteUrl}/experience`,
-    'url': `${siteUrl}/experience`,
-    'name': locale === 'es' ? 'Experiencia de Sebastian Alvarez' : 'Sebastian Alvarez Experience',
+    '@id': `${siteUrl}/skills`,
+    'url': `${siteUrl}/skills`,
+    'name': locale === 'es' ? 'Habilidades de Sebastian Alvarez' : 'Sebastian Alvarez Skills',
     'description': locale === 'es'
-      ? 'Trayectoria profesional y experiencia laboral de Sebastian Alvarez'
-      : 'Sebastian Alvarez professional career and work experience',
+      ? 'Stack tecnológico y habilidades técnicas de Sebastian Alvarez'
+      : 'Sebastian Alvarez technical skills and tech stack',
     'mainEntity': {
       '@type': 'Person',
       'name': 'Sebastian Alvarez',
       'url': siteUrl,
-      'sameAs': [
-        'https://github.com/listerineh',
-        'https://twitter.com/listerineh',
-        'https://linkedin.com/in/listerineh',
-      ],
-      'hasOccupation': experiences.map((exp) => ({
-        '@type': 'Occupation',
-        'name': exp.jobTitle,
-        'occupationLocation': exp.location ? { '@type': 'Place', 'name': exp.location } : undefined,
-        'hiringOrganization': {
-          '@type': 'Organization',
-          'name': exp.company,
-        },
-      })),
+      'knowsAbout': Array.from(new Set(skillGroups.flatMap((group) => group.skills.map((skill) => skill.name)))),
     },
     'inLanguage': locale === 'es' ? 'es-ES' : 'en-US',
   };
@@ -125,7 +112,7 @@ export default async function ExperiencePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <ExperienceListingClient experiences={experiences} />
+      <SkillsListingClient skillGroups={skillGroups} />
     </>
   );
 }

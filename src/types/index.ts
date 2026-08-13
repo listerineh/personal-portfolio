@@ -22,10 +22,24 @@ export interface Experience {
   companyAiHint?: string; 
 }
 
+export type SkillCategory =
+  | 'languages'
+  | 'frontend'
+  | 'backend'
+  | 'mobile'
+  | 'database'
+  | 'ai'
+  | 'devops'
+  | 'testing'
+  | 'tools'
+  | 'management';
+
 export interface Skill {
   name: string;
   icon?: LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>;
   iconUrl?: string;
+  category: SkillCategory[];
+  description: string;
 }
 
 export interface Project {

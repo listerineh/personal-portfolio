@@ -112,7 +112,7 @@ export default function PrivacyPage() {
               </h2>
               <p className="text-foreground/55 leading-relaxed">
                 {t('contactText', { contactForm: 'contact form' }).split('contact form').map((part, i, arr) =>
-                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/#contact" className="text-primary hover:text-primary/80 underline underline-offset-2">contact form</Link></span> : part
+                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/contact" className="text-primary hover:text-primary/80 underline underline-offset-2">contact form</Link></span> : part
                 )}
               </p>
             </section>

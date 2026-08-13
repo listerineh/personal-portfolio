@@ -483,7 +483,7 @@ export default function WhyPage() {
             </Title>
             <p className="reveal-up text-lg text-white/80 leading-relaxed mb-12">{t('ctaDescription')}</p>
             <div className="reveal-up flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Button variant="primary" accent="neutral" href="/#contact">
+              <Button variant="primary" accent="neutral" href="/contact">
                 {t('getInTouch')}
               </Button>
               <Link href="/" className="font-headline font-bold text-sm text-white/60 hover:text-white transition-colors duration-300 underline-offset-4 hover:underline">

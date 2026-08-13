@@ -54,7 +54,22 @@
     "title": "Tecnologías con las que Trabajo",
     "badge": "Stack Tecnológico",
     "description": "Competente con una amplia gama de herramientas y frameworks de desarrollo modernos, siempre dispuesto a explorar tecnologías emergentes.",
-    "watermark": "STACK"
+    "watermark": "STACK",
+    "viewAll": "Ver Todas las Habilidades",
+    "pageTitle": "Mi Stack Tecnológico Completo",
+    "pageDescription": "Un desglose categorizado de los lenguajes, frameworks y herramientas que uso para diseñar, construir y lanzar software.",
+    "categories": {
+      "languages": "Lenguajes",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Móvil",
+      "database": "Base de Datos",
+      "ai": "IA y Machine Learning",
+      "devops": "Cloud y DevOps",
+      "testing": "Testing y QA",
+      "tools": "Herramientas y Diseño",
+      "management": "Gestión y Colaboración"
+    }
   },
   "projects": {
     "title": "Proyectos Destacados",
@@ -145,6 +160,13 @@
     "title": "Ponte en Contacto",
     "badge": "Contacto",
     "description": "¿Tienes un proyecto en mente, una pregunta o simplemente quieres saludar? ¡No dudes en contactarme!",
+    "viewAll": "Enviar un Mensaje",
+    "watermark": "CONTACTO",
+    "pageTitle": "Construyamos Algo Juntos",
+    "pageDescription": "¿Tienes un proyecto en mente, una pregunta, o solo quieres saludar? Escríbeme por el formulario o encuéntrame en tu plataforma favorita.",
+    "directEmailTitle": "¿Prefieres el correo?",
+    "connectTitle": "Conéctate en otros lugares",
+    "responseTime": "Normalmente respondo en 2–4 horas.",
     "nameLabel": "Tu Nombre",
     "namePlaceholder": "ej. Juan Pérez",
     "nameError": "El nombre debe tener al menos 2 caracteres.",

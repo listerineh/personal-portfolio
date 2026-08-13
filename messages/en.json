@@ -54,7 +54,22 @@
     "title": "Technologies I Work With",
     "badge": "Tech Stack",
     "description": "Proficient with a diverse range of modern development tools and frameworks, always keen to explore emerging technologies.",
-    "watermark": "STACK"
+    "watermark": "STACK",
+    "viewAll": "View All Skills",
+    "pageTitle": "My Full Tech Stack",
+    "pageDescription": "A categorized breakdown of the languages, frameworks, and tools I use to design, build, and ship software.",
+    "categories": {
+      "languages": "Languages",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "mobile": "Mobile",
+      "database": "Database",
+      "ai": "AI & Machine Learning",
+      "devops": "Cloud & DevOps",
+      "testing": "Testing & QA",
+      "tools": "Tools & Design",
+      "management": "Management & Collaboration"
+    }
   },
   "projects": {
     "title": "Featured Projects",
@@ -145,6 +160,13 @@
     "title": "Get In Touch",
     "badge": "Contact",
     "description": "Have a project in mind, a question, or just want to say hi? Feel free to reach out!",
+    "viewAll": "Send a Message",
+    "watermark": "CONTACT",
+    "pageTitle": "Let's Build Something Together",
+    "pageDescription": "Have a project in mind, a question, or just want to say hi? Reach out through the form or find me on your favorite platform.",
+    "directEmailTitle": "Prefer email?",
+    "connectTitle": "Connect elsewhere",
+    "responseTime": "I typically respond within 2–4 hours.",
     "nameLabel": "Your Name",
     "namePlaceholder": "e.g. Jane Doe",
     "nameError": "Name must be at least 2 characters.",

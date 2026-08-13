@@ -325,7 +325,7 @@ export function AboutContent() {
             {t('ctaBody')}
           </p>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-            <Button variant="primary" accent="amber" size="lg" href="/#contact" className="w-full sm:w-auto justify-center rounded-2xl sm:rounded-full">
+            <Button variant="primary" accent="amber" size="lg" href="/contact" className="w-full sm:w-auto justify-center rounded-2xl sm:rounded-full">
               <Mail className="w-4 h-4" />
               {t('ctaPrimary')}
             </Button>
