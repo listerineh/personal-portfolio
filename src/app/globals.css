@@ -165,8 +165,8 @@
   }
 
   ::selection {
-    background-color: rgb(var(--accent));
-    color: rgb(var(--accent-foreground));
+    background-color: rgb(var(--primary));
+    color: rgb(var(--primary-foreground));
   }
 }
 
