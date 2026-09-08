@@ -1,11 +1,12 @@
 'use client';
 
-import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import { Fragment, useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
 import { BlogSearch } from '@/components/blog/blog-search';
+import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 import { Title, Text, BlogCard, EndOfList } from '@/components/ds';
 import type { BlogPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
@@ -194,24 +195,30 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
               {displayedPosts.map((post, index) => (
-                <div
-                  key={post.slug}
-                  ref={(el) => { cardsRef.current[index] = el; }}
-                  className="mt-5"
-                >
-                  <BlogCard
-                    title={post.title}
-                    slug={post.slug}
-                    excerpt={post.excerpt}
-                    date={post.date}
-                    tags={post.tags}
-                    coverImage={post.imageUrl}
-                    readMoreLabel={tCommon('readMore')}
-                    newLabel={t('new')}
-                    isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
-                    recommendedLabel={t('sortRecommended')}
-                  />
-                </div>
+                <Fragment key={post.slug}>
+                  <div
+                    ref={(el) => { cardsRef.current[index] = el; }}
+                    className="mt-5"
+                  >
+                    <BlogCard
+                      title={post.title}
+                      slug={post.slug}
+                      excerpt={post.excerpt}
+                      date={post.date}
+                      tags={post.tags}
+                      coverImage={post.imageUrl}
+                      readMoreLabel={tCommon('readMore')}
+                      newLabel={t('new')}
+                      isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
+                      recommendedLabel={t('sortRecommended')}
+                    />
+                  </div>
+                  {(index + 1) % 5 === 0 && (
+                    <div className="col-span-1 md:col-span-2">
+                      <NewsletterSubscribe variant="default" />
+                    </div>
+                  )}
+                </Fragment>
               ))}
               {isLoadingMore && Array.from({ length: skeletonCount }).map((_, i) => (
                 <div key={`skel-${i}`} className="rounded-2xl border border-foreground/[0.07] overflow-hidden animate-pulse">
