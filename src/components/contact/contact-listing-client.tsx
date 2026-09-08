@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { z } from 'zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2, Mail, Clock, ArrowRight } from 'lucide-react';
+import { Loader2, Mail, Check, ArrowUpRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { submitContactForm } from '@/lib/actions';
@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useGSAP } from '@/hooks/use-gsap';
 import { socialLinks } from '@/lib/data';
 import type { ContactFormData } from '@/types';
-import { SectionLabel, Title, Text, Input, Textarea, FormField, Button, AccentCard } from '@/components/ds';
+import { Title, Input, Textarea, FormField, Button } from '@/components/ds';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 
@@ -33,10 +33,6 @@ export function ContactListingClient() {
     message: z.string().min(10, { message: t('messageError') }),
   });
 
-  const infoRef = useRef<HTMLDivElement>(null);
-  const formCardRef = useRef<HTMLDivElement>(null);
-  const fieldsRef = useRef<(HTMLDivElement | null)[]>([]);
-
   const {
     register,
     handleSubmit,
@@ -46,33 +42,46 @@ export function ContactListingClient() {
     resolver: zodResolver(contactFormSchema),
   });
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-  }, []);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const fieldsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
-    [infoRef.current, formCardRef.current].forEach((el, index) => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    [headerRef.current, infoRef.current, formRef.current].forEach((el, index) => {
       if (el) {
-        gsap.from(el, {
-          opacity: 0,
-          y: 24,
-          duration: 0.5,
-          delay: index * 0.1,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' },
-        });
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.1,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' },
+          }
+        );
       }
     });
 
     fieldsRef.current.forEach((field, index) => {
       if (field) {
-        gsap.from(field, {
-          opacity: 0,
-          duration: 0.4,
-          delay: 0.2 + index * 0.08,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: field, start: 'top 90%', toggleActions: 'play none none none' },
-        });
+        gsap.fromTo(
+          field,
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            delay: 0.25 + index * 0.08,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: field, start: 'top 92%', toggleActions: 'play none none none' },
+          }
+        );
       }
     });
   }, []);
@@ -106,72 +115,85 @@ export function ContactListingClient() {
   };
 
   const emailLink = socialLinks.find((link) => link.name === 'Email');
+  const otherLinks = socialLinks.filter((link) => link.name !== 'Email');
+  const collaborationItems = t.raw('collaborationItems') as string[];
 
   return (
     <>
       <Header />
       <main className="min-h-screen bg-background">
         <section className="relative py-20 md:py-32 overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to bottom, transparent, rgba(245,158,11,0.03), transparent)' }} />
-          <div
-            className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
-            style={{ top: '4%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-          >
-            {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.04] to-amber-950/0 pointer-events-none" />
 
-          <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-            <div className="mb-16 text-center">
-              <SectionLabel accent="amber" className="mb-6 reveal-up">{t('badge')}</SectionLabel>
-              <Title as="h1" animate className="mb-4" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
+            {/* Header */}
+            <div ref={headerRef} style={{ opacity: 0 }} className="mb-16 md:mb-20 max-w-3xl">
+              <Title as="h1" className="text-display-sm mb-5">
                 {t('pageTitle')}
               </Title>
-              <Text size="base" strength="secondary" animate className="max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl text-foreground/60 leading-relaxed">
                 {t('pageDescription')}
-              </Text>
+              </p>
             </div>
 
-            <div className="grid md:grid-cols-[1fr_1.3fr] gap-8 md:gap-12 items-start">
+            <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-start">
               {/* Left: contact info */}
-              <div ref={infoRef} className="space-y-6">
+              <div ref={infoRef} style={{ opacity: 0 }} className="space-y-12">
+                {/* Email */}
                 {emailLink && (
-                  <AccentCard accent="amber" className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Mail className="w-4 h-4 text-primary" />
-                      <span className="font-headline text-[10px] tracking-[0.25em] uppercase text-primary">
-                        {t('directEmailTitle')}
-                      </span>
-                    </div>
+                  <div>
+                    <span className="text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary/70 mb-3 block">
+                      {t('directEmailTitle')}
+                    </span>
                     <a
                       href={emailLink.url}
-                      className="inline-flex items-center gap-2 font-headline font-bold text-foreground hover:text-primary transition-colors mb-4"
-                      style={{ fontSize: 'clamp(0.95rem, 2vw, 1.05rem)' }}
+                      className="group inline-flex items-center gap-2 font-headline font-bold text-2xl md:text-3xl text-foreground hover:text-primary transition-colors break-all"
                     >
                       {t('directEmailAction')}
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowUpRight className="w-6 h-6 opacity-30 group-hover:opacity-100 transition-opacity shrink-0" />
                     </a>
-                    <div className="flex items-center gap-2 pt-4 border-t border-primary/15">
-                      <Clock className="w-3.5 h-3.5 text-foreground/35 shrink-0" />
-                      <span className="text-xs text-foreground/45">{t('responseTime')}</span>
-                    </div>
-                  </AccentCard>
+                    <p className="mt-3 text-sm text-foreground/50 leading-relaxed max-w-md">
+                      {t('note')}
+                    </p>
+                    <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-headline font-semibold uppercase tracking-wide text-foreground/40">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      {t('responseTime')}
+                    </p>
+                  </div>
                 )}
 
-                <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.02] p-6">
-                  <p className="font-headline text-[10px] tracking-[0.25em] uppercase text-foreground/35 mb-4">
+                {/* Collaboration */}
+                <div className="border-l-2 border-primary/20 pl-5 py-1">
+                  <span className="text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary/70 mb-3 block">
+                    {t('collaborationTitle')}
+                  </span>
+                  <ul className="space-y-2.5">
+                    {collaborationItems.map((item) => (
+                      <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/70">
+                        <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Social links */}
+                <div>
+                  <span className="text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary/70 mb-4 block">
                     {t('connectTitle')}
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    {socialLinks.filter((link) => link.name !== 'Email').map((link) => (
+                  </span>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {otherLinks.map((link) => (
                       <a
                         key={link.name}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                        className="p-3 rounded-xl border border-foreground/10 text-foreground/50 hover:text-primary hover:border-primary/30 transition-colors duration-200"
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl border border-foreground/[0.08] bg-card/30 text-foreground/70 hover:text-primary hover:border-primary/25 hover:bg-primary/[0.02] transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97]"
                       >
                         <link.icon className="w-4 h-4" />
+                        <span className="text-sm font-medium">{link.name}</span>
                       </a>
                     ))}
                   </div>
@@ -179,9 +201,18 @@ export function ContactListingClient() {
               </div>
 
               {/* Right: form */}
-              <div ref={formCardRef} className="rounded-2xl border border-foreground/10 bg-foreground/[0.02] p-6 md:p-8">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                  <div ref={(el) => { fieldsRef.current[0] = el; }}>
+              <div ref={formRef} style={{ opacity: 0 }} className="rounded-2xl border border-foreground/[0.08] bg-card/40 p-6 md:p-8">
+                <div ref={(el) => { fieldsRef.current[0] = el; }}>
+                  <h2 className="font-headline font-bold text-foreground text-xl mb-2">
+                    {t('formTitle')}
+                  </h2>
+                  <p className="text-sm text-foreground/55 mb-8">
+                    {t('formIntro')}
+                  </p>
+                </div>
+
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <div ref={(el) => { fieldsRef.current[1] = el; }} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField label={t('nameLabel')} error={errors.name?.message} required>
                       <Input
                         id="name"
@@ -193,9 +224,6 @@ export function ContactListingClient() {
                         {...register('name')}
                       />
                     </FormField>
-                  </div>
-
-                  <div ref={(el) => { fieldsRef.current[1] = el; }}>
                     <FormField label={t('emailLabel')} error={errors.email?.message} required>
                       <Input
                         id="email"
@@ -223,20 +251,22 @@ export function ContactListingClient() {
                     </FormField>
                   </div>
 
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    accent="amber"
-                    size="lg"
-                    disabled={isSubmitting}
-                    className="w-full justify-center"
-                  >
-                    {isSubmitting ? (
-                      <><Loader2 className="w-4 h-4 animate-spin" />{t('submittingButton')}</>
-                    ) : (
-                      <><Mail className="w-4 h-4" />{t('submitButton')}</>
-                    )}
-                  </Button>
+                  <div ref={(el) => { fieldsRef.current[3] = el; }}>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      accent="amber"
+                      size="lg"
+                      disabled={isSubmitting}
+                      className="w-full justify-center"
+                    >
+                      {isSubmitting ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" />{t('submittingButton')}</>
+                      ) : (
+                        <><Mail className="w-4 h-4" />{t('submitButton')}</>
+                      )}
+                    </Button>
+                  </div>
                 </form>
               </div>
             </div>

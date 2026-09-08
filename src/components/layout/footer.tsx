@@ -3,14 +3,13 @@
 import { Fragment, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { socialLinks } from '@/lib/data';
 import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
-import { Pill } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -22,7 +21,7 @@ export function Footer() {
   const tCommon = useTranslations('common');
   const currentYear = new Date().getFullYear();
   const footerRef = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
+  const footerBgRef = useRef<HTMLDivElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const socialIconsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const copyrightRef = useRef<HTMLDivElement>(null);
@@ -51,8 +50,8 @@ export function Footer() {
       });
 
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!prefersReducedMotion && bgRef.current) {
-        gsap.fromTo(bgRef.current,
+      if (!prefersReducedMotion && footerBgRef.current) {
+        gsap.fromTo(footerBgRef.current,
           { yPercent: -12 },
           {
             yPercent: 12,
@@ -116,86 +115,107 @@ export function Footer() {
         }
       });
     };
-  }, [pathname]);
+  }, [pathname, footerRef, footerBgRef, navLinksRef, socialIconsRef, copyrightRef]);
 
   useEffect(() => {
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    if (isTouchDevice) return;
+    const controllers: (() => void)[] = [];
 
-    socialIconsRef.current.forEach((icon) => {
-      if (!icon) return;
+    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+      socialIconsRef.current.forEach((icon) => {
+        if (!icon) return;
 
-      const handleMouseEnter = () => {
-        gsap.to(icon, {
-          y: -4,
-          scale: 1.08,
-          duration: 0.25,
-          ease: 'power2.out',
-          overwrite: 'auto',
+        const handleMouseEnter = () => {
+          gsap.to(icon, {
+            y: -4,
+            scale: 1.08,
+            duration: 0.25,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        const handleMouseLeave = () => {
+          gsap.to(icon, {
+            y: 0,
+            scale: 1,
+            duration: 0.2,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        icon.addEventListener('mouseenter', handleMouseEnter);
+        icon.addEventListener('mouseleave', handleMouseLeave);
+
+        controllers.push(() => {
+          icon.removeEventListener('mouseenter', handleMouseEnter);
+          icon.removeEventListener('mouseleave', handleMouseLeave);
         });
-      };
+      });
+    }
 
-      const handleMouseLeave = () => {
-        gsap.to(icon, {
-          y: 0,
-          scale: 1,
-          duration: 0.2,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
-      };
-
-      icon.addEventListener('mouseenter', handleMouseEnter);
-      icon.addEventListener('mouseleave', handleMouseLeave);
-    });
-  }, []);
+    return () => {
+      controllers.forEach((cleanup) => cleanup());
+    };
+  }, [socialIconsRef]);
 
   useEffect(() => {
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    if (isTouchDevice) return;
+    const controllers: (() => void)[] = [];
 
-    navLinksRef.current.forEach((link) => {
-      if (!link) return;
+    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+      navLinksRef.current.forEach((link) => {
+        if (!link) return;
 
-      const handleMouseEnter = () => {
-        gsap.to(link, {
-          y: -2,
-          duration: 0.2,
-          ease: 'power2.out',
-          overwrite: 'auto',
+        const handleMouseEnter = () => {
+          gsap.to(link, {
+            y: -2,
+            duration: 0.2,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        const handleMouseLeave = () => {
+          gsap.to(link, {
+            y: 0,
+            duration: 0.2,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        link.addEventListener('mouseenter', handleMouseEnter);
+        link.addEventListener('mouseleave', handleMouseLeave);
+
+        controllers.push(() => {
+          link.removeEventListener('mouseenter', handleMouseEnter);
+          link.removeEventListener('mouseleave', handleMouseLeave);
         });
-      };
+      });
+    }
 
-      const handleMouseLeave = () => {
-        gsap.to(link, {
-          y: 0,
-          duration: 0.2,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
-      };
-
-      link.addEventListener('mouseenter', handleMouseEnter);
-      link.addEventListener('mouseleave', handleMouseLeave);
-    });
-  }, []);
+    return () => {
+      controllers.forEach((cleanup) => cleanup());
+    };
+  }, [navLinksRef]);
 
   return (
-    <footer ref={footerRef} className="relative overflow-hidden" style={{ background: '#080808' }}>
+    <footer ref={footerRef} className="relative overflow-hidden bg-[var(--surface-deep)]">
 
-      {/* Parallax photo background */}
-      <div ref={bgRef} className="absolute inset-0 scale-[1.25] origin-center pointer-events-none">
+      {/* Parallax background image */}
+      <div ref={footerBgRef} className="absolute inset-0 scale-[1.25] origin-center">
         <Image
-          src="/images/footer-photo.webp"
+          src="/images/footer.webp"
           alt=""
           fill
-          className="object-cover object-center"
           sizes="100vw"
+          className="object-cover object-center"
+          priority={false}
         />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(8,8,8,0.72) 0%, rgba(8,8,8,0.55) 40%, rgba(8,8,8,0.88) 100%)' }} />
       </div>
-      {/* Extra darkening overlay — static, outside parallax */}
-      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+
+      {/* Overlays: darken the middle so copy remains readable, fade to surface at edges */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-deep)] via-black/40 to-[var(--surface-deep)]" />
 
       {/* Newsletter section */}
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 pt-28 md:pt-36 pb-20 md:pb-24">
@@ -203,33 +223,15 @@ export function Footer() {
           <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
 
             {/* Left — copy */}
-            <div className="space-y-6 text-center md:text-left">
-              <Pill variant="outline" accent="amber" className="inline-flex">{tNewsletter('badge')}</Pill>
+            <div className="space-y-5 text-center md:text-left">
               <h2
-                className="font-headline font-black leading-[0.9] text-transparent bg-clip-text"
-                style={{
-                  fontSize: 'clamp(2.4rem, 6vw, 5rem)',
-                  backgroundImage: 'linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-light)), rgb(var(--primary)))',
-                }}
+                className="font-headline font-black leading-[0.9] text-white text-display-sm"
               >
-                {tNewsletter('title')}{' '}
-                <span className="text-primary/60">{tNewsletter('titleGradient')}</span>
+                {tNewsletter('title')}
               </h2>
-              <p className="text-white/45 leading-relaxed max-w-sm mx-auto md:mx-0" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)' }}>
+              <p className="text-white/45 leading-relaxed max-w-sm mx-auto md:mx-0 text-sm">
                 {tNewsletter('description')}
               </p>
-              <div className="flex justify-center md:justify-start gap-8 pt-2">
-                {[
-                  { label: tNewsletter('monthlyLabel'), sub: tNewsletter('monthlyValue') },
-                  { label: tNewsletter('spamLabel'), sub: tNewsletter('spamValue') },
-                  { label: tNewsletter('freeLabel'), sub: tNewsletter('freeValue') },
-                ].map(({ label, sub }) => (
-                  <div key={label}>
-                    <div className="font-headline font-black text-2xl text-primary">{label}</div>
-                    <div className="text-[10px] text-white/30 uppercase tracking-[0.2em] mt-1">{sub}</div>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* Right — form */}

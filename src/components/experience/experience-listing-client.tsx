@@ -8,7 +8,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@/hooks/use-gsap';
 import type { Experience } from '@/types';
-import { SectionLabel, Title, Text } from '@/components/ds';
+import { Title, Text, EndOfList } from '@/components/ds';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 
@@ -22,6 +22,7 @@ interface ExperienceListingClientProps {
 
 export function ExperienceListingClient({ experiences }: ExperienceListingClientProps) {
   const t = useTranslations('experience');
+  const tCommon = useTranslations('common');
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
@@ -45,17 +46,10 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
       <main className="min-h-screen bg-background">
         <section className="relative py-20 md:py-32 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.04] to-amber-950/0 pointer-events-none" />
-          <div
-            className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
-            style={{ top: '4%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-          >
-            {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
-          </div>
 
           <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
             <div className="mb-16 text-center">
-              <SectionLabel accent="amber" className="mb-6 reveal-up">{t('badge')}</SectionLabel>
-              <Title as="h1" animate className="mb-4" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+              <Title as="h1" animate className="mb-4 text-display-sm">
                 {t('pageTitle')}
               </Title>
               <Text size="base" strength="secondary" animate className="max-w-2xl mx-auto">
@@ -64,8 +58,9 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
             </div>
 
             {experiences.length > 0 ? (
-              <div className="divide-y divide-foreground/10">
-                {experiences.map((exp, index) => (
+              <>
+                <div className="divide-y divide-foreground/10">
+                  {experiences.map((exp, index) => (
                   <div
                     key={index}
                     ref={(el) => { itemsRef.current[index] = el; }}
@@ -73,7 +68,7 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
                   >
                     {/* Dates & location */}
                     <div className="flex flex-row md:flex-col flex-wrap items-center md:items-start gap-x-4 gap-y-1.5">
-                      <span className="inline-flex items-center gap-1.5 font-headline text-[11px] font-bold tracking-[0.15em] uppercase" style={{ color: '#f59e0b' }}>
+                      <span className="inline-flex items-center gap-1.5 font-headline text-[11px] font-bold tracking-[0.15em] uppercase text-amber-400">
                         <Calendar className="w-3 h-3 shrink-0" />
                         {exp.employmentDates}
                       </span>
@@ -90,20 +85,19 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
                       <div className="flex items-center gap-4 mb-5">
                         <div className="shrink-0">
                           {exp.logoUrl ? (
-                            <div className="w-12 h-12 rounded-full overflow-hidden relative" style={{ border: '1px solid rgba(245,158,11,0.2)' }}>
-                              <Image src={exp.logoUrl} alt={`${exp.company} logo`} fill className="object-cover" />
+                            <div className="w-12 h-12 rounded-full overflow-hidden relative border border-primary/20">
+                              <Image src={exp.logoUrl} alt={`${exp.company} logo`} fill sizes="48px" className="object-cover" />
                             </div>
                           ) : (
                             <div
-                              className="w-12 h-12 rounded-full flex items-center justify-center"
-                              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}
+                              className="w-12 h-12 rounded-full flex items-center justify-center bg-primary/[0.08] border border-primary/20"
                             >
                               <Briefcase className="w-5 h-5 text-foreground/40" />
                             </div>
                           )}
                         </div>
                         <div className="min-w-0">
-                          <h3 className="font-headline font-bold text-foreground leading-tight" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)' }}>
+                          <h3 className="font-headline font-bold text-foreground leading-tight text-headline">
                             {exp.jobTitle}
                           </h3>
                           <p className="text-sm font-semibold text-foreground/50 mt-0.5">{exp.company}</p>
@@ -114,8 +108,7 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
                         {exp.responsibilities.map((item, i) => (
                           <li key={i} className="flex items-start gap-3">
                             <span
-                              className="mt-2 shrink-0 w-1 h-1 rounded-full"
-                              style={{ background: 'rgba(245,158,11,0.5)' }}
+                              className="mt-2 shrink-0 w-1 h-1 rounded-full bg-primary/50"
                             />
                             <p className="text-sm text-foreground/65 leading-relaxed">{item}</p>
                           </li>
@@ -124,10 +117,12 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
                     </div>
                   </div>
                 ))}
-              </div>
+                </div>
+                <EndOfList>{tCommon('endOfList')}</EndOfList>
+              </>
             ) : (
               <div className="text-center py-20">
-                <p className="text-foreground/50 text-lg">No experience found.</p>
+                <p className="text-foreground/50 text-lg">{t('noResults')}</p>
               </div>
             )}
           </div>

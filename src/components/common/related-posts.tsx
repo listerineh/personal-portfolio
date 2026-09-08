@@ -22,7 +22,7 @@ export function RelatedPosts({ currentSlug, limit = 3 }: RelatedPostsProps) {
 
   return (
     <section className="mt-16 pt-8 border-t border-foreground/[0.06]">
-      <h3 className="font-headline font-black text-foreground mb-8" style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.75rem)' }}>
+      <h3 className="font-headline font-black text-foreground mb-8 text-headline">
         {t('relatedArticles')}
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -30,13 +30,7 @@ export function RelatedPosts({ currentSlug, limit = 3 }: RelatedPostsProps) {
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="group flex flex-col gap-3 p-5 rounded-2xl transition-colors duration-200"
-            style={{
-              border: '1px solid var(--primary-border)',
-              background: 'var(--primary-bg)',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--primary-bg-hover)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--primary-bg)'; }}
+            className="group flex flex-col gap-3 p-5 rounded-2xl transition-colors duration-200 border border-primary/[0.25] bg-primary/[0.08] hover:bg-primary/[0.13]"
           >
             <h4 className="font-headline font-bold text-sm leading-snug text-foreground line-clamp-3">
               {post.title}
@@ -45,10 +39,9 @@ export function RelatedPosts({ currentSlug, limit = 3 }: RelatedPostsProps) {
               {post.excerpt}
             </p>
             <div
-              className="flex items-center gap-1 text-xs font-headline font-semibold tracking-wide group-hover:gap-2 transition-all"
-              style={{ color: 'rgb(var(--primary))' }}
+              className="flex items-center gap-1 text-xs font-headline font-semibold tracking-wide group-hover:gap-2 transition-[gap] text-primary"
             >
-              {t('readMore')} <ArrowRight className="h-3.5 w-3.5" />
+              {t('readMore')} <ArrowRight className="h-3.5 w-3.5 transition-transform" />
             </div>
           </Link>
         ))}

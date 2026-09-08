@@ -3,11 +3,19 @@
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { useState, useEffect } from 'react';
 
 export default function TermsPage() {
   const t = useTranslations('terms');
-  
+  const tCommon = useTranslations('common');
+  const locale = useLocale();
+  const [lastUpdated, setLastUpdated] = useState('');
+
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric' }));
+  }, [locale]);
+
   return (
     <>
       <Header />
@@ -16,17 +24,16 @@ export default function TermsPage() {
         <div className="pt-36 pb-20 px-6 sm:px-10 md:px-16 lg:px-24 border-b border-foreground/[0.06]">
           <div className="max-w-4xl mx-auto">
             <Link href="/" className="inline-flex items-center gap-2 text-[11px] font-headline tracking-[0.2em] uppercase text-foreground/35 hover:text-primary transition-colors mb-10">
-              ← Back
+              ← {tCommon('back')}
             </Link>
-            <p className="text-[11px] font-headline tracking-[0.25em] uppercase text-primary/70 mb-4">Legal</p>
+            <p className="text-[11px] font-headline tracking-[0.25em] uppercase text-primary/70 mb-4">{tCommon('legal')}</p>
             <h1
-              className="font-headline font-black leading-[0.9] text-foreground mb-6"
-              style={{ fontSize: 'clamp(2.8rem, 7vw, 6rem)' }}
+              className="font-headline font-black leading-[0.9] text-foreground mb-6 text-display-sm"
             >
               {t('title')}
             </h1>
             <p className="text-foreground/40 text-sm font-headline tracking-wide">
-              {t('lastUpdated')} {new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
+              {t('lastUpdated')} {lastUpdated}
             </p>
           </div>
         </div>
@@ -47,14 +54,14 @@ export default function TermsPage() {
               [t('governingLawTitle'), t('governingLawText')],
             ].map(([title, content]) => (
               <section key={title}>
-                <h2 className="font-headline font-black text-primary mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>{title}</h2>
+                <h2 className="font-headline font-black text-primary mb-5 text-headline">{title}</h2>
                 <p className="text-foreground/55 leading-relaxed">{content}</p>
               </section>
             ))}
 
             {/* License with not-allowed list */}
             <section>
-              <h2 className="font-headline font-black text-primary mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+              <h2 className="font-headline font-black text-primary mb-5 text-headline">
                 {t('licenseTitle')}
               </h2>
               <p className="text-foreground/55 leading-relaxed mb-4">{t('licenseText')}</p>
@@ -68,7 +75,7 @@ export default function TermsPage() {
 
             {/* Blog content with callout box */}
             <section>
-              <h2 className="font-headline font-black text-primary mb-5" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+              <h2 className="font-headline font-black text-primary mb-5 text-headline">
                 {t('blogContentTitle')}
               </h2>
               <p className="text-foreground/55 leading-relaxed mb-4">{t('blogContentText')}</p>
@@ -82,21 +89,21 @@ export default function TermsPage() {
             <section className="rounded-xl border border-primary/15 bg-primary/[0.03] p-6">
               <p className="text-sm text-foreground/55 leading-relaxed">
                 <span className="font-semibold text-primary">{t('noteLabel')} </span>
-                {t('noteText', { privacyPolicy: 'Privacy Policy' }).split('Privacy Policy').map((part, i, arr) =>
-                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/privacy" className="text-primary hover:text-primary/80 underline underline-offset-2">Privacy Policy</Link></span> : part
-                )}
+                {t.rich('noteText', {
+                  privacyLink: (chunks) => <Link href="/privacy" className="text-primary hover:text-primary/80 underline underline-offset-2">{chunks}</Link>
+                })}
               </p>
             </section>
 
             {/* Contact */}
             <section className="rounded-xl border border-primary/15 bg-primary/[0.03] p-8">
-              <h2 className="font-headline font-black text-primary mb-4" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
+              <h2 className="font-headline font-black text-primary mb-4 text-headline">
                 {t('contactInfoTitle')}
               </h2>
               <p className="text-foreground/55 leading-relaxed">
-                {t('contactInfoText', { contactForm: 'contact form' }).split('contact form').map((part, i, arr) =>
-                  i < arr.length - 1 ? <span key={i}>{part}<Link href="/contact" className="text-primary hover:text-primary/80 underline underline-offset-2">contact form</Link></span> : part
-                )}
+                {t.rich('contactInfoText', {
+                  contactLink: (chunks) => <Link href="/contact" className="text-primary hover:text-primary/80 underline underline-offset-2">{chunks}</Link>
+                })}
               </p>
             </section>
           </div>

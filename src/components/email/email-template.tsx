@@ -98,7 +98,7 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
         <div style={{
           backgroundColor: 'rgba(255,255,255,0.02)',
           border: '1px solid rgba(255,255,255,0.06)',
-          borderLeft: '3px solid #f59e0b',
+          borderLeft: '1px solid rgba(245,158,11,0.4)',
           borderRadius: '8px',
           padding: '18px 20px',
         }}>

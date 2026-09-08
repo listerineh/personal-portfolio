@@ -16,15 +16,16 @@ export function BackToTopButton() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [hasReachedTop, setHasReachedTop] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const reducedMotionRef = useRef(false);
 
   const handleScroll = useCallback(rafThrottle(() => {
     const scrollY = window.scrollY;
-    
+
     if (scrollY < 100 && isAnimating) {
       setHasReachedTop(true);
       setIsAnimating(false);
     }
-    
+
     if (!isAnimating && hasReachedTop && scrollY > 800) {
       setIsVisible(true);
       setHasReachedTop(false);
@@ -41,7 +42,17 @@ export function BackToTopButton() {
   }, [handleScroll]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    reducedMotionRef.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, []);
+
+  useEffect(() => {
     if (!buttonRef.current || isAnimating) return;
+
+    if (reducedMotionRef.current) {
+      gsap.set(buttonRef.current, { scale: isVisible ? 1 : 0.9, opacity: isVisible ? 1 : 0, y: 0 });
+      return;
+    }
 
     if (isVisible) {
       gsap.to(buttonRef.current, {
@@ -53,11 +64,11 @@ export function BackToTopButton() {
       });
     } else {
       gsap.to(buttonRef.current, {
-        scale: 0,
+        scale: 0.9,
         opacity: 0,
         y: 0,
         duration: 0.2,
-        ease: 'power2.in',
+        ease: 'power2.out',
       });
     }
   }, [isVisible, isAnimating]);
@@ -68,8 +79,8 @@ export function BackToTopButton() {
     const button = buttonRef.current;
     const icon = button.querySelector('svg');
     const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    
-    if (isTouchDevice) return;
+
+    if (isTouchDevice || reducedMotionRef.current) return;
 
     const handleMouseEnter = () => {
       gsap.to(button, {
@@ -119,20 +130,25 @@ export function BackToTopButton() {
     setIsAnimating(true);
     setHasReachedTop(false);
 
-    gsap.to(buttonRef.current, {
-      y: -100,
-      scale: 0,
-      opacity: 0,
-      duration: 0.3,
-      ease: 'power2.in',
-      onComplete: () => {
-        if (buttonRef.current) {
-          gsap.set(buttonRef.current, { y: 0 });
+    if (!reducedMotionRef.current) {
+      gsap.to(buttonRef.current, {
+        y: -100,
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.out',
+        onComplete: () => {
+          if (buttonRef.current) {
+            gsap.set(buttonRef.current, { y: 0 });
+          }
         }
-      }
-    });
+      });
+    }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: 0,
+      behavior: reducedMotionRef.current ? 'instant' : 'smooth',
+    });
   };
 
   return (
@@ -140,8 +156,7 @@ export function BackToTopButton() {
       ref={buttonRef}
       onClick={scrollToTop}
       aria-label="Back to top"
-      className="fixed bottom-8 right-8 z-40 h-11 w-11 rounded-full shadow-xl flex items-center justify-center opacity-0 scale-0 font-bold border-0"
-      style={{ background: 'rgb(var(--primary))', color: 'rgb(var(--primary-foreground))' }}
+      className="fixed bottom-8 right-8 z-40 h-11 w-11 rounded-full shadow-xl flex items-center justify-center opacity-0 scale-90 font-bold border-0 bg-primary text-primary-foreground transition-transform duration-200 ease-out active:scale-[0.95]"
     >
       <ArrowUp className="h-5 w-5" />
     </button>

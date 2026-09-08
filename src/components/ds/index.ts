@@ -22,5 +22,6 @@ export { Modal, ModalTrigger, ModalContent, ModalHeader, ModalTitle, ModalDescri
 export { Switch } from './Switch'
 export { Dropdown, DropdownTrigger, DropdownContent, DropdownItem, DropdownCheckboxItem, DropdownLabel, DropdownSeparator } from './Dropdown'
 export { Toaster } from './Toaster'
+export { EndOfList } from './EndOfList'
 
 export type { Accent, TextStrength, TextSize, ButtonVariant, ButtonSize, TitleGradient, SectionAlign, InputSize, CardVariant } from './types'

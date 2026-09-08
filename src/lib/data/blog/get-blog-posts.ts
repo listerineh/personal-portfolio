@@ -1,5 +1,6 @@
 import type { BlogPost } from '@/types';
 import type { Locale } from '@/i18n/config';
+import { calculateReadingTime } from '@/lib/reading-time';
 import { firebaseVsSupabase } from './firebase-vs-supabase';
 import { pythonRenaissanceAiEra } from './python-renaissance-ai-era';
 import { adaptingToNewJobs } from './adapting-to-new-jobs';
@@ -54,7 +55,11 @@ const allBlogPosts = {
 };
 
 export function getBlogPosts(locale: Locale): BlogPost[] {
-  return allBlogPosts[locale] || allBlogPosts.en;
+  const posts = allBlogPosts[locale] || allBlogPosts.en;
+  return posts.map((post) => ({
+    ...post,
+    readingTime: post.readingTime ?? calculateReadingTime(post.content),
+  }));
 }
 
 export function getBlogPost(slug: string, locale: Locale): BlogPost | undefined {

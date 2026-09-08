@@ -55,14 +55,6 @@ export const Error: Story = {
   },
 };
 
-export const ForceDark: Story = {
-  args: {
-    accent: 'amber',
-    forceDark: true,
-    placeholder: 'Force dark mode input',
-  },
-};
-
 export const WithValue: Story = {
   args: {
     accent: 'amber',

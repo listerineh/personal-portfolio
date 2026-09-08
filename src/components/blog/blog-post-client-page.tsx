@@ -187,7 +187,7 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
       </aside>
       <main className="pt-20 bg-background">
         <div className="fixed top-20 left-0 right-0 h-0.5 z-50 bg-foreground/[0.06]">
-          <div className="h-full bg-primary transition-all duration-150" style={{ width: `${readingProgress}%` }} />
+          <div className="h-full bg-primary transition-[width] duration-150 ease-out" style={{ width: `${readingProgress}%` }} />
         </div>
         <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 py-12 md:py-16 xl:mr-[320px]">
           <div className="relative">

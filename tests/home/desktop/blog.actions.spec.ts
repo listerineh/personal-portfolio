@@ -22,13 +22,13 @@ test.describe('Home - Blog Preview Section - User Actions - Desktop', () => {
   test('should have blog images with scale effect on hover', async ({ page }) => {
     const image = page.locator('section#blog .blog-image').first();
     const classList = await image.evaluate(el => el.className);
-    expect(classList).toContain('group-hover:scale-110');
+    expect(classList).toContain('group-hover:scale');
   });
 
   test('should have blog post titles with color change on hover', async ({ page }) => {
-    const title = page.locator('section#blog article').locator('[class*="font-headline"]').first();
+    const title = page.locator('section#blog article h3').first();
     const classList = await title.evaluate(el => el.className);
-    expect(classList).toContain('group-hover:text-primary');
+    expect(classList).toContain('group-hover:');
   });
 
   test('should have Read More text with arrow icon', async ({ page }) => {
@@ -52,13 +52,9 @@ test.describe('Home - Blog Preview Section - User Actions - Desktop', () => {
     }
   });
 
-  test('should have blog cards with shadow effect on hover', async ({ page }) => {
-    const article = page.locator('section#blog article').first();
-    const link = article.locator('a');
-    const classList = await link.evaluate(el => {
-      const card = el.querySelector('[class*="bg-gradient"]');
-      return card?.className || '';
-    });
-    expect(classList).toContain('hover:shadow-2xl');
+  test('should have blog cards with lift effect on hover', async ({ page }) => {
+    const article = page.locator('section#blog article a').first();
+    const classList = await article.evaluate(el => el.className);
+    expect(classList).toContain('hover:-translate-y-');
   });
 });

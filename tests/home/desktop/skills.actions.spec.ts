@@ -16,7 +16,7 @@ test.describe('Home - Skills Section - User Actions - Desktop', () => {
   test('should have skill cards with hover border effect', async ({ page }) => {
     const skillCard = page.locator('section#skills .skill-card').first();
     const classList = await skillCard.evaluate(el => el.className);
-    expect(classList).toContain('hover:border-primary');
+    expect(classList).toContain('hover:border');
   });
 
   test('should have skill cards with cursor pointer', async ({ page }) => {
@@ -33,7 +33,7 @@ test.describe('Home - Skills Section - User Actions - Desktop', () => {
 
   test('should have marquee animation on row 1', async ({ page }) => {
     const row1 = page.locator('section#skills .marquee-row').first();
-    const transform = await row1.evaluate(el => 
+    const transform = await row1.evaluate(el =>
       window.getComputedStyle(el).transform
     );
     expect(transform).toBeTruthy();
@@ -41,7 +41,7 @@ test.describe('Home - Skills Section - User Actions - Desktop', () => {
 
   test('should have marquee animation on row 2', async ({ page }) => {
     const row2 = page.locator('section#skills .marquee-row').nth(1);
-    const transform = await row2.evaluate(el => 
+    const transform = await row2.evaluate(el =>
       window.getComputedStyle(el).transform
     );
     expect(transform).toBeTruthy();

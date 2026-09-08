@@ -9,7 +9,7 @@ import { experiencesData } from '@/lib/data';
 import { getLocalizedData } from '@/lib/i18n-data';
 import { useLocale } from '@/context/locale-context';
 import { useGSAP } from '@/hooks/use-gsap';
-import { SectionLabel, Title, ExperienceCard, Button } from '@/components/ds';
+import { Title, ExperienceCard, Button } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -42,39 +42,58 @@ export function ExperienceSection() {
   return (
     <section id="experience" className="relative py-28 md:py-44 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <SectionLabel accent="amber" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
-        <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
-          {t('title')}
-        </Title>
-
-        <div className="space-y-6">
-          {visible.map((exp, index) => (
-            <div
-              key={index}
-              ref={(el) => { itemsRef.current[index] = el; }}
-            >
-              <ExperienceCard
-                jobTitle={exp.jobTitle}
-                company={exp.company}
-                employmentDates={exp.employmentDates}
-                location={exp.location}
-                logoUrl={exp.logoUrl}
-                responsibilities={exp.responsibilities}
-                showMoreLabel={tCommon('seeMore')}
-                showLessLabel={tCommon('showLess')}
-              />
-            </div>
-          ))}
-        </div>
-
-        {experiences.length > 3 && (
-          <div className="flex justify-start mt-12 reveal-up">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+          <Title as="h2" animate className="text-display-sm">
+            {t('title')}
+          </Title>
+          {experiences.length > 3 && (
             <Button
               href="/experience"
               variant="ghost"
               accent="neutral"
               size="md"
-              className="w-full md:w-auto rounded-2xl md:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
+              className="shrink-0 rounded-full border border-foreground/15 hover:border-foreground/30 hidden md:inline-flex"
+            >
+              {t('viewAll')}
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
+
+        {/* Timeline list */}
+        <div className="relative">
+          <div className="absolute left-[5px] top-3 bottom-3 w-px bg-foreground/10" />
+          <div className="space-y-0 divide-y divide-foreground/[0.08]">
+            {visible.map((exp, index) => (
+              <div
+                key={index}
+                className="relative pl-8 md:pl-12 py-10"
+                ref={(el) => { itemsRef.current[index] = el; }}
+              >
+                <div className="absolute left-[5px] top-14 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-primary" />
+                <ExperienceCard
+                  jobTitle={exp.jobTitle}
+                  company={exp.company}
+                  employmentDates={exp.employmentDates}
+                  location={exp.location}
+                  logoUrl={exp.logoUrl}
+                  responsibilities={exp.responsibilities}
+                  showMoreLabel={tCommon('seeMore')}
+                  showLessLabel={tCommon('showLess')}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {experiences.length > 3 && (
+          <div className="flex justify-start mt-10 md:hidden">
+            <Button
+              href="/experience"
+              variant="ghost"
+              accent="neutral"
+              size="md"
+              className="w-full rounded-2xl justify-center border border-foreground/15 hover:border-foreground/30"
             >
               {t('viewAll')}
               <ArrowRight className="w-4 h-4" />
@@ -83,13 +102,7 @@ export function ExperienceSection() {
         )}
       </div>
 
-      {/* Watermark */}
-      <div
-        className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
-        style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-      >
-        {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
-      </div>
+
     </section>
   );
 }

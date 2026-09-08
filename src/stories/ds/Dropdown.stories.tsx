@@ -98,13 +98,13 @@ export const WithCustomHover: Story = {
           <Button>Custom Hover</Button>
         </DropdownTrigger>
         <DropdownContent>
-          <DropdownItem onClick={() => console.log('Item 1')} hoverColor="rgba(245,158,11,0.1)">
+          <DropdownItem onClick={() => console.log('Item 1')}>
             Amber hover
           </DropdownItem>
-          <DropdownItem onClick={() => console.log('Item 2')} hoverColor="rgba(129,140,248,0.1)">
+          <DropdownItem onClick={() => console.log('Item 2')}>
             Indigo hover
           </DropdownItem>
-          <DropdownItem onClick={() => console.log('Item 3')} hoverColor="rgba(29,185,84,0.1)">
+          <DropdownItem onClick={() => console.log('Item 3')}>
             Green hover
           </DropdownItem>
         </DropdownContent>

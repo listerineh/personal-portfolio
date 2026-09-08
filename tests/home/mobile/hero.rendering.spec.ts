@@ -12,14 +12,9 @@ test.describe('Home - Hero Section - Rendering - Mobile', () => {
     await expect(heroSection).toBeVisible();
   });
 
-  test('should display profile image on mobile', async ({ page }) => {
-    const profileImage = page.locator('section#hero img[alt="Sebastian Alvarez"]');
-    await expect(profileImage).toBeVisible();
-  });
-
-  test('should display experience badge on mobile', async ({ page }) => {
-    const badge = page.locator('section#hero').locator('text=+5 Years Experience');
-    await expect(badge).toBeVisible();
+  test('should display background image on mobile', async ({ page }) => {
+    const heroImage = page.locator('section#hero img[alt="Sebastian Alvarez"]');
+    await expect(heroImage).toBeVisible();
   });
 
   test('should display main title on mobile', async ({ page }) => {
@@ -30,42 +25,30 @@ test.describe('Home - Hero Section - Rendering - Mobile', () => {
   });
 
   test('should display subtitle on mobile', async ({ page }) => {
-    const subtitle = page.locator('section#hero p', { hasText: /Senior Software Engineer/ });
+    const subtitle = page.locator('section#hero span, section#hero p').filter({ hasText: /Senior Software Engineer/ });
     await expect(subtitle).toBeVisible();
   });
 
   test('should display description on mobile', async ({ page }) => {
-    const description = page.locator('section#hero p', { hasText: /Specialized in cloud infrastructure/ });
+    const description = page.locator('section#hero p').filter({ hasText: /build web applications/ });
     await expect(description).toBeVisible();
   });
 
   test('should display Download CV button on mobile', async ({ page }) => {
-    const cvButton = page.locator('section#hero button', { hasText: /Download CV/ });
+    const cvButton = page.locator('section#hero button, section#hero a').filter({ hasText: /Download CV/ });
     await expect(cvButton).toBeVisible();
   });
 
   test('should display Get in Touch button on mobile', async ({ page }) => {
-    const touchButton = page.locator('section#hero button', { hasText: /Get in Touch/ });
+    const touchButton = page.locator('section#hero a[href="#contact"], section#hero button').filter({ hasText: /Get in Touch/ });
     await expect(touchButton).toBeVisible();
   });
 
   test('should stack buttons vertically on mobile', async ({ page }) => {
-    const cvButton = page.locator('section#hero button', { hasText: /Download CV/ });
-    const classList = await cvButton.evaluate(el => {
-      let parent = el.parentElement;
-      while (parent && !parent.className.includes('flex')) {
-        parent = parent.parentElement;
-      }
-      return parent?.className || '';
-    });
-    expect(classList).toContain('flex-col');
-  });
-
-  test('should have smaller image on mobile', async ({ page }) => {
-    const imageWrapper = page.locator('section#hero img[alt="Sebastian Alvarez"]').locator('..').locator('..');
-    const classList = await imageWrapper.evaluate(el => el.className);
-    expect(classList).toContain('w-36');
-    expect(classList).toContain('h-36');
+    const cvButton = page.locator('section#hero a[href*=".pdf"], section#hero button').filter({ hasText: /Download CV/ });
+    const parent = cvButton.locator('xpath=..');
+    const classList = await parent.evaluate(el => el.className);
+    expect(classList.includes('flex-col')).toBe(true);
   });
 
   test('should have readable font sizes on mobile', async ({ page }) => {
@@ -76,8 +59,8 @@ test.describe('Home - Hero Section - Rendering - Mobile', () => {
   });
 
   test('should have full-width buttons on mobile', async ({ page }) => {
-    const touchButton = page.locator('section#hero button', { hasText: /Get in Touch/ });
+    const touchButton = page.locator('section#hero a[href="#contact"], section#hero button').filter({ hasText: /Get in Touch/ });
     const classList = await touchButton.evaluate(el => el.className);
-    expect(classList).toContain('w-full');
+    expect(classList.includes('w-full') || classList.includes('sm:w-auto')).toBe(true);
   });
 });

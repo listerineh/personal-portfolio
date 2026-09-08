@@ -2,12 +2,12 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import { Mail, MapPin, Server, Monitor, Cloud, Sparkles } from 'lucide-react';
+import { Mail, MapPin, Server, Monitor, Cloud, Sparkles, Quote } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@/hooks/use-gsap';
-import { SectionLabel, Title, Text, Button, BrandLink, AccentCard } from '@/components/ds';
+import { Title, Text, Button } from '@/components/ds';
 import { communityLinks } from '@/lib/data';
 import Link from 'next/link';
 
@@ -46,16 +46,16 @@ export function AboutContent() {
   }, []);
 
   const phases = [
-    { label: t('phase1Label'), title: t('phase1Title'), body: t('phase1Body') },
-    { label: t('phase2Label'), title: t('phase2Title'), body: t('phase2Body') },
-    { label: t('phase3Label'), title: t('phase3Title'), body: t('phase3Body') },
+    { id: 'phase1', label: t('phase1Label'), title: t('phase1Title'), body: t('phase1Body') },
+    { id: 'phase2', label: t('phase2Label'), title: t('phase2Title'), body: t('phase2Body') },
+    { id: 'phase3', label: t('phase3Label'), title: t('phase3Title'), body: t('phase3Body') },
   ];
 
   const expertise = [
-    { Icon: Server,   title: t('expertise1Title'), body: t('expertise1Body') },
-    { Icon: Monitor,  title: t('expertise2Title'), body: t('expertise2Body') },
-    { Icon: Cloud,    title: t('expertise3Title'), body: t('expertise3Body') },
-    { Icon: Sparkles, title: t('expertise4Title'), body: t('expertise4Body') },
+    { id: 'backend',   Icon: Server,   title: t('expertise1Title'), body: t('expertise1Body') },
+    { id: 'frontend',  Icon: Monitor,  title: t('expertise2Title'), body: t('expertise2Body') },
+    { id: 'cloud',     Icon: Cloud,    title: t('expertise3Title'), body: t('expertise3Body') },
+    { id: 'ai',        Icon: Sparkles, title: t('expertise4Title'), body: t('expertise4Body') },
   ];
 
   const stats = [
@@ -69,22 +69,13 @@ export function AboutContent() {
       {/* ── HERO ──────────────────────────────────────────────────────── */}
       <section className="pt-32 pb-20 md:pt-44 md:pb-28 px-6 sm:px-10 md:px-16 lg:px-24">
         <div ref={heroRef} className="max-w-5xl mx-auto">
-          <div className="hero-item mb-5">
-            <SectionLabel accent="amber">{t('heroBadge')}</SectionLabel>
-          </div>
           <h1
             className="hero-item font-headline font-black leading-[0.88] mb-6"
           >
-            <span className="block text-foreground" style={{ fontSize: 'clamp(3.2rem, 10vw, 9rem)' }}>
+            <span className="block text-foreground text-display">
               {t('heroGreeting')}
             </span>
-            <span
-              className="block text-transparent bg-clip-text"
-              style={{
-                fontSize: 'clamp(3rem, 9.5vw, 8.5rem)',
-                backgroundImage: 'linear-gradient(90deg, rgb(var(--primary)), rgb(var(--primary-light)), rgb(var(--primary)))',
-              }}
-            >
+            <span className="block text-primary text-display">
               Sebastian.
             </span>
           </h1>
@@ -100,42 +91,35 @@ export function AboutContent() {
 
       {/* ── INTRO PULL QUOTE ─────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 overflow-hidden">
-        <div
-          className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black select-none pointer-events-none leading-none"
-          style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-        >
-          {Array.from({ length: 10 }, (_, i) => (
-            <span key={i}>{t('wmStory')}&nbsp;&nbsp;</span>
-          ))}
-        </div>
+
         <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-          <SectionLabel animate accent="amber" className="mb-8">
-            {t('journeyBadge')}
-          </SectionLabel>
-          <Title
-            as="h2"
-            animate
-            className="leading-[1.15]"
-            style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.3rem)', maxWidth: '44rem' }}
-          >
-            {t('heroDescription')}
-          </Title>
+          <div className="relative pl-10 md:pl-14">
+            <Quote
+              className="absolute top-0 left-0 w-8 h-8 md:w-10 md:h-10 text-foreground/10"
+              aria-hidden="true"
+            />
+            <Title
+              as="h2"
+              animate
+              className="leading-[1.15] text-subhead"
+              style={{ maxWidth: '44rem' }}
+            >
+              {t('heroDescription')}
+            </Title>
+          </div>
         </div>
       </section>
 
       {/* ── JOURNEY ──────────────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="max-w-5xl mx-auto">
-          <SectionLabel animate accent="amber" className="mb-6">
-            {t('journeyBadge')}
-          </SectionLabel>
-          <Title as="h2" gradient="amber" animate className="mb-20" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+          <Title as="h2" animate className="mb-20 text-display-sm text-primary">
             {t('journeyTitle')}
           </Title>
 
           <div className="reveal-stagger">
-            {phases.map(({ label, title, body }, i) => (
-              <div key={i} className="relative border-t border-foreground/[0.08] py-14 md:py-20 grid md:grid-cols-[12rem_1fr] gap-6 md:gap-16">
+            {phases.map(({ id, label, title, body }) => (
+              <div key={id} className="relative border-t border-foreground/[0.08] py-14 md:py-20 grid md:grid-cols-[12rem_1fr] gap-6 md:gap-16">
                 <div className="shrink-0 pt-1">
                   <span className="font-headline text-[11px] tracking-[0.3em] uppercase text-foreground/30">
                     {label}
@@ -143,12 +127,11 @@ export function AboutContent() {
                 </div>
                 <div>
                   <h3
-                    className="font-headline font-black text-foreground mb-6"
-                    style={{ fontSize: 'clamp(1.3rem, 3vw, 2rem)' }}
+                    className="font-headline font-black text-foreground mb-6 text-headline"
                   >
                     {title}
                   </h3>
-                  <p className="text-foreground/50 leading-relaxed max-w-2xl" style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)' }}>
+                  <p className="text-foreground/50 leading-relaxed max-w-2xl text-lead">
                     {body}
                   </p>
                 </div>
@@ -162,37 +145,41 @@ export function AboutContent() {
       {/* ── EXPERTISE ────────────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/[0.06] to-primary/0 pointer-events-none" />
-        <div
-          className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black select-none pointer-events-none leading-none"
-          style={{ top: '14%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-        >
-          {Array.from({ length: 10 }, (_, i) => (
-            <span key={i}>{t('wmCode')}&nbsp;&nbsp;</span>
-          ))}
-        </div>
-        <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-          <SectionLabel animate accent="amber" className="mb-6">
-            {t('expertiseBadge')}
-          </SectionLabel>
-          <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
-            {t('expertiseTitle')}
-          </Title>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 reveal-stagger">
-            {expertise.map(({ Icon, title, body }, i) => (
-              <AccentCard key={i} accent="amber" className="p-8">
-                <div className="flex flex-col gap-5">
-                  <Icon className="w-6 h-6 shrink-0" style={{ color: 'rgb(var(--primary))' }} />
-                  <h3
-                    className="font-headline font-black text-foreground"
-                    style={{ fontSize: 'clamp(1.05rem, 2vw, 1.3rem)' }}
-                  >
-                    {title}
-                  </h3>
-                  <p className="text-sm text-foreground/45 leading-relaxed">{body}</p>
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
+          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-24">
+            <div>
+              <span className="block font-headline text-[11px] tracking-[0.2em] uppercase text-foreground/30 mb-4">
+                {t('expertiseBadge')}
+              </span>
+              <Title as="h2" animate className="text-display-sm">
+                {t('expertiseTitle')}
+              </Title>
+            </div>
+
+            <div className="reveal-stagger divide-y divide-foreground/[0.08]">
+              {expertise.map(({ id, Icon, title, body }, i) => (
+                <div
+                  key={id}
+                  className="py-10 md:py-12 grid grid-cols-[auto_1fr] gap-6 md:gap-10 items-start group"
+                >
+                  <span className="font-headline text-[11px] tracking-[0.15em] uppercase text-foreground/25 pt-1.5 group-hover:text-primary transition-colors">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <Icon className="w-5 h-5 text-foreground/40 group-hover:text-primary transition-colors" />
+                      <h3 className="font-headline font-bold text-foreground text-headline">
+                        {title}
+                      </h3>
+                    </div>
+                    <p className="text-foreground/50 leading-relaxed text-base max-w-2xl">
+                      {body}
+                    </p>
+                  </div>
                 </div>
-              </AccentCard>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -200,68 +187,57 @@ export function AboutContent() {
       {/* ── COMMUNITY ────────────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/[0.06] to-primary/0 pointer-events-none" />
-        <div
-          className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black select-none pointer-events-none leading-none"
-          style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-        >
-          {Array.from({ length: 10 }, (_, i) => (
-            <span key={i}>{t('wmGdg')}&nbsp;&nbsp;</span>
-          ))}
-        </div>
+
         <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-          <SectionLabel animate accent="amber" className="mb-6">
-            {t('communityBadge')}
-          </SectionLabel>
-          <Title as="h2" gradient="amber" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
-            {t('communityTitle')}
-          </Title>
+          <div className="grid lg:grid-cols-[2fr_1fr] gap-16 lg:gap-24 items-start">
+            <div>
+              <Title as="h2" animate className="text-display-sm text-primary mb-8">
+                {t('communityTitle')}
+              </Title>
 
-          <Text size="lg" strength="secondary" animate className="mb-10">
-            {t('communityBody')}
-          </Text>
+              <Text size="lg" strength="secondary" accent="amber" animate className="max-w-2xl mb-12">
+                {t('communityBody')}
+              </Text>
 
-          <div className="reveal-stagger grid grid-cols-3 gap-6 md:gap-10 mb-16">
-            {stats.map(({ stat, label }, i) => (
-              <div key={i} className="border-t pt-5" style={{ borderColor: 'var(--primary-border)' }}>
-                <div className="font-headline font-black mb-1" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', color: 'rgb(var(--primary))' }}>
-                  {stat}
-                </div>
-                <div className="text-[10px] font-headline tracking-[0.15em] uppercase text-foreground/35 leading-tight">
-                  {label}
-                </div>
+              <div className="reveal-up flex flex-wrap gap-x-12 gap-y-8">
+                {stats.map(({ stat, label }) => (
+                  <div key={`${stat}-${label}`} className="min-w-[8rem]">
+                    <div className="font-headline text-4xl md:text-5xl font-black text-primary leading-none">
+                      {stat}
+                    </div>
+                    <div className="text-[10px] font-headline tracking-[0.15em] uppercase text-foreground/35 leading-tight mt-2">
+                      {label}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-
-          <div
-            className="reveal-up flex flex-col gap-6 p-6 md:p-8 rounded-2xl"
-            style={{
-              border: '1px solid rgba(251,191,36,0.14)',
-              background: 'rgba(251,191,36,0.04)',
-            }}
-          >
-            <div className="flex items-center gap-4">
-              <Image
-                src="/images/gdg_quito_logo.webp"
-                alt="GDG Quito"
-                width={48}
-                height={48}
-                className="rounded-full shrink-0"
-              />
-              <h3
-                className="font-headline font-black text-foreground"
-                style={{ fontSize: 'clamp(0.95rem, 1.8vw, 1.15rem)' }}
-              >
-                Google Developer Groups — Quito
-              </h3>
             </div>
-            <p className="text-sm text-foreground/45 leading-relaxed">
-              {t('communityCardBody')}
-            </p>
-            <div className="flex justify-center md:justify-start">
-              <BrandLink href={communityLinks.gdgQuito} color="#4285F4" variant="outline" className="flex w-full md:w-auto justify-center rounded-2xl md:rounded-full">
-                {t('communityJoin')} ↗
-              </BrandLink>
+
+            <div className="reveal-up border-t lg:border-t-0 lg:border-l border-foreground/[0.08] pt-10 lg:pt-0 lg:pl-12">
+              <div className="flex items-center gap-4 mb-4">
+                <Image
+                  src="/images/gdg_quito_logo.webp"
+                  alt="GDG Quito"
+                  width={48}
+                  height={48}
+                  className="rounded-full shrink-0"
+                />
+                <h3 className="font-headline font-bold text-foreground text-headline">
+                  Google Developer Groups — Quito
+                </h3>
+              </div>
+              <p className="text-sm text-foreground/45 leading-relaxed mb-6">
+                {t('communityCardBody')}
+              </p>
+              <a
+                href={communityLinks.gdgQuito}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-headline font-semibold text-xs uppercase tracking-wide text-foreground/50 hover:text-primary transition-colors"
+              >
+                {t('communityJoin')}
+                <span aria-hidden="true" className="text-base leading-none">↗</span>
+              </a>
             </div>
           </div>
         </div>
@@ -270,40 +246,24 @@ export function AboutContent() {
       {/* ── BEYOND CODE ──────────────────────────────────────────────── */}
       <section className="relative py-28 md:py-44 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-green-950/0 via-green-950/[0.07] to-green-950/0 pointer-events-none" />
-        <div
-          className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black select-none pointer-events-none leading-none"
-          style={{ top: '14%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-green)' }}
-        >
-          {Array.from({ length: 10 }, (_, i) => (
-            <span key={i}>{t('wmMusic')}&nbsp;&nbsp;</span>
-          ))}
-        </div>
-        <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-          <SectionLabel animate accent="green" className="mb-6">
-            {t('musicBadge')}
-          </SectionLabel>
+
+        <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10 text-center">
           <Title
             as="h2"
-            gradient="green"
             animate
-            className="mb-14"
-            style={{
-              fontSize: 'clamp(2.4rem, 6vw, 5rem)',
-              backgroundImage: 'linear-gradient(90deg, #1DB954, #86efac, #1DB954)',
-            }}
+            className="mb-10 text-green-500 text-display-sm text-center"
           >
             {t('musicTitle')}
           </Title>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <Text size="lg" strength="secondary" animate>
+          <div className="flex flex-col items-center gap-10">
+            <Text size="lg" strength="secondary" animate className="max-w-2xl text-center">
               {t('musicBody')}
             </Text>
-            <div className="reveal-up flex items-center justify-center md:justify-start">
+            <div className="reveal-up">
               <Link
                 href="/why"
-                className="flex w-full md:w-auto justify-center items-center gap-2 px-6 py-3 font-bold rounded-2xl md:rounded-full text-sm transition-all duration-300 text-black hover:brightness-110"
-                style={{ backgroundColor: '#1DB954' }}
+                className="inline-flex items-center gap-2 px-6 py-3 font-bold rounded-full text-sm transition-[colors,transform] duration-300 text-black hover:brightness-110 bg-green-500 active:scale-[0.97]"
               >
                 {t('musicLink')} ↗
               </Link>
@@ -315,12 +275,11 @@ export function AboutContent() {
       {/* ── CTA ──────────────────────────────────────────────────────── */}
       <section className="py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="max-w-5xl mx-auto reveal-up text-center flex flex-col items-center">
-          <Title as="h2" animate className="mb-6" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+          <Title as="h2" animate className="mb-6 text-display-sm">
             {t('ctaTitle')}
           </Title>
           <p
-            className="text-foreground/45 leading-relaxed mb-10 max-w-xl"
-            style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)' }}
+            className="text-foreground/45 leading-relaxed mb-10 max-w-xl text-lead"
           >
             {t('ctaBody')}
           </p>

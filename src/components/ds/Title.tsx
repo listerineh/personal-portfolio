@@ -32,7 +32,7 @@ export function Title({
         'font-headline font-bold leading-tight',
         gradient
           ? 'text-transparent bg-clip-text'
-          : 'text-gray-900 dark:text-white',
+          : 'text-foreground',
         className,
       )}
       style={{

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { cn } from '@/lib/utils';
 import { Button, Modal, ModalContent, ModalHeader, ModalTitle, ModalDescription, Switch } from '@/components/ds';
 import { Cookie, X, Settings } from 'lucide-react';
 import {
@@ -12,9 +13,13 @@ import {
   type CookieConsent,
 } from '@/lib/cookies';
 
+const DRAWER_DURATION = 400;
+
 export function CookieBanner() {
   const t = useTranslations('cookies');
   const [showBanner, setShowBanner] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [preferences, setPreferences] = useState({
     necessary: true,
@@ -27,32 +32,53 @@ export function CookieBanner() {
     setShowBanner(!hasResponded);
   }, []);
 
+  useEffect(() => {
+    if (!showBanner || isClosing) return;
+    const timer = setTimeout(() => setIsVisible(true), 10);
+    return () => clearTimeout(timer);
+  }, [showBanner, isClosing]);
+
   const handleAcceptAll = () => {
-    acceptAllCookies();
-    setShowBanner(false);
-    window.location.reload();
+    setIsClosing(true);
+    setTimeout(() => {
+      acceptAllCookies();
+      window.location.reload();
+    }, DRAWER_DURATION);
   };
 
   const handleRejectAll = () => {
-    acceptNecessaryCookies();
-    setShowBanner(false);
+    setIsClosing(true);
+    setTimeout(() => {
+      acceptNecessaryCookies();
+      setShowBanner(false);
+    }, DRAWER_DURATION);
   };
 
   const handleSavePreferences = () => {
-    const consent: CookieConsent = {
-      ...preferences,
-      timestamp: Date.now(),
-    };
-    saveCookieConsent(consent);
+    setIsClosing(true);
     setShowSettings(false);
-    setShowBanner(false);
+    setTimeout(() => {
+      const consent: CookieConsent = {
+        ...preferences,
+        timestamp: Date.now(),
+      };
+      saveCookieConsent(consent);
+      setShowBanner(false);
+    }, DRAWER_DURATION);
   };
 
   if (!showBanner) return null;
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur-lg border-t border-border shadow-2xl">
+      <div
+        className={cn(
+          'fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur-lg border-t border-border shadow-2xl',
+          'transition-transform duration-500',
+          isVisible && !isClosing ? 'translate-y-0' : 'translate-y-full'
+        )}
+        style={{ transitionTimingFunction: 'var(--ease-drawer)' }}
+      >
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3 flex-1">
@@ -90,12 +116,13 @@ export function CookieBanner() {
           <div className="space-y-4 py-4">
             <div className="flex items-start justify-between space-x-4">
               <div className="flex-1 space-y-1">
-                <label className="text-sm font-medium">{t('necessaryLabel')}</label>
+                <label htmlFor="cookies-necessary" className="text-sm font-medium">{t('necessaryLabel')}</label>
                 <p className="text-xs text-muted-foreground">
                   {t('necessaryDescription')}
                 </p>
               </div>
               <Switch
+                id="cookies-necessary"
                 checked={true}
                 disabled
                 className="mt-1"

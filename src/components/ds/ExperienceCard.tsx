@@ -3,9 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Briefcase, Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
-import { useTheme } from '@/context/theme-context';
-import { Pill } from './Pill';
-import { Button } from './Button';
 
 interface ExperienceCardProps {
   jobTitle: string;
@@ -31,90 +28,77 @@ export function ExperienceCard({
   initialVisible = 3,
 }: ExperienceCardProps) {
   const [expanded, setExpanded] = useState(false);
-  const { theme } = useTheme();
-  const dark = theme === 'dark';
   const visible = expanded ? responsibilities : responsibilities.slice(0, initialVisible);
   const hasMore = responsibilities.length > initialVisible;
 
   return (
-    <div
-      className="rounded-2xl overflow-hidden"
-      style={{
-        border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.12)'}`,
-        background: dark ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.7)',
-      }}
-    >
-      {/* Header */}
-      <div className="flex items-center gap-4 p-6 pb-4" style={{ borderBottom: `1px solid ${dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.09)'}` }}>
+    <article className="group py-2">
+      <div className="flex items-start gap-4">
         {/* Logo */}
-        <div className="shrink-0">
+        <div className="shrink-0 pt-1">
           {logoUrl ? (
-            <div className="w-14 h-14 rounded-full overflow-hidden relative" style={{ border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.13)'}` }}>
-              <Image src={logoUrl} alt={`${company} logo`} fill className="object-cover" />
+            <div className="w-11 h-11 rounded-full overflow-hidden relative bg-foreground/[0.03]">
+              <Image src={logoUrl} alt={`${company} logo`} fill sizes="44px" className="object-cover" />
             </div>
           ) : (
-            <div
-              className="w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ background: dark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)', border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.13)'}` }}
-            >
-              <Briefcase className="w-6 h-6 text-foreground/40" />
+            <div className="w-11 h-11 rounded-full flex items-center justify-center bg-foreground/[0.03]">
+              <Briefcase className="w-5 h-5 text-foreground/40" />
             </div>
           )}
         </div>
 
-        {/* Title + Company */}
+        {/* Content */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-headline font-bold text-foreground truncate" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}>
+          <h3 className="font-headline font-bold text-foreground leading-tight text-headline">
             {jobTitle}
           </h3>
-          <p className="text-sm font-semibold text-foreground/50 mt-0.5 truncate">{company}</p>
-        </div>
-      </div>
+          <p className="text-sm text-foreground/50 mt-0.5">
+            {company}
+          </p>
 
-      {/* Meta & Responsibilities */}
-      <div className="p-6 space-y-5">
-        {/* Dates + Location */}
-        <div className="flex flex-wrap gap-2">
-          <Pill variant="outline" accent="neutral">
-            <Calendar className="w-3 h-3" />
-            {employmentDates}
-          </Pill>
-          {location && (
-            <Pill variant="outline" accent="neutral">
-              <MapPin className="w-3 h-3" />
-              {location}
-            </Pill>
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-foreground/40">
+            <span className="inline-flex items-center gap-1.5 font-headline tracking-wide uppercase">
+              <Calendar className="w-3 h-3" />
+              {employmentDates}
+            </span>
+            {location && (
+              <span className="inline-flex items-center gap-1.5 font-headline tracking-wide uppercase">
+                <MapPin className="w-3 h-3" />
+                {location}
+              </span>
+            )}
+          </div>
+
+          <ul className="mt-5 space-y-2.5">
+            {visible.map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="mt-2.5 shrink-0 w-1 h-1 rounded-full bg-primary/70" />
+                <p className="text-sm text-foreground/60 leading-relaxed">{item}</p>
+              </li>
+            ))}
+          </ul>
+
+          {hasMore && (
+            <button
+              type="button"
+              onClick={() => setExpanded(!expanded)}
+              className="mt-4 inline-flex items-center gap-1.5 min-h-11 px-1 -ml-1 text-xs font-headline font-semibold uppercase tracking-wide text-foreground/40 hover:text-primary transition-[color,transform] duration-200 ease-out active:scale-[0.97]"
+            >
+              {expanded ? (
+                <>
+                  <ChevronUp className="w-3.5 h-3.5" />
+                  {showLessLabel}
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-3.5 h-3.5" />
+                  {showMoreLabel}
+                </>
+              )}
+            </button>
           )}
         </div>
-
-        {/* Responsibilities */}
-        <ul className="space-y-3">
-          {visible.map((item, i) => (
-            <li key={i} className="flex items-start gap-3">
-              <span
-                className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full"
-                style={{ background: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)' }}
-              />
-              <p className="text-sm text-foreground/65 leading-relaxed">{item}</p>
-            </li>
-          ))}
-        </ul>
-
-        {hasMore && (
-          <Button
-            variant="ghost"
-            accent="neutral"
-            size="sm"
-            onClick={() => setExpanded(!expanded)}
-          >
-            {expanded ? (
-              <><ChevronUp className="w-3.5 h-3.5" />{showLessLabel}</>
-            ) : (
-              <><ChevronDown className="w-3.5 h-3.5" />{showMoreLabel}</>
-            )}
-          </Button>
-        )}
       </div>
-    </div>
+    </article>
   );
 }

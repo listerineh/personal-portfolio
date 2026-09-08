@@ -8,37 +8,13 @@ test.describe('Home - Projects Section - User Actions - Desktop', () => {
     await page.locator('section#projects').scrollIntoViewIfNeeded();
   });
 
-  test('should have clickable Live Demo buttons', async ({ page }) => {
-    const liveLink = page.locator('section#projects a:has-text("Live Demo")').first();
-    await expect(liveLink).toBeVisible();
-  });
-
-  test('should have clickable Source buttons', async ({ page }) => {
-    const sourceLink = page.locator('section#projects a:has-text("Source")').first();
-    await expect(sourceLink).toBeVisible();
-  });
-
-  test('should open Live Demo in new tab', async ({ page }) => {
-    const liveLink = page.locator('section#projects a:has-text("Live Demo")').first();
-    const target = await liveLink.getAttribute('target');
-    expect(target).toBe('_blank');
-  });
-
-  test('should open Source in new tab', async ({ page }) => {
-    const sourceLink = page.locator('section#projects a:has-text("Source")').first();
-    const target = await sourceLink.getAttribute('target');
-    expect(target).toBe('_blank');
-  });
-
-  test('should have proper rel attribute on external links', async ({ page }) => {
-    const liveLink = page.locator('section#projects a:has-text("Live Demo")').first();
-    const rel = await liveLink.getAttribute('rel');
-    expect(rel).toContain('noopener');
-    expect(rel).toContain('noreferrer');
+  test('should have clickable project cards', async ({ page }) => {
+    const card = page.locator('section#projects article a').first();
+    await expect(card).toBeVisible();
   });
 
   test('should have project cards with hover effects', async ({ page }) => {
-    const card = page.locator('section#projects').locator('div[class*="group"]').first();
+    const card = page.locator('section#projects article').first();
     const classList = await card.evaluate(el => el.className);
     expect(classList).toContain('group');
   });
@@ -46,12 +22,19 @@ test.describe('Home - Projects Section - User Actions - Desktop', () => {
   test('should have project images with scale effect on hover', async ({ page }) => {
     const image = page.locator('section#projects .project-image').first();
     const classList = await image.evaluate(el => el.className);
-    expect(classList).toContain('group-hover:scale-110');
+    expect(classList).toContain('group-hover:scale');
   });
 
-  test('should have project cards with shadow effect on hover', async ({ page }) => {
-    const card = page.locator('section#projects').locator('[class*="bg-card"]').first();
+  test('should navigate to project detail page', async ({ page }) => {
+    const link = page.locator('section#projects article a').first();
+    const href = await link.getAttribute('href');
+    expect(href).toBeTruthy();
+    expect(href).toContain('/projects/');
+  });
+
+  test('should have project cards with lift effect on hover', async ({ page }) => {
+    const card = page.locator('section#projects article a').first();
     const classList = await card.evaluate(el => el.className);
-    expect(classList).toContain('hover:shadow-md');
+    expect(classList).toContain('hover:-translate-y-');
   });
 });

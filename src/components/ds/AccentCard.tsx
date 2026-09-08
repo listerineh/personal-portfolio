@@ -21,7 +21,7 @@ export function AccentCard({ accent = 'neutral', animate, className, children }:
     <div
       className={cn(
         animate && 'reveal-up',
-        'rounded-2xl border p-4 transition-colors duration-300',
+        'rounded-2xl border p-4 transition-[color,background-color,border-color] duration-300 ease-out',
         cardMap[accent],
         className,
       )}

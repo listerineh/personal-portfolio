@@ -25,34 +25,6 @@ export const Checked: Story = {
   },
 };
 
-export const Amber: Story = {
-  args: {
-    checked: true,
-    accentColor: '#f59e0b',
-  },
-};
-
-export const Indigo: Story = {
-  args: {
-    checked: true,
-    accentColor: '#818cf8',
-  },
-};
-
-export const Green: Story = {
-  args: {
-    checked: true,
-    accentColor: '#1DB954',
-  },
-};
-
-export const CustomColor: Story = {
-  args: {
-    checked: true,
-    accentColor: '#ff6b6b',
-  },
-};
-
 export const Disabled: Story = {
   args: {
     checked: true,

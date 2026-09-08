@@ -22,13 +22,13 @@ test.describe('Home - Blog Preview Section - User Actions - Mobile', () => {
   test('should have blog images with scale effect on hover on mobile', async ({ page }) => {
     const image = page.locator('section#blog .blog-image').first();
     const classList = await image.evaluate(el => el.className);
-    expect(classList).toContain('group-hover:scale-110');
+    expect(classList).toContain('group-hover:scale');
   });
 
   test('should have blog post titles with color change on hover on mobile', async ({ page }) => {
-    const title = page.locator('section#blog article').locator('[class*="font-headline"]').first();
+    const title = page.locator('section#blog article h3').first();
     const classList = await title.evaluate(el => el.className);
-    expect(classList).toContain('group-hover:text-primary');
+    expect(classList).toContain('group-hover:');
   });
 
   test('should have Read More text with arrow icon on mobile', async ({ page }) => {

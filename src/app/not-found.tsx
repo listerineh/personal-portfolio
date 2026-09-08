@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Button, Title, Text, SectionLabel } from '@/components/ds';
+import { Button, Title, Text } from '@/components/ds';
 import { Home, ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
@@ -11,15 +11,15 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-6 overflow-hidden relative">
       <div
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-headline font-black pointer-events-none select-none leading-none overflow-hidden"
-        style={{ fontSize: 'clamp(12rem, 45vw, 32rem)', color: 'rgba(251,191,36,0.04)' }}
+        className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-headline font-black pointer-events-none select-none leading-none overflow-hidden text-display-sm text-primary/[0.04]"
+        style={{ fontSize: '45vw' }}
       >
         404
       </div>
 
       <div className="relative z-10 max-w-2xl w-full text-center">
-        <SectionLabel accent="amber" className="mb-6">404</SectionLabel>
-        <Title as="h1" style={{ fontSize: 'clamp(2rem, 5vw, 3.8rem)' }} className="mb-4">
+        <p className="font-headline text-xs tracking-[0.2em] uppercase text-primary/70 mb-6">404</p>
+        <Title as="h1" className="mb-4 text-display-sm">
           {t('title')}
         </Title>
         <Text size="base" strength="secondary" className="max-w-md mx-auto mb-10">

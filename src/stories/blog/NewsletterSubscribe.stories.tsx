@@ -63,12 +63,7 @@ function MockNewsletterSubscribe({ variant = 'default' }: { variant?: 'default' 
           accent="amber"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          forceDark
-          style={{
-            background: 'rgba(255,255,255,0.08)',
-            border: '1px solid rgba(255,255,255,0.18)',
-            color: 'rgba(255,255,255,0.9)',
-          }}
+          className="bg-white/[0.08] border-white/[0.18] text-white/90 placeholder:text-white/35"
         />
         <Button
           type="submit"

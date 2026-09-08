@@ -123,7 +123,7 @@ function MockBlogSearch() {
             <button
               key={key}
               onClick={() => setSortBy(key as any)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border shrink-0 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97] border shrink-0 ${
                 sortBy === key
                   ? 'bg-primary/15 border-primary/40 text-primary'
                   : 'bg-transparent border-foreground/10 text-foreground/50 hover:border-foreground/25 hover:text-foreground/80'

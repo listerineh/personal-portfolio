@@ -162,7 +162,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
           </DropdownTrigger>
           <DropdownContent align="end" className="w-56">
             <DropdownLabel>{t('filterByTags')}</DropdownLabel>
-            <DropdownSeparator className="h-px mx-2 my-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
+            <DropdownSeparator className="h-px mx-2 my-1 bg-foreground/[0.06]" />
             <div className="max-h-[300px] overflow-y-auto">
               {allTags.map(tag => (
                 <DropdownCheckboxItem
@@ -176,7 +176,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
             </div>
             {selectedTags.length > 0 && (
               <>
-                <DropdownSeparator className="h-px mx-2 my-1" style={{ background: 'rgba(255,255,255,0.06)' }} />
+                <DropdownSeparator className="h-px mx-2 my-1 bg-foreground/[0.06]" />
                 <div className="px-2 py-1.5">
                   <button
                     onClick={clearFilters}
@@ -198,7 +198,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
             <button
               key={key}
               onClick={() => setSortBy(key)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border shrink-0 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97] border shrink-0 ${
                 sortBy === key
                   ? 'bg-primary/15 border-primary/40 text-primary'
                   : 'bg-transparent border-foreground/10 text-foreground/50 hover:border-foreground/25 hover:text-foreground/80'

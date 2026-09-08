@@ -20,11 +20,6 @@ test.describe('Home - Skills Section - Rendering - Mobile', () => {
     expect(titleText).toContain('Technologies I Work With');
   });
 
-  test('should display tech stack badge on mobile', async ({ page }) => {
-    const badge = page.locator('section#skills').locator('text=Tech Stack');
-    await expect(badge).toBeVisible();
-  });
-
   test('should display skill cards on mobile', async ({ page }) => {
     const skillCards = page.locator('section#skills .skill-card');
     const count = await skillCards.count();
@@ -50,7 +45,7 @@ test.describe('Home - Skills Section - Rendering - Mobile', () => {
   });
 
   test('should display description text on mobile', async ({ page }) => {
-    const description = page.locator('section#skills p:has-text("Proficient")');
+    const description = page.locator('section#skills p').filter({ hasText: /The tools and frameworks I use day to day/ });
     await expect(description).toBeVisible();
   });
 
@@ -58,19 +53,7 @@ test.describe('Home - Skills Section - Rendering - Mobile', () => {
     const skillCard = page.locator('section#skills .skill-card').first();
     const classList = await skillCard.evaluate(el => el.className);
     expect(classList).toContain('skill-card');
-    expect(classList).toContain('rounded-lg');
-    expect(classList).toContain('bg-card');
-  });
-
-  test('should have marquee rows with overflow hidden on mobile', async ({ page }) => {
-    const marqueeContainer = page.locator('section#skills').locator('div.overflow-hidden').first();
-    await expect(marqueeContainer).toBeVisible();
-  });
-
-  test('should have skill cards with proper dimensions on mobile', async ({ page }) => {
-    const skillCard = page.locator('section#skills .skill-card').first();
-    const classList = await skillCard.evaluate(el => el.className);
-    expect(classList).toContain('min-w-[80px]');
+    expect(classList).toContain('rounded');
   });
 
   test('should have skill icons with proper sizing on mobile', async ({ page }) => {

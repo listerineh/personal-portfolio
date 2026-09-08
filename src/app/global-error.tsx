@@ -21,31 +21,31 @@ export default function GlobalError({
           <div style={{ maxWidth: '480px', width: '100%', textAlign: 'center' }}>
 
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-              <div style={{ borderRadius: '9999px', background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)', padding: '1.25rem', display: 'inline-flex' }}>
-                <AlertTriangle style={{ width: '2.5rem', height: '2.5rem', color: '#fbbf24' }} />
+              <div className="rounded-full bg-primary/10 border border-primary/20 p-5 inline-flex">
+                <AlertTriangle className="w-10 h-10 text-primary" />
               </div>
             </div>
 
-            <p style={{ fontSize: '0.625rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(251,191,36,0.6)', marginBottom: '1.25rem' }}>
+            <p className="text-[0.625rem] tracking-[0.3em] uppercase text-primary/60 mb-5">
               Critical Error
             </p>
-            <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 700, color: '#fff', marginBottom: '1rem', lineHeight: 1.2 }}>
+            <h1 className="text-display-sm font-bold text-white mb-4">
               Something went critically wrong
             </h1>
-            <p style={{ color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, marginBottom: '2.5rem', fontSize: '0.95rem' }}>
+            <p className="text-white/45 leading-relaxed mb-10 text-sm">
               A critical error occurred and the application could not recover. Please try refreshing the page.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center' }}>
               <button
                 onClick={reset}
-                style={{ padding: '0.625rem 1.5rem', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '0.5rem', background: 'transparent', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '0.875rem', width: '100%', maxWidth: '240px' }}
+                className="py-2.5 px-6 border border-white/12 rounded-lg bg-transparent text-white/60 text-sm w-full max-w-[240px] cursor-pointer"
               >
                 Try again
               </button>
               <button
                 onClick={() => { window.location.href = '/'; }}
-                style={{ padding: '0.625rem 1.5rem', border: 'none', borderRadius: '0.5rem', background: '#f59e0b', color: '#000', cursor: 'pointer', fontSize: '0.875rem', fontWeight: 600, width: '100%', maxWidth: '240px' }}
+                className="py-2.5 px-6 border-none rounded-lg bg-primary text-black text-sm font-semibold w-full max-w-[240px] cursor-pointer"
               >
                 Go to homepage
               </button>

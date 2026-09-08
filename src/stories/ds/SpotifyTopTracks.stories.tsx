@@ -136,7 +136,7 @@ function MockSpotifyTopTracks({ tracks: trackLinks, accentColor }: { tracks: rea
                 </p>
                 <p className="text-xs truncate mt-1" style={{ color: 'rgba(255,255,255,0.35)' }}>{track.artistName}</p>
               </div>
-              <div className="flex items-center gap-2 flex-wrap sm:ml-auto sm:flex-nowrap opacity-100 sm:opacity-0 sm:-translate-x-1.5 sm:group-hover:opacity-100 sm:group-hover:translate-x-0 transition-all duration-300">
+              <div className="flex items-center gap-2 flex-wrap sm:ml-auto sm:flex-nowrap opacity-100 sm:opacity-0 sm:-translate-x-1.5 sm:group-hover:opacity-100 sm:group-hover:translate-x-0 transition-[opacity,transform] duration-300 ease-out">
                 {platforms.map((platform) => (
                   <a
                     key={platform.key}

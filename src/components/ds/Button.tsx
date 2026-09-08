@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import React, { type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
-import { useTheme } from '@/context/theme-context'
 import { type Accent, type ButtonVariant, type ButtonSize } from './types'
 
 interface ButtonProps {
@@ -16,17 +15,30 @@ interface ButtonProps {
   children: ReactNode
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
-  gradient?: string
   disabled?: boolean
 }
 
-type ColorTriple = [bg: string, text: string, hoverBg: string]
-
-const primaryColors: Record<Accent, { light: ColorTriple; dark: ColorTriple }> = {
-  amber:   { light: ['#f59e0b', '#000000', '#fbbf24'], dark: ['#fbbf24', '#000000', '#fcd34d'] },
-  indigo:  { light: ['#4f46e5', '#ffffff', '#4338ca'], dark: ['#818cf8', '#ffffff', '#a5b4fc'] },
-  green:   { light: ['#10b981', '#000000', '#34d399'], dark: ['#34d399', '#000000', '#6ee7b7'] },
-  neutral: { light: ['#111827', '#ffffff', '#374151'], dark: ['#ffffff', '#000000', 'rgba(255,255,255,0.9)'] },
+const accentMap: Record<Accent, { primary: string; secondary: string; ghost: string }> = {
+  amber: {
+    primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+    secondary: 'border border-primary/30 text-primary hover:bg-primary/[0.08] hover:border-primary/50',
+    ghost: 'text-primary hover:bg-primary/[0.08]',
+  },
+  indigo: {
+    primary: 'bg-indigo-500 text-white hover:bg-indigo-400',
+    secondary: 'border border-indigo-400/30 text-indigo-400 hover:bg-indigo-400/10 hover:border-indigo-400/50',
+    ghost: 'text-indigo-400 hover:bg-indigo-400/10',
+  },
+  green: {
+    primary: 'bg-green-500 text-black hover:bg-green-400',
+    secondary: 'border border-green-500/30 text-green-500 hover:bg-green-500/10 hover:border-green-500/50',
+    ghost: 'text-green-500 hover:bg-green-500/10',
+  },
+  neutral: {
+    primary: 'bg-foreground text-background hover:bg-foreground/90',
+    secondary: 'border border-foreground/15 text-foreground/70 hover:text-foreground hover:border-foreground/30',
+    ghost: 'text-foreground/60 hover:text-foreground hover:bg-foreground/[0.05]',
+  },
 }
 
 const sizeMap: Record<ButtonSize, string> = {
@@ -36,7 +48,7 @@ const sizeMap: Record<ButtonSize, string> = {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 font-headline font-bold rounded-full tracking-wide transition-all duration-300 active:scale-[0.97] select-none'
+  'inline-flex items-center justify-center gap-2 font-headline font-bold rounded-full tracking-wide transition-[color,background-color,border-color,transform] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 select-none disabled:opacity-50 disabled:cursor-not-allowed'
 
 export function Button({
   variant = 'primary',
@@ -48,67 +60,13 @@ export function Button({
   children,
   onClick,
   type = 'button',
-  gradient,
   disabled = false,
 }: ButtonProps) {
-  const { theme } = useTheme()
-  const isDark = theme === 'dark'
-
-  const classes = cn(base, sizeMap[size], className)
-
-  let inlineStyle: React.CSSProperties = {}
-
-  if (gradient) {
-    inlineStyle = { backgroundImage: gradient }
-  } else if (variant === 'primary') {
-    const [bg, text] = primaryColors[accent][isDark ? 'dark' : 'light']
-    inlineStyle = { backgroundColor: bg, color: text }
-  } else if (variant === 'secondary') {
-    inlineStyle = isDark
-      ? { borderWidth: 1, borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.6)' }
-      : { borderWidth: 1, borderStyle: 'solid', borderColor: '#d1d5db', color: '#6b7280' }
-  } else {
-    inlineStyle = { color: isDark ? 'rgba(255,255,255,0.5)' : '#6b7280' }
-  }
-
-  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
-    const el = e.currentTarget
-    if (gradient) return
-    if (variant === 'primary') {
-      const [,, hoverBg] = primaryColors[accent][isDark ? 'dark' : 'light']
-      el.style.backgroundColor = hoverBg
-    } else if (variant === 'secondary') {
-      el.style.borderColor = isDark ? 'rgba(255,255,255,0.35)' : '#6b7280'
-      el.style.color = isDark ? '#ffffff' : '#111827'
-    } else {
-      el.style.color = isDark ? '#ffffff' : '#111827'
-    }
-  }
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
-    const el = e.currentTarget
-    if (gradient) return
-    if (variant === 'primary') {
-      const [bg] = primaryColors[accent][isDark ? 'dark' : 'light']
-      el.style.backgroundColor = bg
-    } else if (variant === 'secondary') {
-      el.style.borderColor = isDark ? 'rgba(255,255,255,0.15)' : '#d1d5db'
-      el.style.color = isDark ? 'rgba(255,255,255,0.6)' : '#6b7280'
-    } else {
-      el.style.color = isDark ? 'rgba(255,255,255,0.5)' : '#6b7280'
-    }
-  }
-
-  const sharedProps = {
-    className: classes,
-    style: inlineStyle,
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-  }
+  const classes = cn(base, sizeMap[size], accentMap[accent][variant], className)
 
   if (href && external) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" {...sharedProps}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
         {children}
       </a>
     )
@@ -116,14 +74,14 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} {...sharedProps}>
+      <Link href={href} className={classes}>
         {children}
       </Link>
     )
   }
 
   return (
-    <button type={type} onClick={onClick} disabled={disabled} {...sharedProps} style={{ ...sharedProps.style, opacity: disabled ? 0.5 : 1, cursor: disabled ? 'not-allowed' : 'pointer' }}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes}>
       {children}
     </button>
   )

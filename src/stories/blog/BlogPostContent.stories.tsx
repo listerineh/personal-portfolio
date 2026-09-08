@@ -78,7 +78,7 @@ React Hooks provide a modern way to write React components. By mastering them, y
                 prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-4
                 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
                 prose-strong:text-foreground prose-strong:font-semibold
-                prose-blockquote:border-l-4 prose-blockquote:border-primary/50 prose-blockquote:pl-6 prose-blockquote:italic
+                prose-blockquote:border-l prose-blockquote:border-primary/30 prose-blockquote:pl-6 prose-blockquote:italic
                 prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded-md prose-code:font-code prose-code:text-sm
                 prose-code:text-foreground prose-code:before:content-none prose-code:after:content-none
                 prose-pre:bg-muted prose-pre:p-6 prose-pre:rounded-xl prose-pre:font-code prose-pre:shadow-lg

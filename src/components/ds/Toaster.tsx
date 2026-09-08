@@ -3,42 +3,49 @@
 import * as ToastPrimitives from '@radix-ui/react-toast';
 import { X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useTheme } from '@/context/theme-context';
+import { cn } from '@/lib/utils';
+
+const variantStyles = {
+  default: 'border-primary/20 bg-card/97',
+  destructive: 'border-destructive/25 bg-card/97',
+};
+
+const barStyles = {
+  default: 'bg-primary',
+  destructive: 'bg-destructive',
+};
 
 export function Toaster() {
   const { toasts } = useToast();
-  const { theme } = useTheme();
-  const dark = theme === 'dark';
-
-  const isDestructive = (variant?: string) => variant === 'destructive';
 
   return (
     <ToastPrimitives.Provider swipeDirection="right">
-      {toasts.map(({ id, title, description, action, variant, open, onOpenChange }) => (
+      {toasts.map(({ id, title, description, action, variant = 'default', open, onOpenChange }) => (
         <ToastPrimitives.Root
           key={id}
           open={open}
           onOpenChange={onOpenChange}
-          className="pointer-events-auto relative flex w-full items-start gap-3 overflow-hidden rounded-xl pr-8 shadow-2xl transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-bottom-full"
-          style={{
-            background: dark ? 'rgba(14,14,16,0.97)' : 'rgba(255,255,255,0.97)',
-            border: `1px solid ${isDestructive(variant)
-              ? 'rgba(239,68,68,0.25)'
-              : dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)'}`,
-            backdropFilter: 'blur(16px)',
-          }}
+          className={cn(
+            'pointer-events-auto relative flex w-full items-start gap-3 overflow-hidden rounded-xl pr-8 shadow-2xl border backdrop-blur-md transition-[transform,opacity] duration-300 ease-out',
+            variantStyles[variant as keyof typeof variantStyles] ?? variantStyles.default,
+            'data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-bottom-full'
+          )}
         >
           {/* Left accent bar */}
           <div
-            className="w-1 self-stretch rounded-l-xl flex-shrink-0"
-            style={{ background: isDestructive(variant) ? 'rgb(var(--destructive))' : 'rgb(var(--primary))' }}
+            className={cn(
+              'w-1 self-stretch rounded-l-xl flex-shrink-0',
+              barStyles[variant as keyof typeof barStyles] ?? barStyles.default
+            )}
           />
 
           <div className="flex flex-col gap-0.5 py-3.5">
             {title && (
               <ToastPrimitives.Title
-                className="font-headline text-xs tracking-wide font-semibold"
-                style={{ color: isDestructive(variant) ? 'rgb(var(--destructive))' : 'rgb(var(--primary))' }}
+                className={cn(
+                  'font-headline text-xs tracking-wide font-semibold',
+                  variant === 'destructive' ? 'text-destructive' : 'text-primary'
+                )}
               >
                 {title}
               </ToastPrimitives.Title>
@@ -52,7 +59,7 @@ export function Toaster() {
 
           {action}
           <ToastPrimitives.Close
-            className="absolute right-2 top-2 rounded-lg p-1 opacity-30 hover:opacity-80 transition-opacity"
+            className="absolute right-2 top-2 rounded-lg p-1 opacity-30 hover:opacity-80 transition-opacity duration-200 ease-out active:scale-[0.95]"
             aria-label="Close"
           >
             <X className="w-3.5 h-3.5" />

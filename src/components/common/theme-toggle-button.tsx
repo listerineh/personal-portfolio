@@ -21,7 +21,7 @@ export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
       iconRef.current,
       {
         rotation: -180,
-        scale: 0,
+        scale: 0.9,
         opacity: 0,
       },
       {
@@ -91,7 +91,7 @@ export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
       ref={buttonRef}
       onClick={handleClick}
       aria-label="Toggle theme"
-      className={`p-2 rounded-lg transition-colors hover:bg-foreground/8 ${className ?? ''}`}
+      className={`p-2 rounded-lg transition-colors duration-200 ease-out hover:bg-foreground/8 active:scale-[0.95] ${className ?? ''}`}
     >
       <div ref={iconRef}>
         {theme === 'dark' ? (

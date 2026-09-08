@@ -3,7 +3,7 @@
 import { forwardRef } from 'react';
 import { useTranslations } from 'next-intl';
 import type { BlogPost } from '@/types';
-import { Pill, Button, Title, SectionLabel } from '@/components/ds';
+import { Pill, Button, Title } from '@/components/ds';
 import { ShareButtons } from './share-buttons';
 import { BlogViews } from './blog-views';
 import { ArrowLeft, CalendarDays, UserCircle, Tag, Clock } from 'lucide-react';
@@ -26,7 +26,7 @@ export const BlogPostHeader = forwardRef<HTMLElement, BlogPostHeaderProps>(
         </Button>
         
         <div className="flex flex-col gap-4 mb-6">
-          <Title as="h1" style={{ fontSize: 'clamp(1.9rem, 5vw, 3.8rem)' }} className="leading-[1.1]">
+          <Title as="h1" className="leading-[1.1] text-subhead">
             {post.title}
           </Title>
           <div className="hidden md:block">

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useLocale } from '@/context/locale-context';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-import { SectionLabel, Title, Text, Button } from '@/components/ds';
+import { Title, Text, Button } from '@/components/ds';
 import { Mail, CheckCircle, XCircle } from 'lucide-react';
 
 export default function UnsubscribePage() {
@@ -46,17 +46,17 @@ export default function UnsubscribePage() {
       <Header />
       <main className="min-h-screen pt-32 pb-20 px-6 sm:px-10 md:px-16 lg:px-24 bg-background">
         <div className="max-w-2xl mx-auto">
-          <SectionLabel accent="amber" className="mb-6">
+          <p className="font-headline text-xs tracking-[0.2em] uppercase text-primary/70 mb-6">
             {t('badge')}
-          </SectionLabel>
-          <Title as="h1" className="mb-6" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
+          </p>
+          <Title as="h1" className="mb-6 text-display-sm">
             {t('title')}
           </Title>
           <Text size="lg" strength="secondary" className="mb-10">
             {t('description')}
           </Text>
 
-          {status === 'idle' && (
+          {(status === 'idle' || status === 'loading') && (
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-foreground/70 mb-2">
@@ -71,7 +71,7 @@ export default function UnsubscribePage() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     placeholder="your@email.com"
-                    className="w-full pl-12 pr-4 py-3 bg-background/60 backdrop-blur-sm border border-foreground/15 rounded-lg text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
+                    className="w-full pl-12 pr-4 py-3 bg-background/60 backdrop-blur-sm border border-foreground/15 rounded-lg text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-[border-color,background-color,box-shadow,color] duration-200 ease-out"
                   />
                 </div>
               </div>

@@ -150,14 +150,14 @@ export function TableOfContents({ content }: TableOfContentsProps) {
             <li
               key={heading.id}
               className={cn(
-                'transition-all duration-200',
+                'transition-[margin] duration-200 ease-out',
                 heading.level === 3 && 'ml-4'
               )}
             >
               <button
                 onClick={() => handleHeadingClick(heading.id, heading.text)}
                 className={cn(
-                  'block w-full text-left py-1 px-4 -ml-[2px] border-l-2 transition-all duration-200',
+                  'block w-full text-left py-1 px-4 -ml-[2px] border-l-2 transition-[color,border-color] duration-200 ease-out',
                   'text-foreground/40 border-transparent hover:text-primary hover:border-primary cursor-pointer'
                 )}
               >

@@ -25,10 +25,13 @@
     --secondary-foreground:   45 50 65;      /* #2D3241 */
     --muted:                  211 214 224;   /* #D3D6E0 */
     --muted-foreground:       101 111 139;   /* #656F8B */
-    --accent:                 152 37 138;    /* #98258A magenta */
+    --accent:                 15 118 110;    /* #0F766E teal-700 */
     --accent-foreground:      255 255 255;   /* #FFFFFF */
     --destructive:            239 68 68;     /* #EF4444 */
     --destructive-foreground: 250 250 250;   /* #FAFAFA */
+
+    /* ── Surface deep ──────────────────────────────────────── */
+    --surface-deep:           #f5f4f0;
 
     /* ── Layout ──────────────────────────────────────────────  */
     --border:                 213 217 228;   /* #D5D9E4 */
@@ -68,10 +71,14 @@
     --why-background:         #f5f4f0;
     --why-foreground:         #111111;
 
-    /* ── Watermarks ─────────────────────────────────────────── */
-    --wm-indigo:              rgba( 79,  70, 229, 0.07);
-    --wm-amber:               rgba(217, 119,   6, 0.07);
-    --wm-green:               rgba( 22, 163,  74, 0.07);
+    /* ── Motion ─────────────────────────────────────────────── */
+    --ease-out:               cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out:            cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer:            cubic-bezier(0.32, 0.72, 0, 1);
+    --duration-fast:          150ms;
+    --duration-base:          200ms;
+    --duration-slow:          300ms;
+
   }
 
   .dark {
@@ -95,10 +102,13 @@
     --secondary-foreground:   211 215 229;   /* #D3D7E5 */
     --muted:                  53 53 61;      /* #35353D */
     --muted-foreground:       147 157 175;   /* #939DAF */
-    --accent:                 152 37 138;    /* #98258A */
-    --accent-foreground:      211 215 229;   /* #D3D7E5 */
+    --accent:                 45 212 191;    /* #2DD4BF teal-400 */
+    --accent-foreground:      20 20 20;      /* #141414 */
     --destructive:            217 54 54;     /* #D93636 */
     --destructive-foreground: 250 250 250;   /* #FAFAFA */
+
+    /* ── Surface deep ──────────────────────────────────────── */
+    --surface-deep:           #080808;
 
     /* ── Layout ───────────────────────────────────────────────── */
     --border:                 58 58 64;      /* #3A3A40 */
@@ -107,7 +117,7 @@
 
     /* ── Charts ───────────────────────────────────────────────── */
     --chart-1:                245 158 11;    /* #F59E0B amber   */
-    --chart-2:                152 37 138;    /* #98258A magenta */
+    --chart-2:                45 212 191;    /* #2DD4BF teal */
     --chart-3:                107 163 204;   /* #6BA3CC         */
     --chart-4:                204 96 204;    /* #CC60CC         */
     --chart-5:                96 170 187;    /* #60AABB         */
@@ -137,10 +147,14 @@
     --why-background:         #080808;
     --why-foreground:         #f0f0f0;
 
-    /* ── Watermarks ───────────────────────────────────────────── */
-    --wm-indigo:              rgba(129, 140, 248, 0.04);
-    --wm-amber:               rgba(245, 158,  11, 0.04);
-    --wm-green:               rgba( 34, 197,  94, 0.04);
+    /* ── Motion ─────────────────────────────────────────────── */
+    --ease-out:               cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out:            cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer:            cubic-bezier(0.32, 0.72, 0, 1);
+    --duration-fast:          150ms;
+    --duration-base:          200ms;
+    --duration-slow:          300ms;
+
   }
 
   /* ── Base resets ──────────────────────────────────────────── */
@@ -192,7 +206,7 @@
 }
 
 .animate-float {
-  animation: float infinite ease-in-out;
+  animation: float infinite var(--ease-in-out);
 }
 
 @keyframes fadeInUp {
@@ -269,28 +283,23 @@
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-  will-change: opacity, transform;
+  animation: fadeInUp 0.6s var(--ease-out) forwards;
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-  will-change: opacity;
+  animation: fadeIn 0.5s var(--ease-out) forwards;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
-  will-change: opacity, transform;
+  animation: scaleIn 0.5s var(--ease-out) forwards;
 }
 
 .animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out forwards;
-  will-change: opacity, transform;
+  animation: slideInLeft 0.6s var(--ease-out) forwards;
 }
 
 .animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out forwards;
-  will-change: opacity, transform;
+  animation: slideInRight 0.6s var(--ease-out) forwards;
 }
 
 .animate-shimmer {
@@ -305,7 +314,7 @@
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
+  animation: pulse-glow 3s var(--ease-in-out) infinite;
 }
 
 .delay-100 {
@@ -352,4 +361,50 @@
 }
 .scrollbar-none::-webkit-scrollbar {
   display: none;
+}
+
+/* ── Type scale (replaces inline clamp overuse) ───────────── */
+.text-display {
+  font-size: clamp(3rem, 10vw, 9rem);
+  line-height: 0.88;
+}
+.text-display-sm {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 0.95;
+}
+.text-headline {
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.25;
+}
+.text-subhead {
+  font-size: clamp(1.4rem, 2.8vw, 2.3rem);
+  line-height: 1.15;
+}
+.text-lead {
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  line-height: 1.6;
+}
+.text-caption {
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  line-height: 1.5;
+}
+
+/* ── Brand color tokens ───────────────────────────────────── */
+.text-brand { color: rgb(var(--primary)); }
+.bg-brand { background-color: rgb(var(--primary)); }
+.border-brand { border-color: rgb(var(--primary)); }
+
+/* ── Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-in-left,
+  .animate-slide-in-right,
+  .animate-shimmer,
+  .animate-pulse-glow,
+  .animate-float {
+    animation: none;
+    transition: none;
+  }
 }

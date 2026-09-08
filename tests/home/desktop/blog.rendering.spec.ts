@@ -17,7 +17,7 @@ test.describe('Home - Blog Preview Section - Rendering - Desktop', () => {
     const title = page.locator('section#blog h2');
     await expect(title).toBeVisible();
     const titleText = await title.textContent();
-    expect(titleText).toContain('Latest Thoughts');
+    expect(titleText).toContain('From the Blog');
   });
 
   test('should display blog badge', async ({ page }) => {
@@ -38,7 +38,7 @@ test.describe('Home - Blog Preview Section - Rendering - Desktop', () => {
   });
 
   test('should display blog post titles', async ({ page }) => {
-    const titles = page.locator('section#blog article').locator('[class*="font-headline"]');
+    const titles = page.locator('section#blog article h3');
     const count = await titles.count();
     expect(count).toBeGreaterThan(0);
   });

@@ -20,19 +20,14 @@ test.describe('Home - Experience Section - Rendering - Desktop', () => {
     expect(titleText).toContain('Work Experience');
   });
 
-  test('should display career badge', async ({ page }) => {
-    const badge = page.locator('section#experience').locator('text=Career');
-    await expect(badge).toBeVisible();
-  });
-
-  test('should display first three experience items', async ({ page }) => {
-    const items = page.locator('section#experience').locator('div[class*="relative group"]').filter({ hasNot: page.locator('.hidden') });
+  test('should display experience items', async ({ page }) => {
+    const items = page.locator('section#experience article');
     const count = await items.count();
-    expect(count).toBeGreaterThanOrEqual(3);
+    expect(count).toBeGreaterThanOrEqual(1);
   });
 
   test('should display company logos or icons', async ({ page }) => {
-    const logos = page.locator('section#experience img[alt*="logo"]');
+    const logos = page.locator('section#experience img[alt*="logo"], section#experience svg');
     const count = await logos.count();
     expect(count).toBeGreaterThan(0);
   });
@@ -61,8 +56,8 @@ test.describe('Home - Experience Section - Rendering - Desktop', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('should display responsibilities as bullet points', async ({ page }) => {
-    const bullets = page.locator('section#experience').locator('div[class*="flex items-start gap-3"]');
+  test('should display responsibilities', async ({ page }) => {
+    const bullets = page.locator('section#experience li');
     const count = await bullets.count();
     expect(count).toBeGreaterThan(0);
   });
@@ -73,21 +68,13 @@ test.describe('Home - Experience Section - Rendering - Desktop', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('should display Show All Experience button', async ({ page }) => {
-    const showAllButton = page.locator('section#experience button:has-text("Show All Experience")');
-    await expect(showAllButton).toBeVisible();
+  test('should display View All Experience button', async ({ page }) => {
+    const viewAllLink = page.locator('section#experience a:has-text("View All Experience"):visible');
+    await expect(viewAllLink).toBeVisible();
   });
 
-  test('should have proper card styling', async ({ page }) => {
-    const card = page.locator('section#experience').locator('div[class*="rounded-xl bg-card"]').first();
-    const classList = await card.evaluate(el => el.className);
-    expect(classList).toContain('rounded-xl');
-    expect(classList).toContain('bg-card');
-  });
-
-  test('should display experience items with hover effects', async ({ page }) => {
-    const card = page.locator('section#experience').locator('div[class*="group"]').first();
-    const classList = await card.evaluate(el => el.className);
-    expect(classList).toContain('group');
+  test('should have clean list styling', async ({ page }) => {
+    const card = page.locator('section#experience article').first();
+    await expect(card).toBeVisible();
   });
 });

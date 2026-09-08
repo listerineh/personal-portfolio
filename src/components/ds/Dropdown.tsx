@@ -2,7 +2,7 @@
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Check } from 'lucide-react';
-import { useTheme } from '@/context/theme-context';
+import { cn } from '@/lib/utils';
 
 export const Dropdown = DropdownMenuPrimitive.Root;
 export const DropdownTrigger = DropdownMenuPrimitive.Trigger;
@@ -17,20 +17,15 @@ export function DropdownContent({
   align?: 'start' | 'center' | 'end';
   className?: string;
 }) {
-  const { theme } = useTheme();
-  const dark = theme === 'dark';
-
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
         align={align}
         sideOffset={4}
-        className={`z-50 min-w-[8rem] overflow-hidden rounded-xl p-1 shadow-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 ${className}`}
-        style={{
-          background: dark ? 'rgba(18,18,22,0.98)' : 'rgba(255,255,255,0.98)',
-          border: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
-          backdropFilter: 'blur(8px)',
-        }}
+        className={cn(
+          'z-50 min-w-[8rem] overflow-hidden rounded-xl p-1 shadow-xl border border-foreground/[0.08] bg-card backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+          className
+        )}
       >
         {children}
       </DropdownMenuPrimitive.Content>
@@ -42,27 +37,18 @@ export function DropdownItem({
   children,
   onClick,
   className = '',
-  hoverColor,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
-  hoverColor?: string;
 }) {
-  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.style.background = hoverColor ?? '';
-  };
-  const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.style.background = '';
-  };
-
   return (
     <DropdownMenuPrimitive.Item
       onClick={onClick}
-      onPointerEnter={hoverColor ? handlePointerEnter : undefined}
-      onPointerLeave={hoverColor ? handlePointerLeave : undefined}
-      onPointerDown={hoverColor ? handlePointerLeave : undefined}
-      className={`relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2 text-sm outline-none transition-colors ${hoverColor ? '' : 'focus:bg-foreground/6'} data-[disabled]:pointer-events-none data-[disabled]:opacity-50 ${className}`}
+      className={cn(
+        'relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2 text-sm outline-none transition-colors hover:bg-foreground/5 focus:bg-foreground/6 data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        className
+      )}
     >
       {children}
     </DropdownMenuPrimitive.Item>

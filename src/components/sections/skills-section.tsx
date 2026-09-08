@@ -6,12 +6,34 @@ import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { skills } from '@/lib/data';
+import type { Skill } from '@/types';
 import { shuffleArray } from '@/lib/utils';
 import { useGSAP } from '@/hooks/use-gsap';
-import { SectionLabel, Title, Button } from '@/components/ds';
+import { Title, Button } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
+}
+
+function SkillCard({ skill }: { skill: Skill }) {
+  return (
+    <div
+      className="skill-card flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer transition-[colors,transform,border-color] duration-200 min-w-[80px] sm:min-w-[96px] md:min-w-[112px] mx-2 sm:mx-3 border border-foreground/[0.08] bg-foreground/[0.02] hover:border-primary/40 hover:bg-foreground/[0.04]"
+      style={{ transformStyle: 'preserve-3d' }}
+      title={skill.name}
+    >
+      {skill.iconUrl && (
+        <img
+          className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 mb-1.5 aspect-square object-contain"
+          src={skill.iconUrl}
+          alt={skill.name}
+        />
+      )}
+      <p className="text-[10px] sm:text-xs font-medium text-center text-foreground/60 truncate max-w-full leading-tight">
+        {skill.name}
+      </p>
+    </div>
+  );
 }
 
 export function SkillsSection() {
@@ -83,13 +105,20 @@ export function SkillsSection() {
   }, [mounted], { skipPerformanceCheck: true });
 
   useEffect(() => {
-    if (!mounted) return;
+    const handlers = new Map<Element, { enter: () => void; leave: () => void }>();
+
+    const cleanup = () => {
+      handlers.forEach((handler, item) => {
+        item.removeEventListener('mouseenter', handler.enter);
+        item.removeEventListener('mouseleave', handler.leave);
+      });
+      handlers.clear();
+    };
+
+    if (!mounted) return cleanup;
 
     const skillElements = document.querySelectorAll('.skill-card');
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    if (isTouchDevice) return;
-
-    const handlers = new Map();
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return cleanup;
     // Cache parent row references to avoid repeated querySelector
     const rowCache = new WeakMap<Element, Element | null>();
 
@@ -137,58 +166,24 @@ export function SkillsSection() {
       item.addEventListener('mouseleave', handleMouseLeave);
     });
 
-    return () => {
-      skillElements.forEach((item) => {
-        const handler = handlers.get(item);
-        if (handler) {
-          item.removeEventListener('mouseenter', handler.enter);
-          item.removeEventListener('mouseleave', handler.leave);
-        }
-      });
-      handlers.clear();
-    };
+    return cleanup;
   }, [mounted]);
 
   if (!mounted) {
     return (
       <section id="skills" className="relative py-28 md:py-44 overflow-hidden">
         <div className="px-6 sm:px-10 md:px-16 lg:px-24 max-w-7xl mx-auto">
-          <SectionLabel accent="green" className="mb-8">{t('badge')}</SectionLabel>
-          <Title as="h2" animate style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>{t('title')}</Title>
+          <Title as="h2" animate className="text-display-sm">{t('title')}</Title>
         </div>
         <div className="min-h-[200px]" />
       </section>
     );
   }
 
-  const SkillCard = ({ skill }: { skill: typeof skills[0] }) => (
-    <div
-      className="skill-card flex flex-col items-center justify-center p-3 rounded-xl cursor-pointer transition-all duration-200 min-w-[80px] sm:min-w-[96px] md:min-w-[112px] mx-2 sm:mx-3"
-      style={{
-        border: '1px solid rgba(255,255,255,0.07)',
-        background: 'rgba(255,255,255,0.02)',
-        transformStyle: 'preserve-3d',
-      }}
-      title={skill.name}
-    >
-      {skill.iconUrl && (
-        <img
-          className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 mb-1.5 aspect-square object-contain"
-          src={skill.iconUrl}
-          alt={skill.name}
-        />
-      )}
-      <p className="text-[10px] sm:text-xs font-medium text-center text-foreground/60 truncate max-w-full leading-tight">
-        {skill.name}
-      </p>
-    </div>
-  );
-
   return (
     <section id="skills" className="relative py-28 md:py-44 overflow-hidden">
       <div className="px-6 sm:px-10 md:px-16 lg:px-24 max-w-7xl mx-auto mb-14">
-        <SectionLabel accent="green" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
-        <Title as="h2" animate style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>{t('title')}</Title>
+        <Title as="h2" animate className="text-display-sm">{t('title')}</Title>
       </div>
       <div ref={containerRef} className="relative py-4 overflow-hidden" style={{ perspective: '1500px' }}>
         <div className="overflow-hidden mb-3 md:mb-4 w-full">
@@ -209,8 +204,7 @@ export function SkillsSection() {
         
         <p
           ref={descriptionRef}
-          className="text-center text-foreground/40 mt-10 md:mt-14 px-6 sm:px-10 max-w-3xl mx-auto"
-          style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1rem)' }}
+          className="text-center text-foreground/40 mt-10 md:mt-14 px-6 sm:px-10 max-w-3xl mx-auto text-caption"
         >
           {t('description')}
         </p>
@@ -229,13 +223,7 @@ export function SkillsSection() {
         </div>
       </div>
 
-      {/* Watermark */}
-      <div
-        className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
-        style={{ top: '14%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-green)' }}
-      >
-        {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
-      </div>
+
     </section>
   );
 }

@@ -1,7 +1,7 @@
 import { getMessages } from 'next-intl/server';
 import { LocaleProvider } from '@/context/locale-context';
 import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrapper';
-import { Unbounded, Outfit } from 'next/font/google';
+import { Space_Grotesk, Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
 import { SmoothScrollWrapper, BackToTopButton, CookieBanner, PageTransition, ScrollRestoration } from '@/components/common';
@@ -17,13 +17,13 @@ import Script from 'next/script';
 
 import './globals.css';
 
-const fontUnbounded = Unbounded({
+const fontHeadline = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-unbounded',
   weight: ['400', '500', '600', '700'],
 });
 
-const fontOutfit = Outfit({
+const fontBody = Inter({
   subsets: ['latin'],
   variable: '--font-outfit',
 });
@@ -68,8 +68,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const messages = await getMessages();
+  const cookieStore = await cookies();
+  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
+  const initialLocale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+
   return (
-    <html lang="en" className={cn(fontUnbounded.variable, fontOutfit.variable)}>
+    <html lang={initialLocale} className={cn(fontHeadline.variable, fontBody.variable)}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#f59e0b" />
@@ -82,7 +86,7 @@ export default async function RootLayout({
         <BreadcrumbSchema />
       </head>
       <body className="font-body antialiased">
-        <LocaleProvider>
+        <LocaleProvider initialLocale={initialLocale}>
           <IntlProviderWrapper initialMessages={messages}>
             <ThemeProvider>
               <PageTransition />

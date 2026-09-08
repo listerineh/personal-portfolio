@@ -181,7 +181,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
                     onClick={() => handleReaction(type)}
                     disabled={hasReacted}
                     className={cn(
-                      'group relative flex flex-col items-center gap-3 p-5 rounded-xl transition-all duration-300',
+                      'group relative flex flex-col items-center gap-3 p-5 rounded-xl transition-[color,background-color,border-color,box-shadow,transform] duration-300 ease-out',
                       'bg-background/40 backdrop-blur-sm border',
                       hasReacted 
                         ? `${config.activeBg} ${config.color} border-current shadow-lg scale-105` 
@@ -190,7 +190,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
                   >
                     {/* Emoji */}
                     <div className="relative">
-                      <span className="text-3xl transition-transform duration-300 group-hover:scale-110">
+                      <span className="text-3xl transition-transform duration-300 ease-out group-hover:scale-110">
                         {config.emoji}
                       </span>
                       {hasReacted && (

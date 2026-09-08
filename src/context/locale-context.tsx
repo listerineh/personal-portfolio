@@ -10,9 +10,16 @@ interface LocaleContextType {
 
 const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
 
-export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(defaultLocale);
-  const [mounted, setMounted] = useState(false);
+export function LocaleProvider({
+  children,
+  initialLocale = defaultLocale,
+}: {
+  children: ReactNode;
+  initialLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(
+    initialLocale && locales.includes(initialLocale) ? initialLocale : defaultLocale
+  );
 
   useEffect(() => {
     const savedLocale = document.cookie
@@ -20,11 +27,10 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       .find(row => row.startsWith('NEXT_LOCALE='))
       ?.split('=')[1] as Locale | undefined;
 
-    if (savedLocale && locales.includes(savedLocale)) {
+    if (savedLocale && locales.includes(savedLocale) && savedLocale !== locale) {
       setLocaleState(savedLocale);
     }
-    setMounted(true);
-  }, []);
+  }, [locale]);
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
@@ -32,10 +38,6 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(() => ({ locale, setLocale }), [locale, setLocale]);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <LocaleContext.Provider value={value}>

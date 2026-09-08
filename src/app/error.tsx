@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button, Title, Text, SectionLabel } from '@/components/ds';
+import { Button, Title, Text } from '@/components/ds';
 import { AlertTriangle } from 'lucide-react';
 
 export default function Error({
@@ -27,8 +27,8 @@ export default function Error({
           </div>
         </div>
 
-        <SectionLabel accent="amber" className="mb-5">{t('errorCode')}</SectionLabel>
-        <Title as="h1" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)' }} className="mb-4">
+        <p className="font-headline text-xs tracking-[0.2em] uppercase text-primary/70 mb-5">{t('errorCode')}</p>
+        <Title as="h1" className="mb-4 text-display-sm">
           {t('title')}
         </Title>
         <Text size="base" strength="secondary" className="max-w-sm mx-auto mb-10">

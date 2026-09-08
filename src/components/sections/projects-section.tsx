@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
@@ -10,7 +9,7 @@ import { projectsData } from '@/lib/data';
 import { getLocalizedData } from '@/lib/i18n-data';
 import { useLocale } from '@/context/locale-context';
 import { useGSAP } from '@/hooks/use-gsap';
-import { SectionLabel, Title, ProjectCard, Button } from '@/components/ds';
+import { Title, ProjectCard, Button } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -41,10 +40,24 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="relative py-28 md:py-44 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <SectionLabel accent="amber" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
-        <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
-          {t('title')}
-        </Title>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+          <Title as="h2" animate className="text-display-sm">
+            {t('title')}
+          </Title>
+          {projects.length > 3 && (
+            <Button
+              href="/projects"
+              variant="ghost"
+              accent="neutral"
+              size="md"
+              className="shrink-0 rounded-full border border-foreground/15 hover:border-foreground/30 hidden md:inline-flex"
+            >
+              {t('viewAll')}
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
+        {/* Balanced 3-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.slice(0, 3).map((project, index) => (
             <div
@@ -63,16 +76,14 @@ export function ProjectsSection() {
             </div>
           ))}
         </div>
-
-        {/* View All Button */}
         {projects.length > 3 && (
-          <div className="flex justify-start mt-12 reveal-up">
+          <div className="flex justify-start mt-10 md:hidden">
             <Button
               href="/projects"
               variant="ghost"
               accent="neutral"
               size="md"
-              className="w-full md:w-auto rounded-2xl md:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
+              className="w-full rounded-2xl justify-center border border-foreground/15 hover:border-foreground/30"
             >
               {t('viewAll')}
               <ArrowRight className="w-4 h-4" />
@@ -81,13 +92,7 @@ export function ProjectsSection() {
         )}
       </div>
 
-      {/* Watermark */}
-      <div
-        className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
-        style={{ top: '8%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-      >
-        {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
-      </div>
+
     </section>
   );
 }

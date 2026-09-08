@@ -49,11 +49,7 @@ export function NewsletterSignup() {
 
   return (
     <section
-      className="my-12 rounded-2xl p-8"
-      style={{
-        border: '1px solid var(--primary-border)',
-        background: 'var(--primary-bg)',
-      }}
+      className="my-12 rounded-2xl p-8 border border-primary/20 bg-primary/[0.08]"
     >
       <div className="">
         <h3 className="text-2xl font-headline font-bold mb-2 text-foreground">

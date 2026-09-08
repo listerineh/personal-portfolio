@@ -102,39 +102,44 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    if (isTouchDevice) return;
+    const controllers: (() => void)[] = [];
 
-    navLinksRef.current.forEach((link) => {
-      if (!link) return;
+    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+      navLinksRef.current.forEach((link) => {
+        if (!link) return;
 
-      const handleMouseEnter = () => {
-        gsap.to(link, {
-          y: -2,
-          duration: 0.2,
-          ease: 'power2.out',
-          overwrite: 'auto',
+        const handleMouseEnter = () => {
+          gsap.to(link, {
+            y: -2,
+            duration: 0.2,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        const handleMouseLeave = () => {
+          gsap.to(link, {
+            y: 0,
+            duration: 0.2,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        };
+
+        link.addEventListener('mouseenter', handleMouseEnter);
+        link.addEventListener('mouseleave', handleMouseLeave);
+
+        controllers.push(() => {
+          link.removeEventListener('mouseenter', handleMouseEnter);
+          link.removeEventListener('mouseleave', handleMouseLeave);
         });
-      };
+      });
+    }
 
-      const handleMouseLeave = () => {
-        gsap.to(link, {
-          y: 0,
-          duration: 0.2,
-          ease: 'power2.out',
-          overwrite: 'auto',
-        });
-      };
-
-      link.addEventListener('mouseenter', handleMouseEnter);
-      link.addEventListener('mouseleave', handleMouseLeave);
-
-      return () => {
-        link.removeEventListener('mouseenter', handleMouseEnter);
-        link.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    });
-  }, []);
+    return () => {
+      controllers.forEach((cleanup) => cleanup());
+    };
+  }, [navLinksRef]);
 
   const openMobileMenu = () => {
     scrollYRef.current = window.scrollY;
@@ -160,8 +165,8 @@ export function Header() {
     if (mobileMenuRef.current) {
       gsap.to(mobileMenuRef.current, {
         opacity: 0,
-        duration: 0.1,
-        ease: 'power2.in',
+        duration: 0.15,
+        ease: 'power2.out',
         onComplete: () => {
           document.body.style.position = '';
           document.body.style.top = '';
@@ -215,7 +220,7 @@ export function Header() {
     <header
       ref={headerRef}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color] duration-300 ease-out',
         atTop
           ? 'bg-gradient-to-b from-black/60 via-black/20 to-transparent dark:from-black/40 dark:via-black/15 dark:to-transparent'
           : 'bg-[#f5f4f0]/92 dark:bg-[#080808]/92 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.06]'
@@ -319,12 +324,11 @@ export function Header() {
       {isMobile && isMobileMenuOpen && (
         <div
           ref={mobileMenuRef}
-          className="md:hidden fixed inset-0 z-[60] flex flex-col"
-          style={{ height: '100dvh', background: '#080808' }}
+          className="md:hidden fixed inset-0 z-[60] flex flex-col h-dvh bg-[var(--surface-deep)]"
         >
           {/* Top bar */}
           <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between px-6 py-5">
-            <span className="font-headline font-black text-amber-400 text-xl">S·A</span>
+            <span className="font-headline font-black text-primary text-xl">S·A</span>
             <button
               onClick={closeMobileMenu}
               className="p-2 text-white/40 hover:text-white transition-colors rounded-lg"
@@ -342,8 +346,7 @@ export function Header() {
                   <Link
                     href={item.href}
                     onClick={(e) => handleNavLinkClick(e, item.href)}
-                    className="block py-4 font-headline font-black text-white/40 hover:text-white transition-colors duration-200"
-                    style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', lineHeight: 1 }}
+                    className="block py-4 font-headline font-black text-white/40 hover:text-white transition-colors duration-200 text-display-sm !leading-none"
                   >
                     {item.label}
                   </Link>
@@ -359,7 +362,7 @@ export function Header() {
                     key={loc}
                     onClick={() => { if (loc !== locale) setLocale(loc); }}
                     className={cn(
-                      'px-3 py-1.5 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-all',
+                      'px-3 py-1.5 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97]',
                       locale === loc
                         ? 'bg-amber-400 text-black'
                         : 'text-white/30 hover:text-white border border-white/10 hover:border-white/30'

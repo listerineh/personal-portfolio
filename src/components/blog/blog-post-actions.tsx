@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { SectionLabel, Text, AccentCard } from '@/components/ds';
+import { Text, AccentCard } from '@/components/ds';
 import { BlogReactions } from './blog-reactions';
 import { ShareButtons } from './share-buttons';
 import { NewsletterSubscribe } from './newsletter-subscribe';
@@ -22,7 +22,7 @@ export function BlogPostActions({ slug, title, url }: BlogPostActionsProps) {
       <div className="my-8 md:my-12 h-px bg-foreground/[0.06]" />
 
       <div className="mb-8">
-        <SectionLabel accent="amber" className="mb-4">{t('whatDidYouThink')}</SectionLabel>
+        <p className="font-headline text-xs tracking-[0.2em] uppercase text-primary/70 mb-4">{t('whatDidYouThink')}</p>
         <BlogReactions slug={slug} />
       </div>
 

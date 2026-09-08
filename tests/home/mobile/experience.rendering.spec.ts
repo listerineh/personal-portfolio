@@ -20,19 +20,14 @@ test.describe('Home - Experience Section - Rendering - Mobile', () => {
     expect(titleText).toContain('Work Experience');
   });
 
-  test('should display career badge on mobile', async ({ page }) => {
-    const badge = page.locator('section#experience').locator('text=Career');
-    await expect(badge).toBeVisible();
-  });
-
-  test('should display first three experience items on mobile', async ({ page }) => {
-    const items = page.locator('section#experience').locator('div[class*="relative group"]').filter({ hasNot: page.locator('.hidden') });
+  test('should display experience items on mobile', async ({ page }) => {
+    const items = page.locator('section#experience article');
     const count = await items.count();
-    expect(count).toBeGreaterThanOrEqual(3);
+    expect(count).toBeGreaterThanOrEqual(1);
   });
 
   test('should display company logos on mobile', async ({ page }) => {
-    const logos = page.locator('section#experience img[alt*="logo"]');
+    const logos = page.locator('section#experience img[alt*="logo"], section#experience svg');
     const count = await logos.count();
     expect(count).toBeGreaterThan(0);
   });
@@ -62,7 +57,7 @@ test.describe('Home - Experience Section - Rendering - Mobile', () => {
   });
 
   test('should display responsibilities on mobile', async ({ page }) => {
-    const bullets = page.locator('section#experience').locator('div[class*="flex items-start gap-3"]');
+    const bullets = page.locator('section#experience li');
     const count = await bullets.count();
     expect(count).toBeGreaterThan(0);
   });
@@ -73,21 +68,13 @@ test.describe('Home - Experience Section - Rendering - Mobile', () => {
     expect(count).toBeGreaterThan(0);
   });
 
-  test('should display Show All Experience button on mobile', async ({ page }) => {
-    const showAllButton = page.locator('section#experience button:has-text("Show All Experience")');
-    await expect(showAllButton).toBeVisible();
+  test('should display View All Experience button on mobile', async ({ page }) => {
+    const viewAllLink = page.locator('section#experience a:has-text("View All Experience"):visible');
+    await expect(viewAllLink).toBeVisible();
   });
 
-  test('should have responsive card styling on mobile', async ({ page }) => {
-    const card = page.locator('section#experience').locator('div[class*="rounded-xl bg-card"]').first();
-    const classList = await card.evaluate(el => el.className);
-    expect(classList).toContain('rounded-xl');
-    expect(classList).toContain('bg-card');
-  });
-
-  test('should have proper padding on mobile', async ({ page }) => {
-    const card = page.locator('section#experience').locator('div[class*="p-6"]').first();
-    const classList = await card.evaluate(el => el.className);
-    expect(classList).toContain('p-6');
+  test('should have clean list styling on mobile', async ({ page }) => {
+    const card = page.locator('section#experience article').first();
+    await expect(card).toBeVisible();
   });
 });

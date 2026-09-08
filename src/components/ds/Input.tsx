@@ -1,55 +1,42 @@
 'use client';
 
 import { forwardRef, useState } from 'react';
-import { useTheme } from '@/context/theme-context';
+import { cn } from '@/lib/utils';
 import type { Accent } from './types';
 
-const accentColorMap: Record<Accent, string> = {
-  amber: 'rgb(var(--primary))',
-  indigo: '#818cf8',
-  green: '#1DB954',
-  neutral: '#a3a3a3',
+const accentRingMap: Record<Accent, string> = {
+  amber: 'focus:ring-primary/20 focus:border-primary',
+  indigo: 'focus:ring-indigo-400/20 focus:border-indigo-400',
+  green: 'focus:ring-green-500/20 focus:border-green-500',
+  neutral: 'focus:ring-foreground/10 focus:border-foreground/40',
 };
 
-const accentGlowMap: Record<Accent, string> = {
-  amber: 'var(--primary-glow)',
-  indigo: 'rgba(129,140,248,0.10)',
-  green: 'rgba(29,185,84,0.10)',
-  neutral: 'rgba(163,163,163,0.10)',
+const accentRingErrorMap: Record<Accent, string> = {
+  amber: 'ring-destructive/30 border-destructive',
+  indigo: 'ring-destructive/30 border-destructive',
+  green: 'ring-destructive/30 border-destructive',
+  neutral: 'ring-destructive/30 border-destructive',
 };
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   accent?: Accent;
   error?: boolean;
-  forceDark?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ accent = 'indigo', error = false, forceDark = false, style, className = '', ...props }, ref) => {
-    const { theme } = useTheme();
+  ({ accent = 'indigo', error = false, className = '', ...props }, ref) => {
     const [focused, setFocused] = useState(false);
-    const dark = theme === 'dark';
-
-    const accentColor = accentColorMap[accent];
-    const borderColor = error
-      ? 'rgb(var(--destructive))'
-      : focused
-      ? accentColor
-      : dark
-      ? 'rgba(255,255,255,0.1)'
-      : 'rgba(0,0,0,0.15)';
 
     return (
       <input
         ref={ref}
-        className={`w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-all duration-200 ${forceDark ? 'placeholder:text-white/35' : 'placeholder:text-foreground/30'} ${className}`}
-        style={{
-          background: dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)',
-          border: `1px solid ${borderColor}`,
-          color: dark ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.85)',
-          boxShadow: focused && !error ? `0 0 0 3px ${accentGlowMap[accent]}` : 'none',
-          ...style,
-        }}
+        className={cn(
+          'w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out',
+          'bg-foreground/[0.04] text-foreground/85 placeholder:text-foreground/30',
+          'border border-foreground/[0.15]',
+          error ? accentRingErrorMap[accent] : `focus:ring-2 ${accentRingMap[accent]}`,
+          className
+        )}
         onFocus={(e) => {
           setFocused(true);
           props.onFocus?.(e);

@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getBlogPosts } from '@/lib/data';
 import { useLocale } from '@/context/locale-context';
 import { useGSAP } from '@/hooks/use-gsap';
-import { SectionLabel, Title, BlogCard, Button } from '@/components/ds';
+import { Title, BlogCard, Button } from '@/components/ds';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
 if (typeof window !== 'undefined') {
@@ -41,15 +41,27 @@ export function BlogPreviewSection() {
   return (
     <section id="blog" className="relative py-28 md:py-44 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <SectionLabel accent="amber" className="mb-8 reveal-up">{t('badge')}</SectionLabel>
-        <Title as="h2" animate className="mb-16" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
-          {t('title')}
-        </Title>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+          <Title as="h2" animate className="text-display-sm">
+            {t('title')}
+          </Title>
+          <Button
+            href="/blog"
+            variant="ghost"
+            accent="neutral"
+            size="md"
+            className="shrink-0 rounded-full border border-foreground/15 hover:border-foreground/30 hidden md:inline-flex"
+          >
+            {t('viewAllPosts')}
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+        {/* Balanced 3-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayedPosts.map((post, index) => (
             <div
               key={post.slug}
-              className="h-full mt-5"
+              className="h-full"
               ref={(el) => { cardsRef.current[index] = el; }}
             >
               <BlogCard
@@ -59,6 +71,7 @@ export function BlogPreviewSection() {
                 date={post.date}
                 tags={post.tags}
                 coverImage={post.imageUrl}
+                readingTime={post.readingTime}
                 readMoreLabel={tCommon('readMore')}
                 newLabel={t('new')}
                 isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
@@ -67,13 +80,13 @@ export function BlogPreviewSection() {
             </div>
           ))}
         </div>
-        <div className="flex justify-start mt-12 reveal-up">
+        <div className="flex justify-start mt-10 md:hidden">
           <Button
             href="/blog"
             variant="ghost"
             accent="neutral"
             size="md"
-            className="w-full md:w-auto rounded-2xl md:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
+            className="w-full rounded-2xl justify-center border border-foreground/15 hover:border-foreground/30"
           >
             {t('viewAllPosts')}
             <ArrowRight className="w-4 h-4" />
@@ -81,13 +94,7 @@ export function BlogPreviewSection() {
         </div>
       </div>
 
-      {/* Watermark */}
-      <div
-        className="absolute inset-x-0 overflow-hidden whitespace-nowrap font-headline font-black pointer-events-none select-none leading-none"
-        style={{ top: '11%', fontSize: 'clamp(6rem, 20vw, 12rem)', color: 'var(--wm-amber)' }}
-      >
-        {Array.from({ length: 10 }, (_, i) => <span key={i}>{t('watermark')}&nbsp;&nbsp;</span>)}
-      </div>
+
     </section>
   );
 }

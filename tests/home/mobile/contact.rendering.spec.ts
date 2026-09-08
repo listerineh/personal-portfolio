@@ -17,62 +17,18 @@ test.describe('Home - Contact Section - Rendering - Mobile', () => {
     const title = page.locator('section#contact h2');
     await expect(title).toBeVisible();
     const titleText = await title.textContent();
-    expect(titleText).toContain('Get In Touch');
-  });
-
-  test('should display contact badge on mobile', async ({ page }) => {
-    const badge = page.locator('section#contact').locator('text=Contact');
-    await expect(badge).toBeVisible();
+    expect(titleText).toMatch(/Work with me/i);
   });
 
   test('should display description text on mobile', async ({ page }) => {
-    const description = page.locator('section#contact p:has-text("Have a project")');
+    const description = page.locator('section#contact p:has-text("If you have a project")');
     await expect(description).toBeVisible();
   });
 
-  test('should display name label on mobile', async ({ page }) => {
-    const label = page.locator('section#contact label:has-text("Your Name")');
-    await expect(label).toBeVisible();
-  });
-
-  test('should display email label on mobile', async ({ page }) => {
-    const label = page.locator('section#contact label:has-text("Your Email")');
-    await expect(label).toBeVisible();
-  });
-
-  test('should display message label on mobile', async ({ page }) => {
-    const label = page.locator('section#contact label:has-text("Your Message")');
-    await expect(label).toBeVisible();
-  });
-
-  test('should display name input field on mobile', async ({ page }) => {
-    const input = page.locator('section#contact input[id="name"]');
-    await expect(input).toBeVisible();
-  });
-
-  test('should display email input field on mobile', async ({ page }) => {
-    const input = page.locator('section#contact input[id="email"]');
-    await expect(input).toBeVisible();
-  });
-
-  test('should display message textarea field on mobile', async ({ page }) => {
-    const textarea = page.locator('section#contact textarea[id="message"]');
-    await expect(textarea).toBeVisible();
-  });
-
-  test('should display submit button on mobile', async ({ page }) => {
-    const button = page.locator('section#contact button[type="submit"]');
+  test('should display call-to-action button on mobile', async ({ page }) => {
+    const button = page.locator('section#contact a[href="/contact"]');
     await expect(button).toBeVisible();
-  });
-
-  test('should have form with proper structure on mobile', async ({ page }) => {
-    const form = page.locator('section#contact form');
-    await expect(form).toBeVisible();
-  });
-
-  test('should have input fields with proper styling on mobile', async ({ page }) => {
-    const input = page.locator('section#contact input[id="name"]');
-    const classList = await input.evaluate(el => el.className);
-    expect(classList).toContain('h-12');
+    const buttonText = await button.textContent();
+    expect(buttonText).toMatch(/Send a message/i);
   });
 });

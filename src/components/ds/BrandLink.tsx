@@ -12,7 +12,7 @@ interface BrandLinkProps {
 }
 
 const base =
-  'inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-full text-sm transition-all duration-300'
+  'inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-full text-sm transition-[filter,background-color,border-color,color,transform] duration-300 ease-out active:scale-[0.97]'
 
 export function BrandLink({
   href,

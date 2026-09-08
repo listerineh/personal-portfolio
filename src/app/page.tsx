@@ -39,12 +39,12 @@ export default function HomePage() {
       gsap.utils.toArray<HTMLElement>('.reveal-up').forEach((el) => {
         gsap.from(el, {
           opacity: 0,
-          y: 50,
-          duration: 0.9,
+          y: 20,
+          duration: 0.5,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: el,
-            start: 'top 88%',
+            start: 'top 90%',
             toggleActions: 'play none none none',
           },
         });
@@ -53,13 +53,13 @@ export default function HomePage() {
       gsap.utils.toArray<HTMLElement>('.reveal-stagger').forEach((container) => {
         gsap.from(Array.from(container.children), {
           opacity: 0,
-          y: 36,
-          duration: 0.6,
-          stagger: 0.12,
+          y: 16,
+          duration: 0.4,
+          stagger: 0.06,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: container,
-            start: 'top 85%',
+            start: 'top 88%',
             toggleActions: 'play none none none',
           },
         });
@@ -73,22 +73,10 @@ export default function HomePage() {
     <div className="homepage-page flex flex-col min-h-screen overflow-x-hidden">
       <style>{`
         .homepage-page {
-          background-color: #f5f4f0;
-          color: #111111;
+          background-color: var(--surface-deep);
         }
-        .dark .homepage-page {
-          background-color: #080808;
-          color: #f0f0f0;
-        }
-        .grain-overlay {
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-          background-repeat: repeat;
-          background-size: 200px 200px;
-        }
-      `}</style>
 
-      {/* Grain overlay */}
-      <div className="grain-overlay fixed inset-0 pointer-events-none z-[9998] opacity-[0.025] mix-blend-overlay" />
+      `}</style>
 
       <Header />
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-foreground">
