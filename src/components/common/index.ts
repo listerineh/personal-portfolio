@@ -6,3 +6,4 @@ export { ErrorBoundary } from './error-boundary';
 export { CookieBanner } from './cookie-banner';
 export { PageTransition } from './page-transition';
 export { ScrollRestoration } from './scroll-restoration';
+export { GlobalScrollReveal } from './global-scroll-reveal';

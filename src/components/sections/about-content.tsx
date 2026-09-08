@@ -5,15 +5,10 @@ import Image from 'next/image';
 import { Mail, MapPin, Server, Monitor, Cloud, Sparkles, Quote } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@/hooks/use-gsap';
 import { Title, Text, Button } from '@/components/ds';
 import { communityLinks } from '@/lib/data';
 import Link from 'next/link';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export function AboutContent() {
   const t = useTranslations('about');
@@ -25,22 +20,6 @@ export function AboutContent() {
     if (!prefersReducedMotion && heroRef.current) {
       gsap.from(heroRef.current.querySelectorAll('.hero-item'), {
         opacity: 0, y: 28, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.15,
-      });
-    }
-
-    if (!prefersReducedMotion) {
-      gsap.utils.toArray<HTMLElement>('.reveal-up').forEach((el) => {
-        gsap.from(el, {
-          opacity: 0, y: 50, duration: 0.9, ease: 'power2.out',
-          scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
-        });
-      });
-
-      gsap.utils.toArray<HTMLElement>('.reveal-stagger').forEach((container) => {
-        gsap.from(Array.from(container.children), {
-          opacity: 0, y: 36, duration: 0.6, stagger: 0.12, ease: 'power2.out',
-          scrollTrigger: { trigger: container, start: 'top 85%', toggleActions: 'play none none none' },
-        });
       });
     }
   }, []);

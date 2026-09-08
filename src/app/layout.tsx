@@ -4,7 +4,7 @@ import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrappe
 import { Space_Grotesk, Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
-import { SmoothScrollWrapper, BackToTopButton, CookieBanner, PageTransition, ScrollRestoration } from '@/components/common';
+import { SmoothScrollWrapper, BackToTopButton, CookieBanner, PageTransition, ScrollRestoration, GlobalScrollReveal } from '@/components/common';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
 import { Toaster } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
@@ -91,6 +91,7 @@ export default async function RootLayout({
             <ThemeProvider>
               <PageTransition />
               <ScrollRestoration />
+              <GlobalScrollReveal />
               <SmoothScrollWrapper>
                 {children}
               </SmoothScrollWrapper>
