@@ -130,7 +130,7 @@ export default function WhyPage() {
       <div className="fixed top-5 left-5 z-[9999]">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-white/50 dark:hover:text-white transition-colors duration-300 group"
+          className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)] transition-colors duration-300 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           <span className="hidden sm:inline font-medium">{t('backToPortfolio')}</span>
@@ -138,8 +138,8 @@ export default function WhyPage() {
       </div>
 
       <div className="fixed top-5 right-5 z-[9999] flex items-center gap-2">
-        <LanguageSwitcher />
-        <ThemeToggleButton className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 border-gray-200 dark:text-white/50 dark:hover:text-white dark:hover:bg-white/10 dark:border-white/10" />
+        <LanguageSwitcher className="text-white/70 hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]" />
+        <ThemeToggleButton className="text-white/70 hover:text-white hover:bg-white/10 border-white/20 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]" />
       </div>
 
       <main id="main-content">
