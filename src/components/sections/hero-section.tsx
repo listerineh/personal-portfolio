@@ -22,6 +22,7 @@ export function HeroSection() {
   const eyebrowRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -43,7 +44,8 @@ export function HeroSection() {
       const tl = gsap.timeline({ delay: 0.1, defaults: { ease: 'power3.out' } });
       tl.from(eyebrowRef.current, { opacity: 0, y: 12, duration: 0.5 })
         .from(titleRef.current, { opacity: 0, y: 24, duration: 0.6 }, '-=0.25')
-        .from(subtitleRef.current, { opacity: 0, y: 16, duration: 0.5 }, '-=0.3');
+        .from(subtitleRef.current, { opacity: 0, y: 16, duration: 0.5 }, '-=0.3')
+        .from(statsRef.current, { opacity: 0, y: 16, duration: 0.5 }, '-=0.3');
     }
   }, []);
 
@@ -92,6 +94,37 @@ export function HeroSection() {
         >
           {t('description')}
         </p>
+
+        <div
+          ref={statsRef}
+          className="flex items-center gap-6 sm:gap-8 mb-8 flex-wrap"
+        >
+          <div className="flex items-center gap-2">
+            <span
+              className="font-headline font-black text-primary"
+              style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}
+            >
+              {t('statsYears')}
+            </span>
+            <span className="text-[10px] font-headline tracking-[0.2em] uppercase text-white/40 leading-tight">
+              <span className="block">{t('statsYearsLabel1')}</span>
+              <span className="block">{t('statsYearsLabel2')}</span>
+            </span>
+          </div>
+          <div className="w-px h-8 bg-white/15" />
+          <div className="flex items-center gap-2">
+            <span
+              className="font-headline font-black text-white/80"
+              style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}
+            >
+              {t('statsRemote')}
+            </span>
+            <span className="text-[10px] font-headline tracking-[0.2em] uppercase text-white/40 leading-tight">
+              <span className="block">{t('statsRemoteLabel1')}</span>
+              <span className="block">{t('statsRemoteLabel2')}</span>
+            </span>
+          </div>
+        </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <Button
