@@ -11,7 +11,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useLocale } from '@/context/locale-context';
 import { locales } from '@/i18n/config';
 import { cn } from '@/lib/utils';
-import { throttle } from '@/lib/performance-utils';
 
 export function Header() {
   const t = useTranslations('nav');
@@ -19,7 +18,6 @@ export function Header() {
   const { locale, setLocale } = useLocale();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
-  const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   
@@ -40,15 +38,6 @@ export function Header() {
   const navItemsRef = useRef<(HTMLLIElement | null)[]>([]);
   const socialLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const scrollYRef = useRef<number>(0);
-
-  useEffect(() => {
-    const handleScroll = throttle(() => {
-      setIsScrolled(window.scrollY > 50);
-    }, 100);
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     if (!headerRef.current) return;
@@ -214,17 +203,10 @@ export function Header() {
     }
   };
 
-  const atTop = !isScrolled;
-
   return (
     <header
       ref={headerRef}
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color] duration-300 ease-out',
-        atTop
-          ? 'bg-gradient-to-b from-black/60 via-black/20 to-transparent dark:from-black/40 dark:via-black/15 dark:to-transparent'
-          : 'bg-[#f5f4f0]/92 dark:bg-[#080808]/92 backdrop-blur-xl border-b border-black/[0.06] dark:border-white/[0.06]'
-      )}
+      className="fixed top-0 left-0 right-0 z-50 bg-background/92 backdrop-blur-xl border-b border-border/20"
     >
       <div className="px-6 sm:px-10 md:px-16 lg:px-24 h-20 flex items-center justify-between">
 
@@ -273,14 +255,11 @@ export function Header() {
                 }
               }}
               aria-current={pathname === item.href ? 'page' : undefined}
-              style={atTop ? { textShadow: '0 2px 8px rgba(0,0,0,0.6)' } : undefined}
               className={cn(
                 'font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
                 pathname === item.href
                   ? 'text-primary'
-                  : atTop
-                    ? 'text-white hover:text-white'
-                    : 'text-foreground/55 hover:text-foreground'
+                  : 'text-foreground/60 hover:text-foreground'
               )}
             >
               {item.label}
@@ -290,33 +269,18 @@ export function Header() {
 
         {/* Right controls */}
         <div className="hidden md:flex items-center gap-1">
-          <LanguageSwitcher className={cn(
-            'transition-colors',
-            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
-          )} />
-          <ThemeToggleButton className={cn(
-            'transition-colors',
-            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
-          )} />
+          <LanguageSwitcher className="transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8" />
+          <ThemeToggleButton className="transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8" />
         </div>
 
         {/* Mobile: controls + burger */}
         <div className="md:hidden flex items-center gap-1">
-          <LanguageSwitcher className={cn(
-            'transition-colors',
-            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground'
-          )} />
-          <ThemeToggleButton className={cn(
-            'transition-colors [&_svg]:w-5 [&_svg]:h-5',
-            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground'
-          )} />
+          <LanguageSwitcher className="transition-colors text-foreground/60 hover:text-foreground" />
+          <ThemeToggleButton className="transition-colors text-foreground/60 hover:text-foreground [&_svg]:w-5 [&_svg]:h-5" />
           <button
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
-            className={cn(
-              'p-2 rounded-lg transition-colors',
-              atTop ? 'text-white/70 hover:text-white hover:bg-white/10' : 'text-foreground/70 hover:text-foreground hover:bg-foreground/8'
-            )}
+            className="p-2 rounded-lg transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8"
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
