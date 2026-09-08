@@ -275,9 +275,11 @@ export function Header() {
               aria-current={pathname === item.href ? 'page' : undefined}
               className={cn(
                 'font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
-                atTop
-                  ? 'text-white/85 hover:text-white'
-                  : 'text-foreground/55 hover:text-foreground'
+                pathname === item.href
+                  ? 'text-primary'
+                  : atTop
+                    ? 'text-white/85 hover:text-white'
+                    : 'text-foreground/55 hover:text-foreground'
               )}
             >
               {item.label}
@@ -346,7 +348,10 @@ export function Header() {
                   <Link
                     href={item.href}
                     onClick={(e) => handleNavLinkClick(e, item.href)}
-                    className="block py-4 font-headline font-black text-white/40 hover:text-white transition-colors duration-200 text-display-sm !leading-none"
+                    className={cn(
+                      'block py-4 font-headline font-black transition-colors duration-200 text-display-sm !leading-none',
+                      pathname === item.href ? 'text-primary' : 'text-white/40 hover:text-white'
+                    )}
                   >
                     {item.label}
                   </Link>
