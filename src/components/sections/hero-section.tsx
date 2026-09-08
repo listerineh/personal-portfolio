@@ -72,18 +72,24 @@ export function HeroSection() {
         <span
           ref={eyebrowRef}
           className="block font-headline text-xs tracking-[0.35em] uppercase mb-5 text-primary"
+          style={{ textShadow: '0 1px 3px rgba(0,0,0,0.45)' }}
         >
           {t('subtitle')}
         </span>
 
-        <h1 ref={titleRef} className="font-headline font-black text-display text-white mb-7">
+        <h1
+          ref={titleRef}
+          className="font-headline font-black text-display text-white mb-7"
+          style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+        >
           <span className="block">Sebastian</span>
           <span className="block text-primary">Alvarez</span>
         </h1>
 
         <p
           ref={subtitleRef}
-          className="max-w-sm md:max-w-md text-white/55 text-base md:text-lg leading-relaxed mb-6"
+          className="max-w-sm md:max-w-md text-white/80 text-base md:text-lg leading-relaxed mb-6"
+          style={{ textShadow: '0 1px 4px rgba(0,0,0,0.45)' }}
         >
           {t('description')}
         </p>
