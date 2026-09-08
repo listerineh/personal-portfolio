@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,12 +11,38 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+function isPastRevealStart(el: HTMLElement, threshold: number) {
+  if (typeof window === 'undefined') return false;
+  const top = el.getBoundingClientRect().top;
+  return top < window.innerHeight * threshold;
+}
+
 export function GlobalScrollReveal() {
   const pathname = usePathname();
+
+  useLayoutEffect(() => {
+    if (!supportsAnimations()) return;
+    const revealEls = gsap.utils.toArray<HTMLElement>('.reveal-up');
+    const staggerContainers = gsap.utils.toArray<HTMLElement>('.reveal-stagger');
+
+    revealEls.forEach((el) => {
+      if (isPastRevealStart(el, 0.88)) {
+        gsap.set(el, { opacity: 1, y: 0 });
+      }
+    });
+
+    staggerContainers.forEach((container) => {
+      if (isPastRevealStart(container, 0.85)) {
+        gsap.set(Array.from(container.children), { opacity: 1, y: 0 });
+      }
+    });
+  }, [pathname]);
 
   useGSAP(() => {
     const revealEls = gsap.utils.toArray<HTMLElement>('.reveal-up');
     revealEls.forEach((el) => {
+      if (isPastRevealStart(el, 0.88)) return;
+
       gsap.fromTo(
         el,
         { opacity: 0, y: 24 },
@@ -36,6 +62,8 @@ export function GlobalScrollReveal() {
 
     const staggerContainers = gsap.utils.toArray<HTMLElement>('.reveal-stagger');
     staggerContainers.forEach((container) => {
+      if (isPastRevealStart(container, 0.85)) return;
+
       gsap.fromTo(
         Array.from(container.children),
         { opacity: 0, y: 16 },
