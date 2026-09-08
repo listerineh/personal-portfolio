@@ -206,8 +206,8 @@ export function SpotifyTopTracks({
                     <p className="text-xs truncate mt-1 text-white/35">{track.artistName}</p>
                   </div>
 
-                  {/* Platform buttons: always visible on mobile, hover-reveal on pointer-capable screens */}
-                  <div className="flex items-center gap-2 flex-wrap sm:ml-auto sm:flex-nowrap opacity-100 sm:opacity-0 sm:-translate-x-1.5 sm:group-hover:opacity-100 sm:group-hover:translate-x-0 transition-[opacity,transform] duration-300 ease-out">
+                  {/* Platform buttons: only reveal on hover */}
+                  <div className="flex items-center gap-2 flex-wrap sm:ml-auto sm:flex-nowrap opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-300 ease-out">
                     {platforms.map((platform) => (
                       <a
                         key={platform.key}
