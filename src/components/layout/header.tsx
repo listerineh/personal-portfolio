@@ -273,13 +273,13 @@ export function Header() {
                 }
               }}
               aria-current={pathname === item.href ? 'page' : undefined}
-              style={atTop ? { textShadow: '0 1px 4px rgba(0,0,0,0.5)' } : undefined}
+              style={atTop ? { textShadow: '0 2px 8px rgba(0,0,0,0.6)' } : undefined}
               className={cn(
                 'font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
                 pathname === item.href
                   ? 'text-primary'
                   : atTop
-                    ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white'
+                    ? 'text-white hover:text-white'
                     : 'text-foreground/55 hover:text-foreground'
               )}
             >
@@ -292,11 +292,11 @@ export function Header() {
         <div className="hidden md:flex items-center gap-1">
           <LanguageSwitcher className={cn(
             'transition-colors',
-            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
+            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
           )} />
           <ThemeToggleButton className={cn(
             'transition-colors',
-            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
+            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
           )} />
         </div>
 
@@ -304,11 +304,11 @@ export function Header() {
         <div className="md:hidden flex items-center gap-1">
           <LanguageSwitcher className={cn(
             'transition-colors',
-            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]' : 'text-foreground/55 hover:text-foreground'
+            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground'
           )} />
           <ThemeToggleButton className={cn(
             'transition-colors [&_svg]:w-5 [&_svg]:h-5',
-            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]' : 'text-foreground/55 hover:text-foreground'
+            atTop ? 'text-white hover:text-white hover:bg-white/10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]' : 'text-foreground/55 hover:text-foreground'
           )} />
           <button
             onClick={toggleMobileMenu}
