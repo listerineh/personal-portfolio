@@ -3,13 +3,11 @@
 import { Fragment, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { socialLinks } from '@/lib/data';
 import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
-import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -17,16 +15,14 @@ if (typeof window !== 'undefined') {
 
 export function Footer() {
   const t = useTranslations('nav');
-  const tNewsletter = useTranslations('newsletter');
   const tCommon = useTranslations('common');
   const currentYear = new Date().getFullYear();
   const footerRef = useRef<HTMLElement>(null);
-  const footerBgRef = useRef<HTMLDivElement>(null);
   const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const socialIconsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const copyrightRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  
+
   const navItems = [
     { label: t('about'), href: '/about' },
     { label: t('experience'), href: '/experience' },
@@ -49,23 +45,6 @@ export function Footer() {
         }
       });
 
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!prefersReducedMotion && footerBgRef.current) {
-        gsap.fromTo(footerBgRef.current,
-          { yPercent: -12 },
-          {
-            yPercent: 12,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: true,
-            },
-          }
-        );
-      }
-
       const navLinks = navLinksRef.current.filter(Boolean);
       const socialIcons = socialIconsRef.current.filter(Boolean);
 
@@ -82,18 +61,20 @@ export function Footer() {
       });
 
       tl.fromTo(navLinks,
-        { opacity: 0 },
+        { opacity: 0, y: 8 },
         {
           opacity: 1,
+          y: 0,
           stagger: 0.03,
           duration: 0.3,
           ease: 'power2.out',
         }
       )
       .fromTo(socialIcons,
-        { opacity: 0 },
+        { opacity: 0, y: 8 },
         {
           opacity: 1,
+          y: 0,
           stagger: 0.03,
           duration: 0.3,
           ease: 'power2.out',
@@ -115,7 +96,7 @@ export function Footer() {
         }
       });
     };
-  }, [pathname, footerRef, footerBgRef, navLinksRef, socialIconsRef, copyrightRef]);
+  }, [pathname, footerRef, navLinksRef, socialIconsRef, copyrightRef]);
 
   useEffect(() => {
     const controllers: (() => void)[] = [];
@@ -152,17 +133,7 @@ export function Footer() {
           icon.removeEventListener('mouseleave', handleMouseLeave);
         });
       });
-    }
 
-    return () => {
-      controllers.forEach((cleanup) => cleanup());
-    };
-  }, [socialIconsRef]);
-
-  useEffect(() => {
-    const controllers: (() => void)[] = [];
-
-    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
       navLinksRef.current.forEach((link) => {
         if (!link) return;
 
@@ -200,57 +171,13 @@ export function Footer() {
   }, [navLinksRef]);
 
   return (
-    <footer ref={footerRef} className="relative overflow-hidden bg-[var(--surface-deep)]">
-
-      {/* Parallax background image */}
-      <div ref={footerBgRef} className="absolute inset-0 scale-[1.25] origin-center">
-        <Image
-          src="/images/footer.webp"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-center brightness-[0.7]"
-          priority={false}
-        />
-      </div>
-
-      {/* Newsletter section */}
-      <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 pt-28 md:pt-36 pb-20 md:pb-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
-
-            {/* Left — copy */}
-            <div className="space-y-5 text-center md:text-left">
-              <h2
-                className="font-headline font-black leading-[0.9] text-white text-display-sm"
-              >
-                {tNewsletter('title')}
-              </h2>
-              <p className="text-white/80 dark:text-white/45 leading-relaxed max-w-sm mx-auto md:mx-0 text-sm">
-                {tNewsletter('description')}
-              </p>
-            </div>
-
-            {/* Right — form */}
-            <div className="flex items-center">
-              <div className="w-full">
-                <NewsletterSubscribe variant="bare" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div className="relative z-10 mx-6 sm:mx-10 md:mx-16 lg:mx-24 h-px bg-white/20 dark:bg-white/8" />
-
-      {/* Big name + nav */}
+    <footer ref={footerRef} className="relative overflow-hidden bg-[#080808]">
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
 
-            {/* Nav links — list on mobile, horizontal with separators on desktop */}
+            {/* Nav links */}
             <nav aria-label="Footer navigation">
               <ul className="flex flex-col lg:flex-row lg:flex-wrap items-center gap-2 lg:gap-x-2 lg:gap-y-4">
                 {navItems.map((link, index) => (
@@ -259,13 +186,13 @@ export function Footer() {
                       <Link
                         ref={(el) => { navLinksRef.current[index] = el; }}
                         href={link.href}
-                        className="font-headline text-sm lg:text-xs tracking-[0.12em] uppercase text-white/85 dark:text-white/35 hover:text-white transition-colors duration-200 px-2 py-1.5 lg:py-1"
+                        className="font-headline text-sm lg:text-xs tracking-[0.12em] uppercase text-white/70 hover:text-white transition-colors duration-200 px-2 py-1.5 lg:py-1"
                       >
                         {link.label}
                       </Link>
                     </li>
                     {index < navItems.length - 1 && (
-                      <li className="hidden lg:block text-white/40 dark:text-white/15 select-none text-xs">·</li>
+                      <li className="hidden lg:block text-white/30 select-none text-xs">·</li>
                     )}
                   </Fragment>
                 ))}
@@ -282,7 +209,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                  className="p-3 lg:p-2.5 rounded-xl border border-white/30 dark:border-white/10 text-white/70 dark:text-white/30 hover:text-primary hover:border-primary/30 transition-colors duration-200"
+                  className="p-3 lg:p-2.5 rounded-xl border border-white/20 text-white/70 hover:text-primary hover:border-primary/30 transition-colors duration-200"
                 >
                   <link.icon className="w-5 h-5 lg:w-4 lg:h-4" />
                 </Link>
@@ -293,20 +220,20 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div ref={copyrightRef} className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-6 md:py-5 pb-24 md:pb-5 border-t border-white/[0.06]">
+      <div ref={copyrightRef} className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-6 md:py-5 border-t border-white/[0.06]">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-5">
-          <p className="font-headline text-xs text-white/60 dark:text-white/25 text-center sm:text-left">
+          <p className="font-headline text-xs text-white/50 text-center sm:text-left">
             &copy; {currentYear} Sebastian Alvarez — {tCommon('allRightsReserved')}
           </p>
-          <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center gap-3 sm:gap-5 text-xs sm:text-xs text-white/60 dark:text-white/25">
-            <CookieSettingsLink className="block w-full text-center sm:w-auto text-xs sm:text-xs text-white/60 dark:text-white/25 hover:text-primary transition-colors py-2 sm:py-0" />
-            <Link href="/privacy" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
+          <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center gap-3 sm:gap-5 text-xs sm:text-xs text-white/50">
+            <CookieSettingsLink className="block w-full text-center sm:w-auto text-xs sm:text-xs text-white/50 hover:text-primary transition-colors py-2 sm:py-0" />
+            <Link href="/privacy" className="block w-full text-center sm:w-auto text-white/50 hover:text-primary transition-colors py-2 sm:py-0">
               {t('privacyPolicy')}
             </Link>
-            <Link href="/terms" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
+            <Link href="/terms" className="block w-full text-center sm:w-auto text-white/50 hover:text-primary transition-colors py-2 sm:py-0">
               {t('termsOfUse')}
             </Link>
-            <Link href="/docs/components" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
+            <Link href="/docs/components" className="block w-full text-center sm:w-auto text-white/50 hover:text-primary transition-colors py-2 sm:py-0">
               {t('components')}
             </Link>
           </div>
