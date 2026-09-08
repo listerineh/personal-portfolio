@@ -278,7 +278,7 @@ export function Header() {
                 pathname === item.href
                   ? 'text-primary'
                   : atTop
-                    ? 'text-white/85 hover:text-white'
+                    ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white'
                     : 'text-foreground/55 hover:text-foreground'
               )}
             >
@@ -291,11 +291,11 @@ export function Header() {
         <div className="hidden md:flex items-center gap-1">
           <LanguageSwitcher className={cn(
             'transition-colors',
-            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
+            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
           )} />
           <ThemeToggleButton className={cn(
             'transition-colors',
-            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
+            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground hover:bg-foreground/8'
           )} />
         </div>
 
@@ -303,11 +303,11 @@ export function Header() {
         <div className="md:hidden flex items-center gap-1">
           <LanguageSwitcher className={cn(
             'transition-colors',
-            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
+            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
           )} />
           <ThemeToggleButton className={cn(
             'transition-colors [&_svg]:w-5 [&_svg]:h-5',
-            atTop ? 'text-white/85 hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
+            atTop ? 'text-white dark:text-white/85 hover:text-white dark:hover:text-white hover:bg-white/10' : 'text-foreground/55 hover:text-foreground'
           )} />
           <button
             onClick={toggleMobileMenu}
