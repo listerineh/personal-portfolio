@@ -229,7 +229,7 @@ export function Footer() {
               >
                 {tNewsletter('title')}
               </h2>
-              <p className="text-white/45 leading-relaxed max-w-sm mx-auto md:mx-0 text-sm">
+              <p className="text-white/80 dark:text-white/45 leading-relaxed max-w-sm mx-auto md:mx-0 text-sm">
                 {tNewsletter('description')}
               </p>
             </div>
@@ -245,7 +245,7 @@ export function Footer() {
       </div>
 
       {/* Divider */}
-      <div className="relative z-10 mx-6 sm:mx-10 md:mx-16 lg:mx-24 h-px bg-white/8" />
+      <div className="relative z-10 mx-6 sm:mx-10 md:mx-16 lg:mx-24 h-px bg-white/20 dark:bg-white/8" />
 
       {/* Big name + nav */}
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20">
@@ -262,13 +262,13 @@ export function Footer() {
                       <Link
                         ref={(el) => { navLinksRef.current[index] = el; }}
                         href={link.href}
-                        className="font-headline text-sm lg:text-xs tracking-[0.12em] uppercase text-white/35 hover:text-white transition-colors duration-200 px-2 py-1.5 lg:py-1"
+                        className="font-headline text-sm lg:text-xs tracking-[0.12em] uppercase text-white/85 dark:text-white/35 hover:text-white transition-colors duration-200 px-2 py-1.5 lg:py-1"
                       >
                         {link.label}
                       </Link>
                     </li>
                     {index < navItems.length - 1 && (
-                      <li className="hidden lg:block text-white/15 select-none text-xs">·</li>
+                      <li className="hidden lg:block text-white/40 dark:text-white/15 select-none text-xs">·</li>
                     )}
                   </Fragment>
                 ))}
@@ -285,7 +285,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                  className="p-3 lg:p-2.5 rounded-xl border border-white/10 text-white/30 hover:text-primary hover:border-primary/30 transition-colors duration-200"
+                  className="p-3 lg:p-2.5 rounded-xl border border-white/30 dark:border-white/10 text-white/70 dark:text-white/30 hover:text-primary hover:border-primary/30 transition-colors duration-200"
                 >
                   <link.icon className="w-5 h-5 lg:w-4 lg:h-4" />
                 </Link>
@@ -298,11 +298,11 @@ export function Footer() {
       {/* Bottom bar */}
       <div ref={copyrightRef} className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-6 md:py-5 pb-24 md:pb-5 border-t border-white/[0.06]">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-5">
-          <p className="font-headline text-xs text-white/25 text-center sm:text-left">
+          <p className="font-headline text-xs text-white/60 dark:text-white/25 text-center sm:text-left">
             &copy; {currentYear} Sebastian Alvarez — {tCommon('allRightsReserved')}
           </p>
-          <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center gap-3 sm:gap-5 text-xs sm:text-xs text-white/25">
-            <CookieSettingsLink className="block w-full text-center sm:w-auto text-xs sm:text-xs text-white/25 hover:text-primary transition-colors py-2 sm:py-0" />
+          <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center gap-3 sm:gap-5 text-xs sm:text-xs text-white/60 dark:text-white/25">
+            <CookieSettingsLink className="block w-full text-center sm:w-auto text-xs sm:text-xs text-white/60 dark:text-white/25 hover:text-primary transition-colors py-2 sm:py-0" />
             <Link href="/privacy" className="block w-full text-center sm:w-auto hover:text-primary transition-colors py-2 sm:py-0">
               {t('privacyPolicy')}
             </Link>
