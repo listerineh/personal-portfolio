@@ -64,7 +64,7 @@ export function HeroSection() {
           quality={90}
           className="object-cover object-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-deep)] via-black/50 to-black/20" />
+        <div className="hidden dark:block absolute inset-0 bg-gradient-to-t from-[var(--surface-deep)] via-black/50 to-black/20" />
       </div>
 
       {/* Content — bottom left */}

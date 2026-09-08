@@ -215,7 +215,7 @@ export function Footer() {
       </div>
 
       {/* Overlays: darken the middle so copy remains readable, fade to surface at edges */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--surface-deep)] via-black/40 to-[var(--surface-deep)]" />
+      <div className="hidden dark:block absolute inset-0 bg-gradient-to-b from-[var(--surface-deep)] via-black/40 to-[var(--surface-deep)]" />
 
       {/* Newsletter section */}
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 pt-28 md:pt-36 pb-20 md:pb-24">
