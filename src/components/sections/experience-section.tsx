@@ -51,7 +51,7 @@ export function ExperienceSection() {
         {/* Timeline list */}
         <div className="relative">
           <div className="absolute left-[5px] top-3 bottom-3 w-px bg-foreground/10" />
-          <div className="space-y-0 divide-y divide-foreground/[0.08]">
+          <div className="space-y-0">
             {visible.map((exp, index) => (
               <div
                 key={index}
