@@ -209,13 +209,10 @@ export function Footer() {
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-center brightness-[0.7]"
           priority={false}
         />
       </div>
-
-      {/* Overlays: darken the middle so copy remains readable, fade to surface at edges */}
-      <div className="hidden dark:block absolute inset-0 bg-gradient-to-b from-[var(--surface-deep)] via-black/40 to-[var(--surface-deep)]" />
 
       {/* Newsletter section */}
       <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 pt-28 md:pt-36 pb-20 md:pb-24">

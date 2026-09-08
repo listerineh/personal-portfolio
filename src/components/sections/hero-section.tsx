@@ -62,9 +62,8 @@ export function HeroSection() {
           priority
           fetchPriority="high"
           quality={90}
-          className="object-cover object-top"
+          className="object-cover object-top brightness-[0.7]"
         />
-        <div className="hidden dark:block absolute inset-0 bg-gradient-to-t from-[var(--surface-deep)] via-black/50 to-black/20" />
       </div>
 
       {/* Content — bottom left */}
