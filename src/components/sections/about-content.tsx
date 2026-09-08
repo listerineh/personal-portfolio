@@ -147,17 +147,16 @@ export function AboutContent() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/0 via-primary/[0.06] to-primary/0 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-24">
-            <div>
-              <span className="block font-headline text-[11px] tracking-[0.2em] uppercase text-foreground/30 mb-4">
-                {t('expertiseBadge')}
-              </span>
-              <Title as="h2" animate className="text-display-sm">
-                {t('expertiseTitle')}
-              </Title>
-            </div>
+          <div className="mb-16">
+            <span className="block font-headline text-[11px] tracking-[0.2em] uppercase text-foreground/30 mb-4">
+              {t('expertiseBadge')}
+            </span>
+            <Title as="h2" animate className="text-display-sm">
+              {t('expertiseTitle')}
+            </Title>
+          </div>
 
-            <div className="reveal-stagger divide-y divide-foreground/[0.08]">
+          <div className="reveal-stagger divide-y divide-foreground/[0.08]">
               {expertise.map(({ id, Icon, title, body }, i) => (
                 <div
                   key={id}
@@ -181,7 +180,6 @@ export function AboutContent() {
               ))}
             </div>
           </div>
-        </div>
       </section>
 
       {/* ── COMMUNITY ────────────────────────────────────────────────── */}
