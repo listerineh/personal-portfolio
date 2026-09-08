@@ -40,22 +40,10 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="relative py-28 md:py-44 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+        <div className="mb-16">
           <Title as="h2" animate className="text-display-sm">
             {t('title')}
           </Title>
-          {projects.length > 3 && (
-            <Button
-              href="/projects"
-              variant="ghost"
-              accent="neutral"
-              size="md"
-              className="shrink-0 rounded-full border border-foreground/15 hover:border-foreground/30 hidden md:inline-flex"
-            >
-              {t('viewAll')}
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          )}
         </div>
         {/* Balanced 3-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -77,13 +65,13 @@ export function ProjectsSection() {
           ))}
         </div>
         {projects.length > 3 && (
-          <div className="flex justify-start mt-10 md:hidden">
+          <div className="flex justify-center mt-10">
             <Button
               href="/projects"
               variant="ghost"
               accent="neutral"
               size="md"
-              className="w-full rounded-2xl justify-center border border-foreground/15 hover:border-foreground/30"
+              className="w-full sm:w-auto rounded-2xl sm:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
             >
               {t('viewAll')}
               <ArrowRight className="w-4 h-4" />
