@@ -25,14 +25,18 @@ export function ProjectsSection() {
   useGSAP(() => {
     cardsRef.current.forEach((card, index) => {
       if (card) {
-        gsap.from(card, {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          delay: (index % 3) * 0.08,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' },
-        });
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            delay: (index % 3) * 0.08,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' },
+          }
+        );
       }
     });
   }, [projects.length]);
@@ -50,7 +54,7 @@ export function ProjectsSection() {
           {projects.slice(0, 3).map((project, index) => (
             <div
               key={project.id}
-              className="h-full"
+              className="reveal-initial h-full"
               ref={(el) => { cardsRef.current[index] = el; }}
             >
               <ProjectCard

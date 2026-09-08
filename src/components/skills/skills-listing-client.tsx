@@ -36,14 +36,18 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
   useGSAP(() => {
     cardsRef.current.forEach((card, index) => {
       if (card) {
-        gsap.from(card, {
-          opacity: 0,
-          y: 20,
-          duration: 0.4,
-          delay: Math.min(index * 0.03, 0.6),
-          ease: 'power2.out',
-          scrollTrigger: { trigger: card, start: 'top 92%', toggleActions: 'play none none none' },
-        });
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            delay: Math.min(index * 0.03, 0.6),
+            ease: 'power2.out',
+            scrollTrigger: { trigger: card, start: 'top 92%', toggleActions: 'play none none none' },
+          }
+        );
       }
     });
   }, [visibleGroups]);
@@ -130,7 +134,7 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
                         <div
                           key={skill.name}
                           ref={(el) => { cardsRef.current[idx] = el; }}
-                          className="rounded-xl border border-foreground/[0.06] bg-card/40 p-4 transition-[border-color,background-color,transform] duration-200 ease-out hover:border-accent/25 hover:bg-accent/[0.02] active:scale-[0.98] flex items-start gap-3"
+                          className="reveal-initial rounded-xl border border-foreground/[0.06] bg-card/40 p-4 transition-[border-color,background-color,transform] duration-200 ease-out hover:border-accent/25 hover:bg-accent/[0.02] active:scale-[0.98] flex items-start gap-3"
                         >
                           {skill.iconUrl ? (
                             <Image

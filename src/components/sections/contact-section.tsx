@@ -18,16 +18,20 @@ export function ContactSection() {
 
   useGSAP(() => {
     if (descriptionRef.current) {
-      gsap.from(descriptionRef.current, {
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: descriptionRef.current,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        },
-      });
+      gsap.fromTo(
+        descriptionRef.current,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: descriptionRef.current,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
     }
   }, []);
 
@@ -39,7 +43,7 @@ export function ContactSection() {
         </Title>
         <p
           ref={descriptionRef}
-          className="text-foreground/50 leading-relaxed mb-10 text-lead"
+          className="reveal-initial text-foreground/50 leading-relaxed mb-10 text-lead"
         >
           {t('description')}
         </p>

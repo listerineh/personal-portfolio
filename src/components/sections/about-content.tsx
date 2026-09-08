@@ -18,9 +18,11 @@ export function AboutContent() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!prefersReducedMotion && heroRef.current) {
-      gsap.from(heroRef.current.querySelectorAll('.hero-item'), {
-        opacity: 0, y: 28, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.15,
-      });
+      gsap.fromTo(
+        heroRef.current.querySelectorAll('.hero-item'),
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.15 }
+      );
     }
   }, []);
 
@@ -49,7 +51,7 @@ export function AboutContent() {
       <section className="pt-32 pb-20 md:pt-44 md:pb-28 px-6 sm:px-10 md:px-16 lg:px-24">
         <div ref={heroRef} className="max-w-5xl mx-auto">
           <h1
-            className="hero-item font-headline font-black leading-[0.88] mb-6"
+            className="hero-item reveal-initial font-headline font-black leading-[0.88] mb-6"
           >
             <span className="block text-foreground text-display">
               {t('heroGreeting')}
@@ -58,10 +60,10 @@ export function AboutContent() {
               Sebastian.
             </span>
           </h1>
-          <p className="hero-item text-foreground/50 text-base md:text-lg leading-relaxed mb-4 max-w-xl">
+          <p className="hero-item reveal-initial text-foreground/50 text-base md:text-lg leading-relaxed mb-4 max-w-xl">
             {t('heroRole')}
           </p>
-          <div className="hero-item flex items-center gap-1.5 text-foreground/30 text-xs font-headline tracking-[0.2em] uppercase">
+          <div className="hero-item reveal-initial flex items-center gap-1.5 text-foreground/30 text-xs font-headline tracking-[0.2em] uppercase">
             <MapPin className="w-3 h-3" />
             Quito, Ecuador
           </div>

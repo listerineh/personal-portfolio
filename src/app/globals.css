@@ -408,6 +408,18 @@
   line-height: 1.5;
 }
 
+/* ── Generic reveal initial state (GPU-only, hides element before GSAP fromTo) ─ */
+.reveal-initial {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-initial {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* ── Brand color tokens ───────────────────────────────────── */
 .text-brand { color: rgb(var(--primary)); }
 .bg-brand { background-color: rgb(var(--primary)); }

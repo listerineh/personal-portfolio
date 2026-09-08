@@ -42,10 +42,10 @@ export function HeroSection() {
 
     if (!prefersReducedMotion) {
       const tl = gsap.timeline({ delay: 0.1, defaults: { ease: 'power3.out' } });
-      tl.from(eyebrowRef.current, { opacity: 0, y: 12, duration: 0.5 })
-        .from(titleRef.current, { opacity: 0, y: 24, duration: 0.6 }, '-=0.25')
-        .from(subtitleRef.current, { opacity: 0, y: 16, duration: 0.5 }, '-=0.3')
-        .from(statsRef.current, { opacity: 0, y: 16, duration: 0.5 }, '-=0.3');
+      tl.fromTo(eyebrowRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 })
+        .fromTo(titleRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.25')
+        .fromTo(subtitleRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
+        .fromTo(statsRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
     }
   }, []);
 
@@ -72,7 +72,7 @@ export function HeroSection() {
       <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 lg:px-24 pb-16 md:pb-28">
         <span
           ref={eyebrowRef}
-          className="block font-headline text-xs tracking-[0.35em] uppercase mb-5 text-primary"
+          className="reveal-initial block font-headline text-xs tracking-[0.35em] uppercase mb-5 text-primary"
           style={{ textShadow: '0 1px 3px rgba(0,0,0,0.45)' }}
         >
           {t('subtitle')}
@@ -80,7 +80,7 @@ export function HeroSection() {
 
         <h1
           ref={titleRef}
-          className="font-headline font-black text-display text-white mb-7"
+          className="reveal-initial font-headline font-black text-display text-white mb-7"
           style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
         >
           <span className="block">Sebastian</span>
@@ -89,7 +89,7 @@ export function HeroSection() {
 
         <p
           ref={subtitleRef}
-          className="max-w-sm md:max-w-md text-white/80 text-base md:text-lg leading-relaxed mb-6"
+          className="reveal-initial max-w-sm md:max-w-md text-white/80 text-base md:text-lg leading-relaxed mb-6"
           style={{ textShadow: '0 1px 4px rgba(0,0,0,0.45)' }}
         >
           {t('description')}
@@ -97,7 +97,7 @@ export function HeroSection() {
 
         <div
           ref={statsRef}
-          className="flex items-center gap-6 sm:gap-8 mb-8 flex-wrap"
+          className="reveal-initial flex items-center gap-6 sm:gap-8 mb-8 flex-wrap"
         >
           <div className="flex items-center gap-2">
             <span

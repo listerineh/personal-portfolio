@@ -25,14 +25,18 @@ export function ExperienceSection() {
   useGSAP(() => {
     itemsRef.current.forEach((item, index) => {
       if (item) {
-        gsap.from(item, {
-          opacity: 0,
-          y: 24,
-          duration: 0.5,
-          delay: index * 0.1,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: item, start: 'top 90%', toggleActions: 'play none none none' },
-        });
+        gsap.fromTo(
+          item,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            delay: index * 0.1,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: item, start: 'top 90%', toggleActions: 'play none none none' },
+          }
+        );
       }
     });
   }, []);
@@ -55,7 +59,7 @@ export function ExperienceSection() {
             {visible.map((exp, index) => (
               <div
                 key={index}
-                className="relative pl-8 md:pl-12 py-10"
+                className="reveal-initial relative pl-8 md:pl-12 py-10"
                 ref={(el) => { itemsRef.current[index] = el; }}
               >
                 <div className="absolute left-[5px] top-14 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-primary" />

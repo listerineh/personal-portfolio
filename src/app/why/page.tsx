@@ -90,11 +90,9 @@ export default function WhyPage() {
     if (!prefersReducedMotion) {
       const heroTl = gsap.timeline({ delay: 0.1, defaults: { ease: 'power3.out' } });
       heroTl
-        .from(heroEyebrowRef.current, { opacity: 0, y: 12, duration: 0.5 })
-        .from(heroTitleRef.current, { opacity: 0, y: 24, duration: 0.6 }, '-=0.25')
-        .from(heroSubtitleRef.current, { opacity: 0, y: 16, duration: 0.5 }, '-=0.3');
-
-
+        .fromTo(heroEyebrowRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 })
+        .fromTo(heroTitleRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.25')
+        .fromTo(heroSubtitleRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
     }
   }, []);
 
@@ -172,11 +170,11 @@ export default function WhyPage() {
           <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 lg:px-24 pb-16 md:pb-28">
             <span
               ref={heroEyebrowRef}
-              className="block font-headline text-amber-400 text-xs tracking-[0.35em] uppercase mb-5 [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]"
+              className="reveal-initial block font-headline text-amber-400 text-xs tracking-[0.35em] uppercase mb-5 [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]"
             >
               {t('heroEyebrow')}
             </span>
-            <h1 ref={heroTitleRef} className="font-headline font-black leading-[0.9] text-white text-display [text-shadow:0_3px_30px_rgba(0,0,0,0.75)]">
+            <h1 ref={heroTitleRef} className="reveal-initial font-headline font-black leading-[0.9] text-white text-display [text-shadow:0_3px_30px_rgba(0,0,0,0.75)]">
               <span className="block [text-shadow:0_3px_30px_rgba(0,0,0,0.75)]">{t('heroWhy')}</span>
               <span className="block text-amber-400 [text-shadow:0_2px_20px_rgba(0,0,0,0.85)]">
                 Listerineh?
@@ -184,7 +182,7 @@ export default function WhyPage() {
             </h1>
             <p
               ref={heroSubtitleRef}
-              className="mt-7 max-w-sm md:max-w-md text-white/85 text-base md:text-lg leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.8)]"
+              className="reveal-initial mt-7 max-w-sm md:max-w-md text-white/85 text-base md:text-lg leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.8)]"
             >
               {t('heroSubtitle')}
             </p>

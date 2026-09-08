@@ -59,9 +59,11 @@ export function GlobalScrollReveal() {
     if (supportsAnimations()) return;
     const revealEls = gsap.utils.toArray<HTMLElement>('.reveal-up');
     const staggerContainers = gsap.utils.toArray<HTMLElement>('.reveal-stagger');
+    const initialEls = gsap.utils.toArray<HTMLElement>('.reveal-initial');
     const allEls = [
       ...revealEls,
       ...staggerContainers.flatMap((c) => Array.from(c.children)),
+      ...initialEls,
     ];
     gsap.set(allEls, { opacity: 1, y: 0 });
   }, [pathname]);
