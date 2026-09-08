@@ -414,7 +414,7 @@ export default function WhyPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center py-24">
-            <Title as="h2" animate className="mb-6 text-white text-display-sm">
+            <Title as="h2" animate className="mb-6 !text-white text-display-sm">
               {t('ctaTitle')}
             </Title>
             <p className="reveal-up text-lg text-white/80 leading-relaxed mb-12">{t('ctaDescription')}</p>
