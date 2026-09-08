@@ -94,34 +94,7 @@ export default function WhyPage() {
         .from(heroTitleRef.current, { opacity: 0, y: 24, duration: 0.6 }, '-=0.25')
         .from(heroSubtitleRef.current, { opacity: 0, y: 16, duration: 0.5 }, '-=0.3');
 
-      gsap.utils.toArray<HTMLElement>('.reveal-up').forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-          },
-        });
-      });
 
-      gsap.utils.toArray<HTMLElement>('.reveal-stagger').forEach((container) => {
-        gsap.from(Array.from(container.children), {
-          opacity: 0,
-          y: 16,
-          duration: 0.4,
-          stagger: 0.06,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: container,
-            start: 'top 88%',
-            toggleActions: 'play none none none',
-          },
-        });
-      });
     }
   }, []);
 

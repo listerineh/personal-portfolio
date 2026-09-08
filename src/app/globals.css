@@ -363,6 +363,25 @@
   display: none;
 }
 
+/* ── Scroll reveal initial states ─────────────────────────── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(1rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ── Type scale (replaces inline clamp overuse) ───────────── */
 .text-display {
   font-size: clamp(3rem, 10vw, 9rem);
