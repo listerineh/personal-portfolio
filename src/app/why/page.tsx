@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
@@ -11,6 +11,8 @@ import { ThemeToggleButton } from '@/components/common/theme-toggle-button';
 import { LanguageSwitcher } from '@/components/common/language-switcher';
 import { useGSAP } from '@/hooks/use-gsap';
 import { musicLinks } from '@/lib/data';
+import { throttle } from '@/lib/performance-utils';
+import { cn } from '@/lib/utils';
 import { Pill, Button, Title, Text, AccentCard, MemberCard, SpotifyTopTracks } from '@/components/ds';
 
 if (typeof window !== 'undefined') {
@@ -39,6 +41,19 @@ export default function WhyPage() {
   const heroEyebrowRef = useRef<HTMLSpanElement>(null);
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroSubtitleRef = useRef<HTMLParagraphElement>(null);
+
+  const [isOverHero, setIsOverHero] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = throttle(() => {
+      const threshold = (heroRef.current?.offsetHeight ?? window.innerHeight) - 80;
+      setIsOverHero(window.scrollY < threshold);
+    }, 100);
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -130,7 +145,12 @@ export default function WhyPage() {
       <div className="fixed top-5 left-5 z-[9999]">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)] transition-colors duration-300 group"
+          className={cn(
+            'inline-flex items-center gap-2 text-sm transition-colors duration-300 group',
+            isOverHero
+              ? 'text-white/70 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]'
+              : 'text-foreground/70 hover:text-foreground'
+          )}
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           <span className="hidden sm:inline font-medium">{t('backToPortfolio')}</span>
@@ -138,8 +158,22 @@ export default function WhyPage() {
       </div>
 
       <div className="fixed top-5 right-5 z-[9999] flex items-center gap-2">
-        <LanguageSwitcher className="text-white/70 hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]" />
-        <ThemeToggleButton className="text-white/70 hover:text-white hover:bg-white/10 border-white/20 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]" />
+        <LanguageSwitcher
+          className={cn(
+            'transition-colors',
+            isOverHero
+              ? 'text-white/70 hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]'
+              : 'text-foreground/70 hover:text-foreground hover:bg-foreground/8'
+          )}
+        />
+        <ThemeToggleButton
+          className={cn(
+            'transition-colors',
+            isOverHero
+              ? 'text-white/70 hover:text-white hover:bg-white/10 border-white/20 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]'
+              : 'text-foreground/70 hover:text-foreground hover:bg-foreground/8 border-foreground/15'
+          )}
+        />
       </div>
 
       <main id="main-content">
