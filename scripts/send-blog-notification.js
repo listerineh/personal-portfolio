@@ -83,7 +83,7 @@ const req = (url.protocol === 'https:' ? https : require('http')).request(option
         console.error('❌ Error (Status', res.statusCode + '):', response.error || response.message || 'Unknown error');
         process.exit(1);
       }
-    } catch (error) {
+    } catch {
       console.error('❌ Failed to parse response');
       console.error('   Status Code:', res.statusCode);
       console.error('   Response:', responseData);
