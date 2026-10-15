@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { gsap } from 'gsap';
 import { getCookieConsent, setCookie, getCookie } from '@/lib/cookies';
 
 type Theme = 'light' | 'dark';
