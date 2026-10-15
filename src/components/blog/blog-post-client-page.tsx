@@ -30,6 +30,7 @@ interface BlogPostClientPageProps {
 export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPageProps) {
   const { locale } = useLocale();
   const t = useTranslations('blog');
+  const tSala = useTranslations('sala');
   const version = versions[locale as Locale] ?? versions[initialLocale]!;
   const { post } = version;
   const [readingProgress, setReadingProgress] = useState(0);
@@ -94,7 +95,7 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
       </div>
       <PageShell>
         <PageHeader
-          name={t('title')}
+          name={tSala('writing')}
           title={post.title}
           titleSize="room"
           nav={

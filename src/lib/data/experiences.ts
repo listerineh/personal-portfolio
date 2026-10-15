@@ -30,7 +30,7 @@ export const experiencesData: Record<Locale, Experience[]> = {
         'Moderated virtual sessions to ensure smooth interaction and active participation.',
         'Led community expansion efforts by attracting new members and encouraging active contributions.',
         'Collaborated with team members to align goals and maintain strong internal communication.',
-        'Delivered presentations on emerging technologies and industry trends to empower the community.',
+        'Gave talks on emerging technologies and industry trends to help the community grow.',
       ],
     },
     {
@@ -149,7 +149,7 @@ export const experiencesData: Record<Locale, Experience[]> = {
         'Moderé sesiones virtuales para asegurar una interacción fluida y participación activa.',
         'Lideré esfuerzos de expansión de la comunidad atrayendo nuevos miembros y fomentando contribuciones activas.',
         'Colaboré con miembros del equipo para alinear objetivos y mantener una comunicación interna sólida.',
-        'Presenté charlas sobre tecnologías emergentes y tendencias de la industria para empoderar a la comunidad.',
+        'Di charlas sobre tecnologías emergentes y tendencias de la industria para ayudar a crecer a la comunidad.',
       ],
     },
     {

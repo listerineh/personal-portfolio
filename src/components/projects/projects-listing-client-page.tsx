@@ -6,6 +6,7 @@ import type { Project } from '@/types';
 import { Button, EndOfList, FilterTag, Hang, PageHeader, ProjectCard, SearchField } from '@/components/ds';
 import { PageShell } from '@/components/layout';
 import { cn } from '@/lib/utils';
+import { liveProjectSlug } from '@/lib/project-status';
 
 interface ProjectsListingClientPageProps {
   projects: Project[];
@@ -23,6 +24,7 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
   const [search, setSearch] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  const liveSlug = useMemo(() => liveProjectSlug(projects), [projects]);
   const allTags = useMemo(() => Array.from(new Set(projects.flatMap((p) => p.tags))).sort(), [projects]);
   const selected = useMemo(() => new Set(selectedTags), [selectedTags]);
 
@@ -96,7 +98,8 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
                         size={slot === 0 ? 'feature' : 'default'}
                         headingLevel="h2"
                         priority={index === 0}
-                        liveLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
+                        liveLabel={project.slug === liveSlug ? tProject('status.in-progress') : undefined}
+                statusLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
                         viewMoreLabel={tCommon('viewProject')}
                       />
                     </Hang>

@@ -18,8 +18,10 @@ interface ProjectCardProps {
   number?: string;
   /** `feature` hangs the work large (first work in a room). */
   size?: "default" | "feature";
-  /** Live marker text (e.g. "In progress"); renders the amber tag. */
+  /** Live marker text (e.g. "In progress"); renders the amber tag. Only one work on a wall should carry it. */
   liveLabel?: string;
+  /** Neutral status text for works that are not the live one (e.g. "In progress", "On hold"). */
+  statusLabel?: string;
   priority?: boolean;
   className?: string;
 }
@@ -39,6 +41,7 @@ export function ProjectCard({
   number,
   size = "default",
   liveLabel,
+  statusLabel,
   priority = false,
   className,
 }: ProjectCardProps) {
@@ -96,6 +99,11 @@ export function ProjectCard({
             {liveLabel && (
               <span className="inline-flex h-6 items-center bg-primary px-2 font-mono text-[0.6875rem] font-medium text-primary-foreground">
                 {liveLabel}
+              </span>
+            )}
+            {!liveLabel && statusLabel && (
+              <span className="inline-flex h-6 items-center border border-foreground/40 px-2 font-mono text-[0.6875rem] font-medium text-muted-foreground">
+                {statusLabel}
               </span>
             )}
           </div>

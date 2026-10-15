@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { stackLayers } from '@/lib/stack-layers';
 import { Button, Hang, ProjectCard, Room, WorkingDrawing } from '@/components/ds';
 import { cn } from '@/lib/utils';
+import { liveProjectSlug } from '@/lib/project-status';
 
 /** Room 01 · Work. The three latest works, hung off-grid on purpose. */
 import type { ProjectSummary } from "@/types";
@@ -15,6 +16,7 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
   const tCommon = useTranslations('common');
   const tProject = useTranslations('project');
   const hung = projects.slice(0, 3);
+  const liveSlug = liveProjectSlug(hung);
   const [feature, ...rest] = hung;
 
   return (
@@ -41,7 +43,8 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
               tags={[...feature.tags]}
               number="01"
               size="feature"
-              liveLabel={feature.status === 'in-progress' ? tProject('status.in-progress') : undefined}
+              liveLabel={feature.slug === liveSlug ? tProject('status.in-progress') : undefined}
+              statusLabel={feature.status === 'in-progress' ? tProject('status.in-progress') : undefined}
               viewMoreLabel={tCommon('viewProject')}
             />
           </Hang>
@@ -67,7 +70,8 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
                 imageUrl={project.imageUrl}
                 tags={[...project.tags]}
                 number={String(index + 2).padStart(2, '0')}
-                liveLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
+                liveLabel={project.slug === liveSlug ? tProject('status.in-progress') : undefined}
+                statusLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
                 viewMoreLabel={tCommon('viewProject')}
               />
             </Hang>
