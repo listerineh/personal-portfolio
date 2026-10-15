@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 import { generatePageMetadata } from '@/lib/metadata';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import { PageShell } from '@/components/layout';
 import { AboutContent } from '@/components/sections/about-content';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -47,12 +46,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main id="main-content" className="flex-grow pt-20">
-        <AboutContent />
-      </main>
-      <Footer />
-    </div>
+    <PageShell>
+      <AboutContent />
+    </PageShell>
   );
 }
