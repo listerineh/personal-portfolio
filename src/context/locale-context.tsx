@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useMemo, useCallback, type ReactNode } from 'react';
+import { createContext, useContext, useState, useMemo, useCallback, type ReactNode } from 'react';
 import { type Locale, defaultLocale, locales } from '@/i18n/config';
 
 interface LocaleContextType {
@@ -20,17 +20,6 @@ export function LocaleProvider({
   const [locale, setLocaleState] = useState<Locale>(
     initialLocale && locales.includes(initialLocale) ? initialLocale : defaultLocale
   );
-
-  useEffect(() => {
-    const savedLocale = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('NEXT_LOCALE='))
-      ?.split('=')[1] as Locale | undefined;
-
-    if (savedLocale && locales.includes(savedLocale) && savedLocale !== locale) {
-      setLocaleState(savedLocale);
-    }
-  }, [locale]);
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);

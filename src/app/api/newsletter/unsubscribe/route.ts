@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
           );
         }
       }
-    } catch (contactError: any) {
+    } catch (contactError) {
       console.error('Exception unsubscribing contact:', contactError);
       return NextResponse.json(
         { error: 'Failed to unsubscribe. Please try again.' },

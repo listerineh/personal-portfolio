@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ThemeToggleButton } from '../../components/common/theme-toggle-button';
 
 const meta: Meta<typeof ThemeToggleButton> = {

@@ -34,7 +34,7 @@ export default function UnsubscribePage() {
         setStatus('error');
         setMessage(data.error || t('errorMessage'));
       }
-    } catch (error) {
+    } catch {
       setStatus('error');
       setMessage(t('errorMessage'));
     }

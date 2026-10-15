@@ -52,11 +52,11 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
     }
   }, [posts, viewCounts]);
 
-  useEffect(() => {
-    if (sortBy === 'most-viewed') {
-      fetchAllViews();
-    }
-  }, [sortBy, fetchAllViews]);
+  // Views are fetched when the visitor asks for that order, not in an effect.
+  const selectSort = (key: SortOption) => {
+    setSortBy(key);
+    if (key === 'most-viewed') void fetchAllViews();
+  };
 
   useEffect(() => {
     onLoadingChange?.(loadingViews);
@@ -176,7 +176,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
       <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('sortBy')}>
         <span className="text-catalog mr-1 text-muted-foreground">{t('sortBy')}</span>
         {sortOptions.map(({ key, label, icon }) => (
-          <FilterTag key={key} pressed={sortBy === key} onPressedChange={() => setSortBy(key)} className="gap-1.5">
+          <FilterTag key={key} pressed={sortBy === key} onPressedChange={() => selectSort(key)} className="gap-1.5">
             {icon}
             {label}
           </FilterTag>

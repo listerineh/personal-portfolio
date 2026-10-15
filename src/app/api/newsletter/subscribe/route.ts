@@ -43,11 +43,11 @@ export async function POST(request: NextRequest) {
           console.log('Contact already exists in Resend, continuing...');
         }
       }
-    } catch (contactError: any) {
+    } catch (contactError) {
       console.error('Exception creating contact:', contactError);
     }
 
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'Sebastian Alvarez <hello@listerineh.dev>',
       to: email,
       subject: isEs ? '¡Bienvenido a mi newsletter!' : 'Welcome to my newsletter!',

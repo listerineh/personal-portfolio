@@ -11,10 +11,11 @@ interface Heading {
 }
 
 interface TableOfContentsProps {
-  content: string;
+  /** Changes whenever the rendered article changes (slug + locale), so headings are re-read. */
+  contentKey: string;
 }
 
-export function TableOfContents({ content }: TableOfContentsProps) {
+export function TableOfContents({ contentKey }: TableOfContentsProps) {
   const t = useTranslations('blog');
   const [headings, setHeadings] = useState<Heading[]>([]);
   const extractIntervalRef = useRef<NodeJS.Timeout>();
@@ -76,8 +77,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
       }
     };
 
-    // Resetear headings y extraer después de un pequeño delay
-    setHeadings([]);
+    // Headings are re-read after a short delay; the parent remounts this component per article.
     const initialTimeout = setTimeout(() => extractHeadings(), 100);
 
     const proseContainer = document.querySelector('.prose');
@@ -106,7 +106,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
         clearTimeout(extractIntervalRef.current);
       }
     };
-  }, [content]);
+  }, [contentKey]);
 
 
   const handleHeadingClick = (id: string, text: string) => {

@@ -1,14 +1,14 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import type { BlogPost } from '@/types';
+import type { BlogPostSummary } from '@/types';
 import { Pill } from '@/components/ds';
 import { ShareButtons } from './share-buttons';
 import { BlogViews } from './blog-views';
-import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
+import { formatReadingTime } from '@/lib/reading-time';
 
 interface BlogPostMetaProps {
-  post: BlogPost;
+  post: BlogPostSummary;
   locale: string;
   formatDate: (dateString: string) => string;
   url: string;
@@ -26,7 +26,7 @@ export function BlogPostHeader({ post, locale, formatDate, url }: BlogPostMetaPr
           {' · '}
           {t('by')} {post.author}
           {' · '}
-          {formatReadingTime(post.readingTime || calculateReadingTime(post.content), locale)}
+          {formatReadingTime(post.readingTime, locale)}
         </p>
         <BlogViews slug={post.slug} />
       </div>

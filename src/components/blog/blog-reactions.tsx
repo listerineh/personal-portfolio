@@ -16,7 +16,7 @@ interface BlogReactionsProps {
   slug: string;
 }
 
-const getReactionConfig = (t: any) => ({
+const getReactionConfig = (t: (key: 'reactionHelpful' | 'reactionLoved' | 'reactionAmazing' | 'reactionInsightful') => string) => ({
   like: { 
     icon: ThumbsUp, 
     label: t('reactionHelpful'), 
@@ -71,14 +71,11 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
       } catch (error) {
         console.error('Error fetching reactions:', error);
       } finally {
+        const savedReactions = localStorage.getItem(`reactions:${slug}`);
+        if (savedReactions) setUserReactions(new Set(JSON.parse(savedReactions)));
         setIsLoading(false);
       }
     };
-
-    const savedReactions = localStorage.getItem(`reactions:${slug}`);
-    if (savedReactions) {
-      setUserReactions(new Set(JSON.parse(savedReactions)));
-    }
 
     fetchReactions();
   }, [slug]);

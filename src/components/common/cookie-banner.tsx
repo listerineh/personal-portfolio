@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { Button, Modal, ModalContent, ModalHeader, ModalTitle, ModalDescription, Switch } from '@/components/ds';
-import { Cookie, X, Settings } from 'lucide-react';
+import { Cookie, Settings } from 'lucide-react';
 import {
   hasUserRespondedToCookies,
   acceptAllCookies,
@@ -15,9 +15,14 @@ import {
 
 const DRAWER_DURATION = 400;
 
+const noopSubscribe = () => () => {};
+
 export function CookieBanner() {
   const t = useTranslations('cookies');
-  const [showBanner, setShowBanner] = useState(false);
+  // Consent lives in cookies (an external store); read it without a mount effect.
+  const needsConsent = useSyncExternalStore(noopSubscribe, () => !hasUserRespondedToCookies(), () => false);
+  const [dismissed, setDismissed] = useState(false);
+  const showBanner = needsConsent && !dismissed;
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -26,11 +31,6 @@ export function CookieBanner() {
     analytics: false,
     preferences: false,
   });
-
-  useEffect(() => {
-    const hasResponded = hasUserRespondedToCookies();
-    setShowBanner(!hasResponded);
-  }, []);
 
   useEffect(() => {
     if (!showBanner || isClosing) return;
@@ -50,7 +50,7 @@ export function CookieBanner() {
     setIsClosing(true);
     setTimeout(() => {
       acceptNecessaryCookies();
-      setShowBanner(false);
+      setDismissed(true);
     }, DRAWER_DURATION);
   };
 
@@ -63,7 +63,7 @@ export function CookieBanner() {
         timestamp: Date.now(),
       };
       saveCookieConsent(consent);
-      setShowBanner(false);
+      setDismissed(true);
     }, DRAWER_DURATION);
   };
 

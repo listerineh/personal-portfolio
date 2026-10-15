@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ErrorBoundary } from '../../components/common/error-boundary';
 
 const meta: Meta<typeof ErrorBoundary> = {

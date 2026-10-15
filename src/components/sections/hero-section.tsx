@@ -5,9 +5,6 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowDown, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { projectsData } from "@/lib/data/projects";
-import { getLocalizedData } from "@/lib/i18n-data";
-import { useLocale } from "@/context/locale-context";
 import { stackLayers } from "@/lib/stack-layers";
 import { Button, Hang, Plaque, WorkingDrawing } from "@/components/ds";
 
@@ -15,13 +12,13 @@ import { Button, Hang, Plaque, WorkingDrawing } from "@/components/ds";
  * Entrance. The wall title is the name; the latest work already hangs beside it,
  * with its label and its working drawing. The primary action walks into the rooms.
  */
-export function HeroSection() {
+import type { ProjectSummary } from "@/types";
+
+export function HeroSection({ latest }: { latest?: ProjectSummary }) {
   const t = useTranslations("hero");
   const tSala = useTranslations("sala");
   const tProject = useTranslations("project");
   const { toast } = useToast();
-  const { locale } = useLocale();
-  const latest = getLocalizedData(projectsData, locale)[0];
   const year = latest?.startDate?.slice(0, 4);
 
   const downloadCv = () => {

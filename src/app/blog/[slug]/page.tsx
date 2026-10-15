@@ -2,7 +2,11 @@
 import { Metadata } from 'next';
 import { getBlogPosts, getBlogPost } from '@/lib/data/blog';
 import { notFound } from 'next/navigation';
-import { BlogPostClientPage } from '@/components/blog/blog-post-client-page';
+import { BlogPostClientPage, type BlogPostVersion } from '@/components/blog/blog-post-client-page';
+import { BlogPostContent } from '@/components/blog/blog-post-content';
+import { BlogStructuredData } from '@/components/blog/blog-structured-data';
+import { ArticleSchema } from '@/components/blog/article-schema';
+import { toBlogSummary } from '@/lib/data/blog/summaries';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 
@@ -93,5 +97,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  return <BlogPostClientPage post={post} />;
+  // Every language is rendered here, on the server; the client only switches between them.
+  const versions: Partial<Record<Locale, BlogPostVersion>> = {};
+  for (const loc of locales) {
+    const localized = getBlogPost(slug, loc);
+    if (!localized) continue;
+    versions[loc] = {
+      post: toBlogSummary(localized),
+      body: <BlogPostContent content={localized.content} />,
+      related: getBlogPosts(loc)
+        .filter((candidate) => candidate.slug !== slug)
+        .slice(0, 3)
+        .map(toBlogSummary),
+    };
+  }
+
+  return (
+    <>
+      <BlogStructuredData post={post} />
+      <ArticleSchema post={post} />
+      <BlogPostClientPage versions={versions} initialLocale={locale} />
+    </>
+  );
 }

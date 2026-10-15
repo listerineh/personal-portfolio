@@ -46,7 +46,7 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
         setStatus('error');
         setMessage(data.error || t('errorMessage'));
       }
-    } catch (error) {
+    } catch {
       setStatus('error');
       setMessage(t('failedMessage'));
     }

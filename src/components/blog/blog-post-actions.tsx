@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import type { BlogPostSummary } from '@/types';
 import { BlogReactions } from './blog-reactions';
 import { ShareButtons } from './share-buttons';
 import { RelatedPosts } from '@/components/common/related-posts';
@@ -8,12 +9,13 @@ import { NewsletterSignup } from '@/components/common/newsletter-signup';
 
 interface BlogPostActionsProps {
   slug: string;
+  related: BlogPostSummary[];
   title: string;
   url: string;
 }
 
 /** After the last paragraph: react, share, keep reading, subscribe. */
-export function BlogPostActions({ slug, title, url }: BlogPostActionsProps) {
+export function BlogPostActions({ slug, title, url, related }: BlogPostActionsProps) {
   const t = useTranslations('blog');
 
   return (
@@ -37,7 +39,7 @@ export function BlogPostActions({ slug, title, url }: BlogPostActionsProps) {
         </div>
       </section>
 
-      <RelatedPosts currentSlug={slug} />
+      <RelatedPosts posts={related} />
 
       <NewsletterSignup />
     </div>

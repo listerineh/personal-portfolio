@@ -40,9 +40,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const emails = contactsData.data.map((contact: any) => contact.email);
+    const emails = contactsData.data.map((contact: { email: string }) => contact.email);
 
-    const { data, error } = await resend.batch.send(
+    const { error } = await resend.batch.send(
       emails.map((email: string) => ({
         from: 'Sebastian Alvarez <hello@listerineh.dev>',
         to: email,

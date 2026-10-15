@@ -51,21 +51,18 @@ export function SpotifyTopTracks({
   accentColor = '#D97706',
 }: SpotifyTopTracksProps) {
   const t = useTranslations('why');
-  const [tracks, setTracks] = useState<Track[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  // Results are keyed by the requested ids, so loading/error are derived instead of set in the effect.
+  const requestKey = trackLinks.map((link) => link.spotifyId).join(',');
+  const [result, setResult] = useState<{ key: string; tracks: Track[] } | { key: string; error: true } | null>(null);
+  const current = result?.key === requestKey ? result : null;
+  const loading = trackLinks.length > 0 && current === null;
+  const error = current !== null && 'error' in current;
+  const tracks = current !== null && 'tracks' in current ? current.tracks : [];
 
   useEffect(() => {
-    if (!trackLinks.length) {
-      setLoading(false);
-      setError(false);
-      return;
-    }
-    setLoading(true);
-    setError(false);
+    if (!requestKey) return;
     let cancelled = false;
-    const ids = trackLinks.map((t) => t.spotifyId);
-    fetch(`/api/spotify/tracks?ids=${ids.join(',')}`)
+    fetch(`/api/spotify/tracks?ids=${requestKey}`)
       .then((r) => {
         if (!r.ok) throw new Error('Network response was not ok');
         return r.json();
@@ -74,29 +71,23 @@ export function SpotifyTopTracks({
         if (cancelled) return;
         if (data?.tracks?.length) {
           const merged = data.tracks.map((track: Track) => {
-            const links = trackLinks.find((t) => t.spotifyId === track.id);
-            return {
-              ...track,
-              youtube: links?.youtube,
-              appleMusic: links?.appleMusic,
-              soundcloud: links?.soundcloud,
-            };
+            const links = trackLinks.find((link) => link.spotifyId === track.id);
+            return { ...track, youtube: links?.youtube, appleMusic: links?.appleMusic, soundcloud: links?.soundcloud };
           });
-          setTracks(merged);
+          setResult({ key: requestKey, tracks: merged });
         } else {
-          setError(true);
+          setResult({ key: requestKey, error: true });
         }
       })
       .catch(() => {
-        if (!cancelled) setError(true);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) setResult({ key: requestKey, error: true });
       });
     return () => {
       cancelled = true;
     };
-  }, [trackLinks]);
+    // trackLinks is identified by requestKey
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestKey]);
 
   if (error) {
     return <p className="py-4 text-base text-muted-foreground">{t('topTracksError')}</p>;

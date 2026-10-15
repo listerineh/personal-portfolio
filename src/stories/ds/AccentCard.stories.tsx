@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { AccentCard } from '@/components/ds/AccentCard';
 import { Wall } from '@/components/ds/Wall';
 

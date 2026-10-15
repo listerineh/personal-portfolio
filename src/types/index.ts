@@ -73,6 +73,24 @@ export interface BlogPost {
   readingTime?: number;
 }
 
+/** A post without its body: what lists and previews need, cheap to send to the client. */
+export type BlogPostSummary = Omit<BlogPost, 'content'> & { readingTime: number };
+
+/** A project as lists and the home page need it: no long-form story. */
+export type ProjectSummary = Omit<Project, 'longDescription' | 'relevance'>;
+
+/** Everything the home page shows for one language, assembled on the server. */
+export interface HomeLocaleData {
+  projects: ProjectSummary[];
+  posts: BlogPostSummary[];
+  experiences: Experience[];
+}
+
+export interface SkillGroupSummary {
+  category: SkillCategory;
+  names: string[];
+}
+
 export interface ContactFormData {
   name: string;
   email: string;

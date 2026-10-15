@@ -1,7 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { getCookieConsent, setCookie, getCookie } from '@/lib/cookies';
+import { createContext, useContext, useMemo, useCallback, useSyncExternalStore } from 'react';
+import { getCookieConsent, setCookie } from '@/lib/cookies';
 
 type Theme = 'light' | 'dark';
 
@@ -12,49 +12,33 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
+// The <html> class is the source of truth: the pre-paint script in the root layout restores it
+// from the cookie/localStorage before React runs, so there is no flash and nothing to sync on mount.
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  return () => observer.disconnect();
+}
+
+const getSnapshot = (): Theme => (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+const getServerSnapshot = (): Theme => 'light';
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
-
-  useEffect(() => {
-    const consent = getCookieConsent();
-    const usePreferenceCookies = consent?.preferences ?? false;
-
-    let savedTheme: Theme = 'light';
-
-    if (usePreferenceCookies) {
-      const cookieTheme = getCookie('theme') as Theme;
-      savedTheme = cookieTheme || 'light';
-    } else {
-      savedTheme = (localStorage.getItem('theme') as Theme) || 'light';
-    }
-
-    setTheme(savedTheme);
-    document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-  }, []);
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const toggleTheme = useCallback(() => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-
-    const consent = getCookieConsent();
-    const usePreferenceCookies = consent?.preferences ?? false;
-
-    if (usePreferenceCookies) {
+    const newTheme: Theme = getSnapshot() === 'light' ? 'dark' : 'light';
+    if (getCookieConsent()?.preferences ?? false) {
       setCookie('theme', newTheme);
     } else {
       localStorage.setItem('theme', newTheme);
     }
-
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
-  }, [theme]);
+  }, []);
 
   const value = useMemo(() => ({ theme, toggleTheme }), [theme, toggleTheme]);
 
-  return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {

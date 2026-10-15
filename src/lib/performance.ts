@@ -18,6 +18,11 @@ export interface PerformanceConfig {
 /**
  * Detect device performance level based on various factors
  */
+type NavigatorHints = Navigator & {
+  deviceMemory?: number;
+  connection?: { effectiveType?: string; saveData?: boolean };
+};
+
 export function detectDevicePerformance(): DevicePerformance {
   if (typeof window === 'undefined') return 'medium';
 
@@ -26,7 +31,7 @@ export function detectDevicePerformance(): DevicePerformance {
   if (prefersReducedMotion) return 'low';
 
   // Check device memory (if available)
-  const deviceMemory = (navigator as any).deviceMemory;
+  const deviceMemory = (navigator as NavigatorHints).deviceMemory;
   if (deviceMemory && deviceMemory < 4) return 'low';
   if (deviceMemory && deviceMemory >= 8) return 'high';
 
@@ -52,7 +57,7 @@ export function detectDevicePerformance(): DevicePerformance {
   }
 
   // Check connection speed (if available)
-  const connection = (navigator as any).connection;
+  const connection = (navigator as NavigatorHints).connection;
   if (connection) {
     const effectiveType = connection.effectiveType;
     if (effectiveType === 'slow-2g' || effectiveType === '2g') return 'low';
@@ -138,13 +143,13 @@ export function getGSAPConfig(performance?: DevicePerformance) {
 /**
  * Debounce function for performance
  */
-export function debounce<T extends (...args: any[]) => any>(
-  func: T,
+export function debounce<A extends unknown[]>(
+  func: (...args: A) => void,
   wait: number
-): (...args: Parameters<T>) => void {
+): (...args: A) => void {
   let timeout: NodeJS.Timeout | null = null;
   
-  return function executedFunction(...args: Parameters<T>) {
+  return function executedFunction(...args: A) {
     const later = () => {
       timeout = null;
       func(...args);
@@ -162,7 +167,7 @@ export function requestIdleCallback(callback: () => void, timeout = 1000) {
   if (typeof window === 'undefined') return;
   
   if ('requestIdleCallback' in window) {
-    (window as any).requestIdleCallback(callback, { timeout });
+    window.requestIdleCallback(callback, { timeout });
   } else {
     setTimeout(callback, 1);
   }

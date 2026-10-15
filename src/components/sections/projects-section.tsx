@@ -2,21 +2,18 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
-import { projectsData } from '@/lib/data/projects';
-import { getLocalizedData } from '@/lib/i18n-data';
-import { useLocale } from '@/context/locale-context';
 import { stackLayers } from '@/lib/stack-layers';
 import { Button, Hang, ProjectCard, Room, WorkingDrawing } from '@/components/ds';
 import { cn } from '@/lib/utils';
 
 /** Room 01 · Work. The latest work hangs at the entrance; this room hangs the next three, off-grid on purpose. */
-export function ProjectsSection() {
+import type { ProjectSummary } from "@/types";
+
+export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
   const t = useTranslations('projects');
   const tSala = useTranslations('sala');
   const tCommon = useTranslations('common');
   const tProject = useTranslations('project');
-  const { locale } = useLocale();
-  const projects = getLocalizedData(projectsData, locale);
   const hung = projects.slice(1, 4);
   const [feature, ...rest] = hung;
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ExperienceCard } from '@/components/ds/ExperienceCard';
 
 const meta: Meta<typeof ExperienceCard> = {

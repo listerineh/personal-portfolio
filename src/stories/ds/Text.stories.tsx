@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Text } from '@/components/ds/Text';
 import { Wall } from '@/components/ds/Wall';
 

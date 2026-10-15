@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 // Renders without the root layout (no fonts, no providers), so it carries the palette inline.
 const wall = '#1F4A3A';
@@ -39,15 +40,12 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
               <button type="button" onClick={reset} style={{ ...button, background: amber, color: ink, border: 'none' }}>
                 Try again
               </button>
-              <button
-                type="button"
-                onClick={() => {
-                  window.location.href = '/';
-                }}
-                style={{ ...button, background: 'transparent', color: paper, border: `1.5px solid ${paper}` }}
+              <Link
+                href="/"
+                style={{ ...button, display: 'inline-flex', alignItems: 'center', textDecoration: 'none', background: 'transparent', color: paper, border: `1.5px solid ${paper}` }}
               >
                 Go to homepage
-              </button>
+              </Link>
             </div>
           </div>
         </main>

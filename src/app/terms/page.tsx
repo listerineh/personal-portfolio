@@ -5,17 +5,18 @@ import { PageHeader } from '@/components/ds';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { useState, useEffect } from 'react';
+import { LEGAL_LAST_UPDATED } from '@/lib/legal';
 
 export default function TermsPage() {
   const t = useTranslations('terms');
   const tCommon = useTranslations('common');
   const locale = useLocale();
-  const [lastUpdated, setLastUpdated] = useState('');
-
-  useEffect(() => {
-    setLastUpdated(new Date().toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric' }));
-  }, [locale]);
+  const lastUpdated = new Date(`${LEGAL_LAST_UPDATED}T12:00:00Z`).toLocaleDateString(locale, {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
 
   return (
     <>

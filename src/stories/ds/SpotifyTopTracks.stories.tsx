@@ -1,8 +1,6 @@
-import type { Decorator, Meta, StoryObj } from "@storybook/react";
-import { NextIntlClientProvider } from "next-intl";
+import type { Decorator, Meta, StoryObj } from "@storybook/nextjs-vite";
 import { SpotifyTopTracks } from "@/components/ds/SpotifyTopTracks";
 import type { TrackPlatformLinks } from "@/lib/data/music";
-import messages from "../../../messages/en.json";
 
 // Illustrative tracks for the story only.
 const mockTracks = [
@@ -41,7 +39,7 @@ const links: TrackPlatformLinks[] = [
 
 /** Routes /api/spotify/tracks to fixtures so the real component renders without the network. */
 function withMockedTracks(mode: "ok" | "error" | "pending"): Decorator {
-  return (Story) => {
+  return function MockedTracks(Story) {
     if (typeof window !== "undefined") {
       const original = window.fetch.bind(window);
       window.fetch = (input, init) => {
@@ -60,13 +58,9 @@ function withMockedTracks(mode: "ok" | "error" | "pending"): Decorator {
         );
       };
     }
-    return (
-      <NextIntlClientProvider locale="en" messages={messages}>
-        <div className="w-[min(640px,92vw)]">
+    return <div className="w-[min(640px,92vw)]">
           <Story />
-        </div>
-      </NextIntlClientProvider>
-    );
+        </div>;
   };
 }
 

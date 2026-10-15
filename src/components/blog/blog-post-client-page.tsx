@@ -1,38 +1,39 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
 import { ArrowLeft } from 'lucide-react';
-import type { BlogPost } from '@/types';
+import type { BlogPostSummary } from '@/types';
+import type { Locale } from '@/i18n/config';
 import { Button, PageHeader } from '@/components/ds';
 import { PageShell } from '@/components/layout';
-import { BlogStructuredData } from '@/components/blog/blog-structured-data';
-import { ArticleSchema } from '@/components/blog/article-schema';
 import { TableOfContents } from './table-of-contents';
 import { BlogPostHeader } from './blog-post-header';
 import { BlogPostHeroImage } from './blog-post-hero-image';
-import { BlogPostContent } from './blog-post-content';
 import { BlogPostActions } from './blog-post-actions';
-import { getBlogPost } from '@/lib/data/blog';
 
-interface BlogPostClientPageProps {
-  post: BlogPost;
+export interface BlogPostVersion {
+  post: BlogPostSummary;
+  /** Article body rendered on the server (markdown never reaches the client bundle). */
+  body: ReactNode;
+  related: BlogPostSummary[];
 }
 
-export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProps) {
+interface BlogPostClientPageProps {
+  /** Each available language of the post; the active locale picks one, falling back to the request's. */
+  versions: Partial<Record<Locale, BlogPostVersion>>;
+  initialLocale: Locale;
+}
+
+export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPageProps) {
   const { locale } = useLocale();
   const t = useTranslations('blog');
-  
-  // Obtener el post en el idioma correcto basado en el locale actual
-  const post = useMemo(() => {
-    const localizedPost = getBlogPost(initialPost.slug, locale);
-    return localizedPost || initialPost;
-  }, [initialPost.slug, locale]);
+  const version = versions[locale as Locale] ?? versions[initialLocale]!;
+  const { post } = version;
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-  const proseRef = useRef<HTMLDivElement>(null);
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -84,28 +85,10 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
     };
   }, []);
 
-  useEffect(() => {
-    if (proseRef.current) {
-      const headings = proseRef.current.querySelectorAll('h2, h3');
-      
-      headings.forEach((heading, index) => {
-        const text = heading.textContent || '';
-        const id = text
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/\s+/g, '-')
-          .replace(/-+/g, '-');
-        heading.id = id || `heading-${index}`;
-      });
-    }
-  }, [post.content]);
-
   const url = typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`;
 
   return (
     <>
-      <BlogStructuredData post={post} />
-      <ArticleSchema post={post} />
       <div aria-hidden="true" className="fixed inset-x-0 top-14 z-40 h-1 bg-foreground/10 md:top-16">
         <div className="h-full origin-left bg-primary" style={{ transform: `scaleX(${readingProgress / 100})` }} />
       </div>
@@ -133,18 +116,18 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
                   <span aria-hidden="true" className="font-mono transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <div className="pt-3">
-                  <TableOfContents content={post.content} />
+                  <TableOfContents key={`${post.slug}:${locale}`} contentKey={`${post.slug}:${locale}`} />
                 </div>
               </details>
               <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 lg:block">
-                <TableOfContents content={post.content} />
+                <TableOfContents key={`${post.slug}:${locale}`} contentKey={`${post.slug}:${locale}`} />
               </div>
             </aside>
 
             <article key={post.slug} ref={contentRef} className="min-w-0 lg:col-span-8 lg:col-start-5">
               {post.imageUrl && <BlogPostHeroImage imageUrl={post.imageUrl} title={post.title} imageAiHint={post.imageAiHint} />}
-              <BlogPostContent ref={proseRef} content={post.content} />
-              <BlogPostActions slug={post.slug} title={post.title} url={url} />
+              {version.body}
+              <BlogPostActions slug={post.slug} title={post.title} url={url} related={version.related} />
               <div className="mt-16 border-t border-foreground/20 pt-8">
                 <Button variant="secondary" href="/blog" className="w-full sm:w-auto">
                   <ArrowLeft aria-hidden="true" className="h-4 w-4" /> {t('moreArticles')}
