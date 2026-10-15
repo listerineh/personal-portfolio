@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useLocale } from '@/context/locale-context';
-import { getBlogPosts } from '@/lib/data';
+import { getBlogPosts } from '@/lib/data/blog';
 import { BlogCard } from '@/components/ds';
 
 interface RelatedPostsProps {

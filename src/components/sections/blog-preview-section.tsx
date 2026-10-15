@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
-import { getBlogPosts } from '@/lib/data';
+import { getBlogPosts } from '@/lib/data/blog';
 import { useLocale } from '@/context/locale-context';
 import { BlogCard, Button, Room } from '@/components/ds';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';

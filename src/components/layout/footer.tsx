@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { socialLinks } from "@/lib/data";
+import { socialLinks } from "@/lib/data/navigation";
 import { CookieSettingsLink } from "@/components/common/cookie-settings-link";
 import { Mark } from "@/components/ds";
 

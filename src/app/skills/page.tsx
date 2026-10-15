@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
-import { getSkillsByCategory } from '@/lib/data';
+import { getSkillsByCategory } from '@/lib/data/skills';
 import { SkillsListingClient } from '@/components/skills/skills-listing-client';
 
 export const dynamic = 'force-dynamic';

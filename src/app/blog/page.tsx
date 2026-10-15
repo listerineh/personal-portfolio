@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getBlogPosts } from '@/lib/data';
+import { getBlogPosts } from '@/lib/data/blog';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 import { PageShell } from '@/components/layout';

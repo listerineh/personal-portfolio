@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getExperiences } from '@/lib/data';
+import { getExperiences } from '@/lib/data/experiences';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 import { ExperienceListingClient } from '@/components/experience/experience-listing-client';

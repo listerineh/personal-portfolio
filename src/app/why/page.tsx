@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { musicLinks } from "@/lib/data";
+import { musicLinks } from "@/lib/data/music";
 import {
   BrandLink,
   Button,

@@ -15,7 +15,7 @@ import { BlogPostHeader } from './blog-post-header';
 import { BlogPostHeroImage } from './blog-post-hero-image';
 import { BlogPostContent } from './blog-post-content';
 import { BlogPostActions } from './blog-post-actions';
-import { getBlogPost } from '@/lib/data';
+import { getBlogPost } from '@/lib/data/blog';
 
 interface BlogPostClientPageProps {
   post: BlogPost;

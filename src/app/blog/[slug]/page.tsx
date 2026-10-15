@@ -1,6 +1,6 @@
 
 import { Metadata } from 'next';
-import { getBlogPosts, getBlogPost } from '@/lib/data';
+import { getBlogPosts, getBlogPost } from '@/lib/data/blog';
 import { notFound } from 'next/navigation';
 import { BlogPostClientPage } from '@/components/blog/blog-post-client-page';
 import { cookies } from 'next/headers';

@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { blogPosts } from '@/lib/data';
+import { blogPosts } from '@/lib/data/blog';
 import { projectsData } from '@/lib/data/projects';
 import { defaultLocale } from '@/i18n/config';
 

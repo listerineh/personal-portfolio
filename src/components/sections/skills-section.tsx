@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
-import { getSkillsByCategory } from '@/lib/data';
+import { getSkillsByCategory } from '@/lib/data/skills';
 import { Button, Room } from '@/components/ds';
 
 /** Room 04 · Craft. The stack as a catalog index by category: read it, don't watch it scroll. */

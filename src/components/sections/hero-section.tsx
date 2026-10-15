@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowDown, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { projectsData } from "@/lib/data";
+import { projectsData } from "@/lib/data/projects";
 import { getLocalizedData } from "@/lib/i18n-data";
 import { useLocale } from "@/context/locale-context";
 import { stackLayers } from "@/lib/stack-layers";

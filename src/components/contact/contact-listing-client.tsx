@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, Mail, Check, ArrowUpRight } from 'lucide-react';
 import { submitContactForm } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
-import { socialLinks } from '@/lib/data';
+import { socialLinks } from '@/lib/data/navigation';
 import type { ContactFormData } from '@/types';
 import { Input, Textarea, FormField, Button, PageHeader } from '@/components/ds';
 import { PageShell } from '@/components/layout';

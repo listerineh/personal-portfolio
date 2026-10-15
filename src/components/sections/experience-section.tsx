@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
-import { experiencesData } from '@/lib/data';
+import { experiencesData } from '@/lib/data/experiences';
 import { getLocalizedData } from '@/lib/i18n-data';
 import { useLocale } from '@/context/locale-context';
 import { Button, ExperienceCard, Room } from '@/components/ds';

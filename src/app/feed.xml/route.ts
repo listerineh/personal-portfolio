@@ -1,4 +1,4 @@
-import { blogPosts } from '@/lib/data';
+import { blogPosts } from '@/lib/data/blog';
 
 export async function GET() {
   const siteUrl = 'https://listerineh.dev';

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
-import { projectsData } from '@/lib/data';
+import { projectsData } from '@/lib/data/projects';
 import { getLocalizedData } from '@/lib/i18n-data';
 import { useLocale } from '@/context/locale-context';
 import { stackLayers } from '@/lib/stack-layers';
