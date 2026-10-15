@@ -368,7 +368,8 @@
     "ctaDescription": "Ya sea un proyecto de software o una colaboración musical, siempre estoy abierto a nuevas oportunidades.",
     "getInTouch": "Ponte en Contacto",
     "topTracksError": "No se pudieron cargar las pistas.",
-    "topTracksAttribution": "Mejores pistas en Spotify"
+    "topTracksAttribution": "Mejores pistas en Spotify",
+    "listenOn": "Escuchar \"{track}\" en {platform}"
   },
   "privacy": {
     "title": "Política de Privacidad",

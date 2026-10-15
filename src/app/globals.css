@@ -46,6 +46,11 @@
     --border: 197 200 191; /* #C5C8BF hairline, decorative */
     --input: 107 112 105; /* #6B7069 control boundary ≥3:1 */
     --ring: 20 22 20; /* focus ring on plaster: ink */
+    --foreground-base: 20 22 20;
+    --muted-foreground-base: 80 85 79;
+    --primary-ink-base: 146 64 14;
+    --border-base: 197 200 191;
+    --ring-base: 20 22 20;
     --radius: 0px;
 
     /* ── Grid ────────────────────────────────────────────── */
@@ -203,6 +208,11 @@
     --border: 44 50 46; /* #2C322E */
     --input: 110 118 111; /* #6E766F */
     --ring: 217 119 6;
+    --foreground-base: 233 233 227;
+    --muted-foreground-base: 163 169 162;
+    --primary-ink-base: 217 119 6;
+    --border-base: 44 50 46;
+    --ring-base: 217 119 6;
 
     --shadow-hang:
       0 28px 48px -24px rgb(0 0 0 / 0.7), 0 2px 6px rgb(0 0 0 / 0.3);
@@ -225,6 +235,17 @@
     --border: var(--wall-muted);
     --ring: var(--wall-ink);
     background-color: rgb(var(--wall));
+    color: rgb(var(--foreground));
+  }
+
+  /* A paper plaque restores ground values, wherever it hangs. */
+  .plaque {
+    --foreground: var(--card-foreground);
+    --muted-foreground: var(--muted-foreground-base);
+    --primary-ink: var(--primary-ink-base);
+    --border: var(--border-base);
+    --ring: var(--ring-base);
+    background-color: rgb(var(--card));
     color: rgb(var(--foreground));
   }
 

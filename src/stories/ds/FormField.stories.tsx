@@ -37,6 +37,10 @@ export const WithError: Story = {
   },
 };
 
+export const WithHint: Story = {
+  args: { label: 'Email', hint: 'I reply within a day.', children: <Input type="email" placeholder="you@company.com" /> },
+};
+
 export const WithTextarea: Story = {
   args: {
     label: 'Message',

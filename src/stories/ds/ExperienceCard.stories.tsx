@@ -29,6 +29,10 @@ export const Default: Story = {
   },
 };
 
+export const Current: Story = {
+  args: { ...Default.args, currentLabel: 'Now' },
+};
+
 export const WithoutLogo: Story = {
   args: {
     jobTitle: 'Full Stack Developer',

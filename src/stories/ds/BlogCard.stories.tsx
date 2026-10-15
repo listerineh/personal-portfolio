@@ -24,6 +24,11 @@ export const Default: Story = {
   },
 };
 
+export const Stacked: Story = {
+  args: { ...Default.args, layout: 'stack' },
+  decorators: [(Story) => <div className="w-[320px]"><Story /></div>],
+};
+
 export const WithoutImage: Story = {
   args: {
     title: 'Advanced TypeScript Patterns for React Developers',

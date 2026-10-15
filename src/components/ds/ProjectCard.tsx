@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { Pill } from './Pill';
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
   slug: string;
@@ -12,69 +12,110 @@ interface ProjectCardProps {
   imageUrl?: string;
   tags: string[];
   viewMoreLabel?: string;
+  /** Catalog number on the label, e.g. "03". */
+  number?: string;
+  /** `feature` hangs the work large (first work in a room). */
+  size?: "default" | "feature";
+  /** Live marker text (e.g. "In progress"); renders the amber tag. */
+  liveLabel?: string;
+  priority?: boolean;
+  className?: string;
 }
 
+/**
+ * A work on the wall: the piece in its mat frame, its label below.
+ * Only the work you face casts a shadow (hover / keyboard focus).
+ */
 export function ProjectCard({
   slug,
   title,
   description,
   imageUrl,
   tags = [],
-  viewMoreLabel = 'View project',
+  viewMoreLabel = "View project",
+  number,
+  size = "default",
+  liveLabel,
+  priority = false,
+  className,
 }: ProjectCardProps) {
-  const visibleTags = tags.slice(0, 3);
-  const extraCount = tags.length - visibleTags.length;
+  const feature = size === "feature";
+  const catalog = [number, ...tags.slice(0, feature ? 5 : 3)]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
-    <article className="group relative h-full">
+    <article className={cn("group relative", className)}>
       <Link
         href={`/projects/${slug}`}
-        className="flex flex-col h-full rounded-2xl overflow-hidden border border-foreground/[0.08] bg-card transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-0.5 active:scale-[0.98] hover:border-primary/25 hover:bg-foreground/[0.03] no-underline"
+        className="block no-underline outline-offset-4"
       >
-        {/* Cover image */}
         {imageUrl && (
-          <div className="relative w-full overflow-hidden aspect-video">
-            <Image
-              src={imageUrl}
-              alt={title}
-              fill
-              className="project-image object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+          <div
+            className={cn(
+              "plaque p-2 sm:p-3",
+              "transition-[box-shadow,transform] duration-hang ease-hang motion-reduce:transition-none",
+              "group-hover:-translate-y-1 group-hover:shadow-hang group-focus-visible:-translate-y-1 group-focus-visible:shadow-hang",
+            )}
+          >
+            <div
+              className={cn(
+                "relative w-full overflow-hidden bg-muted",
+                feature ? "aspect-[4/3] md:aspect-[16/10]" : "aspect-[4/3]",
+              )}
+            >
+              <Image
+                src={imageUrl}
+                alt=""
+                fill
+                priority={priority}
+                className="object-cover"
+                sizes={
+                  feature
+                    ? "(max-width: 768px) 100vw, 60vw"
+                    : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                }
+              />
+            </div>
           </div>
         )}
 
-        {/* Content */}
-        <div className="flex flex-col flex-1 p-5 gap-3">
-          <h3 className="font-headline font-bold text-foreground leading-tight line-clamp-2 text-headline">
-            {title}
-          </h3>
-
-          <p className="text-sm text-foreground/55 leading-relaxed line-clamp-3">
+        <div className="mt-4 grid gap-2 md:mt-5">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h3
+              className={cn(
+                "text-foreground",
+                feature ? "text-subhead" : "text-headline",
+              )}
+            >
+              {title}
+            </h3>
+            {liveLabel && (
+              <span className="inline-flex h-6 items-center bg-primary px-2 font-mono text-[0.6875rem] font-medium text-primary-foreground">
+                {liveLabel}
+              </span>
+            )}
+          </div>
+          {catalog && (
+            <p className="text-catalog text-muted-foreground">{catalog}</p>
+          )}
+          <p
+            className={cn(
+              "max-w-[60ch] text-muted-foreground",
+              feature
+                ? "text-lead line-clamp-4"
+                : "text-sm leading-relaxed line-clamp-3",
+            )}
+          >
             {description}
           </p>
-
-          {/* Tags */}
-          {tags.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2 mt-1">
-              {visibleTags.map((tag) => (
-                <Pill key={tag} variant="outline" accent="neutral" size="sm" uppercase={false}>
-                  {tag}
-                </Pill>
-              ))}
-              {extraCount > 0 && (
-                <Pill variant="outline" accent="neutral" size="sm" uppercase={false}>
-                  +{extraCount}
-                </Pill>
-              )}
-            </div>
-          )}
-
-          {/* View more */}
-          <div className="flex items-center gap-1.5 text-xs font-headline font-semibold uppercase tracking-wide mt-auto pt-3 text-foreground/40 group-hover:text-primary transition-colors duration-200">
+          <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-foreground underline decoration-1 underline-offset-[0.3em] group-hover:decoration-2">
             {viewMoreLabel}
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-          </div>
+            <ArrowRight
+              aria-hidden="true"
+              className="h-4 w-4 transition-transform duration-snap ease-snap group-hover:translate-x-0.5"
+            />
+          </span>
         </div>
       </Link>
     </article>

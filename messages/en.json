@@ -368,7 +368,8 @@
     "ctaDescription": "Whether it's a software project or a musical collaboration, I'm always open to new opportunities.",
     "getInTouch": "Get in Touch",
     "topTracksError": "Could not load tracks.",
-    "topTracksAttribution": "Top tracks via Spotify"
+    "topTracksAttribution": "Top tracks via Spotify",
+    "listenOn": "Listen to \"{track}\" on {platform}"
   },
   "privacy": {
     "title": "Privacy Policy",

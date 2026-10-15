@@ -1,12 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { Pill } from './Pill';
-import { cn } from '@/lib/utils';
-import { MONTHS_EN, MONTHS_ES } from '@/lib/blog-constants';
+import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { MONTHS_EN, MONTHS_ES } from "@/lib/blog-constants";
 
 interface BlogCardProps {
   title: string;
@@ -14,12 +11,17 @@ interface BlogCardProps {
   excerpt?: string;
   date?: string;
   readingTime?: number;
+  /** Unit after the reading time, localized by the caller. */
+  readingTimeLabel?: string;
   tags?: string[];
   coverImage?: string;
   readMoreLabel?: string;
   newLabel?: string;
   isRecommended?: boolean;
   recommendedLabel?: string;
+  /** `row` = entry in a written-works list; `stack` = cover on top (narrow columns). */
+  layout?: "row" | "stack";
+  className?: string;
 }
 
 function isNewPost(date?: string): boolean {
@@ -28,123 +30,115 @@ function isNewPost(date?: string): boolean {
   // Handle "Month DD, YYYY" format (Safari-safe — Date constructor rejects this)
   const match = date.match(/^(\w+)\s+\d+,\s+(\d{4})$/);
   if (match) {
-    const month = MONTHS_EN.indexOf(match[1]) !== -1
-      ? MONTHS_EN.indexOf(match[1])
-      : MONTHS_ES.indexOf(match[1]);
+    const month =
+      MONTHS_EN.indexOf(match[1]) !== -1
+        ? MONTHS_EN.indexOf(match[1])
+        : MONTHS_ES.indexOf(match[1]);
     const year = parseInt(match[2], 10);
-    return month !== -1 && year === now.getFullYear() && month === now.getMonth();
+    return (
+      month !== -1 && year === now.getFullYear() && month === now.getMonth()
+    );
   }
-  // Fallback for ISO or other standard formats
   const postDate = new Date(date);
   if (isNaN(postDate.getTime())) return false;
-  return postDate.getFullYear() === now.getFullYear() && postDate.getMonth() === now.getMonth();
+  return (
+    postDate.getFullYear() === now.getFullYear() &&
+    postDate.getMonth() === now.getMonth()
+  );
 }
 
+/** A written work: catalog line, title, excerpt. The cover is a small framed print, not a banner. */
 export function BlogCard({
   title,
   slug,
   excerpt,
   date,
   readingTime,
+  readingTimeLabel = "min read",
   tags = [],
   coverImage,
-  readMoreLabel = 'Read more',
-  newLabel = 'New',
+  readMoreLabel = "Read more",
+  newLabel = "New",
   isRecommended,
   recommendedLabel,
+  layout = "row",
+  className,
 }: BlogCardProps) {
-  const [starHovered, setStarHovered] = useState(false);
   const isNew = isNewPost(date);
+  const catalog = [
+    date,
+    readingTime !== undefined ? `${readingTime} ${readingTimeLabel}` : null,
+    ...tags.slice(0, 2),
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
-    <article className="group relative h-full">
+    <article className={cn("group relative", className)}>
       <Link
         href={`/blog/${slug}`}
-        className="flex flex-col h-full rounded-2xl overflow-hidden border border-foreground/[0.08] bg-card transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-0.5 active:scale-[0.98] hover:border-primary/25 hover:bg-foreground/[0.03] no-underline"
+        aria-label={`${title}. ${readMoreLabel}`}
+        className={cn(
+          "grid gap-4 no-underline outline-offset-4",
+          layout === "row" &&
+            coverImage &&
+            "sm:grid-cols-[1fr_9rem] sm:gap-6 md:grid-cols-[1fr_11rem]",
+        )}
       >
-        {/* Cover image */}
-        {coverImage && (
-          <div className="relative w-full overflow-hidden aspect-video">
-            <Image
-              src={coverImage}
-              alt={title}
-              fill
-              className="blog-image object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent from-60% to-black/50" />
+        <div
+          className={cn(
+            "grid content-start gap-2",
+            layout === "row" && "sm:order-1",
+          )}
+        >
+          <div className="flex flex-wrap items-center gap-2">
             {isNew && newLabel && (
-              <div className="absolute top-0 right-0 z-20">
-                <span className="inline-flex items-center font-headline font-bold text-[10px] tracking-widest uppercase text-white shadow-lg bg-primary rounded-bl-lg px-2.5 py-1">
-                  {newLabel}
-                </span>
-              </div>
+              <span className="inline-flex h-6 items-center bg-primary px-2 font-mono text-[0.6875rem] font-medium text-primary-foreground">
+                {newLabel}
+              </span>
             )}
-            {isRecommended && (
-              <div
-                className="absolute top-3 left-3 z-10 flex items-center gap-1.5"
-                onMouseEnter={() => setStarHovered(true)}
-                onMouseLeave={() => setStarHovered(false)}
-              >
-                <span className="flex items-center justify-center w-9 h-9 rounded-full shadow-md backdrop-blur-sm transition-transform duration-200 ease-out bg-black/45 group-hover/star:scale-[1.15]">
-                  <Sparkles className="h-4 w-4 text-primary" />
-                </span>
-                <span
-                  className={cn(
-                    'px-2 py-0.5 rounded-full text-[10px] font-headline font-bold uppercase tracking-wider text-white shadow-md backdrop-blur-sm bg-black/45 transition-[opacity,transform] duration-200 ease-out',
-                    starHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'
-                  )}
-                >
-                  {recommendedLabel}
-                </span>
-              </div>
+            {isRecommended && recommendedLabel && (
+              <span className="inline-flex h-6 items-center border border-foreground/40 px-2 font-mono text-[0.6875rem] font-medium text-foreground">
+                {recommendedLabel}
+              </span>
+            )}
+            {catalog && (
+              <p className="text-catalog text-muted-foreground">
+                {date ? <time dateTime={date}>{catalog}</time> : catalog}
+              </p>
             )}
           </div>
-        )}
-
-        {/* Content */}
-        <div className="flex flex-col flex-1 p-5 gap-3">
-          {/* Date */}
-          {date && (
-            <time className="text-xs font-headline font-semibold uppercase tracking-widest text-foreground/30" dateTime={date}>
-              {date}{readingTime !== undefined ? ` · ${readingTime} min read` : ''}
-            </time>
-          )}
-
-          {/* Title */}
-          <h3 className="font-headline font-bold text-foreground leading-tight line-clamp-3 text-headline">
+          <h3 className="text-headline text-foreground decoration-1 underline-offset-[0.2em] group-hover:underline">
             {title}
           </h3>
-
-          {/* Excerpt */}
           {excerpt && (
-            <p className="text-sm text-foreground/55 leading-relaxed line-clamp-3">
+            <p className="max-w-[62ch] text-sm leading-relaxed text-muted-foreground line-clamp-3">
               {excerpt}
             </p>
           )}
-
-          {/* Tags */}
-          {tags.length > 0 && (
-            <div className="flex items-center gap-2 mt-1">
-              {tags.slice(0, 2).map((tag) => (
-                <Pill key={tag} variant="outline" accent="neutral" size="sm" uppercase={false} className="shrink-0">
-                  {tag}
-                </Pill>
-              ))}
-              {tags.length > 2 && (
-                <Pill variant="outline" accent="neutral" size="sm" uppercase={false} className="shrink-0">
-                  +{tags.length - 2}
-                </Pill>
-              )}
-            </div>
-          )}
-
-          {/* Read more */}
-          <div className="flex items-center gap-1.5 text-xs font-headline font-semibold uppercase tracking-wide mt-auto pt-3 text-foreground/40 group-hover:text-primary transition-colors duration-200">
-            {readMoreLabel}
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-          </div>
         </div>
+
+        {coverImage && (
+          <div
+            className={cn(
+              "plaque p-1.5 transition-[box-shadow,transform] duration-hang ease-hang motion-reduce:transition-none",
+              "group-hover:-translate-y-0.5 group-hover:shadow-lift",
+              layout === "row"
+                ? "order-first sm:order-2 sm:self-start"
+                : "order-first",
+            )}
+          >
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted sm:aspect-[4/3]">
+              <Image
+                src={coverImage}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, 176px"
+              />
+            </div>
+          </div>
+        )}
       </Link>
     </article>
   );

@@ -1,32 +1,35 @@
-import { cn } from '@/lib/utils'
-import { type Accent } from './types'
-import { type ReactNode } from 'react'
+import { cn } from "@/lib/utils";
+import { type Accent } from "./types";
+import { type ReactNode } from "react";
 
 interface SectionLabelProps {
-  accent?: Accent
-  animate?: boolean
-  className?: string
-  children: ReactNode
+  /** `amber` marks a live item; other accents render muted. */
+  accent?: Accent;
+  animate?: boolean;
+  className?: string;
+  children: ReactNode;
 }
 
-const colorMap: Record<Accent, string> = {
-  amber:   'text-primary/60 dark:text-primary/40',
-  indigo:  'text-indigo-700/60 dark:text-white/25',
-  green:   'text-emerald-700/65 dark:text-white/25',
-  neutral: 'text-gray-400 dark:text-white/25',
-}
-
-export function SectionLabel({ accent = 'neutral', animate, className, children }: SectionLabelProps) {
+/**
+ * Catalog line: the data printed on a label (date, medium, place).
+ * Never use it as an eyebrow above a heading; the heading carries its own weight.
+ */
+export function SectionLabel({
+  accent = "neutral",
+  animate,
+  className,
+  children,
+}: SectionLabelProps) {
   return (
     <p
       className={cn(
-        animate && 'reveal-up',
-        'font-headline text-[10px] tracking-[0.35em] uppercase',
-        colorMap[accent],
+        animate && "reveal-up",
+        "text-catalog",
+        accent === "amber" ? "text-primary" : "text-muted-foreground",
         className,
       )}
     >
       {children}
     </p>
-  )
+  );
 }

@@ -23,6 +23,11 @@ export const Default: Story = {
   },
 };
 
+export const Feature: Story = {
+  args: { ...Default.args, size: 'feature', number: '01', liveLabel: 'In progress', priority: true },
+  parameters: { layout: 'padded' },
+};
+
 export const WithoutImage: Story = {
   args: {
     slug: 'cli-tool',
