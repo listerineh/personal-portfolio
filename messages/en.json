@@ -108,7 +108,9 @@
     },
     "backToProjects": "Back to Projects",
     "liveDemo": "Live Demo",
-    "sourceCode": "Source Code"
+    "sourceCode": "Source Code",
+    "dates": "Dates",
+    "statusLabel": "Status"
   },
   "blog": {
     "title": "From the Blog",

@@ -108,7 +108,9 @@
     },
     "backToProjects": "Volver a Proyectos",
     "liveDemo": "Ver Demo",
-    "sourceCode": "Código Fuente"
+    "sourceCode": "Código Fuente",
+    "dates": "Fechas",
+    "statusLabel": "Estado"
   },
   "blog": {
     "title": "Del Blog",

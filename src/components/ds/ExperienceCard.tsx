@@ -6,6 +6,8 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ExperienceCardProps {
+  /** Heading level of the title, so pages keep a valid outline. */
+  headingLevel?: 'h2' | 'h3';
   jobTitle: string;
   company: string;
   employmentDates: string;
@@ -21,6 +23,7 @@ interface ExperienceCardProps {
 
 /** One stop in the career timeline: dates in the margin, role and work on the wall. */
 export function ExperienceCard({
+  headingLevel: Heading = 'h3',
   jobTitle,
   company,
   employmentDates,
@@ -67,7 +70,7 @@ export function ExperienceCard({
             </div>
           )}
           <div className="min-w-0">
-            <h3 className="text-headline text-foreground">{jobTitle}</h3>
+            <Heading className="text-headline text-foreground">{jobTitle}</Heading>
             <p className="mt-0.5 text-base text-muted-foreground">{company}</p>
           </div>
         </div>

@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { MONTHS_EN, MONTHS_ES } from "@/lib/blog-constants";
 
 interface BlogCardProps {
+  /** Heading level of the title, so pages keep a valid outline. */
+  headingLevel?: 'h2' | 'h3';
   title: string;
   slug: string;
   excerpt?: string;
@@ -49,6 +51,7 @@ function isNewPost(date?: string): boolean {
 
 /** A written work: catalog line, title, excerpt. The cover is a small framed print, not a banner. */
 export function BlogCard({
+  headingLevel: Heading = 'h3',
   title,
   slug,
   excerpt,
@@ -108,9 +111,9 @@ export function BlogCard({
               </p>
             )}
           </div>
-          <h3 className="text-headline text-foreground decoration-1 underline-offset-[0.2em] group-hover:underline">
+          <Heading className="text-headline text-foreground decoration-1 underline-offset-[0.2em] group-hover:underline">
             {title}
-          </h3>
+          </Heading>
           {excerpt && (
             <p className="max-w-[62ch] text-sm leading-relaxed text-muted-foreground line-clamp-3">
               {excerpt}

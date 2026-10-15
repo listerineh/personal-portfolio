@@ -11,7 +11,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const fieldBase =
-  "w-full bg-card text-foreground placeholder:text-muted-foreground border border-input " +
+  "plaque w-full bg-card text-foreground placeholder:text-muted-foreground border border-input " +
   "px-4 text-base outline-none transition-[border-color,box-shadow] duration-snap ease-snap motion-reduce:transition-none " +
   "hover:border-foreground focus-visible:border-foreground focus-visible:shadow-[inset_0_0_0_1px_rgb(var(--foreground))] " +
   "disabled:cursor-not-allowed disabled:opacity-60";

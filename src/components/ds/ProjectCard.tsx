@@ -6,6 +6,8 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
+  /** Heading level of the title, so pages keep a valid outline. */
+  headingLevel?: 'h2' | 'h3';
   slug: string;
   title: string;
   description: string;
@@ -27,6 +29,7 @@ interface ProjectCardProps {
  * Only the work you face casts a shadow (hover / keyboard focus).
  */
 export function ProjectCard({
+  headingLevel: Heading = 'h3',
   slug,
   title,
   description,
@@ -82,14 +85,14 @@ export function ProjectCard({
 
         <div className="mt-4 grid gap-2 md:mt-5">
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h3
+            <Heading
               className={cn(
                 "text-foreground",
                 feature ? "text-subhead" : "text-headline",
               )}
             >
               {title}
-            </h3>
+            </Heading>
             {liveLabel && (
               <span className="inline-flex h-6 items-center bg-primary px-2 font-mono text-[0.6875rem] font-medium text-primary-foreground">
                 {liveLabel}
