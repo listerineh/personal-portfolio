@@ -17,7 +17,8 @@ export function SpotifyPlayer({ artistId, artistName = 'Listerineh' }: SpotifyPl
         allowFullScreen={true}
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        className="rounded-2xl"
+        title={`${artistName} · Spotify`}
+        className="block"
       />
     </div>
   );

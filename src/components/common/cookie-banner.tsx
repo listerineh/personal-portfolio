@@ -73,19 +73,19 @@ export function CookieBanner() {
     <>
       <div
         className={cn(
-          'fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur-lg border-t border-border shadow-2xl',
+          'plaque fixed inset-x-0 bottom-0 z-50 px-gutter py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-hang',
           'transition-transform duration-500',
           isVisible && !isClosing ? 'translate-y-0' : 'translate-y-full'
         )}
         style={{ transitionTimingFunction: 'var(--ease-drawer)' }}
       >
-        <div className="container mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[1296px]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3 flex-1">
-              <Cookie className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+              <Cookie aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0" />
               <div className="space-y-1">
-                <p className="text-sm font-medium">{t('bannerTitle')}</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-base font-semibold">{t('bannerTitle')}</p>
+                <p className="max-w-[64ch] text-sm leading-relaxed text-muted-foreground">
                   {t('bannerDescription')}
                 </p>
               </div>
@@ -93,7 +93,7 @@ export function CookieBanner() {
             
             <div className="flex flex-wrap gap-2 w-full sm:w-auto">
               <Button variant="ghost" accent="neutral" size="sm" onClick={() => setShowSettings(true)}>
-                <Settings className="w-4 h-4" />{t('customize')}
+                <Settings aria-hidden="true" className="h-4 w-4" />{t('customize')}
               </Button>
               <Button variant="secondary" accent="neutral" size="sm" onClick={handleRejectAll}>
                 {t('rejectAll')}

@@ -18,7 +18,7 @@ export function PageShell({ className, children }: PageShellProps) {
     <div className="flex min-h-screen flex-col">
       <SkipLink>{t('skipToContent')}</SkipLink>
       <Header />
-      <main id="main-content" className={cn('flex-grow', className)}>
+      <main id="main-content" tabIndex={-1} className={cn("flex-grow focus:outline-none", className)}>
         {children}
       </main>
       <Footer />

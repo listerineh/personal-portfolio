@@ -4,7 +4,7 @@ import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrappe
 import { Archivo, JetBrains_Mono } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
-import { SmoothScrollWrapper, BackToTopButton, CookieBanner, PageTransition, ScrollRestoration, GlobalScrollReveal } from '@/components/common';
+import { BackToTopButton, CookieBanner, ScrollRestoration } from '@/components/common';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
 import { Toaster, RouteRail } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
@@ -99,12 +99,8 @@ export default async function RootLayout({
         <LocaleProvider initialLocale={initialLocale}>
           <IntlProviderWrapper initialMessages={messages}>
             <ThemeProvider>
-              <PageTransition />
               <ScrollRestoration />
-              <GlobalScrollReveal />
-              <SmoothScrollWrapper>
-                {children}
-              </SmoothScrollWrapper>
+              {children}
               <RouteRail />
               <BackToTopButton />
               <CookieBanner />

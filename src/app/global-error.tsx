@@ -1,57 +1,56 @@
 'use client';
 
 import { useEffect } from 'react';
-import { AlertTriangle } from 'lucide-react';
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+// Renders without the root layout (no fonts, no providers), so it carries the palette inline.
+const wall = '#1F4A3A';
+const paper = '#F3F3EF';
+const muted = '#CFE0D6';
+const amber = '#D97706';
+const ink = '#141614';
+
+const button = {
+  minHeight: 48,
+  padding: '0 24px',
+  fontSize: 15,
+  fontWeight: 600,
+  cursor: 'pointer',
+  fontFamily: 'inherit',
+} as const;
+
+export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     console.error('Global Error:', error);
   }, [error]);
 
   return (
-    <html>
-      <body style={{ margin: 0, background: '#0a0a0a', color: '#e5e5e5', fontFamily: 'system-ui, sans-serif' }}>
-        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
-          <div style={{ maxWidth: '480px', width: '100%', textAlign: 'center' }}>
-
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-              <div className="rounded-full bg-primary/10 border border-primary/20 p-5 inline-flex">
-                <AlertTriangle className="w-10 h-10 text-primary" />
-              </div>
-            </div>
-
-            <p className="text-[0.625rem] tracking-[0.3em] uppercase text-primary/60 mb-5">
-              Critical Error
-            </p>
-            <h1 className="text-display-sm font-bold text-white mb-4">
+    <html lang="en">
+      <body style={{ margin: 0, background: wall, color: paper, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <main style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '80px clamp(16px, 5vw, 72px)' }}>
+          <div style={{ maxWidth: 720 }}>
+            <p style={{ fontFamily: 'ui-monospace, monospace', fontSize: 13, color: muted, margin: 0 }}>500</p>
+            <h1 style={{ fontSize: 'clamp(2rem, 7vw, 3.5rem)', lineHeight: 1, letterSpacing: '-0.02em', margin: '12px 0 0' }}>
               Something went critically wrong
             </h1>
-            <p className="text-white/45 leading-relaxed mb-10 text-sm">
+            <p style={{ fontSize: 18, lineHeight: 1.55, color: muted, maxWidth: '48ch', margin: '20px 0 0' }}>
               A critical error occurred and the application could not recover. Please try refreshing the page.
             </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center' }}>
-              <button
-                onClick={reset}
-                className="py-2.5 px-6 border border-white/12 rounded-lg bg-transparent text-white/60 text-sm w-full max-w-[240px] cursor-pointer"
-              >
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
+              <button type="button" onClick={reset} style={{ ...button, background: amber, color: ink, border: 'none' }}>
                 Try again
               </button>
               <button
-                onClick={() => { window.location.href = '/'; }}
-                className="py-2.5 px-6 border-none rounded-lg bg-primary text-black text-sm font-semibold w-full max-w-[240px] cursor-pointer"
+                type="button"
+                onClick={() => {
+                  window.location.href = '/';
+                }}
+                style={{ ...button, background: 'transparent', color: paper, border: `1.5px solid ${paper}` }}
               >
                 Go to homepage
               </button>
             </div>
           </div>
-        </div>
+        </main>
       </body>
     </html>
   );

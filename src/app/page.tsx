@@ -23,7 +23,7 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col">
       <SkipLink>{t("skipToContent")}</SkipLink>
       <Header />
-      <main id="main-content" className="flex-grow">
+      <main id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
         <HeroSection />
         <ProjectsSection />
         <BlogPreviewSection />

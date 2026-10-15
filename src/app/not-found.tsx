@@ -2,57 +2,57 @@
 
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Button, Title, Text } from '@/components/ds';
-import { Home, ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Home } from 'lucide-react';
+import { Button } from '@/components/ds';
+import { PageShell } from '@/components/layout';
 
+/** An empty wall: nothing hangs here. The way back, and rooms worth visiting. */
 export default function NotFound() {
   const t = useTranslations('notFound');
-  
+  const rooms = [
+    { href: '/projects', key: 'projects' },
+    { href: '/blog', key: 'blog' },
+    { href: '/experience', key: 'experience' },
+    { href: '/contact', key: 'contact' },
+  ] as const;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-6 overflow-hidden relative">
-      <div
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-headline font-black pointer-events-none select-none leading-none overflow-hidden text-display-sm text-primary/[0.04]"
-        style={{ fontSize: '45vw' }}
-      >
-        404
-      </div>
-
-      <div className="relative z-10 max-w-2xl w-full text-center">
-        <p className="font-headline text-xs tracking-[0.2em] uppercase text-primary/70 mb-6">404</p>
-        <Title as="h1" className="mb-4 text-display-sm">
-          {t('title')}
-        </Title>
-        <Text size="base" strength="secondary" className="max-w-md mx-auto mb-10">
-          {t('description')}
-        </Text>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
-          <Button variant="secondary" accent="neutral" size="md" onClick={() => history.back()}>
-            <ArrowLeft className="w-4 h-4" />
-            {t('goBack')}
-          </Button>
-          <Button variant="primary" accent="amber" size="md" href="/">
-            <Home className="w-4 h-4" />
-            {t('goHome')}
-          </Button>
-        </div>
-
-        <div className="border-t border-foreground/[0.07] pt-8">
-          <p className="font-headline text-[10px] tracking-[0.3em] uppercase text-foreground/25 mb-6">
-            {t('interestedIn')}
-          </p>
-          <div className="flex flex-wrap gap-6 justify-center">
-            {(['/blog', '/#projects', '/experience', '/contact'] as const).map((href) => {
-              const key = href.replace('/#', '').replace('/', '') as 'blog' | 'projects' | 'experience' | 'contact';
-              return (
-                <Link key={href} href={href} className="font-headline text-[11px] tracking-widest uppercase text-foreground/35 hover:text-primary transition-colors duration-200">
-                  {t(key)}
-                </Link>
-              );
-            })}
+    <PageShell>
+      <section className="wall px-gutter pb-20 pt-28 md:pb-28 md:pt-36">
+        <div className="mx-auto grid max-w-[1296px] gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="lg:col-span-7">
+            <p aria-hidden="true" className="text-[clamp(5rem,24vw,12rem)] font-light leading-[0.8] tabular-nums text-muted-foreground [font-stretch:125%]">
+              404
+            </p>
+            <h1 className="text-display-sm mt-8">{t('title')}</h1>
+            <p className="text-lead mt-5 max-w-[48ch] text-muted-foreground">{t('description')}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button accent="amber" size="lg" href="/" className="w-full sm:w-auto">
+                <Home aria-hidden="true" className="h-4 w-4" />
+                {t('goHome')}
+              </Button>
+              <Button variant="secondary" size="lg" onClick={() => history.back()} className="w-full sm:w-auto">
+                <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+                {t('goBack')}
+              </Button>
+            </div>
           </div>
+          <nav aria-labelledby="nf-rooms" className="lg:col-span-4 lg:col-start-9 lg:self-end">
+            <h2 id="nf-rooms" className="text-headline">
+              {t('interestedIn')}
+            </h2>
+            <ul className="mt-4 divide-y divide-foreground/25 border-y border-foreground/25">
+              {rooms.map(({ href, key }) => (
+                <li key={href}>
+                  <Link href={href} className="flex min-h-12 items-center py-2 text-base font-semibold underline-offset-[0.3em] hover:underline">
+                    {t(key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
-      </div>
-    </div>
+      </section>
+    </PageShell>
   );
 }

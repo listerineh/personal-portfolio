@@ -432,31 +432,8 @@
   padding-bottom: 0.75rem !important;
 }
 
-/* ── Scroll reveal: visible by default, GSAP opts elements in ─────── */
-.reveal-up,
-.reveal-stagger > *,
-.reveal-initial {
-  opacity: 1;
-}
-html.js-motion .reveal-up {
-  opacity: 0;
-  transform: translateY(1rem);
-}
-html.js-motion .reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(0.75rem);
-}
-html.js-motion .reveal-initial {
-  opacity: 0;
-}
-
+/* Legacy reveal classes are inert: content is always visible. Motion lives in Hang. */
 @media (prefers-reduced-motion: reduce) {
-  html.js-motion .reveal-up,
-  html.js-motion .reveal-stagger > *,
-  html.js-motion .reveal-initial {
-    opacity: 1 !important;
-    transform: none !important;
-  }
   html {
     scroll-behavior: auto;
   }

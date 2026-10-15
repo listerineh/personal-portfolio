@@ -2,56 +2,35 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button, Title, Text } from '@/components/ds';
 import { AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ds';
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const t = useTranslations('error');
-  
+
   useEffect(() => {
     console.error('Error:', error);
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-6">
-      <div className="max-w-lg w-full text-center">
-        <div className="flex justify-center mb-8">
-          <div className="rounded-full bg-primary/10 border border-primary/20 p-5">
-            <AlertTriangle className="h-10 w-10 text-primary" />
-          </div>
-        </div>
-
-        <p className="font-headline text-xs tracking-[0.2em] uppercase text-primary/70 mb-5">{t('errorCode')}</p>
-        <Title as="h1" className="mb-4 text-display-sm">
-          {t('title')}
-        </Title>
-        <Text size="base" strength="secondary" className="max-w-sm mx-auto mb-10">
-          {t('description')}
-        </Text>
-
+    <main id="main-content" className="wall flex min-h-screen items-center px-gutter py-20">
+      <div className="mx-auto w-full max-w-[1296px]">
+        <AlertTriangle aria-hidden="true" className="h-8 w-8" />
+        <p className="text-catalog mt-6 text-muted-foreground">{t('errorCode')}</p>
+        <h1 className="text-display-sm mt-3 max-w-[20ch]">{t('title')}</h1>
+        <p className="text-lead mt-5 max-w-[48ch] text-muted-foreground">{t('description')}</p>
         {process.env.NODE_ENV === 'development' && (
-          <div className="bg-muted/50 p-4 rounded-xl border border-foreground/[0.06] text-left mb-8">
-            <p className="text-xs font-mono text-primary/80 break-all">
-              {error.message}
-            </p>
-          </div>
+          <pre className="plaque mt-8 max-w-2xl overflow-x-auto p-4 font-mono text-xs">{error.message}</pre>
         )}
-
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button variant="secondary" accent="neutral" size="md" onClick={reset}>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button accent="amber" size="lg" onClick={reset} className="w-full sm:w-auto">
             {t('tryAgain')}
           </Button>
-          <Button variant="primary" accent="amber" size="md" onClick={() => { window.location.href = '/'; }}>
+          <Button variant="secondary" size="lg" href="/" className="w-full sm:w-auto">
             {t('goHome')}
           </Button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
