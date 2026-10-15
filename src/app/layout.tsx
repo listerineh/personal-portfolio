@@ -84,8 +84,8 @@ export default async function RootLayout({
     <html lang={initialLocale} className={cn(fontSans.variable, fontMono.variable)} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1F4A3A" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121513" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1B2540" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#12141A" />
         <script dangerouslySetInnerHTML={{ __html: prePaintScript }} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 
 // Renders without the root layout (no fonts, no providers), so it carries the palette inline.
-const wall = '#1F4A3A';
-const paper = '#F3F3EF';
-const muted = '#CFE0D6';
+const wall = '#1B2540';
+const paper = '#F8F6F2';
+const muted = '#C9D0E0';
 const amber = '#D97706';
-const ink = '#141614';
+const ink = '#16181D';
 
 const button = {
   minHeight: 48,

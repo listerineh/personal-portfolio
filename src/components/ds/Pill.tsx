@@ -56,7 +56,7 @@ export function Pill({
     const style: React.CSSProperties =
       variant === "outline"
         ? { border: `1px solid ${color}`, color }
-        : { backgroundColor: color, color: "#141614" };
+        : { backgroundColor: color, color: "#16181D" };
     return (
       <span className={cn(base, className)} style={style}>
         {children}

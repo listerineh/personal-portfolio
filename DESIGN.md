@@ -5,21 +5,21 @@ colors:
   amber: "#D97706"
   amber-ink: "#92400E"
   amber-on-wall: "#F5B54A"
-  gallery-green: "#1F4A3A"
-  gallery-green-night: "#183A2E"
-  wall-paper: "#F3F3EF"
-  wall-muted: "#CFE0D6"
-  plaster: "#E6E7E2"
-  plaster-deep: "#D9DBD4"
-  plaque: "#F3F3EF"
-  ink: "#141614"
-  ink-muted: "#50554F"
+  ink-blue: "#1B2540"
+  ink-blue-night: "#18213A"
+  wall-paper: "#F8F6F2"
+  wall-muted: "#C9D0E0"
+  bone: "#EFECE6"
+  bone-deep: "#D9DBD4"
+  plaque: "#F8F6F2"
+  ink: "#16181D"
+  ink-muted: "#4F5360"
   hairline: "#C5C8BF"
-  control-line: "#6B7069"
-  after-hours: "#121513"
-  after-hours-plaque: "#1B1F1C"
-  after-hours-ink: "#E9E9E3"
-  after-hours-muted: "#A3A9A2"
+  control-line: "#6E6A62"
+  after-hours: "#12141A"
+  after-hours-plaque: "#1A1D25"
+  after-hours-ink: "#ECE9E2"
+  after-hours-muted: "#A3A8B5"
   destructive: "#B42318"
 typography:
   display:
@@ -83,7 +83,7 @@ components:
     height: "56px"
   button-ink:
     backgroundColor: "{colors.ink}"
-    textColor: "{colors.plaster}"
+    textColor: "{colors.bone}"
     rounded: "{rounded.none}"
     padding: "0 24px"
     height: "48px"
@@ -127,12 +127,12 @@ components:
 
 The site is an exhibition in numbered rooms. Every page is a wall you face; every project hangs as a work in its mat frame with a paper plaque beside it and, where it helps, a working drawing of its stack. Sections are rooms on a single route (01 Work, 02 Writing, 03 Career, 04 Craft, 05 Contact), and one continuous line along the floor shows how far you have walked.
 
-Two grounds carry the whole system: cool plaster in light, gallery after hours in dark. Painted gallery-green walls own whole regions (the entrance, alternating rooms, the exit wall). Amber is the house's only signal and it means one thing: live now. Everything is square. Nothing is glass. Depth exists only as the shadow of the work you are facing.
+Two grounds carry the whole system: cool bone in light, gallery after hours in dark. Painted ink-blue walls own whole regions (the entrance, alternating rooms, the exit wall). Amber is the house's only signal and it means one thing: live now. Everything is square. Nothing is glass. Depth exists only as the shadow of the work you are facing.
 
 The voice is engineering-first. Music has its own temporary exhibitions on /why and a quiet section on /about; it does not decorate the rest of the building.
 
 **Key Characteristics:**
-- Committed color: painted walls cover full sections; plaster and plaques carry reading.
+- Committed color: painted walls cover full sections; bone and plaques carry reading.
 - One wide grotesk (Archivo) with a width axis: Expanded for wall titles, normal for text. Mono only for catalog data.
 - Square corners everywhere; no gradients, glass, glow or emoji.
 - Asymmetric 12-column hangs; rooms separated by deliberate empty wall.
@@ -143,26 +143,26 @@ The voice is engineering-first. Music has its own temporary exhibitions on /why 
 A restrained neutral ground, one painted wall color, and one signal.
 
 ### Primary
-- **Live Amber** (#D97706): the only accent. Marks what is live now: current role, newest post, work in progress, current page in navigation, the walked part of the route, the single primary action of a wall. Used as fill with ink text (5.7:1) or as large type; never as small text on plaster (2.56:1).
-- **Amber Ink** (#92400E): small amber text on plaster and plaques (5.7:1). Resolved automatically by `text-primary` in light.
-- **Amber on Wall** (#F5B54A): small amber text on gallery green (5.5:1). Resolved automatically inside `.wall`.
+- **Live Amber** (#D97706): the only accent. Marks what is live now: current role, newest post, work in progress, current page in navigation, the walked part of the route, the single primary action of a wall. Used as fill with ink text (5.7:1) or as large type; never as small text on bone (2.56:1).
+- **Amber Ink** (#92400E): small amber text on bone and plaques (5.7:1). Resolved automatically by `text-primary` in light.
+- **Amber on Wall** (#F5B54A): small amber text on ink blue (8.4:1). Resolved automatically inside `.wall`.
 
 ### Secondary
-- **Gallery Green** (#1F4A3A; night #183A2E): painted walls. Re-scopes foreground, muted, amber and focus tokens for everything hung on it (`.wall`).
+- **Ink Blue** (#1B2540; night #18213A): painted walls. Re-scopes foreground, muted, amber and focus tokens for everything hung on it (`.wall`).
 
 ### Neutral
-- **Plaster** (#E6E7E2): light ground.
-- **Plaque Paper** (#F3F3EF): labels, framed mats, fields, notices (`.plaque`, which restores ground tokens wherever it hangs).
-- **Ink** (#141614): text, ink buttons, rules (14.6:1 on plaster).
-- **Ink Muted** (#50554F): secondary text (6.1:1).
-- **Wall Muted** (#CFE0D6): secondary text on gallery green (7.3:1).
-- **Hairline** (#C5C8BF) decorative rules; **Control Line** (#6B7069) field boundaries (≥3:1).
-- **After Hours** (#121513), **After Hours Plaque** (#1B1F1C), **After Hours Ink** (#E9E9E3), **After Hours Muted** (#A3A9A2): the dark theme. Amber stays #D97706 (5.8:1 on the ground).
+- **Bone** (#EFECE6): light ground.
+- **Plaque Paper** (#F8F6F2): labels, framed mats, fields, notices (`.plaque`, which restores ground tokens wherever it hangs).
+- **Ink** (#16181D): text, ink buttons, rules (15.1:1 on bone).
+- **Ink Muted** (#4F5360): secondary text (6.1:1).
+- **Wall Muted** (#C9D0E0): secondary text on ink blue (9.8:1).
+- **Hairline** (#C5C8BF) decorative rules; **Control Line** (#6E6A62) field boundaries (≥3:1).
+- **After Hours** (#12141A), **After Hours Plaque** (#1A1D25), **After Hours Ink** (#ECE9E2), **After Hours Muted** (#A3A8B5): the dark theme. Amber stays #D97706 (5.8:1 on the ground).
 
 ### Named Rules
 **The Live Amber Rule.** Amber means "live now" and nothing else. If an element is not current, new, in progress, or the one primary action, it is ink.
 
-**The Surface Rule.** Text on a foreground fill uses `text-surface` (the ground you are standing on), never a hard-coded background color, so inverted buttons work on plaster, wall and plaque alike.
+**The Surface Rule.** Text on a foreground fill uses `text-surface` (the ground you are standing on), never a hard-coded background color, so inverted buttons work on bone, wall and plaque alike.
 
 ## Typography
 
@@ -190,7 +190,7 @@ A restrained neutral ground, one painted wall color, and one signal.
 
 Mobile-first from 360px. Gutter token `--gutter`: 16 → 24 (640) → 40 (768) → 64 (1024) → 72px (1440). Content max-width 1296px. Twelve columns from `md`/`lg`, a single column below.
 
-Rooms (`Room`) pad 80px (mobile) to 128px (desktop) vertically and open with title + numeral on one baseline. Works hang off-grid on purpose: one large (8 cols) then two smaller (5 cols, the second offset down ~128px and started at col 8). Reading pages place the text column at cols 4–11 with a sticky table of contents in cols 1–3. Rhythm alternates plaster and painted rooms; the footer is always a painted exit wall.
+Rooms (`Room`) pad 80px (mobile) to 128px (desktop) vertically and open with title + numeral on one baseline. Works hang off-grid on purpose: one large (8 cols) then two smaller (5 cols, the second offset down ~128px and started at col 8). Reading pages place the text column at cols 4–11 with a sticky table of contents in cols 1–3. Rhythm alternates bone and painted rooms; the footer is always a painted exit wall.
 
 ## Elevation & Depth
 
@@ -227,7 +227,7 @@ Every corner is square (`--radius: 0`). Frames are mats: a plaque-colored paddin
 
 ### Inputs / Fields
 - **Style:** plaque background, 1px control line, square, min 48px.
-- **Focus:** border to foreground plus the global 2px outline (ink on plaster, amber on dark and walls).
+- **Focus:** border to foreground plus the global 2px outline (ink on bone, amber on dark and walls).
 - **Error:** destructive border with inset ring; message wired via `aria-describedby`, `role="alert"`.
 
 ### Navigation
@@ -244,7 +244,7 @@ Every corner is square (`--radius: 0`). Frames are mats: a plaque-colored paddin
 ## Do's and Don'ts
 
 ### Do:
-- **Do** paint whole sections gallery green and hang plaques on them; let `.wall` and `.plaque` handle contrast.
+- **Do** paint whole sections ink blue and hang plaques on them; let `.wall` and `.plaque` handle contrast.
 - **Do** use amber only for live state and the single primary action of a wall.
 - **Do** set dates, stacks and counts in `.text-catalog`.
 - **Do** hang works asymmetrically (8 / 5 / 5 offset) and leave empty wall between rooms.
@@ -256,5 +256,5 @@ Every corner is square (`--radius: 0`). Frames are mats: a plaque-colored paddin
 - **Don't** round corners or build grids of identical rounded cards.
 - **Don't** put a kicker or eyebrow above a heading.
 - **Don't** use emoji or Unicode glyphs as icons; use lucide or the ds brand SVGs.
-- **Don't** set small text in #D97706 on plaster.
+- **Don't** set small text in #D97706 on bone.
 - **Don't** fade-up every section; only works and the route move.

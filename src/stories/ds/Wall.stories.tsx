@@ -12,7 +12,7 @@ const meta: Meta<typeof Wall> = {
 export default meta;
 type Story = StoryObj<typeof Wall>;
 
-/** Painted gallery green. Text, muted and amber tokens re-scope to stay AA on it. */
+/** Painted ink blue. Text, muted and amber tokens re-scope to stay AA on it. */
 export const Painted: Story = {
   render: () => (
     <Wall className="py-16">
@@ -31,11 +31,11 @@ export const Painted: Story = {
   ),
 };
 
-export const Plaster: Story = {
+export const Bone: Story = {
   render: () => (
     <Wall tone="plaster" className="py-16">
       <h2 className="text-display-sm">Written work</h2>
-      <p className="text-lead mt-4 max-w-[48ch] text-muted-foreground">Bare ground: plaster in light, after-hours in dark.</p>
+      <p className="text-lead mt-4 max-w-[48ch] text-muted-foreground">Bare ground: bone in light, after-hours in dark.</p>
     </Wall>
   ),
 };

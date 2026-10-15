@@ -4,8 +4,8 @@
 
 /*
  * Sala — the site is an exhibition in numbered rooms.
- * Grounds: cool plaster (light) / gallery after hours (dark).
- * Walls: painted gallery green. Plaques: flat paper labels.
+ * Grounds: warm bone (light) / gallery after hours (dark).
+ * Walls: painted ink blue. Plaques: flat paper labels.
  * Amber #D97706 marks only what is live now. Used as fill or large type;
  * small amber text uses --primary-ink, which is tuned per surface for AA.
  */
@@ -13,45 +13,45 @@
 @layer base {
   :root {
     /* ── Grounds ─────────────────────────────────────────── */
-    --background: 230 231 226; /* #E6E7E2 plaster */
-    --foreground: 20 22 20; /* #141614 ink */
-    --card: 243 243 239; /* #F3F3EF plaque */
-    --card-foreground: 20 22 20;
-    --popover: 243 243 239;
-    --popover-foreground: 20 22 20;
+    --background: 239 236 230; /* #EFECE6 bone */
+    --foreground: 22 24 29; /* #16181D ink */
+    --card: 248 246 242; /* #F8F6F2 plaque */
+    --card-foreground: 22 24 29;
+    --popover: 248 246 242;
+    --popover-foreground: 22 24 29;
 
     /* ── Amber (brand, live) ─────────────────────────────── */
     --primary: 217 119 6; /* #D97706 */
-    --primary-foreground: 20 22 20; /* ink on amber 5.7:1 */
-    --primary-ink: 146 64 14; /* #92400E small amber text on plaster 5.7:1 */
+    --primary-foreground: 22 24 29; /* ink on amber 5.6:1 */
+    --primary-ink: 146 64 14; /* #92400E small amber text on bone 6.0:1 */
 
     /* ── Neutrals ────────────────────────────────────────── */
-    --secondary: 217 219 212; /* #D9DBD4 */
-    --secondary-foreground: 20 22 20;
-    --muted: 217 219 212;
-    --muted-foreground: 80 85 79; /* #50554F 6.1:1 */
+    --secondary: 226 222 214; /* #E2DED6 */
+    --secondary-foreground: 22 24 29;
+    --muted: 226 222 214;
+    --muted-foreground: 79 83 96; /* #4F5360 slate 6.5:1 */
 
-    /* ── Wall (gallery green) ────────────────────────────── */
-    --wall: 31 74 58; /* #1F4A3A */
-    --wall-foreground: 243 243 239; /* 9.0:1 */
-    --wall-muted: 207 224 214; /* #CFE0D6 green-tinted, 7.3:1 */
-    --wall-ink: 245 181 74; /* #F5B54A amber text on wall 5.5:1 */
-    --accent: 31 74 58;
-    --accent-foreground: 243 243 239;
+    /* ── Wall (ink blue, amber's complement) ─────────────── */
+    --wall: 27 37 64; /* #1B2540 */
+    --wall-foreground: 242 239 232; /* #F2EFE8 13.2:1 */
+    --wall-muted: 201 208 224; /* #C9D0E0 9.8:1 */
+    --wall-ink: 245 181 74; /* #F5B54A amber text on wall 8.4:1 */
+    --accent: 27 37 64;
+    --accent-foreground: 242 239 232;
 
     --destructive: 180 35 24; /* #B42318 */
-    --destructive-foreground: 243 243 239;
+    --destructive-foreground: 248 246 242;
 
     /* ── Lines ───────────────────────────────────────────── */
-    --border: 197 200 191; /* #C5C8BF hairline, decorative */
-    --input: 107 112 105; /* #6B7069 control boundary ≥3:1 */
-    --ring: 20 22 20; /* focus ring on plaster: ink */
-    --foreground-base: 20 22 20;
+    --border: 207 202 192; /* #CFCAC0 hairline, decorative */
+    --input: 110 106 98; /* #6E6A62 control boundary 4.6:1 */
+    --ring: 22 24 29; /* focus ring on bone: ink */
+    --foreground-base: 22 24 29;
     --surface: var(--background);
-    --muted-foreground-base: 80 85 79;
+    --muted-foreground-base: 79 83 96;
     --primary-ink-base: 146 64 14;
-    --border-base: 197 200 191;
-    --ring-base: 20 22 20;
+    --border-base: 207 202 192;
+    --ring-base: 22 24 29;
     --radius: 0px;
 
     /* ── Grid ────────────────────────────────────────────── */
@@ -61,8 +61,8 @@
 
     /* ── Depth: only the work you face casts a shadow ────── */
     --shadow-hang:
-      0 28px 48px -24px rgb(10 14 12 / 0.45), 0 2px 6px rgb(10 14 12 / 0.12);
-    --shadow-lift: 0 12px 24px -16px rgb(10 14 12 / 0.35);
+      0 28px 48px -24px rgb(12 16 30 / 0.45), 0 2px 6px rgb(12 16 30 / 0.12);
+    --shadow-lift: 0 12px 24px -16px rgb(12 16 30 / 0.35);
 
     /* ── Motion (springs, generated from k/c in src/lib/motion.ts) ── */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -163,7 +163,7 @@
     /* ── Music identities (about, /why only) ─────────────── */
     --mn-accent: #d97706; /* Margarita Nugget */
     --mn-accent-muted: #b45309;
-    --mn-accent-foreground: #141614;
+    --mn-accent-foreground: #16181D;
     --ss-accent: #3d5a80; /* Sofones Solares: slate, no neon */
     --ss-accent-muted: #5a7799;
     --ss-accent-foreground: #ffffff;
@@ -172,47 +172,47 @@
     --solo-accent-foreground: #000000;
 
     /* ── /why page ───────────────────────────────────────── */
-    --why-background: #e6e7e2;
-    --why-foreground: #141614;
-    --surface-deep: #121513;
+    --why-background: #efece6;
+    --why-foreground: #16181d;
+    --surface-deep: #12141a;
 
     color-scheme: light;
   }
 
   .dark {
-    --background: 18 21 19; /* #121513 after hours */
-    --foreground: 233 233 227; /* #E9E9E3 */
-    --card: 27 31 28; /* #1B1F1C */
-    --card-foreground: 233 233 227;
-    --popover: 27 31 28;
-    --popover-foreground: 233 233 227;
+    --background: 18 20 26; /* #12141A after hours */
+    --foreground: 236 233 226; /* #ECE9E2 15.2:1 */
+    --card: 26 29 37; /* #1A1D25 */
+    --card-foreground: 236 233 226;
+    --popover: 26 29 37;
+    --popover-foreground: 236 233 226;
 
     --primary: 217 119 6;
-    --primary-foreground: 20 22 20;
-    --primary-ink: 217 119 6; /* 5.8:1 on #121513 */
+    --primary-foreground: 22 24 29;
+    --primary-ink: 217 119 6; /* 5.8:1 on #12141A */
 
-    --secondary: 36 41 37; /* #242925 */
-    --secondary-foreground: 233 233 227;
-    --muted: 36 41 37;
-    --muted-foreground: 163 169 162; /* #A3A9A2 7.7:1 */
+    --secondary: 35 39 51; /* #232733 */
+    --secondary-foreground: 236 233 226;
+    --muted: 35 39 51;
+    --muted-foreground: 163 168 181; /* #A3A8B5 7.7:1 */
 
-    --wall: 24 58 46; /* #183A2E */
-    --wall-foreground: 233 233 227;
-    --wall-muted: 207 224 214;
+    --wall: 24 33 58; /* #18213A */
+    --wall-foreground: 236 233 226;
+    --wall-muted: 201 208 224;
     --wall-ink: 245 181 74;
-    --accent: 24 58 46;
-    --accent-foreground: 233 233 227;
+    --accent: 24 33 58;
+    --accent-foreground: 236 233 226;
 
     --destructive: 240 112 95; /* #F0705F */
-    --destructive-foreground: 20 22 20;
+    --destructive-foreground: 22 24 29;
 
-    --border: 44 50 46; /* #2C322E */
-    --input: 110 118 111; /* #6E766F */
+    --border: 43 48 60; /* #2B303C */
+    --input: 111 117 134; /* #6F7586 4.0:1 */
     --ring: 217 119 6;
-    --foreground-base: 233 233 227;
-    --muted-foreground-base: 163 169 162;
+    --foreground-base: 236 233 226;
+    --muted-foreground-base: 163 168 181;
     --primary-ink-base: 217 119 6;
-    --border-base: 44 50 46;
+    --border-base: 43 48 60;
     --ring-base: 217 119 6;
 
     --shadow-hang:
@@ -221,9 +221,9 @@
 
     --ss-accent: #8aa4c4;
     --ss-accent-muted: #5a7799;
-    --why-background: #121513;
-    --why-foreground: #e9e9e3;
-    --surface-deep: #0c0e0d;
+    --why-background: #12141a;
+    --why-foreground: #ece9e2;
+    --surface-deep: #0c0e13;
 
     color-scheme: dark;
   }
@@ -523,10 +523,10 @@ html.js-motion [data-hang]:not([data-hung]) {
 .prose-sala :where(table) { font-size: 0.9375rem; }
 .prose-sala :where(thead th) { font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.8125rem; }
 
-/* Syntax: ink, amber ink, gallery green, muted. No neon. */
+/* Syntax: ink, amber ink, ink blue, muted. No neon. */
 .hljs-comment, .hljs-quote { color: rgb(var(--muted-foreground)); font-style: italic; }
 .hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-type, .hljs-literal { color: rgb(var(--primary-ink)); font-weight: 600; }
-.hljs-string, .hljs-attr, .hljs-template-variable, .hljs-addition { color: rgb(31 110 82); }
-.dark .hljs-string, .dark .hljs-attr, .dark .hljs-template-variable, .dark .hljs-addition { color: rgb(126 200 160); }
+.hljs-string, .hljs-attr, .hljs-template-variable, .hljs-addition { color: rgb(42 74 138); }
+.dark .hljs-string, .dark .hljs-attr, .dark .hljs-template-variable, .dark .hljs-addition { color: rgb(157 180 224); }
 .hljs-number, .hljs-symbol, .hljs-variable, .hljs-title, .hljs-title.function_ { color: rgb(var(--foreground)); font-weight: 600; }
 .hljs-deletion, .hljs-meta { color: rgb(var(--destructive)); }

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface WallProps {
   as?: ElementType;
-  /** `paint` = gallery green with the palette re-scoped; `plaster` = the bare ground. */
+  /** `paint` = ink blue with the palette re-scoped; `plaster` = the bare ground (bone). */
   tone?: "paint" | "plaster";
   className?: string;
   id?: string;
