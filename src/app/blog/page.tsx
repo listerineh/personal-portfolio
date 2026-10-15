@@ -2,8 +2,7 @@ import { Metadata } from 'next';
 import { getBlogPosts } from '@/lib/data';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import { PageShell } from '@/components/layout';
 import { BlogListingClient } from '@/components/blog/blog-listing-client';
 
 export const dynamic = 'force-dynamic';
@@ -142,11 +141,9 @@ export default async function BlogListingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Header />
-      <main className="pt-20">
+      <PageShell>
         <BlogListingClient posts={blogPosts} />
-      </main>
-      <Footer />
+      </PageShell>
     </>
   );
 }

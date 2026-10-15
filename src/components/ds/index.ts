@@ -35,6 +35,7 @@ export { SkipLink } from './SkipLink'
 export { PageHeader } from './PageHeader'
 export { FilterTag } from './FilterTag'
 export { SearchField } from './SearchField'
+export { EntrySkeleton } from './EntrySkeleton'
 export type { DrawingLayer } from './WorkingDrawing'
 
 export type { Accent, TextStrength, TextSize, ButtonVariant, ButtonSize, TitleGradient, TitleSize, SectionAlign, InputSize, CardVariant } from './types'

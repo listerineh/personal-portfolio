@@ -2,8 +2,8 @@
 
 import { useState, useMemo, useEffect, useCallback, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
-import { Search, X, Filter, TrendingUp, ArrowUpAZ, ArrowDownAZ, Sparkles, Loader2 } from 'lucide-react';
-import { Input, Pill, Dropdown, DropdownTrigger, DropdownContent, DropdownCheckboxItem, DropdownLabel, DropdownSeparator } from '@/components/ds';
+import { X, Filter, TrendingUp, ArrowUpAZ, ArrowDownAZ, Star, Loader2 } from 'lucide-react';
+import { Dropdown, DropdownTrigger, DropdownContent, DropdownCheckboxItem, DropdownItem, DropdownLabel, DropdownSeparator, FilterTag, SearchField } from '@/components/ds';
 import type { BlogPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
@@ -119,115 +119,86 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
 
   const sortOptions: { key: SortOption; label: string; icon: ReactNode }[] = [
     { key: 'all',          label: t('sortAll'),         icon: null },
-    { key: 'recommended',  label: t('sortRecommended'), icon: <Sparkles className="h-3 w-3" /> },
-    { key: 'most-viewed',  label: t('sortMostViewed'),  icon: loadingViews && sortBy === 'most-viewed' ? <Loader2 className="h-3 w-3 animate-spin" /> : <TrendingUp className="h-3 w-3" /> },
-    { key: 'desc',         label: t('sortDescending'),  icon: <ArrowDownAZ className="h-3 w-3" /> },
-    { key: 'asc',          label: t('sortAscending'),   icon: <ArrowUpAZ className="h-3 w-3" /> },
+    { key: 'recommended',  label: t('sortRecommended'), icon: <Star aria-hidden="true" className="h-3 w-3" /> },
+    { key: 'most-viewed',  label: t('sortMostViewed'),  icon: loadingViews && sortBy === 'most-viewed' ? <Loader2 aria-hidden="true" className="h-3 w-3 animate-spin motion-reduce:animate-none" /> : <TrendingUp aria-hidden="true" className="h-3 w-3" /> },
+    { key: 'desc',         label: t('sortDescending'),  icon: <ArrowDownAZ aria-hidden="true" className="h-3 w-3" /> },
+    { key: 'asc',          label: t('sortAscending'),   icon: <ArrowUpAZ aria-hidden="true" className="h-3 w-3" /> },
   ];
 
   return (
-    <div className="space-y-4 mb-8">
+    <div className="grid gap-5">
       <div className="flex gap-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/40 pointer-events-none z-10" />
-          <Input
-            type="text"
-            placeholder={t('searchPlaceholder')}
-            accent="amber"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
+        <SearchField
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder={t('searchPlaceholder')}
+          label={t('searchPlaceholder')}
+          clearLabel={t('clearAll')}
+          className="flex-1"
+        />
 
         <Dropdown>
           <DropdownTrigger asChild>
-            <button className="flex items-center gap-2 shrink-0 px-3 py-2 rounded-lg border border-foreground/15 text-sm font-medium text-foreground/70 hover:text-foreground hover:border-foreground/30 transition-colors">
-              <Filter className="h-4 w-4" />
+            <button
+              type="button"
+              aria-label={t('filterByTags')}
+              className="plaque inline-flex min-h-12 shrink-0 items-center gap-2 border border-input px-4 text-sm font-semibold transition-colors hover:border-foreground"
+            >
+              <Filter aria-hidden="true" className="h-4 w-4" />
               <span className="hidden sm:inline">{t('tags')}</span>
               {selectedTags.length > 0 && (
-                <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold rounded-full bg-primary/20 text-primary">
+                <span className="inline-flex h-5 min-w-5 items-center justify-center bg-primary px-1 font-mono text-[0.6875rem] text-primary-foreground">
                   {selectedTags.length}
                 </span>
               )}
             </button>
           </DropdownTrigger>
-          <DropdownContent align="end" className="w-56">
+          <DropdownContent align="end" className="w-64">
             <DropdownLabel>{t('filterByTags')}</DropdownLabel>
-            <DropdownSeparator className="h-px mx-2 my-1 bg-foreground/[0.06]" />
+            <DropdownSeparator />
             <div className="max-h-[300px] overflow-y-auto">
-              {allTags.map(tag => (
-                <DropdownCheckboxItem
-                  key={tag}
-                  checked={selectedTags.includes(tag)}
-                  onCheckedChange={() => toggleTag(tag)}
-                >
+              {allTags.map((tag) => (
+                <DropdownCheckboxItem key={tag} checked={selectedTags.includes(tag)} onCheckedChange={() => toggleTag(tag)}>
                   {tag}
                 </DropdownCheckboxItem>
               ))}
             </div>
             {selectedTags.length > 0 && (
               <>
-                <DropdownSeparator className="h-px mx-2 my-1 bg-foreground/[0.06]" />
-                <div className="px-2 py-1.5">
-                  <button
-                    onClick={clearFilters}
-                    className="w-full text-xs px-2 py-1.5 rounded text-foreground/50 hover:text-foreground hover:bg-foreground/5 transition-colors"
-                  >
-                    {t('clearAll')}
-                  </button>
-                </div>
+                <DropdownSeparator />
+                <DropdownItem onClick={clearFilters}>{t('clearAll')}</DropdownItem>
               </>
             )}
           </DropdownContent>
         </Dropdown>
       </div>
 
-      <div className="flex items-center justify-center gap-3 w-full">
-        <span className="text-xs text-foreground/35 font-medium tracking-wide uppercase shrink-0 hidden sm:block">{t('sortBy')}</span>
-        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none flex-nowrap sm:flex-wrap">
-          {sortOptions.map(({ key, label, icon }) => (
-            <button
-              key={key}
-              onClick={() => setSortBy(key)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97] border shrink-0 ${
-                sortBy === key
-                  ? 'bg-primary/15 border-primary/40 text-primary'
-                  : 'bg-transparent border-foreground/10 text-foreground/50 hover:border-foreground/25 hover:text-foreground/80'
-              }`}
-            >
-              {icon}
-              {label}
-            </button>
-          ))}
-        </div>
+      <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('sortBy')}>
+        <span className="text-catalog mr-1 text-muted-foreground">{t('sortBy')}</span>
+        {sortOptions.map(({ key, label, icon }) => (
+          <FilterTag key={key} pressed={sortBy === key} onPressedChange={() => setSortBy(key)} className="gap-1.5">
+            {icon}
+            {label}
+          </FilterTag>
+        ))}
       </div>
 
       {selectedTags.length > 0 && (
-        <div className="flex flex-wrap gap-2 items-center">
-          <span className="text-xs text-foreground/40">{t('filteringBy')}</span>
-          {selectedTags.map(tag => (
-            <button key={tag} onClick={() => toggleTag(tag)} className="flex items-center gap-1">
-              <Pill variant="solid" accent="amber">
-                {tag} <X className="h-3 w-3" />
-              </Pill>
-            </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-catalog mr-1 text-muted-foreground">{t('filteringBy')}</span>
+          {selectedTags.map((tag) => (
+            <FilterTag key={tag} pressed onPressedChange={() => toggleTag(tag)} className="gap-1.5">
+              {tag}
+              <X aria-hidden="true" className="h-3 w-3" />
+            </FilterTag>
           ))}
         </div>
       )}
 
       {hasActiveFilters && (
-        <div className="text-sm text-muted-foreground">
+        <p className="text-catalog text-muted-foreground" aria-live="polite">
           {t('foundArticles', { count: filteredAndSortedPosts.length })}
-        </div>
+        </p>
       )}
     </div>
   );

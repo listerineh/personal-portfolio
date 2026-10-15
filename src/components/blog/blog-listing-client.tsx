@@ -1,19 +1,12 @@
 'use client';
 
 import { Fragment, useRef, useEffect, useState, useMemo, useCallback } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
 import { BlogSearch } from '@/components/blog/blog-search';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
-import { Title, Text, BlogCard, EndOfList } from '@/components/ds';
+import { BlogCard, EndOfList, EntrySkeleton, PageHeader } from '@/components/ds';
 import type { BlogPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const INITIAL_COUNT = 6;
 const PAGE_SIZE = 6;
@@ -24,21 +17,16 @@ interface BlogListingClientProps {
 }
 
 export function BlogListingClient({ posts }: BlogListingClientProps) {
-  const { locale } = useLocale();
   const t = useTranslations('blog');
   const tCommon = useTranslations('common');
+  const tSala = useTranslations('sala');
+  const minutesLabel = t('readingTime', { minutes: '' }).trim();
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const [isGridLoading, setIsGridLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const isLoadMoreRef = useRef(false);
-  const prevCardCountRef = useRef(0);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  const titleRef = useRef<HTMLDivElement>(null);
-  const descRef = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const displayedPosts = useMemo(
     () => filteredPosts.slice(0, visibleCount),
@@ -49,7 +37,6 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
   const skeletonCount = Math.min(filteredPosts.length - visibleCount, PAGE_SIZE);
 
   const handleFilteredPostsChange = useCallback((newPosts: BlogPost[]) => {
-    isLoadMoreRef.current = false;
     setFilteredPosts(newPosts);
     setVisibleCount(INITIAL_COUNT);
     setIsLoadingMore(false);
@@ -60,12 +47,12 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasMore && !isLoadingMore && !isGridLoading) {
           setIsLoadingMore(true);
-          setTimeout(() => {
-            isLoadMoreRef.current = true;
+          timer = setTimeout(() => {
             setVisibleCount(prev => prev + PAGE_SIZE);
             setIsLoadingMore(false);
           }, SKELETON_DELAY);
@@ -75,176 +62,77 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
     );
 
     observer.observe(sentinel);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (timer) clearTimeout(timer);
+    };
   }, [hasMore, isLoadingMore, isGridLoading]);
 
-  // Header elements animate once on mount
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const tl = gsap.timeline();
-
-    if (titleRef.current) tl.fromTo(titleRef.current,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' },
-      '-=0.3'
-    );
-    if (descRef.current) tl.fromTo(descRef.current,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-      '-=0.35'
-    );
-    if (searchRef.current) tl.fromTo(searchRef.current,
-      { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-      '-=0.2'
-    );
-  }, []);
-
-  // Cards re-animate on displayedPosts change, smartly handling load-more vs full refresh
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const cards = cardsRef.current.filter((c): c is HTMLDivElement => c !== null);
-
-    if (isLoadMoreRef.current) {
-      // Animate only the newly added cards
-      const newCards = cards.slice(prevCardCountRef.current);
-      gsap.set(newCards, { opacity: 0, y: 28 });
-      newCards.forEach((card, index) => {
-        gsap.to(card, {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          delay: index * 0.07,
-          ease: 'power2.out',
-        });
-      });
-      isLoadMoreRef.current = false;
-    } else {
-      // Full re-animation: filter changed or initial load
-      cards.forEach(card => {
-        gsap.killTweensOf(card);
-        ScrollTrigger.getAll()
-          .filter(st => st.trigger === card)
-          .forEach(st => st.kill());
-      });
-      gsap.set(cards, { opacity: 0, y: 28 });
-      cards.forEach((card, index) => {
-        gsap.to(card, {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          delay: Math.min(index * 0.07, 0.35),
-          ease: 'power2.out',
-        });
-      });
-    }
-
-    prevCardCountRef.current = cards.length;
-  }, [displayedPosts]);
-
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.04] to-amber-950/0 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <div className="mb-12 text-center">
-          <div ref={titleRef} style={{ opacity: 0 }}>
-            <Title as="h1" className="mb-4 text-display-sm">
-              {t('pageTitle')}
-            </Title>
-          </div>
-          <div ref={descRef} className="opacity-0">
-            <Text size="base" strength="secondary" className="max-w-2xl mx-auto">
-              {t('pageDescription')}
-            </Text>
-          </div>
-        </div>
-
-        <div ref={searchRef} className="max-w-3xl mx-auto mb-12">
+    <>
+      <PageHeader number="02" name={tSala('writing')} title={t('pageTitle')} intro={t('pageDescription')}>
+        <div className="max-w-3xl">
           <BlogSearch posts={posts} onFilteredPostsChange={handleFilteredPostsChange} onLoadingChange={setIsGridLoading} />
         </div>
+      </PageHeader>
 
-        {isGridLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-2xl border border-foreground/[0.07] overflow-hidden animate-pulse">
-                <div className="h-48 bg-foreground/[0.05]" />
-                <div className="p-5 space-y-3">
-                  <div className="h-3 w-1/3 rounded-full bg-foreground/[0.07]" />
-                  <div className="h-5 w-4/5 rounded-full bg-foreground/[0.08]" />
-                  <div className="h-4 w-full rounded-full bg-foreground/[0.05]" />
-                  <div className="h-4 w-3/4 rounded-full bg-foreground/[0.05]" />
-                  <div className="flex gap-2 pt-1">
-                    <div className="h-5 w-16 rounded-full bg-foreground/[0.06]" />
-                    <div className="h-5 w-20 rounded-full bg-foreground/[0.06]" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : filteredPosts.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-foreground/50 text-headline">{t('noArticles')}</p>
-            <p className="text-sm text-foreground/35 mt-2">{t('tryAdjusting')}</p>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-              {displayedPosts.map((post, index) => (
-                <Fragment key={post.slug}>
-                  <div
-                    ref={(el) => { cardsRef.current[index] = el; }}
-                    className="mt-5"
-                  >
-                    <BlogCard
-                      title={post.title}
-                      slug={post.slug}
-                      excerpt={post.excerpt}
-                      date={post.date}
-                      tags={post.tags}
-                      coverImage={post.imageUrl}
-                      readMoreLabel={tCommon('readMore')}
-                      newLabel={t('new')}
-                      isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
-                      recommendedLabel={t('sortRecommended')}
-                    />
-                  </div>
-                  {(index + 1) % 5 === 0 && (
-                    <div className="col-span-1 md:col-span-2">
-                      <NewsletterSubscribe variant="default" />
-                    </div>
-                  )}
-                </Fragment>
-              ))}
-              {isLoadingMore && Array.from({ length: skeletonCount }).map((_, i) => (
-                <div key={`skel-${i}`} className="rounded-2xl border border-foreground/[0.07] overflow-hidden animate-pulse">
-                  <div className="h-48 bg-foreground/[0.05]" />
-                  <div className="p-5 space-y-3">
-                    <div className="h-3 w-1/3 rounded-full bg-foreground/[0.07]" />
-                    <div className="h-5 w-4/5 rounded-full bg-foreground/[0.08]" />
-                    <div className="h-4 w-full rounded-full bg-foreground/[0.05]" />
-                    <div className="h-4 w-3/4 rounded-full bg-foreground/[0.05]" />
-                    <div className="flex gap-2 pt-1">
-                      <div className="h-5 w-16 rounded-full bg-foreground/[0.06]" />
-                      <div className="h-5 w-20 rounded-full bg-foreground/[0.06]" />
-                    </div>
-                  </div>
-                </div>
+      <section className="px-gutter py-12 md:py-20" aria-busy={isGridLoading || isLoadingMore || undefined}>
+        <div className="mx-auto max-w-[1296px] lg:pl-[calc(100%/12*2)]">
+          {isGridLoading ? (
+            <div className="divide-y divide-foreground/20 border-y border-foreground/20">
+              {Array.from({ length: 4 }, (_, i) => (
+                <EntrySkeleton key={i} />
               ))}
             </div>
+          ) : filteredPosts.length === 0 ? (
+            <div className="plaque max-w-xl p-6 md:p-8">
+              <p className="text-headline">{t('noArticles')}</p>
+              <p className="mt-2 text-muted-foreground">{t('tryAdjusting')}</p>
+            </div>
+          ) : (
+            <>
+              <ol className="divide-y divide-foreground/20 border-y border-foreground/20">
+                {displayedPosts.map((post, index) => (
+                  <Fragment key={post.slug}>
+                    <li className="py-8 md:py-10">
+                      <BlogCard
+                        headingLevel="h2"
+                        title={post.title}
+                        slug={post.slug}
+                        excerpt={post.excerpt}
+                        date={post.date}
+                        tags={post.tags}
+                        coverImage={post.imageUrl}
+                        readingTime={post.readingTime}
+                        readingTimeLabel={minutesLabel}
+                        readMoreLabel={tCommon('readMore')}
+                        newLabel={t('new')}
+                        isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
+                        recommendedLabel={t('sortRecommended')}
+                      />
+                    </li>
+                    {(index + 1) % 5 === 0 && (
+                      <li className="py-8">
+                        <NewsletterSubscribe variant="default" />
+                      </li>
+                    )}
+                  </Fragment>
+                ))}
+                {isLoadingMore &&
+                  Array.from({ length: skeletonCount }, (_, i) => (
+                    <li key={`skel-${i}`}>
+                      <EntrySkeleton />
+                    </li>
+                  ))}
+              </ol>
 
-            <div ref={sentinelRef} className="h-1" />
+              <div ref={sentinelRef} className="h-1" />
 
-            {!hasMore && !isLoadingMore && (
-              <EndOfList>{tCommon('endOfList')}</EndOfList>
-            )}
-          </>
-        )}
-      </div>
-    </section>
+              {!hasMore && !isLoadingMore && <EndOfList>{tCommon('endOfList')}</EndOfList>}
+            </>
+          )}
+        </div>
+      </section>
+    </>
   );
 }
