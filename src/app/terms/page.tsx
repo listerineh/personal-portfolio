@@ -1,7 +1,8 @@
 'use client';
 
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import { PageShell } from '@/components/layout';
+import { PageHeader } from '@/components/ds';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState, useEffect } from 'react';
@@ -18,29 +19,26 @@ export default function TermsPage() {
 
   return (
     <>
-      <Header />
-      <main>
-        {/* Hero */}
-        <div className="pt-36 pb-20 px-6 sm:px-10 md:px-16 lg:px-24 border-b border-foreground/[0.06]">
-          <div className="max-w-4xl mx-auto">
-            <Link href="/" className="inline-flex items-center gap-2 text-[11px] font-headline tracking-[0.2em] uppercase text-foreground/35 hover:text-primary transition-colors mb-10">
-              ← {tCommon('back')}
+      <PageShell>
+        <PageHeader
+          name={t('title')}
+          title={t('title')}
+          titleSize="room"
+          nav={
+            <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline-offset-[0.3em] hover:underline">
+              <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+              {tCommon('back')}
             </Link>
-            <p className="text-[11px] font-headline tracking-[0.25em] uppercase text-primary/70 mb-4">{tCommon('legal')}</p>
-            <h1
-              className="font-headline font-black leading-[0.9] text-foreground mb-6 text-display-sm"
-            >
-              {t('title')}
-            </h1>
-            <p className="text-foreground/40 text-sm font-headline tracking-wide">
-              {t('lastUpdated')} {lastUpdated}
-            </p>
-          </div>
-        </div>
+          }
+        >
+          <p className="text-catalog text-muted-foreground">
+            {t('lastUpdated')} {lastUpdated}
+          </p>
+        </PageHeader>
 
         {/* Content */}
-        <div className="px-6 sm:px-10 md:px-16 lg:px-24 py-20">
-          <div className="max-w-4xl mx-auto space-y-16">
+        <div className="px-gutter py-16 md:py-24">
+          <div className="mx-auto grid max-w-[1296px] gap-14 lg:pl-[calc(100%/12*3)]">
 
             {/* Generic sections */}
             {[
@@ -54,62 +52,61 @@ export default function TermsPage() {
               [t('governingLawTitle'), t('governingLawText')],
             ].map(([title, content]) => (
               <section key={title}>
-                <h2 className="font-headline font-black text-primary mb-5 text-headline">{title}</h2>
-                <p className="text-foreground/55 leading-relaxed">{content}</p>
+                <h2 className="text-subhead mb-4">{title}</h2>
+                <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90">{content}</p>
               </section>
             ))}
 
             {/* License with not-allowed list */}
             <section>
-              <h2 className="font-headline font-black text-primary mb-5 text-headline">
+              <h2 className="text-subhead mb-4">
                 {t('licenseTitle')}
               </h2>
-              <p className="text-foreground/55 leading-relaxed mb-4">{t('licenseText')}</p>
-              <h3 className="font-headline font-semibold text-foreground/70 text-sm uppercase tracking-widest mb-3">{t('licenseNotAllowedTitle')}</h3>
-              <ul className="space-y-2 pl-4 border-l-2 border-primary/20">
+              <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90 mb-4">{t('licenseText')}</p>
+              <h3 className="mb-2 mt-8 text-base font-semibold">{t('licenseNotAllowedTitle')}</h3>
+              <ul className="grid max-w-[68ch] list-disc gap-2 pl-5 marker:text-foreground">
                 {[t('modifyMaterials'), t('commercialUse'), t('reverseEngineer'), t('removeCopyright'), t('transferMaterials')].map((item) => (
-                  <li key={item} className="text-foreground/50 text-sm leading-relaxed">{item}</li>
+                  <li key={item} className="leading-relaxed text-foreground/85">{item}</li>
                 ))}
               </ul>
             </section>
 
             {/* Blog content with callout box */}
             <section>
-              <h2 className="font-headline font-black text-primary mb-5 text-headline">
+              <h2 className="text-subhead mb-4">
                 {t('blogContentTitle')}
               </h2>
-              <p className="text-foreground/55 leading-relaxed mb-4">{t('blogContentText')}</p>
-              <div className="rounded-xl border border-foreground/[0.06] bg-foreground/[0.02] p-5">
-                <p className="text-xs font-headline tracking-widest uppercase text-foreground/40 mb-2">{t('codeExamplesLabel')}</p>
-                <p className="text-sm text-foreground/50">{t('codeExamplesText')}</p>
+              <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90 mb-4">{t('blogContentText')}</p>
+              <div className="plaque max-w-[68ch] p-5 md:p-6">
+                <p className="text-catalog mb-2 text-muted-foreground">{t('codeExamplesLabel')}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground">{t('codeExamplesText')}</p>
               </div>
             </section>
 
             {/* Note callout */}
-            <section className="rounded-xl border border-primary/15 bg-primary/[0.03] p-6">
-              <p className="text-sm text-foreground/55 leading-relaxed">
+            <section className="plaque max-w-[68ch] p-6">
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 <span className="font-semibold text-primary">{t('noteLabel')} </span>
                 {t.rich('noteText', {
-                  privacyLink: (chunks) => <Link href="/privacy" className="text-primary hover:text-primary/80 underline underline-offset-2">{chunks}</Link>
+                  privacyLink: (chunks) => <Link href="/privacy" className="font-medium underline decoration-primary decoration-1 underline-offset-[0.22em] hover:decoration-2">{chunks}</Link>
                 })}
               </p>
             </section>
 
             {/* Contact */}
-            <section className="rounded-xl border border-primary/15 bg-primary/[0.03] p-8">
-              <h2 className="font-headline font-black text-primary mb-4 text-headline">
+            <section className="plaque max-w-[68ch] p-6 md:p-8">
+              <h2 className="text-subhead mb-4">
                 {t('contactInfoTitle')}
               </h2>
-              <p className="text-foreground/55 leading-relaxed">
+              <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90">
                 {t.rich('contactInfoText', {
-                  contactLink: (chunks) => <Link href="/contact" className="text-primary hover:text-primary/80 underline underline-offset-2">{chunks}</Link>
+                  contactLink: (chunks) => <Link href="/contact" className="font-medium underline decoration-primary decoration-1 underline-offset-[0.22em] hover:decoration-2">{chunks}</Link>
                 })}
               </p>
             </section>
           </div>
         </div>
-      </main>
-      <Footer />
+      </PageShell>
     </>
   );
 }
