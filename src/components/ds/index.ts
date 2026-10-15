@@ -40,3 +40,5 @@ export { Exhibit } from './Exhibit'
 export type { DrawingLayer } from './WorkingDrawing'
 
 export type { Accent, TextStrength, TextSize, ButtonVariant, ButtonSize, TitleGradient, TitleSize, SectionAlign, InputSize, CardVariant } from './types'
+export { Directory } from './Directory'
+export type { DirectoryStop } from './Directory'

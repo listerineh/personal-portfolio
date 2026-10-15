@@ -52,7 +52,7 @@ export const MinimalTags: Story = {
     slug: 'simple-project',
     title: 'Simple Project',
     description: 'A minimal project demonstrating core concepts and best practices.',
-    imageUrl: '/images/sebastian_alvarez_photo.webp',
+    imageUrl: '/images/website_screenshot.webp',
     tags: ['React'],
   },
 };

@@ -32,7 +32,7 @@ export function HomePage({ byLocale, skills }: HomePageProps) {
       <SkipLink>{t('skipToContent')}</SkipLink>
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
-        <HeroSection latest={data.projects[0]} />
+        <HeroSection />
         <ProjectsSection projects={data.projects} />
         <BlogPreviewSection posts={data.posts} />
         <ExperienceSection experiences={data.experiences} />

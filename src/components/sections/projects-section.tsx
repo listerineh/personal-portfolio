@@ -6,7 +6,7 @@ import { stackLayers } from '@/lib/stack-layers';
 import { Button, Hang, ProjectCard, Room, WorkingDrawing } from '@/components/ds';
 import { cn } from '@/lib/utils';
 
-/** Room 01 · Work. The latest work hangs at the entrance; this room hangs the next three, off-grid on purpose. */
+/** Room 01 · Work. The three latest works, hung off-grid on purpose. */
 import type { ProjectSummary } from "@/types";
 
 export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
@@ -14,7 +14,7 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
   const tSala = useTranslations('sala');
   const tCommon = useTranslations('common');
   const tProject = useTranslations('project');
-  const hung = projects.slice(1, 4);
+  const hung = projects.slice(0, 3);
   const [feature, ...rest] = hung;
 
   return (
@@ -39,7 +39,7 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
               description={feature.description}
               imageUrl={feature.imageUrl}
               tags={[...feature.tags]}
-              number="02"
+              number="01"
               size="feature"
               liveLabel={feature.status === 'in-progress' ? tProject('status.in-progress') : undefined}
               viewMoreLabel={tCommon('viewProject')}
@@ -66,7 +66,7 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
                 description={project.description}
                 imageUrl={project.imageUrl}
                 tags={[...project.tags]}
-                number={String(index + 3).padStart(2, '0')}
+                number={String(index + 2).padStart(2, '0')}
                 liveLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
                 viewMoreLabel={tCommon('viewProject')}
               />

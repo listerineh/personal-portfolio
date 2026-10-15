@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { ArrowUpRight, Mail, Server, Monitor, Cloud, Bot } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Button, Hang, PageHeader, Plaque } from '@/components/ds';
+import { Button, PageHeader, Plaque } from '@/components/ds';
 import { communityLinks } from '@/lib/data/navigation';
 
 export function AboutContent() {
@@ -43,17 +43,10 @@ export function AboutContent() {
         <p className="text-catalog text-muted-foreground">Quito, Ecuador</p>
       </PageHeader>
 
-      {/* Statement beside the portrait */}
+      {/* Statement */}
       <section className="px-gutter py-20 md:py-28">
-        <div className="mx-auto grid max-w-[1296px] items-end gap-12 lg:grid-cols-12 lg:gap-6">
-          <p className="text-subhead max-w-[30ch] !leading-[1.3] lg:col-span-7">{t('heroDescription')}</p>
-          <Hang className="max-w-sm lg:col-span-4 lg:col-start-9">
-            <div className="plaque p-2 shadow-hang sm:p-3">
-              <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-                <Image src="/images/sebastian_alvarez_photo.webp" alt="Sebastian Alvarez" fill sizes="(max-width: 1024px) 384px, 30vw" className="object-cover" />
-              </div>
-            </div>
-          </Hang>
+        <div className="mx-auto max-w-[1296px]">
+          <p className="text-subhead max-w-[34ch] !leading-[1.3]">{t('heroDescription')}</p>
         </div>
       </section>
 

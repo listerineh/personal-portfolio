@@ -1,25 +1,26 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowDown, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { stackLayers } from "@/lib/stack-layers";
-import { Button, Hang, Plaque, WorkingDrawing } from "@/components/ds";
+import { Button, Directory } from "@/components/ds";
 
 /**
- * Entrance. The wall title is the name; the latest work already hangs beside it,
- * with its label and its working drawing. The primary action walks into the rooms.
+ * Entrance. The wall title is the name and the statement; beside it hangs the floor plan
+ * of the rooms. Works belong to room 01, so none hang here.
  */
-import type { ProjectSummary } from "@/types";
-
-export function HeroSection({ latest }: { latest?: ProjectSummary }) {
+export function HeroSection() {
   const t = useTranslations("hero");
   const tSala = useTranslations("sala");
-  const tProject = useTranslations("project");
   const { toast } = useToast();
-  const year = latest?.startDate?.slice(0, 4);
+
+  const stops = [
+    { number: "01", name: tSala("work"), href: "#work" },
+    { number: "02", name: tSala("writing"), href: "#writing" },
+    { number: "03", name: tSala("career"), href: "#career" },
+    { number: "04", name: tSala("craft"), href: "#craft" },
+    { number: "05", name: tSala("contact"), href: "#contact" },
+  ];
 
   const downloadCv = () => {
     const link = document.createElement("a");
@@ -40,32 +41,15 @@ export function HeroSection({ latest }: { latest?: ProjectSummary }) {
       data-room-name={tSala("entrance")}
       className="wall px-gutter pb-16 pt-24 md:pb-24 md:pt-32"
     >
-      <div className="mx-auto grid max-w-[1296px] gap-12 lg:grid-cols-12 lg:gap-6">
-        <div className="lg:col-span-6 lg:pt-6">
-          <div>
-            <h1 id="hero-title" className="text-display">
-              <span className="block">Sebastian</span>
-              <span className="block">Alvarez</span>
-            </h1>
-          </div>
-          <div className="mt-6 flex items-center gap-4">
-            <div className="plaque w-16 shrink-0 p-1 sm:w-20 lg:w-24">
-              <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-                <Image
-                  src="/images/sebastian_alvarez_photo.webp"
-                  alt="Sebastian Alvarez"
-                  fill
-                  sizes="80px"
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </div>
-
-          <p className="text-[clamp(1.125rem,2.6vw,1.5rem)] font-semibold leading-snug [font-stretch:108%]">
+      <div className="mx-auto grid max-w-[1296px] gap-14 lg:grid-cols-12 lg:gap-6">
+        <div className="lg:col-span-7">
+          <h1 id="hero-title" className="text-display">
+            <span className="block">Sebastian</span>
+            <span className="block">Alvarez</span>
+          </h1>
+          <p className="mt-6 text-[clamp(1.125rem,2.6vw,1.5rem)] font-semibold leading-snug [font-stretch:108%]">
             {t("subtitle")}
           </p>
-          </div>
           <p className="text-lead mt-4 max-w-[52ch] text-muted-foreground">
             {t("description")}
           </p>
@@ -106,60 +90,11 @@ export function HeroSection({ latest }: { latest?: ProjectSummary }) {
           </div>
         </div>
 
-        {latest && (
-          <div className="grid gap-6 sm:grid-cols-[1fr_auto] lg:col-span-6 lg:grid-cols-[1fr_11rem] lg:gap-6">
-            <Hang className="sm:col-span-2 lg:col-span-2">
-              <Link
-                href={`/projects/${latest.slug}`}
-                className="group block outline-offset-4"
-                aria-label={latest.title}
-              >
-                <div className="plaque p-2 shadow-hang sm:p-3">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                    <Image
-                      src={latest.imageUrl}
-                      alt=""
-                      fill
-                      priority
-                      fetchPriority="high"
-                      sizes="(max-width: 1024px) 100vw, 48vw"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              </Link>
-            </Hang>
-            <Plaque className="self-start">
-              <p className="text-catalog text-muted-foreground">
-                {tSala("latestWork")}
-              </p>
-              <h2 className="text-headline mt-2">
-                <Link
-                  href={`/projects/${latest.slug}`}
-                  className="underline-offset-[0.2em] hover:underline"
-                >
-                  {latest.title}
-                </Link>
-              </h2>
-              <p className="text-catalog mt-2 text-muted-foreground">
-                {[year, latest.role].filter(Boolean).join(" · ")}
-              </p>
-              {latest.status === "in-progress" && (
-                <span className="mt-3 inline-flex h-6 items-center bg-primary px-2 font-mono text-[0.6875rem] font-medium text-primary-foreground">
-                  {tProject("status.in-progress")}
-                </span>
-              )}
-            </Plaque>
-            <WorkingDrawing
-              caption={tSala("drawingCaption")}
-              layers={stackLayers(latest.tags).map(({ layer, items }) => ({
-                name: tSala(`layers.${layer}`),
-                items,
-              }))}
-              className="sm:w-64 lg:w-auto"
-            />
-          </div>
-        )}
+        <Directory
+          label={tSala("route")}
+          stops={stops}
+          className="lg:col-span-4 lg:col-start-9 lg:self-end"
+        />
       </div>
     </section>
   );

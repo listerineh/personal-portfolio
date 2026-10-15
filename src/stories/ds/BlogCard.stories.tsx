@@ -46,7 +46,7 @@ export const NewPost: Story = {
     excerpt: 'A comprehensive guide to integrating AI capabilities into your web applications using modern APIs and frameworks.',
     date: 'July 29, 2026',
     tags: ['AI', 'Web Development', 'APIs'],
-    coverImage: '/images/sebastian_alvarez_photo.webp',
+    coverImage: '/images/website_screenshot.webp',
     newLabel: 'New',
   },
 };
@@ -82,7 +82,7 @@ export const CustomLabels: Story = {
     excerpt: 'Explore the latest CSS features and techniques that will transform your styling workflow.',
     date: 'April 15, 2024',
     tags: ['CSS', 'Frontend', 'Styling'],
-    coverImage: '/images/sebastian_alvarez_photo.webp',
+    coverImage: '/images/website_screenshot.webp',
     readMoreLabel: 'Continue reading',
     newLabel: 'Fresh',
   },
