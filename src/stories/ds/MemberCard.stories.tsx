@@ -12,9 +12,9 @@ export default meta;
 type Story = StoryObj<typeof MemberCard>;
 
 export const Default: Story = {
-  args: { name: 'Sebastián Álvarez', role: 'Guitar, synths' },
+  args: { name: 'Sebastian Alvarez', role: 'Guitar, synths' },
 };
 
 export const Live: Story = {
-  args: { name: 'Sebastián Álvarez', role: 'Bass', accent: 'amber' },
+  args: { name: 'Sebastian Alvarez', role: 'Bass', accent: 'amber' },
 };

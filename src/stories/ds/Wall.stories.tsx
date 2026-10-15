@@ -17,9 +17,9 @@ export const Painted: Story = {
   render: () => (
     <Wall className="py-16">
       <h1 className="text-display">
-        Sebastián
+        Sebastian
         <br />
-        Álvarez
+        Alvarez
       </h1>
       <p className="text-lead mt-6 max-w-[40ch] text-muted-foreground">Full-stack engineer. Systems, cloud and applied AI, from the API to the interface.</p>
       <p className="mt-4 text-primary">Available for new projects</p>

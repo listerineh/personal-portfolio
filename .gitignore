@@ -59,3 +59,4 @@ public/docs/components
 .impeccable/review/
 .impeccable/build/
 .impeccable/config.local.json
+.impeccable/questions/

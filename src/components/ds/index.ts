@@ -29,6 +29,7 @@ export { RouteRail } from './RouteRail'
 export { useRoute, refreshRoute } from './route-store'
 export type { RouteStop, RouteState } from './route-store'
 export { WorkingDrawing } from './WorkingDrawing'
+export { Mark } from './Mark'
 export type { DrawingLayer } from './WorkingDrawing'
 
 export type { Accent, TextStrength, TextSize, ButtonVariant, ButtonSize, TitleGradient, TitleSize, SectionAlign, InputSize, CardVariant } from './types'

@@ -1,359 +1,255 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { Menu, X } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ThemeToggleButton, LanguageSwitcher } from '@/components/common';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { useLocale } from '@/context/locale-context';
-import { locales } from '@/i18n/config';
-import { cn } from '@/lib/utils';
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Menu, X } from "lucide-react";
+import { ThemeToggleButton, LanguageSwitcher } from "@/components/common";
+import { Mark, useRoute } from "@/components/ds";
+import { cn } from "@/lib/utils";
 
+/**
+ * The gallery's top strip. Solid ground (no glass), the mark, the rooms of the site,
+ * and the room you are standing in, as text.
+ */
 export function Header() {
-  const t = useTranslations('nav');
-  const tCommon = useTranslations('common');
-  const { locale, setLocale } = useLocale();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
+  const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const router = useRouter();
   const pathname = usePathname();
-  
-  const navItems = useMemo(() => [
-    { label: t('about'), href: '/about' },
-    { label: t('experience'), href: '/experience' },
-    { label: t('skills'), href: '/skills' },
-    { label: t('projects'), href: '/projects' },
-    { label: t('blog'), href: '/blog' },
-    { label: t('contact'), href: '/contact' },
-    { label: t('why'), href: '/why' },
-  ], [t]);
-  const headerRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLAnchorElement>(null);
-  const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const menuHeaderRef = useRef<HTMLDivElement>(null);
-  const navItemsRef = useRef<(HTMLLIElement | null)[]>([]);
-  const socialLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const scrollYRef = useRef<number>(0);
+  const { current } = useRoute();
+  const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const scrollYRef = useRef(0);
 
-  useEffect(() => {
-    if (!headerRef.current) return;
+  const navItems = useMemo(
+    () => [
+      { label: t("about"), href: "/about" },
+      { label: t("experience"), href: "/experience" },
+      { label: t("skills"), href: "/skills" },
+      { label: t("projects"), href: "/projects" },
+      { label: t("blog"), href: "/blog" },
+      { label: t("contact"), href: "/contact" },
+      { label: t("why"), href: "/why" },
+    ],
+    [t],
+  );
 
-    gsap.fromTo(headerRef.current,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 0.6,
-        ease: 'power2.out',
-      }
-    );
-  }, [pathname]);
+  const isCurrent = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
-  useEffect(() => {
-    if (!logoRef.current) return;
+  const lockScroll = () => {
+    scrollYRef.current = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollYRef.current}px`;
+    document.body.style.width = "100%";
+  };
 
-    const logo = logoRef.current;
-    const icon = logo.querySelector('svg');
-    
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    if (isTouchDevice) return;
+  const unlockScroll = () => {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+    window.scrollTo({ top: scrollYRef.current, behavior: "instant" });
+  };
 
-    const handleMouseEnter = () => {
-      gsap.to(icon, {
-        rotation: 360,
-        scale: 1.05,
-        duration: 0.4,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
-    };
+  const openRef = useRef(false);
 
-    const handleMouseLeave = () => {
-      gsap.to(icon, {
-        rotation: 0,
-        scale: 1,
-        duration: 0.25,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
-    };
-
-    logo.addEventListener('mouseenter', handleMouseEnter);
-    logo.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      logo.removeEventListener('mouseenter', handleMouseEnter);
-      logo.removeEventListener('mouseleave', handleMouseLeave);
-    };
+  const closeMenu = useCallback((restoreFocus = true) => {
+    if (!openRef.current) return;
+    openRef.current = false;
+    unlockScroll();
+    setOpen(false);
+    if (restoreFocus) window.requestAnimationFrame(() => menuButtonRef.current?.focus());
   }, []);
 
+  const openMenu = () => {
+    openRef.current = true;
+    lockScroll();
+    setOpen(true);
+  };
+
+  // Escape closes; focus moves into the sheet and stays there while it is open.
   useEffect(() => {
-    const controllers: (() => void)[] = [];
+    if (!open) return;
+    const sheet = sheetRef.current;
+    sheet?.querySelector<HTMLElement>("a, button")?.focus();
 
-    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
-      navLinksRef.current.forEach((link) => {
-        if (!link) return;
-
-        const handleMouseEnter = () => {
-          gsap.to(link, {
-            y: -2,
-            duration: 0.2,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        const handleMouseLeave = () => {
-          gsap.to(link, {
-            y: 0,
-            duration: 0.2,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        link.addEventListener('mouseenter', handleMouseEnter);
-        link.addEventListener('mouseleave', handleMouseLeave);
-
-        controllers.push(() => {
-          link.removeEventListener('mouseenter', handleMouseEnter);
-          link.removeEventListener('mouseleave', handleMouseLeave);
-        });
-      });
-    }
-
-    return () => {
-      controllers.forEach((cleanup) => cleanup());
-    };
-  }, [navLinksRef]);
-
-  const openMobileMenu = () => {
-    scrollYRef.current = window.scrollY;
-    
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollYRef.current}px`;
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
-
-    setIsMobileMenuOpen(true);
-    
-    if (mobileMenuRef.current) {
-      gsap.fromTo(mobileMenuRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.15, ease: 'power2.out' }
-      );
-    }
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-    
-    if (mobileMenuRef.current) {
-      gsap.to(mobileMenuRef.current, {
-        opacity: 0,
-        duration: 0.15,
-        ease: 'power2.out',
-        onComplete: () => {
-          document.body.style.position = '';
-          document.body.style.top = '';
-          document.body.style.width = '';
-          document.body.style.overflow = '';
-          window.scrollTo({ top: scrollYRef.current, behavior: 'instant' });
-        }
-      });
-    }
-  };
-
-  const toggleMobileMenu = () => {
-    if (isMobileMenuOpen) {
-      closeMobileMenu();
-    } else {
-      openMobileMenu();
-    }
-  };
-
-  const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('/#')) {
-      e.preventDefault();
-      const sectionId = href.substring(2);
-      
-      if (pathname === '/') {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          closeMobileMenu();
-          setTimeout(() => {
-            const headerOffset = 100;
-            const elementPosition = section.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-          }, 100);
-        }
-      } else {
-        closeMobileMenu();
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'instant' });
-          router.push(href, { scroll: false });
-        }, 150);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        return;
       }
+      if (event.key !== "Tab" || !sheet) return;
+      const focusable = Array.from(
+        sheet.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, closeMenu]);
+
+  // Close the sheet if the viewport grows past the mobile breakpoint.
+  useEffect(() => {
+    if (!open) return;
+    const query = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => query.matches && closeMenu(false);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, [open, closeMenu]);
+
+  const handleHashLink = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (!href.startsWith("/#")) {
+      closeMenu(false);
+      return;
+    }
+    event.preventDefault();
+    const section =
+      pathname === "/" ? document.getElementById(href.slice(2)) : null;
+    closeMenu(false);
+    if (section) {
+      window.requestAnimationFrame(() =>
+        section.scrollIntoView({ behavior: "smooth", block: "start" }),
+      );
     } else {
-      closeMobileMenu();
+      router.push(href);
     }
   };
 
   return (
-    <header
-      ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-50 bg-background/92 backdrop-blur-xl border-b border-border/20"
-    >
-      <div className="px-6 sm:px-10 md:px-16 lg:px-24 h-20 flex items-center justify-between">
-
-        {/* Logo */}
-        <Link
-          ref={logoRef}
-          href="/"
-          onClick={closeMobileMenu}
-          className="flex items-center gap-2.5 select-none"
-        >
-          <svg viewBox="0 0 64 64" className="w-8 h-8 shrink-0" xmlns="http://www.w3.org/2000/svg">
-            <circle fill="rgb(var(--primary))" cx="32" cy="32" r="32" />
-            <g opacity="0.2">
-              <path fill="#231F20" d="M42.5,44c-0.7,0-1.3-0.3-1.7-1c-0.6-0.9-0.3-2.2,0.7-2.8l10.1-6.2c0,0,0,0,0-0.1s0,0,0-0.1l-10.1-6.2c-0.9-0.6-1.2-1.8-0.7-2.8c0.6-0.9,1.8-1.2,2.8-0.7l10.6,6.6l0.2,0.2c0.8,0.8,1.2,1.9,1.2,3c0,1.1-0.4,2.2-1.2,3l-0.2,0.2l-10.6,6.6C43.2,43.9,42.8,44,42.5,44z" />
-              <path fill="#231F20" d="M21.5,44c-0.4,0-0.7-0.1-1-0.3L9.9,37.1L9.7,37c-0.8-0.8-1.2-1.9-1.2-3c0-1.1,0.4-2.2,1.2-3l0.2-0.2l10.6-6.6c0.9-0.6,2.2-0.3,2.8,0.7c0.6,0.9,0.3,2.2-0.7,2.8l-10.1,6.2c0,0,0,0,0,0.1s0,0,0,0.1l10.1,6.2c0.9,0.6,1.2,1.8,0.7,2.8C22.9,43.7,22.2,44,21.5,44z" />
-              <path fill="#231F20" d="M25.5,53c-0.2,0-0.5,0-0.7-0.1c-1-0.4-1.5-1.6-1.2-2.6l13-34c0.4-1,1.6-1.5,2.6-1.2c1,0.4,1.5,1.6,1.2,2.6l-13,34C27.1,52.5,26.3,53,25.5,53z" />
-            </g>
-            <path fill="#ffffff" d="M42.5,42c-0.7,0-1.3-0.3-1.7-1c-0.6-0.9-0.3-2.2,0.7-2.8l10.1-6.2c0,0,0-0.1,0-0.1l-10.1-6.2c-0.9-0.6-1.2-1.8-0.7-2.8c0.6-0.9,1.8-1.2,2.8-0.7l10.6,6.6l0.2,0.2c1.6,1.6,1.6,4.3,0,6l-0.2,0.2l-10.6,6.6C43.2,41.9,42.8,42,42.5,42z" />
-            <path fill="#ffffff" d="M21.5,42c-0.4,0-0.7-0.1-1-0.3L9.9,35.1L9.7,35c-1.6-1.6-1.6-4.3,0-6l0.2-0.2l10.6-6.6c0.9-0.6,2.2-0.3,2.8,0.7c0.6,0.9,0.3,2.2-0.7,2.8l-10.1,6.2c0,0,0,0.1,0,0.1l10.1,6.2c0.9,0.6,1.2,1.8,0.7,2.8C22.9,41.7,22.2,42,21.5,42z" />
-            <path fill="#ffffff" d="M25.5,51c-0.2,0-0.5,0-0.7-0.1c-1-0.4-1.5-1.6-1.2-2.6l13-34c0.4-1,1.6-1.5,2.6-1.2c1,0.4,1.5,1.6,1.2,2.6l-13,34C27.1,50.5,26.3,51,25.5,51z" />
-          </svg>
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-          {navItems.map((item, index) => (
-            <Link
-              key={item.label}
-              ref={(el) => { navLinksRef.current[index] = el; }}
-              href={item.href}
-              onClick={(e) => {
-                if (item.href.startsWith('/#')) {
-                  e.preventDefault();
-                  const sectionId = item.href.substring(2);
-                  if (pathname === '/') {
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                      const headerOffset = 100;
-                      const offsetPosition = section.getBoundingClientRect().top + window.scrollY - headerOffset;
-                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    }
-                  } else {
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                    router.push(item.href, { scroll: false });
-                  }
-                }
-              }}
-              aria-current={pathname === item.href ? 'page' : undefined}
-              className={cn(
-                'font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
-                pathname === item.href
-                  ? 'text-primary'
-                  : 'text-foreground/60 hover:text-foreground'
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Right controls */}
-        <div className="hidden md:flex items-center gap-1">
-          <LanguageSwitcher className="transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8" />
-          <ThemeToggleButton className="transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8" />
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-foreground/15 bg-background print:static">
+      <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-4 px-gutter md:h-16">
+        <div className="flex min-w-0 items-center gap-4">
+          <Link
+            href="/"
+            onClick={() => closeMenu(false)}
+            className="flex shrink-0 items-center gap-3"
+            aria-label="Sebastian Alvarez"
+          >
+            <Mark className="h-8 w-8" />
+            <span className="hidden font-sans text-[0.9375rem] font-extrabold uppercase tracking-[0.02em] [font-stretch:125%] sm:inline">
+              Listerineh
+            </span>
+          </Link>
+          {current && (
+            <p className="text-catalog hidden min-w-0 truncate border-l border-foreground/20 pl-4 text-muted-foreground md:block">
+              <span className="text-foreground">{current.number}</span>{" "}
+              {current.name}
+            </p>
+          )}
         </div>
 
-        {/* Mobile: controls + burger */}
-        <div className="md:hidden flex items-center gap-1">
-          <LanguageSwitcher className="transition-colors text-foreground/60 hover:text-foreground" />
-          <ThemeToggleButton className="transition-colors text-foreground/60 hover:text-foreground [&_svg]:w-5 [&_svg]:h-5" />
+        <nav className="hidden lg:block" aria-label={tCommon("menu")}>
+          <ul className="flex items-center gap-6 xl:gap-8">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={(event) => handleHashLink(event, item.href)}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                  className={cn(
+                    "relative inline-flex h-11 items-center text-[0.9375rem] font-semibold transition-colors duration-snap ease-snap",
+                    isCurrent(item.href)
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {item.label}
+                  {isCurrent(item.href) && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-0 bottom-2 h-0.5 bg-primary"
+                    />
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="flex items-center">
+          <LanguageSwitcher className="hidden sm:inline-flex" />
+          <ThemeToggleButton />
           <button
-            onClick={toggleMobileMenu}
-            aria-label="Toggle mobile menu"
-            className="p-2 rounded-lg transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8"
+            ref={menuButtonRef}
+            type="button"
+            onClick={open ? () => closeMenu() : openMenu}
+            aria-expanded={open}
+            aria-controls="site-menu"
+            aria-label={open ? tCommon("close") : tCommon("menu")}
+            className="inline-flex h-11 w-11 items-center justify-center text-foreground lg:hidden"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {open ? (
+              <X aria-hidden="true" className="h-6 w-6" />
+            ) : (
+              <Menu aria-hidden="true" className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu — always cinematic dark */}
-      {isMobile && isMobileMenuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className="md:hidden fixed inset-0 z-[60] flex flex-col h-dvh bg-[var(--surface-deep)]"
-        >
-          {/* Top bar */}
-          <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between px-6 py-5">
-            <span className="font-headline font-black text-primary text-xl">S·A</span>
-            <button
-              onClick={closeMobileMenu}
-              className="p-2 text-white/40 hover:text-white transition-colors rounded-lg"
-              aria-label={tCommon('close')}
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-
-          {/* Nav items */}
-          <nav className="flex-1 overflow-y-auto px-6 pt-8" aria-label="Mobile navigation">
-            <ul className="space-y-1">
-              {navItems.map((item, index) => (
-                <li key={item.label} ref={(el) => { navItemsRef.current[index] = el; }}>
-                  <Link
-                    href={item.href}
-                    onClick={(e) => handleNavLinkClick(e, item.href)}
-                    className={cn(
-                      'block py-4 font-headline font-black transition-colors duration-200 text-display-sm !leading-none',
-                      pathname === item.href ? 'text-primary' : 'text-white/40 hover:text-white'
-                    )}
-                  >
+      {/* Mobile sheet: a painted wall with the rooms of the site as wall titles. */}
+      <div
+        id="site-menu"
+        ref={sheetRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={tCommon("menu")}
+        className={cn(
+          "wall fixed inset-x-0 bottom-0 top-14 flex-col overflow-y-auto md:top-16 lg:hidden",
+          open ? "flex" : "hidden",
+        )}
+      >
+        <nav className="flex-1 px-gutter pt-6" aria-label={tCommon("menu")}>
+          <ol className="divide-y divide-foreground/20 border-y border-foreground/20">
+            {navItems.map((item, index) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={(event) => handleHashLink(event, item.href)}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                  className="flex min-h-16 items-baseline gap-4 py-3"
+                >
+                  <span className="text-catalog w-6 shrink-0 text-muted-foreground">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-[clamp(1.75rem,8vw,2.5rem)] font-extrabold leading-none tracking-[-0.02em] [font-stretch:118%]">
                     {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            {/* Bottom controls */}
-            <div className="mt-16 pb-8 flex items-center justify-between">
-              <div className="flex gap-2">
-                {locales.map((loc) => (
-                  <button
-                    key={loc}
-                    onClick={() => { if (loc !== locale) setLocale(loc); }}
-                    className={cn(
-                      'px-3 py-1.5 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97]',
-                      locale === loc
-                        ? 'bg-amber-400 text-black'
-                        : 'text-white/30 hover:text-white border border-white/10 hover:border-white/30'
-                    )}
-                  >
-                    {loc.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-              <ThemeToggleButton className="text-white/40 hover:text-white hover:bg-white/10" />
-            </div>
-          </nav>
-
-          {/* Footer */}
-          <div className="flex-shrink-0 px-6 py-4 border-t border-white/5">
-            <p className="text-xs text-white/20 font-headline">
-              © {new Date().getFullYear()} Sebastian Alvarez
-            </p>
-          </div>
+                  </span>
+                  {isCurrent(item.href) && (
+                    <span
+                      aria-hidden="true"
+                      className="ml-auto h-3 w-3 shrink-0 self-center bg-primary"
+                    />
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <div className="flex items-center justify-between px-gutter py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+          <LanguageSwitcher />
+          <p className="text-catalog text-muted-foreground">
+            © {new Date().getFullYear()} Sebastian Alvarez
+          </p>
         </div>
-      )}
+      </div>
     </header>
   );
 }

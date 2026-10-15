@@ -1,52 +1,37 @@
 'use client';
 
-import { Check, ChevronDown } from 'lucide-react';
-import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
+import { useTranslations } from 'next-intl';
+import { locales, localeNames, type Locale } from '@/i18n/config';
 import { useLocale } from '@/context/locale-context';
-import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from '@/components/ds';
 import { cn } from '@/lib/utils';
 
+/** Two-state language control: EN / ES as text, the current one set solid. */
 export function LanguageSwitcher({ className }: { className?: string }) {
   const { locale, setLocale } = useLocale();
+  const t = useTranslations('language');
 
-  const switchLocale = (newLocale: Locale) => {
-    if (newLocale === locale) return;
-    setLocale(newLocale);
+  const switchLocale = (next: Locale) => {
+    if (next !== locale) setLocale(next);
   };
 
   return (
-    <Dropdown>
-      <DropdownTrigger asChild>
+    <div role="group" aria-label={t('switchLanguage')} className={cn('inline-flex h-11 items-center', className)}>
+      {locales.map((loc) => (
         <button
-          aria-label="Switch language"
+          key={loc}
+          type="button"
+          lang={loc}
+          onClick={() => switchLocale(loc)}
+          aria-pressed={locale === loc}
+          aria-label={localeNames[loc]}
           className={cn(
-            "flex items-center gap-1.5 px-2 h-9 rounded-md transition-colors",
-            className
+            'inline-flex h-11 min-w-11 items-center justify-center px-2 font-mono text-xs font-semibold uppercase transition-colors duration-snap ease-snap',
+            locale === loc ? 'text-foreground underline decoration-2 underline-offset-[0.45em]' : 'text-muted-foreground hover:text-foreground',
           )}
         >
-          <span className="text-base">{localeFlags[locale]}</span>
-          <span className="text-xs font-medium uppercase hidden sm:inline">{locale}</span>
-          <ChevronDown className="h-3.5 w-3.5 opacity-50" />
+          {loc}
         </button>
-      </DropdownTrigger>
-      <DropdownContent align="end" className="w-48">
-        {locales.map((loc) => (
-          <DropdownItem
-            key={loc}
-            onClick={() => switchLocale(loc)}
-            className={cn(
-              "gap-3 py-2.5",
-              locale === loc ? "text-primary font-medium" : ""
-            )}
-          >
-            <span className="text-lg">{localeFlags[loc]}</span>
-            <span className="flex-1">{localeNames[loc]}</span>
-            {locale === loc && (
-              <Check className="h-4 w-4 text-primary" />
-            )}
-          </DropdownItem>
-        ))}
-      </DropdownContent>
-    </Dropdown>
+      ))}
+    </div>
   );
 }

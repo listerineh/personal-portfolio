@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
 import { SmoothScrollWrapper, BackToTopButton, CookieBanner, PageTransition, ScrollRestoration, GlobalScrollReveal } from '@/components/common';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
-import { Toaster } from '@/components/ds';
+import { Toaster, RouteRail } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { generatePageMetadata } from '@/lib/metadata';
@@ -105,6 +105,7 @@ export default async function RootLayout({
               <SmoothScrollWrapper>
                 {children}
               </SmoothScrollWrapper>
+              <RouteRail />
               <BackToTopButton />
               <CookieBanner />
               <Toaster />

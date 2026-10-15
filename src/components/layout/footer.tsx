@@ -1,242 +1,119 @@
-'use client';
+"use client";
 
-import { Fragment, useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { socialLinks } from '@/lib/data';
-import { CookieSettingsLink } from '@/components/common/cookie-settings-link';
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { socialLinks } from "@/lib/data";
+import { CookieSettingsLink } from "@/components/common/cookie-settings-link";
+import { Mark } from "@/components/ds";
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
+/** The exit wall: the rooms of the site as an index, where to find me, and the small print. */
 export function Footer() {
-  const t = useTranslations('nav');
-  const tCommon = useTranslations('common');
+  const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const currentYear = new Date().getFullYear();
-  const footerRef = useRef<HTMLElement>(null);
-  const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const socialIconsRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const copyrightRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
 
   const navItems = [
-    { label: t('about'), href: '/about' },
-    { label: t('experience'), href: '/experience' },
-    { label: t('skills'), href: '/skills' },
-    { label: t('projects'), href: '/projects' },
-    { label: t('blog'), href: '/blog' },
-    { label: t('contact'), href: '/contact' },
-    { label: 'Why', href: '/why' },
+    { label: t("about"), href: "/about" },
+    { label: t("experience"), href: "/experience" },
+    { label: t("skills"), href: "/skills" },
+    { label: t("projects"), href: "/projects" },
+    { label: t("blog"), href: "/blog" },
+    { label: t("contact"), href: "/contact" },
+    { label: t("why"), href: "/why" },
   ];
 
-  useEffect(() => {
-    if (!footerRef.current) return;
-
-    const timer = setTimeout(() => {
-      if (!footerRef.current) return;
-
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === footerRef.current) {
-          trigger.kill();
-        }
-      });
-
-      const navLinks = navLinksRef.current.filter(Boolean);
-      const socialIcons = socialIconsRef.current.filter(Boolean);
-
-      if (navLinks.length === 0 || socialIcons.length === 0 || !copyrightRef.current) {
-        return;
-      }
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: footerRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      tl.fromTo(navLinks,
-        { opacity: 0, y: 8 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.03,
-          duration: 0.3,
-          ease: 'power2.out',
-        }
-      )
-      .fromTo(socialIcons,
-        { opacity: 0, y: 8 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.03,
-          duration: 0.3,
-          ease: 'power2.out',
-        }, '-=0.2')
-      .fromTo(copyrightRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.3,
-          ease: 'power2.out',
-        }, '-=0.15');
-    }, 100);
-
-    return () => {
-      clearTimeout(timer);
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.trigger === footerRef.current) {
-          trigger.kill();
-        }
-      });
-    };
-  }, [pathname, footerRef, navLinksRef, socialIconsRef, copyrightRef]);
-
-  useEffect(() => {
-    const controllers: (() => void)[] = [];
-
-    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
-      socialIconsRef.current.forEach((icon) => {
-        if (!icon) return;
-
-        const handleMouseEnter = () => {
-          gsap.to(icon, {
-            y: -4,
-            scale: 1.08,
-            duration: 0.25,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        const handleMouseLeave = () => {
-          gsap.to(icon, {
-            y: 0,
-            scale: 1,
-            duration: 0.2,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        icon.addEventListener('mouseenter', handleMouseEnter);
-        icon.addEventListener('mouseleave', handleMouseLeave);
-
-        controllers.push(() => {
-          icon.removeEventListener('mouseenter', handleMouseEnter);
-          icon.removeEventListener('mouseleave', handleMouseLeave);
-        });
-      });
-
-      navLinksRef.current.forEach((link) => {
-        if (!link) return;
-
-        const handleMouseEnter = () => {
-          gsap.to(link, {
-            y: -2,
-            duration: 0.2,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        const handleMouseLeave = () => {
-          gsap.to(link, {
-            y: 0,
-            duration: 0.2,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        link.addEventListener('mouseenter', handleMouseEnter);
-        link.addEventListener('mouseleave', handleMouseLeave);
-
-        controllers.push(() => {
-          link.removeEventListener('mouseenter', handleMouseEnter);
-          link.removeEventListener('mouseleave', handleMouseLeave);
-        });
-      });
-    }
-
-    return () => {
-      controllers.forEach((cleanup) => cleanup());
-    };
-  }, [navLinksRef]);
+  const legalLinkClass =
+    "inline-flex min-h-11 items-center text-sm text-muted-foreground underline-offset-[0.3em] transition-colors hover:text-foreground hover:underline";
 
   return (
-    <footer ref={footerRef} className="relative overflow-hidden bg-[#080808]">
-      <div className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20">
-        <div className="max-w-6xl mx-auto">
+    <footer className="wall relative pb-[calc(env(safe-area-inset-bottom)+0.25rem)] print:hidden">
+      <div className="mx-auto max-w-[1296px] px-gutter py-16 md:py-24">
+        <div className="grid gap-12 md:grid-cols-12 md:gap-6">
+          <div className="md:col-span-5">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-3"
+              aria-label="Sebastian Alvarez"
+            >
+              <Mark className="h-10 w-10" />
+              <span className="text-[1.375rem] font-extrabold uppercase leading-none tracking-[0.01em] [font-stretch:125%]">
+                Listerineh
+              </span>
+            </Link>
+          </div>
 
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-
-            {/* Nav links */}
-            <nav aria-label="Footer navigation">
-              <ul className="flex flex-col lg:flex-row lg:flex-wrap items-center gap-2 lg:gap-x-2 lg:gap-y-4">
-                {navItems.map((link, index) => (
-                  <Fragment key={link.label}>
-                    <li>
-                      <Link
-                        ref={(el) => { navLinksRef.current[index] = el; }}
-                        href={link.href}
-                        className="font-headline text-sm lg:text-xs tracking-[0.12em] uppercase text-white/70 hover:text-white transition-colors duration-200 px-2 py-1.5 lg:py-1"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                    {index < navItems.length - 1 && (
-                      <li className="hidden lg:block text-white/30 select-none text-xs">·</li>
-                    )}
-                  </Fragment>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Social icons */}
-            <div className="flex justify-center lg:justify-start gap-5 lg:gap-4" aria-label="Social media links">
-              {socialLinks.map((link, index) => (
-                <Link
-                  key={link.name}
-                  ref={(el) => { socialIconsRef.current[index] = el; }}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                  className="p-3 lg:p-2.5 rounded-xl border border-white/20 text-white/70 hover:text-primary hover:border-primary/30 transition-colors duration-200"
-                >
-                  <link.icon className="w-5 h-5 lg:w-4 lg:h-4" />
-                </Link>
+          <nav
+            aria-label={tCommon("siteIndex")}
+            className="md:col-span-4"
+          >
+            <ol className="grid grid-cols-2 gap-x-6 sm:grid-cols-1">
+              {navItems.map((link, index) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="group flex min-h-11 items-baseline gap-3 py-1"
+                  >
+                    <span className="text-catalog w-6 shrink-0 text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-base font-semibold underline-offset-[0.3em] group-hover:underline">
+                      {link.label}
+                    </span>
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ol>
+          </nav>
+
+          <div className="md:col-span-3">
+            <p className="text-catalog text-muted-foreground">
+              {tCommon("followMe")}
+            </p>
+            <ul
+              className="mt-3 flex flex-wrap gap-1"
+              aria-label={tCommon("followMe")}
+            >
+              {socialLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${tCommon("visitSocial")} ${link.name}`}
+                    className="inline-flex h-11 w-11 items-center justify-center border border-foreground/30 transition-colors duration-snap ease-snap hover:border-foreground hover:bg-foreground hover:text-[rgb(var(--wall))]"
+                  >
+                    <link.icon aria-hidden="true" className="h-5 w-5" />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div ref={copyrightRef} className="relative z-10 px-6 sm:px-10 md:px-16 lg:px-24 py-6 md:py-5 border-t border-white/[0.06]">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-5">
-          <p className="font-headline text-xs text-white/50 text-center sm:text-left">
-            &copy; {currentYear} Sebastian Alvarez — {tCommon('allRightsReserved')}
+        <div className="mt-16 flex flex-col gap-4 border-t border-foreground/25 pt-6 md:mt-24 md:flex-row md:items-center md:justify-between">
+          <p className="text-catalog text-muted-foreground">
+            © {currentYear} Sebastian Alvarez · {tCommon("allRightsReserved")}
           </p>
-          <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center gap-3 sm:gap-5 text-xs sm:text-xs text-white/50">
-            <CookieSettingsLink className="block w-full text-center sm:w-auto text-xs sm:text-xs text-white/50 hover:text-primary transition-colors py-2 sm:py-0" />
-            <Link href="/privacy" className="block w-full text-center sm:w-auto text-white/50 hover:text-primary transition-colors py-2 sm:py-0">
-              {t('privacyPolicy')}
-            </Link>
-            <Link href="/terms" className="block w-full text-center sm:w-auto text-white/50 hover:text-primary transition-colors py-2 sm:py-0">
-              {t('termsOfUse')}
-            </Link>
-            <Link href="/docs/components" className="block w-full text-center sm:w-auto text-white/50 hover:text-primary transition-colors py-2 sm:py-0">
-              {t('components')}
-            </Link>
-          </div>
+          <ul className="flex flex-wrap gap-x-6" aria-label={tCommon("legal")}>
+            <li>
+              <CookieSettingsLink className={legalLinkClass} />
+            </li>
+            <li>
+              <Link href="/privacy" className={legalLinkClass}>
+                {t("privacyPolicy")}
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className={legalLinkClass}>
+                {t("termsOfUse")}
+              </Link>
+            </li>
+            <li>
+              <Link href="/docs/components" className={legalLinkClass}>
+                {t("components")}
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>

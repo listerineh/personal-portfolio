@@ -13,7 +13,7 @@ export default meta;
 type Story = StoryObj<typeof Title>;
 
 export const WallTitle: Story = {
-  args: { as: 'h1', size: 'wall', children: 'Sebastián Álvarez' },
+  args: { as: 'h1', size: 'wall', children: 'Sebastian Alvarez' },
 };
 
 export const RoomTitle: Story = {
@@ -33,9 +33,9 @@ export const OnWall: Story = {
   render: () => (
     <Wall className="py-16">
       <Title as="h1" size="wall">
-        Sebastián
+        Sebastian
         <br />
-        Álvarez
+        Alvarez
       </Title>
     </Wall>
   ),
