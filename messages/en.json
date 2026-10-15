@@ -40,8 +40,8 @@
   },
   "hero": {
     "title": "Sebastian Alvarez",
-    "subtitle": "Senior Software Engineer & Full-Stack Developer",
-    "description": "I build web applications from backend to frontend. My work spans cloud infrastructure, APIs, and React/Next.js interfaces - with a focus on things that actually ship and scale.",
+    "subtitle": "Full-Stack Engineer · Applied AI",
+    "description": "I build software end to end: backend systems, cloud infrastructure and React/Next.js interfaces. Lately that means AI agents and integrations that automate real business workflows, built to ship and scale.",
     "badge": "+6 Years",
     "statsYears": "6+",
     "statsYearsLabel1": "Years",
@@ -257,10 +257,10 @@
     "currentLanguage": "English"
   },
   "metadata": {
-    "title": "Sebastian Alvarez | Full-Stack Software Engineer & Web Developer",
-    "description": "Full-stack software engineer specializing in React, Next.js, Python, and cloud technologies. View my portfolio, projects, and technical blog on modern web development.",
-    "ogTitle": "Sebastian Alvarez | Full-Stack Software Engineer",
-    "ogDescription": "Explore my portfolio of web development projects and technical expertise in React, Next.js, and Python"
+    "title": "Sebastian Alvarez | Full-Stack Engineer & Applied AI",
+    "description": "Full-stack software engineer building backend systems, cloud infrastructure and React/Next.js interfaces, focused on applied AI: agents and integrations that automate real workflows.",
+    "ogTitle": "Sebastian Alvarez | Full-Stack Engineer & Applied AI",
+    "ogDescription": "Projects, writing and experience: full-stack engineering with a focus on applied AI."
   },
   "badges": {
     "featured": "Featured"
@@ -517,5 +517,29 @@
     "errorMessage": "Failed to unsubscribe. Please check your email and try again.",
     "backToHome": "Back to Home",
     "tryAgain": "Try Again"
+  },
+  "sala": {
+    "entrance": "Entrance",
+    "work": "Work",
+    "writing": "Writing",
+    "career": "Career",
+    "craft": "Craft",
+    "contact": "Contact",
+    "walkTheWork": "Walk the work",
+    "latestWork": "Latest work",
+    "now": "Now",
+    "drawingCaption": "Elevation · stack",
+    "layers": {
+      "interface": "Interface",
+      "api": "API & backend",
+      "ai": "AI",
+      "data": "Data",
+      "infra": "Cloud & infra",
+      "tooling": "Tooling"
+    },
+    "route": "Route",
+    "room": "Room",
+    "yearsRemote": "{years} years · {remote} remote",
+    "allSkills": "Full stack index"
   }
 }

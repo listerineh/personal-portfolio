@@ -14,8 +14,8 @@ interface PageMetadata {
 const metadata: Record<string, Record<Locale, PageMetadata>> = {
   home: {
     en: {
-      title: 'Sebastian Alvarez | Full-Stack Engineer & Platform Builder',
-      description: 'Full-stack engineer crafting scalable cloud systems with React, Next.js, Python and AWS. 6+ years of remote experience, GDG Quito organizer, open source contributor and technical blogger from Ecuador.',
+      title: 'Sebastian Alvarez | Full-Stack Engineer & Applied AI',
+      description: 'Full-stack engineer building backend systems, cloud infrastructure and React/Next.js interfaces, focused on applied AI: agents and integrations that automate real workflows. 6+ years remote, GDG Quito organizer, technical blogger from Ecuador.',
       keywords: [
         'Sebastian Alvarez',
         'listerineh',
@@ -30,6 +30,8 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
         'AWS',
         'Kubernetes',
         'AI agents',
+        'applied AI',
+        'MCP',
         'cloud-native',
         'DevOps',
         'tech lead',
@@ -43,8 +45,8 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
       image: '/images/home-og.webp',
     },
     es: {
-      title: 'Sebastian Alvarez | Ingeniero Full-Stack & Platform Builder',
-      description: 'Ingeniero full-stack que diseña sistemas cloud escalables con React, Next.js, Python y AWS. Más de 6 años de experiencia remota, organizador de GDG Quito, contribuidor open source y blogger técnico desde Ecuador.',
+      title: 'Sebastian Alvarez | Ingeniero Full-Stack e IA aplicada',
+      description: 'Ingeniero full-stack que construye sistemas backend, infraestructura cloud e interfaces con React/Next.js, enfocado en IA aplicada: agentes e integraciones que automatizan flujos reales. Más de 6 años remoto, organizador de GDG Quito y blogger técnico desde Ecuador.',
       keywords: [
         'Sebastian Alvarez',
         'listerineh',
@@ -59,6 +61,8 @@ const metadata: Record<string, Record<Locale, PageMetadata>> = {
         'AWS',
         'Kubernetes',
         'agentes IA',
+        'IA aplicada',
+        'MCP',
         'cloud-native',
         'DevOps',
         'tech lead',

@@ -23,12 +23,12 @@ interface ButtonProps {
 const variantMap: Record<ButtonVariant, { amber: string; ink: string }> = {
   primary: {
     amber: "bg-primary text-primary-foreground hover:bg-primary/90",
-    ink: "bg-foreground text-background hover:bg-foreground/85",
+    ink: "bg-foreground text-surface hover:bg-foreground/85",
   },
   secondary: {
     amber:
-      "border-[1.5px] border-foreground text-foreground hover:bg-foreground hover:text-background",
-    ink: "border-[1.5px] border-foreground text-foreground hover:bg-foreground hover:text-background",
+      "border-[1.5px] border-foreground text-foreground hover:bg-foreground hover:text-surface",
+    ink: "border-[1.5px] border-foreground text-foreground hover:bg-foreground hover:text-surface",
   },
   ghost: {
     amber:

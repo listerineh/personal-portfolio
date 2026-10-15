@@ -1,61 +1,67 @@
 'use client';
 
-import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { projectsData } from '@/lib/data';
 import { getLocalizedData } from '@/lib/i18n-data';
 import { useLocale } from '@/context/locale-context';
-import { useGSAP } from '@/hooks/use-gsap';
-import { Title, ProjectCard, Button } from '@/components/ds';
+import { stackLayers } from '@/lib/stack-layers';
+import { Button, Hang, ProjectCard, Room, WorkingDrawing } from '@/components/ds';
+import { cn } from '@/lib/utils';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
+/** Room 01 · Work. The latest work hangs at the entrance; this room hangs the next three, off-grid on purpose. */
 export function ProjectsSection() {
   const t = useTranslations('projects');
+  const tSala = useTranslations('sala');
   const tCommon = useTranslations('common');
+  const tProject = useTranslations('project');
   const { locale } = useLocale();
   const projects = getLocalizedData(projectsData, locale);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useGSAP(() => {
-    cardsRef.current.forEach((card, index) => {
-      if (card) {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            delay: (index % 3) * 0.08,
-            ease: 'power2.out',
-            scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' },
-          }
-        );
-      }
-    });
-  }, [projects.length]);
+  const hung = projects.slice(1, 4);
+  const [feature, ...rest] = hung;
 
   return (
-    <section id="projects" className="relative py-28 md:py-44 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <div className="mb-16">
-          <Title as="h2" animate className="text-display-sm">
-            {t('title')}
-          </Title>
+    <Room
+      id="work"
+      number="01"
+      name={tSala('work')}
+      title={t('title')}
+      aside={
+        <Button variant="ghost" href="/projects">
+          {t('viewAll')}
+          <ArrowRight aria-hidden="true" className="h-4 w-4" />
+        </Button>
+      }
+    >
+      {feature && (
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-6">
+          <Hang className="lg:col-span-8">
+            <ProjectCard
+              slug={feature.slug}
+              title={feature.title}
+              description={feature.description}
+              imageUrl={feature.imageUrl}
+              tags={[...feature.tags]}
+              number="02"
+              size="feature"
+              liveLabel={feature.status === 'in-progress' ? tProject('status.in-progress') : undefined}
+              viewMoreLabel={tCommon('viewProject')}
+            />
+          </Hang>
+          <WorkingDrawing
+            caption={tSala('drawingCaption')}
+            layers={stackLayers(feature.tags).map(({ layer, items }) => ({ name: tSala(`layers.${layer}`), items }))}
+            className="max-w-xs lg:col-span-3 lg:col-start-10 lg:mt-24"
+          />
         </div>
-        {/* Balanced 3-column grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.slice(0, 3).map((project, index) => (
-            <div
+      )}
+
+      {rest.length > 0 && (
+        <div className="mt-20 grid gap-16 md:grid-cols-12 md:gap-6">
+          {rest.map((project, index) => (
+            <Hang
               key={project.id}
-              className="reveal-initial h-full"
-              ref={(el) => { cardsRef.current[index] = el; }}
+              className={cn(index === 0 ? 'md:col-span-5' : 'md:col-span-5 md:col-start-8 md:mt-32')}
             >
               <ProjectCard
                 slug={project.slug}
@@ -63,28 +69,14 @@ export function ProjectsSection() {
                 description={project.description}
                 imageUrl={project.imageUrl}
                 tags={[...project.tags]}
+                number={String(index + 3).padStart(2, '0')}
+                liveLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
                 viewMoreLabel={tCommon('viewProject')}
               />
-            </div>
+            </Hang>
           ))}
         </div>
-        {projects.length > 3 && (
-          <div className="flex justify-center mt-10">
-            <Button
-              href="/projects"
-              variant="ghost"
-              accent="neutral"
-              size="md"
-              className="w-full sm:w-auto rounded-2xl sm:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
-            >
-              {t('viewAll')}
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
-      </div>
-
-
-    </section>
+      )}
+    </Room>
   );
 }

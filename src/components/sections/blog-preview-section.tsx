@@ -1,63 +1,41 @@
 'use client';
 
-import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getBlogPosts } from '@/lib/data';
 import { useLocale } from '@/context/locale-context';
-import { useGSAP } from '@/hooks/use-gsap';
-import { Title, BlogCard, Button } from '@/components/ds';
+import { BlogCard, Button, Room } from '@/components/ds';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
+/** Room 02 · Writing. Written works as a ruled list, not a card grid. */
 export function BlogPreviewSection() {
   const t = useTranslations('blog');
+  const tSala = useTranslations('sala');
   const tCommon = useTranslations('common');
   const { locale } = useLocale();
-  const allPosts = getBlogPosts(locale);
-  const displayedPosts = allPosts.slice(0, 3);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useGSAP(() => {
-    cardsRef.current.forEach((card, index) => {
-      if (card) {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            delay: index * 0.1,
-            ease: 'power2.out',
-            scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' },
-          }
-        );
-      }
-    });
-  }, [displayedPosts.length]);
+  const posts = getBlogPosts(locale).slice(0, 3);
+  const minutesLabel = t('readingTime', { minutes: '' }).trim();
 
   return (
-    <section id="blog" className="relative py-28 md:py-44 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <div className="mb-16">
-          <Title as="h2" animate className="text-display-sm">
-            {t('title')}
-          </Title>
-        </div>
-        {/* Balanced 3-column grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedPosts.map((post, index) => (
-            <div
-              key={post.slug}
-              className="reveal-initial h-full"
-              ref={(el) => { cardsRef.current[index] = el; }}
-            >
+    <Room
+      id="writing"
+      number="02"
+      name={tSala('writing')}
+      title={t('title')}
+      tone="paint"
+      aside={
+        <Button variant="ghost" href="/blog">
+          {t('viewAllPosts')}
+          <ArrowRight aria-hidden="true" className="h-4 w-4" />
+        </Button>
+      }
+    >
+      {posts.length === 0 ? (
+        <p className="text-lead text-muted-foreground">{t('noArticles')}</p>
+      ) : (
+        <ol className="divide-y divide-foreground/20 border-y border-foreground/20 lg:ml-[calc(100%/12*3)]">
+          {posts.map((post) => (
+            <li key={post.slug} className="py-8 md:py-10">
               <BlogCard
                 title={post.title}
                 slug={post.slug}
@@ -66,29 +44,16 @@ export function BlogPreviewSection() {
                 tags={post.tags}
                 coverImage={post.imageUrl}
                 readingTime={post.readingTime}
+                readingTimeLabel={minutesLabel}
                 readMoreLabel={tCommon('readMore')}
                 newLabel={t('new')}
                 isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
                 recommendedLabel={t('sortRecommended')}
               />
-            </div>
+            </li>
           ))}
-        </div>
-        <div className="flex justify-center mt-10">
-          <Button
-            href="/blog"
-            variant="ghost"
-            accent="neutral"
-            size="md"
-            className="w-full sm:w-auto rounded-2xl sm:rounded-full justify-center border border-foreground/15 hover:border-foreground/30"
-          >
-            {t('viewAllPosts')}
-            <ArrowRight className="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
-
-
-    </section>
+        </ol>
+      )}
+    </Room>
   );
 }

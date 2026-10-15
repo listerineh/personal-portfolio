@@ -58,7 +58,7 @@ export function Room({
           </TitleTag>
           <span
             aria-hidden="true"
-            className="font-sans text-[clamp(2.5rem,10vw,6rem)] font-extrabold leading-[0.8] [font-stretch:125%] text-foreground/15 md:col-span-4 md:justify-self-end"
+            className="font-sans text-[clamp(2.5rem,10vw,6rem)] font-light leading-[0.8] [font-stretch:125%] text-muted-foreground tabular-nums md:col-span-4 md:justify-self-end"
           >
             {number}
           </span>

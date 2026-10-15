@@ -34,7 +34,7 @@
     /* ── Wall (gallery green) ────────────────────────────── */
     --wall: 31 74 58; /* #1F4A3A */
     --wall-foreground: 243 243 239; /* 9.0:1 */
-    --wall-muted: 184 199 191; /* #B8C7BF 5.7:1 */
+    --wall-muted: 207 224 214; /* #CFE0D6 green-tinted, 7.3:1 */
     --wall-ink: 245 181 74; /* #F5B54A amber text on wall 5.5:1 */
     --accent: 31 74 58;
     --accent-foreground: 243 243 239;
@@ -47,6 +47,7 @@
     --input: 107 112 105; /* #6B7069 control boundary ≥3:1 */
     --ring: 20 22 20; /* focus ring on plaster: ink */
     --foreground-base: 20 22 20;
+    --surface: var(--background);
     --muted-foreground-base: 80 85 79;
     --primary-ink-base: 146 64 14;
     --border-base: 197 200 191;
@@ -197,7 +198,7 @@
 
     --wall: 24 58 46; /* #183A2E */
     --wall-foreground: 233 233 227;
-    --wall-muted: 184 199 191;
+    --wall-muted: 207 224 214;
     --wall-ink: 245 181 74;
     --accent: 24 58 46;
     --accent-foreground: 233 233 227;
@@ -234,6 +235,7 @@
     --primary-ink: var(--wall-ink);
     --border: var(--wall-muted);
     --ring: var(--wall-ink);
+    --surface: var(--wall);
     background-color: rgb(var(--wall));
     color: rgb(var(--foreground));
   }
@@ -245,6 +247,7 @@
     --primary-ink: var(--primary-ink-base);
     --border: var(--border-base);
     --ring: var(--ring-base);
+    --surface: var(--card);
     background-color: rgb(var(--card));
     color: rgb(var(--foreground));
   }
@@ -350,10 +353,15 @@
 
 @layer components {
   /* Wall titles: cut vinyl. Display max 6rem. */
+  .text-display,
+  .text-display-sm {
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
   .text-display {
     font-stretch: 125%;
     font-weight: 800;
-    font-size: clamp(2.75rem, 13vw, 6rem);
+    font-size: clamp(2.25rem, 10.5vw, 6rem);
     line-height: 0.9;
     letter-spacing: -0.025em;
   }
@@ -452,4 +460,28 @@ html.js-motion .reveal-initial {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* ── Hang: a work settles onto its hook once, on the hang spring ─── */
+html.js-motion [data-hang] {
+  transition:
+    transform var(--spring-hang-duration) var(--spring-hang),
+    opacity 240ms var(--ease-out);
+}
+html.js-motion [data-hang]:not([data-hung]) {
+  opacity: 0;
+  transform: translateY(24px) rotate(-0.6deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js-motion [data-hang] {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Theme cross-fade (View Transitions) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
 }

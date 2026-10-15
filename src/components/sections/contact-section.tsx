@@ -1,66 +1,28 @@
 'use client';
 
-import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { Mail } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@/hooks/use-gsap';
-import { Title, Button } from '@/components/ds';
+import { ArrowRight } from 'lucide-react';
+import { Button, Room } from '@/components/ds';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
+/** Room 05 · Contact. The last room before the exit wall: one statement, one action. */
 export function ContactSection() {
   const t = useTranslations('contact');
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-
-  useGSAP(() => {
-    if (descriptionRef.current) {
-      gsap.fromTo(
-        descriptionRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: descriptionRef.current,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }
-  }, []);
+  const tSala = useTranslations('sala');
 
   return (
-    <section id="contact" className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
-      <div className="max-w-2xl mx-auto relative z-10 text-center">
-        <Title as="h2" animate className="mb-6 text-display-sm">
-          {t('title')}
-        </Title>
-        <p
-          ref={descriptionRef}
-          className="reveal-initial text-foreground/50 leading-relaxed mb-10 text-lead"
+    <Room id="contact" number="05" name={tSala('contact')} title={t('title')} intro={t('description')}>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+        <Button href="/contact" accent="amber" size="lg" className="w-full sm:w-auto">
+          {t('viewAll')}
+          <ArrowRight aria-hidden="true" className="h-4 w-4" />
+        </Button>
+        <a
+          href={`mailto:${t('directEmailAction')}`}
+          className="text-catalog inline-flex min-h-11 items-center break-all text-foreground underline decoration-1 underline-offset-[0.3em] hover:decoration-2"
         >
-          {t('description')}
-        </p>
-
-        <div className="flex justify-center reveal-up">
-          <Button
-            href="/contact"
-            variant="primary"
-            accent="amber"
-            size="lg"
-            className="w-full sm:w-auto justify-center"
-          >
-            <Mail className="w-4 h-4" />
-            {t('viewAll')}
-          </Button>
-        </div>
+          {t('directEmailAction')}
+        </a>
       </div>
-    </section>
+    </Room>
   );
 }

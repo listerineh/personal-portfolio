@@ -80,7 +80,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${tCommon("visitSocial")} ${link.name}`}
-                    className="inline-flex h-11 w-11 items-center justify-center border border-foreground/30 transition-colors duration-snap ease-snap hover:border-foreground hover:bg-foreground hover:text-[rgb(var(--wall))]"
+                    className="inline-flex h-11 w-11 items-center justify-center border border-foreground/30 transition-colors duration-snap ease-snap hover:border-foreground hover:bg-foreground hover:text-surface"
                   >
                     <link.icon aria-hidden="true" className="h-5 w-5" />
                   </a>

@@ -39,7 +39,7 @@ export function DropdownContent({
 
 const itemBase =
   "relative flex min-h-11 cursor-pointer select-none items-center gap-2 px-3 text-[0.9375rem] text-foreground outline-none transition-colors " +
-  "data-[highlighted]:bg-foreground data-[highlighted]:text-background data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+  "data-[highlighted]:bg-foreground data-[highlighted]:text-surface data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
 
 export function DropdownItem({
   children,

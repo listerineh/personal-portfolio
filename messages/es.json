@@ -40,8 +40,8 @@
   },
   "hero": {
     "title": "Sebastian Alvarez",
-    "subtitle": "Ingeniero de Software Senior y Desarrollador Full-Stack",
-    "description": "Construyo aplicaciones web de backend a frontend. Mi trabajo abarca infraestructura cloud, APIs e interfaces con React/Next.js - con enfoque en productos que realmente salen a producción y escalan.",
+    "subtitle": "Ingeniero Full-Stack · IA aplicada",
+    "description": "Construyo software de punta a punta: sistemas backend, infraestructura cloud e interfaces con React/Next.js. Hoy eso incluye agentes de IA e integraciones que automatizan flujos de negocio reales, hechos para salir a producción y escalar.",
     "badge": "+6 Años",
     "statsYears": "6+",
     "statsYearsLabel1": "Años",
@@ -257,10 +257,10 @@
     "currentLanguage": "Español"
   },
   "metadata": {
-    "title": "Sebastian Alvarez | Ingeniero de Software Full-Stack y Desarrollador Web",
-    "description": "Ingeniero de software full-stack especializado en React, Next.js, Python y tecnologías en la nube. Ve mi portafolio, proyectos y blog técnico sobre desarrollo web moderno.",
-    "ogTitle": "Sebastian Alvarez | Ingeniero de Software Full-Stack",
-    "ogDescription": "Explora mi portafolio de proyectos de desarrollo web y experiencia técnica en React, Next.js y Python"
+    "title": "Sebastian Alvarez | Ingeniero Full-Stack e IA aplicada",
+    "description": "Ingeniero de software full-stack que construye sistemas backend, infraestructura cloud e interfaces con React/Next.js, enfocado en IA aplicada: agentes e integraciones que automatizan flujos reales.",
+    "ogTitle": "Sebastian Alvarez | Ingeniero Full-Stack e IA aplicada",
+    "ogDescription": "Proyectos, escritos y experiencia: ingeniería full-stack con enfoque en IA aplicada."
   },
   "badges": {
     "featured": "Destacado"
@@ -517,5 +517,29 @@
     "errorMessage": "No se pudo cancelar la suscripción. Por favor verifica tu correo e intenta nuevamente.",
     "backToHome": "Volver al Inicio",
     "tryAgain": "Intentar de Nuevo"
+  },
+  "sala": {
+    "entrance": "Entrada",
+    "work": "Obra",
+    "writing": "Escritos",
+    "career": "Trayectoria",
+    "craft": "Oficio",
+    "contact": "Contacto",
+    "walkTheWork": "Recorrer la obra",
+    "latestWork": "Obra más reciente",
+    "now": "Actual",
+    "drawingCaption": "Alzado · stack",
+    "layers": {
+      "interface": "Interfaz",
+      "api": "API y backend",
+      "ai": "IA",
+      "data": "Datos",
+      "infra": "Cloud e infra",
+      "tooling": "Herramientas"
+    },
+    "route": "Recorrido",
+    "room": "Sala",
+    "yearsRemote": "{years} años · {remote} remoto",
+    "allSkills": "Índice completo"
   }
 }
