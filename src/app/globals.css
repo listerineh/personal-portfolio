@@ -475,6 +475,10 @@ html.js-motion [data-hang]:not([data-hung]) {
   --tw-prose-counters: rgb(var(--muted-foreground));
   --tw-prose-hr: rgb(var(--foreground) / 0.2);
   --tw-prose-code: rgb(var(--foreground));
+  --tw-prose-pre-bg: rgb(var(--card));
+  --tw-prose-pre-code: rgb(var(--card-foreground));
+  --tw-prose-captions: rgb(var(--muted-foreground));
+  --tw-prose-kbd: rgb(var(--foreground));
   --tw-prose-th-borders: rgb(var(--foreground) / 0.4);
   --tw-prose-td-borders: rgb(var(--foreground) / 0.15);
   max-width: 68ch;
