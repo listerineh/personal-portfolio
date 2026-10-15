@@ -1,6 +1,5 @@
 'use client';
 
-import { forwardRef } from 'react';
 import Image from 'next/image';
 import { getBlogImageBlur } from '@/lib/image-blur';
 
@@ -10,28 +9,22 @@ interface BlogPostHeroImageProps {
   imageAiHint?: string;
 }
 
-export const BlogPostHeroImage = forwardRef<HTMLDivElement, BlogPostHeroImageProps>(
-  ({ imageUrl, title, imageAiHint }, ref) => {
-    return (
-      <div 
-        ref={ref} 
-        className="relative w-full h-auto mb-8 md:mb-16 rounded-xl md:rounded-2xl overflow-hidden shadow-lg md:shadow-2xl"
-      >
-        <Image
-          src={imageUrl}
-          alt={title}
-          width={1200}
-          height={630}
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 1200px"
-          style={{ width: '100%', height: 'auto' }}
-          data-ai-hint={imageAiHint || 'blog post header'}
-          placeholder="blur"
-          blurDataURL={getBlogImageBlur()}
-          priority
-        />
-      </div>
-    );
-  }
-);
-
-BlogPostHeroImage.displayName = 'BlogPostHeroImage';
+/** The article's print, framed and hung above the text. */
+export function BlogPostHeroImage({ imageUrl, title, imageAiHint }: BlogPostHeroImageProps) {
+  return (
+    <div className="plaque mb-12 p-2 shadow-hang sm:p-3 md:mb-16">
+      <Image
+        src={imageUrl}
+        alt={title}
+        width={1200}
+        height={630}
+        sizes="(max-width: 1024px) 100vw, 860px"
+        style={{ width: '100%', height: 'auto' }}
+        data-ai-hint={imageAiHint || 'blog post header'}
+        placeholder="blur"
+        blurDataURL={getBlogImageBlur()}
+        priority
+      />
+    </div>
+  );
+}

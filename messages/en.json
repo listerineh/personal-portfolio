@@ -247,7 +247,8 @@
     "toastCopiedDesc": "The article link has been copied to your clipboard.",
     "toastOpeningX": "Opening on X...",
     "toastOpeningLinkedIn": "Opening on LinkedIn...",
-    "toastOpeningFacebook": "Opening on Facebook..."
+    "toastOpeningFacebook": "Opening on Facebook...",
+    "checkOutArticle": "Check out this article: \"{title}\""
   },
   "theme": {
     "lightMode": "Light Mode",

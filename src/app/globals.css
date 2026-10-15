@@ -485,3 +485,67 @@ html.js-motion [data-hang]:not([data-hung]) {
 ::view-transition-new(root) {
   animation-duration: 280ms;
 }
+
+/* ── Reading: long-form prose (blog posts, legal pages) ─────────── */
+.prose-sala {
+  --tw-prose-body: rgb(var(--foreground) / 0.9);
+  --tw-prose-headings: rgb(var(--foreground));
+  --tw-prose-links: rgb(var(--foreground));
+  --tw-prose-bold: rgb(var(--foreground));
+  --tw-prose-quotes: rgb(var(--foreground));
+  --tw-prose-quote-borders: rgb(var(--foreground) / 0.5);
+  --tw-prose-bullets: rgb(var(--foreground));
+  --tw-prose-counters: rgb(var(--muted-foreground));
+  --tw-prose-hr: rgb(var(--foreground) / 0.2);
+  --tw-prose-code: rgb(var(--foreground));
+  --tw-prose-th-borders: rgb(var(--foreground) / 0.4);
+  --tw-prose-td-borders: rgb(var(--foreground) / 0.15);
+  max-width: 68ch;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+.prose-sala :where(h2, h3, h4) {
+  font-stretch: 110%;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 6rem;
+}
+.prose-sala :where(h2) { font-size: clamp(1.5rem, 3.6vw, 2rem); line-height: 1.15; margin-top: 3rem; margin-bottom: 1rem; }
+.prose-sala :where(h3) { font-size: clamp(1.25rem, 2.6vw, 1.5rem); line-height: 1.2; margin-top: 2.25rem; }
+.prose-sala :where(a) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(var(--primary));
+  text-underline-offset: 0.22em;
+  font-weight: 500;
+}
+.prose-sala :where(a):hover { text-decoration-thickness: 2px; }
+.prose-sala :where(blockquote) { border-left-width: 1px; font-style: normal; font-size: 1.1875rem; padding-left: 1.25rem; }
+.prose-sala :where(code):not(:where(pre code)) {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875em;
+  background: rgb(var(--foreground) / 0.07);
+  padding: 0.1em 0.35em;
+}
+.prose-sala :where(code)::before, .prose-sala :where(code)::after { content: none; }
+.prose-sala :where(pre) {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  background: rgb(var(--card));
+  color: rgb(var(--card-foreground));
+  border: 1px solid rgb(var(--foreground) / 0.15);
+  border-radius: 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+}
+.prose-sala :where(img) { border-radius: 0; box-shadow: var(--shadow-lift); }
+.prose-sala :where(table) { font-size: 0.9375rem; }
+.prose-sala :where(thead th) { font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.8125rem; }
+
+/* Syntax: ink, amber ink, gallery green, muted. No neon. */
+.hljs-comment, .hljs-quote { color: rgb(var(--muted-foreground)); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-type, .hljs-literal { color: rgb(var(--primary-ink)); font-weight: 600; }
+.hljs-string, .hljs-attr, .hljs-template-variable, .hljs-addition { color: rgb(31 110 82); }
+.dark .hljs-string, .dark .hljs-attr, .dark .hljs-template-variable, .dark .hljs-addition { color: rgb(126 200 160); }
+.hljs-number, .hljs-symbol, .hljs-variable, .hljs-title, .hljs-title.function_ { color: rgb(var(--foreground)); font-weight: 600; }
+.hljs-deletion, .hljs-meta { color: rgb(var(--destructive)); }

@@ -49,13 +49,13 @@ export function NewsletterSignup() {
 
   return (
     <section
-      className="my-12 rounded-2xl p-8 border border-primary/20 bg-primary/[0.08]"
+      className="plaque my-16 p-6 md:p-10"
     >
       <div className="">
-        <h3 className="text-2xl font-headline font-bold mb-2 text-foreground">
+        <h2 className="text-subhead">
           {t('stayUpdated')}
-        </h3>
-        <p className="text-foreground/50 text-sm leading-relaxed mb-6">
+        </h2>
+        <p className="mt-2 mb-6 max-w-[56ch] text-muted-foreground">
           {t('stayUpdatedDescription')}
         </p>
 
@@ -64,7 +64,8 @@ export function NewsletterSignup() {
             <Input
               type="email"
               placeholder={t('emailPlaceholder')}
-              accent="amber"
+              aria-label={t('emailPlaceholder')}
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -77,27 +78,27 @@ export function NewsletterSignup() {
             accent="amber"
             size="md"
             disabled={loading || !email}
-            className="text-black shrink-0"
+            className="shrink-0"
           >
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mail className="h-4 w-4" />}
+            {loading ? <Loader2 aria-hidden="true" className="h-4 w-4 animate-spin motion-reduce:animate-none" /> : <Mail aria-hidden="true" className="h-4 w-4" />}
             {loading ? t('subscribing') : t('subscribe')}
           </Button>
         </form>
 
         {status === 'success' && (
-          <div className="flex items-center gap-2 mt-3 text-sm text-emerald-500">
+          <div role="status" className="flex items-center gap-2 mt-3 text-sm text-foreground">
             <CheckCircle className="h-4 w-4 shrink-0" />
             {t('successfullySubscribed')}
           </div>
         )}
         {status === 'error' && (
-          <div className="flex items-center gap-2 mt-3 text-sm text-destructive">
+          <div role="alert" className="flex items-center gap-2 mt-3 text-sm font-medium text-destructive">
             <AlertCircle className="h-4 w-4 shrink-0" />
             {t('failedToSubscribe')}
           </div>
         )}
 
-        <p className="text-xs text-foreground/30 mt-4">{t('privacyNote')}</p>
+        <p className="text-catalog mt-4 text-muted-foreground">{t('privacyNote')}</p>
       </div>
     </section>
   );

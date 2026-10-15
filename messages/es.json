@@ -247,7 +247,8 @@
     "toastCopiedDesc": "El enlace del artículo se copió al portapapeles.",
     "toastOpeningX": "Abriendo en X...",
     "toastOpeningLinkedIn": "Abriendo en LinkedIn...",
-    "toastOpeningFacebook": "Abriendo en Facebook..."
+    "toastOpeningFacebook": "Abriendo en Facebook...",
+    "checkOutArticle": "Mira este artículo: \"{title}\""
   },
   "theme": {
     "lightMode": "Modo Claro",

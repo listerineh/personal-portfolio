@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
-import { List } from 'lucide-react';
 
 interface Heading {
   id: string;
@@ -118,7 +117,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
     
     if (!element) {
       const allHeadings = proseContainer.querySelectorAll('h2, h3');
-      element = Array.from(allHeadings).find((h: any) => h.textContent === text) as HTMLElement;
+      element = (Array.from(allHeadings).find((h) => h.textContent === text) as HTMLElement | undefined) ?? null;
     }
     
     if (element) {
@@ -138,35 +137,24 @@ export function TableOfContents({ content }: TableOfContentsProps) {
   }
 
   return (
-    <nav className="space-y-3">
-      <div className="space-y-3">
-        <div className="flex items-center gap-2 mb-4">
-          <List className="h-3.5 w-3.5 text-foreground/35" />
-          <p className="font-headline text-[10px] tracking-[0.3em] uppercase text-foreground/35">{t('tableOfContents')}</p>
-        </div>
-        
-        <ul className="space-y-1 text-sm border-l-2 border-foreground/[0.07]">
-          {headings.map((heading) => (
-            <li
-              key={heading.id}
-              className={cn(
-                'transition-[margin] duration-200 ease-out',
-                heading.level === 3 && 'ml-4'
-              )}
+    <nav aria-label={t('tableOfContents')}>
+      <p className="text-catalog text-muted-foreground">{t('tableOfContents')}</p>
+      <ol className="mt-4 grid gap-0.5 border-l border-foreground/25">
+        {headings.map((heading) => (
+          <li key={heading.id} className={cn(heading.level === 3 && 'pl-3')}>
+            <a
+              href={`#${heading.id}`}
+              onClick={(event) => {
+                event.preventDefault();
+                handleHeadingClick(heading.id, heading.text);
+              }}
+              className="-ml-px block border-l-2 border-transparent py-1.5 pl-4 text-sm leading-snug text-muted-foreground transition-[color,border-color] duration-snap ease-snap hover:border-foreground hover:text-foreground"
             >
-              <button
-                onClick={() => handleHeadingClick(heading.id, heading.text)}
-                className={cn(
-                  'block w-full text-left py-1 px-4 -ml-[2px] border-l-2 transition-[color,border-color] duration-200 ease-out',
-                  'text-foreground/40 border-transparent hover:text-primary hover:border-primary cursor-pointer'
-                )}
-              >
-                {heading.text}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 }

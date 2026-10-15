@@ -1,16 +1,13 @@
-
 "use client";
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import Link from 'next/link';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
+import { ArrowLeft } from 'lucide-react';
 import type { BlogPost } from '@/types';
-import Link from 'next/link';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Button } from '@/components/ds';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import { Button, PageHeader } from '@/components/ds';
+import { PageShell } from '@/components/layout';
 import { BlogStructuredData } from '@/components/blog/blog-structured-data';
 import { ArticleSchema } from '@/components/blog/article-schema';
 import { TableOfContents } from './table-of-contents';
@@ -18,12 +15,7 @@ import { BlogPostHeader } from './blog-post-header';
 import { BlogPostHeroImage } from './blog-post-hero-image';
 import { BlogPostContent } from './blog-post-content';
 import { BlogPostActions } from './blog-post-actions';
-import { ArrowLeft } from 'lucide-react';
 import { getBlogPost } from '@/lib/data';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface BlogPostClientPageProps {
   post: BlogPost;
@@ -40,10 +32,7 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
   }, [initialPost.slug, locale]);
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
   const proseRef = useRef<HTMLDivElement>(null);
-  const asideRef = useRef<HTMLDivElement>(null);
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -111,126 +100,60 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
     }
   }, [post.content]);
 
-  useEffect(() => {
-    const handleAsideVisibility = () => {
-      if (!asideRef.current) return;
-
-      const footer = document.querySelector('footer');
-      if (!footer) {
-        gsap.to(asideRef.current, {
-          opacity: 1,
-          duration: 0.3,
-          pointerEvents: 'auto',
-        });
-        return;
-      }
-
-      const footerRect = footer.getBoundingClientRect();
-      const asideRect = asideRef.current.getBoundingClientRect();
-
-      if (asideRect.bottom > footerRect.top) {
-        gsap.to(asideRef.current, {
-          opacity: 0,
-          duration: 0.3,
-          pointerEvents: 'none',
-        });
-      } else {
-        gsap.to(asideRef.current, {
-          opacity: 1,
-          duration: 0.3,
-          pointerEvents: 'auto',
-        });
-      }
-    };
-
-    window.addEventListener('scroll', handleAsideVisibility, { passive: true });
-    handleAsideVisibility();
-
-    return () => {
-      window.removeEventListener('scroll', handleAsideVisibility);
-    };
-  }, []);
-
-  useEffect(() => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-
-    const ctx = gsap.context(() => {
-      if (headerRef.current && headerRef.current.children.length > 0) {
-        gsap.fromTo(headerRef.current.children,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.06,
-            duration: 0.5,
-            ease: 'power2.out',
-          }
-        );
-      }
-    });
-
-    return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, [post.slug]);
+  const url = typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`;
 
   return (
     <>
       <BlogStructuredData post={post} />
       <ArticleSchema post={post} />
-      <Header />
-      <aside ref={asideRef} className="hidden xl:block xl:fixed xl:right-4 xl:top-24 xl:w-[280px] xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto xl:z-40 xl:pointer-events-auto">
-        <div className="pr-2">
-          <TableOfContents content={post.content} />
-        </div>
-      </aside>
-      <main className="pt-20 bg-background">
-        <div className="fixed top-20 left-0 right-0 h-0.5 z-50 bg-foreground/[0.06]">
-          <div className="h-full bg-primary transition-[width] duration-150 ease-out" style={{ width: `${readingProgress}%` }} />
-        </div>
-        <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 py-12 md:py-16 xl:mr-[320px]">
-          <div className="relative">
-            <article key={post.slug} ref={contentRef}>
-          <BlogPostHeader 
-            ref={headerRef}
-            post={post}
-            locale={locale}
-            formatDate={formatDate}
-          />
+      <div aria-hidden="true" className="fixed inset-x-0 top-14 z-40 h-1 bg-foreground/10 md:top-16">
+        <div className="h-full origin-left bg-primary" style={{ transform: `scaleX(${readingProgress / 100})` }} />
+      </div>
+      <PageShell>
+        <PageHeader
+          name={t('title')}
+          title={post.title}
+          titleSize="room"
+          nav={
+            <Link href="/blog" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline-offset-[0.3em] hover:underline">
+              <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+              {t('backToBlog')}
+            </Link>
+          }
+        >
+          <BlogPostHeader post={post} locale={locale} formatDate={formatDate} url={url} />
+        </PageHeader>
 
-          {post.imageUrl && (
-            <BlogPostHeroImage
-              ref={imageRef}
-              imageUrl={post.imageUrl}
-              title={post.title}
-              imageAiHint={post.imageAiHint}
-            />
-          )}
+        <div className="px-gutter py-12 md:py-20">
+          <div className="mx-auto grid max-w-[1296px] gap-10 lg:grid-cols-12 lg:gap-6">
+            <aside className="lg:col-span-3">
+              <details className="group border-y border-foreground/20 py-3 lg:hidden">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-semibold">
+                  {t('tableOfContents')}
+                  <span aria-hidden="true" className="font-mono transition-transform group-open:rotate-45">+</span>
+                </summary>
+                <div className="pt-3">
+                  <TableOfContents content={post.content} />
+                </div>
+              </details>
+              <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 lg:block">
+                <TableOfContents content={post.content} />
+              </div>
+            </aside>
 
-          <div className="my-6 md:my-12 h-px bg-foreground/[0.06]" />
-
-          <BlogPostContent ref={proseRef} content={post.content} />
-
-          <BlogPostActions 
-            slug={post.slug}
-            title={post.title}
-            url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`}
-          />
-
-          <div className="my-12 h-px bg-foreground/[0.06]" />
-
-          <div className="text-center">
-            <Button variant="secondary" accent="neutral" size="md" href="/blog" className="w-full md:w-auto rounded-2xl md:rounded-full justify-center">
-              <ArrowLeft className="w-4 h-4" /> {t('moreArticles')}
-            </Button>
-          </div>
-
+            <article key={post.slug} ref={contentRef} className="min-w-0 lg:col-span-8 lg:col-start-5">
+              {post.imageUrl && <BlogPostHeroImage imageUrl={post.imageUrl} title={post.title} imageAiHint={post.imageAiHint} />}
+              <BlogPostContent ref={proseRef} content={post.content} />
+              <BlogPostActions slug={post.slug} title={post.title} url={url} />
+              <div className="mt-16 border-t border-foreground/20 pt-8">
+                <Button variant="secondary" href="/blog" className="w-full sm:w-auto">
+                  <ArrowLeft aria-hidden="true" className="h-4 w-4" /> {t('moreArticles')}
+                </Button>
+              </div>
             </article>
           </div>
         </div>
-      </main>
-      <Footer />
+      </PageShell>
     </>
   );
 }

@@ -52,16 +52,16 @@ export function BlogViews({ slug }: BlogViewsProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Eye className="h-4 w-4 animate-pulse" />
+      <div className="text-catalog flex items-center gap-2 text-muted-foreground">
+        <Eye aria-hidden="true" className="h-4 w-4 motion-safe:animate-pulse" />
         <span className="animate-pulse">{t('loading')}</span>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-      <Eye className="h-4 w-4" />
+    <div className="text-catalog flex items-center gap-2 text-muted-foreground">
+      <Eye aria-hidden="true" className="h-4 w-4" />
       <span>
         {views !== null ? (
           <>
