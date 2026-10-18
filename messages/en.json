@@ -215,7 +215,7 @@
     "viewAll": "Send a message",
     "pageTitle": "Let's talk",
     "pageDescription": "I work remotely from Quito, Ecuador. Whether it's a full project, a code review, or a quick question, my inbox is open.",
-    "note": "I usually reply within a few hours on weekdays. If I'm deep in a build, it might take a bit longer.",
+    "note": "I usually reply within a day on weekdays. If I'm deep in a build, it might take a bit longer.",
     "directEmailTitle": "Email",
     "directEmailAction": "sebask8er.alvarez@gmail.com",
     "connectTitle": "Elsewhere",
@@ -243,7 +243,12 @@
       "Cloud infrastructure & CI/CD setup",
       "AI integrations & automation",
       "Technical consulting & code reviews"
-    ]
+    ],
+    "localTimeLabel": "Local time in Quito",
+    "copyEmail": "Copy email",
+    "emailCopied": "Email copied",
+    "sentBody": "Thanks for writing. I'll get back to you soon.",
+    "sendAnother": "Send another message"
   },
   "newsletter": {
     "badge": "Newsletter",

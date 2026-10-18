@@ -215,7 +215,7 @@
     "viewAll": "Enviar un mensaje",
     "pageTitle": "Hablemos",
     "pageDescription": "Trabajo de forma remota desde Quito, Ecuador. Ya sea un proyecto completo, una revisión de código o una pregunta, mi correo está abierto.",
-    "note": "Suelo responder en pocas horas durante la semana. Si estoy metido en un build, puede tardar un poco más.",
+    "note": "Suelo responder en menos de un día entre semana. Si estoy metido en un build, puede tardar un poco más.",
     "directEmailTitle": "Correo",
     "directEmailAction": "sebask8er.alvarez@gmail.com",
     "connectTitle": "Otras redes",
@@ -243,7 +243,12 @@
       "Infraestructura en la nube y CI/CD",
       "Integraciones de IA y automatización",
       "Consultoría técnica y revisiones de código"
-    ]
+    ],
+    "localTimeLabel": "Hora local en Quito",
+    "copyEmail": "Copiar correo",
+    "emailCopied": "Correo copiado",
+    "sentBody": "Gracias por escribir. Te respondo pronto.",
+    "sendAnother": "Enviar otro mensaje"
   },
   "newsletter": {
     "badge": "Boletín",
