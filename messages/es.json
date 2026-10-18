@@ -205,7 +205,8 @@
     "sortBy": "Ordenar",
     "loadingViews": "Cargando...",
     "sectionIntro": "Sobre ingeniería, cloud e IA aplicada.",
-    "articleCount": "{count, plural, one {# artículo} other {# artículos}}"
+    "articleCount": "{count, plural, one {# artículo} other {# artículos}}",
+    "keepReading": "Sigue leyendo"
   },
   "contact": {
     "title": "Trabajemos juntos",

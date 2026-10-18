@@ -205,7 +205,8 @@
     "sortBy": "Sort",
     "loadingViews": "Loading...",
     "sectionIntro": "On engineering, cloud and applied AI.",
-    "articleCount": "{count, plural, one {# article} other {# articles}}"
+    "articleCount": "{count, plural, one {# article} other {# articles}}",
+    "keepReading": "Keep reading"
   },
   "contact": {
     "title": "Work with me",

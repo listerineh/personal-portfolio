@@ -4,10 +4,11 @@ import { useState, useEffect, useRef, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
-import { ChevronDown, ChevronLeft } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { BlogPostSummary } from '@/types';
 import type { Locale } from '@/i18n/config';
-import { Button, PageHeader } from '@/components/ds';
+import { Ambient, BlogCard, Button, PageHeader, Reveal } from '@/components/ds';
+import { NewsletterSubscribe } from './newsletter-subscribe';
 import { PageShell } from '@/components/layout';
 import { TableOfContents } from './table-of-contents';
 import { BlogPostHeader } from './blog-post-header';
@@ -30,6 +31,7 @@ interface BlogPostClientPageProps {
 export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPageProps) {
   const { locale } = useLocale();
   const t = useTranslations('blog');
+  const tCommon = useTranslations('common');
   const version = versions[locale as Locale] ?? versions[initialLocale]!;
   const { post } = version;
   const [readingProgress, setReadingProgress] = useState(0);
@@ -97,6 +99,7 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
         <PageHeader
           title={post.title}
           titleSize="section"
+          intro={post.excerpt}
           nav={
             <Link
               href="/blog"
@@ -107,7 +110,7 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
             </Link>
           }
         >
-          <BlogPostHeader post={post} locale={locale} formatDate={formatDate} url={url} />
+          <BlogPostHeader post={post} locale={locale} formatDate={formatDate} />
         </PageHeader>
 
         {/* The cover, full column width, before the text starts. */}
@@ -119,7 +122,7 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
           </div>
         )}
 
-        <div className="px-gutter pb-24 pt-4 md:pb-32">
+        <div className="px-gutter pb-20 pt-4 md:pb-28">
           <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-12 lg:gap-10">
             <aside className="lg:col-span-3">
               <details className="panel group p-2 lg:hidden">
@@ -138,15 +141,48 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
 
             <article key={post.slug} ref={contentRef} className="min-w-0 lg:col-span-8 lg:col-start-5">
               {version.body}
-              <BlogPostActions slug={post.slug} title={post.title} url={url} related={version.related} />
-              <div className="mt-12">
-                <Button variant="secondary" href="/blog" className="w-full sm:w-auto">
-                  <ChevronLeft aria-hidden="true" className="h-4 w-4" /> {t('moreArticles')}
-                </Button>
-              </div>
+              <BlogPostActions slug={post.slug} title={post.title} url={url} />
             </article>
           </div>
         </div>
+        {/* After the article: related posts as cards, the newsletter, the way back. */}
+        <section aria-labelledby="keep-reading" className="tint relative isolate overflow-clip px-gutter py-20 md:py-28">
+          <Ambient intensity="soft" grid={false} spotlight={false} />
+          <div className="mx-auto max-w-[1200px]">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <h2 id="keep-reading" className="text-display-sm">
+                {t('keepReading')}
+              </h2>
+              <Button variant="ghost" accent="amber" href="/blog" className="self-start md:self-auto">
+                {t('moreArticles')}
+                <ChevronRight aria-hidden="true" className="h-4 w-4" />
+              </Button>
+            </div>
+            {version.related.length > 0 && (
+              <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                {version.related.slice(0, 3).map((related) => (
+                  <Reveal as="li" key={related.slug}>
+                    <BlogCard
+                      layout="stack"
+                      title={related.title}
+                      slug={related.slug}
+                      excerpt={related.excerpt}
+                      date={related.date}
+                      coverImage={related.imageUrl}
+                      readingTime={related.readingTime}
+                      readingTimeLabel={t('readingTime', { minutes: '' }).trim()}
+                      readMoreLabel={tCommon('readMore')}
+                      newLabel={t('new')}
+                    />
+                  </Reveal>
+                ))}
+              </ul>
+            )}
+            <div className="mt-10">
+              <NewsletterSubscribe variant="default" />
+            </div>
+          </div>
+        </section>
       </PageShell>
     </>
   );
