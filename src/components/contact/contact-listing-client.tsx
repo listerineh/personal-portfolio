@@ -68,42 +68,44 @@ export function ContactListingClient() {
 
   return (
     <PageShell>
-      <PageHeader title={t('pageTitle')} intro={t('pageDescription')}>
+      <PageHeader ambient title={t('pageTitle')} intro={t('pageDescription')}>
         {emailLink && (
           <div className="grid gap-3">
             <a
               href={emailLink.url}
-              className="group inline-flex max-w-full items-center gap-2 break-all text-[clamp(1.25rem,4vw,2rem)] font-bold leading-tight underline decoration-1 underline-offset-[0.2em] [font-stretch:108%] hover:decoration-2"
+              className="group inline-flex max-w-full items-center gap-2 break-all text-[clamp(1.25rem,4vw,2rem)] font-semibold leading-tight tracking-[-0.02em] text-foreground transition-colors duration-snap ease-snap hover:text-primary"
             >
               {t('directEmailAction')}
-              <ArrowUpRight aria-hidden="true" className="h-6 w-6 shrink-0" />
+              <ArrowUpRight aria-hidden="true" className="h-6 w-6 shrink-0 transition-transform duration-snap ease-snap group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
-            <p className="text-meta inline-flex items-center gap-2 text-muted-foreground">
-              <span aria-hidden="true" className="h-2 w-2 bg-primary" />
+            <p className="inline-flex h-9 w-fit items-center gap-2 rounded-full bg-foreground/[0.05] px-4 text-[0.8125rem] font-medium text-foreground/80">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary motion-safe:animate-pulse" />
               {t('responseTime')}
             </p>
           </div>
         )}
       </PageHeader>
 
-      <section className="px-gutter py-16 md:py-24">
-        <div className="mx-auto grid max-w-[1200px] items-start gap-14 lg:grid-cols-12 lg:gap-6">
-          <div className="grid gap-12 lg:col-span-5">
-            <p className="text-lead max-w-[48ch] text-muted-foreground">{t('note')}</p>
+      <section className="px-gutter pb-24 pt-8 md:pb-32 md:pt-12">
+        <div className="mx-auto grid max-w-[1200px] items-start gap-10 lg:grid-cols-12 lg:gap-10">
+          <div className="grid gap-5 lg:col-span-5">
+            <p className="text-lead max-w-[48ch] pb-3 text-muted-foreground">{t('note')}</p>
 
-            <div>
+            <div className="panel p-6 md:p-7">
               <h2 className="text-headline">{t('collaborationTitle')}</h2>
               <ul className="mt-4 grid gap-3">
                 {collaborationItems.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-[0.9375rem] leading-relaxed">
-                    <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0" />
+                    <span aria-hidden="true" className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/[0.14] text-primary">
+                      <Check className="h-3 w-3" strokeWidth={3} />
+                    </span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div>
+            <div className="panel p-6 md:p-7">
               <h2 className="text-headline">{t('connectTitle')}</h2>
               <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {otherLinks.map((link) => (
@@ -113,7 +115,7 @@ export function ContactListingClient() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${tCommon('visitSocial')} ${link.name}`}
-                      className="flex min-h-11 items-center gap-3 border-[1.5px] border-foreground/25 px-3 text-sm font-semibold transition-colors duration-snap ease-snap hover:border-foreground"
+                      className="flex min-h-11 items-center gap-2.5 rounded-full bg-background px-4 text-sm font-medium shadow-card transition-[transform,color] duration-snap ease-snap hover:text-primary active:scale-95"
                     >
                       <link.icon aria-hidden="true" className="h-4 w-4 shrink-0" />
                       <span className="truncate">{link.name}</span>
@@ -124,7 +126,7 @@ export function ContactListingClient() {
             </div>
           </div>
 
-          <div className="panel p-6 shadow-card md:p-10 lg:col-span-7">
+          <div className="panel p-6 md:p-10 lg:sticky lg:top-[calc(var(--header-h)+1.5rem)] lg:col-span-7">
             <h2 className="text-subhead">{t('formTitle')}</h2>
             <p className="mt-2 text-muted-foreground">{t('formIntro')}</p>
 

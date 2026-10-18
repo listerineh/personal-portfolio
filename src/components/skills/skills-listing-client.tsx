@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import type { Skill, SkillCategory } from '@/types';
-import { EndOfList, FilterTag, PageHeader } from '@/components/ds';
+import { EndOfList, FilterTag, PageHeader, Reveal } from '@/components/ds';
 import { PageShell } from '@/components/layout';
 
 interface SkillsListingClientProps {
@@ -42,39 +42,37 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
               onPressedChange={() => toggleCategory(group.category)}
             >
               {t(`categories.${group.category}`)}
-              <span className="ml-1.5 opacity-75">{group.skills.length}</span>
+              <span className="ml-1.5 tabular-nums opacity-60">{group.skills.length}</span>
             </FilterTag>
           ))}
         </div>
       </PageHeader>
 
-      <div className="px-gutter py-16 md:py-24">
+      <div className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8">
         <div className="mx-auto grid max-w-[1200px] gap-16 md:gap-20">
           {visibleGroups.map((group) => (
-            <section
-              key={group.category}
-              aria-labelledby={`cat-${group.category}`}
-              className="grid gap-6 border-t border-foreground/25 pt-6 lg:grid-cols-12 lg:gap-6"
-            >
-              <div className="lg:col-span-3">
-                <h2 id={`cat-${group.category}`} className="text-subhead lg:sticky lg:top-24">
+            <section key={group.category} aria-labelledby={`cat-${group.category}`}>
+              <div className="flex items-baseline gap-3">
+                <h2 id={`cat-${group.category}`} className="text-subhead">
                   {t(`categories.${group.category}`)}
                 </h2>
-                <p className="text-meta mt-2 text-muted-foreground">{group.skills.length}</p>
+                <span className="text-meta text-muted-foreground">{group.skills.length}</span>
               </div>
-              <ul className="grid gap-x-6 sm:grid-cols-2 lg:col-span-9">
+              <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
                 {group.skills.map((skill) => (
-                  <li key={skill.name} className="flex items-start gap-3 border-b border-foreground/15 py-4">
-                    {skill.iconUrl ? (
-                      <Image src={skill.iconUrl} alt="" width={24} height={24} className="mt-0.5 h-6 w-6 shrink-0 object-contain" unoptimized />
-                    ) : (
-                      <span aria-hidden="true" className="mt-0.5 h-6 w-6 shrink-0 border border-foreground/30" />
-                    )}
+                  <Reveal as="li" key={skill.name} className="panel flex items-start gap-4 p-5">
+                    <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white ring-1 ring-black/[0.06]">
+                      {skill.iconUrl ? (
+                        <Image src={skill.iconUrl} alt="" width={24} height={24} className="h-6 w-6 object-contain" unoptimized />
+                      ) : (
+                        <span aria-hidden="true" className="h-2 w-2 rounded-full bg-foreground/30" />
+                      )}
+                    </span>
                     <div className="min-w-0">
                       <h3 className="text-base font-semibold leading-tight">{skill.name}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{skill.description}</p>
+                      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{skill.description}</p>
                     </div>
-                  </li>
+                  </Reveal>
                 ))}
               </ul>
             </section>
