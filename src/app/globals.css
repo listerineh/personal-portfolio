@@ -128,6 +128,33 @@
     color-scheme: dark;
   }
 
+  /* A night stage: dark tokens for everything inside, whatever the site theme (used by /why). */
+  .stage {
+    --background: 0 0 0;
+    --foreground: 245 245 247;
+    --tint: 22 22 23;
+    --card: 28 28 30;
+    --card-foreground: 245 245 247;
+    --popover: 28 28 30;
+    --popover-foreground: 245 245 247;
+    --primary-ink: 232 137 12;
+    --primary-foreground: 29 29 31;
+    --secondary: 44 44 46;
+    --secondary-foreground: 245 245 247;
+    --muted: 44 44 46;
+    --muted-foreground: 161 161 166;
+    --border: 56 56 58;
+    --input: 124 124 128;
+    --ring: 232 137 12;
+    --surface: 0 0 0;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px -4px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 2px 6px rgb(0 0 0 / 0.5), 0 24px 48px -16px rgb(0 0 0 / 0.8);
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    color-scheme: dark;
+  }
+  .stage .tint { --card: 36 36 38; }
+
   /* An alternate section ground; panels inside it turn to the plain ground so they still lift. */
   .tint {
     --surface: var(--tint);
@@ -414,6 +441,23 @@ html:not(.js-motion) .marquee-copy { display: none; }
   from { transform: translateX(-100%); }
   to { transform: translateX(300%); }
 }
+
+/* ── Stage effects (/why): a record that spins, an equalizer that dances, a light that sweeps ── */
+@keyframes vinyl-spin { to { transform: rotate(360deg); } }
+html.js-motion .vinyl-spin { animation: vinyl-spin 9s linear infinite; }
+html.js-motion .group:hover .vinyl-spin { animation-duration: 3s; }
+
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+html.js-motion .eq-bar { animation: eq-bounce var(--eq-speed, 1s) ease-in-out infinite; animation-delay: var(--eq-delay, 0s); }
+
+@keyframes stage-sweep {
+  0%, 100% { transform: translateX(-18%) rotate(-8deg); }
+  50% { transform: translateX(18%) rotate(8deg); }
+}
+html.js-motion .stage-light { animation: stage-sweep 14s ease-in-out infinite; }
 
 /* Theme cross-fade (View Transitions) */
 ::view-transition-old(root),

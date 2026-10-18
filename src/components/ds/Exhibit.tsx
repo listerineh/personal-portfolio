@@ -11,12 +11,14 @@ interface ExhibitProps {
   /** One catalog line under the title (genre, years). */
   subtitle?: ReactNode
   tone?: 'tint' | 'plain'
+  /** Decorative visual beside the title (e.g. a spinning Vinyl). */
+  visual?: ReactNode
   className?: string
   children: ReactNode
 }
 
 /** One music project on /why: its identity color as a dot and soft glow, its tags, a large title, then its content. */
-export function Exhibit({ id, color, tags, title, subtitle, tone = 'plain', className, children }: ExhibitProps) {
+export function Exhibit({ id, color, tags, title, subtitle, tone = 'plain', visual, className, children }: ExhibitProps) {
   return (
     <section
       id={id}
@@ -26,18 +28,23 @@ export function Exhibit({ id, color, tags, title, subtitle, tone = 'plain', clas
       {/* A faint wash of the project's color behind its title. */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -right-[20vmax] -top-[20vmax] -z-10 h-[55vmax] w-[55vmax] rounded-full opacity-[0.14]"
+        className="pointer-events-none absolute -right-[20vmax] -top-[20vmax] -z-10 h-[60vmax] w-[60vmax] rounded-full opacity-[0.22]"
         style={{ background: `radial-gradient(closest-side, ${color}, transparent)` }}
       />
       <div className="mx-auto max-w-[1200px]">
-        <div className="flex flex-wrap items-center gap-3">
-          <span aria-hidden="true" className="h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: color }} />
-          {tags}
+        <div className="group flex items-center justify-between gap-8">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-3">
+              <span aria-hidden="true" className="h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+              {tags}
+            </div>
+            <h2 id={`${id}-title`} className="text-display mt-6">
+              {title}
+            </h2>
+            {subtitle && <p className="mt-3 text-[1.0625rem] font-medium text-muted-foreground">{subtitle}</p>}
+          </div>
+          {visual && <div className="hidden w-[clamp(140px,18vw,240px)] shrink-0 sm:block">{visual}</div>}
         </div>
-        <h2 id={`${id}-title`} className="text-display mt-6">
-          {title}
-        </h2>
-        {subtitle && <p className="text-meta mt-3 text-muted-foreground">{subtitle}</p>}
         <div className="mt-12 md:mt-16">{children}</div>
       </div>
     </section>

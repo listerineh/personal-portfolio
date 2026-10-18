@@ -10,11 +10,13 @@ import {
   Exhibit,
   Reveal,
   MemberCard,
-  PageHeader,
   Pill,
   Panel,
   SpotifyTopTracks,
   Ambient,
+  Equalizer,
+  ScrollText,
+  Vinyl,
 } from "@/components/ds";
 import { PageShell } from "@/components/layout";
 
@@ -42,46 +44,102 @@ export default function WhyPage() {
 
   return (
     <PageShell>
-      <PageHeader
-        ambient
-        title={
-          <>
-            <span className="block">{t("heroWhy")}</span>
-            <span className="block text-muted-foreground">Listerineh?</span>
-          </>
-        }
-        intro={t("heroSubtitle")}
+      {/* The whole page is a night stage, whatever the site theme. */}
+      <div className="stage">
+      {/* Hero: the photo fills the stage, a spotlight sweeps, the equalizer keeps time. */}
+      <section
+        aria-labelledby="why-title"
+        className="relative isolate flex min-h-[100svh] items-end overflow-clip px-gutter pb-16 pt-[calc(var(--header-h)+3rem)] md:pb-24"
       >
-        <p className="inline-flex h-9 items-center gap-2 rounded-full bg-foreground/[0.05] px-4 text-[0.8125rem] font-medium text-foreground/80">
-          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
-          {t("heroEyebrow")}
-        </p>
-      </PageHeader>
-
-      {/* The photograph, hung, and where the name comes from */}
-      <section className="px-gutter pb-24 pt-8 md:pb-32 md:pt-12">
-        <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-6">
-          <Reveal className="lg:col-span-7">
-            <div className="overflow-hidden rounded-xl shadow-card">
-              <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                <Image
-                  src="/images/sebas-playing.webp"
-                  alt="Sebastian Alvarez playing guitar"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  className="object-cover object-center"
-                />
-              </div>
-            </div>
-          </Reveal>
-          <div className="lg:col-span-4 lg:col-start-9 lg:self-end">
-            <h2 className="text-display-sm">{t("originHeadline")}</h2>
-            <div className="mt-6 grid gap-5 text-lead text-muted-foreground">
-              <p>{t("originParagraph1")}</p>
-              <p>{t("originParagraph2")}</p>
-            </div>
+        <Image
+          src="/images/sebas-playing.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="-z-30 object-cover object-[60%_30%] opacity-70"
+        />
+        <span aria-hidden="true" className="absolute inset-0 -z-20 bg-gradient-to-t from-black via-black/70 to-black/25" />
+        <span
+          aria-hidden="true"
+          className="stage-light pointer-events-none absolute -top-[30%] left-1/2 -z-10 h-[130%] w-[60vmax] -translate-x-1/2 opacity-60 mix-blend-screen"
+          style={{ background: 'radial-gradient(ellipse 35% 70% at 50% 0%, rgba(217,119,6,0.55), transparent 70%)' }}
+        />
+        <div className="mx-auto w-full max-w-[1200px]">
+          <p
+            data-intro=""
+            style={{ '--i': 0 } as React.CSSProperties}
+            className="inline-flex h-9 items-center gap-2 rounded-full bg-white/10 px-4 text-[0.8125rem] font-medium text-foreground backdrop-blur-md"
+          >
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
+            {t("heroEyebrow")}
+          </p>
+          <h1 id="why-title" className="mt-8">
+            <span data-intro="" style={{ '--i': 1 } as React.CSSProperties} className="text-display block">
+              {t("heroWhy")}
+            </span>
+            <span data-intro="" style={{ '--i': 2 } as React.CSSProperties} className="text-display block text-primary">
+              Listerineh?
+            </span>
+          </h1>
+          <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <p data-intro="" style={{ '--i': 3 } as React.CSSProperties} className="text-lead max-w-[48ch] text-foreground/80">
+              {t("heroSubtitle")}
+            </p>
+            <Equalizer className="h-12 md:h-16" bars={14} />
           </div>
+        </div>
+      </section>
+
+      {/* Where the name comes from: the first paragraph lights up as it scrolls by. */}
+      <section aria-labelledby="origin-title" className="px-gutter py-24 md:py-36">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 id="origin-title" className="text-meta text-primary">
+            {t("originHeadline")}
+          </h2>
+          <ScrollText
+            text={t("originParagraph1")}
+            className="mt-6 max-w-[30ch] text-[clamp(1.625rem,4vw,3.25rem)] font-semibold leading-[1.18] tracking-[-0.035em]"
+          />
+          <p className="text-lead mt-10 max-w-[56ch] text-muted-foreground">{t("originParagraph2")}</p>
+        </div>
+      </section>
+
+      {/* Tracklist: the three projects as records; each one jumps to its section. */}
+      <section aria-labelledby="tracklist-title" className="px-gutter pb-24 md:pb-32">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 id="tracklist-title" className="text-display-sm">
+            {t("tracklist")}
+          </h2>
+          <ol className="mt-10 grid gap-4 sm:grid-cols-3 md:gap-6">
+            {[
+              { id: 'margarita-nugget', color: MN, title: t("mnTitle"), genre: t("mnGenre"), status: t("mnStatus") },
+              { id: 'sofones-solares', color: SS, title: t("ssTitle"), genre: t("ssGenre"), status: t("ssPaused") },
+              { id: 'listerineh-solo', color: SOLO, title: 'Listerineh', genre: t("soloGenre"), status: t("soloBadge") },
+            ].map((record, index) => (
+              <Reveal as="li" key={record.id}>
+                <a
+                  href={`#${record.id}`}
+                  className="panel group flex h-full flex-col gap-6 p-5 no-underline transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float motion-reduce:transition-none md:p-6"
+                >
+                  <Vinyl color={record.color} className="w-full max-w-[220px] self-center" />
+                  <span className="flex items-start justify-between gap-3">
+                    <span className="min-w-0">
+                      <span className="text-meta text-muted-foreground">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="mt-1 block text-headline transition-colors duration-snap ease-snap group-hover:text-primary">
+                        {record.title}
+                      </span>
+                      <span className="mt-1 block text-[0.875rem] text-muted-foreground">{record.genre}</span>
+                    </span>
+                    <span className="inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-foreground/[0.07] px-2.5 text-[0.6875rem] font-medium">
+                      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: record.color }} />
+                      {record.status}
+                    </span>
+                  </span>
+                </a>
+              </Reveal>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -90,6 +148,7 @@ export default function WhyPage() {
         tone="tint"
         id="margarita-nugget"
         color={MN}
+        visual={<Vinyl color={MN} />}
         tags={
           <>
             <Pill variant="outline">{t("mnBadge")}</Pill>
@@ -159,6 +218,7 @@ export default function WhyPage() {
       <Exhibit
         id="sofones-solares"
         color={SS}
+        visual={<Vinyl color={SS} />}
         tags={
           <>
             <Pill variant="outline">{t("ssBadge")}</Pill>
@@ -213,6 +273,7 @@ export default function WhyPage() {
         tone="tint"
         id="listerineh-solo"
         color={SOLO}
+        visual={<Vinyl color={SOLO} />}
         tags={<Pill variant="outline">{t("soloBadge")}</Pill>}
         title="Listerineh"
         subtitle={t("soloGenre")}
@@ -286,6 +347,7 @@ export default function WhyPage() {
           </Reveal>
         </div>
       </section>
+      </div>
     </PageShell>
   );
 }

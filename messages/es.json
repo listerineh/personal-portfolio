@@ -420,7 +420,8 @@
     "getInTouch": "Ponte en Contacto",
     "topTracksError": "No se pudieron cargar las pistas.",
     "topTracksAttribution": "Mejores pistas en Spotify",
-    "listenOn": "Escuchar \"{track}\" en {platform}"
+    "listenOn": "Escuchar \"{track}\" en {platform}",
+    "tracklist": "Tres proyectos, un nombre"
   },
   "privacy": {
     "title": "Política de Privacidad",

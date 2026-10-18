@@ -420,7 +420,8 @@
     "getInTouch": "Get in Touch",
     "topTracksError": "Could not load tracks.",
     "topTracksAttribution": "Top tracks via Spotify",
-    "listenOn": "Listen to \"{track}\" on {platform}"
+    "listenOn": "Listen to \"{track}\" on {platform}",
+    "tracklist": "Three projects, one name"
   },
   "privacy": {
     "title": "Privacy Policy",
