@@ -59,7 +59,15 @@ export default function WhyPage() {
           sizes="100vw"
           className="-z-30 object-cover object-[60%_30%] opacity-90 dark:opacity-70"
         />
-        <span aria-hidden="true" className="absolute inset-0 -z-20 bg-gradient-to-t from-background via-background/75 to-background/20" />
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 -z-20 bg-gradient-to-t from-background via-background/85 to-background/45 dark:via-background/75 dark:to-background/20"
+        />
+        {/* Frosted glass that thickens toward the text, so the photo stays a mood rather than competing with the title. */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 -z-20 backdrop-blur-[10px] [-webkit-mask-image:linear-gradient(to_top,#000_35%,transparent_85%)] [mask-image:linear-gradient(to_top,#000_35%,transparent_85%)] dark:backdrop-blur-[4px]"
+        />
         <span
           aria-hidden="true"
           className="stage-light pointer-events-none absolute -top-[30%] left-1/2 -z-10 h-[130%] w-[60vmax] -translate-x-1/2 opacity-50 mix-blend-multiply dark:opacity-60 dark:mix-blend-screen"
