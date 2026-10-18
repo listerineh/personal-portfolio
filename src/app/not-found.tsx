@@ -6,7 +6,7 @@ import { ArrowLeft, Home } from 'lucide-react';
 import { Button, Ambient } from '@/components/ds';
 import { PageShell } from '@/components/layout';
 
-/** An empty wall: nothing hangs here. The way back, and rooms worth visiting. */
+/** Nothing here: the way back, and a few pages worth visiting. */
 export default function NotFound() {
   const t = useTranslations('notFound');
   const rooms = [

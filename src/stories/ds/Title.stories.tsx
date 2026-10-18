@@ -13,11 +13,11 @@ export default meta;
 type Story = StoryObj<typeof Title>;
 
 export const WallTitle: Story = {
-  args: { as: 'h1', size: 'wall', children: 'Sebastian Alvarez' },
+  args: { as: 'h1', size: 'display', children: 'Sebastian Alvarez' },
 };
 
 export const RoomTitle: Story = {
-  args: { size: 'room', children: 'Selected work' },
+  args: { size: 'title', children: 'Selected work' },
 };
 
 export const SectionTitle: Story = {
@@ -32,7 +32,7 @@ export const WorkTitle: Story = {
 export const OnWall: Story = {
   render: () => (
     <Band className="py-16">
-      <Title as="h1" size="wall">
+      <Title as="h1" size="display">
         Sebastian
         <br />
         Alvarez
@@ -43,7 +43,7 @@ export const OnWall: Story = {
 
 export const LongText: Story = {
   args: {
-    size: 'room',
+    size: 'title',
     children: 'A long room title that wraps across lines and stays balanced at every width',
   },
 };

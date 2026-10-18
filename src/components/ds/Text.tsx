@@ -21,7 +21,7 @@ const sizeMap: Record<TextSize, string> = {
   xl: "text-xl leading-snug",
 };
 
-// Every strength holds AA on plaster, plaque and wall: the tokens are re-scoped per surface.
+// Every strength holds AA on plain, tint and panel surfaces in both themes.
 const strengthMap: Record<TextStrength, string> = {
   primary: "text-foreground",
   secondary: "text-muted-foreground",

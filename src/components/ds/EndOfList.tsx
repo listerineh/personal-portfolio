@@ -2,7 +2,7 @@ interface EndOfListProps {
   children: React.ReactNode;
 }
 
-/** End of a room: a short rule and the closing catalog line, left-aligned like a wall label. */
+/** End of a list: a small dot and a closing line. */
 export function EndOfList({ children }: EndOfListProps) {
   return (
     <div className="mt-16 flex items-center gap-4">

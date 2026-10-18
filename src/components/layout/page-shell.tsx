@@ -11,7 +11,7 @@ interface PageShellProps {
   children: React.ReactNode;
 }
 
-/** Skip link, header, the page's main landmark, and the exit wall. */
+/** Skip link, header, the page's main landmark, and the footer. */
 export function PageShell({ className, children }: PageShellProps) {
   const t = useTranslations('common');
   return (

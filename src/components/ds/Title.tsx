@@ -4,7 +4,7 @@ import { type ElementType, type ReactNode, type CSSProperties } from "react";
 
 interface TitleProps {
   as?: ElementType;
-  /** wall = cut-vinyl name on a wall, room = room title, work = a single work's title. */
+  /** display = page title, title = section title, section = subsection, work = a card's title. */
   size?: TitleSize;
   /** @deprecated Gradient text is out of the system; `amber` sets the title in the live amber. */
   gradient?: TitleGradient;
@@ -16,8 +16,8 @@ interface TitleProps {
 }
 
 const sizeMap: Record<TitleSize, string> = {
-  wall: "text-display",
-  room: "text-display-sm",
+  display: "text-display",
+  title: "text-display-sm",
   section: "text-subhead",
   work: "text-headline",
 };

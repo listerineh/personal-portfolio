@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-/** A notice pinned to the wall: plaque, hang shadow, a square marker for its kind. */
+/** A floating notice: rounded panel, soft shadow, a dot for its kind. Swipe to dismiss. */
 export function Toaster() {
   const { toasts } = useToast();
 

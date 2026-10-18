@@ -31,7 +31,7 @@ const ssMembers = [
   { nameKey: "ssMember3Name" as const, roleKey: "ssMember3Role" as const },
 ];
 
-// Exhibition marker colors: the bands' identities, used only as markers and platform links.
+// Each project's identity color: used for its marker dot, its soft glow and its platform links.
 const MN = "#D97706";
 const SS = "#5A7799";
 const SOLO = "#1DB954";

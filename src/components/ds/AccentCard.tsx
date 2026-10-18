@@ -3,14 +3,14 @@ import { type Accent } from "./types";
 import { type ReactNode } from "react";
 
 interface AccentCardProps {
-  /** `amber` adds the live marker; other accents render as a plain plaque. */
+  /** `amber` adds the live dot; other accents render as a plain panel. */
   accent?: Accent;
   animate?: boolean;
   className?: string;
   children: ReactNode;
 }
 
-/** A paper plaque. Flat, square, no border: elevation comes only from the hang shadow. */
+/** A soft rounded panel; `amber` marks it with a small live dot. */
 export function AccentCard({
   accent = "neutral",
   animate,
