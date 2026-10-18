@@ -129,7 +129,10 @@
     "liveDemo": "Live Demo",
     "sourceCode": "Source Code",
     "dates": "Dates",
-    "statusLabel": "Status"
+    "statusLabel": "Status",
+    "nextProject": "Next project",
+    "timeline": "Timeline",
+    "allProjects": "All projects"
   },
   "blog": {
     "title": "Latest articles",

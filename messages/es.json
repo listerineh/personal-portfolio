@@ -129,7 +129,10 @@
     "liveDemo": "Ver Demo",
     "sourceCode": "Código Fuente",
     "dates": "Fechas",
-    "statusLabel": "Estado"
+    "statusLabel": "Estado",
+    "nextProject": "Siguiente proyecto",
+    "timeline": "Periodo",
+    "allProjects": "Todos los proyectos"
   },
   "blog": {
     "title": "Artículos recientes",

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import { getProject } from '@/lib/data/projects';
+import { getProject, getProjects } from '@/lib/data/projects';
 import { notFound } from 'next/navigation';
-import { ProjectDetailClientPage } from '@/components/projects/project-detail-client-page';
+import { ProjectDetailClientPage, type ProjectVersion } from '@/components/projects/project-detail-client-page';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 
@@ -86,11 +86,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const cookieStore = await cookies();
   const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
   const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
-  const project = getProject(slug, locale);
-
-  if (!project) {
+  if (!getProject(slug, locale)) {
     notFound();
   }
 
-  return <ProjectDetailClientPage project={project} />;
+  // Both languages travel with the page so the client-side language switch translates it in place;
+  // each version knows which project comes next in its own list.
+  const versions = Object.fromEntries(
+    locales.map((loc) => {
+      const list = getProjects(loc);
+      const index = list.findIndex((item) => item.slug === slug);
+      const next = index === -1 ? undefined : list[(index + 1) % list.length];
+      return [
+        loc,
+        {
+          project: list[index],
+          next: next && next.slug !== slug ? { slug: next.slug, title: next.title, description: next.description, imageUrl: next.imageUrl } : undefined,
+        },
+      ];
+    }),
+  ) as Record<Locale, ProjectVersion>;
+
+  return <ProjectDetailClientPage versions={versions} initialLocale={locale} />;
 }

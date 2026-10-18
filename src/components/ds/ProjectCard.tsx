@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export type ProjectStatus = "in-progress" | "completed" | "on-hold" | "archived";
 
 // Amber only for work that is moving now; finished and paused work stay neutral.
-const statusDot: Record<ProjectStatus, string> = {
+export const projectStatusDot: Record<ProjectStatus, string> = {
   "in-progress": "bg-primary motion-safe:animate-pulse",
   completed: "bg-foreground/60",
   "on-hold": "border border-foreground/50 bg-transparent",
@@ -95,7 +95,7 @@ export function ProjectCard({
             {number && <span className="text-meta text-muted-foreground">{number}</span>}
             {status && statusLabel && (
               <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-foreground/[0.06] px-2.5 text-[0.6875rem] font-medium text-foreground/80">
-                <span aria-hidden="true" className={cn("h-1.5 w-1.5 rounded-full", statusDot[status])} />
+                <span aria-hidden="true" className={cn("h-1.5 w-1.5 rounded-full", projectStatusDot[status])} />
                 {statusLabel}
               </span>
             )}
