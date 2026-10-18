@@ -19,7 +19,7 @@ interface HomePageProps {
   skills: SkillGroupSummary[];
 }
 
-/** The exhibition: entrance, then the rooms in route order. Data arrives per language from the server. */
+/** Home: hero, experience, skills, projects, blog, contact. Data arrives per language from the server. */
 export function HomePage({ byLocale, skills }: HomePageProps) {
   const t = useTranslations('common');
   const { locale } = useLocale();
@@ -33,10 +33,10 @@ export function HomePage({ byLocale, skills }: HomePageProps) {
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
         <HeroSection />
-        <ProjectsSection projects={data.projects} />
-        <BlogPreviewSection posts={data.posts} />
         <ExperienceSection experiences={data.experiences} />
         <SkillsSection groups={skills} />
+        <ProjectsSection projects={data.projects} />
+        <BlogPreviewSection posts={data.posts} />
         <ContactSection />
       </main>
       <Footer />
