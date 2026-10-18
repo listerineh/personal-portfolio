@@ -84,7 +84,7 @@ export function AboutContent() {
     <>
       {/* 1. Who: split hero, the figures count up beside the name. */}
       <section className="relative isolate overflow-clip bg-background px-gutter pb-20 pt-[calc(var(--header-h)+3.5rem)] md:pb-28 md:pt-[calc(var(--header-h)+6rem)]">
-        <Ambient />
+        <Ambient className="[-webkit-mask-image:linear-gradient(to_bottom,#000_55%,transparent)] [mask-image:linear-gradient(to_bottom,#000_55%,transparent)]" />
         <div className="mx-auto grid max-w-[1200px] items-center gap-14 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
             <p
