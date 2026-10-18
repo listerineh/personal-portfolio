@@ -400,6 +400,11 @@ html.js-motion .marquee-track { animation: marquee var(--marquee-duration, 60s) 
 html.js-motion .marquee-track[data-reverse] { animation-direction: reverse; }
 html.js-motion .marquee:hover .marquee-track,
 html.js-motion .marquee[data-paused] .marquee-track { animation-play-state: paused; }
+/* Edge fade for any horizontally scrolling row (filters). */
+.marquee-edges {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+}
 /* Without motion: one still row you can swipe, no duplicate. */
 html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
 html:not(.js-motion) .marquee-copy { display: none; }

@@ -77,3 +77,9 @@ export const LongDescription: Story = {
     tags: ['Microservices', 'Kubernetes', 'Go', 'React'],
   },
 };
+
+/** Horizontal lead card spanning a whole row (first project on /projects). */
+export const Wide: Story = {
+  args: { ...Default.args, layout: 'wide', status: 'in-progress', statusLabel: 'In progress' },
+  decorators: [(Story) => <div className="max-w-5xl"><Story /></div>],
+};

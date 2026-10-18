@@ -111,7 +111,11 @@
     "noResults": "Ningún proyecto coincide con tu búsqueda.",
     "clearFilters": "Limpiar filtros",
     "badge": "Pasatiempos",
-    "viewAll": "Ver Todos los Proyectos"
+    "viewAll": "Ver Todos los Proyectos",
+    "filterAll": "Todos",
+    "statusFilter": "Filtrar por estado",
+    "technologies": "Tecnologías",
+    "showing": "{shown} de {total} proyectos"
   },
   "project": {
     "featuredProject": "Proyecto Destacado",

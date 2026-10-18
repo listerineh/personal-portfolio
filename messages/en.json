@@ -111,7 +111,11 @@
     "noResults": "No projects match your search.",
     "clearFilters": "Clear filters",
     "badge": "Hobbies",
-    "viewAll": "View All Projects"
+    "viewAll": "View All Projects",
+    "filterAll": "All",
+    "statusFilter": "Filter by status",
+    "technologies": "Technologies",
+    "showing": "{shown} of {total} projects"
   },
   "project": {
     "featuredProject": "Featured Project",

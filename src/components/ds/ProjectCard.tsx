@@ -28,6 +28,8 @@ interface ProjectCardProps {
   number?: string;
   /** `feature` = the large card (first in a listing). */
   size?: "default" | "feature";
+  /** `wide` lays the card out horizontally (image beside the text) for a lead spanning a whole row. */
+  layout?: "card" | "wide";
   /** Project status; every card shows it the same way, only the dot changes. */
   status?: ProjectStatus;
   /** Localized status text, e.g. "In progress". */
@@ -50,12 +52,14 @@ export function ProjectCard({
   viewMoreLabel = "View project",
   number,
   size = "default",
+  layout = "card",
   status,
   statusLabel,
   priority = false,
   className,
 }: ProjectCardProps) {
-  const feature = size === "feature";
+  const wide = layout === "wide";
+  const feature = size === "feature" || wide;
   const stack = tags.slice(0, feature ? 5 : 3).join(" · ");
 
   return (
@@ -64,6 +68,7 @@ export function ProjectCard({
         href={`/projects/${slug}`}
         className={cn(
           "panel flex h-full flex-col overflow-hidden no-underline",
+          wide && "md:grid md:grid-cols-2",
           "transition-[transform,box-shadow] duration-glide ease-glide motion-reduce:transition-none",
           "hover:-translate-y-1 hover:shadow-float focus-visible:-translate-y-1 focus-visible:shadow-float",
         )}
@@ -73,6 +78,7 @@ export function ProjectCard({
             className={cn(
               "relative w-full overflow-hidden bg-muted",
               "aspect-[4/3]",
+              wide && "md:aspect-auto md:h-full md:min-h-[360px]",
             )}
           >
             <Image
@@ -90,7 +96,7 @@ export function ProjectCard({
           </div>
         )}
 
-        <div className="flex flex-1 flex-col gap-2 p-6 md:p-7">
+        <div className={cn("flex flex-1 flex-col gap-2 p-6 md:p-7", wide && "md:justify-center md:gap-3 md:p-10 lg:p-12")}>
           <div className="flex flex-wrap items-center gap-2">
             {number && <span className="text-meta text-muted-foreground">{number}</span>}
             {status && statusLabel && (
@@ -103,7 +109,7 @@ export function ProjectCard({
           <Heading
             className={cn(
               "text-foreground",
-              feature ? "text-subhead" : "text-headline",
+              wide ? "text-display-sm" : feature ? "text-subhead" : "text-headline",
             )}
           >
             {title}
@@ -116,7 +122,7 @@ export function ProjectCard({
           >
             {description}
           </p>
-          <div className="mt-auto flex flex-wrap items-end justify-between gap-x-4 gap-y-2 pt-4">
+          <div className={cn("mt-auto flex flex-wrap items-end justify-between gap-x-4 gap-y-2 pt-4", wide && "md:mt-4")}>
             {stack && <p className="text-meta text-muted-foreground">{stack}</p>}
             <span className="inline-flex items-center gap-1 text-[0.9375rem] font-medium text-primary">
               {viewMoreLabel}
