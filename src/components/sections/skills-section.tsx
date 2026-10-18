@@ -12,6 +12,7 @@ export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
   return (
     <Section
       ambient={{ halos: false }}
+      tone="tint"
       id="craft"
       title={t('title')}
       intro={t('description')}
@@ -30,7 +31,7 @@ export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
               {names.map((name) => (
                 <li
                   key={name}
-                  className="inline-flex h-8 items-center rounded-full bg-background px-3 text-[0.8125rem] font-medium text-foreground shadow-card"
+                  className="inline-flex h-8 items-center rounded-full bg-foreground/[0.06] px-3 text-[0.8125rem] font-medium text-foreground"
                 >
                   {name}
                 </li>

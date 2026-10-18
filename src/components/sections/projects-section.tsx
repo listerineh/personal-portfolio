@@ -16,7 +16,6 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
     <Section
       ambient={{ intensity: "soft", grid: false, spotlight: false, mirror: true }}
       id="work"
-      tone="tint"
       title={t('title')}
       bleed
       aside={
