@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { ArrowLeft, Home } from 'lucide-react';
-import { Button } from '@/components/ds';
+import { Button, Ambient } from '@/components/ds';
 import { PageShell } from '@/components/layout';
 
 /** An empty wall: nothing hangs here. The way back, and rooms worth visiting. */
@@ -18,10 +18,11 @@ export default function NotFound() {
 
   return (
     <PageShell>
-      <section className="tint px-gutter pb-20 pt-28 md:pb-28 md:pt-36">
+      <section className="relative isolate overflow-clip bg-background px-gutter pb-24 pt-[calc(var(--header-h)+4rem)] md:pb-32 md:pt-[calc(var(--header-h)+7rem)]">
+        <Ambient />
         <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-6">
           <div className="lg:col-span-7">
-            <p aria-hidden="true" className="text-[clamp(5rem,24vw,12rem)] font-light leading-[0.8] tabular-nums text-muted-foreground [font-stretch:125%]">
+            <p aria-hidden="true" className="text-[clamp(5rem,24vw,12rem)] font-bold leading-[0.85] tracking-[-0.06em] tabular-nums text-muted-foreground/50">
               404
             </p>
             <h1 className="text-display-sm mt-8">{t('title')}</h1>
@@ -41,10 +42,10 @@ export default function NotFound() {
             <h2 id="nf-rooms" className="text-headline">
               {t('interestedIn')}
             </h2>
-            <ul className="mt-4 divide-y divide-foreground/25 border-y border-foreground/25">
+            <ul className="panel mt-4 grid gap-0.5 p-2">
               {rooms.map(({ href, key }) => (
                 <li key={href}>
-                  <Link href={href} className="flex min-h-12 items-center py-2 text-base font-semibold underline-offset-[0.3em] hover:underline">
+                  <Link href={href} className="flex min-h-12 items-center justify-between rounded-[14px] px-4 text-base font-medium transition-colors duration-snap ease-snap hover:bg-foreground/[0.05] hover:text-primary">
                     {t(key)}
                   </Link>
                 </li>

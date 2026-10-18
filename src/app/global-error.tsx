@@ -4,17 +4,17 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 
 // Renders without the root layout (no fonts, no providers), so it carries the palette inline.
-const wall = '#1B2540';
-const paper = '#F8F6F2';
-const muted = '#C9D0E0';
+const ground = '#F5F5F7';
+const ink = '#1D1D1F';
+const muted = '#6E6E73';
 const amber = '#D97706';
-const ink = '#16181D';
 
 const button = {
   minHeight: 48,
   padding: '0 24px',
   fontSize: 15,
-  fontWeight: 600,
+  fontWeight: 500,
+  borderRadius: 999,
   cursor: 'pointer',
   fontFamily: 'inherit',
 } as const;
@@ -26,11 +26,11 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
 
   return (
     <html lang="en">
-      <body style={{ margin: 0, background: wall, color: paper, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <body style={{ margin: 0, background: ground, color: ink, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
         <main style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', padding: '80px clamp(16px, 5vw, 72px)' }}>
           <div style={{ maxWidth: 720 }}>
-            <p style={{ fontFamily: 'ui-monospace, monospace', fontSize: 13, color: muted, margin: 0 }}>500</p>
-            <h1 style={{ fontSize: 'clamp(2rem, 7vw, 3.5rem)', lineHeight: 1, letterSpacing: '-0.02em', margin: '12px 0 0' }}>
+            <p style={{ fontSize: 13, fontWeight: 500, color: muted, margin: 0 }}>500</p>
+            <h1 style={{ fontSize: 'clamp(2rem, 7vw, 3.5rem)', lineHeight: 1, letterSpacing: '-0.035em', fontWeight: 700, margin: '12px 0 0' }}>
               Something went critically wrong
             </h1>
             <p style={{ fontSize: 18, lineHeight: 1.55, color: muted, maxWidth: '48ch', margin: '20px 0 0' }}>
@@ -42,7 +42,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
               </button>
               <Link
                 href="/"
-                style={{ ...button, display: 'inline-flex', alignItems: 'center', textDecoration: 'none', background: 'transparent', color: paper, border: `1.5px solid ${paper}` }}
+                style={{ ...button, display: 'inline-flex', alignItems: 'center', textDecoration: 'none', background: 'rgba(0,0,0,0.06)', color: ink, border: 'none' }}
               >
                 Go to homepage
               </Link>

@@ -43,7 +43,7 @@ export default function UnsubscribePage() {
   return (
     <PageShell>
       <PageHeader title={t('title')} titleSize="section" intro={t('description')} />
-      <section className="px-gutter py-16 md:py-24">
+      <section className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8">
         <div className="mx-auto max-w-[1200px]">
           <div className="panel max-w-xl p-6 md:p-8" aria-live="polite">
             {(status === 'idle' || status === 'loading') && (
@@ -67,7 +67,7 @@ export default function UnsubscribePage() {
 
             {status === 'success' && (
               <div role="status" className="grid gap-5">
-                <CheckCircle aria-hidden="true" className="h-8 w-8" />
+                <CheckCircle aria-hidden="true" className="h-8 w-8 text-primary" />
                 <p className="text-lead">{message}</p>
                 <div>
                   <Button variant="secondary" href="/">

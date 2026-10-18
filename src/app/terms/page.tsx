@@ -2,7 +2,7 @@
 
 import { PageShell } from '@/components/layout';
 import { PageHeader } from '@/components/ds';
-import { ArrowLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { LEGAL_LAST_UPDATED } from '@/lib/legal';
@@ -25,8 +25,8 @@ export default function TermsPage() {
           title={t('title')}
           titleSize="section"
           nav={
-            <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline-offset-[0.3em] hover:underline">
-              <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+            <Link href="/" className="inline-flex h-9 items-center gap-1 rounded-full bg-foreground/[0.06] pl-2.5 pr-4 text-[0.8125rem] font-medium text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1]">
+              <ChevronLeft aria-hidden="true" className="h-4 w-4" />
               {tCommon('back')}
             </Link>
           }
@@ -37,8 +37,8 @@ export default function TermsPage() {
         </PageHeader>
 
         {/* Content */}
-        <div className="px-gutter py-16 md:py-24">
-          <div className="mx-auto grid max-w-[1200px] gap-14 lg:pl-[calc(100%/12*3)]">
+        <div className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8">
+          <div className="mx-auto grid max-w-[760px] gap-14 lg:ml-0">
 
             {/* Generic sections */}
             {[
@@ -64,7 +64,7 @@ export default function TermsPage() {
               </h2>
               <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90 mb-4">{t('licenseText')}</p>
               <h3 className="mb-2 mt-8 text-base font-semibold">{t('licenseNotAllowedTitle')}</h3>
-              <ul className="grid max-w-[68ch] list-disc gap-2 pl-5 marker:text-foreground">
+              <ul className="grid max-w-[68ch] list-disc gap-2 pl-5 marker:text-primary">
                 {[t('modifyMaterials'), t('commercialUse'), t('reverseEngineer'), t('removeCopyright'), t('transferMaterials')].map((item) => (
                   <li key={item} className="leading-relaxed text-foreground/85">{item}</li>
                 ))}
