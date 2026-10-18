@@ -43,12 +43,12 @@ export function BackToTopButton() {
       tabIndex={isVisible ? 0 : -1}
       aria-hidden={!isVisible}
       className={cn(
-        'fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-gutter z-40 flex h-12 w-12 items-center justify-center bg-foreground text-surface shadow-card print:hidden',
-        'transition-[opacity,transform] duration-snap ease-snap motion-reduce:transition-none active:scale-[0.95]',
+        'material fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-gutter z-40 flex h-12 w-12 items-center justify-center rounded-full text-foreground shadow-float ring-1 ring-foreground/[0.08] print:hidden',
+        'transition-[opacity,transform] duration-bounce ease-bounce motion-reduce:transition-none hover:-translate-y-0.5 active:scale-90',
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0',
       )}
     >
-      <ArrowUp aria-hidden="true" className="h-5 w-5" />
+      <ArrowUp aria-hidden="true" className="h-[18px] w-[18px]" />
     </button>
   );
 }

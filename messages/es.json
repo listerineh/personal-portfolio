@@ -562,5 +562,12 @@
     "allSkills": "Índice completo",
     "previous": "Anterior",
     "next": "Siguiente"
+  },
+  "footer": {
+    "groupWork": "Trabajo",
+    "groupAbout": "Sobre mí",
+    "groupConnect": "Conecta",
+    "tagline": "Ingeniero full-stack que construye agentes de IA, plataformas cloud y productos web. Desde Quito, trabajando en remoto.",
+    "available": "Disponible para nuevos proyectos"
   }
 }

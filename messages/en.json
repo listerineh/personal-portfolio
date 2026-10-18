@@ -562,5 +562,12 @@
     "allSkills": "Full stack index",
     "previous": "Previous",
     "next": "Next"
+  },
+  "footer": {
+    "groupWork": "Work",
+    "groupAbout": "About me",
+    "groupConnect": "Connect",
+    "tagline": "Full-stack engineer building AI agents, cloud platforms and web products. Based in Quito, working remotely.",
+    "available": "Open to new projects"
   }
 }
