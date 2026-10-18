@@ -165,7 +165,7 @@ export function AboutContent() {
                     className={cn(
                       "order-2 text-[0.875rem] leading-snug",
                       index === 0
-                        ? "text-primary-foreground/80"
+                        ? "font-medium text-primary-foreground"
                         : "text-muted-foreground",
                     )}
                   >
