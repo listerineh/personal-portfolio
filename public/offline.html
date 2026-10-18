@@ -3,194 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline — Sebastian Alvarez</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+  <title>Offline · listerineh.dev</title>
   <style>
+    /* Served by the service worker with no network: system font, inline everything, Lumen tokens by hand. */
+    :root {
+      --bg: #ffffff; --tint: #f5f5f7; --ink: #1d1d1f; --muted: #6e6e73; --line: #d2d2d7;
+      --amber: #d97706; --amber-ink: #a84b0a; --amber-soft: rgba(217, 119, 6, 0.14);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #000000; --tint: #1c1c1e; --ink: #f5f5f7; --muted: #a1a1a6; --line: #38383a; --amber-ink: #e8890c; }
+    }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a0a0a;
-      color: #e5e5e5;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      overflow: hidden;
-      position: relative;
+      min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; letter-spacing: -0.01em;
+      background: var(--bg); color: var(--ink); overflow: hidden; position: relative; -webkit-font-smoothing: antialiased;
     }
+    /* Ambient light: two warm halos drifting slowly. */
+    .halo { position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; }
+    .halo.a { width: 70vmax; height: 70vmax; top: -35vmax; right: -20vmax; background: radial-gradient(closest-side, rgba(217,119,6,0.2), transparent); animation: drift-a 26s ease-in-out infinite alternate; }
+    .halo.b { width: 50vmax; height: 50vmax; bottom: -28vmax; left: -16vmax; background: radial-gradient(closest-side, rgba(245,158,11,0.12), transparent); animation: drift-b 33s ease-in-out infinite alternate; }
+    @keyframes drift-a { to { transform: translate(-9vmax, 7vmax) scale(1.12); } }
+    @keyframes drift-b { to { transform: translate(10vmax, -6vmax) scale(1.18); } }
 
-    .watermark {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: clamp(8rem, 35vw, 28rem);
-      font-weight: 900;
-      color: rgba(251, 191, 36, 0.04);
-      pointer-events: none;
-      user-select: none;
-      line-height: 1;
-      white-space: nowrap;
+    main { position: relative; z-index: 1; width: 100%; max-width: 520px; text-align: center; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; letter-spacing: -0.02em; }
+    .brand svg { width: 28px; height: 28px; }
+    .icon { margin: 48px auto 0; width: 64px; height: 64px; border-radius: 50%; background: var(--amber-soft); color: var(--amber-ink); display: grid; place-items: center; }
+    .icon svg { width: 28px; height: 28px; }
+    h1 { margin-top: 28px; font-size: clamp(2.25rem, 9vw, 3.5rem); line-height: 1.05; font-weight: 700; letter-spacing: -0.04em; }
+    p.lead { margin: 16px auto 0; max-width: 40ch; font-size: 17px; line-height: 1.55; color: var(--muted); }
+    .status { margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border-radius: 999px; background: var(--tint); font-size: 13px; font-weight: 500; color: var(--ink); }
+    .dot { position: relative; width: 8px; height: 8px; }
+    .dot::before, .dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--amber); }
+    .dot::before { animation: ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite; opacity: 0.6; }
+    @keyframes ping { 75%, 100% { transform: scale(2.4); opacity: 0; } }
+    .actions { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+    @media (min-width: 480px) { .actions { flex-direction: row; justify-content: center; } }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 999px; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer; text-decoration: none; transition: transform 0.2s, filter 0.2s, background-color 0.2s; width: 100%; max-width: 280px; }
+    @media (min-width: 480px) { .btn { width: auto; } }
+    .btn:active { transform: scale(0.96); }
+    .btn-primary { background: var(--amber); color: #1d1d1f; }
+    .btn-primary:hover { filter: brightness(1.07); }
+    .btn-secondary { background: rgba(127,127,127,0.12); color: var(--ink); }
+    .btn-secondary:hover { background: rgba(127,127,127,0.18); }
+    .btn:focus-visible, .links a:focus-visible, .brand:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+    .cached { margin-top: 48px; padding: 8px; border-radius: 22px; background: var(--tint); text-align: left; }
+    .cached p { padding: 8px 12px 4px; font-size: 13px; font-weight: 500; color: var(--muted); }
+    .links { list-style: none; display: grid; gap: 2px; }
+    .links a { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 12px; border-radius: 14px; color: var(--ink); text-decoration: none; font-size: 16px; font-weight: 500; transition: background-color 0.2s, color 0.2s; }
+    .links a:hover { background: rgba(127,127,127,0.1); color: var(--amber-ink); }
+    @media (prefers-reduced-motion: reduce) {
+      .halo, .dot::before { animation: none; }
+      .btn { transition: none; }
     }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 480px;
-      width: 100%;
-      text-align: center;
-    }
-
-    .icon-wrap {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 72px;
-      height: 72px;
-      border-radius: 9999px;
-      background: rgba(251, 191, 36, 0.08);
-      border: 1px solid rgba(251, 191, 36, 0.2);
-      margin-bottom: 2rem;
-    }
-
-    .icon-wrap svg {
-      width: 2rem;
-      height: 2rem;
-      color: #fbbf24;
-      stroke: #fbbf24;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .label {
-      font-size: 0.625rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(251, 191, 36, 0.6);
-      margin-bottom: 1.25rem;
-    }
-
-    h1 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.45);
-      line-height: 1.7;
-      max-width: 340px;
-      margin: 0 auto 2.5rem;
-    }
-
-    .actions {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      align-items: center;
-      margin-bottom: 3rem;
-    }
-
-    .btn {
-      width: 100%;
-      max-width: 240px;
-      padding: 0.625rem 1.5rem;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .btn:hover { opacity: 0.85; }
-
-    .btn-primary {
-      background: #f59e0b;
-      color: #000;
-      border: none;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: rgba(255,255,255,0.6);
-      border: 1px solid rgba(255,255,255,0.12);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      margin-bottom: 1.75rem;
-    }
-
-    .cached-label {
-      font-size: 0.625rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-      margin-bottom: 1.25rem;
-    }
-
-    .cached-links {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-    }
-
-    .cached-links a {
-      font-size: 0.6875rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .cached-links a:hover { color: #f59e0b; }
   </style>
 </head>
 <body>
-  <div class="watermark">OFFLINE</div>
+  <span class="halo a" aria-hidden="true"></span>
+  <span class="halo b" aria-hidden="true"></span>
 
-  <div class="container">
-    <div class="icon-wrap">
-      <svg viewBox="0 0 24 24">
-        <line x1="1" y1="1" x2="23" y2="23"/>
-        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/>
-        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/>
-        <path d="M10.71 5.05A16 16 0 0 1 22.56 9"/>
-        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/>
-        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
-        <line x1="12" y1="20" x2="12.01" y2="20"/>
-      </svg>
+  <main>
+    <a class="brand" href="/" aria-label="listerineh.dev">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#D97706"/><path fill="#fff" d="M42.5,42c-0.7,0-1.3-0.3-1.7-1c-0.6-0.9-0.3-2.2,0.7-2.8l10.1-6.2l-10.1-6.2c-0.9-0.6-1.2-1.8-0.7-2.8c0.6-0.9,1.8-1.2,2.8-0.7l10.6,6.6l0.2,0.2c1.6,1.6,1.6,4.3,0,6l-0.2,0.2l-10.6,6.6C43.2,41.9,42.8,42,42.5,42z M21.5,42c-0.4,0-0.7-0.1-1-0.3L9.9,35.1L9.7,35c-1.6-1.6-1.6-4.3,0-6l0.2-0.2l10.6-6.6c0.9-0.6,2.2-0.3,2.8,0.7c0.6,0.9,0.3,2.2-0.7,2.8l-10.1,6.2l10.1,6.2c0.9,0.6,1.2,1.8,0.7,2.8C22.9,41.7,22.2,42,21.5,42z M25.5,51c-0.2,0-0.5,0-0.7-0.1c-1-0.4-1.5-1.6-1.2-2.6l13-34c0.4-1,1.6-1.5,2.6-1.2c1,0.4,1.5,1.6,1.2,2.6l-13,34C27.1,50.5,26.3,51,25.5,51z"/></svg>
+      listerineh.dev
+    </a>
+
+    <div class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 4.17-2.65"/><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"/><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"/><path d="M5 13a10 10 0 0 1 5.24-2.76"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
     </div>
 
-    <p class="label">No connection</p>
-    <h1>You're Offline</h1>
-    <p>It looks like you've lost your internet connection. Some features may not be available right now.</p>
+    <h1 data-i18n="title">You're offline</h1>
+    <p class="lead" data-i18n="body">Your connection dropped. The pages you already visited still work, and this one will reload by itself as soon as you're back online.</p>
+    <div class="status" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span data-i18n="waiting">Waiting for connection…</span></div>
 
     <div class="actions">
-      <button class="btn btn-primary" onclick="location.reload()">Try Again</button>
-      <a href="/" class="btn btn-secondary">Go to Homepage</a>
+      <button type="button" class="btn btn-primary" onclick="location.reload()" data-i18n="retry">Try again</button>
+      <a href="/" class="btn btn-secondary" data-i18n="home">Go to homepage</a>
     </div>
 
-    <hr class="divider">
-    <p class="cached-label">Cached pages</p>
-    <ul class="cached-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/about">About</a></li>
-    </ul>
-  </div>
+    <nav class="cached" aria-labelledby="cached-label">
+      <p id="cached-label" data-i18n="cached">Saved for offline</p>
+      <ul class="links">
+        <li><a href="/" data-i18n="linkHome">Home</a></li>
+        <li><a href="/blog" data-i18n="linkBlog">Blog</a></li>
+        <li><a href="/about" data-i18n="linkAbout">About</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <script>
+    // Language: the saved site locale (cookie), else the browser's.
+    (function () {
+      var match = document.cookie.match(/(?:^|;\s*)NEXT_LOCALE=(en|es)/);
+      var lang = match ? match[1] : (navigator.language || 'en').slice(0, 2) === 'es' ? 'es' : 'en';
+      if (lang === 'es') {
+        var es = {
+          title: 'Sin conexión',
+          body: 'Se cayó tu conexión. Las páginas que ya visitaste siguen funcionando, y esta se recargará sola en cuanto vuelvas a estar en línea.',
+          waiting: 'Esperando conexión…',
+          retry: 'Reintentar',
+          home: 'Ir al inicio',
+          cached: 'Guardado para ver sin conexión',
+          linkHome: 'Inicio',
+          linkBlog: 'Blog',
+          linkAbout: 'Sobre mí'
+        };
+        document.documentElement.lang = 'es';
+        document.title = 'Sin conexión · listerineh.dev';
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (es[key]) el.textContent = es[key];
+        });
+      }
+      // Back online: reload into the real page.
+      window.addEventListener('online', function () { location.reload(); });
+    })();
+  </script>
 </body>
 </html>
