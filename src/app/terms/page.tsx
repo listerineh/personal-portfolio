@@ -1,112 +1,161 @@
-'use client';
+"use client";
 
-import { PageShell } from '@/components/layout';
-import { PageHeader } from '@/components/ds';
-import { ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
-import { useTranslations, useLocale } from 'next-intl';
-import { LEGAL_LAST_UPDATED } from '@/lib/legal';
+import Link from "next/link";
+import { ChevronLeft, Mail } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import { PageShell } from "@/components/layout";
+import {
+  Button,
+  DocList,
+  DocText,
+  LegalDocument,
+  PageHeader,
+} from "@/components/ds";
+import { LEGAL_LAST_UPDATED } from "@/lib/legal";
 
+const inlineLink =
+  "font-medium text-primary underline decoration-primary/40 decoration-1 underline-offset-[0.22em] hover:decoration-primary";
+
+/** Terms of use: same document layout as the privacy policy. */
 export default function TermsPage() {
-  const t = useTranslations('terms');
-  const tCommon = useTranslations('common');
+  const t = useTranslations("terms");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
-  const lastUpdated = new Date(`${LEGAL_LAST_UPDATED}T12:00:00Z`).toLocaleDateString(locale, {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    timeZone: 'UTC',
+  const lastUpdated = new Date(
+    `${LEGAL_LAST_UPDATED}T12:00:00Z`,
+  ).toLocaleDateString(locale, {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
   });
 
-  return (
-    <>
-      <PageShell>
-        <PageHeader
-          title={t('title')}
-          titleSize="section"
-          nav={
-            <Link href="/" className="inline-flex h-9 items-center gap-1 rounded-full bg-foreground/[0.06] pl-2.5 pr-4 text-[0.8125rem] font-medium text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1]">
-              <ChevronLeft aria-hidden="true" className="h-4 w-4" />
-              {tCommon('back')}
-            </Link>
-          }
-        >
-          <p className="text-meta text-muted-foreground">
-            {t('lastUpdated')} {lastUpdated}
-          </p>
-        </PageHeader>
+  const plain = (id: string, title: string, text: string) => ({
+    id,
+    title,
+    children: <DocText>{text}</DocText>,
+  });
 
-        {/* Content */}
-        <div className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8">
-          <div className="mx-auto grid max-w-[1200px] gap-14 [&>*]:max-w-[760px]">
-
-            {/* Generic sections */}
-            {[
-              [t('agreementTitle'), t('agreementText')],
-              [t('disclaimerTitle'), `${t('disclaimerText1')} ${t('disclaimerText2')}`],
-              [t('limitationsTitle'), t('limitationsText')],
-              [t('externalLinksTitle'), t('externalLinksText')],
-              [t('userCommentsTitle'), t('userCommentsText')],
-              [t('intellectualPropertyTitle'), t('intellectualPropertyText')],
-              [t('modificationsTitle'), t('modificationsText')],
-              [t('governingLawTitle'), t('governingLawText')],
-            ].map(([title, content]) => (
-              <section key={title}>
-                <h2 className="text-subhead mb-4">{title}</h2>
-                <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90">{content}</p>
-              </section>
-            ))}
-
-            {/* License with not-allowed list */}
-            <section>
-              <h2 className="text-subhead mb-4">
-                {t('licenseTitle')}
-              </h2>
-              <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90 mb-4">{t('licenseText')}</p>
-              <h3 className="mb-2 mt-8 text-base font-semibold">{t('licenseNotAllowedTitle')}</h3>
-              <ul className="grid max-w-[68ch] list-disc gap-2 pl-5 marker:text-primary">
-                {[t('modifyMaterials'), t('commercialUse'), t('reverseEngineer'), t('removeCopyright'), t('transferMaterials')].map((item) => (
-                  <li key={item} className="leading-relaxed text-foreground/85">{item}</li>
-                ))}
-              </ul>
-            </section>
-
-            {/* Blog content with callout box */}
-            <section>
-              <h2 className="text-subhead mb-4">
-                {t('blogContentTitle')}
-              </h2>
-              <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90 mb-4">{t('blogContentText')}</p>
-              <div className="panel max-w-[68ch] p-5 md:p-6">
-                <p className="text-meta mb-2 text-muted-foreground">{t('codeExamplesLabel')}</p>
-                <p className="text-sm leading-relaxed text-muted-foreground">{t('codeExamplesText')}</p>
-              </div>
-            </section>
-
-            {/* Note callout */}
-            <section className="panel max-w-[68ch] p-6">
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                <span className="font-semibold text-primary">{t('noteLabel')} </span>
-                {t.rich('noteText', {
-                  privacyLink: (chunks) => <Link href="/privacy" className="font-medium underline decoration-primary decoration-1 underline-offset-[0.22em] hover:decoration-2">{chunks}</Link>
-                })}
-              </p>
-            </section>
-
-            {/* Contact */}
-            <section className="panel max-w-[68ch] p-6 md:p-8">
-              <h2 className="text-subhead mb-4">
-                {t('contactInfoTitle')}
-              </h2>
-              <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90">
-                {t.rich('contactInfoText', {
-                  contactLink: (chunks) => <Link href="/contact" className="font-medium underline decoration-primary decoration-1 underline-offset-[0.22em] hover:decoration-2">{chunks}</Link>
-                })}
-              </p>
-            </section>
+  const sections = [
+    plain("agreement", t("agreementTitle"), t("agreementText")),
+    {
+      id: "license",
+      title: t("licenseTitle"),
+      children: (
+        <>
+          <DocText>{t("licenseText")}</DocText>
+          <h3 className="text-headline mt-2">{t("licenseNotAllowedTitle")}</h3>
+          <DocList
+            items={[
+              t("modifyMaterials"),
+              t("commercialUse"),
+              t("reverseEngineer"),
+              t("removeCopyright"),
+              t("transferMaterials"),
+            ]}
+          />
+        </>
+      ),
+    },
+    plain(
+      "disclaimer",
+      t("disclaimerTitle"),
+      `${t("disclaimerText1")} ${t("disclaimerText2")}`,
+    ),
+    plain("limitations", t("limitationsTitle"), t("limitationsText")),
+    plain("external-links", t("externalLinksTitle"), t("externalLinksText")),
+    {
+      id: "blog-content",
+      title: t("blogContentTitle"),
+      children: (
+        <>
+          <DocText>{t("blogContentText")}</DocText>
+          <div className="panel max-w-[66ch] p-5 md:p-6">
+            <p className="text-[0.9375rem] font-semibold">
+              {t("codeExamplesLabel").replace(/:$/, "")}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {t("codeExamplesText")}
+            </p>
           </div>
+        </>
+      ),
+    },
+    plain("comments", t("userCommentsTitle"), t("userCommentsText")),
+    plain(
+      "intellectual-property",
+      t("intellectualPropertyTitle"),
+      t("intellectualPropertyText"),
+    ),
+    plain("modifications", t("modificationsTitle"), t("modificationsText")),
+    plain("governing-law", t("governingLawTitle"), t("governingLawText")),
+    {
+      id: "contact",
+      title: t("contactInfoTitle"),
+      children: (
+        <div className="panel grid gap-5 p-6 md:p-8">
+          <DocText>
+            {t.rich("contactInfoText", {
+              contactLink: (chunks) => (
+                <Link href="/contact" className={inlineLink}>
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </DocText>
+          <p className="max-w-[66ch] text-sm leading-relaxed text-muted-foreground">
+            <span className="font-semibold text-foreground">
+              {t("noteLabel")}{" "}
+            </span>
+            {t.rich("noteText", {
+              privacyLink: (chunks) => (
+                <Link href="/privacy" className={inlineLink}>
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </p>
+          <Button
+            accent="amber"
+            href="/contact"
+            className="w-full sm:w-auto sm:justify-self-start"
+          >
+            <Mail aria-hidden="true" className="h-4 w-4" />
+            {t("contactInfoTitle")}
+          </Button>
         </div>
-      </PageShell>
-    </>
+      ),
+    },
+  ];
+
+  return (
+    <PageShell>
+      <PageHeader
+        title={t("title")}
+        nav={
+          <Link
+            href="/"
+            className="inline-flex h-9 items-center gap-1 rounded-full bg-foreground/[0.06] pl-2.5 pr-4 text-[0.8125rem] font-medium text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1]"
+          >
+            <ChevronLeft aria-hidden="true" className="h-4 w-4" />
+            {tCommon("back")}
+          </Link>
+        }
+      >
+        <p className="inline-flex h-9 items-center gap-2 rounded-full bg-foreground/[0.05] px-4 text-[0.8125rem] font-medium text-foreground/80">
+          <span
+            aria-hidden="true"
+            className="h-2 w-2 rounded-full bg-primary"
+          />
+          {t("lastUpdated")} {lastUpdated}
+        </p>
+      </PageHeader>
+
+      <div className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8">
+        <div className="mx-auto max-w-[1200px]">
+          <LegalDocument sections={sections} tocLabel={tCommon("onThisPage")} />
+        </div>
+      </div>
+    </PageShell>
   );
 }
