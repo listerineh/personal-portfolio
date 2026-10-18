@@ -4,11 +4,13 @@ import { Fragment, useRef, useEffect, useState, useMemo, useCallback } from 'rea
 import { useTranslations } from 'next-intl';
 import { BlogSearch } from '@/components/blog/blog-search';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
-import { BlogCard, EndOfList, EntrySkeleton, PageHeader } from '@/components/ds';
+import { BlogCard, EndOfList, EntrySkeleton, PageHeader, Reveal } from '@/components/ds';
+import { cn } from '@/lib/utils';
 import type { BlogPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
-const INITIAL_COUNT = 6;
+// 8 = the lead (two columns) + one, then two full rows of three.
+const INITIAL_COUNT = 8;
 const PAGE_SIZE = 6;
 const SKELETON_DELAY = 400;
 
@@ -75,14 +77,16 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
         </div>
       </PageHeader>
 
-      <section className="px-gutter py-12 md:py-20" aria-busy={isGridLoading || isLoadingMore || undefined}>
-        <div className="mx-auto max-w-[1200px] lg:pl-[calc(100%/12*2)]">
+      <section className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8" aria-busy={isGridLoading || isLoadingMore || undefined}>
+        <div className="mx-auto max-w-[1200px]">
           {isGridLoading ? (
-            <div className="divide-y divide-foreground/20 border-y border-foreground/20">
-              {Array.from({ length: 4 }, (_, i) => (
-                <EntrySkeleton key={i} />
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              {Array.from({ length: 6 }, (_, i) => (
+                <li key={i}>
+                  <EntrySkeleton />
+                </li>
               ))}
-            </div>
+            </ul>
           ) : filteredPosts.length === 0 ? (
             <div className="panel max-w-xl p-6 md:p-8">
               <p className="text-headline">{t('noArticles')}</p>
@@ -90,12 +94,14 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
             </div>
           ) : (
             <>
-              <ol className="divide-y divide-foreground/20 border-y border-foreground/20">
+              {/* The newest post leads across two columns; the rest follow as cards; a newsletter row every few posts. */}
+              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                 {displayedPosts.map((post, index) => (
                   <Fragment key={post.slug}>
-                    <li className="py-8 md:py-10">
+                    <Reveal as="li" className={cn(index === 0 && 'sm:col-span-2')}>
                       <BlogCard
                         headingLevel="h2"
+                        layout={index === 0 ? 'feature' : 'stack'}
                         title={post.title}
                         slug={post.slug}
                         excerpt={post.excerpt}
@@ -109,9 +115,9 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
                         isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
                         recommendedLabel={t('sortRecommended')}
                       />
-                    </li>
-                    {(index + 1) % 5 === 0 && (
-                      <li className="py-8">
+                    </Reveal>
+                    {(index === 4 || (index > 4 && (index - 4) % 6 === 0)) && (
+                      <li className="sm:col-span-2 lg:col-span-3">
                         <NewsletterSubscribe variant="default" />
                       </li>
                     )}
@@ -123,7 +129,7 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
                       <EntrySkeleton />
                     </li>
                   ))}
-              </ol>
+              </ul>
 
               <div ref={sentinelRef} className="h-1" />
 

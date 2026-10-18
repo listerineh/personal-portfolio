@@ -142,12 +142,12 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
             <button
               type="button"
               aria-label={t('filterByTags')}
-              className="panel inline-flex min-h-12 shrink-0 items-center gap-2 border border-input px-4 text-sm font-semibold transition-colors hover:border-foreground"
+              className="inline-flex min-h-12 shrink-0 items-center gap-2 rounded-full bg-foreground/[0.06] px-5 text-sm font-medium transition-colors duration-snap ease-snap hover:bg-foreground/[0.1]"
             >
               <Filter aria-hidden="true" className="h-4 w-4" />
               <span className="hidden sm:inline">{t('tags')}</span>
               {selectedTags.length > 0 && (
-                <span className="inline-flex h-5 min-w-5 items-center justify-center bg-primary px-1 font-mono text-[0.6875rem] text-primary-foreground">
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[0.6875rem] font-semibold text-primary-foreground">
                   {selectedTags.length}
                 </span>
               )}

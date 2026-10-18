@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Button, Input } from '@/components/ds';
+import { Button, Input, Ambient } from '@/components/ds';
 import { Mail, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -139,10 +139,11 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
     return form;
   }
 
-  // Default: a notice pinned to the wall between written works.
+  // Default: a soft-lit card between posts.
   return (
-    <aside className="panel my-4 grid gap-6 p-6 md:grid-cols-12 md:gap-6 md:p-10">
-      <h2 className="text-subhead md:col-span-6">{t('dontMissNextPost')}</h2>
+    <aside className="panel relative isolate my-2 grid gap-6 overflow-hidden p-6 md:grid-cols-12 md:items-center md:gap-10 md:p-12">
+      <Ambient intensity="soft" grid={false} spotlight={false} />
+      <h2 className="text-display-sm md:col-span-6">{t('dontMissNextPost')}</h2>
       <div className="md:col-span-6">{form}</div>
     </aside>
   );
