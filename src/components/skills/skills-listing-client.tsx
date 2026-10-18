@@ -77,6 +77,7 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
             <span className="relative hidden h-px w-24 overflow-hidden bg-foreground/15 sm:block">
               <span className="absolute inset-y-0 left-0 w-1/3 rounded-full bg-primary motion-safe:animate-[transfer_1.8s_var(--ease-in-out)_infinite]" />
             </span>
+            <ArrowDown className="h-5 w-5 text-primary motion-safe:animate-bounce sm:hidden" />
             <span className="rounded-full bg-primary px-4 py-3 text-[0.9375rem] font-medium text-primary-foreground shadow-card">
               {t('transferTo')}
             </span>
