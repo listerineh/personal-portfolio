@@ -3,7 +3,7 @@
   "version": "2.1.1",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 9006",
+    "dev": "next dev -p 9008",
     "dev:turbo": "next dev --turbopack -p 9006",
     "prebuild": "node scripts/update-sw-version.js",
     "build": "next build",
