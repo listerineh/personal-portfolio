@@ -110,7 +110,7 @@ export function Carousel({
       <ul
         ref={trackRef}
         className={cn(
-          "scrollbar-none flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-6 pt-2 md:gap-6",
+          "scrollbar-none flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain pb-8 pt-2 md:gap-8",
           // Align the first card with the 1200px column, let the rest run to the viewport edge.
           "pl-[max(var(--gutter),calc((100vw_-_1200px)/2_+_var(--gutter)))] pr-gutter",
           "scroll-pl-[max(var(--gutter),calc((100vw_-_1200px)/2_+_var(--gutter)))]",

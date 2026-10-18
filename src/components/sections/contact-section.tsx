@@ -9,8 +9,8 @@ export function ContactSection() {
   const t = useTranslations('contact');
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="bg-background px-gutter py-20 md:py-28">
-      <Reveal className="tint mx-auto max-w-[1200px] rounded-xl px-6 py-14 text-center md:px-12 md:py-24">
+    <section id="contact" aria-labelledby="contact-title" className="bg-background px-gutter py-24 md:py-32 lg:py-40">
+      <Reveal className="tint mx-auto max-w-[1200px] rounded-xl px-6 py-16 text-center md:px-12 md:py-28">
         <h2 id="contact-title" className="text-display-sm mx-auto max-w-[18ch]">
           {t('title')}
         </h2>

@@ -21,7 +21,7 @@ export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
         </Button>
       }
     >
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
+      <ul className="grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
         {groups.map(({ category, names }) => (
           <Reveal as="li" key={category} className="panel p-6">
             <h3 className="text-headline">{t(`categories.${category}`)}</h3>

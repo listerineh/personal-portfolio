@@ -26,7 +26,7 @@ export function BlogPreviewSection({ posts }: { posts: BlogPostSummary[] }) {
       {posts.length === 0 ? (
         <p className="text-lead text-muted-foreground">{t('noArticles')}</p>
       ) : (
-        <ul className="grid gap-5 md:grid-cols-3 md:gap-6">
+        <ul className="grid gap-6 md:grid-cols-3 lg:gap-8">
           {posts.map((post) => (
             <Reveal as="li" key={post.slug}>
               <BlogCard

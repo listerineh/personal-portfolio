@@ -27,7 +27,7 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
         ) : undefined
       }
     >
-      <div className="grid gap-4 md:gap-5">
+      <div className="grid gap-5 md:gap-6">
         {visible.map((exp) => (
           <Reveal key={`${exp.company}-${exp.employmentDates}`}>
             <ExperienceCard

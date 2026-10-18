@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ChevronRight, FileText } from "lucide-react";
+import { ChevronDown, ChevronRight, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ds";
 
@@ -31,9 +31,10 @@ export function HeroSection() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="bg-background px-gutter pb-16 pt-[calc(var(--header-h)+3.5rem)] md:pb-24 md:pt-[calc(var(--header-h)+6.5rem)]"
+      className="relative flex min-h-[100svh] flex-col bg-background px-gutter pb-24 pt-[calc(var(--header-h)+3rem)] md:pb-28"
     >
-      <div className="mx-auto max-w-[1200px]">
+      {/* The first screen is the whole screen: content sits centred in the space below the header. */}
+      <div className="mx-auto my-auto w-full max-w-[1200px] py-8">
         <p
           data-intro=""
           style={step(0)}
@@ -111,6 +112,14 @@ export function HeroSection() {
           </Button>
         </div>
       </div>
+
+      <a
+        href="#work"
+        aria-label={tSala("walkTheWork")}
+        className="absolute bottom-6 left-1/2 inline-flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors duration-snap ease-snap hover:text-foreground md:bottom-8"
+      >
+        <ChevronDown aria-hidden="true" className="h-5 w-5 motion-safe:animate-bounce" />
+      </a>
     </section>
   );
 }

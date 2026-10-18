@@ -51,7 +51,7 @@ export function Section({
               {title}
             </TitleTag>
             {intro && (
-              <div className="text-lead mt-4 max-w-[56ch] text-muted-foreground">
+              <div className="text-lead mt-5 max-w-[56ch] text-muted-foreground">
                 {intro}
               </div>
             )}
