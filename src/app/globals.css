@@ -388,6 +388,22 @@ html.js-motion .ambient-halo-c { animation: drift-c 41s ease-in-out infinite alt
   .ambient-spot { display: none; }
 }
 
+/* ── Marquee: endless rows that drift sideways, edges fading out ── */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee-track { display: flex; width: max-content; }
+@keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
+html.js-motion .marquee-track { animation: marquee var(--marquee-duration, 60s) linear infinite; }
+html.js-motion .marquee-track[data-reverse] { animation-direction: reverse; }
+html.js-motion .marquee:hover .marquee-track,
+html.js-motion .marquee[data-paused] .marquee-track { animation-play-state: paused; }
+/* Without motion: one still row you can swipe, no duplicate. */
+html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
+html:not(.js-motion) .marquee-copy { display: none; }
+
 /* Theme cross-fade (View Transitions) */
 ::view-transition-old(root),
 ::view-transition-new(root) {

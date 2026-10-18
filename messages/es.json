@@ -100,7 +100,8 @@
       "testing": "Testing y QA",
       "tools": "Herramientas y Diseño",
       "management": "Gestión y Colaboración"
-    }
+    },
+    "filterLabel": "Filtrar por área"
   },
   "projects": {
     "title": "Construido y lanzado",

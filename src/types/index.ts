@@ -86,9 +86,11 @@ export interface HomeLocaleData {
   experiences: Experience[];
 }
 
-export interface SkillGroupSummary {
-  category: SkillCategory;
-  names: string[];
+/** A skill as the home marquee needs it: name, icon and the categories it belongs to. */
+export interface SkillIconSummary {
+  name: string;
+  iconUrl: string;
+  categories: SkillCategory[];
 }
 
 export interface ContactFormData {

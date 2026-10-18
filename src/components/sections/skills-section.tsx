@@ -1,13 +1,39 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { ChevronRight } from 'lucide-react';
-import { Button, Reveal, Section } from '@/components/ds';
-import type { SkillGroupSummary } from '@/types';
+import { Button, FilterTag, Marquee, Reveal, Section, SkillTile } from '@/components/ds';
+import { skillCategoryOrder } from '@/lib/data/skill-categories';
+import type { SkillCategory, SkillIconSummary } from '@/types';
 
-/** Craft: the stack grouped by category, each group a panel of chips. */
-export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
+/**
+ * Skills: the whole stack drifting by in two rows that run in opposite directions. Picking a category below
+ * pauses the rows and fades out everything outside it, so the stack can be read by area.
+ */
+export function SkillsSection({ skills }: { skills: SkillIconSummary[] }) {
   const t = useTranslations('skills');
+  const [active, setActive] = useState<SkillCategory | null>(null);
+
+  // Alternate skills between the rows so each row mixes areas instead of splitting them.
+  const [rowA, rowB] = useMemo(
+    () => [skills.filter((_, i) => i % 2 === 0), skills.filter((_, i) => i % 2 === 1)],
+    [skills],
+  );
+  const categories = useMemo(
+    () => skillCategoryOrder.filter((category) => skills.some((skill) => skill.categories.includes(category))),
+    [skills],
+  );
+
+  const tiles = (row: SkillIconSummary[]) =>
+    row.map((skill) => (
+      <SkillTile
+        key={skill.name}
+        name={skill.name}
+        iconUrl={skill.iconUrl}
+        dimmed={active !== null && !skill.categories.includes(active)}
+      />
+    ));
 
   return (
     <Section
@@ -16,6 +42,7 @@ export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
       id="craft"
       title={t('title')}
       intro={t('description')}
+      bleed
       aside={
         <Button variant="ghost" accent="amber" href="/skills">
           {t('viewAll')}
@@ -23,23 +50,28 @@ export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
         </Button>
       }
     >
-      <ul className="grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
-        {groups.map(({ category, names }) => (
-          <Reveal as="li" key={category} className="panel p-6">
-            <h3 className="text-headline">{t(`categories.${category}`)}</h3>
-            <ul className="mt-4 flex flex-wrap gap-1.5">
-              {names.map((name) => (
-                <li
-                  key={name}
-                  className="inline-flex h-8 items-center rounded-full bg-foreground/[0.06] px-3 text-[0.8125rem] font-medium text-foreground"
-                >
-                  {name}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        ))}
-      </ul>
+      <Reveal className="grid gap-2">
+        <Marquee label={t('title')} duration={rowA.length * 2.6} paused={active !== null}>
+          {tiles(rowA)}
+        </Marquee>
+        <Marquee label={t('title')} duration={rowB.length * 2.6} paused={active !== null} reverse>
+          {tiles(rowB)}
+        </Marquee>
+      </Reveal>
+
+      <div className="mx-auto mt-10 max-w-[1200px] px-gutter md:mt-12">
+        <div role="group" aria-label={t('filterLabel')} className="flex flex-wrap justify-center gap-2">
+          {categories.map((category) => (
+            <FilterTag
+              key={category}
+              pressed={active === category}
+              onPressedChange={(pressed) => setActive(pressed ? category : null)}
+            >
+              {t(`categories.${category}`)}
+            </FilterTag>
+          ))}
+        </div>
+      </div>
     </Section>
   );
 }

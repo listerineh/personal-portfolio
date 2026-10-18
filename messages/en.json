@@ -100,7 +100,8 @@
       "testing": "Testing & QA",
       "tools": "Tools & Design",
       "management": "Management & Collaboration"
-    }
+    },
+    "filterLabel": "Filter by area"
   },
   "projects": {
     "title": "Built and shipped",
