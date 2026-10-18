@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
+import { Ambient } from "./Ambient";
 
 interface SectionProps {
   /** Anchor id; the heading id derives from it. */
@@ -14,6 +15,8 @@ interface SectionProps {
   titleAs?: "h1" | "h2";
   /** `wide` lets children break out of the content column (carousels). */
   bleed?: boolean;
+  /** Ambient light behind the section; pass Ambient's props, or `true` for the default. */
+  ambient?: boolean | React.ComponentProps<typeof Ambient>;
   className?: string;
   children: ReactNode;
 }
@@ -27,6 +30,7 @@ export function Section({
   tone = "plain",
   titleAs: TitleTag = "h2",
   bleed = false,
+  ambient,
   className,
   children,
 }: SectionProps) {
@@ -37,10 +41,12 @@ export function Section({
       aria-labelledby={headingId}
       className={cn(
         tone === "tint" ? "tint" : "bg-background text-foreground",
-        "py-20 md:py-28",
+        "py-24 md:py-32 lg:py-40",
+        ambient && "relative isolate overflow-hidden",
         className,
       )}
     >
+      {ambient && <Ambient {...(ambient === true ? {} : ambient)} />}
       <div className="mx-auto max-w-[1200px] px-gutter">
         <Reveal
           as="header"
@@ -61,7 +67,7 @@ export function Section({
       </div>
       <div
         className={cn(
-          "mt-10 md:mt-14",
+          "mt-12 md:mt-16 lg:mt-20",
           !bleed && "mx-auto max-w-[1200px] px-gutter",
         )}
       >

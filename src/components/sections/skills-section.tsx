@@ -11,6 +11,7 @@ export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
 
   return (
     <Section
+      ambient={{ halos: false }}
       id="craft"
       title={t('title')}
       intro={t('description')}

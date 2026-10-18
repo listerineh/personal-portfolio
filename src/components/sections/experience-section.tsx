@@ -15,6 +15,7 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
 
   return (
     <Section
+      ambient={{ intensity: "soft", grid: false, spotlight: false }}
       id="career"
       tone="tint"
       title={t('title')}

@@ -10,6 +10,10 @@ interface AmbientProps {
   spotlight?: boolean;
   /** `hero` = full strength; `soft` = smaller, quieter halos for cards. */
   intensity?: "hero" | "soft";
+  /** Drifting warm halos. Off leaves only the grid (and spotlight). */
+  halos?: boolean;
+  /** Flip the composition horizontally so neighbouring sections don't repeat it. Not with `spotlight`. */
+  mirror?: boolean;
   className?: string;
 }
 
@@ -22,6 +26,8 @@ export function Ambient({
   grid = true,
   spotlight = true,
   intensity = "hero",
+  halos = true,
+  mirror = false,
   className,
 }: AmbientProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -61,12 +67,17 @@ export function Ambient({
       className={cn(
         "ambient pointer-events-none absolute inset-0 -z-10 overflow-hidden",
         intensity === "soft" && "ambient-soft",
+        mirror && "-scale-x-100",
         className,
       )}
     >
-      <span className="ambient-halo ambient-halo-a" />
-      <span className="ambient-halo ambient-halo-b" />
-      <span className="ambient-halo ambient-halo-c" />
+      {halos && (
+        <>
+          <span className="ambient-halo ambient-halo-a" />
+          <span className="ambient-halo ambient-halo-b" />
+          <span className="ambient-halo ambient-halo-c" />
+        </>
+      )}
       {grid && <span className="ambient-grid" />}
       {grid && spotlight && <span className="ambient-grid ambient-spot" />}
     </div>
