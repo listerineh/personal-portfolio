@@ -31,7 +31,7 @@ export function HeroSection() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="bg-background px-gutter pb-20 pt-[calc(var(--header-h)+4.5rem)] md:pb-28 md:pt-[calc(var(--header-h)+8rem)]"
+      className="bg-background px-gutter pb-16 pt-[calc(var(--header-h)+3.5rem)] md:pb-24 md:pt-[calc(var(--header-h)+6.5rem)]"
     >
       <div className="mx-auto max-w-[1200px]">
         <p
@@ -54,12 +54,19 @@ export function HeroSection() {
           <span data-intro="" style={step(1)} className="text-display block">
             Sebastian Alvarez.
           </span>
+          {/* The role as a quieter second voice, one clean line per part: no orphaned separators. */}
           <span
             data-intro=""
             style={step(2)}
-            className="text-display block text-muted-foreground"
+            className="mt-2 block text-[clamp(1.75rem,5.6vw,4.25rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-muted-foreground"
           >
-            {t("subtitle")}
+            {t("subtitle")
+              .split("·")
+              .map((part) => (
+                <span key={part} className="block">
+                  {part.trim()}
+                </span>
+              ))}
           </span>
         </h1>
 

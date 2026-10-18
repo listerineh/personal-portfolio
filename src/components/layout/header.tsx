@@ -162,7 +162,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden lg:block" aria-label={tCommon("menu")}>
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-0.5 xl:gap-1">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
@@ -170,7 +170,7 @@ export function Header() {
                   onClick={(event) => handleHashLink(event, item.href)}
                   aria-current={isCurrent(item.href) ? "page" : undefined}
                   className={cn(
-                    "relative inline-flex h-9 items-center rounded-full px-3.5 text-[0.875rem] font-medium",
+                    "relative inline-flex h-8 items-center whitespace-nowrap rounded-full px-3 text-[0.8125rem] font-medium xl:px-3.5 xl:text-[0.875rem]",
                     "transition-[color,background-color] duration-snap ease-snap motion-reduce:transition-none",
                     isCurrent(item.href)
                       ? "bg-foreground/[0.06] text-foreground"
