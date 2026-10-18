@@ -48,7 +48,7 @@ export function CookiePreferencesPanel<T extends CookieChoices>({
         <ModalDescription>{t('settingsDescription')}</ModalDescription>
       </ModalHeader>
 
-      <ul className="divide-y divide-border overflow-hidden rounded-lg bg-background">
+      <ul className="divide-y divide-border overflow-hidden rounded-lg bg-foreground/[0.04]">
         <li className="flex items-start justify-between gap-4 px-4 py-4">
           <div className="min-w-0">
             <p className="text-[0.9375rem] font-medium text-foreground">{t('necessaryLabel')}</p>
