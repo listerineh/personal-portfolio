@@ -96,3 +96,31 @@ export const Minimal: Story = {
     tags: ['Tips', 'Code Quality'],
   },
 };
+
+/** The lead story on the home page: large cover and title, tags as chips. */
+export const Feature: Story = {
+  args: {
+    layout: 'feature',
+    title: 'Modern CSS Techniques for 2024',
+    slug: 'modern-css-techniques',
+    excerpt: 'Explore the latest CSS features and techniques that will transform your styling workflow.',
+    date: 'April 15, 2024',
+    readingTime: 8,
+    tags: ['CSS', 'Frontend', 'Styling'],
+    coverImage: '/images/website_screenshot.webp',
+  },
+  decorators: [(Story) => <div className="max-w-2xl"><Story /></div>],
+};
+
+/** A tight row with a thumbnail, for the list beside the lead story. */
+export const Compact: Story = {
+  args: {
+    layout: 'compact',
+    title: 'Quick Tips for Better Code',
+    slug: 'quick-tips-better-code',
+    date: 'March 1, 2024',
+    readingTime: 4,
+    coverImage: '/images/website_screenshot.webp',
+  },
+  decorators: [(Story) => <div className="max-w-md"><Story /></div>],
+};

@@ -132,7 +132,7 @@
     "statusLabel": "Estado"
   },
   "blog": {
-    "title": "Notas desde el trabajo",
+    "title": "Artículos recientes",
     "badge": "Blog",
     "viewAllPosts": "Ver Todos los Posts",
     "pageTitle": "Mi Blog de Desarrollo",
@@ -190,7 +190,8 @@
     "sortAscending": "Más antiguos",
     "sortDescending": "Más recientes",
     "sortBy": "Ordenar",
-    "loadingViews": "Cargando..."
+    "loadingViews": "Cargando...",
+    "sectionIntro": "Sobre ingeniería, cloud e IA aplicada."
   },
   "contact": {
     "title": "Trabajemos juntos",

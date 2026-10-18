@@ -132,7 +132,7 @@
     "statusLabel": "Status"
   },
   "blog": {
-    "title": "Notes from the work",
+    "title": "Latest articles",
     "badge": "Blog",
     "readingTime": "{minutes} min read",
     "viewAllPosts": "View All Posts",
@@ -190,7 +190,8 @@
     "sortAscending": "Oldest First",
     "sortDescending": "Newest First",
     "sortBy": "Sort",
-    "loadingViews": "Loading..."
+    "loadingViews": "Loading...",
+    "sectionIntro": "On engineering, cloud and applied AI."
   },
   "contact": {
     "title": "Work with me",
