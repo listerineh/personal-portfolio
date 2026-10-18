@@ -60,3 +60,6 @@ public/docs/components
 .impeccable/build/
 .impeccable/config.local.json
 .impeccable/questions/
+
+# verification builds
+/.next-verify/

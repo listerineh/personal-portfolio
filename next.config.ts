@@ -41,6 +41,8 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 365,
   },
+  // Lets verification builds write elsewhere (NEXT_DIST_DIR=.next-verify) without disturbing a running dev server.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   compress: true,
   poweredByHeader: false,
   // /experience was folded into the home page's career section.
