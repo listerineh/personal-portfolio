@@ -43,7 +43,7 @@ export function Footer() {
 
   return (
     <footer className="tint relative pb-[calc(env(safe-area-inset-bottom)+0.25rem)] print:hidden">
-      <div className="mx-auto max-w-[1200px] px-gutter pb-8 pt-16 md:pt-24">
+      <div className="mx-auto max-w-[1200px] px-gutter pb-10 pt-20 md:pt-28">
         <div className="grid gap-12 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-5">
             <Link href="/" className="inline-flex items-center gap-2.5" aria-label="Sebastian Alvarez">
@@ -69,7 +69,7 @@ export function Footer() {
             {groups.map((group) => (
               <div key={group.title}>
                 <h2 className="text-[0.8125rem] font-semibold text-foreground">{group.title}</h2>
-                <ul className="mt-3">
+                <ul className="mt-4 grid gap-1">
                   {group.links.map((link) => (
                     <li key={link.href}>
                       <Link href={link.href} className={linkClass}>
@@ -82,7 +82,7 @@ export function Footer() {
             ))}
             <div>
               <h2 className="text-[0.8125rem] font-semibold text-foreground">{tFooter("groupConnect")}</h2>
-              <ul className="mt-3">
+              <ul className="mt-4 grid gap-1">
                 {socialLinks.map((link) => (
                   <li key={link.name}>
                     <a
@@ -102,7 +102,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t pt-5 md:mt-20 md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-2 border-t pt-6 md:mt-24 md:flex-row md:items-center md:justify-between">
           <p className="text-[0.8125rem] text-muted-foreground">
             © {currentYear} Sebastian Alvarez · {tCommon("allRightsReserved")}
           </p>
