@@ -38,7 +38,7 @@ export default function PrivacyPage() {
 
         {/* Content */}
         <div className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8">
-          <div className="mx-auto grid max-w-[760px] gap-14 lg:ml-0">
+          <div className="mx-auto grid max-w-[1200px] gap-14 [&>*]:max-w-[760px]">
 
             {/* Cookies section with list */}
             <section>
