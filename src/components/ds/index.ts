@@ -38,3 +38,5 @@ export { Exhibit } from './Exhibit'
 export type { StackLayer } from './StackList'
 
 export type { Accent, TextStrength, TextSize, ButtonVariant, ButtonSize, TitleGradient, TitleSize, SectionAlign, InputSize, CardVariant } from './types'
+export { CardStack } from './CardStack'
+export { RotatingWords } from './RotatingWords'

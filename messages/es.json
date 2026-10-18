@@ -53,7 +53,23 @@
     "downloadCV": "Descargar CV (inglés)",
     "getInTouch": "Contáctame",
     "cvDownloadedTitle": "¡CV Descargado!",
-    "cvDownloadedDescription": "Gracias por descargar mi CV. Espero que te sea útil."
+    "cvDownloadedDescription": "Gracias por descargar mi CV. Espero que te sea útil.",
+    "buildPrefix": "Construyo",
+    "buildWords": [
+      "agentes de IA",
+      "plataformas cloud",
+      "productos web",
+      "herramientas dev"
+    ],
+    "buildSentence": "Construyo agentes de IA, plataformas cloud, productos web y herramientas para developers.",
+    "vignettes": {
+      "agentAsk": "Clasifica el ticket #4821 y redacta una respuesta",
+      "agentReply": "Listo. Prioridad alta, aplica reembolso.",
+      "build": "Build",
+      "tests": "Tests",
+      "infra": "Infraestructura",
+      "rollout": "Desplegando"
+    }
   },
   "experience": {
     "title": "Dónde he trabajado",

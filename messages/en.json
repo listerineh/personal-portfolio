@@ -53,7 +53,23 @@
     "downloadCV": "Download CV",
     "getInTouch": "Get in Touch",
     "cvDownloadedTitle": "CV Downloaded!",
-    "cvDownloadedDescription": "Thank you for downloading my CV. I hope you find it useful."
+    "cvDownloadedDescription": "Thank you for downloading my CV. I hope you find it useful.",
+    "buildPrefix": "I build",
+    "buildWords": [
+      "AI agents",
+      "cloud platforms",
+      "web products",
+      "developer tools"
+    ],
+    "buildSentence": "I build AI agents, cloud platforms, web products and developer tools.",
+    "vignettes": {
+      "agentAsk": "Classify ticket #4821 and draft a reply",
+      "agentReply": "Drafted. Priority: high, refund eligible.",
+      "build": "Build",
+      "tests": "Tests",
+      "infra": "Infrastructure",
+      "rollout": "Rolling out"
+    }
   },
   "experience": {
     "title": "Where I've worked",
