@@ -409,6 +409,12 @@ html.js-motion .marquee[data-paused] .marquee-track { animation-play-state: paus
 html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
 html:not(.js-motion) .marquee-copy { display: none; }
 
+/* Skills note: a pulse of knowledge travelling along a line. */
+@keyframes transfer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
 /* Theme cross-fade (View Transitions) */
 ::view-transition-old(root),
 ::view-transition-new(root) {

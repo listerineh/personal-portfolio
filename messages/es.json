@@ -102,7 +102,12 @@
       "tools": "Herramientas y Diseño",
       "management": "Gestión y Colaboración"
     },
-    "filterLabel": "Filtrar por área"
+    "filterLabel": "Filtrar por área",
+    "transferTitle": "¿No está en la lista? No es un obstáculo.",
+    "transferBody": "Trabajar con IA a diario hace que adoptar herramientas nuevas sea rápido. Llevo lo que sé de una tecnología a otras que aún no he usado: mapeo los conceptos, aprendo sus convenciones con IA como copiloto y entrego con el mismo estándar.",
+    "transferFrom": "Lo que sé",
+    "transferTo": "Lo que usa tu equipo",
+    "summary": "{skills} tecnologías en {areas} áreas"
   },
   "projects": {
     "title": "Construido y lanzado",

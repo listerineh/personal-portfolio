@@ -102,7 +102,12 @@
       "tools": "Tools & Design",
       "management": "Management & Collaboration"
     },
-    "filterLabel": "Filter by area"
+    "filterLabel": "Filter by area",
+    "transferTitle": "Not on the list? Not a blocker.",
+    "transferBody": "Working with AI every day has made picking up new tools fast. I carry what I know from one technology to ones I haven't used yet: map the concepts, learn the idioms with an AI pair, and ship to the same standard.",
+    "transferFrom": "What I know",
+    "transferTo": "What your team uses",
+    "summary": "{skills} technologies across {areas} areas"
   },
   "projects": {
     "title": "Built and shipped",
