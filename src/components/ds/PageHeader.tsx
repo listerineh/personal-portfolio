@@ -31,20 +31,30 @@ export function PageHeader({ title, intro, nav, children, tone = 'plain', titleS
             {nav}
           </div>
         )}
-        <h1
-          data-intro=""
-          style={{ '--i': 0 } as React.CSSProperties}
-          className={cn(titleSize === 'section' ? 'text-display-sm' : 'text-display', 'max-w-[18ch]')}
-        >
-          {title}
-        </h1>
-        {intro && (
-          <div data-intro="" style={{ '--i': 1 } as React.CSSProperties} className="text-lead mt-5 max-w-[56ch] text-muted-foreground">
-            {intro}
-          </div>
-        )}
+        {/* Desktop: title and intro share the row, so the header spans the whole column instead of hugging the left. */}
+        <div className={cn(intro && titleSize === 'display' && 'lg:grid lg:grid-cols-12 lg:items-end lg:gap-10')}>
+          <h1
+            data-intro=""
+            style={{ '--i': 0 } as React.CSSProperties}
+            className={cn(titleSize === 'section' ? 'text-display-sm max-w-[24ch]' : 'text-display', intro && titleSize === 'display' && 'lg:col-span-7')}
+          >
+            {title}
+          </h1>
+          {intro && (
+            <div
+              data-intro=""
+              style={{ '--i': 1 } as React.CSSProperties}
+              className={cn(
+                'text-lead mt-5 max-w-[56ch] text-muted-foreground',
+                titleSize === 'display' && 'lg:col-span-5 lg:mt-0 lg:pb-3',
+              )}
+            >
+              {intro}
+            </div>
+          )}
+        </div>
         {children && (
-          <div data-intro="" style={{ '--i': 2 } as React.CSSProperties} className="mt-10">
+          <div data-intro="" style={{ '--i': 2 } as React.CSSProperties} className="mt-10 md:mt-14">
             {children}
           </div>
         )}

@@ -46,7 +46,7 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
   return (
     <PageShell>
       <PageHeader title={t('pageTitle')} intro={t('pageDescription')}>
-        <div className="grid max-w-3xl gap-5">
+        <div className="grid gap-5">
           <SearchField
             value={search}
             onChange={setSearch}

@@ -70,7 +70,7 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
   return (
     <>
       <PageHeader title={t('pageTitle')} intro={t('pageDescription')}>
-        <div className="max-w-3xl">
+        <div>
           <BlogSearch posts={posts} onFilteredPostsChange={handleFilteredPostsChange} onLoadingChange={setIsGridLoading} />
         </div>
       </PageHeader>
