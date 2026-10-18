@@ -42,7 +42,7 @@ export function Section({
       className={cn(
         tone === "tint" ? "tint" : "bg-background text-foreground",
         "py-24 md:py-32 lg:py-40",
-        ambient && "relative isolate overflow-hidden",
+        ambient && "relative isolate overflow-clip",
         className,
       )}
     >

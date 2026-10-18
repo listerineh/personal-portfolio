@@ -21,7 +21,7 @@ export function Footer() {
       title: tFooter("groupWork"),
       links: [
         { label: t("projects"), href: "/projects" },
-        { label: t("experience"), href: "/experience" },
+        { label: t("experience"), href: "/#career" },
         { label: t("skills"), href: "/skills" },
         { label: t("blog"), href: "/blog" },
       ],

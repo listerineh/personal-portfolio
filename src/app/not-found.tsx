@@ -12,7 +12,7 @@ export default function NotFound() {
   const rooms = [
     { href: '/projects', key: 'projects' },
     { href: '/blog', key: 'blog' },
-    { href: '/experience', key: 'experience' },
+    { href: '/#career', key: 'experience' },
     { href: '/contact', key: 'contact' },
   ] as const;
 

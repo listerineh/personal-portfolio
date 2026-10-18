@@ -26,7 +26,7 @@ export function Header() {
   const navItems = useMemo(
     () => [
       { label: t("about"), href: "/about" },
-      { label: t("experience"), href: "/experience" },
+      { label: t("experience"), href: "/#career" },
       { label: t("projects"), href: "/projects" },
       { label: t("skills"), href: "/skills" },
       { label: t("blog"), href: "/blog" },

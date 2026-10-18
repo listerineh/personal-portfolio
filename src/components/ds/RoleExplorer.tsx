@@ -102,7 +102,7 @@ export function RoleExplorer({
         aria-orientation="vertical"
         className={cn(
           "scrollbar-none -mx-gutter flex snap-x gap-2 overflow-x-auto px-gutter pb-1",
-          "lg:relative lg:col-span-5 lg:mx-0 lg:flex-col lg:gap-1 lg:overflow-visible lg:px-0 lg:pb-0",
+          "lg:relative lg:col-span-5 lg:mx-0 lg:flex-col lg:gap-1 lg:self-start lg:overflow-visible lg:px-0 lg:pb-0",
         )}
       >
         {/* The line the timeline dots sit on (desktop). */}
@@ -174,7 +174,7 @@ export function RoleExplorer({
         id={`${baseId}-panel`}
         aria-labelledby={`${baseId}-tab-${active}`}
         tabIndex={0}
-        className="panel p-6 md:p-10 lg:col-span-7"
+        className="panel p-6 md:p-10 lg:sticky lg:top-[calc(var(--header-h)+1.5rem)] lg:col-span-7 lg:self-start"
       >
         <div
           key={active}

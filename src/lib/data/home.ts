@@ -15,7 +15,7 @@ export function getHomeData(): { byLocale: Record<Locale, HomeLocaleData>; skill
         .slice(0, 6)
         .map(({ longDescription: _long, relevance: _relevance, ...project }): ProjectSummary => project),
       posts: getBlogPosts(locale).slice(0, 3).map(toBlogSummary),
-      experiences: getExperiences(locale).slice(0, 5), // 4 shown + 1 tells the section there is more
+      experiences: getExperiences(locale), // every role: the home page is the only place they live
     };
   }
   const skills = getSkillsByCategory()

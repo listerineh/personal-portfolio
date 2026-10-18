@@ -43,6 +43,10 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   poweredByHeader: false,
+  // /experience was folded into the home page's career section.
+  async redirects() {
+    return [{ source: '/experience', destination: '/#career', permanent: true }];
+  },
   async headers() {
     return [
       {
