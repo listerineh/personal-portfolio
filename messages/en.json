@@ -541,7 +541,8 @@
     "preferencesCookiesDescription": "Remember your settings and preferences (e.g., theme, language).",
     "cancelButton": "Cancel",
     "saveButton": "Save Preferences",
-    "revokeAllButton": "Revoke All"
+    "revokeAllButton": "Revoke All",
+    "alwaysOn": "Always on"
   },
   "unsubscribe": {
     "badge": "Newsletter",
