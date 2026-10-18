@@ -29,7 +29,7 @@ export const Projects: Story = {
     <Band className="px-0 py-16">
       <Carousel {...args}>
         {projects.map(({ live, ...project }) => (
-          <ProjectCard key={project.slug} {...project} liveLabel={live ? 'In progress' : undefined} />
+          <ProjectCard key={project.slug} {...project} status={live ? 'in-progress' : 'completed'} statusLabel={live ? 'In progress' : 'Completed'} />
         ))}
       </Carousel>
     </Band>

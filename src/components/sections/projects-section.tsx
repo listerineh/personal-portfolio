@@ -3,7 +3,6 @@
 import { useTranslations } from 'next-intl';
 import { ChevronRight } from 'lucide-react';
 import { Button, Carousel, ProjectCard, Reveal, Section } from '@/components/ds';
-import { liveProjectSlug } from '@/lib/project-status';
 import type { ProjectSummary } from '@/types';
 
 /** Work: the latest projects on a horizontal shelf that runs off the edge, so the next one always peeks in. */
@@ -12,7 +11,6 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
   const tSala = useTranslations('sala');
   const tCommon = useTranslations('common');
   const tProject = useTranslations('project');
-  const liveSlug = liveProjectSlug(projects);
 
   return (
     <Section
@@ -38,8 +36,8 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
               imageUrl={project.imageUrl}
               tags={[...project.tags]}
               priority={index === 0}
-              liveLabel={project.slug === liveSlug ? tProject('status.in-progress') : undefined}
-              statusLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
+              status={project.status}
+              statusLabel={project.status ? tProject(`status.${project.status}`) : undefined}
               viewMoreLabel={tCommon('viewProject')}
             />
           ))}

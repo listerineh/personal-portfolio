@@ -24,7 +24,7 @@ export const Default: Story = {
 };
 
 export const Feature: Story = {
-  args: { ...Default.args, size: 'feature', number: '01', liveLabel: 'In progress', priority: true },
+  args: { ...Default.args, size: 'feature', number: '01', status: 'in-progress', statusLabel: 'In progress', priority: true },
   parameters: { layout: 'padded' },
 };
 

@@ -5,15 +5,10 @@ import { useTranslations } from 'next-intl';
 import type { Project } from '@/types';
 import { Button, EndOfList, FilterTag, Reveal, PageHeader, ProjectCard, SearchField } from '@/components/ds';
 import { PageShell } from '@/components/layout';
-import { cn } from '@/lib/utils';
-import { liveProjectSlug } from '@/lib/project-status';
 
 interface ProjectsListingClientPageProps {
   projects: Project[];
 }
-
-// Hang pattern for a 12-column wall: one large work, then two smaller ones off-grid.
-const HANG = ['md:col-span-8', 'md:col-span-5', 'md:col-span-5 md:col-start-8 md:mt-32'] as const;
 
 export function ProjectsListingClientPage({ projects }: ProjectsListingClientPageProps) {
   const t = useTranslations('projects');
@@ -24,7 +19,6 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
   const [search, setSearch] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const liveSlug = useMemo(() => liveProjectSlug(projects), [projects]);
   const allTags = useMemo(() => Array.from(new Set(projects.flatMap((p) => p.tags))).sort(), [projects]);
   const selected = useMemo(() => new Set(selectedTags), [selectedTags]);
 
@@ -72,7 +66,7 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
         </div>
       </PageHeader>
 
-      <section className="px-gutter py-16 md:py-24" aria-live="polite">
+      <section className="px-gutter pb-24 pt-4 md:pb-32 md:pt-8" aria-live="polite">
         <div className="mx-auto max-w-[1200px]">
           {filteredProjects.length === 0 ? (
             <div className="panel max-w-xl p-6 md:p-8">
@@ -83,29 +77,25 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
             </div>
           ) : (
             <>
-              <div className="grid gap-16 md:grid-cols-12 md:gap-x-6 md:gap-y-24">
-                {filteredProjects.map((project, index) => {
-                  const slot = index % 3;
-                  return (
-                    <Reveal key={project.id} className={cn(HANG[slot])}>
-                      <ProjectCard
-                        slug={project.slug}
-                        title={project.title}
-                        description={project.description}
-                        imageUrl={project.imageUrl}
-                        tags={[...project.tags]}
-                        number={String(index + 1).padStart(2, '0')}
-                        size={slot === 0 ? 'feature' : 'default'}
-                        headingLevel="h2"
-                        priority={index === 0}
-                        liveLabel={project.slug === liveSlug ? tProject('status.in-progress') : undefined}
-                statusLabel={project.status === 'in-progress' ? tProject('status.in-progress') : undefined}
-                        viewMoreLabel={tCommon('viewProject')}
-                      />
-                    </Reveal>
-                  );
-                })}
-              </div>
+              {/* One simple grid: every project the same size, read left to right. */}
+              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                {filteredProjects.map((project, index) => (
+                  <Reveal as="li" key={project.id}>
+                    <ProjectCard
+                      slug={project.slug}
+                      title={project.title}
+                      description={project.description}
+                      imageUrl={project.imageUrl}
+                      tags={[...project.tags]}
+                      headingLevel="h2"
+                      priority={index < 3}
+                      status={project.status}
+                      statusLabel={project.status ? tProject(`status.${project.status}`) : undefined}
+                      viewMoreLabel={tCommon('viewProject')}
+                    />
+                  </Reveal>
+                ))}
+              </ul>
               <EndOfList>{tCommon('endOfList')}</EndOfList>
             </>
           )}

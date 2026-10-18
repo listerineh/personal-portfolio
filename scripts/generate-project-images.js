@@ -6,6 +6,10 @@
  * Generates product-showcase images for portfolio projects.
  * Uses Playwright to render HTML/CSS product cards → PNG → WebP via sharp.
  *
+ * Format: 4:3 at 2x (2400×1800), matching the site's project cards. Only the product UI is shown,
+ * centred and large: the card around the image already carries the name, description and stack,
+ * so the image no longer repeats them (and nothing gets cropped).
+ *
  * Usage:
  *   node scripts/generate-project-images.js          # all projects
  *   node scripts/generate-project-images.js openstage # single project
@@ -18,7 +22,8 @@ const path = require('path');
 
 const OUTPUT_DIR = path.join(__dirname, '../public/projects');
 const WIDTH = 1200;
-const HEIGHT = 675;
+const HEIGHT = 900;
+const SCALE = 2;
 const FILTER = process.argv[2] || null;
 
 // ─── HTML Templates ────────────────────────────────────────────────────────
@@ -90,6 +95,12 @@ function baseStyles(bg, accent, accent2) {
         background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.08);
       }
       .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+      /* Card format: hide the copy column, centre the product UI and scale it up. */
+      .layout { justify-content: center; padding: 64px; gap: 0; }
+      .left { display: none; }
+      .right { flex: 0 0 auto; width: 600px; zoom: 1.4; }
+      .right > * { margin-left: auto; margin-right: auto; }
     </style>
   `;
 }
@@ -354,6 +365,9 @@ function htmlOpenKanban() {
       font-size: 12px; color: #4ADE80;
     }
     .rt-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ADE80; }
+    /* Card format: the board alone, vertically centred. */
+    .kanban-layout { justify-content: center; padding: 72px 64px; gap: 32px; }
+    .kanban-sub { display: none; }
   </style>
 </head><body>
   <div class="dot-grid"></div>
@@ -788,8 +802,10 @@ async function generateImages() {
 
   console.log(`🚀 Launching Chromium…`);
   const browser = await chromium.launch();
-  const page = await browser.newPage();
-  await page.setViewportSize({ width: WIDTH, height: HEIGHT });
+  const page = await browser.newPage({
+    viewport: { width: WIDTH, height: HEIGHT },
+    deviceScaleFactor: SCALE,
+  });
 
   for (const project of projects) {
     process.stdout.write(`  ⏳ ${project.id}… `);
@@ -803,7 +819,7 @@ async function generateImages() {
 
     const outputPath = path.join(OUTPUT_DIR, project.filename);
     await sharp(pngBuffer)
-      .webp({ quality: 90 })
+      .webp({ quality: 86 })
       .toFile(outputPath);
 
     const sizeKB = Math.round(fs.statSync(outputPath).size / 1024);

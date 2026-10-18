@@ -5,6 +5,16 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export type ProjectStatus = "in-progress" | "completed" | "on-hold" | "archived";
+
+// Amber only for work that is moving now; finished and paused work stay neutral.
+const statusDot: Record<ProjectStatus, string> = {
+  "in-progress": "bg-primary motion-safe:animate-pulse",
+  completed: "bg-foreground/60",
+  "on-hold": "border border-foreground/50 bg-transparent",
+  archived: "border border-foreground/30 bg-transparent",
+};
+
 interface ProjectCardProps {
   /** Heading level of the title, so pages keep a valid outline. */
   headingLevel?: 'h2' | 'h3';
@@ -18,9 +28,9 @@ interface ProjectCardProps {
   number?: string;
   /** `feature` = the large card (first in a listing). */
   size?: "default" | "feature";
-  /** Live marker text (e.g. "In progress"); renders the amber tag. Only one card in a view should carry it. */
-  liveLabel?: string;
-  /** Neutral status text for works that are not the live one (e.g. "In progress", "On hold"). */
+  /** Project status; every card shows it the same way, only the dot changes. */
+  status?: ProjectStatus;
+  /** Localized status text, e.g. "In progress". */
   statusLabel?: string;
   priority?: boolean;
   className?: string;
@@ -40,7 +50,7 @@ export function ProjectCard({
   viewMoreLabel = "View project",
   number,
   size = "default",
-  liveLabel,
+  status,
   statusLabel,
   priority = false,
   className,
@@ -62,7 +72,7 @@ export function ProjectCard({
           <div
             className={cn(
               "relative w-full overflow-hidden bg-muted",
-              feature ? "aspect-[16/10]" : "aspect-[4/3]",
+              "aspect-[4/3]",
             )}
           >
             <Image
@@ -83,14 +93,9 @@ export function ProjectCard({
         <div className="flex flex-1 flex-col gap-2 p-6 md:p-7">
           <div className="flex flex-wrap items-center gap-2">
             {number && <span className="text-meta text-muted-foreground">{number}</span>}
-            {liveLabel && (
-              <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-primary/[0.14] px-2.5 text-[0.6875rem] font-semibold text-primary">
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary motion-safe:animate-pulse" />
-                {liveLabel}
-              </span>
-            )}
-            {!liveLabel && statusLabel && (
-              <span className="inline-flex h-6 items-center rounded-full bg-foreground/[0.06] px-2.5 text-[0.6875rem] font-medium text-muted-foreground">
+            {status && statusLabel && (
+              <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-foreground/[0.06] px-2.5 text-[0.6875rem] font-medium text-foreground/80">
+                <span aria-hidden="true" className={cn("h-1.5 w-1.5 rounded-full", statusDot[status])} />
                 {statusLabel}
               </span>
             )}
