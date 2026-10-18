@@ -77,7 +77,8 @@
     "viewAll": "View All Experience",
     "pageTitle": "My Career Journey",
     "pageDescription": "A detailed look at the roles, companies, and projects that have shaped my journey as a software engineer.",
-    "noResults": "No experience found."
+    "noResults": "No experience found.",
+    "rolesLabel": "Roles"
   },
   "skills": {
     "title": "The stack I reach for",

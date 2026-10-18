@@ -41,3 +41,5 @@ export type { Accent, TextStrength, TextSize, ButtonVariant, ButtonSize, TitleGr
 export { CardStack } from './CardStack'
 export { RotatingWords } from './RotatingWords'
 export { Ambient } from './Ambient'
+export { RoleExplorer } from './RoleExplorer'
+export type { Role } from './RoleExplorer'
