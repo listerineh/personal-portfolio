@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Briefcase } from "lucide-react";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { cn } from "@/lib/utils";
 
@@ -24,25 +25,30 @@ interface RoleExplorerProps {
   className?: string;
 }
 
+/** Company mark in a circle. Logos sit on white (they are drawn for it); no logo gets a neutral briefcase. */
 function Logo({ src, size }: { src?: string; size: "sm" | "lg" }) {
-  const box =
-    size === "lg" ? "h-16 w-16 rounded-[18px]" : "h-10 w-10 rounded-[12px]";
+  const box = size === "lg" ? "h-16 w-16" : "h-10 w-10";
+  if (!src) {
+    return (
+      <span
+        className={cn(
+          "inline-flex shrink-0 items-center justify-center rounded-full bg-foreground/[0.08] text-muted-foreground ring-1 ring-foreground/[0.06]",
+          box,
+        )}
+      >
+        <Briefcase aria-hidden="true" className={size === "lg" ? "h-7 w-7" : "h-[18px] w-[18px]"} strokeWidth={1.75} />
+      </span>
+    );
+  }
   return (
-    <span
-      className={cn(
-        "relative block shrink-0 overflow-hidden bg-background shadow-card",
-        box,
-      )}
-    >
-      {src && (
-        <Image
-          src={src}
-          alt=""
-          fill
-          sizes={size === "lg" ? "64px" : "40px"}
-          className="object-contain p-1.5"
-        />
-      )}
+    <span className={cn("relative block shrink-0 overflow-hidden rounded-full bg-white shadow-card ring-1 ring-black/[0.06]", box)}>
+      <Image
+        src={src}
+        alt=""
+        fill
+        sizes={size === "lg" ? "64px" : "40px"}
+        className={cn("object-contain", size === "lg" ? "p-3" : "p-2")}
+      />
     </span>
   );
 }
