@@ -59,7 +59,7 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
       </PageHeader>
 
       {/* The note: the list is a starting point, not a boundary. */}
-      <section aria-labelledby="transfer-title" className="px-gutter">
+      <section aria-labelledby="transfer-title" className="px-gutter pt-10 md:pt-16">
         <Reveal className="tint relative isolate mx-auto grid max-w-[1200px] items-center gap-8 overflow-hidden rounded-xl p-6 md:grid-cols-12 md:gap-10 md:p-10">
           <Ambient intensity="soft" grid={false} spotlight={false} />
           <div className="md:col-span-7">

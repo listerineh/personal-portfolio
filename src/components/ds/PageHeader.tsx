@@ -29,7 +29,8 @@ export function PageHeader({ title, intro, nav, children, tone = 'plain', titleS
         className,
       )}
     >
-      {ambient && <Ambient />}
+      {/* The light fades out toward the bottom: the next section shares the ground, so no hard edge. */}
+      {ambient && <Ambient className="[-webkit-mask-image:linear-gradient(to_bottom,#000_55%,transparent)] [mask-image:linear-gradient(to_bottom,#000_55%,transparent)]" />}
       <div className="mx-auto max-w-[1200px]">
         {nav && (
           <div data-intro="" className="mb-8">
