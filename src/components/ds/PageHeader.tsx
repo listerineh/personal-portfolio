@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
+import { Ambient } from './Ambient'
 
 interface PageHeaderProps {
   title: ReactNode
@@ -11,20 +12,24 @@ interface PageHeaderProps {
   tone?: 'tint' | 'plain'
   /** `section` for long titles (articles). */
   titleSize?: 'display' | 'section'
+  /** Ambient light behind the header (halos + grid + spotlight by default). */
+  ambient?: boolean
   className?: string
 }
 
 /** The top of an inner page: a large title that comes into focus, one line on what is inside, then any controls. */
-export function PageHeader({ title, intro, nav, children, tone = 'plain', titleSize = 'display', className }: PageHeaderProps) {
+export function PageHeader({ title, intro, nav, children, tone = 'plain', titleSize = 'display', ambient = false, className }: PageHeaderProps) {
   return (
     <header
       id="page-top"
       className={cn(
         tone === 'tint' ? 'tint' : 'bg-background text-foreground',
         'px-gutter pb-12 pt-[calc(var(--header-h)+3.5rem)] md:pb-16 md:pt-[calc(var(--header-h)+6rem)]',
+        ambient && 'relative isolate overflow-clip',
         className,
       )}
     >
+      {ambient && <Ambient />}
       <div className="mx-auto max-w-[1200px]">
         {nav && (
           <div data-intro="" className="mb-8">

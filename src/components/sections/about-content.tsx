@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { ArrowUpRight, Mail, Server, Monitor, Cloud, Bot } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Button, PageHeader, Panel } from '@/components/ds';
+import { Ambient, Button, PageHeader, Reveal, Section } from '@/components/ds';
+import { cn } from '@/lib/utils';
 import { communityLinks } from '@/lib/data/navigation';
 
 export function AboutContent() {
@@ -31,123 +32,118 @@ export function AboutContent() {
   return (
     <>
       <PageHeader
+        ambient
         title={
           <>
             <span className="block">{t('heroGreeting')}</span>
-            <span className="block">Sebastian.</span>
+            <span className="block text-muted-foreground">Sebastian.</span>
           </>
         }
         intro={t('heroRole')}
       >
-        <p className="text-meta text-muted-foreground">Quito, Ecuador</p>
+        <p className="inline-flex h-9 items-center gap-2 rounded-full bg-foreground/[0.05] px-4 text-[0.8125rem] font-medium text-foreground/80">
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
+          Quito, Ecuador
+        </p>
       </PageHeader>
 
-      {/* Statement */}
-      <section className="px-gutter py-20 md:py-28">
-        <div className="mx-auto max-w-[1200px]">
-          <p className="text-subhead max-w-[34ch] !leading-[1.3]">{t('heroDescription')}</p>
-        </div>
+      {/* The statement, large: who I am in one breath. */}
+      <section className="px-gutter py-16 md:py-24">
+        <Reveal className="mx-auto max-w-[1200px]">
+          <p className="max-w-[28ch] text-[clamp(1.625rem,3.6vw,2.75rem)] font-semibold leading-[1.2] tracking-[-0.03em]">
+            {t('heroDescription')}
+          </p>
+        </Reveal>
       </section>
 
-      {/* Journey */}
-      <section aria-labelledby="journey-title" className="px-gutter pb-20 md:pb-28">
-        <div className="mx-auto max-w-[1200px]">
-          <h2 id="journey-title" className="text-display-sm">
-            {t('journeyTitle')}
-          </h2>
-          <ol className="mt-12">
-            {phases.map(({ id, label, title, body }) => (
-              <li key={id} className="grid gap-3 border-t border-foreground/20 py-10 md:grid-cols-12 md:gap-6 md:py-14">
-                <p className="text-meta text-muted-foreground md:col-span-3">{label}</p>
-                <div className="md:col-span-8">
-                  <h3 className="text-subhead">{title}</h3>
-                  <p className="text-lead mt-4 max-w-[62ch] text-muted-foreground">{body}</p>
-                </div>
-              </li>
+      {/* Journey: three stops on a timeline. */}
+      <Section id="journey" title={t('journeyTitle')} tone="tint" ambient={{ intensity: 'soft', grid: false, spotlight: false }}>
+        <ol className="relative grid gap-5 md:gap-6">
+          <span aria-hidden="true" className="absolute bottom-6 left-[15px] top-6 w-px bg-foreground/15 md:left-[19px]" />
+          {phases.map(({ id, label, title, body }, index) => (
+            <Reveal as="li" key={id} className="relative grid grid-cols-[32px_1fr] gap-4 md:grid-cols-[40px_1fr] md:gap-6">
+              <span aria-hidden="true" className="relative mt-7 flex h-8 w-8 items-center justify-center md:h-10 md:w-10">
+                <span
+                  className={cn(
+                    'h-3 w-3 rounded-full ring-4 ring-[rgb(var(--tint))]',
+                    index === phases.length - 1 ? 'bg-primary' : 'bg-foreground/40',
+                  )}
+                />
+              </span>
+              <div className="panel p-6 md:p-8">
+                <p className="text-meta text-muted-foreground">{label}</p>
+                <h3 className="text-subhead mt-2">{title}</h3>
+                <p className="mt-4 max-w-[64ch] text-[1.0625rem] leading-relaxed text-muted-foreground">{body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </ol>
+      </Section>
+
+      {/* What I do: four areas as cards. */}
+      <Section id="expertise" title={t('expertiseTitle')}>
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          {expertise.map(({ id, Icon, title, body }) => (
+            <Reveal as="li" key={id} className="panel p-6 md:p-7">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/[0.14] text-primary">
+                <Icon aria-hidden="true" className="h-5 w-5" />
+              </span>
+              <h3 className="text-headline mt-5">{title}</h3>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted-foreground">{body}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </Section>
+
+      {/* Community: the numbers large, the group beside them. */}
+      <Section id="community" title={t('communityTitle')} intro={t('communityBody')} tone="tint" ambient={{ halos: false }}>
+        <div className="grid gap-5 lg:grid-cols-12 lg:gap-6">
+          <dl className="grid gap-5 sm:grid-cols-3 lg:col-span-7">
+            {stats.map(({ stat, label }) => (
+              <Reveal key={`${stat}-${label}`} className="panel flex flex-col p-6">
+                <dt className="order-2 mt-3 text-[0.9375rem] text-muted-foreground">{label}</dt>
+                <dd className="order-1 text-[clamp(2.25rem,4vw,3rem)] font-bold leading-none tracking-[-0.04em] tabular-nums">{stat}</dd>
+              </Reveal>
             ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* Expertise on a painted wall */}
-      <section aria-labelledby="expertise-title" className="tint px-gutter py-20 md:py-28">
-        <div className="mx-auto max-w-[1200px]">
-          <h2 id="expertise-title" className="text-display-sm">
-            {t('expertiseTitle')}
-          </h2>
-          <ul className="mt-12 grid gap-x-6 gap-y-10 md:grid-cols-2">
-            {expertise.map(({ id, Icon, title, body }) => (
-              <li key={id} className="border-t border-foreground/25 pt-6">
-                <Icon aria-hidden="true" className="h-6 w-6" />
-                <h3 className="text-headline mt-4">{title}</h3>
-                <p className="mt-3 max-w-[56ch] text-muted-foreground">{body}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Community */}
-      <section aria-labelledby="community-title" className="px-gutter py-20 md:py-28">
-        <div className="mx-auto grid max-w-[1200px] items-start gap-12 lg:grid-cols-12 lg:gap-6">
-          <div className="lg:col-span-7">
-            <h2 id="community-title" className="text-display-sm">
-              {t('communityTitle')}
-            </h2>
-            <p className="text-lead mt-6 max-w-[60ch] text-muted-foreground">{t('communityBody')}</p>
-            <dl className="mt-10 border-t border-foreground/20">
-              {stats.map(({ stat, label }) => (
-                <div key={`${stat}-${label}`} className="flex items-baseline gap-4 border-b border-foreground/20 py-4">
-                  <dt className="order-2 text-base text-muted-foreground">{label}</dt>
-                  <dd className="w-20 shrink-0 text-headline tabular-nums">{stat}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <Panel className="lg:col-span-4 lg:col-start-9">
+          </dl>
+          <Reveal className="panel flex flex-col p-6 md:p-8 lg:col-span-5">
             <div className="flex items-center gap-4">
-              <Image src="/images/gdg_quito_logo.webp" alt="" width={48} height={48} className="h-12 w-12 shrink-0" />
+              <span className="relative block h-12 w-12 shrink-0 overflow-hidden rounded-full bg-white ring-1 ring-black/[0.06]">
+                <Image src="/images/gdg_quito_logo.webp" alt="" fill sizes="48px" className="object-contain p-2" />
+              </span>
               <h3 className="text-headline">Google Developer Groups · Quito</h3>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{t('communityCardBody')}</p>
-            <a
-              href={communityLinks.gdgQuito}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold underline decoration-1 underline-offset-[0.3em] hover:decoration-2"
-            >
+            <p className="mt-4 text-[0.9375rem] leading-relaxed text-muted-foreground">{t('communityCardBody')}</p>
+            <Button variant="ghost" accent="amber" href={communityLinks.gdgQuito} external className="mt-auto self-start pt-5">
               {t('communityJoin')}
               <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
-            </a>
-          </Panel>
+            </Button>
+          </Reveal>
         </div>
-      </section>
+      </Section>
 
-      {/* Beyond the terminal: music has its own room (/why) */}
-      <section aria-labelledby="music-title" className="border-t border-foreground/20 px-gutter py-20 md:py-28">
-        <div className="mx-auto grid max-w-[1200px] gap-8 lg:grid-cols-12 lg:gap-6">
-          <h2 id="music-title" className="text-display-sm lg:col-span-6">
-            {t('musicTitle')}
-          </h2>
-          <div className="lg:col-span-5 lg:col-start-8">
-            <p className="text-lead text-muted-foreground">{t('musicBody')}</p>
-            <Button variant="secondary" href="/why" className="mt-6">
+      {/* Beyond the terminal: music has its own page (/why). */}
+      <Section id="music" title={t('musicTitle')}>
+        <Reveal className="panel grid gap-6 p-6 md:grid-cols-12 md:items-center md:gap-10 md:p-10">
+          <p className="text-lead text-muted-foreground md:col-span-8">{t('musicBody')}</p>
+          <div className="md:col-span-4 md:justify-self-end">
+            <Button variant="secondary" size="lg" href="/why" className="w-full sm:w-auto">
               {t('musicLink')}
               <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </Button>
           </div>
-        </div>
-      </section>
+        </Reveal>
+      </Section>
 
-      {/* Close */}
-      <section aria-labelledby="cta-title" className="tint px-gutter py-20 md:py-28">
-        <div className="mx-auto max-w-[1200px]">
-          <h2 id="cta-title" className="text-display-sm max-w-[18ch]">
+      {/* Close: the same lit card as the home page. */}
+      <section aria-labelledby="cta-title" className="bg-background px-gutter pb-24 md:pb-32 lg:pb-40">
+        <Reveal className="tint relative isolate mx-auto max-w-[1200px] overflow-hidden rounded-xl px-6 py-16 text-center md:px-12 md:py-24">
+          <Ambient intensity="soft" spotlight={false} />
+          <h2 id="cta-title" className="text-display-sm mx-auto max-w-[18ch]">
             {t('ctaTitle')}
           </h2>
-          <p className="text-lead mt-6 max-w-[52ch] text-muted-foreground">{t('ctaBody')}</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <p className="text-lead mx-auto mt-5 max-w-[52ch] text-muted-foreground">{t('ctaBody')}</p>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button accent="amber" size="lg" href="/contact" className="w-full sm:w-auto">
               <Mail aria-hidden="true" className="h-4 w-4" />
               {t('ctaPrimary')}
@@ -156,7 +152,7 @@ export function AboutContent() {
               {t('ctaSecondary')}
             </Button>
           </div>
-        </div>
+        </Reveal>
       </section>
     </>
   );
