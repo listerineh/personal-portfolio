@@ -25,6 +25,7 @@ export default defineConfig([
   },
   globalIgnores([
     '.next/**',
+    '.next-verify/**',
     'node_modules/**',
     'out/**',
     'build/**',
