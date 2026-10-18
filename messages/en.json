@@ -339,7 +339,14 @@
     "ctaTitle": "Let's Build Something Together",
     "ctaBody": "Always open to interesting projects, collaborations, and conversations about engineering, AI, or music.",
     "ctaPrimary": "Get in Touch",
-    "ctaSecondary": "Back to Portfolio"
+    "ctaSecondary": "Back to Portfolio",
+    "glanceTitle": "At a glance",
+    "glanceYears": "Years building software",
+    "glanceCommunity": "Developers in the GDG community",
+    "glanceOrganizer": "Years organizing GDG Quito",
+    "glanceInstruments": "Instruments I play",
+    "glanceInstrumentsValue": "4",
+    "journeyIntro": "From a screwdriver to leading engineering teams."
   },
   "why": {
     "skipToContent": "Skip to main content",

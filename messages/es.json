@@ -339,7 +339,14 @@
     "ctaTitle": "Construyamos Algo Juntos",
     "ctaBody": "Siempre abierto a proyectos interesantes, colaboraciones y conversaciones sobre ingeniería, IA o música.",
     "ctaPrimary": "Contáctame",
-    "ctaSecondary": "Volver al Portafolio"
+    "ctaSecondary": "Volver al Portafolio",
+    "glanceTitle": "En resumen",
+    "glanceYears": "Años construyendo software",
+    "glanceCommunity": "Developers en la comunidad GDG",
+    "glanceOrganizer": "Años organizando GDG Quito",
+    "glanceInstruments": "Instrumentos que toco",
+    "glanceInstrumentsValue": "4",
+    "journeyIntro": "De un destornillador a liderar equipos de ingeniería."
   },
   "why": {
     "skipToContent": "Saltar al contenido principal",
