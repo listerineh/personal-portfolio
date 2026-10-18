@@ -143,8 +143,6 @@ export function Header() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 print:static",
-        // /why is a night stage: the bar joins it instead of floating white over it.
-        pathname.startsWith("/why") && "stage",
         "transition-[box-shadow,background-color] duration-snap ease-snap motion-reduce:transition-none",
         open ? "bg-background" : "material",
         scrolled && !open && "shadow-[0_1px_0_rgb(var(--border)/0.8)]",

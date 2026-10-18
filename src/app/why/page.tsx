@@ -44,8 +44,8 @@ export default function WhyPage() {
 
   return (
     <PageShell>
-      {/* The whole page is a night stage, whatever the site theme. */}
-      <div className="stage">
+      {/* A stage that follows the site theme: the photo fades into the ground, the light tints or glows. */}
+      <div>
       {/* Hero: the photo fills the stage, a spotlight sweeps, the equalizer keeps time. */}
       <section
         aria-labelledby="why-title"
@@ -57,19 +57,19 @@ export default function WhyPage() {
           fill
           priority
           sizes="100vw"
-          className="-z-30 object-cover object-[60%_30%] opacity-70"
+          className="-z-30 object-cover object-[60%_30%] opacity-90 dark:opacity-70"
         />
-        <span aria-hidden="true" className="absolute inset-0 -z-20 bg-gradient-to-t from-black via-black/70 to-black/25" />
+        <span aria-hidden="true" className="absolute inset-0 -z-20 bg-gradient-to-t from-background via-background/75 to-background/20" />
         <span
           aria-hidden="true"
-          className="stage-light pointer-events-none absolute -top-[30%] left-1/2 -z-10 h-[130%] w-[60vmax] -translate-x-1/2 opacity-60 mix-blend-screen"
+          className="stage-light pointer-events-none absolute -top-[30%] left-1/2 -z-10 h-[130%] w-[60vmax] -translate-x-1/2 opacity-50 mix-blend-multiply dark:opacity-60 dark:mix-blend-screen"
           style={{ background: 'radial-gradient(ellipse 35% 70% at 50% 0%, rgba(217,119,6,0.55), transparent 70%)' }}
         />
         <div className="mx-auto w-full max-w-[1200px]">
           <p
             data-intro=""
             style={{ '--i': 0 } as React.CSSProperties}
-            className="inline-flex h-9 items-center gap-2 rounded-full bg-white/10 px-4 text-[0.8125rem] font-medium text-foreground backdrop-blur-md"
+            className="material inline-flex h-9 items-center gap-2 rounded-full px-4 text-[0.8125rem] font-medium text-foreground"
           >
             <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
             {t("heroEyebrow")}
