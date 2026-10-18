@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 
 interface ExhibitProps {
   id: string
-  /** The exhibition's identity color (hex); used only as its marker square. */
+  /** The project's identity color (hex); used for the marker dot and a faint glow behind the title. */
   color: string
   /** Catalog tags shown with the title (format, status). */
   tags?: ReactNode
@@ -15,14 +15,20 @@ interface ExhibitProps {
   children: ReactNode
 }
 
-/** A temporary exhibition inside the site: its own marker color, the house type and grid. */
+/** One music project on /why: its identity color as a dot and soft glow, its tags, a large title, then its content. */
 export function Exhibit({ id, color, tags, title, subtitle, tone = 'plain', className, children }: ExhibitProps) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn(tone === 'tint' ? 'tint' : 'bg-background text-foreground', 'px-gutter py-20 md:py-28', className)}
+      className={cn(tone === 'tint' ? 'tint' : 'bg-background text-foreground', 'relative isolate overflow-clip px-gutter py-24 md:py-32', className)}
     >
+      {/* A faint wash of the project's color behind its title. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-[20vmax] -top-[20vmax] -z-10 h-[55vmax] w-[55vmax] rounded-full opacity-[0.14]"
+        style={{ background: `radial-gradient(closest-side, ${color}, transparent)` }}
+      />
       <div className="mx-auto max-w-[1200px]">
         <div className="flex flex-wrap items-center gap-3">
           <span aria-hidden="true" className="h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: color }} />

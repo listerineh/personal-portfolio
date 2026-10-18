@@ -14,6 +14,7 @@ import {
   Pill,
   Panel,
   SpotifyTopTracks,
+  Ambient,
 } from "@/components/ds";
 import { PageShell } from "@/components/layout";
 
@@ -42,22 +43,26 @@ export default function WhyPage() {
   return (
     <PageShell>
       <PageHeader
+        ambient
         title={
           <>
             <span className="block">{t("heroWhy")}</span>
-            <span className="block">Listerineh?</span>
+            <span className="block text-muted-foreground">Listerineh?</span>
           </>
         }
         intro={t("heroSubtitle")}
       >
-        <p className="text-meta text-muted-foreground">{t("heroEyebrow")}</p>
+        <p className="inline-flex h-9 items-center gap-2 rounded-full bg-foreground/[0.05] px-4 text-[0.8125rem] font-medium text-foreground/80">
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
+          {t("heroEyebrow")}
+        </p>
       </PageHeader>
 
       {/* The photograph, hung, and where the name comes from */}
-      <section className="px-gutter py-20 md:py-28">
+      <section className="px-gutter pb-24 pt-8 md:pb-32 md:pt-12">
         <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-6">
           <Reveal className="lg:col-span-7">
-            <div className="overflow-hidden rounded-xl">
+            <div className="overflow-hidden rounded-xl shadow-card">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                 <Image
                   src="/images/sebas-playing.webp"
@@ -82,6 +87,7 @@ export default function WhyPage() {
 
       {/* Margarita Nugget */}
       <Exhibit
+        tone="tint"
         id="margarita-nugget"
         color={MN}
         tags={
@@ -124,7 +130,7 @@ export default function WhyPage() {
 
         <div className="mt-16">
           <h3 className="text-headline">{t("mnVideoTitle")}</h3>
-          <div className="mt-4 overflow-hidden rounded-xl">
+          <div className="mt-4 overflow-hidden rounded-xl shadow-card">
             <div className="relative aspect-video w-full overflow-hidden bg-muted">
               <iframe
                 src={`https://www.youtube.com/embed/${musicLinks.mn.featuredVideoId}?rel=0&modestbranding=1`}
@@ -204,6 +210,7 @@ export default function WhyPage() {
 
       {/* Listerineh solo */}
       <Exhibit
+        tone="tint"
         id="listerineh-solo"
         color={SOLO}
         tags={<Pill variant="outline">{t("soloBadge")}</Pill>}
@@ -236,12 +243,13 @@ export default function WhyPage() {
         </div>
       </Exhibit>
 
-      {/* Close: back to the engineering rooms */}
+      {/* Close: a lit card, back to the engineering side */}
       <section
         aria-labelledby="why-cta-title"
-        className="tint px-gutter py-20 md:py-28"
+        className="bg-background px-gutter py-24 md:py-32"
       >
-        <div className="mx-auto grid max-w-[1200px] items-end gap-12 lg:grid-cols-12 lg:gap-6">
+        <div className="tint relative isolate mx-auto grid max-w-[1200px] items-center gap-10 overflow-hidden rounded-xl p-6 md:p-12 lg:grid-cols-12 lg:gap-10">
+          <Ambient intensity="soft" spotlight={false} />
           <div className="lg:col-span-6">
             <h2 id="why-cta-title" className="text-display-sm">
               {t("ctaTitle")}
@@ -258,13 +266,13 @@ export default function WhyPage() {
               >
                 {t("getInTouch")}
               </Button>
-              <Button variant="ghost" href="/">
+              <Button variant="ghost" accent="amber" href="/">
                 {t("backToPortfolio")}
               </Button>
             </div>
           </div>
           <Reveal className="lg:col-span-5 lg:col-start-8">
-            <div className="overflow-hidden rounded-xl">
+            <div className="overflow-hidden rounded-xl shadow-card">
               <div className="relative aspect-[3/2] overflow-hidden bg-muted">
                 <Image
                   src="/images/sebas-playing-footer.webp"

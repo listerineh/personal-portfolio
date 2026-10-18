@@ -35,12 +35,12 @@ interface PlatformButton {
 
 function TrackSkeleton() {
   return (
-    <li className="flex items-center gap-4 border-t border-foreground/15 py-4" aria-hidden="true">
-      <div className="h-4 w-6 bg-foreground/10" />
-      <div className="h-14 w-14 shrink-0 bg-foreground/10" />
+    <li className="flex items-center gap-4 px-3 py-3" aria-hidden="true">
+      <div className="h-4 w-6 rounded-full bg-foreground/10" />
+      <div className="h-14 w-14 shrink-0 rounded-[12px] bg-foreground/10" />
       <div className="min-w-0 flex-1 space-y-2.5">
-        <div className="h-4 w-3/5 bg-foreground/10" />
-        <div className="h-3 w-2/5 bg-foreground/[0.07]" />
+        <div className="h-4 w-3/5 rounded-full bg-foreground/10" />
+        <div className="h-3 w-2/5 rounded-full bg-foreground/[0.07]" />
       </div>
     </li>
   );
@@ -95,7 +95,7 @@ export function SpotifyTopTracks({
 
   return (
     <div style={{ '--track-accent': accentColor } as React.CSSProperties}>
-      <ol className="border-b border-foreground/15" aria-busy={loading || undefined}>
+      <ol className="panel grid gap-0.5 p-2" aria-busy={loading || undefined}>
         {loading
           ? trackLinks.map((link) => <TrackSkeleton key={link.spotifyId} />)
           : tracks.map((track, index) => {
@@ -131,15 +131,15 @@ export function SpotifyTopTracks({
               ].filter(Boolean) as PlatformButton[];
 
               return (
-                <li key={track.id} className="group flex items-center gap-4 border-t border-foreground/15 py-4">
+                <li key={track.id} className="group flex items-center gap-4 rounded-[16px] px-3 py-3 transition-colors duration-snap ease-snap hover:bg-foreground/[0.04]">
                   <span className="text-meta w-6 shrink-0 text-right text-muted-foreground">
                     {String(index + 1).padStart(2, '0')}
                   </span>
 
                   {track.albumArt ? (
-                    <Image src={track.albumArt} alt="" width={56} height={56} className="h-14 w-14 shrink-0 object-cover" />
+                    <Image src={track.albumArt} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-[12px] object-cover shadow-card" />
                   ) : (
-                    <div className="h-14 w-14 shrink-0 bg-[var(--track-accent)] opacity-30" />
+                    <div className="h-14 w-14 shrink-0 rounded-[12px] bg-[var(--track-accent)] opacity-30" />
                   )}
 
                   <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -158,7 +158,7 @@ export function SpotifyTopTracks({
                           rel="noopener noreferrer"
                           aria-label={t('listenOn', { track: track.name, platform: platform.label })}
                           title={platform.label}
-                          className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-transparent transition-colors duration-snap hover:border-foreground/40"
+                          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors duration-snap hover:bg-foreground/[0.08]"
                         >
                           {platform.icon}
                         </a>
