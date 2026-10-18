@@ -335,6 +335,59 @@ html.js-motion [data-intro] {
   }
 }
 
+/* ── Ambient light: warm halos that drift, a fading dot grid, an amber spotlight under the pointer ── */
+.ambient-halo {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  will-change: transform;
+}
+.ambient-halo-a {
+  width: 64vmax; height: 64vmax; top: -30vmax; right: -18vmax;
+  background: radial-gradient(closest-side, rgb(var(--primary) / 0.20), rgb(var(--primary) / 0));
+}
+.ambient-halo-b {
+  width: 48vmax; height: 48vmax; bottom: -26vmax; left: -16vmax;
+  background: radial-gradient(closest-side, rgb(245 158 11 / 0.13), rgb(245 158 11 / 0));
+}
+.ambient-halo-c {
+  width: 38vmax; height: 38vmax; top: 18%; left: 30%;
+  background: radial-gradient(closest-side, rgb(251 113 133 / 0.07), rgb(251 113 133 / 0));
+}
+.dark .ambient-halo-a { background: radial-gradient(closest-side, rgb(var(--primary) / 0.26), rgb(var(--primary) / 0)); }
+.dark .ambient-halo-b { background: radial-gradient(closest-side, rgb(245 158 11 / 0.14), rgb(245 158 11 / 0)); }
+.ambient-soft .ambient-halo-a { width: 40vmax; height: 40vmax; top: -22vmax; right: -10vmax; }
+.ambient-soft .ambient-halo-b { width: 30vmax; height: 30vmax; bottom: -18vmax; left: -8vmax; }
+.ambient-soft .ambient-halo-c { display: none; }
+
+@keyframes drift-a { to { transform: translate3d(-9vmax, 7vmax, 0) scale(1.12); } }
+@keyframes drift-b { to { transform: translate3d(10vmax, -6vmax, 0) scale(1.18); } }
+@keyframes drift-c { to { transform: translate3d(-6vmax, -8vmax, 0) scale(0.9); } }
+html.js-motion .ambient-halo-a { animation: drift-a 26s ease-in-out infinite alternate; }
+html.js-motion .ambient-halo-b { animation: drift-b 33s ease-in-out infinite alternate; }
+html.js-motion .ambient-halo-c { animation: drift-c 41s ease-in-out infinite alternate; }
+
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-image: radial-gradient(rgb(var(--foreground) / 0.13) 1px, transparent 1.2px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 25%, transparent 78%);
+}
+.ambient-spot {
+  background-image: radial-gradient(rgb(var(--primary) / 0.9) 1.2px, transparent 1.6px);
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), #000, transparent 72%);
+  mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), #000, transparent 72%);
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out);
+}
+.ambient[data-lit] .ambient-spot { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .ambient-spot { display: none; }
+}
+
 /* Theme cross-fade (View Transitions) */
 ::view-transition-old(root),
 ::view-transition-new(root) {

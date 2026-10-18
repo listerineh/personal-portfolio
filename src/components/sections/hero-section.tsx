@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Button, RotatingWords } from "@/components/ds";
+import { Ambient, Button, RotatingWords } from "@/components/ds";
 import { HeroVignettes } from "./hero-vignettes";
 
 const step = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -33,9 +33,10 @@ export function HeroSection() {
     <section
       id="hero"
       aria-labelledby="hero-title"
-      className="relative flex min-h-[100svh] flex-col overflow-hidden bg-background px-gutter pb-28 pt-[calc(var(--header-h)+2.5rem)] md:pb-32"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-background px-gutter pb-28 pt-[calc(var(--header-h)+2.5rem)] md:pb-32"
     >
-      <div className="mx-auto my-auto grid w-full max-w-[1200px] items-center gap-16 py-10 lg:grid-cols-12 lg:gap-10 lg:py-16">
+      <Ambient />
+      <div className="relative mx-auto my-auto grid w-full max-w-[1200px] items-center gap-16 py-10 lg:grid-cols-12 lg:gap-10 lg:py-16">
         <div className="lg:col-span-7">
           <p
             data-intro=""

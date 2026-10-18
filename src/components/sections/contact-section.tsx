@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ChevronRight } from 'lucide-react';
-import { Button, Reveal } from '@/components/ds';
+import { Ambient, Button, Reveal } from '@/components/ds';
 
 /** Closing invitation: one large rounded card, one statement, one action, the address as a fallback. */
 export function ContactSection() {
@@ -10,7 +10,8 @@ export function ContactSection() {
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="bg-background px-gutter py-24 md:py-32 lg:py-40">
-      <Reveal className="tint mx-auto max-w-[1200px] rounded-xl px-6 py-16 text-center md:px-12 md:py-28">
+      <Reveal className="tint relative isolate mx-auto max-w-[1200px] overflow-hidden rounded-xl px-6 py-16 text-center md:px-12 md:py-28">
+        <Ambient intensity="soft" spotlight={false} />
         <h2 id="contact-title" className="text-display-sm mx-auto max-w-[18ch]">
           {t('title')}
         </h2>
