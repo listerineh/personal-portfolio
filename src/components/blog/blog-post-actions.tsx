@@ -19,8 +19,8 @@ export function BlogPostActions({ slug, title, url, related }: BlogPostActionsPr
   const t = useTranslations('blog');
 
   return (
-    <div className="mt-16 border-t border-foreground/20 pt-10">
-      <section aria-labelledby="reactions-title">
+    <div className="mt-16 grid gap-5">
+      <section aria-labelledby="reactions-title" className="panel p-6 md:p-8">
         <h2 id="reactions-title" className="text-headline">
           {t('whatDidYouThink')}
         </h2>
@@ -29,7 +29,7 @@ export function BlogPostActions({ slug, title, url, related }: BlogPostActionsPr
         </div>
       </section>
 
-      <section aria-labelledby="share-title" className="mt-12">
+      <section aria-labelledby="share-title" className="panel p-6 md:p-8">
         <h2 id="share-title" className="text-headline">
           {t('foundHelpful')}
         </h2>

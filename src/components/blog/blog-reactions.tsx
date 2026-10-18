@@ -148,15 +148,15 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
                 disabled={hasReacted}
                 aria-pressed={hasReacted}
                 className={cn(
-                  'inline-flex min-h-11 w-full items-center gap-2 border-[1.5px] px-3 text-sm font-semibold transition-[background-color,color,border-color,transform] duration-snap ease-snap',
+                  'inline-flex min-h-11 w-full items-center gap-2 rounded-full px-4 text-sm font-medium transition-[background-color,color,transform] duration-bounce ease-bounce motion-reduce:transition-none',
                   hasReacted
-                    ? 'border-foreground bg-foreground text-surface'
-                    : 'border-foreground/30 text-foreground hover:border-foreground active:scale-[0.98]',
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-foreground/[0.06] text-foreground hover:bg-foreground/[0.1] active:scale-95',
                 )}
               >
                 <Icon aria-hidden="true" className="h-4 w-4" />
                 <span>{config.label}</span>
-                {count > 0 && <span className="ml-auto font-mono text-xs tabular-nums sm:ml-1">{count}</span>}
+                {count > 0 && <span className="ml-auto text-xs font-semibold tabular-nums sm:ml-1">{count}</span>}
               </button>
             </li>
           );

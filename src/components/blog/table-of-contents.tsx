@@ -139,7 +139,7 @@ export function TableOfContents({ contentKey }: TableOfContentsProps) {
   return (
     <nav aria-label={t('tableOfContents')}>
       <p className="text-meta text-muted-foreground">{t('tableOfContents')}</p>
-      <ol className="mt-4 grid gap-0.5 border-l border-foreground/25">
+      <ol className="mt-3 grid gap-0.5">
         {headings.map((heading) => (
           <li key={heading.id} className={cn(heading.level === 3 && 'pl-3')}>
             <a
@@ -148,7 +148,7 @@ export function TableOfContents({ contentKey }: TableOfContentsProps) {
                 event.preventDefault();
                 handleHeadingClick(heading.id, heading.text);
               }}
-              className="-ml-px block border-l-2 border-transparent py-1.5 pl-4 text-sm leading-snug text-muted-foreground transition-[color,border-color] duration-snap ease-snap hover:border-foreground hover:text-foreground"
+              className="block rounded-[10px] px-3 py-2 text-sm leading-snug text-muted-foreground transition-[color,background-color] duration-snap ease-snap hover:bg-foreground/[0.05] hover:text-foreground"
             >
               {heading.text}
             </a>

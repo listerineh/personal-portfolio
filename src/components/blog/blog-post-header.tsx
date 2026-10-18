@@ -34,7 +34,7 @@ export function BlogPostHeader({ post, locale, formatDate, url }: BlogPostMetaPr
         <ul className="flex flex-wrap gap-2" aria-label={t('tags')}>
           {post.tags.map((tag) => (
             <li key={tag}>
-              <Pill variant="outline">{tag}</Pill>
+              <Pill>{tag}</Pill>
             </li>
           ))}
         </ul>

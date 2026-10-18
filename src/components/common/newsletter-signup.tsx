@@ -49,7 +49,7 @@ export function NewsletterSignup() {
 
   return (
     <section
-      className="panel my-16 p-6 md:p-10"
+      className="panel relative isolate my-16 overflow-hidden p-6 md:p-10"
     >
       <div className="">
         <h2 className="text-subhead">

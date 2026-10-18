@@ -12,7 +12,7 @@ interface BlogPostHeroImageProps {
 /** The article's print, framed and hung above the text. */
 export function BlogPostHeroImage({ imageUrl, title, imageAiHint }: BlogPostHeroImageProps) {
   return (
-    <div className="mb-12 overflow-hidden rounded-xl md:mb-16">
+    <div className="mb-12 overflow-hidden rounded-xl shadow-card md:mb-16">
       <Image
         src={imageUrl}
         alt={title}

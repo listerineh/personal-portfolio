@@ -45,7 +45,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
     }
   };
 
-  const buttonClass = 'inline-flex min-h-11 items-center gap-2 border-[1.5px] border-foreground/30 px-3 text-sm font-semibold text-foreground transition-colors duration-snap ease-snap hover:border-foreground';
+  const buttonClass = 'inline-flex min-h-11 items-center gap-2 rounded-full bg-foreground/[0.06] px-4 text-sm font-medium text-foreground transition-[background-color,transform] duration-snap ease-snap hover:bg-foreground/[0.1] active:scale-95 motion-reduce:transition-none';
 
   return (
     <ul className="flex flex-wrap gap-2" aria-label={t('shareThisPost')}>

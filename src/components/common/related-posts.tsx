@@ -19,13 +19,14 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
       <h2 id="related-title" className="text-subhead">
         {t('relatedArticles')}
       </h2>
-      <ol className="mt-6 divide-y divide-foreground/20 border-y border-foreground/20">
+      <ol className="mt-4 divide-y divide-border">
         {posts.map((post) => (
-          <li key={post.slug} className="py-6">
+          <li key={post.slug}>
             <BlogCard
+              layout="compact"
+              coverImage={post.imageUrl}
               title={post.title}
               slug={post.slug}
-              excerpt={post.excerpt}
               date={post.date}
               readingTime={post.readingTime}
               readingTimeLabel={minutesLabel}

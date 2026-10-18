@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
-import { ArrowLeft } from 'lucide-react';
+import { ChevronDown, ChevronLeft } from 'lucide-react';
 import type { BlogPostSummary } from '@/types';
 import type { Locale } from '@/i18n/config';
 import { Button, PageHeader } from '@/components/ds';
@@ -89,16 +89,20 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
 
   return (
     <>
-      <div aria-hidden="true" className="fixed inset-x-0 top-14 z-40 h-1 bg-foreground/10 md:top-16">
-        <div className="h-full origin-left bg-primary" style={{ transform: `scaleX(${readingProgress / 100})` }} />
+      {/* Reading progress: a hairline under the header that fills with amber. */}
+      <div aria-hidden="true" className="fixed inset-x-0 top-header z-40 h-0.5 bg-transparent">
+        <div className="h-full origin-left rounded-r-full bg-primary" style={{ transform: `scaleX(${readingProgress / 100})` }} />
       </div>
       <PageShell>
         <PageHeader
           title={post.title}
           titleSize="section"
           nav={
-            <Link href="/blog" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline-offset-[0.3em] hover:underline">
-              <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+            <Link
+              href="/blog"
+              className="inline-flex h-9 items-center gap-1 rounded-full bg-foreground/[0.06] pl-2.5 pr-4 text-[0.8125rem] font-medium text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1]"
+            >
+              <ChevronLeft aria-hidden="true" className="h-4 w-4" />
               {t('backToBlog')}
             </Link>
           }
@@ -106,30 +110,38 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
           <BlogPostHeader post={post} locale={locale} formatDate={formatDate} url={url} />
         </PageHeader>
 
-        <div className="px-gutter py-12 md:py-20">
-          <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-12 lg:gap-6">
+        {/* The cover, full column width, before the text starts. */}
+        {post.imageUrl && (
+          <div className="px-gutter">
+            <div className="mx-auto max-w-[1200px]">
+              <BlogPostHeroImage imageUrl={post.imageUrl} title={post.title} imageAiHint={post.imageAiHint} />
+            </div>
+          </div>
+        )}
+
+        <div className="px-gutter pb-24 pt-4 md:pb-32">
+          <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-12 lg:gap-10">
             <aside className="lg:col-span-3">
-              <details className="group border-y border-foreground/20 py-3 lg:hidden">
-                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-semibold">
+              <details className="panel group p-2 lg:hidden">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-[14px] px-3 text-sm font-semibold">
                   {t('tableOfContents')}
-                  <span aria-hidden="true" className="font-mono transition-transform group-open:rotate-45">+</span>
+                  <ChevronDown aria-hidden="true" className="h-4 w-4 transition-transform duration-snap ease-snap group-open:rotate-180" />
                 </summary>
-                <div className="pt-3">
+                <div className="px-1 pb-2 pt-1">
                   <TableOfContents key={`${post.slug}:${locale}`} contentKey={`${post.slug}:${locale}`} />
                 </div>
               </details>
-              <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 lg:block">
+              <div className="sticky top-[calc(var(--header-h)+1.5rem)] hidden max-h-[calc(100vh-8rem)] overflow-y-auto pr-2 lg:block">
                 <TableOfContents key={`${post.slug}:${locale}`} contentKey={`${post.slug}:${locale}`} />
               </div>
             </aside>
 
             <article key={post.slug} ref={contentRef} className="min-w-0 lg:col-span-8 lg:col-start-5">
-              {post.imageUrl && <BlogPostHeroImage imageUrl={post.imageUrl} title={post.title} imageAiHint={post.imageAiHint} />}
               {version.body}
               <BlogPostActions slug={post.slug} title={post.title} url={url} related={version.related} />
-              <div className="mt-16 border-t border-foreground/20 pt-8">
+              <div className="mt-12">
                 <Button variant="secondary" href="/blog" className="w-full sm:w-auto">
-                  <ArrowLeft aria-hidden="true" className="h-4 w-4" /> {t('moreArticles')}
+                  <ChevronLeft aria-hidden="true" className="h-4 w-4" /> {t('moreArticles')}
                 </Button>
               </div>
             </article>
