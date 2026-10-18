@@ -124,3 +124,9 @@ export const Compact: Story = {
   },
   decorators: [(Story) => <div className="max-w-md"><Story /></div>],
 };
+
+/** The lead across a full row on /blog: cover beside the text. */
+export const Wide: Story = {
+  args: { ...Feature.args, layout: 'wide' },
+  decorators: [(Story) => <div className="max-w-5xl"><Story /></div>],
+};

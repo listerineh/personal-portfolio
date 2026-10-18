@@ -24,9 +24,10 @@ interface BlogCardProps {
   recommendedLabel?: string;
   /**
    * `row` = list entry with a small cover beside it (blog listing); `stack` = card with the cover on top;
-   * `feature` = the lead story, large cover and title, tags as chips; `compact` = a tight row with a thumbnail.
+   * `feature` = the lead story, large cover and title, tags as chips; `wide` = the same lead laid out horizontally
+   * for a full row; `compact` = a tight row with a thumbnail.
    */
-  layout?: "row" | "stack" | "feature" | "compact";
+  layout?: "row" | "stack" | "feature" | "wide" | "compact";
   className?: string;
 }
 
@@ -127,29 +128,33 @@ export function BlogCard({
     );
   }
 
-  if (layout === "feature") {
+  if (layout === "feature" || layout === "wide") {
+    const wide = layout === "wide";
     return (
       <article className={cn("group relative h-full", className)}>
         <Link
           href={`/blog/${slug}`}
           aria-label={`${title}. ${readMoreLabel}`}
-          className="panel flex h-full flex-col overflow-hidden no-underline transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float focus-visible:-translate-y-1 focus-visible:shadow-float motion-reduce:transition-none"
+          className={cn(
+            "panel flex h-full flex-col overflow-hidden no-underline transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float focus-visible:-translate-y-1 focus-visible:shadow-float motion-reduce:transition-none",
+            wide && "md:grid md:grid-cols-2",
+          )}
         >
           {coverImage && (
-            <span className="relative block aspect-[16/9] w-full overflow-hidden bg-muted">
-              <Image src={coverImage} alt="" fill sizes="(max-width: 1024px) 100vw, 700px" className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.03] motion-reduce:transition-none" />
+            <span className={cn("relative block aspect-[16/9] w-full overflow-hidden bg-muted", wide && "md:aspect-auto md:h-full md:min-h-[380px]")}>
+              <Image src={coverImage} alt="" fill sizes={wide ? "(max-width: 768px) 100vw, 600px" : "(max-width: 1024px) 100vw, 700px"} className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.03] motion-reduce:transition-none" />
             </span>
           )}
-          <span className="flex flex-1 flex-col gap-3 p-6 md:p-8">
+          <span className={cn("flex flex-1 flex-col gap-3 p-6 md:p-8", wide && "md:justify-center md:p-10 lg:p-12")}>
             <span className="flex flex-wrap items-center gap-2">
               {badges}
               {meta && <span className="text-meta text-muted-foreground">{date ? <time dateTime={date}>{meta}</time> : meta}</span>}
             </span>
-            <Heading className="text-subhead text-foreground transition-colors duration-snap ease-snap group-hover:text-primary motion-reduce:transition-none">
+            <Heading className={cn("text-foreground transition-colors duration-snap ease-snap group-hover:text-primary motion-reduce:transition-none", wide ? "text-display-sm" : "text-subhead")}>
               {title}
             </Heading>
             {excerpt && <span className="line-clamp-3 max-w-[62ch] text-[1.0625rem] leading-relaxed text-muted-foreground">{excerpt}</span>}
-            <span className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-3">
+            <span className={cn("mt-auto flex flex-wrap items-center justify-between gap-3 pt-3", wide && "md:mt-4")}>
               {tags.length > 0 && (
                 <span className="flex flex-wrap gap-1.5">
                   {tags.slice(0, 3).map((tag) => (

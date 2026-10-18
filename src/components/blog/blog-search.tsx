@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback, type ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { X, Filter, TrendingUp, ArrowUpAZ, ArrowDownAZ, Star, Loader2 } from 'lucide-react';
-import { Dropdown, DropdownTrigger, DropdownContent, DropdownCheckboxItem, DropdownItem, DropdownLabel, DropdownSeparator, FilterTag, SearchField } from '@/components/ds';
+import { Button, Dropdown, DropdownTrigger, DropdownContent, DropdownCheckboxItem, DropdownItem, DropdownLabel, DropdownSeparator, FilterTag, SearchField } from '@/components/ds';
 import type { BlogPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
@@ -126,7 +126,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
   ];
 
   return (
-    <div className="grid gap-5">
+    <div className="grid gap-4">
       <div className="flex gap-2">
         <SearchField
           value={searchQuery}
@@ -173,14 +173,16 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
         </Dropdown>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('sortBy')}>
-        <span className="text-meta mr-1 text-muted-foreground">{t('sortBy')}</span>
-        {sortOptions.map(({ key, label, icon }) => (
-          <FilterTag key={key} pressed={sortBy === key} onPressedChange={() => selectSort(key)} className="gap-1.5">
-            {icon}
-            {label}
-          </FilterTag>
-        ))}
+      <div className="marquee-edges -mx-gutter overflow-x-auto px-gutter scrollbar-none">
+        <div className="flex w-max items-center gap-2 py-1" role="group" aria-label={t('sortBy')}>
+          <span className="text-meta mr-1 text-muted-foreground">{t('sortBy')}</span>
+          {sortOptions.map(({ key, label, icon }) => (
+            <FilterTag key={key} pressed={sortBy === key} onPressedChange={() => selectSort(key)} className="gap-1.5">
+              {icon}
+              {label}
+            </FilterTag>
+          ))}
+        </div>
       </div>
 
       {selectedTags.length > 0 && (
@@ -195,11 +197,16 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
         </div>
       )}
 
-      {hasActiveFilters && (
+      <div className="flex min-h-9 items-center gap-3">
         <p className="text-meta text-muted-foreground" aria-live="polite">
-          {t('foundArticles', { count: filteredAndSortedPosts.length })}
+          {t(hasActiveFilters ? 'foundArticles' : 'articleCount', { count: filteredAndSortedPosts.length })}
         </p>
-      )}
+        {hasActiveFilters && (
+          <Button variant="ghost" accent="amber" size="sm" onClick={clearFilters}>
+            {t('clearAll')}
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
