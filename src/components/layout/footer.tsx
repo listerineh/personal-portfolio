@@ -48,7 +48,7 @@ export function Footer() {
           <div className="md:col-span-5">
             <Link href="/" className="inline-flex items-center gap-2.5" aria-label="Sebastian Alvarez">
               <Mark className="h-9 w-9" />
-              <span className="text-xl font-semibold tracking-[-0.02em]">Listerineh</span>
+              <span className="text-xl font-semibold tracking-[-0.02em]">listerineh.dev</span>
             </Link>
             <p className="mt-5 max-w-[36ch] text-[0.9375rem] leading-relaxed text-muted-foreground">
               {tFooter("tagline")}

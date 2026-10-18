@@ -157,7 +157,7 @@ export function Header() {
         >
           <Mark className="h-7 w-7" />
           <span className="hidden text-[0.9375rem] font-semibold tracking-[-0.02em] sm:inline">
-            Listerineh
+            listerineh.dev
           </span>
         </Link>
 
