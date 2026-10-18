@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { metadataFor } from '@/lib/metadata';
 import { getBlogPosts } from '@/lib/data/blog';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
@@ -7,84 +7,7 @@ import { BlogListingClient } from '@/components/blog/blog-listing-client';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
-  
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
-  const blogUrl = `${siteUrl}/blog`;
-  
-  const title = locale === 'es' 
-    ? 'Blog Técnico | Sebastian Alvarez — Desarrollo, IA & Arquitectura'
-    : 'Technical Blog | Sebastian Alvarez — Engineering, AI & Architecture';
-  
-  const description = locale === 'es'
-    ? 'Artículos sobre desarrollo web, IA, arquitectura de sistemas, DevOps y cloud computing. Experiencias reales, guías prácticas y reflexiones de un ingeniero fullstack senior con base en Ecuador.'
-    : 'Articles on web development, AI, system architecture, DevOps and cloud. Real-world experience, practical guides and engineering insights from a senior fullstack engineer based in Ecuador.';
-  
-  const keywords = locale === 'es'
-    ? ['blog tecnología', 'desarrollo software', 'inteligencia artificial', 'programación', 'arquitectura software', 'DevOps', 'cloud computing', 'tutoriales programación', 'Sebastian Alvarez']
-    : ['tech blog', 'software development', 'artificial intelligence', 'programming', 'software architecture', 'DevOps', 'cloud computing', 'programming tutorials', 'Sebastian Alvarez'];
-
-  return {
-    title,
-    description,
-    keywords,
-    authors: [{ name: 'Sebastian Alvarez', url: siteUrl }],
-    creator: 'Sebastian Alvarez',
-    publisher: 'Sebastian Alvarez',
-    openGraph: {
-      title,
-      description,
-      url: blogUrl,
-      siteName: 'listerineh.dev',
-      images: [
-        {
-          url: `${siteUrl}/images/blog-og.webp`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-      locale: locale === 'es' ? 'es_ES' : 'en_US',
-      alternateLocale: locale === 'es' ? 'en_US' : 'es_ES',
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [`${siteUrl}/images/blog-og.webp`],
-      creator: '@listerineh',
-      site: '@listerineh',
-    },
-    alternates: {
-      canonical: blogUrl,
-      languages: {
-        'en': `${siteUrl}/blog`,
-        'es': `${siteUrl}/blog`,
-      },
-      types: {
-        'application/rss+xml': `${siteUrl}/feed.xml`,
-      },
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-    verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION,
-    },
-  };
-}
+export const generateMetadata = metadataFor('blog');
 
 export default async function BlogListingPage() {
   const cookieStore = await cookies();

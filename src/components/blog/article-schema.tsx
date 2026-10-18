@@ -7,7 +7,7 @@ interface ArticleSchemaProps {
 export function ArticleSchema({ post }: ArticleSchemaProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
   const postUrl = `${siteUrl}/blog/${post.slug}`;
-  const imageUrl = post.imageUrl ? `${siteUrl}${post.imageUrl}` : `${siteUrl}/og-default.png`;
+  const imageUrl = post.imageUrl ? `${siteUrl}${post.imageUrl.replace(/^\/blog\/(.+)\.\w+$/, '/og/blog/$1.jpg')}` : `${siteUrl}/og/home.png`;
 
   const schema = {
     '@context': 'https://schema.org',
@@ -27,7 +27,7 @@ export function ArticleSchema({ post }: ArticleSchemaProps) {
       name: 'Sebastian Alvarez',
       logo: {
         '@type': 'ImageObject',
-        url: `${siteUrl}/favicon.svg`,
+        url: `${siteUrl}/icons/icon-512.png`,
       },
     },
     mainEntityOfPage: {

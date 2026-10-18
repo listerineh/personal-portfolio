@@ -4,7 +4,7 @@ export function PersonSchema() {
     '@type': 'Person',
     name: 'Sebastian Alvarez',
     url: 'https://listerineh.dev',
-    image: 'https://listerineh.dev/images/home-og.webp',
+    image: 'https://listerineh.dev/og/home.png',
     description: 'Senior Fullstack & Platform Engineer with 6+ years building scalable cloud systems. React, Next.js, Python, AWS. GDG Quito organizer and open source contributor based in Ecuador.',
     jobTitle: 'Senior Fullstack & Platform Engineer',
     worksFor: {
