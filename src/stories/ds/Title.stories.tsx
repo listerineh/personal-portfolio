@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Title } from '@/components/ds/Title';
-import { Wall } from '@/components/ds/Wall';
+import { Band } from '@/components/ds/Surface';
 
 const meta: Meta<typeof Title> = {
   title: 'DS/Title',
@@ -31,13 +31,13 @@ export const WorkTitle: Story = {
 /** On a painted wall the title picks up the wall foreground automatically. */
 export const OnWall: Story = {
   render: () => (
-    <Wall className="py-16">
+    <Band className="py-16">
       <Title as="h1" size="wall">
         Sebastian
         <br />
         Alvarez
       </Title>
-    </Wall>
+    </Band>
   ),
 };
 

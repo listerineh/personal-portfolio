@@ -10,28 +10,28 @@ interface ExhibitProps {
   title: ReactNode
   /** One catalog line under the title (genre, years). */
   subtitle?: ReactNode
-  tone?: 'paint' | 'plaster'
+  tone?: 'tint' | 'plain'
   className?: string
   children: ReactNode
 }
 
 /** A temporary exhibition inside the site: its own marker color, the house type and grid. */
-export function Exhibit({ id, color, tags, title, subtitle, tone = 'plaster', className, children }: ExhibitProps) {
+export function Exhibit({ id, color, tags, title, subtitle, tone = 'plain', className, children }: ExhibitProps) {
   return (
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn(tone === 'paint' ? 'wall' : 'bg-background text-foreground', 'border-t border-foreground/20 px-gutter py-20 md:py-28', className)}
+      className={cn(tone === 'tint' ? 'tint' : 'bg-background text-foreground', 'px-gutter py-20 md:py-28', className)}
     >
-      <div className="mx-auto max-w-[1296px]">
+      <div className="mx-auto max-w-[1200px]">
         <div className="flex flex-wrap items-center gap-3">
-          <span aria-hidden="true" className="h-4 w-4 shrink-0" style={{ backgroundColor: color }} />
+          <span aria-hidden="true" className="h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: color }} />
           {tags}
         </div>
         <h2 id={`${id}-title`} className="text-display mt-6">
           {title}
         </h2>
-        {subtitle && <p className="text-catalog mt-3 text-muted-foreground">{subtitle}</p>}
+        {subtitle && <p className="text-meta mt-3 text-muted-foreground">{subtitle}</p>}
         <div className="mt-12 md:mt-16">{children}</div>
       </div>
     </section>

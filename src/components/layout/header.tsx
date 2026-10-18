@@ -4,22 +4,21 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Menu, X } from "lucide-react";
 import { ThemeToggleButton, LanguageSwitcher } from "@/components/common";
-import { Mark, useRoute } from "@/components/ds";
+import { Mark } from "@/components/ds";
 import { cn } from "@/lib/utils";
 
 /**
- * The gallery's top strip. Solid ground (no glass), the mark, the rooms of the site,
- * and the room you are standing in, as text.
+ * Floating translucent bar: the mark, the pages of the site, language and theme.
+ * The hairline appears only once content scrolls under it. On phones, a full-screen sheet.
  */
 export function Header() {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const router = useRouter();
   const pathname = usePathname();
-  const { current } = useRoute();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const scrollYRef = useRef(0);
@@ -102,6 +101,14 @@ export function Header() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, closeMenu]);
 
+  // Scroll edge: show the hairline only when content is under the bar.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // Close the sheet if the viewport grows past the mobile breakpoint.
   useEffect(() => {
     if (!open) return;
@@ -133,30 +140,29 @@ export function Header() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-foreground/15 bg-background print:static">
-      <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-4 px-gutter md:h-16">
-        <div className="flex min-w-0 items-center gap-4">
-          <Link
-            href="/"
-            onClick={() => closeMenu(false)}
-            className="flex shrink-0 items-center gap-3"
-            aria-label="Sebastian Alvarez"
-          >
-            <Mark className="h-8 w-8" />
-            <span className="hidden font-sans text-[0.9375rem] font-extrabold uppercase tracking-[0.02em] [font-stretch:125%] sm:inline">
-              Listerineh
-            </span>
-          </Link>
-          {current && (
-            <p className="text-catalog hidden min-w-0 truncate border-l border-foreground/20 pl-4 text-muted-foreground md:block">
-              <span className="text-foreground">{current.number}</span>{" "}
-              {current.name}
-            </p>
-          )}
-        </div>
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 print:static",
+        "transition-[box-shadow,background-color] duration-snap ease-snap motion-reduce:transition-none",
+        open ? "bg-background" : "material",
+        scrolled && !open && "shadow-[0_1px_0_rgb(var(--border)/0.8)]",
+      )}
+    >
+      <div className="mx-auto flex h-header max-w-[1200px] items-center justify-between gap-4 px-gutter">
+        <Link
+          href="/"
+          onClick={() => closeMenu(false)}
+          className="flex shrink-0 items-center gap-2.5"
+          aria-label="Sebastian Alvarez"
+        >
+          <Mark className="h-7 w-7" />
+          <span className="hidden text-[0.9375rem] font-semibold tracking-[-0.02em] sm:inline">
+            Listerineh
+          </span>
+        </Link>
 
         <nav className="hidden lg:block" aria-label={tCommon("menu")}>
-          <ul className="flex items-center gap-6 xl:gap-8">
+          <ul className="flex items-center gap-1">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
@@ -164,26 +170,21 @@ export function Header() {
                   onClick={(event) => handleHashLink(event, item.href)}
                   aria-current={isCurrent(item.href) ? "page" : undefined}
                   className={cn(
-                    "relative inline-flex h-11 items-center text-[0.9375rem] font-semibold transition-colors duration-snap ease-snap",
+                    "relative inline-flex h-9 items-center rounded-full px-3.5 text-[0.875rem] font-medium",
+                    "transition-[color,background-color] duration-snap ease-snap motion-reduce:transition-none",
                     isCurrent(item.href)
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground",
+                      ? "bg-foreground/[0.06] text-foreground"
+                      : "text-muted-foreground hover:bg-foreground/[0.04] hover:text-foreground",
                   )}
                 >
                   {item.label}
-                  {isCurrent(item.href) && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute inset-x-0 bottom-2 h-0.5 bg-primary"
-                    />
-                  )}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           <LanguageSwitcher className="hidden sm:inline-flex" />
           <ThemeToggleButton />
           <button
@@ -193,18 +194,30 @@ export function Header() {
             aria-expanded={open}
             aria-controls="site-menu"
             aria-label={open ? tCommon("close") : tCommon("menu")}
-            className="inline-flex h-11 w-11 items-center justify-center text-foreground lg:hidden"
+            className="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-foreground lg:hidden"
           >
-            {open ? (
-              <X aria-hidden="true" className="h-6 w-6" />
-            ) : (
-              <Menu aria-hidden="true" className="h-6 w-6" />
-            )}
+            {/* Two strokes that fold into an X: the control explains its own state change. */}
+            <span aria-hidden="true" className="relative block h-3 w-[18px]">
+              <span
+                className={cn(
+                  "absolute left-0 block h-[1.5px] w-full rounded-full bg-current",
+                  "transition-transform duration-snap ease-snap motion-reduce:transition-none",
+                  open ? "top-[5px] rotate-45" : "top-0",
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute left-0 block h-[1.5px] w-full rounded-full bg-current",
+                  "transition-transform duration-snap ease-snap motion-reduce:transition-none",
+                  open ? "top-[5px] -rotate-45" : "top-[10px]",
+                )}
+              />
+            </span>
           </button>
         </div>
       </div>
 
-      {/* Mobile sheet: a painted wall with the rooms of the site as wall titles. */}
+      {/* Phone sheet: pages as large links that arrive one after another. */}
       <div
         id="site-menu"
         ref={sheetRef}
@@ -212,40 +225,39 @@ export function Header() {
         aria-modal="true"
         aria-label={tCommon("menu")}
         className={cn(
-          "wall fixed inset-x-0 bottom-0 top-14 flex-col overflow-y-auto md:top-16 lg:hidden",
+          "fixed inset-x-0 bottom-0 top-header flex-col overflow-y-auto bg-background lg:hidden",
           open ? "flex" : "hidden",
         )}
       >
-        <nav className="flex-1 px-gutter pt-6" aria-label={tCommon("menu")}>
-          <ol className="divide-y divide-foreground/20 border-y border-foreground/20">
+        <nav className="flex-1 px-gutter pt-4" aria-label={tCommon("menu")}>
+          <ul>
             {navItems.map((item, index) => (
-              <li key={item.href}>
+              <li
+                key={item.href}
+                className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-2 motion-safe:fill-mode-both"
+                style={{ animationDelay: `${index * 35}ms`, animationDuration: "380ms" }}
+              >
                 <Link
                   href={item.href}
                   onClick={(event) => handleHashLink(event, item.href)}
                   aria-current={isCurrent(item.href) ? "page" : undefined}
-                  className="flex min-h-16 items-baseline gap-4 py-3"
+                  className={cn(
+                    "flex min-h-14 items-center justify-between py-2 text-[1.75rem] font-semibold tracking-[-0.03em]",
+                    isCurrent(item.href) ? "text-foreground" : "text-foreground/80",
+                  )}
                 >
-                  <span className="text-catalog w-6 shrink-0 text-muted-foreground">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[clamp(1.75rem,8vw,2.5rem)] font-extrabold leading-none tracking-[-0.02em] [font-stretch:118%]">
-                    {item.label}
-                  </span>
+                  {item.label}
                   {isCurrent(item.href) && (
-                    <span
-                      aria-hidden="true"
-                      className="ml-auto h-3 w-3 shrink-0 self-center bg-primary"
-                    />
+                    <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
                   )}
                 </Link>
               </li>
             ))}
-          </ol>
+          </ul>
         </nav>
         <div className="flex items-center justify-between px-gutter py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
           <LanguageSwitcher />
-          <p className="text-catalog text-muted-foreground">
+          <p className="text-meta text-muted-foreground">
             © {new Date().getFullYear()} Sebastian Alvarez
           </p>
         </div>

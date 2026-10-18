@@ -42,10 +42,10 @@ export default function UnsubscribePage() {
 
   return (
     <PageShell>
-      <PageHeader name={t('title')} title={t('title')} titleSize="room" intro={t('description')} />
+      <PageHeader title={t('title')} titleSize="section" intro={t('description')} />
       <section className="px-gutter py-16 md:py-24">
-        <div className="mx-auto max-w-[1296px]">
-          <div className="plaque max-w-xl p-6 md:p-8" aria-live="polite">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="panel max-w-xl p-6 md:p-8" aria-live="polite">
             {(status === 'idle' || status === 'loading') && (
               <form onSubmit={handleSubmit} className="grid gap-6">
                 <FormField label={t('emailLabel')} required>

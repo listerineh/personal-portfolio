@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { ArrowUpRight, Mail, Server, Monitor, Cloud, Bot } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Button, PageHeader, Plaque } from '@/components/ds';
+import { Button, PageHeader, Panel } from '@/components/ds';
 import { communityLinks } from '@/lib/data/navigation';
 
 export function AboutContent() {
@@ -31,7 +31,6 @@ export function AboutContent() {
   return (
     <>
       <PageHeader
-        name={t('heroGreeting')}
         title={
           <>
             <span className="block">{t('heroGreeting')}</span>
@@ -40,26 +39,26 @@ export function AboutContent() {
         }
         intro={t('heroRole')}
       >
-        <p className="text-catalog text-muted-foreground">Quito, Ecuador</p>
+        <p className="text-meta text-muted-foreground">Quito, Ecuador</p>
       </PageHeader>
 
       {/* Statement */}
       <section className="px-gutter py-20 md:py-28">
-        <div className="mx-auto max-w-[1296px]">
+        <div className="mx-auto max-w-[1200px]">
           <p className="text-subhead max-w-[34ch] !leading-[1.3]">{t('heroDescription')}</p>
         </div>
       </section>
 
       {/* Journey */}
       <section aria-labelledby="journey-title" className="px-gutter pb-20 md:pb-28">
-        <div className="mx-auto max-w-[1296px]">
+        <div className="mx-auto max-w-[1200px]">
           <h2 id="journey-title" className="text-display-sm">
             {t('journeyTitle')}
           </h2>
           <ol className="mt-12">
             {phases.map(({ id, label, title, body }) => (
               <li key={id} className="grid gap-3 border-t border-foreground/20 py-10 md:grid-cols-12 md:gap-6 md:py-14">
-                <p className="text-catalog text-muted-foreground md:col-span-3">{label}</p>
+                <p className="text-meta text-muted-foreground md:col-span-3">{label}</p>
                 <div className="md:col-span-8">
                   <h3 className="text-subhead">{title}</h3>
                   <p className="text-lead mt-4 max-w-[62ch] text-muted-foreground">{body}</p>
@@ -71,8 +70,8 @@ export function AboutContent() {
       </section>
 
       {/* Expertise on a painted wall */}
-      <section aria-labelledby="expertise-title" className="wall px-gutter py-20 md:py-28">
-        <div className="mx-auto max-w-[1296px]">
+      <section aria-labelledby="expertise-title" className="tint px-gutter py-20 md:py-28">
+        <div className="mx-auto max-w-[1200px]">
           <h2 id="expertise-title" className="text-display-sm">
             {t('expertiseTitle')}
           </h2>
@@ -90,7 +89,7 @@ export function AboutContent() {
 
       {/* Community */}
       <section aria-labelledby="community-title" className="px-gutter py-20 md:py-28">
-        <div className="mx-auto grid max-w-[1296px] items-start gap-12 lg:grid-cols-12 lg:gap-6">
+        <div className="mx-auto grid max-w-[1200px] items-start gap-12 lg:grid-cols-12 lg:gap-6">
           <div className="lg:col-span-7">
             <h2 id="community-title" className="text-display-sm">
               {t('communityTitle')}
@@ -106,7 +105,7 @@ export function AboutContent() {
             </dl>
           </div>
 
-          <Plaque className="lg:col-span-4 lg:col-start-9">
+          <Panel className="lg:col-span-4 lg:col-start-9">
             <div className="flex items-center gap-4">
               <Image src="/images/gdg_quito_logo.webp" alt="" width={48} height={48} className="h-12 w-12 shrink-0" />
               <h3 className="text-headline">Google Developer Groups · Quito</h3>
@@ -121,13 +120,13 @@ export function AboutContent() {
               {t('communityJoin')}
               <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
             </a>
-          </Plaque>
+          </Panel>
         </div>
       </section>
 
       {/* Beyond the terminal: music has its own room (/why) */}
       <section aria-labelledby="music-title" className="border-t border-foreground/20 px-gutter py-20 md:py-28">
-        <div className="mx-auto grid max-w-[1296px] gap-8 lg:grid-cols-12 lg:gap-6">
+        <div className="mx-auto grid max-w-[1200px] gap-8 lg:grid-cols-12 lg:gap-6">
           <h2 id="music-title" className="text-display-sm lg:col-span-6">
             {t('musicTitle')}
           </h2>
@@ -142,8 +141,8 @@ export function AboutContent() {
       </section>
 
       {/* Close */}
-      <section aria-labelledby="cta-title" className="wall px-gutter py-20 md:py-28">
-        <div className="mx-auto max-w-[1296px]">
+      <section aria-labelledby="cta-title" className="tint px-gutter py-20 md:py-28">
+        <div className="mx-auto max-w-[1200px]">
           <h2 id="cta-title" className="text-display-sm max-w-[18ch]">
             {t('ctaTitle')}
           </h2>

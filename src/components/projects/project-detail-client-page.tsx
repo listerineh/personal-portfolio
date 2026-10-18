@@ -7,7 +7,7 @@ import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import { useLocale } from '@/context/locale-context';
 import type { Project } from '@/types';
 import { stackLayers } from '@/lib/stack-layers';
-import { Button, Hang, PageHeader, Plaque, WorkingDrawing } from '@/components/ds';
+import { Button, Reveal, PageHeader, Panel, StackList } from '@/components/ds';
 import { PageShell } from '@/components/layout';
 
 interface ProjectDetailClientPageProps {
@@ -43,7 +43,7 @@ export function ProjectDetailClientPage({ project }: ProjectDetailClientPageProp
 
   return (
     <PageShell>
-      <PageHeader name={project.title} title={project.title} intro={project.description} nav={backLink}>
+      <PageHeader title={project.title} intro={project.description} nav={backLink}>
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           {project.liveDemoUrl && (
             <Button accent="amber" size="lg" href={project.liveDemoUrl} external className="w-full sm:w-auto">
@@ -61,30 +61,30 @@ export function ProjectDetailClientPage({ project }: ProjectDetailClientPageProp
       </PageHeader>
 
       <section className="px-gutter py-16 md:py-24">
-        <div className="mx-auto grid max-w-[1296px] gap-10 lg:grid-cols-12 lg:gap-6">
+        <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-12 lg:gap-6">
           {project.imageUrl && (
-            <Hang className="lg:col-span-8">
-              <div className="plaque p-2 shadow-hang sm:p-3">
+            <Reveal className="lg:col-span-8">
+              <div className="overflow-hidden rounded-xl">
                 <div className="relative aspect-[16/10] overflow-hidden bg-muted">
                   <Image src={project.imageUrl} alt={project.title} fill priority sizes="(max-width: 1024px) 100vw, 66vw" className="object-cover" />
                 </div>
               </div>
-            </Hang>
+            </Reveal>
           )}
 
           <div className="grid content-start gap-8 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1">
-            <Plaque>
+            <Panel>
               <dl className="grid gap-4">
                 {project.role && (
                   <div>
-                    <dt className="text-catalog text-muted-foreground">{t('role')}</dt>
+                    <dt className="text-meta text-muted-foreground">{t('role')}</dt>
                     <dd className="mt-1 font-semibold">{project.role}</dd>
                   </div>
                 )}
                 {dateRange && (
                   <div>
                     <dt className="sr-only">{t('dates')}</dt>
-                    <dd className="text-catalog">{dateRange}</dd>
+                    <dd className="text-meta">{dateRange}</dd>
                   </div>
                 )}
                 {status && (
@@ -104,9 +104,9 @@ export function ProjectDetailClientPage({ project }: ProjectDetailClientPageProp
                   </div>
                 )}
               </dl>
-            </Plaque>
+            </Panel>
             {project.tags.length > 0 && (
-              <WorkingDrawing
+              <StackList
                 caption={`${t('technologies')} · ${tSala('drawingCaption')}`}
                 layers={stackLayers(project.tags).map(({ layer, items }) => ({ name: tSala(`layers.${layer}`), items }))}
               />
@@ -117,7 +117,7 @@ export function ProjectDetailClientPage({ project }: ProjectDetailClientPageProp
 
       {(project.longDescription || project.relevance) && (
         <section className="px-gutter pb-20 md:pb-32">
-          <div className="mx-auto grid max-w-[1296px] gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-6">
             {project.longDescription && (
               <div className="lg:col-span-7">
                 <h2 className="text-subhead">{t('aboutProject')}</h2>
@@ -135,7 +135,7 @@ export function ProjectDetailClientPage({ project }: ProjectDetailClientPageProp
               </aside>
             )}
           </div>
-          <div className="mx-auto mt-16 max-w-[1296px] border-t border-foreground/20 pt-6">{backLink}</div>
+          <div className="mx-auto mt-16 max-w-[1200px] border-t border-foreground/20 pt-6">{backLink}</div>
         </section>
       )}
     </PageShell>

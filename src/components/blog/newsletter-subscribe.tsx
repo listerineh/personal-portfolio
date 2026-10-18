@@ -129,7 +129,7 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
         {buttonContent}
       </Button>
       {feedback}
-      <p className="text-catalog text-muted-foreground">
+      <p className="text-meta text-muted-foreground">
         {t('secureLabel')} · {t('privateLabel')}
       </p>
     </form>
@@ -141,7 +141,7 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
 
   // Default: a notice pinned to the wall between written works.
   return (
-    <aside className="plaque my-4 grid gap-6 p-6 md:grid-cols-12 md:gap-6 md:p-10">
+    <aside className="panel my-4 grid gap-6 p-6 md:grid-cols-12 md:gap-6 md:p-10">
       <h2 className="text-subhead md:col-span-6">{t('dontMissNextPost')}</h2>
       <div className="md:col-span-6">{form}</div>
     </aside>

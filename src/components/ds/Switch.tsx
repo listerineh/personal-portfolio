@@ -22,12 +22,12 @@ export function Switch({ id, checked, onCheckedChange, disabled, className = "",
       disabled={disabled}
       aria-label={ariaLabel}
       className={cn(
-        "relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center border-[1.5px] border-foreground p-0.5 transition-colors duration-snap ease-snap",
-        "data-[state=checked]:bg-primary data-[state=unchecked]:bg-transparent disabled:cursor-not-allowed disabled:opacity-50",
+        "relative inline-flex h-[31px] w-[51px] shrink-0 cursor-pointer items-center rounded-full p-0.5 transition-colors duration-snap ease-snap",
+        "data-[state=checked]:bg-primary data-[state=unchecked]:bg-foreground/[0.16] disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
     >
-      <SwitchPrimitive.Thumb className="pointer-events-none block h-[18px] w-[18px] bg-foreground transition-transform duration-snap ease-snap data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 motion-reduce:transition-none" />
+      <SwitchPrimitive.Thumb className="pointer-events-none block h-[27px] w-[27px] rounded-full bg-white shadow-[0_3px_8px_rgb(0_0_0/0.15),0_1px_1px_rgb(0_0_0/0.16)] transition-transform duration-bounce ease-bounce data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 motion-reduce:transition-none" />
     </SwitchPrimitive.Root>
   );
 }

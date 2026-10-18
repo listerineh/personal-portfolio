@@ -22,9 +22,8 @@ export default function PrivacyPage() {
     <>
       <PageShell>
         <PageHeader
-          name={t('title')}
           title={t('title')}
-          titleSize="room"
+          titleSize="section"
           nav={
             <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline-offset-[0.3em] hover:underline">
               <ArrowLeft aria-hidden="true" className="h-4 w-4" />
@@ -32,14 +31,14 @@ export default function PrivacyPage() {
             </Link>
           }
         >
-          <p className="text-catalog text-muted-foreground">
+          <p className="text-meta text-muted-foreground">
             {t('lastUpdated')} {lastUpdated}
           </p>
         </PageHeader>
 
         {/* Content */}
         <div className="px-gutter py-16 md:py-24">
-          <div className="mx-auto grid max-w-[1296px] gap-14 lg:pl-[calc(100%/12*3)]">
+          <div className="mx-auto grid max-w-[1200px] gap-14 lg:pl-[calc(100%/12*3)]">
 
             {/* Cookies section with list */}
             <section>
@@ -59,8 +58,8 @@ export default function PrivacyPage() {
                   cookieLink: (chunks) => <Link href="/" className="font-medium underline decoration-primary decoration-1 underline-offset-[0.22em] hover:decoration-2">{chunks}</Link>
                 })}
               </p>
-              <div className="plaque max-w-[68ch] p-5 md:p-6">
-                <p className="text-catalog mb-3 text-muted-foreground">{t('cookieTypesLabel')}</p>
+              <div className="panel max-w-[68ch] p-5 md:p-6">
+                <p className="text-meta mb-3 text-muted-foreground">{t('cookieTypesLabel')}</p>
                 <ul className="space-y-2">
                   {[
                     [t('necessaryCookies'), t('necessaryCookiesDesc')],
@@ -112,7 +111,7 @@ export default function PrivacyPage() {
             ))}
 
             {/* Contact */}
-            <section className="plaque max-w-[68ch] p-6 md:p-8">
+            <section className="panel max-w-[68ch] p-6 md:p-8">
               <h2 className="text-subhead mb-4">
                 {t('contactTitle')}
               </h2>

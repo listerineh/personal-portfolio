@@ -8,11 +8,11 @@ import {
   BrandLink,
   Button,
   Exhibit,
-  Hang,
+  Reveal,
   MemberCard,
   PageHeader,
   Pill,
-  Plaque,
+  Panel,
   SpotifyTopTracks,
 } from "@/components/ds";
 import { PageShell } from "@/components/layout";
@@ -42,7 +42,6 @@ export default function WhyPage() {
   return (
     <PageShell>
       <PageHeader
-        name="Listerineh"
         title={
           <>
             <span className="block">{t("heroWhy")}</span>
@@ -51,14 +50,14 @@ export default function WhyPage() {
         }
         intro={t("heroSubtitle")}
       >
-        <p className="text-catalog text-muted-foreground">{t("heroEyebrow")}</p>
+        <p className="text-meta text-muted-foreground">{t("heroEyebrow")}</p>
       </PageHeader>
 
       {/* The photograph, hung, and where the name comes from */}
       <section className="px-gutter py-20 md:py-28">
-        <div className="mx-auto grid max-w-[1296px] gap-12 lg:grid-cols-12 lg:gap-6">
-          <Hang className="lg:col-span-7">
-            <div className="plaque p-2 shadow-hang sm:p-3">
+        <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-6">
+          <Reveal className="lg:col-span-7">
+            <div className="overflow-hidden rounded-xl">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                 <Image
                   src="/images/sebas-playing.webp"
@@ -70,7 +69,7 @@ export default function WhyPage() {
                 />
               </div>
             </div>
-          </Hang>
+          </Reveal>
           <div className="lg:col-span-4 lg:col-start-9 lg:self-end">
             <h2 className="text-display-sm">{t("originHeadline")}</h2>
             <div className="mt-6 grid gap-5 text-lead text-muted-foreground">
@@ -125,7 +124,7 @@ export default function WhyPage() {
 
         <div className="mt-16">
           <h3 className="text-headline">{t("mnVideoTitle")}</h3>
-          <div className="plaque mt-4 p-2 sm:p-3">
+          <div className="mt-4 overflow-hidden rounded-xl">
             <div className="relative aspect-video w-full overflow-hidden bg-muted">
               <iframe
                 src={`https://www.youtube.com/embed/${musicLinks.mn.featuredVideoId}?rel=0&modestbranding=1`}
@@ -167,12 +166,12 @@ export default function WhyPage() {
           <div className="grid content-start gap-5 lg:col-span-6">
             <p className="text-lead">{t("ssDescription")}</p>
             <p className="text-muted-foreground">{t("ssDescription2")}</p>
-            <Plaque className="p-5">
-              <p className="text-catalog text-muted-foreground">
+            <Panel className="p-5">
+              <p className="text-meta text-muted-foreground">
                 {t("ssAlbumNote")}
               </p>
               <p className="mt-2 text-sm leading-relaxed">{t("ssAlbumDesc")}</p>
-            </Plaque>
+            </Panel>
             <div className="pt-2">
               <BrandLink href={musicLinks.ss.instagram} color={SS}>
                 {t("soloIG")}
@@ -240,9 +239,9 @@ export default function WhyPage() {
       {/* Close: back to the engineering rooms */}
       <section
         aria-labelledby="why-cta-title"
-        className="wall px-gutter py-20 md:py-28"
+        className="tint px-gutter py-20 md:py-28"
       >
-        <div className="mx-auto grid max-w-[1296px] items-end gap-12 lg:grid-cols-12 lg:gap-6">
+        <div className="mx-auto grid max-w-[1200px] items-end gap-12 lg:grid-cols-12 lg:gap-6">
           <div className="lg:col-span-6">
             <h2 id="why-cta-title" className="text-display-sm">
               {t("ctaTitle")}
@@ -264,8 +263,8 @@ export default function WhyPage() {
               </Button>
             </div>
           </div>
-          <Hang className="lg:col-span-5 lg:col-start-8">
-            <div className="plaque p-2 shadow-hang sm:p-3">
+          <Reveal className="lg:col-span-5 lg:col-start-8">
+            <div className="overflow-hidden rounded-xl">
               <div className="relative aspect-[3/2] overflow-hidden bg-muted">
                 <Image
                   src="/images/sebas-playing-footer.webp"
@@ -276,7 +275,7 @@ export default function WhyPage() {
                 />
               </div>
             </div>
-          </Hang>
+          </Reveal>
         </div>
       </section>
     </PageShell>

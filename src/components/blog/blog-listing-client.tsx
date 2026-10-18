@@ -19,7 +19,6 @@ interface BlogListingClientProps {
 export function BlogListingClient({ posts }: BlogListingClientProps) {
   const t = useTranslations('blog');
   const tCommon = useTranslations('common');
-  const tSala = useTranslations('sala');
   const minutesLabel = t('readingTime', { minutes: '' }).trim();
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
@@ -70,14 +69,14 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
 
   return (
     <>
-      <PageHeader number="02" name={tSala('writing')} title={t('pageTitle')} intro={t('pageDescription')}>
+      <PageHeader title={t('pageTitle')} intro={t('pageDescription')}>
         <div className="max-w-3xl">
           <BlogSearch posts={posts} onFilteredPostsChange={handleFilteredPostsChange} onLoadingChange={setIsGridLoading} />
         </div>
       </PageHeader>
 
       <section className="px-gutter py-12 md:py-20" aria-busy={isGridLoading || isLoadingMore || undefined}>
-        <div className="mx-auto max-w-[1296px] lg:pl-[calc(100%/12*2)]">
+        <div className="mx-auto max-w-[1200px] lg:pl-[calc(100%/12*2)]">
           {isGridLoading ? (
             <div className="divide-y divide-foreground/20 border-y border-foreground/20">
               {Array.from({ length: 4 }, (_, i) => (
@@ -85,7 +84,7 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
               ))}
             </div>
           ) : filteredPosts.length === 0 ? (
-            <div className="plaque max-w-xl p-6 md:p-8">
+            <div className="panel max-w-xl p-6 md:p-8">
               <p className="text-headline">{t('noArticles')}</p>
               <p className="mt-2 text-muted-foreground">{t('tryAdjusting')}</p>
             </div>

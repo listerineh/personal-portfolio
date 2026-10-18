@@ -21,10 +21,10 @@ export function BrandLink({ href, color, variant = "outline", className, childre
       rel="noopener noreferrer"
       style={{ "--brand": color } as CSSProperties}
       className={cn(
-        "inline-flex min-h-11 items-center gap-2 px-5 text-sm font-semibold transition-[background-color,color,transform] duration-snap ease-snap active:scale-[0.98] motion-reduce:transition-none",
+        "inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-sm font-medium transition-[background-color,color,transform,filter] duration-snap ease-snap active:scale-[0.96] motion-reduce:transition-none",
         variant === "solid"
           ? "bg-[var(--brand)] text-[#16181D] hover:brightness-110"
-          : "border-[1.5px] border-[var(--brand)] text-foreground hover:bg-foreground/[0.06]",
+          : "border border-[var(--brand)] text-foreground hover:bg-foreground/[0.06]",
         className,
       )}
     >

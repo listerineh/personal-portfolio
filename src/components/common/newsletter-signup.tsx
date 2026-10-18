@@ -49,7 +49,7 @@ export function NewsletterSignup() {
 
   return (
     <section
-      className="plaque my-16 p-6 md:p-10"
+      className="panel my-16 p-6 md:p-10"
     >
       <div className="">
         <h2 className="text-subhead">
@@ -98,7 +98,7 @@ export function NewsletterSignup() {
           </div>
         )}
 
-        <p className="text-catalog mt-4 text-muted-foreground">{t('privacyNote')}</p>
+        <p className="text-meta mt-4 text-muted-foreground">{t('privacyNote')}</p>
       </div>
     </section>
   );

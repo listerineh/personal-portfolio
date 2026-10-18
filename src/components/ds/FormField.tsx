@@ -32,7 +32,7 @@ export function FormField({ label, error, hint, required = false, requiredLabel 
 
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <label htmlFor={controlId} className="text-sm font-semibold text-foreground">
+      <label htmlFor={controlId} className="text-sm font-medium text-foreground">
         {label}
         {required && (
           <span className="ml-1 text-muted-foreground" aria-hidden="true">

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Button } from '@/components/ds/Button';
-import { Wall } from '@/components/ds/Wall';
+import { Band } from '@/components/ds/Surface';
 
 const meta: Meta<typeof Button> = {
   title: 'DS/Button',
@@ -71,10 +71,10 @@ export const WithIcon: Story = {
 /** On a painted wall, ink buttons pick up the wall foreground; amber stays the one live action. */
 export const OnWall: Story = {
   render: () => (
-    <Wall className="flex flex-wrap gap-3 py-10">
+    <Band className="flex flex-wrap gap-3 py-10">
       <Button accent="amber">Walk the work</Button>
       <Button variant="secondary">Contact</Button>
       <Button variant="ghost">Download CV</Button>
-    </Wall>
+    </Band>
   ),
 };

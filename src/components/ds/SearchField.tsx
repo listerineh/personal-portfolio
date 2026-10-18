@@ -30,7 +30,7 @@ export function SearchField({ value, onChange, placeholder, label, clearLabel, c
           type="button"
           onClick={() => onChange('')}
           aria-label={clearLabel}
-          className="absolute right-0.5 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-muted-foreground hover:text-foreground"
+          className="absolute right-0.5 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:text-foreground"
         >
           <X aria-hidden="true" className="h-4 w-4" />
         </button>

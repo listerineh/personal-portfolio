@@ -1,28 +1,33 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ArrowRight } from 'lucide-react';
-import { Button, Room } from '@/components/ds';
+import { ChevronRight } from 'lucide-react';
+import { Button, Reveal } from '@/components/ds';
 
-/** Room 05 · Contact. The last room before the exit wall: one statement, one action. */
+/** Closing invitation: one large rounded card, one statement, one action, the address as a fallback. */
 export function ContactSection() {
   const t = useTranslations('contact');
-  const tSala = useTranslations('sala');
 
   return (
-    <Room id="contact" number="05" name={tSala('contact')} title={t('title')} intro={t('description')}>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-        <Button href="/contact" accent="amber" size="lg" className="w-full sm:w-auto">
-          {t('viewAll')}
-          <ArrowRight aria-hidden="true" className="h-4 w-4" />
-        </Button>
-        <a
-          href={`mailto:${t('directEmailAction')}`}
-          className="text-catalog inline-flex min-h-11 items-center break-all text-foreground underline decoration-1 underline-offset-[0.3em] hover:decoration-2"
-        >
-          {t('directEmailAction')}
-        </a>
-      </div>
-    </Room>
+    <section id="contact" aria-labelledby="contact-title" className="bg-background px-gutter py-20 md:py-28">
+      <Reveal className="tint mx-auto max-w-[1200px] rounded-xl px-6 py-14 text-center md:px-12 md:py-24">
+        <h2 id="contact-title" className="text-display-sm mx-auto max-w-[18ch]">
+          {t('title')}
+        </h2>
+        <p className="text-lead mx-auto mt-5 max-w-[48ch] text-muted-foreground">{t('description')}</p>
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+          <Button href="/contact" accent="amber" size="lg" className="w-full sm:w-auto">
+            {t('viewAll')}
+          </Button>
+          <a
+            href={`mailto:${t('directEmailAction')}`}
+            className="inline-flex min-h-11 items-center gap-1 break-all rounded-md text-[0.9375rem] font-medium text-primary hover:underline"
+          >
+            {t('directEmailAction')}
+            <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0" />
+          </a>
+        </div>
+      </Reveal>
+    </section>
   );
 }

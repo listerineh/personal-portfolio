@@ -132,7 +132,7 @@ export function SpotifyTopTracks({
 
               return (
                 <li key={track.id} className="group flex items-center gap-4 border-t border-foreground/15 py-4">
-                  <span className="text-catalog w-6 shrink-0 text-right text-muted-foreground">
+                  <span className="text-meta w-6 shrink-0 text-right text-muted-foreground">
                     {String(index + 1).padStart(2, '0')}
                   </span>
 
@@ -170,7 +170,7 @@ export function SpotifyTopTracks({
             })}
       </ol>
 
-      <p className="text-catalog mt-3 flex items-center gap-2 text-muted-foreground">
+      <p className="text-meta mt-3 flex items-center gap-2 text-muted-foreground">
         <SpotifyIcon className="h-3 w-3 shrink-0" base />
         {t('topTracksAttribution')}
       </p>

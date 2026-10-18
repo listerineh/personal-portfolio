@@ -52,7 +52,7 @@ export function BlogViews({ slug }: BlogViewsProps) {
 
   if (isLoading) {
     return (
-      <div className="text-catalog flex items-center gap-2 text-muted-foreground">
+      <div className="text-meta flex items-center gap-2 text-muted-foreground">
         <Eye aria-hidden="true" className="h-4 w-4 motion-safe:animate-pulse" />
         <span className="animate-pulse">{t('loading')}</span>
       </div>
@@ -60,7 +60,7 @@ export function BlogViews({ slug }: BlogViewsProps) {
   }
 
   return (
-    <div className="text-catalog flex items-center gap-2 text-muted-foreground">
+    <div className="text-meta flex items-center gap-2 text-muted-foreground">
       <Eye aria-hidden="true" className="h-4 w-4" />
       <span>
         {views !== null ? (

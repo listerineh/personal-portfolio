@@ -37,7 +37,7 @@ export const Default: Story = { render: () => <SearchWithResults /> };
 
 export const OnWall: Story = {
   render: () => (
-    <div className="wall p-8">
+    <div className="tint p-8">
       <SearchWithResults />
     </div>
   ),

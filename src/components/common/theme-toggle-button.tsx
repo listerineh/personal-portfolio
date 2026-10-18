@@ -34,11 +34,11 @@ export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
       aria-label={`${t('toggleTheme')}: ${nextLabel}`}
       title={nextLabel}
       className={cn(
-        'inline-flex h-11 w-11 items-center justify-center text-muted-foreground transition-colors duration-snap ease-snap hover:text-foreground',
+        'inline-flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-[color,background-color,transform] duration-snap ease-snap hover:bg-foreground/[0.05] hover:text-foreground active:scale-90 motion-reduce:transition-none',
         className,
       )}
     >
-      {theme === 'dark' ? <Sun aria-hidden="true" className="h-5 w-5" /> : <Moon aria-hidden="true" className="h-5 w-5" />}
+      {theme === 'dark' ? <Sun aria-hidden="true" className="h-[18px] w-[18px]" /> : <Moon aria-hidden="true" className="h-[18px] w-[18px]" />}
     </button>
   );
 }

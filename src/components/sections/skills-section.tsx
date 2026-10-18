@@ -1,47 +1,43 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ArrowRight } from 'lucide-react';
-import { Button, Room } from '@/components/ds';
+import { ChevronRight } from 'lucide-react';
+import { Button, Reveal, Section } from '@/components/ds';
+import type { SkillGroupSummary } from '@/types';
 
-/** Room 04 · Craft. The stack as a catalog index by category: read it, don't watch it scroll. */
-import type { SkillGroupSummary } from "@/types";
-
+/** Craft: the stack grouped by category, each group a panel of chips. */
 export function SkillsSection({ groups }: { groups: SkillGroupSummary[] }) {
   const t = useTranslations('skills');
-  const tSala = useTranslations('sala');
 
   return (
-    <Room
+    <Section
       id="craft"
-      number="04"
-      name={tSala('craft')}
       title={t('title')}
       intro={t('description')}
-      tone="paint"
       aside={
-        <Button variant="ghost" href="/skills">
+        <Button variant="ghost" accent="amber" href="/skills">
           {t('viewAll')}
-          <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          <ChevronRight aria-hidden="true" className="h-4 w-4" />
         </Button>
       }
     >
-      <dl className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
         {groups.map(({ category, names }) => (
-          <div key={category} className="border-t border-foreground/25 pt-4">
-            <dt className="text-headline">{t(`categories.${category}`)}</dt>
-            <dd className="mt-3">
-              <ul className="flex flex-wrap gap-x-4 gap-y-1.5">
-                {names.map((name) => (
-                  <li key={name} className="text-catalog text-muted-foreground">
-                    {name}
-                  </li>
-                ))}
-              </ul>
-            </dd>
-          </div>
+          <Reveal as="li" key={category} className="panel p-6">
+            <h3 className="text-headline">{t(`categories.${category}`)}</h3>
+            <ul className="mt-4 flex flex-wrap gap-1.5">
+              {names.map((name) => (
+                <li
+                  key={name}
+                  className="inline-flex h-8 items-center rounded-full bg-background px-3 text-[0.8125rem] font-medium text-foreground shadow-card"
+                >
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         ))}
-      </dl>
-    </Room>
+      </ul>
+    </Section>
   );
 }

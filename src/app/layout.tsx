@@ -1,12 +1,12 @@
 import { getMessages } from 'next-intl/server';
 import { LocaleProvider } from '@/context/locale-context';
 import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrapper';
-import { Archivo, JetBrains_Mono } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
 import { BackToTopButton, CookieBanner, ScrollRestoration } from '@/components/common';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
-import { Toaster, RouteRail } from '@/components/ds';
+import { Toaster } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { generatePageMetadata } from '@/lib/metadata';
@@ -17,16 +17,15 @@ import Script from 'next/script';
 
 import './globals.css';
 
-// Archivo carries the whole voice: Expanded (wdth 125) for wall titles, normal width for text.
-const fontSans = Archivo({
+// Geist carries the whole voice; tracking tightens as size grows (see .text-* in globals.css).
+const fontSans = Geist({
   subsets: ['latin', 'latin-ext'],
-  axes: ['wdth'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-// Catalog data only: numbers, dates, stacks.
-const fontMono = JetBrains_Mono({
+// Code only.
+const fontMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
@@ -84,8 +83,8 @@ export default async function RootLayout({
     <html lang={initialLocale} className={cn(fontSans.variable, fontMono.variable)} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1B2540" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#12141A" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
         <script dangerouslySetInnerHTML={{ __html: prePaintScript }} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -101,7 +100,6 @@ export default async function RootLayout({
             <ThemeProvider>
               <ScrollRestoration />
               {children}
-              <RouteRail />
               <BackToTopButton />
               <CookieBanner />
               <Toaster />

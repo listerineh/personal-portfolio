@@ -17,10 +17,11 @@ export function FilterTag({ pressed, onPressedChange, children, className }: Fil
       aria-pressed={pressed}
       onClick={() => onPressedChange(!pressed)}
       className={cn(
-        'inline-flex min-h-10 items-center border px-3 font-mono text-xs font-medium transition-[background-color,color,border-color] duration-snap ease-snap',
+        'inline-flex min-h-9 items-center rounded-full px-3.5 text-[0.8125rem] font-medium',
+        'transition-[background-color,color,transform] duration-snap ease-snap active:scale-95 motion-reduce:transition-none',
         pressed
-          ? 'border-foreground bg-foreground text-surface'
-          : 'border-foreground/30 text-foreground hover:border-foreground',
+          ? 'bg-foreground text-surface'
+          : 'bg-foreground/[0.06] text-foreground hover:bg-foreground/[0.1]',
         className,
       )}
     >

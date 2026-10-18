@@ -12,7 +12,7 @@ export function getHomeData(): { byLocale: Record<Locale, HomeLocaleData>; skill
   for (const locale of locales) {
     byLocale[locale] = {
       projects: getProjects(locale)
-        .slice(0, 3)
+        .slice(0, 6)
         .map(({ longDescription: _long, relevance: _relevance, ...project }): ProjectSummary => project),
       posts: getBlogPosts(locale).slice(0, 3).map(toBlogSummary),
       experiences: getExperiences(locale).slice(0, 4), // 3 shown + 1 tells the room there is more

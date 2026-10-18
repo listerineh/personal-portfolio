@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Text } from '@/components/ds/Text';
-import { Wall } from '@/components/ds/Wall';
+import { Band } from '@/components/ds/Surface';
 
 const meta: Meta<typeof Text> = {
   title: 'DS/Text',
@@ -31,10 +31,10 @@ export const Lead: Story = {
 
 export const OnWall: Story = {
   render: () => (
-    <Wall className="space-y-3 py-10">
+    <Band className="space-y-3 py-10">
       <Text>Primary text on a painted wall.</Text>
       <Text strength="secondary">Secondary text on a painted wall.</Text>
       <Text strength="accent">Live amber on a painted wall.</Text>
-    </Wall>
+    </Band>
   ),
 };

@@ -21,7 +21,7 @@ export function BlogPostHeader({ post, locale, formatDate, url }: BlogPostMetaPr
   return (
     <div className="grid gap-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <p className="text-catalog text-muted-foreground">
+        <p className="text-meta text-muted-foreground">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           {' · '}
           {t('by')} {post.author}

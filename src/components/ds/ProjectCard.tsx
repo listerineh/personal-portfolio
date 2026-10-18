@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
@@ -14,11 +14,11 @@ interface ProjectCardProps {
   imageUrl?: string;
   tags: string[];
   viewMoreLabel?: string;
-  /** Catalog number on the label, e.g. "03". */
+  /** Optional index, e.g. "03". */
   number?: string;
-  /** `feature` hangs the work large (first work in a room). */
+  /** `feature` = the large card (first in a listing). */
   size?: "default" | "feature";
-  /** Live marker text (e.g. "In progress"); renders the amber tag. Only one work on a wall should carry it. */
+  /** Live marker text (e.g. "In progress"); renders the amber tag. Only one card in a view should carry it. */
   liveLabel?: string;
   /** Neutral status text for works that are not the live one (e.g. "In progress", "On hold"). */
   statusLabel?: string;
@@ -27,8 +27,8 @@ interface ProjectCardProps {
 }
 
 /**
- * A work on the wall: the piece in its mat frame, its label below.
- * Only the work you face casts a shadow (hover / keyboard focus).
+ * A project as a rounded card: the image first, then name, status, one line and the stack.
+ * Hover and keyboard focus lift the card and ease the image in on the glide spring.
  */
 export function ProjectCard({
   headingLevel: Heading = 'h3',
@@ -46,87 +46,81 @@ export function ProjectCard({
   className,
 }: ProjectCardProps) {
   const feature = size === "feature";
-  const catalog = [number, ...tags.slice(0, feature ? 5 : 3)]
-    .filter(Boolean)
-    .join(" · ");
+  const stack = tags.slice(0, feature ? 5 : 3).join(" · ");
 
   return (
-    <article className={cn("group relative", className)}>
+    <article className={cn("group relative h-full", className)}>
       <Link
         href={`/projects/${slug}`}
-        className="block no-underline outline-offset-4"
+        className={cn(
+          "panel flex h-full flex-col overflow-hidden no-underline",
+          "transition-[transform,box-shadow] duration-glide ease-glide motion-reduce:transition-none",
+          "hover:-translate-y-1 hover:shadow-float focus-visible:-translate-y-1 focus-visible:shadow-float",
+        )}
       >
         {imageUrl && (
           <div
             className={cn(
-              "plaque p-2 sm:p-3",
-              "transition-[box-shadow,transform] duration-hang ease-hang motion-reduce:transition-none",
-              "group-hover:-translate-y-1 group-hover:shadow-hang group-focus-visible:-translate-y-1 group-focus-visible:shadow-hang",
+              "relative w-full overflow-hidden bg-muted",
+              feature ? "aspect-[16/10]" : "aspect-[4/3]",
             )}
           >
-            <div
-              className={cn(
-                "relative w-full overflow-hidden bg-muted",
-                feature ? "aspect-[4/3] md:aspect-[16/10]" : "aspect-[4/3]",
-              )}
-            >
-              <Image
-                src={imageUrl}
-                alt=""
-                fill
-                priority={priority}
-                className="object-cover"
-                sizes={
-                  feature
-                    ? "(max-width: 768px) 100vw, 60vw"
-                    : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                }
-              />
-            </div>
+            <Image
+              src={imageUrl}
+              alt=""
+              fill
+              priority={priority}
+              className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.04] motion-reduce:transition-none"
+              sizes={
+                feature
+                  ? "(max-width: 768px) 100vw, 60vw"
+                  : "(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 520px"
+              }
+            />
           </div>
         )}
 
-        <div className="mt-4 grid gap-2 md:mt-5">
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <Heading
-              className={cn(
-                "text-foreground",
-                feature ? "text-subhead" : "text-headline",
-              )}
-            >
-              {title}
-            </Heading>
+        <div className="flex flex-1 flex-col gap-2 p-6 md:p-7">
+          <div className="flex flex-wrap items-center gap-2">
+            {number && <span className="text-meta text-muted-foreground">{number}</span>}
             {liveLabel && (
-              <span className="inline-flex h-6 items-center bg-primary px-2 font-mono text-[0.6875rem] font-medium text-primary-foreground">
+              <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-primary/[0.14] px-2.5 text-[0.6875rem] font-semibold text-primary">
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary motion-safe:animate-pulse" />
                 {liveLabel}
               </span>
             )}
             {!liveLabel && statusLabel && (
-              <span className="inline-flex h-6 items-center border border-foreground/40 px-2 font-mono text-[0.6875rem] font-medium text-muted-foreground">
+              <span className="inline-flex h-6 items-center rounded-full bg-foreground/[0.06] px-2.5 text-[0.6875rem] font-medium text-muted-foreground">
                 {statusLabel}
               </span>
             )}
           </div>
-          {catalog && (
-            <p className="text-catalog text-muted-foreground">{catalog}</p>
-          )}
+          <Heading
+            className={cn(
+              "text-foreground",
+              feature ? "text-subhead" : "text-headline",
+            )}
+          >
+            {title}
+          </Heading>
           <p
             className={cn(
               "max-w-[60ch] text-muted-foreground",
-              feature
-                ? "text-lead line-clamp-4"
-                : "text-sm leading-relaxed line-clamp-3",
+              feature ? "text-lead line-clamp-3" : "text-[0.9375rem] leading-relaxed line-clamp-3",
             )}
           >
             {description}
           </p>
-          <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-foreground underline decoration-1 underline-offset-[0.3em] group-hover:decoration-2">
-            {viewMoreLabel}
-            <ArrowRight
-              aria-hidden="true"
-              className="h-4 w-4 transition-transform duration-snap ease-snap group-hover:translate-x-0.5"
-            />
-          </span>
+          <div className="mt-auto flex flex-wrap items-end justify-between gap-x-4 gap-y-2 pt-4">
+            {stack && <p className="text-meta text-muted-foreground">{stack}</p>}
+            <span className="inline-flex items-center gap-1 text-[0.9375rem] font-medium text-primary">
+              {viewMoreLabel}
+              <ChevronRight
+                aria-hidden="true"
+                className="h-4 w-4 transition-transform duration-snap ease-snap group-hover:translate-x-0.5 motion-reduce:transition-none"
+              />
+            </span>
+          </div>
         </div>
       </Link>
     </article>

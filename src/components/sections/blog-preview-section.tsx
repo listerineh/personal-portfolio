@@ -1,45 +1,40 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ArrowRight } from 'lucide-react';
-import { BlogCard, Button, Room } from '@/components/ds';
+import { ChevronRight } from 'lucide-react';
+import { BlogCard, Button, Reveal, Section } from '@/components/ds';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
+import type { BlogPostSummary } from '@/types';
 
-/** Room 02 · Writing. Written works as a ruled list, not a card grid. */
-import type { BlogPostSummary } from "@/types";
-
+/** Writing: the three latest posts as cards, cover first. */
 export function BlogPreviewSection({ posts }: { posts: BlogPostSummary[] }) {
   const t = useTranslations('blog');
-  const tSala = useTranslations('sala');
   const tCommon = useTranslations('common');
   const minutesLabel = t('readingTime', { minutes: '' }).trim();
 
   return (
-    <Room
+    <Section
       id="writing"
-      number="02"
-      name={tSala('writing')}
       title={t('title')}
-      tone="paint"
       aside={
-        <Button variant="ghost" href="/blog">
+        <Button variant="ghost" accent="amber" href="/blog">
           {t('viewAllPosts')}
-          <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          <ChevronRight aria-hidden="true" className="h-4 w-4" />
         </Button>
       }
     >
       {posts.length === 0 ? (
         <p className="text-lead text-muted-foreground">{t('noArticles')}</p>
       ) : (
-        <ol className="divide-y divide-foreground/20 border-y border-foreground/20 lg:ml-[calc(100%/12*3)]">
+        <ul className="grid gap-5 md:grid-cols-3 md:gap-6">
           {posts.map((post) => (
-            <li key={post.slug} className="py-8 md:py-10">
+            <Reveal as="li" key={post.slug}>
               <BlogCard
+                layout="stack"
                 title={post.title}
                 slug={post.slug}
                 excerpt={post.excerpt}
                 date={post.date}
-                tags={post.tags}
                 coverImage={post.imageUrl}
                 readingTime={post.readingTime}
                 readingTimeLabel={minutesLabel}
@@ -48,10 +43,10 @@ export function BlogPreviewSection({ posts }: { posts: BlogPostSummary[] }) {
                 isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
                 recommendedLabel={t('sortRecommended')}
               />
-            </li>
+            </Reveal>
           ))}
-        </ol>
+        </ul>
       )}
-    </Room>
+    </Section>
   );
 }

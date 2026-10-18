@@ -22,9 +22,8 @@ export default function TermsPage() {
     <>
       <PageShell>
         <PageHeader
-          name={t('title')}
           title={t('title')}
-          titleSize="room"
+          titleSize="section"
           nav={
             <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline-offset-[0.3em] hover:underline">
               <ArrowLeft aria-hidden="true" className="h-4 w-4" />
@@ -32,14 +31,14 @@ export default function TermsPage() {
             </Link>
           }
         >
-          <p className="text-catalog text-muted-foreground">
+          <p className="text-meta text-muted-foreground">
             {t('lastUpdated')} {lastUpdated}
           </p>
         </PageHeader>
 
         {/* Content */}
         <div className="px-gutter py-16 md:py-24">
-          <div className="mx-auto grid max-w-[1296px] gap-14 lg:pl-[calc(100%/12*3)]">
+          <div className="mx-auto grid max-w-[1200px] gap-14 lg:pl-[calc(100%/12*3)]">
 
             {/* Generic sections */}
             {[
@@ -78,14 +77,14 @@ export default function TermsPage() {
                 {t('blogContentTitle')}
               </h2>
               <p className="max-w-[68ch] text-[1.0625rem] leading-[1.7] text-foreground/90 mb-4">{t('blogContentText')}</p>
-              <div className="plaque max-w-[68ch] p-5 md:p-6">
-                <p className="text-catalog mb-2 text-muted-foreground">{t('codeExamplesLabel')}</p>
+              <div className="panel max-w-[68ch] p-5 md:p-6">
+                <p className="text-meta mb-2 text-muted-foreground">{t('codeExamplesLabel')}</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">{t('codeExamplesText')}</p>
               </div>
             </section>
 
             {/* Note callout */}
-            <section className="plaque max-w-[68ch] p-6">
+            <section className="panel max-w-[68ch] p-6">
               <p className="text-sm leading-relaxed text-muted-foreground">
                 <span className="font-semibold text-primary">{t('noteLabel')} </span>
                 {t.rich('noteText', {
@@ -95,7 +94,7 @@ export default function TermsPage() {
             </section>
 
             {/* Contact */}
-            <section className="plaque max-w-[68ch] p-6 md:p-8">
+            <section className="panel max-w-[68ch] p-6 md:p-8">
               <h2 className="text-subhead mb-4">
                 {t('contactInfoTitle')}
               </h2>

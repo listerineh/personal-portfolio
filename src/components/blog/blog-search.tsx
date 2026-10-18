@@ -142,7 +142,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
             <button
               type="button"
               aria-label={t('filterByTags')}
-              className="plaque inline-flex min-h-12 shrink-0 items-center gap-2 border border-input px-4 text-sm font-semibold transition-colors hover:border-foreground"
+              className="panel inline-flex min-h-12 shrink-0 items-center gap-2 border border-input px-4 text-sm font-semibold transition-colors hover:border-foreground"
             >
               <Filter aria-hidden="true" className="h-4 w-4" />
               <span className="hidden sm:inline">{t('tags')}</span>
@@ -174,7 +174,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
       </div>
 
       <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('sortBy')}>
-        <span className="text-catalog mr-1 text-muted-foreground">{t('sortBy')}</span>
+        <span className="text-meta mr-1 text-muted-foreground">{t('sortBy')}</span>
         {sortOptions.map(({ key, label, icon }) => (
           <FilterTag key={key} pressed={sortBy === key} onPressedChange={() => selectSort(key)} className="gap-1.5">
             {icon}
@@ -185,7 +185,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
 
       {selectedTags.length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-catalog mr-1 text-muted-foreground">{t('filteringBy')}</span>
+          <span className="text-meta mr-1 text-muted-foreground">{t('filteringBy')}</span>
           {selectedTags.map((tag) => (
             <FilterTag key={tag} pressed onPressedChange={() => toggleTag(tag)} className="gap-1.5">
               {tag}
@@ -196,7 +196,7 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
       )}
 
       {hasActiveFilters && (
-        <p className="text-catalog text-muted-foreground" aria-live="polite">
+        <p className="text-meta text-muted-foreground" aria-live="polite">
           {t('foundArticles', { count: filteredAndSortedPosts.length })}
         </p>
       )}

@@ -7,7 +7,7 @@ import { type Accent, type ButtonVariant, type ButtonSize } from "./types";
 
 interface ButtonProps {
   variant?: ButtonVariant;
-  /** `amber` marks the one live action on a wall; everything else is ink. Legacy accents map to ink. */
+  /** `amber` = the brand action (one per view); everything else is ink. Legacy accents map to ink. */
   accent?: Accent;
   size?: ButtonSize;
   href?: string;
@@ -22,31 +22,30 @@ interface ButtonProps {
 
 const variantMap: Record<ButtonVariant, { amber: string; ink: string }> = {
   primary: {
-    amber: "bg-primary text-primary-foreground hover:bg-primary/90",
-    ink: "bg-foreground text-surface hover:bg-foreground/85",
+    amber: "rounded-full bg-primary text-primary-foreground hover:brightness-[1.07]",
+    ink: "rounded-full bg-foreground text-surface hover:bg-foreground/85",
   },
   secondary: {
-    amber:
-      "border-[1.5px] border-foreground text-foreground hover:bg-foreground hover:text-surface",
-    ink: "border-[1.5px] border-foreground text-foreground hover:bg-foreground hover:text-surface",
+    amber: "rounded-full bg-primary/[0.12] text-primary hover:bg-primary/[0.18]",
+    ink: "rounded-full bg-foreground/[0.07] text-foreground hover:bg-foreground/[0.11]",
   },
   ghost: {
-    amber:
-      "px-0 text-primary underline decoration-1 underline-offset-[0.3em] hover:decoration-2",
-    ink: "px-0 text-foreground underline decoration-1 underline-offset-[0.3em] hover:decoration-2",
+    amber: "rounded-md px-0 text-primary hover:underline",
+    ink: "rounded-md px-0 text-foreground hover:underline",
   },
 };
 
 const sizeMap: Record<ButtonSize, string> = {
-  sm: "min-h-10 px-4 text-sm",
-  md: "min-h-12 px-6 text-[0.9375rem]",
-  lg: "min-h-14 px-8 text-base",
+  sm: "min-h-9 px-4 text-sm",
+  md: "min-h-11 px-5 text-[0.9375rem]",
+  lg: "min-h-12 px-6 text-base",
 };
 
+// Press: shrinks on the snap spring, springs back with a little bounce (the press carried momentum).
 const base =
-  "inline-flex items-center justify-center gap-2 font-sans font-semibold [font-stretch:108%] tracking-[-0.005em] select-none " +
-  "transition-[color,background-color,border-color,text-decoration-thickness,transform] duration-snap ease-snap " +
-  "active:scale-[0.98] motion-reduce:transition-none motion-reduce:active:scale-100 " +
+  "inline-flex items-center justify-center gap-2 font-sans font-medium tracking-[-0.01em] select-none underline-offset-[0.25em] " +
+  "transition-[color,background-color,filter,transform] duration-bounce ease-bounce " +
+  "active:scale-[0.96] active:duration-snap active:ease-snap motion-reduce:transition-none motion-reduce:active:scale-100 " +
   "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
 
 export function Button({

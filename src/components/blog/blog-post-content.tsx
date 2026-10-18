@@ -15,7 +15,7 @@ interface BlogPostContentProps {
  */
 export function BlogPostContent({ content }: BlogPostContentProps) {
   return (
-    <div className="prose prose-sala">
+    <div className="prose prose-article">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, rehypeSanitize, rehypeHighlight, rehypeHeadingIds]}

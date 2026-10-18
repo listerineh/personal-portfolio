@@ -529,9 +529,9 @@
     "career": "Trayectoria",
     "craft": "Oficio",
     "contact": "Contacto",
-    "walkTheWork": "Recorrer la obra",
+    "walkTheWork": "Explorar mi trabajo",
     "now": "Actual",
-    "drawingCaption": "Alzado · stack",
+    "drawingCaption": "Stack",
     "layers": {
       "interface": "Interfaz",
       "api": "API y backend",
@@ -543,6 +543,8 @@
     "route": "Recorrido",
     "room": "Sala",
     "yearsRemote": "{years} años · {remote} remoto",
-    "allSkills": "Índice completo"
+    "allSkills": "Índice completo",
+    "previous": "Anterior",
+    "next": "Siguiente"
   }
 }

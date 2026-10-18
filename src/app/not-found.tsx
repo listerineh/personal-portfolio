@@ -18,8 +18,8 @@ export default function NotFound() {
 
   return (
     <PageShell>
-      <section className="wall px-gutter pb-20 pt-28 md:pb-28 md:pt-36">
-        <div className="mx-auto grid max-w-[1296px] gap-12 lg:grid-cols-12 lg:gap-6">
+      <section className="tint px-gutter pb-20 pt-28 md:pb-28 md:pt-36">
+        <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-6">
           <div className="lg:col-span-7">
             <p aria-hidden="true" className="text-[clamp(5rem,24vw,12rem)] font-light leading-[0.8] tabular-nums text-muted-foreground [font-stretch:125%]">
               404

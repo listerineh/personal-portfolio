@@ -1,13 +1,12 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ArrowRight } from 'lucide-react';
-import { Button, ExperienceCard, Room } from '@/components/ds';
+import { ChevronRight } from 'lucide-react';
+import { Button, ExperienceCard, Reveal, Section } from '@/components/ds';
 import { isCurrentRole } from '@/lib/experience-utils';
+import type { Experience } from '@/types';
 
-/** Room 03 · Career. The three most recent stops; the current one is live. */
-import type { Experience } from "@/types";
-
+/** Career: the three most recent roles; the current one carries the live tag. */
 export function ExperienceSection({ experiences }: { experiences: Experience[] }) {
   const t = useTranslations('experience');
   const tSala = useTranslations('sala');
@@ -15,36 +14,36 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
   const visible = experiences.slice(0, 3);
 
   return (
-    <Room
+    <Section
       id="career"
-      number="03"
-      name={tSala('career')}
+      tone="tint"
       title={t('title')}
       aside={
         experiences.length > 3 ? (
-          <Button variant="ghost" href="/experience">
+          <Button variant="ghost" accent="amber" href="/experience">
             {t('viewAll')}
-            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            <ChevronRight aria-hidden="true" className="h-4 w-4" />
           </Button>
         ) : undefined
       }
     >
-      <div className="grid gap-10">
+      <div className="grid gap-4 md:gap-5">
         {visible.map((exp) => (
-          <ExperienceCard
-            key={`${exp.company}-${exp.employmentDates}`}
-            jobTitle={exp.jobTitle}
-            company={exp.company}
-            employmentDates={exp.employmentDates}
-            location={exp.location}
-            logoUrl={exp.logoUrl}
-            responsibilities={exp.responsibilities}
-            showMoreLabel={tCommon('seeMore')}
-            showLessLabel={tCommon('showLess')}
-            currentLabel={isCurrentRole(exp.employmentDates) ? tSala('now') : undefined}
-          />
+          <Reveal key={`${exp.company}-${exp.employmentDates}`}>
+            <ExperienceCard
+              jobTitle={exp.jobTitle}
+              company={exp.company}
+              employmentDates={exp.employmentDates}
+              location={exp.location}
+              logoUrl={exp.logoUrl}
+              responsibilities={exp.responsibilities}
+              showMoreLabel={tCommon('seeMore')}
+              showLessLabel={tCommon('showLess')}
+              currentLabel={isCurrentRole(exp.employmentDates) ? tSala('now') : undefined}
+            />
+          </Reveal>
         ))}
       </div>
-    </Room>
+    </Section>
   );
 }

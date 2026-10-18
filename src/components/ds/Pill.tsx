@@ -13,7 +13,7 @@ interface PillProps {
   /** Brand color (hex) for music identities only. */
   color?: string;
   size?: PillSize;
-  /** Kept for API compatibility; tags are always square in Sala. */
+  /** Kept for API compatibility; tags are always fully rounded. */
   shape?: "pill" | "rect";
   uppercase?: boolean;
   className?: string;
@@ -23,20 +23,20 @@ interface PillProps {
 const toneMap: Record<PillVariant, { amber: string; ink: string }> = {
   solid: {
     amber: "bg-primary text-primary-foreground",
-    ink: "bg-foreground/[0.08] text-foreground",
+    ink: "bg-foreground/[0.07] text-foreground",
   },
   outline: {
-    amber: "border border-primary text-primary",
-    ink: "border border-foreground/30 text-muted-foreground",
+    amber: "border border-primary/60 text-primary",
+    ink: "border border-border text-muted-foreground",
   },
 };
 
 const sizeMap: Record<PillSize, string> = {
-  md: "h-7 px-2.5 text-xs",
-  sm: "h-6 px-2 text-[0.6875rem]",
+  md: "h-7 px-3 text-xs",
+  sm: "h-6 px-2.5 text-[0.6875rem]",
 };
 
-/** Catalog tag: a stack item, a status, a medium. Data, so it is set in mono. */
+/** Tag: a stack item, a status, a medium. Small, fully rounded. */
 export function Pill({
   variant = "solid",
   accent = "neutral",
@@ -47,7 +47,7 @@ export function Pill({
   children,
 }: PillProps) {
   const base = cn(
-    "inline-flex items-center gap-1.5 font-mono font-medium leading-none whitespace-nowrap",
+    "inline-flex items-center gap-1.5 rounded-full font-medium leading-none whitespace-nowrap",
     sizeMap[size],
     uppercase && "uppercase tracking-[0.04em]",
   );
@@ -56,7 +56,7 @@ export function Pill({
     const style: React.CSSProperties =
       variant === "outline"
         ? { border: `1px solid ${color}`, color }
-        : { backgroundColor: color, color: "#16181D" };
+        : { backgroundColor: color, color: "#1D1D1F" };
     return (
       <span className={cn(base, className)} style={style}>
         {children}

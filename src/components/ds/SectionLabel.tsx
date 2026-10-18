@@ -24,7 +24,7 @@ export function SectionLabel({
     <p
       className={cn(
         animate && "reveal-up",
-        "text-catalog",
+        "text-meta",
         accent === "amber" ? "text-primary" : "text-muted-foreground",
         className,
       )}

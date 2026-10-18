@@ -138,7 +138,7 @@ export function TableOfContents({ contentKey }: TableOfContentsProps) {
 
   return (
     <nav aria-label={t('tableOfContents')}>
-      <p className="text-catalog text-muted-foreground">{t('tableOfContents')}</p>
+      <p className="text-meta text-muted-foreground">{t('tableOfContents')}</p>
       <ol className="mt-4 grid gap-0.5 border-l border-foreground/25">
         {headings.map((heading) => (
           <li key={heading.id} className={cn(heading.level === 3 && 'pl-3')}>

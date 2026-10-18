@@ -16,7 +16,6 @@ import { PageShell } from '@/components/layout';
 export function ContactListingClient() {
   const t = useTranslations('contact');
   const tCommon = useTranslations('common');
-  const tSala = useTranslations('sala');
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -69,7 +68,7 @@ export function ContactListingClient() {
 
   return (
     <PageShell>
-      <PageHeader number="05" name={tSala('contact')} title={t('pageTitle')} intro={t('pageDescription')}>
+      <PageHeader title={t('pageTitle')} intro={t('pageDescription')}>
         {emailLink && (
           <div className="grid gap-3">
             <a
@@ -79,7 +78,7 @@ export function ContactListingClient() {
               {t('directEmailAction')}
               <ArrowUpRight aria-hidden="true" className="h-6 w-6 shrink-0" />
             </a>
-            <p className="text-catalog inline-flex items-center gap-2 text-muted-foreground">
+            <p className="text-meta inline-flex items-center gap-2 text-muted-foreground">
               <span aria-hidden="true" className="h-2 w-2 bg-primary" />
               {t('responseTime')}
             </p>
@@ -88,7 +87,7 @@ export function ContactListingClient() {
       </PageHeader>
 
       <section className="px-gutter py-16 md:py-24">
-        <div className="mx-auto grid max-w-[1296px] items-start gap-14 lg:grid-cols-12 lg:gap-6">
+        <div className="mx-auto grid max-w-[1200px] items-start gap-14 lg:grid-cols-12 lg:gap-6">
           <div className="grid gap-12 lg:col-span-5">
             <p className="text-lead max-w-[48ch] text-muted-foreground">{t('note')}</p>
 
@@ -125,7 +124,7 @@ export function ContactListingClient() {
             </div>
           </div>
 
-          <div className="plaque p-6 shadow-lift md:p-10 lg:col-span-7">
+          <div className="panel p-6 shadow-card md:p-10 lg:col-span-7">
             <h2 className="text-subhead">{t('formTitle')}</h2>
             <p className="mt-2 text-muted-foreground">{t('formIntro')}</p>
 

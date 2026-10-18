@@ -15,7 +15,7 @@ export function MemberCard({
   return (
     <AccentCard accent={accent} className="p-4 md:p-5">
       <p className="text-base font-semibold text-foreground">{name}</p>
-      <p className="text-catalog mt-1 text-muted-foreground">{role}</p>
+      <p className="text-meta mt-1 text-muted-foreground">{role}</p>
     </AccentCard>
   );
 }

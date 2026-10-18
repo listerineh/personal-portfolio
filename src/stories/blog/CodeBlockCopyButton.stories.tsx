@@ -15,7 +15,7 @@ type Story = StoryObj<typeof CodeBlockCopyButton>;
 
 export const Default: Story = {
   render: () => (
-    <div className="plaque relative h-32 w-64 p-4">
+    <div className="panel relative h-32 w-64 p-4">
       <pre className="text-xs text-muted-foreground">{'const example = "code here";'}</pre>
       <CodeBlockCopyButton code="const example = 'code here';" />
     </div>

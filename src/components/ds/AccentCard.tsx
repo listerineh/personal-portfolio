@@ -21,14 +21,14 @@ export function AccentCard({
     <div
       className={cn(
         animate && "reveal-up",
-        "plaque relative p-5 md:p-6",
+        "panel relative p-5 md:p-6",
         className,
       )}
     >
       {accent === "amber" && (
         <span
           aria-hidden="true"
-          className="absolute right-0 top-0 h-3 w-3 bg-primary"
+          className="absolute right-4 top-4 h-2 w-2 rounded-full bg-primary"
         />
       )}
       {children}

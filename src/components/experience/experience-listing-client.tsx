@@ -17,9 +17,9 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
 
   return (
     <PageShell>
-      <PageHeader number="03" name={tSala('career')} title={t('pageTitle')} intro={t('pageDescription')} />
+      <PageHeader title={t('pageTitle')} intro={t('pageDescription')} />
       <section className="px-gutter py-16 md:py-24">
-        <div className="mx-auto max-w-[1296px]">
+        <div className="mx-auto max-w-[1200px]">
           {experiences.length > 0 ? (
             <>
               <ol className="grid gap-12 md:gap-16">
@@ -42,7 +42,7 @@ export function ExperienceListingClient({ experiences }: ExperienceListingClient
               <EndOfList>{tCommon('endOfList')}</EndOfList>
             </>
           ) : (
-            <div className="plaque max-w-xl p-6 md:p-8">
+            <div className="panel max-w-xl p-6 md:p-8">
               <p className="text-headline">{t('noResults')}</p>
             </div>
           )}

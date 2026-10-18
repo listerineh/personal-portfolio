@@ -15,7 +15,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({ accent
   <textarea
     ref={ref}
     aria-invalid={error || props["aria-invalid"] || undefined}
-    className={cn(fieldBase, "min-h-36 resize-y py-3 leading-relaxed", error && "border-destructive shadow-[inset_0_0_0_1px_rgb(var(--destructive))]", className)}
+    className={cn(fieldBase, "min-h-36 resize-y py-3 leading-relaxed", error && "border-destructive shadow-[0_0_0_4px_rgb(var(--destructive)/0.15)]", className)}
     {...props}
   />
 ));

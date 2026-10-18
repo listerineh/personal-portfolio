@@ -5,7 +5,7 @@ import { locales, localeNames, type Locale } from '@/i18n/config';
 import { useLocale } from '@/context/locale-context';
 import { cn } from '@/lib/utils';
 
-/** Two-state language control: EN / ES as text, the current one set solid. */
+/** Segmented control: EN / ES, the current one raised on a light thumb. */
 export function LanguageSwitcher({ className }: { className?: string }) {
   const { locale, setLocale } = useLocale();
   const t = useTranslations('language');
@@ -15,7 +15,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
   };
 
   return (
-    <div role="group" aria-label={t('switchLanguage')} className={cn('inline-flex h-11 items-center', className)}>
+    <div role="group" aria-label={t('switchLanguage')} className={cn('inline-flex h-9 items-center rounded-full bg-foreground/[0.06] p-[3px]', className)}>
       {locales.map((loc) => (
         <button
           key={loc}
@@ -25,8 +25,9 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           aria-pressed={locale === loc}
           aria-label={localeNames[loc]}
           className={cn(
-            'inline-flex h-11 min-w-11 items-center justify-center px-2 font-mono text-xs font-semibold uppercase transition-colors duration-snap ease-snap',
-            locale === loc ? 'text-foreground underline decoration-2 underline-offset-[0.45em]' : 'text-muted-foreground hover:text-foreground',
+            'inline-flex h-full min-w-10 items-center justify-center rounded-full px-2.5 text-xs font-semibold uppercase tracking-[0.02em]',
+            'transition-[color,background-color,box-shadow] duration-snap ease-snap motion-reduce:transition-none',
+            locale === loc ? 'bg-background text-foreground shadow-card' : 'text-muted-foreground hover:text-foreground',
           )}
         >
           {loc}

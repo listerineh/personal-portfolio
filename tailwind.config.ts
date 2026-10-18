@@ -25,10 +25,6 @@ export default {
           DEFAULT: 'rgb(var(--card) / <alpha-value>)',
           foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
         },
-        plaque: {
-          DEFAULT: 'rgb(var(--card) / <alpha-value>)',
-          foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
-        },
         popover: {
           DEFAULT: 'rgb(var(--popover) / <alpha-value>)',
           foreground: 'rgb(var(--popover-foreground) / <alpha-value>)',
@@ -46,11 +42,7 @@ export default {
           DEFAULT: 'rgb(var(--muted) / <alpha-value>)',
           foreground: 'rgb(var(--muted-foreground) / <alpha-value>)',
         },
-        wall: {
-          DEFAULT: 'rgb(var(--wall) / <alpha-value>)',
-          foreground: 'rgb(var(--wall-foreground) / <alpha-value>)',
-          muted: 'rgb(var(--wall-muted) / <alpha-value>)',
-        },
+        tint: 'rgb(var(--tint) / <alpha-value>)',
         accent: {
           DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
           foreground: 'rgb(var(--accent-foreground) / <alpha-value>)',
@@ -59,7 +51,7 @@ export default {
           DEFAULT: 'rgb(var(--destructive) / <alpha-value>)',
           foreground: 'rgb(var(--destructive-foreground) / <alpha-value>)',
         },
-        // The ground you are standing on (plaster, wall or plaque): text on a foreground fill.
+        // The ground you are on (plain, tint or panel): text on a foreground fill.
         surface: 'rgb(var(--surface) / <alpha-value>)',
         border: 'rgb(var(--border) / <alpha-value>)',
         input: 'rgb(var(--input) / <alpha-value>)',
@@ -75,29 +67,32 @@ export default {
         amber: 'rgb(var(--primary) / <alpha-value>)',
       },
       borderRadius: {
-        lg: 'var(--radius)',
+        sm: 'var(--radius-sm)',
         md: 'var(--radius)',
-        sm: 'var(--radius)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
       },
       spacing: {
         gutter: 'var(--gutter)',
-        floor: 'var(--floor-h)',
+        header: 'var(--header-h)',
       },
       boxShadow: {
-        hang: 'var(--shadow-hang)',
-        lift: 'var(--shadow-lift)',
+        card: 'var(--shadow-card)',
+        float: 'var(--shadow-float)',
       },
       transitionTimingFunction: {
         out: 'var(--ease-out)',
         'in-out': 'var(--ease-in-out)',
         drawer: 'var(--ease-drawer)',
-        hang: 'var(--spring-hang)',
+        glide: 'var(--spring-glide)',
         snap: 'var(--spring-snap)',
+        bounce: 'var(--spring-bounce)',
       },
       transitionDuration: {
         '400': '400ms',
-        hang: 'var(--spring-hang-duration)',
+        glide: 'var(--spring-glide-duration)',
         snap: 'var(--spring-snap-duration)',
+        bounce: 'var(--spring-bounce-duration)',
       },
       keyframes: {
         'accordion-down': {

@@ -118,7 +118,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
 
   if (isLoading) {
     return (
-      <p className="text-catalog text-muted-foreground" aria-live="polite">
+      <p className="text-meta text-muted-foreground" aria-live="polite">
         {t('loadingReactions')}
       </p>
     );
@@ -129,7 +129,7 @@ export function BlogReactions({ slug }: BlogReactionsProps) {
 
   return (
     <div>
-      <p className="text-catalog text-muted-foreground" aria-live="polite">
+      <p className="text-meta text-muted-foreground" aria-live="polite">
         {totalReactions > 0
           ? `${totalReactions} ${totalReactions === 1 ? t('reaction') : t('reactions')}`
           : t('shareYourReaction')}

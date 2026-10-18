@@ -26,7 +26,7 @@ export function DropdownContent({
         align={align}
         sideOffset={6}
         className={cn(
-          "plaque z-50 min-w-[12rem] overflow-hidden p-1 shadow-lift",
+          "panel z-50 min-w-[12rem] overflow-hidden rounded-[14px] bg-popover p-1.5 shadow-float",
           "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[side=bottom]:slide-in-from-top-1 motion-reduce:animate-none",
           className,
         )}
@@ -38,8 +38,8 @@ export function DropdownContent({
 }
 
 const itemBase =
-  "relative flex min-h-11 cursor-pointer select-none items-center gap-2 px-3 text-[0.9375rem] text-foreground outline-none transition-colors " +
-  "data-[highlighted]:bg-foreground data-[highlighted]:text-surface data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+  "relative flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-[9px] px-3 text-[0.9375rem] text-foreground outline-none transition-colors " +
+  "data-[highlighted]:bg-foreground/[0.07] data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
 
 export function DropdownItem({
   children,
@@ -74,7 +74,7 @@ export function DropdownCheckboxItem({
       onCheckedChange={onCheckedChange}
       className={cn(itemBase, "pl-9", className)}
     >
-      <span className="absolute left-3 flex h-4 w-4 items-center justify-center border border-current">
+      <span className="absolute left-3 flex h-4 w-4 items-center justify-center rounded-[5px] border border-current">
         <DropdownMenuPrimitive.ItemIndicator>
           <Check aria-hidden="true" className="h-3.5 w-3.5" />
         </DropdownMenuPrimitive.ItemIndicator>
@@ -85,5 +85,5 @@ export function DropdownCheckboxItem({
 }
 
 export function DropdownLabel({ children }: { children: React.ReactNode }) {
-  return <DropdownMenuPrimitive.Label className="text-catalog px-3 py-2 text-muted-foreground">{children}</DropdownMenuPrimitive.Label>;
+  return <DropdownMenuPrimitive.Label className="text-meta px-3 py-2 text-muted-foreground">{children}</DropdownMenuPrimitive.Label>;
 }

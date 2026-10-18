@@ -3,275 +3,158 @@
 @tailwind utilities;
 
 /*
- * Sala — the site is an exhibition in numbered rooms.
- * Grounds: warm bone (light) / gallery after hours (dark).
- * Walls: painted ink blue. Plaques: flat paper labels.
- * Amber #D97706 marks only what is live now. Used as fill or large type;
- * small amber text uses --primary-ink, which is tuned per surface for AA.
+ * Lumen: quiet neutral grounds, rounded surfaces, one warm accent.
+ * Sections alternate plain and tint; content sits on soft panels.
+ * Amber #D97706 is the brand accent: the primary action, what is live, the active state.
+ * Small amber text uses --primary-ink, tuned per theme for AA.
+ * Motion is spring-based and tied to scroll where the browser supports it.
  */
 
 @layer base {
   :root {
     /* ── Grounds ─────────────────────────────────────────── */
-    --background: 239 236 230; /* #EFECE6 bone */
-    --foreground: 22 24 29; /* #16181D ink */
-    --card: 248 246 242; /* #F8F6F2 plaque */
-    --card-foreground: 22 24 29;
-    --popover: 248 246 242;
-    --popover-foreground: 22 24 29;
+    --background: 255 255 255; /* #FFFFFF */
+    --foreground: 29 29 31; /* #1D1D1F 16.8:1 */
+    --tint: 245 245 247; /* #F5F5F7 alternate section ground */
+    --card: 245 245 247; /* panel on a plain section */
+    --card-foreground: 29 29 31;
+    --popover: 255 255 255;
+    --popover-foreground: 29 29 31;
 
-    /* ── Amber (brand, live) ─────────────────────────────── */
+    /* ── Amber (brand) ───────────────────────────────────── */
     --primary: 217 119 6; /* #D97706 */
-    --primary-foreground: 22 24 29; /* ink on amber 5.6:1 */
-    --primary-ink: 146 64 14; /* #92400E small amber text on bone 6.0:1 */
+    --primary-foreground: 29 29 31; /* ink on amber 5.3:1 */
+    --primary-ink: 168 75 10; /* #A84B0A small amber text, 5.3:1 on tint */
 
     /* ── Neutrals ────────────────────────────────────────── */
-    --secondary: 226 222 214; /* #E2DED6 */
-    --secondary-foreground: 22 24 29;
-    --muted: 226 222 214;
-    --muted-foreground: 79 83 96; /* #4F5360 slate 6.5:1 */
+    --secondary: 232 232 237; /* #E8E8ED */
+    --secondary-foreground: 29 29 31;
+    --muted: 232 232 237;
+    --muted-foreground: 110 110 115; /* #6E6E73 5.1:1 / 4.7:1 on tint */
+    --accent: 245 245 247;
+    --accent-foreground: 29 29 31;
 
-    /* ── Wall (ink blue, amber's complement) ─────────────── */
-    --wall: 27 37 64; /* #1B2540 */
-    --wall-foreground: 242 239 232; /* #F2EFE8 13.2:1 */
-    --wall-muted: 201 208 224; /* #C9D0E0 9.8:1 */
-    --wall-ink: 245 181 74; /* #F5B54A amber text on wall 8.4:1 */
-    --accent: 27 37 64;
-    --accent-foreground: 242 239 232;
-
-    --destructive: 180 35 24; /* #B42318 */
-    --destructive-foreground: 248 246 242;
+    --destructive: 215 0 21; /* #D70015 */
+    --destructive-foreground: 255 255 255;
 
     /* ── Lines ───────────────────────────────────────────── */
-    --border: 207 202 192; /* #CFCAC0 hairline, decorative */
-    --input: 110 106 98; /* #6E6A62 control boundary 4.6:1 */
-    --ring: 22 24 29; /* focus ring on bone: ink */
-    --foreground-base: 22 24 29;
+    --border: 210 210 215; /* #D2D2D7 hairline, decorative */
+    --input: 134 134 139; /* #86868B control boundary 3.6:1 */
+    --ring: 217 119 6; /* focus ring: amber */
     --surface: var(--background);
-    --muted-foreground-base: 79 83 96;
-    --primary-ink-base: 146 64 14;
-    --border-base: 207 202 192;
-    --ring-base: 22 24 29;
-    --radius: 0px;
+
+    /* ── Shape ───────────────────────────────────────────── */
+    --radius-sm: 10px; /* chips, small controls */
+    --radius: 14px; /* fields, buttons that are not pills */
+    --radius-lg: 22px; /* panels, cards */
+    --radius-xl: 30px; /* media, large showcases */
 
     /* ── Grid ────────────────────────────────────────────── */
-    --gutter: 16px;
-    --module: 8px;
-    --floor-h: 56px;
+    --gutter: 20px;
+    --header-h: 52px;
 
-    /* ── Depth: only the work you face casts a shadow ────── */
-    --shadow-hang:
-      0 28px 48px -24px rgb(12 16 30 / 0.45), 0 2px 6px rgb(12 16 30 / 0.12);
-    --shadow-lift: 0 12px 24px -16px rgb(12 16 30 / 0.35);
+    /* ── Depth: soft, only where something floats ────────── */
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 4px 16px -4px rgb(0 0 0 / 0.08);
+    --shadow-float: 0 2px 6px rgb(0 0 0 / 0.05), 0 24px 48px -16px rgb(0 0 0 / 0.18);
 
-    /* ── Motion (springs, generated from k/c in src/lib/motion.ts) ── */
+    /* ── Motion (springs from src/lib/motion.ts) ─────────── */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
     --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-    --spring-hang: linear(
-      0,
-      0.0299,
-      0.1057,
-      0.2098,
-      0.3279,
-      0.4493,
-      0.5661,
-      0.673,
-      0.767,
-      0.8466,
-      0.9114,
-      0.9622,
-      1.0002,
-      1.027,
-      1.0445,
-      1.0542,
-      1.0581,
-      1.0575,
-      1.0539,
-      1.0483,
-      1.0416,
-      1.0345,
-      1.0276,
-      1.0211,
-      1.0154,
-      1.0104,
-      1.0064,
-      1.0031,
-      1.0007,
-      0.9989,
-      0.9977,
-      0.997,
-      0.9967,
-      0.9966,
-      0.9968,
-      0.9971,
-      0.9974,
-      0.9978,
-      0.9983,
-      0.9986,
-      1
-    );
-    --spring-hang-duration: 773ms;
-    --spring-snap: linear(
-      0,
-      0.0228,
-      0.0786,
-      0.1529,
-      0.2357,
-      0.3202,
-      0.4024,
-      0.4795,
-      0.5503,
-      0.6139,
-      0.6704,
-      0.72,
-      0.7632,
-      0.8004,
-      0.8324,
-      0.8596,
-      0.8828,
-      0.9023,
-      0.9188,
-      0.9326,
-      0.9442,
-      0.9539,
-      0.9619,
-      0.9686,
-      0.9742,
-      0.9788,
-      0.9826,
-      0.9857,
-      0.9883,
-      0.9904,
-      0.9922,
-      0.9936,
-      0.9948,
-      0.9957,
-      0.9965,
-      0.9972,
-      0.9977,
-      0.9981,
-      0.9985,
-      0.9988,
-      1
-    );
-    --spring-snap-duration: 450ms;
-    --duration-fast: 150ms;
-    --duration-base: 200ms;
-    --duration-slow: 300ms;
+    /* critically damped: UI feedback, response 0.35s */
+    --spring-snap: linear(0, 0.0344, 0.1143, 0.2148, 0.3205, 0.4225, 0.5161, 0.599, 0.6707, 0.7317, 0.7828, 0.8251, 0.8598, 0.8882, 0.9111, 0.9295, 0.9443, 0.9561, 0.9655, 0.973, 0.9788, 0.9835, 0.9871, 0.9899, 0.9922, 0.9939, 0.9953, 0.9963, 0.9972, 0.9978, 0.9983, 0.9987, 1);
+    --spring-snap-duration: 514ms;
+    /* critically damped: content settling into place, response 0.55s */
+    --spring-glide: var(--spring-snap);
+    --spring-glide-duration: 808ms;
+    /* damping 0.8: only after a gesture carried momentum (carousel, press release) */
+    --spring-bounce: linear(0, 0.0303, 0.1052, 0.2049, 0.3153, 0.4264, 0.5317, 0.6272, 0.7109, 0.7821, 0.8411, 0.8888, 0.9263, 0.955, 0.9764, 0.9918, 1.0023, 1.009, 1.013, 1.0148, 1.0151, 1.0145, 1.0133, 1.0117, 1.01, 1.0084, 1.0068, 1.0054, 1.0042, 1.0031, 1.0023, 1.0016, 1);
+    --spring-bounce-duration: 606ms;
 
     /* ── Music identities (about, /why only) ─────────────── */
     --mn-accent: #d97706; /* Margarita Nugget */
     --mn-accent-muted: #b45309;
-    --mn-accent-foreground: #16181D;
-    --ss-accent: #3d5a80; /* Sofones Solares: slate, no neon */
+    --mn-accent-foreground: #1d1d1f;
+    --ss-accent: #3d5a80; /* Sofones Solares */
     --ss-accent-muted: #5a7799;
     --ss-accent-foreground: #ffffff;
     --solo-accent: #1db954; /* Listerineh solo (Spotify) */
     --solo-accent-hover: #1ed760;
     --solo-accent-foreground: #000000;
 
-    /* ── /why page ───────────────────────────────────────── */
-    --why-background: #efece6;
-    --why-foreground: #16181d;
-    --surface-deep: #12141a;
+    --why-background: #ffffff;
+    --why-foreground: #1d1d1f;
+    --surface-deep: #f5f5f7;
 
     color-scheme: light;
   }
 
   .dark {
-    --background: 18 20 26; /* #12141A after hours */
-    --foreground: 236 233 226; /* #ECE9E2 15.2:1 */
-    --card: 26 29 37; /* #1A1D25 */
-    --card-foreground: 236 233 226;
-    --popover: 26 29 37;
-    --popover-foreground: 236 233 226;
+    --background: 0 0 0; /* #000000 */
+    --foreground: 245 245 247; /* #F5F5F7 19.3:1 */
+    --tint: 22 22 23; /* #161617 */
+    --card: 28 28 30; /* #1C1C1E */
+    --card-foreground: 245 245 247;
+    --popover: 28 28 30;
+    --popover-foreground: 245 245 247;
 
     --primary: 217 119 6;
-    --primary-foreground: 22 24 29;
-    --primary-ink: 217 119 6; /* 5.8:1 on #12141A */
+    --primary-foreground: 29 29 31;
+    --primary-ink: 232 137 12; /* #E8890C 5.9:1 on the lightest panel */
 
-    --secondary: 35 39 51; /* #232733 */
-    --secondary-foreground: 236 233 226;
-    --muted: 35 39 51;
-    --muted-foreground: 163 168 181; /* #A3A8B5 7.7:1 */
+    --secondary: 44 44 46; /* #2C2C2E */
+    --secondary-foreground: 245 245 247;
+    --muted: 44 44 46;
+    --muted-foreground: 161 161 166; /* #A1A1A6 8.2:1 */
+    --accent: 28 28 30;
+    --accent-foreground: 245 245 247;
 
-    --wall: 24 33 58; /* #18213A */
-    --wall-foreground: 236 233 226;
-    --wall-muted: 201 208 224;
-    --wall-ink: 245 181 74;
-    --accent: 24 33 58;
-    --accent-foreground: 236 233 226;
+    --destructive: 255 69 58; /* #FF453A */
+    --destructive-foreground: 29 29 31;
 
-    --destructive: 240 112 95; /* #F0705F */
-    --destructive-foreground: 22 24 29;
+    --border: 56 56 58; /* #38383A */
+    --input: 124 124 128; /* #7C7C80 */
+    --ring: 232 137 12;
 
-    --border: 43 48 60; /* #2B303C */
-    --input: 111 117 134; /* #6F7586 4.0:1 */
-    --ring: 217 119 6;
-    --foreground-base: 236 233 226;
-    --muted-foreground-base: 163 168 181;
-    --primary-ink-base: 217 119 6;
-    --border-base: 43 48 60;
-    --ring-base: 217 119 6;
-
-    --shadow-hang:
-      0 28px 48px -24px rgb(0 0 0 / 0.7), 0 2px 6px rgb(0 0 0 / 0.3);
-    --shadow-lift: 0 12px 24px -16px rgb(0 0 0 / 0.6);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px -4px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 2px 6px rgb(0 0 0 / 0.5), 0 24px 48px -16px rgb(0 0 0 / 0.8);
 
     --ss-accent: #8aa4c4;
     --ss-accent-muted: #5a7799;
-    --why-background: #12141a;
-    --why-foreground: #ece9e2;
-    --surface-deep: #0c0e13;
+    --why-background: #000000;
+    --why-foreground: #f5f5f7;
+    --surface-deep: #161617;
 
     color-scheme: dark;
   }
 
-  /* A painted wall re-scopes the palette for everything hung on it. */
-  .wall {
-    --foreground: var(--wall-foreground);
-    --muted-foreground: var(--wall-muted);
-    --primary-ink: var(--wall-ink);
-    --border: var(--wall-muted);
-    --ring: var(--wall-ink);
-    --surface: var(--wall);
-    background-color: rgb(var(--wall));
+  /* An alternate section ground; panels inside it turn to the plain ground so they still lift. */
+  .tint {
+    --surface: var(--tint);
+    --card: var(--background);
+    background-color: rgb(var(--tint));
     color: rgb(var(--foreground));
   }
+  .dark .tint {
+    --card: 36 36 38; /* #242426 */
+  }
 
-  /* A paper plaque restores ground values, wherever it hangs. */
-  .plaque {
-    --foreground: var(--card-foreground);
-    --muted-foreground: var(--muted-foreground-base);
-    --primary-ink: var(--primary-ink-base);
-    --border: var(--border-base);
-    --ring: var(--ring-base);
+  /* A soft rounded surface: cards, notices, form containers, empty states. */
+  .panel {
     --surface: var(--card);
     background-color: rgb(var(--card));
-    color: rgb(var(--foreground));
+    color: rgb(var(--card-foreground));
+    border-radius: var(--radius-lg);
   }
 
   @media (min-width: 640px) {
-    :root {
-      --gutter: 24px;
-    }
-  }
-  @media (min-width: 768px) {
-    :root {
-      --gutter: 40px;
-      --floor-h: 64px;
-    }
+    :root { --gutter: 28px; }
   }
   @media (min-width: 1024px) {
-    :root {
-      --gutter: 64px;
-    }
+    :root { --gutter: 48px; --header-h: 56px; }
   }
   @media (min-width: 1440px) {
-    :root {
-      --gutter: 72px;
-    }
+    :root { --gutter: 64px; }
   }
 
   /* ── Base ────────────────────────────────────────────── */
@@ -281,6 +164,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 16px);
     overflow-x: clip;
     -webkit-text-size-adjust: 100%;
   }
@@ -288,116 +172,83 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-feature-settings:
-      "ss01",
-      "tnum" 0;
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.006em;
     overflow-x: clip;
     caret-color: rgb(var(--primary));
     scrollbar-color: rgb(var(--muted-foreground) / 0.5) transparent;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans), system-ui, sans-serif;
-    font-stretch: 112%;
-    font-weight: 750;
-    letter-spacing: -0.02em;
+    font-weight: 650;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
+  p { text-wrap: pretty; }
 
   a {
     text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
   }
 
-  code,
-  kbd,
-  samp,
-  pre,
-  time,
-  .tabular {
+  code, kbd, samp, pre, time, .tabular {
     font-variant-numeric: tabular-nums;
   }
 
   ::selection {
-    background-color: rgb(var(--primary));
-    color: rgb(var(--primary-foreground));
+    background-color: rgb(var(--primary) / 0.28);
   }
 
   :focus-visible {
     outline: 2px solid rgb(var(--ring));
     outline-offset: 3px;
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgb(var(--muted-foreground) / 0.45);
-    border: 3px solid transparent;
-    background-clip: padding-box;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
+    border-radius: 6px;
   }
 }
 
 @layer components {
-  /* Wall titles: cut vinyl. Display max 6rem. */
-  .text-display,
-  .text-display-sm {
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
+  /* Type: tight tracking that grows with size, leading that shrinks with it. */
+  .text-display, .text-display-sm { overflow-wrap: break-word; }
   .text-display {
-    font-stretch: 125%;
-    font-weight: 800;
-    font-size: clamp(2.25rem, 10.5vw, 6rem);
-    line-height: 0.9;
-    letter-spacing: -0.025em;
+    font-weight: 700;
+    font-size: clamp(2.75rem, 11vw, 6.5rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
   }
   .text-display-sm {
-    font-stretch: 118%;
-    font-weight: 800;
-    font-size: clamp(2rem, 8vw, 3.75rem);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    font-size: clamp(2rem, 6.5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.038em;
   }
   .text-subhead {
-    font-stretch: 110%;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 4.5vw, 2.25rem);
-    line-height: 1.1;
+    font-weight: 650;
+    font-size: clamp(1.375rem, 3.4vw, 1.875rem);
+    line-height: 1.15;
+    letter-spacing: -0.028em;
   }
   .text-headline {
-    font-stretch: 100%;
-    font-weight: 700;
-    font-size: clamp(1.125rem, 2.4vw, 1.375rem);
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2vw, 1.3125rem);
     line-height: 1.25;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.018em;
   }
   .text-lead {
-    font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
-    line-height: 1.55;
+    font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+    line-height: 1.5;
+    letter-spacing: -0.012em;
   }
   .text-caption {
     font-size: 0.9375rem;
     line-height: 1.5;
   }
-  /* Catalog data: numbers, dates, stacks. Mono only for data. */
-  .text-catalog {
-    font-family: var(--font-mono), ui-monospace, monospace;
+  /* Meta: dates, stacks, counts. Small, medium weight, tabular. */
+  .text-meta {
     font-size: 0.8125rem;
-    line-height: 1.6;
+    font-weight: 500;
+    line-height: 1.5;
     letter-spacing: 0;
     font-variant-numeric: tabular-nums;
   }
@@ -410,64 +261,91 @@
     margin-left: var(--gutter);
     margin-right: var(--gutter);
   }
-  .shadow-hang {
-    box-shadow: var(--shadow-hang);
+
+  /* Floating chrome: translucent, content scrolls under it. */
+  .material {
+    background-color: rgb(var(--background) / 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
   }
-  .shadow-lift {
-    box-shadow: var(--shadow-lift);
+  @media (prefers-reduced-transparency: reduce) {
+    .material {
+      background-color: rgb(var(--background));
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 
   .scrollbar-none {
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  .scrollbar-none::-webkit-scrollbar {
-    display: none;
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ── Motion ──────────────────────────────────────────────────────
+ * Everything here is gated on html.js-motion, which the pre-paint script sets only when
+ * JS runs and reduced motion is off. Content is visible without it.
+ */
+
+/* Intro: the first screen comes into focus once, staggered by --i. */
+@keyframes focus-in {
+  from { opacity: 0; transform: translateY(18px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+html.js-motion [data-intro] {
+  animation: focus-in var(--spring-glide-duration) var(--spring-glide) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 60ms);
+}
+
+/* Reveal: content rises into place as it enters, tied to scroll where supported. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes settle-zoom {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+@supports (animation-timeline: view()) {
+  html.js-motion [data-reveal] {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 90%;
+  }
+  html.js-motion [data-zoom] {
+    animation: settle-zoom linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
   }
 }
-
-.prose h2 {
-  margin-top: 2.5rem !important;
-  margin-bottom: 1.5rem !important;
-  padding-bottom: 0.75rem !important;
-}
-
-/* Legacy reveal classes are inert: content is always visible. Motion lives in Hang. */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
+@supports not (animation-timeline: view()) {
+  html.js-motion [data-reveal] {
+    transition:
+      opacity 500ms var(--ease-out),
+      transform var(--spring-glide-duration) var(--spring-glide);
   }
-}
-
-/* ── Hang: a work settles onto its hook once, on the hang spring ─── */
-html.js-motion [data-hang] {
-  transition:
-    transform var(--spring-hang-duration) var(--spring-hang),
-    opacity 240ms var(--ease-out);
-}
-html.js-motion [data-hang]:not([data-hung]) {
-  opacity: 0;
-  transform: translateY(24px) rotate(-0.6deg);
-}
-@media (prefers-reduced-motion: reduce) {
-  html.js-motion [data-hang] {
-    transition: none;
-    opacity: 1;
-    transform: none;
+  html.js-motion [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
   }
 }
 
 /* Theme cross-fade (View Transitions) */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 280ms;
+  animation-duration: 320ms;
 }
 
 /* ── Reading: long-form prose (blog posts, legal pages) ─────────── */
-.prose-sala {
+.prose-article {
   --tw-prose-body: rgb(var(--foreground) / 0.9);
   --tw-prose-headings: rgb(var(--foreground));
-  --tw-prose-links: rgb(var(--foreground));
+  --tw-prose-links: rgb(var(--primary-ink));
   --tw-prose-bold: rgb(var(--foreground));
   --tw-prose-quotes: rgb(var(--foreground));
   --tw-prose-quote-borders: rgb(var(--foreground) / 0.5);
@@ -485,45 +363,46 @@ html.js-motion [data-hang]:not([data-hung]) {
   font-size: 1.0625rem;
   line-height: 1.7;
 }
-.prose-sala :where(h2, h3, h4) {
-  font-stretch: 110%;
-  letter-spacing: -0.02em;
+.prose-article :where(h2, h3, h4) {
+  font-weight: 650;
+  letter-spacing: -0.025em;
   scroll-margin-top: 6rem;
 }
-.prose-sala :where(h2) { font-size: clamp(1.5rem, 3.6vw, 2rem); line-height: 1.15; margin-top: 3rem; margin-bottom: 1rem; }
-.prose-sala :where(h3) { font-size: clamp(1.25rem, 2.6vw, 1.5rem); line-height: 1.2; margin-top: 2.25rem; }
-.prose-sala :where(a) {
+.prose-article :where(h2) { font-size: clamp(1.5rem, 3.6vw, 2rem); line-height: 1.15; margin-top: 3rem; margin-bottom: 1rem; }
+.prose-article :where(h3) { font-size: clamp(1.25rem, 2.6vw, 1.5rem); line-height: 1.2; margin-top: 2.25rem; }
+.prose-article :where(a) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: rgb(var(--primary));
+  text-decoration-color: rgb(var(--primary) / 0.5);
   text-underline-offset: 0.22em;
   font-weight: 500;
 }
-.prose-sala :where(a):hover { text-decoration-thickness: 2px; }
-.prose-sala :where(blockquote) { border-left-width: 1px; font-style: normal; font-size: 1.1875rem; padding-left: 1.25rem; }
-.prose-sala :where(code):not(:where(pre code)) {
+.prose-article :where(a):hover { text-decoration-color: rgb(var(--primary)); }
+.prose-article :where(blockquote) { border-left-width: 3px; border-left-color: rgb(var(--primary)); font-style: normal; font-size: 1.1875rem; padding-left: 1.25rem; }
+.prose-article :where(code):not(:where(pre code)) {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875em;
   background: rgb(var(--foreground) / 0.07);
   padding: 0.1em 0.35em;
+  border-radius: 6px;
 }
-.prose-sala :where(code)::before, .prose-sala :where(code)::after { content: none; }
-.prose-sala :where(pre) {
+.prose-article :where(code)::before, .prose-article :where(code)::after { content: none; }
+.prose-article :where(pre) {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875rem;
   line-height: 1.65;
   background: rgb(var(--card));
   color: rgb(var(--card-foreground));
-  border: 1px solid rgb(var(--foreground) / 0.15);
-  border-radius: 0;
-  padding: 1.25rem;
+  border: 0;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
   overflow-x: auto;
 }
-.prose-sala :where(img) { border-radius: 0; box-shadow: var(--shadow-lift); }
-.prose-sala :where(table) { font-size: 0.9375rem; }
-.prose-sala :where(thead th) { font-family: var(--font-mono), ui-monospace, monospace; font-size: 0.8125rem; }
+.prose-article :where(img) { border-radius: var(--radius-lg); }
+.prose-article :where(table) { font-size: 0.9375rem; }
+.prose-article :where(thead th) { font-size: 0.8125rem; font-weight: 600; }
 
-/* Syntax: ink, amber ink, ink blue, muted. No neon. */
+/* Syntax: ink, amber ink, one cool blue for strings, muted comments. */
 .hljs-comment, .hljs-quote { color: rgb(var(--muted-foreground)); font-style: italic; }
 .hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-type, .hljs-literal { color: rgb(var(--primary-ink)); font-weight: 600; }
 .hljs-string, .hljs-attr, .hljs-template-variable, .hljs-addition { color: rgb(42 74 138); }

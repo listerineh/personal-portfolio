@@ -73,13 +73,13 @@ export function CookieBanner() {
     <>
       <div
         className={cn(
-          'plaque fixed inset-x-0 bottom-0 z-50 px-gutter py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-hang',
+          'panel fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 mx-auto max-w-3xl bg-popover px-5 py-5 shadow-float sm:inset-x-6 md:px-6',
           'transition-transform duration-500',
           isVisible && !isClosing ? 'translate-y-0' : 'translate-y-full'
         )}
         style={{ transitionTimingFunction: 'var(--ease-drawer)' }}
       >
-        <div className="mx-auto max-w-[1296px]">
+        <div className="mx-auto max-w-[1200px]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3 flex-1">
               <Cookie aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0" />

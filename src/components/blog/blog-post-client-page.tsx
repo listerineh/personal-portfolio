@@ -30,7 +30,6 @@ interface BlogPostClientPageProps {
 export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPageProps) {
   const { locale } = useLocale();
   const t = useTranslations('blog');
-  const tSala = useTranslations('sala');
   const version = versions[locale as Locale] ?? versions[initialLocale]!;
   const { post } = version;
   const [readingProgress, setReadingProgress] = useState(0);
@@ -95,9 +94,8 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
       </div>
       <PageShell>
         <PageHeader
-          name={tSala('writing')}
           title={post.title}
-          titleSize="room"
+          titleSize="section"
           nav={
             <Link href="/blog" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline-offset-[0.3em] hover:underline">
               <ArrowLeft aria-hidden="true" className="h-4 w-4" />
@@ -109,7 +107,7 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
         </PageHeader>
 
         <div className="px-gutter py-12 md:py-20">
-          <div className="mx-auto grid max-w-[1296px] gap-10 lg:grid-cols-12 lg:gap-6">
+          <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-12 lg:gap-6">
             <aside className="lg:col-span-3">
               <details className="group border-y border-foreground/20 py-3 lg:hidden">
                 <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-semibold">

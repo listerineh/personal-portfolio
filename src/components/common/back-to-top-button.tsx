@@ -43,7 +43,7 @@ export function BackToTopButton() {
       tabIndex={isVisible ? 0 : -1}
       aria-hidden={!isVisible}
       className={cn(
-        'fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-gutter z-40 flex h-12 w-12 items-center justify-center bg-foreground text-surface shadow-lift print:hidden',
+        'fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-gutter z-40 flex h-12 w-12 items-center justify-center bg-foreground text-surface shadow-card print:hidden',
         'transition-[opacity,transform] duration-snap ease-snap motion-reduce:transition-none active:scale-[0.95]',
         isVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0',
       )}

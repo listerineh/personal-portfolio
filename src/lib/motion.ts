@@ -1,6 +1,6 @@
 /**
- * Sala motion: physical springs, not easing curves.
- * The CSS tokens --spring-hang / --spring-snap in globals.css are sampled from these presets.
+ * Lumen motion: physical springs, not easing curves (damping ratio + response, as Apple ships them).
+ * The CSS tokens --spring-snap / --spring-glide / --spring-bounce in globals.css are sampled from these presets.
  */
 
 export type SpringPreset = {
@@ -9,13 +9,19 @@ export type SpringPreset = {
   mass?: number;
 };
 
+/** Converts Apple's damping ratio + response (seconds) into stiffness/damping for a unit mass. */
+function fromResponse(dampingRatio: number, response: number): SpringPreset {
+  const omega = (2 * Math.PI) / response;
+  return { stiffness: omega * omega, damping: 2 * dampingRatio * omega };
+}
+
 export const springs = {
-  /** A work settling on the wall: ~6% overshoot. */
-  hang: { stiffness: 180, damping: 18 },
-  /** UI feedback: critically damped, no overshoot. */
-  snap: { stiffness: 420, damping: 42 },
-  /** The route line advancing between rooms. */
-  route: { stiffness: 140, damping: 24 },
+  /** UI feedback: critically damped, response 0.35s. */
+  snap: fromResponse(1, 0.35),
+  /** Content settling into place: critically damped, response 0.55s. */
+  glide: fromResponse(1, 0.55),
+  /** Only after a gesture carried momentum: damping 0.8, response 0.45s. */
+  bounce: fromResponse(0.8, 0.45),
 } as const satisfies Record<string, SpringPreset>;
 
 /** Displacement of a unit spring released from 0 toward 1 at time t (seconds). */
@@ -52,7 +58,7 @@ const cache = new Map<
 >();
 
 /**
- * GSAP-ready spring: `gsap.to(el, { y: 0, ...spring(springs.hang) })`.
+ * JS spring for imperative animation: `{ duration, ease } = spring(springs.glide)`.
  * Duration is the physical settle time, so the motion never ends early or drags.
  */
 export function spring(preset: SpringPreset): {

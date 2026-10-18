@@ -49,7 +49,10 @@ function isNewPost(date?: string): boolean {
   );
 }
 
-/** A written work: catalog line, title, excerpt. The cover is a small framed print, not a banner. */
+/**
+ * A post. `stack` = rounded card with the cover on top (home, related posts);
+ * `row` = list entry with a small rounded cover beside it (blog listing).
+ */
 export function BlogCard({
   headingLevel: Heading = 'h3',
   title,
@@ -68,80 +71,80 @@ export function BlogCard({
   className,
 }: BlogCardProps) {
   const isNew = isNewPost(date);
-  const catalog = [
+  const meta = [
     date,
     readingTime !== undefined ? `${readingTime} ${readingTimeLabel}` : null,
-    ...tags.slice(0, 2),
   ]
     .filter(Boolean)
     .join(" · ");
+  const stack = layout === "stack";
+
+  const badges = (
+    <>
+      {isNew && newLabel && (
+        <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-primary/[0.14] px-2.5 text-[0.6875rem] font-semibold text-primary">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary" />
+          {newLabel}
+        </span>
+      )}
+      {isRecommended && recommendedLabel && (
+        <span className="inline-flex h-6 items-center rounded-full bg-foreground/[0.06] px-2.5 text-[0.6875rem] font-medium text-foreground">
+          {recommendedLabel}
+        </span>
+      )}
+    </>
+  );
 
   return (
-    <article className={cn("group relative", className)}>
+    <article className={cn("group relative h-full", className)}>
       <Link
         href={`/blog/${slug}`}
         aria-label={`${title}. ${readMoreLabel}`}
         className={cn(
-          "grid gap-4 no-underline outline-offset-4",
-          layout === "row" &&
-            coverImage &&
-            "sm:grid-cols-[1fr_9rem] sm:gap-6 md:grid-cols-[1fr_11rem]",
+          "no-underline",
+          stack
+            ? "panel flex h-full flex-col overflow-hidden transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float focus-visible:-translate-y-1 focus-visible:shadow-float motion-reduce:transition-none"
+            : cn("grid gap-4 rounded-lg", coverImage && "sm:grid-cols-[1fr_10rem] sm:gap-8 md:grid-cols-[1fr_13rem]"),
         )}
       >
-        <div
-          className={cn(
-            "grid content-start gap-2",
-            layout === "row" && "sm:order-1",
-          )}
-        >
-          <div className="flex flex-wrap items-center gap-2">
-            {isNew && newLabel && (
-              <span className="inline-flex h-6 items-center bg-primary px-2 font-mono text-[0.6875rem] font-medium text-primary-foreground">
-                {newLabel}
-              </span>
-            )}
-            {isRecommended && recommendedLabel && (
-              <span className="inline-flex h-6 items-center border border-foreground/40 px-2 font-mono text-[0.6875rem] font-medium text-foreground">
-                {recommendedLabel}
-              </span>
-            )}
-            {catalog && (
-              <p className="text-catalog text-muted-foreground">
-                {date ? <time dateTime={date}>{catalog}</time> : catalog}
-              </p>
-            )}
-          </div>
-          <Heading className="text-headline text-foreground decoration-1 underline-offset-[0.2em] group-hover:underline">
-            {title}
-          </Heading>
-          {excerpt && (
-            <p className="max-w-[62ch] text-sm leading-relaxed text-muted-foreground line-clamp-3">
-              {excerpt}
-            </p>
-          )}
-        </div>
-
         {coverImage && (
           <div
             className={cn(
-              "plaque p-1.5 transition-[box-shadow,transform] duration-hang ease-hang motion-reduce:transition-none",
-              "group-hover:-translate-y-0.5 group-hover:shadow-lift",
-              layout === "row"
-                ? "order-first sm:order-2 sm:self-start"
-                : "order-first",
+              "relative w-full overflow-hidden bg-muted",
+              stack ? "aspect-[16/10]" : "order-first aspect-[16/10] rounded-lg sm:order-2 sm:aspect-[4/3] sm:self-start",
             )}
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted sm:aspect-[4/3]">
-              <Image
-                src={coverImage}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 100vw, 176px"
-              />
-            </div>
+            <Image
+              src={coverImage}
+              alt=""
+              fill
+              className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.04] motion-reduce:transition-none"
+              sizes={stack ? "(max-width: 768px) 100vw, 380px" : "(max-width: 640px) 100vw, 208px"}
+            />
           </div>
         )}
+
+        <div className={cn("grid content-start gap-2", stack ? "flex-1 p-6" : "sm:order-1")}>
+          <div className="flex flex-wrap items-center gap-2">
+            {badges}
+            {meta && (
+              <p className="text-meta text-muted-foreground">
+                {date ? <time dateTime={date}>{meta}</time> : meta}
+              </p>
+            )}
+          </div>
+          <Heading className="text-headline text-foreground transition-colors duration-snap ease-snap group-hover:text-primary motion-reduce:transition-none">
+            {title}
+          </Heading>
+          {excerpt && (
+            <p className="max-w-[62ch] text-[0.9375rem] leading-relaxed text-muted-foreground line-clamp-3">
+              {excerpt}
+            </p>
+          )}
+          {tags.length > 0 && (
+            <p className="text-meta mt-1 text-muted-foreground">{tags.slice(0, 3).join(" · ")}</p>
+          )}
+        </div>
       </Link>
     </article>
   );

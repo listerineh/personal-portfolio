@@ -14,7 +14,6 @@ interface SkillsListingClientProps {
 export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
   const t = useTranslations('skills');
   const tCommon = useTranslations('common');
-  const tSala = useTranslations('sala');
   const [selectedCategories, setSelectedCategories] = useState<SkillCategory[]>([]);
 
   const visibleGroups = useMemo(
@@ -30,9 +29,9 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
 
   return (
     <PageShell>
-      <PageHeader number="04" name={tSala('craft')} title={t('pageTitle')} intro={t('pageDescription')}>
+      <PageHeader title={t('pageTitle')} intro={t('pageDescription')}>
         <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t('filterByCategory')}>
-          <span className="text-catalog mr-1 text-muted-foreground">{t('filterByCategory')}</span>
+          <span className="text-meta mr-1 text-muted-foreground">{t('filterByCategory')}</span>
           <FilterTag pressed={selectedCategories.length === 0} onPressedChange={() => setSelectedCategories([])}>
             {t('filterAll')}
           </FilterTag>
@@ -50,7 +49,7 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
       </PageHeader>
 
       <div className="px-gutter py-16 md:py-24">
-        <div className="mx-auto grid max-w-[1296px] gap-16 md:gap-20">
+        <div className="mx-auto grid max-w-[1200px] gap-16 md:gap-20">
           {visibleGroups.map((group) => (
             <section
               key={group.category}
@@ -61,7 +60,7 @@ export function SkillsListingClient({ skillGroups }: SkillsListingClientProps) {
                 <h2 id={`cat-${group.category}`} className="text-subhead lg:sticky lg:top-24">
                   {t(`categories.${group.category}`)}
                 </h2>
-                <p className="text-catalog mt-2 text-muted-foreground">{group.skills.length}</p>
+                <p className="text-meta mt-2 text-muted-foreground">{group.skills.length}</p>
               </div>
               <ul className="grid gap-x-6 sm:grid-cols-2 lg:col-span-9">
                 {group.skills.map((skill) => (

@@ -529,9 +529,9 @@
     "career": "Career",
     "craft": "Craft",
     "contact": "Contact",
-    "walkTheWork": "Walk the work",
+    "walkTheWork": "Explore my work",
     "now": "Now",
-    "drawingCaption": "Elevation · stack",
+    "drawingCaption": "Stack",
     "layers": {
       "interface": "Interface",
       "api": "API & backend",
@@ -543,6 +543,8 @@
     "route": "Route",
     "room": "Room",
     "yearsRemote": "{years} years · {remote} remote",
-    "allSkills": "Full stack index"
+    "allSkills": "Full stack index",
+    "previous": "Previous",
+    "next": "Next"
   }
 }
