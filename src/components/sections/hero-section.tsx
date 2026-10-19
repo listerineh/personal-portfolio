@@ -1,153 +1,143 @@
 "use client";
 
-import { useRef } from 'react';
-import { useTranslations } from 'next-intl';
-import Image from "next/image";
-import { FileText } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@/hooks/use-gsap';
-import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ds';
+import { useTranslations } from "next-intl";
+import { ChevronDown, ChevronRight, FileText } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { Ambient, Button, RotatingWords } from "@/components/ds";
+import { HeroVignettes } from "./hero-vignettes";
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+const step = (i: number) => ({ "--i": i }) as React.CSSProperties;
 
+/**
+ * First screen, full height. Left: who, what I build (the noun keeps changing), the actions.
+ * Right: what I build, shown as a deck of small app windows that leans toward the pointer and deals itself.
+ */
 export function HeroSection() {
-  const t = useTranslations('hero');
+  const t = useTranslations("hero");
+  const tSala = useTranslations("sala");
   const { toast } = useToast();
-  const sectionRef = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-  const eyebrowRef = useRef<HTMLSpanElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
+  const words = t.raw("buildWords") as string[];
 
-  useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!prefersReducedMotion && bgRef.current && sectionRef.current) {
-      gsap.to(bgRef.current, {
-        yPercent: 22,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    }
-
-    if (!prefersReducedMotion) {
-      const tl = gsap.timeline({ delay: 0.1, defaults: { ease: 'power3.out' } });
-      tl.fromTo(eyebrowRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 })
-        .fromTo(titleRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.25')
-        .fromTo(subtitleRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
-        .fromTo(statsRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
-    }
-  }, []);
+  const downloadCv = () => {
+    const link = document.createElement("a");
+    link.href = "/docs/CV_SebastianAlvarez_FS_EN.pdf";
+    link.download = "CV_SebastianAlvarez_EN.pdf";
+    link.click();
+    toast({
+      title: t("cvDownloadedTitle"),
+      description: t("cvDownloadedDescription"),
+    });
+  };
 
   return (
     <section
-      ref={sectionRef}
       id="hero"
-      className="relative h-screen min-h-[600px] overflow-hidden flex items-end"
+      aria-labelledby="hero-title"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-background px-gutter pb-28 pt-[calc(var(--header-h)+2.5rem)] md:pb-32"
     >
-      {/* Parallax background photo */}
-      <div ref={bgRef} className="absolute inset-0 scale-[1.12] origin-top">
-        <Image
-          src="/images/hero-photo.webp"
-          alt="Sebastian Alvarez"
-          fill
-          priority
-          fetchPriority="high"
-          quality={90}
-          className="object-cover object-top brightness-[0.7]"
-        />
-      </div>
+      <Ambient />
+      <div className="relative mx-auto my-auto grid w-full max-w-[1200px] items-center gap-16 py-10 lg:grid-cols-12 lg:gap-10 lg:py-16">
+        <div className="lg:col-span-7">
+          <p
+            data-intro=""
+            style={step(0)}
+            className="inline-flex items-center gap-2.5 rounded-full bg-foreground/[0.05] py-1.5 pl-3 pr-4 text-[0.8125rem] font-medium text-foreground/80"
+          >
+            <span aria-hidden="true" className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 motion-safe:animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+            </span>
+            {t("subtitle")}
+          </p>
 
-      {/* Content — bottom left */}
-      <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 lg:px-24 pb-16 md:pb-28">
-        <span
-          ref={eyebrowRef}
-          className="reveal-initial block font-headline text-xs tracking-[0.35em] uppercase mb-5 text-primary"
-          style={{ textShadow: '0 1px 3px rgba(0,0,0,0.45)' }}
-        >
-          {t('subtitle')}
-        </span>
+          <h1 id="hero-title" className="mt-8 md:mt-10">
+            <span data-intro="" style={step(1)} className="text-display block">
+              Sebastian Alvarez.
+            </span>
+            <span
+              data-intro=""
+              style={step(2)}
+              className="mt-3 block text-[clamp(1.75rem,5vw,3.75rem)] font-semibold leading-[1.1] tracking-[-0.04em] text-muted-foreground"
+            >
+              <span className="sr-only">{t("buildSentence")}</span>
+              <span aria-hidden="true">{t("buildPrefix")} </span>
+              <RotatingWords words={words} className="text-primary" />
+            </span>
+          </h1>
 
-        <h1
-          ref={titleRef}
-          className="reveal-initial font-headline font-black text-display text-white mb-7"
-          style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
-        >
-          <span className="block">Sebastian</span>
-          <span className="block text-primary">Alvarez</span>
-        </h1>
+          <p
+            data-intro=""
+            style={step(3)}
+            className="text-lead mt-8 max-w-[52ch] text-muted-foreground md:mt-10"
+          >
+            {t("description")}
+          </p>
 
-        <p
-          ref={subtitleRef}
-          className="reveal-initial max-w-sm md:max-w-md text-white/80 text-base md:text-lg leading-relaxed mb-6"
-          style={{ textShadow: '0 1px 4px rgba(0,0,0,0.45)' }}
-        >
-          {t('description')}
-        </p>
+          <div
+            data-intro=""
+            style={step(4)}
+            className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-12"
+          >
+            <Button
+              href="#work"
+              accent="amber"
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              {tSala("walkTheWork")}
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={downloadCv}
+              className="w-full sm:w-auto"
+            >
+              <FileText aria-hidden="true" className="h-4 w-4" />
+              {t("downloadCV")}
+            </Button>
+            <Button
+              variant="ghost"
+              accent="amber"
+              href="/contact"
+              className="justify-center sm:ml-3"
+            >
+              {t("getInTouch")}
+              <ChevronRight aria-hidden="true" className="h-4 w-4" />
+            </Button>
+          </div>
+
+          <p
+            data-intro=""
+            style={step(5)}
+            className="text-meta mt-10 text-muted-foreground md:mt-12"
+          >
+            {tSala("yearsRemote", {
+              years: t("statsYears"),
+              remote: t("statsRemote"),
+            })}{" "}
+            · Quito, EC
+          </p>
+        </div>
 
         <div
-          ref={statsRef}
-          className="reveal-initial flex items-center gap-6 sm:gap-8 mb-8 flex-wrap"
+          data-intro=""
+          style={step(3)}
+          className="mx-auto w-full max-w-[480px] lg:col-span-5 lg:max-w-none"
         >
-          <div className="flex items-center gap-2">
-            <span
-              className="font-headline font-black text-primary"
-              style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}
-            >
-              {t('statsYears')}
-            </span>
-            <span className="text-[10px] font-headline tracking-[0.2em] uppercase text-white/40 leading-tight">
-              <span className="block">{t('statsYearsLabel1')}</span>
-              <span className="block">{t('statsYearsLabel2')}</span>
-            </span>
-          </div>
-          <div className="w-px h-8 bg-white/15" />
-          <div className="flex items-center gap-2">
-            <span
-              className="font-headline font-black text-white/80"
-              style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}
-            >
-              {t('statsRemote')}
-            </span>
-            <span className="text-[10px] font-headline tracking-[0.2em] uppercase text-white/40 leading-tight">
-              <span className="block">{t('statsRemoteLabel1')}</span>
-              <span className="block">{t('statsRemoteLabel2')}</span>
-            </span>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <Button
-            variant="primary"
-            accent="amber"
-            size="md"
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = '/docs/CV_SebastianAlvarez_FS_EN.pdf';
-              link.download = 'CV_SebastianAlvarez_EN.pdf';
-              link.click();
-              toast({ title: t('cvDownloadedTitle'), description: t('cvDownloadedDescription') });
-            }}
-            className="w-full sm:w-auto justify-center hover:shadow-[0_0_40px_rgba(245,158,11,0.35)]"
-          >
-            <FileText className="w-4 h-4" />
-            {t('downloadCV')}
-          </Button>
-          <Button variant="ghost" accent="neutral" size="md" href="#contact" className="w-full sm:w-auto justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/40 hover:bg-white/5">
-            {t('getInTouch')}
-          </Button>
+          <HeroVignettes />
         </div>
       </div>
+
+      <a
+        href="#career"
+        aria-label={t("scrollToCareer")}
+        className="absolute bottom-6 left-1/2 inline-flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors duration-snap ease-snap hover:text-foreground md:bottom-8"
+      >
+        <ChevronDown
+          aria-hidden="true"
+          className="h-5 w-5 motion-safe:animate-bounce"
+        />
+      </a>
     </section>
   );
 }

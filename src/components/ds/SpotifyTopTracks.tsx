@@ -33,44 +33,36 @@ interface PlatformButton {
   icon: React.ReactNode;
 }
 
-function TrackSkeleton({ accentColor }: { accentColor: string }) {
+function TrackSkeleton() {
   return (
-    <div
-      className="flex items-center gap-4 p-4 rounded-2xl animate-pulse"
-      style={{ border: `1px solid ${accentColor}15` }}
-    >
-      <div className="shrink-0 rounded" style={{ width: '2rem', height: '1.25rem', background: `${accentColor}20` }} />
-      <div className="w-14 h-14 rounded-xl shrink-0" style={{ background: `${accentColor}18` }} />
-      <div className="flex-1 space-y-2.5 min-w-0">
-        <div className="h-4 rounded-lg w-3/5" style={{ background: `${accentColor}18` }} />
-        <div className="h-3 rounded w-2/5" style={{ background: `${accentColor}10` }} />
+    <li className="flex items-center gap-4 px-3 py-3" aria-hidden="true">
+      <div className="h-4 w-6 rounded-full bg-foreground/10" />
+      <div className="h-14 w-14 shrink-0 rounded-[12px] bg-foreground/10" />
+      <div className="min-w-0 flex-1 space-y-2.5">
+        <div className="h-4 w-3/5 rounded-full bg-foreground/10" />
+        <div className="h-3 w-2/5 rounded-full bg-foreground/[0.07]" />
       </div>
-      <div className="hidden sm:block h-3 rounded shrink-0" style={{ width: '9rem', background: `${accentColor}10` }} />
-    </div>
+    </li>
   );
 }
 
 export function SpotifyTopTracks({
   tracks: trackLinks,
-  accentColor = '#818cf8',
+  accentColor = '#D97706',
 }: SpotifyTopTracksProps) {
   const t = useTranslations('why');
-  const [tracks, setTracks] = useState<Track[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  // Results are keyed by the requested ids, so loading/error are derived instead of set in the effect.
+  const requestKey = trackLinks.map((link) => link.spotifyId).join(',');
+  const [result, setResult] = useState<{ key: string; tracks: Track[] } | { key: string; error: true } | null>(null);
+  const current = result?.key === requestKey ? result : null;
+  const loading = trackLinks.length > 0 && current === null;
+  const error = current !== null && 'error' in current;
+  const tracks = current !== null && 'tracks' in current ? current.tracks : [];
 
   useEffect(() => {
-    if (!trackLinks.length) {
-      setLoading(false);
-      setError(false);
-      return;
-    }
-    setLoading(true);
-    setError(false);
+    if (!requestKey) return;
     let cancelled = false;
-    const ids = trackLinks.map((t) => t.spotifyId);
-    fetch(`/api/spotify/tracks?ids=${ids.join(',')}`)
+    fetch(`/api/spotify/tracks?ids=${requestKey}`)
       .then((r) => {
         if (!r.ok) throw new Error('Network response was not ok');
         return r.json();
@@ -79,174 +71,109 @@ export function SpotifyTopTracks({
         if (cancelled) return;
         if (data?.tracks?.length) {
           const merged = data.tracks.map((track: Track) => {
-            const links = trackLinks.find((t) => t.spotifyId === track.id);
-            return {
-              ...track,
-              youtube: links?.youtube,
-              appleMusic: links?.appleMusic,
-              soundcloud: links?.soundcloud,
-            };
+            const links = trackLinks.find((link) => link.spotifyId === track.id);
+            return { ...track, youtube: links?.youtube, appleMusic: links?.appleMusic, soundcloud: links?.soundcloud };
           });
-          setTracks(merged);
+          setResult({ key: requestKey, tracks: merged });
         } else {
-          setError(true);
+          setResult({ key: requestKey, error: true });
         }
       })
       .catch(() => {
-        if (!cancelled) setError(true);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) setResult({ key: requestKey, error: true });
       });
     return () => {
       cancelled = true;
     };
-  }, [trackLinks]);
+    // trackLinks is identified by requestKey
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestKey]);
 
   if (error) {
-    return <p className="text-sm text-foreground/50 py-4">{t('topTracksError')}</p>;
+    return <p className="py-4 text-base text-muted-foreground">{t('topTracksError')}</p>;
   }
 
   return (
-    <div className="space-y-2">
-      {loading
-        ? trackLinks.map((t) => <TrackSkeleton key={t.spotifyId} accentColor={accentColor} />)
-        : tracks.map((track, index) => {
-            const hovered = hoveredId === track.id;
+    <div style={{ '--track-accent': accentColor } as React.CSSProperties}>
+      <ol className="panel grid gap-0.5 p-2" aria-busy={loading || undefined}>
+        {loading
+          ? trackLinks.map((link) => <TrackSkeleton key={link.spotifyId} />)
+          : tracks.map((track, index) => {
+              const platforms: PlatformButton[] = [
+                {
+                  key: 'spotify',
+                  href: track.spotifyUrl,
+                  label: 'Spotify',
+                  color: '#1DB954',
+                  icon: <SpotifyIcon className="h-4 w-4" base />,
+                },
+                track.youtube && {
+                  key: 'youtube',
+                  href: track.youtube,
+                  label: 'YouTube',
+                  color: '#FF0000',
+                  icon: <YoutubeIcon className="h-4 w-4" accentColor="#FF0000" />,
+                },
+                track.appleMusic && {
+                  key: 'appleMusic',
+                  href: track.appleMusic,
+                  label: 'Apple Music',
+                  color: '#FA57C1',
+                  icon: <AppleMusicIcon className="h-4 w-4" accentColor="#FA57C1" />,
+                },
+                track.soundcloud && {
+                  key: 'soundcloud',
+                  href: track.soundcloud,
+                  label: 'SoundCloud',
+                  color: '#FF5500',
+                  icon: <SoundcloudIcon className="h-4 w-4" accentColor="#FF5500" />,
+                },
+              ].filter(Boolean) as PlatformButton[];
 
-            const platforms: PlatformButton[] = [
-              {
-                key: 'spotify',
-                href: track.spotifyUrl,
-                label: 'Spotify',
-                color: '#1DB954',
-                icon: <SpotifyIcon className="w-4 h-4" base />,
-              },
-              track.youtube && {
-                key: 'youtube',
-                href: track.youtube,
-                label: 'YouTube',
-                color: '#FF0000',
-                icon: <YoutubeIcon className="w-4 h-4" accentColor="#FF0000" />,
-              },
-              track.appleMusic && {
-                key: 'appleMusic',
-                href: track.appleMusic,
-                label: 'Apple Music',
-                color: '#FA57C1',
-                icon: <AppleMusicIcon className="w-4 h-4" accentColor="#FA57C1" />,
-              },
-              track.soundcloud && {
-                key: 'soundcloud',
-                href: track.soundcloud,
-                label: 'SoundCloud',
-                color: '#FF5500',
-                icon: <SoundcloudIcon className="w-4 h-4" accentColor="#FF5500" />,
-              },
-            ].filter(Boolean) as PlatformButton[];
+              return (
+                <li key={track.id} className="group flex items-center gap-4 rounded-[16px] px-3 py-3 transition-colors duration-snap ease-snap hover:bg-foreground/[0.04]">
+                  <span className="text-meta w-6 shrink-0 text-right text-muted-foreground">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
 
-            return (
-              <div
-                key={track.id}
-                className="group relative flex items-center gap-4 p-4 rounded-2xl overflow-hidden"
-                style={{
-                  border: `1px solid ${hovered ? accentColor + '30' : accentColor + '15'}`,
-                  transition: 'border-color 0.25s',
-                }}
-                onMouseEnter={() => setHoveredId(track.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                {/* Hover overlay */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: `linear-gradient(to right, ${accentColor}12, ${accentColor}04)`,
-                    opacity: hovered ? 1 : 0,
-                    transition: 'opacity 0.25s',
-                  }}
-                />
-
-                {/* Track number */}
-                <span
-                  className="relative z-10 font-headline font-black tabular-nums shrink-0 leading-none"
-                  style={{
-                    fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
-                    color: `${accentColor}50`,
-                    minWidth: '2rem',
-                    textAlign: 'right',
-                  }}
-                >
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-
-                {/* Album art */}
-                <div className="relative z-10 shrink-0">
                   {track.albumArt ? (
-                    <Image
-                      src={track.albumArt}
-                      alt={track.name}
-                      width={56}
-                      height={56}
-                      className="rounded-xl object-cover"
-                      unoptimized={false}
-                    />
+                    <Image src={track.albumArt} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-[12px] object-cover shadow-card" />
                   ) : (
-                    <div className="w-14 h-14 rounded-xl" style={{ background: `${accentColor}20` }} />
+                    <div className="h-14 w-14 shrink-0 rounded-[12px] bg-[var(--track-accent)] opacity-30" />
                   )}
-                </div>
 
-                {/* Track info & platform buttons */}
-                <div className="relative z-10 flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                  <div className="min-w-0">
-                    <p
-                      className="font-headline font-bold truncate leading-tight text-foreground text-caption"
-                    >
-                      {track.name}
-                    </p>
-                    <p className="text-xs truncate mt-1 text-foreground/50">{track.artistName}</p>
+                  <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                    <div className="min-w-0">
+                      <p className="truncate text-base font-semibold leading-tight text-foreground">{track.name}</p>
+                      <p className="mt-1 truncate text-sm text-muted-foreground">{track.artistName}</p>
+                    </div>
+
+                    {/* Always visible on touch; revealed on hover or focus where hover exists. */}
+                    <div className="flex flex-wrap items-center gap-1 sm:ml-auto sm:flex-nowrap [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:transition-opacity [@media(hover:hover)]:duration-snap [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-within:opacity-100">
+                      {platforms.map((platform) => (
+                        <a
+                          key={platform.key}
+                          href={platform.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={t('listenOn', { track: track.name, platform: platform.label })}
+                          title={platform.label}
+                          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors duration-snap hover:bg-foreground/[0.08]"
+                        >
+                          {platform.icon}
+                        </a>
+                      ))}
+                    </div>
                   </div>
+                </li>
+              );
+            })}
+      </ol>
 
-                  {/* Platform buttons: only reveal on hover */}
-                  <div className="flex items-center gap-2 flex-wrap sm:ml-auto sm:flex-nowrap opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-300 ease-out">
-                    {platforms.map((platform) => (
-                      <a
-                        key={platform.key}
-                        href={platform.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Escuchar "${track.name}" en ${platform.label}`}
-                        title={platform.label}
-                        className="flex items-center justify-center w-8 h-8 rounded-full shrink-0"
-                        style={{
-                          border: `1px solid ${platform.color}40`,
-                          background: `${platform.color}12`,
-                          transition: 'background 0.2s, border-color 0.2s',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = `${platform.color}25`;
-                          e.currentTarget.style.borderColor = `${platform.color}80`;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = `${platform.color}12`;
-                          e.currentTarget.style.borderColor = `${platform.color}40`;
-                        }}
-                      >
-                        {platform.icon}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-      {/* Attribution */}
-      <div className="pt-2 px-1 flex items-center gap-2 text-foreground/50">
-        <svg viewBox="0 0 24 24" className="w-3 h-3 shrink-0" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
-        </svg>
-        <span className="text-xs">{t('topTracksAttribution')}</span>
-      </div>
+      <p className="text-meta mt-3 flex items-center gap-2 text-muted-foreground">
+        <SpotifyIcon className="h-3 w-3 shrink-0" base />
+        {t('topTracksAttribution')}
+      </p>
     </div>
   );
 }

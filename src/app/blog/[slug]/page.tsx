@@ -1,8 +1,13 @@
 
-import { Metadata } from 'next';
-import { getBlogPosts, getBlogPost } from '@/lib/data';
+import type { Metadata } from 'next';
+import { DEFAULT_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
+import { getBlogPosts, getBlogPost } from '@/lib/data/blog';
 import { notFound } from 'next/navigation';
-import { BlogPostClientPage } from '@/components/blog/blog-post-client-page';
+import { BlogPostClientPage, type BlogPostVersion } from '@/components/blog/blog-post-client-page';
+import { BlogPostContent } from '@/components/blog/blog-post-content';
+import { BlogStructuredData } from '@/components/blog/blog-structured-data';
+import { ArticleSchema } from '@/components/blog/article-schema';
+import { toBlogSummary } from '@/lib/data/blog/summaries';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 
@@ -16,70 +21,26 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const locale = await requestLocale();
   const post = getBlogPost(slug, locale);
+  if (!post) return { title: locale === 'es' ? 'Artículo no encontrado' : 'Article not found', robots: { index: false } };
 
-  if (!post) {
-    return {
-      title: 'Post Not Found',
-    };
-  }
+  // The cover re-encoded for sharing (JPG, 1200×630, nothing cropped): see scripts/generate-og-images.js.
+  const cover = post.imageUrl ? post.imageUrl.replace(/^\/blog\/(.+)\.\w+$/, '/og/blog/$1.jpg') : DEFAULT_OG_IMAGE;
+  const published = new Date(post.date);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
-  const postUrl = `${siteUrl}/blog/${post.slug}`;
-  const imageUrl = post.imageUrl ? `${siteUrl}${post.imageUrl}` : `${siteUrl}/og-default.png`;
-  
-  const ogLocale = locale === 'es' ? 'es_ES' : 'en_US';
-  const alternateLocale = locale === 'es' ? 'en' : 'es';
-
-  return {
-    title: `${post.title} | Sebastian Alvarez`,
+  return shareMetadata({
+    title: post.title,
     description: post.excerpt,
-    authors: [{ name: post.author, url: siteUrl }],
-    creator: 'Sebastian Alvarez',
-    publisher: 'Sebastian Alvarez',
     keywords: post.tags,
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
-    },
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      url: postUrl,
-      siteName: 'listerineh.dev',
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
-      locale: ogLocale,
-      alternateLocale: alternateLocale === 'es' ? 'es_ES' : 'en_US',
-      type: 'article',
-      publishedTime: new Date(post.date).toISOString(),
-      modifiedTime: new Date(post.date).toISOString(),
-      authors: [post.author],
-      tags: post.tags,
-      section: post.tags[0] ?? 'Engineering',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
-      images: [imageUrl],
-      creator: '@listerineh',
-      site: '@listerineh',
-    },
-    alternates: {
-      canonical: postUrl,
-    },
-  };
+    path: `/blog/${post.slug}`,
+    image: cover,
+    imageAlt: post.title,
+    locale,
+    type: 'article',
+    publishedTime: Number.isNaN(published.getTime()) ? undefined : published.toISOString(),
+    tags: post.tags,
+  });
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -93,5 +54,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  return <BlogPostClientPage post={post} />;
+  // Every language is rendered here, on the server; the client only switches between them.
+  const versions: Partial<Record<Locale, BlogPostVersion>> = {};
+  for (const loc of locales) {
+    const localized = getBlogPost(slug, loc);
+    if (!localized) continue;
+    versions[loc] = {
+      post: toBlogSummary(localized),
+      body: <BlogPostContent content={localized.content} />,
+      related: getBlogPosts(loc)
+        .filter((candidate) => candidate.slug !== slug)
+        .slice(0, 3)
+        .map(toBlogSummary),
+    };
+  }
+
+  return (
+    <>
+      <BlogStructuredData post={post} />
+      <ArticleSchema post={post} />
+      <BlogPostClientPage versions={versions} initialLocale={locale} />
+    </>
+  );
 }

@@ -1,57 +1,38 @@
-import { cn } from '@/lib/utils'
-import { type Accent, type TextSize, type TextStrength } from './types'
-import { type ElementType, type ReactNode } from 'react'
+import { cn } from "@/lib/utils";
+import { type Accent, type TextSize, type TextStrength } from "./types";
+import { type ElementType, type ReactNode } from "react";
 
 interface TextProps {
-  as?: ElementType
-  size?: TextSize
-  strength?: TextStrength
-  accent?: Accent
-  animate?: boolean
-  className?: string
-  children: ReactNode
+  as?: ElementType;
+  size?: TextSize;
+  strength?: TextStrength;
+  /** Kept for API compatibility. Only `strength="accent"` uses color (live amber ink). */
+  accent?: Accent;
+  animate?: boolean;
+  className?: string;
+  children: ReactNode;
 }
 
 const sizeMap: Record<TextSize, string> = {
-  xs:   'text-xs',
-  sm:   'text-sm',
-  base: 'text-base',
-  lg:   'text-lg',
-  xl:   'text-xl',
-}
+  xs: "text-xs leading-relaxed",
+  sm: "text-sm leading-relaxed",
+  base: "text-base leading-[1.6]",
+  lg: "text-lead",
+  xl: "text-xl leading-snug",
+};
 
-const colorMap: Record<TextStrength, Record<Accent, string>> = {
-  primary: {
-    amber:   'text-foreground/75 dark:text-white/75',
-    indigo:  'text-indigo-950/75 dark:text-white/70',
-    green:   'text-emerald-950/75 dark:text-white/65',
-    neutral: 'text-gray-700 dark:text-white/75',
-  },
-  secondary: {
-    amber:   'text-foreground/55 dark:text-white/50',
-    indigo:  'text-indigo-900/55 dark:text-white/45',
-    green:   'text-emerald-900/55 dark:text-white/50',
-    neutral: 'text-gray-500 dark:text-white/50',
-  },
-  accent: {
-    amber:   'text-primary dark:text-primary/50',
-    indigo:  'text-indigo-600 dark:text-indigo-400/50',
-    green:   'text-emerald-600 dark:text-emerald-400/50',
-    neutral: 'text-gray-600 dark:text-white/40',
-  },
-  muted: {
-    amber:   'text-primary/40 dark:text-foreground/30',
-    indigo:  'text-indigo-700/40 dark:text-white/30',
-    green:   'text-emerald-700/40 dark:text-white/30',
-    neutral: 'text-gray-400 dark:text-white/30',
-  },
-}
+// Every strength holds AA on plain, tint and panel surfaces in both themes.
+const strengthMap: Record<TextStrength, string> = {
+  primary: "text-foreground",
+  secondary: "text-muted-foreground",
+  accent: "text-primary",
+  muted: "text-muted-foreground",
+};
 
 export function Text({
-  as: Tag = 'p',
-  size = 'base',
-  strength = 'primary',
-  accent = 'neutral',
+  as: Tag = "p",
+  size = "base",
+  strength = "primary",
   animate,
   className,
   children,
@@ -59,14 +40,14 @@ export function Text({
   return (
     <Tag
       className={cn(
-        animate && 'reveal-up',
-        'leading-relaxed',
+        animate && "reveal-up",
+        "max-w-[68ch]",
         sizeMap[size],
-        colorMap[strength][accent],
+        strengthMap[strength],
         className,
       )}
     >
       {children}
     </Tag>
-  )
+  );
 }

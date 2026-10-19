@@ -1,25 +1,34 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { Pill } from './Pill';
-import { cn } from '@/lib/utils';
-import { MONTHS_EN, MONTHS_ES } from '@/lib/blog-constants';
+import Image from "next/image";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { MONTHS_EN, MONTHS_ES } from "@/lib/blog-constants";
 
 interface BlogCardProps {
+  /** Heading level of the title, so pages keep a valid outline. */
+  headingLevel?: 'h2' | 'h3';
   title: string;
   slug: string;
   excerpt?: string;
   date?: string;
   readingTime?: number;
+  /** Unit after the reading time, localized by the caller. */
+  readingTimeLabel?: string;
   tags?: string[];
   coverImage?: string;
   readMoreLabel?: string;
   newLabel?: string;
   isRecommended?: boolean;
   recommendedLabel?: string;
+  /**
+   * `row` = list entry with a small cover beside it (blog listing); `stack` = card with the cover on top;
+   * `feature` = the lead story, large cover and title, tags as chips; `wide` = the same lead laid out horizontally
+   * for a full row; `compact` = a tight row with a thumbnail.
+   */
+  layout?: "row" | "stack" | "feature" | "wide" | "compact";
+  className?: string;
 }
 
 function isNewPost(date?: string): boolean {
@@ -28,122 +37,193 @@ function isNewPost(date?: string): boolean {
   // Handle "Month DD, YYYY" format (Safari-safe — Date constructor rejects this)
   const match = date.match(/^(\w+)\s+\d+,\s+(\d{4})$/);
   if (match) {
-    const month = MONTHS_EN.indexOf(match[1]) !== -1
-      ? MONTHS_EN.indexOf(match[1])
-      : MONTHS_ES.indexOf(match[1]);
+    const month =
+      MONTHS_EN.indexOf(match[1]) !== -1
+        ? MONTHS_EN.indexOf(match[1])
+        : MONTHS_ES.indexOf(match[1]);
     const year = parseInt(match[2], 10);
-    return month !== -1 && year === now.getFullYear() && month === now.getMonth();
+    return (
+      month !== -1 && year === now.getFullYear() && month === now.getMonth()
+    );
   }
-  // Fallback for ISO or other standard formats
   const postDate = new Date(date);
   if (isNaN(postDate.getTime())) return false;
-  return postDate.getFullYear() === now.getFullYear() && postDate.getMonth() === now.getMonth();
+  return (
+    postDate.getFullYear() === now.getFullYear() &&
+    postDate.getMonth() === now.getMonth()
+  );
 }
 
+/**
+ * A post. `stack` = rounded card with the cover on top (home, related posts);
+ * `row` = list entry with a small rounded cover beside it (blog listing).
+ */
 export function BlogCard({
+  headingLevel: Heading = 'h3',
   title,
   slug,
   excerpt,
   date,
   readingTime,
+  readingTimeLabel = "min read",
   tags = [],
   coverImage,
-  readMoreLabel = 'Read more',
-  newLabel = 'New',
+  readMoreLabel = "Read more",
+  newLabel = "New",
   isRecommended,
   recommendedLabel,
+  layout = "row",
+  className,
 }: BlogCardProps) {
-  const [starHovered, setStarHovered] = useState(false);
   const isNew = isNewPost(date);
+  const meta = [
+    date,
+    readingTime !== undefined ? `${readingTime} ${readingTimeLabel}` : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const stack = layout === "stack";
+
+  const badges = (
+    <>
+      {isNew && newLabel && (
+        <span className="inline-flex h-6 items-center gap-1.5 rounded-full bg-primary/[0.14] px-2.5 text-[0.6875rem] font-semibold text-primary">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-primary" />
+          {newLabel}
+        </span>
+      )}
+      {isRecommended && recommendedLabel && (
+        <span className="inline-flex h-6 items-center rounded-full bg-foreground/[0.06] px-2.5 text-[0.6875rem] font-medium text-foreground">
+          {recommendedLabel}
+        </span>
+      )}
+    </>
+  );
+
+  if (layout === "compact") {
+    return (
+      <article className={cn("group relative", className)}>
+        <Link
+          href={`/blog/${slug}`}
+          aria-label={`${title}. ${readMoreLabel}`}
+          className="-mx-3 flex items-center gap-4 rounded-lg px-3 py-4 no-underline transition-colors duration-snap ease-snap hover:bg-foreground/[0.04] motion-reduce:transition-none"
+        >
+          {coverImage && (
+            <span className="relative aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-[14px] bg-muted sm:w-28">
+              <Image src={coverImage} alt="" fill sizes="112px" className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.06] motion-reduce:transition-none" />
+            </span>
+          )}
+          <span className="min-w-0 flex-1">
+            <span className="flex flex-wrap items-center gap-2">
+              {badges}
+              {meta && <span className="text-meta text-muted-foreground">{meta}</span>}
+            </span>
+            <Heading className="mt-1 line-clamp-2 text-[1.0625rem] font-semibold leading-snug tracking-[-0.015em] text-foreground transition-colors duration-snap ease-snap group-hover:text-primary motion-reduce:transition-none">
+              {title}
+            </Heading>
+          </span>
+          <ChevronRight aria-hidden="true" className="h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-snap ease-snap group-hover:translate-x-1 group-hover:text-foreground motion-reduce:transition-none" />
+        </Link>
+      </article>
+    );
+  }
+
+  if (layout === "feature" || layout === "wide") {
+    const wide = layout === "wide";
+    return (
+      <article className={cn("group relative h-full", className)}>
+        <Link
+          href={`/blog/${slug}`}
+          aria-label={`${title}. ${readMoreLabel}`}
+          className={cn(
+            "panel flex h-full flex-col overflow-hidden no-underline transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float focus-visible:-translate-y-1 focus-visible:shadow-float motion-reduce:transition-none",
+            wide && "md:grid md:grid-cols-2",
+          )}
+        >
+          {coverImage && (
+            <span className={cn("relative block aspect-[16/9] w-full overflow-hidden bg-muted", wide && "md:aspect-auto md:h-full md:min-h-[380px]")}>
+              <Image src={coverImage} alt="" fill sizes={wide ? "(max-width: 768px) 100vw, 600px" : "(max-width: 1024px) 100vw, 700px"} className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.03] motion-reduce:transition-none" />
+            </span>
+          )}
+          <span className={cn("flex flex-1 flex-col gap-3 p-6 md:p-8", wide && "md:justify-center md:p-10 lg:p-12")}>
+            <span className="flex flex-wrap items-center gap-2">
+              {badges}
+              {meta && <span className="text-meta text-muted-foreground">{date ? <time dateTime={date}>{meta}</time> : meta}</span>}
+            </span>
+            <Heading className={cn("text-foreground transition-colors duration-snap ease-snap group-hover:text-primary motion-reduce:transition-none", wide ? "text-display-sm" : "text-subhead")}>
+              {title}
+            </Heading>
+            {excerpt && <span className="line-clamp-3 max-w-[62ch] text-[1.0625rem] leading-relaxed text-muted-foreground">{excerpt}</span>}
+            <span className={cn("mt-auto flex flex-wrap items-center justify-between gap-3 pt-3", wide && "md:mt-4")}>
+              {tags.length > 0 && (
+                <span className="flex flex-wrap gap-1.5">
+                  {tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="inline-flex h-7 items-center rounded-full bg-foreground/[0.06] px-3 text-xs font-medium text-foreground">
+                      {tag}
+                    </span>
+                  ))}
+                </span>
+              )}
+              <span className="inline-flex items-center gap-1 text-[0.9375rem] font-medium text-primary">
+                {readMoreLabel}
+                <ChevronRight aria-hidden="true" className="h-4 w-4 transition-transform duration-snap ease-snap group-hover:translate-x-0.5 motion-reduce:transition-none" />
+              </span>
+            </span>
+          </span>
+        </Link>
+      </article>
+    );
+  }
 
   return (
-    <article className="group relative h-full">
+    <article className={cn("group relative h-full", className)}>
       <Link
         href={`/blog/${slug}`}
-        className="flex flex-col h-full rounded-2xl overflow-hidden border border-foreground/[0.08] bg-card transition-[transform,border-color,background-color] duration-300 ease-out hover:-translate-y-0.5 active:scale-[0.98] hover:border-primary/25 hover:bg-foreground/[0.03] no-underline"
+        aria-label={`${title}. ${readMoreLabel}`}
+        className={cn(
+          "no-underline",
+          stack
+            ? "panel flex h-full flex-col overflow-hidden transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float focus-visible:-translate-y-1 focus-visible:shadow-float motion-reduce:transition-none"
+            : cn("grid gap-4 rounded-lg", coverImage && "sm:grid-cols-[1fr_10rem] sm:gap-8 md:grid-cols-[1fr_13rem]"),
+        )}
       >
-        {/* Cover image */}
         {coverImage && (
-          <div className="relative w-full overflow-hidden aspect-video">
+          <div
+            className={cn(
+              "relative w-full overflow-hidden bg-muted",
+              stack ? "aspect-[16/10]" : "order-first aspect-[16/10] rounded-lg sm:order-2 sm:aspect-[4/3] sm:self-start",
+            )}
+          >
             <Image
               src={coverImage}
-              alt={title}
+              alt=""
               fill
-              className="blog-image object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.04] motion-reduce:transition-none"
+              sizes={stack ? "(max-width: 768px) 100vw, 380px" : "(max-width: 640px) 100vw, 208px"}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent from-60% to-black/50" />
-            {isNew && newLabel && (
-              <div className="absolute top-0 right-0 z-20">
-                <span className="inline-flex items-center font-headline font-bold text-[10px] tracking-widest uppercase text-white shadow-lg bg-primary rounded-bl-lg px-2.5 py-1">
-                  {newLabel}
-                </span>
-              </div>
-            )}
-            {isRecommended && (
-              <div
-                className="absolute top-3 left-3 z-10 flex items-center gap-1.5"
-                onMouseEnter={() => setStarHovered(true)}
-                onMouseLeave={() => setStarHovered(false)}
-              >
-                <span className="flex items-center justify-center w-9 h-9 rounded-full shadow-md backdrop-blur-sm transition-transform duration-200 ease-out bg-black/45 group-hover/star:scale-[1.15]">
-                  <Sparkles className="h-4 w-4 text-primary" />
-                </span>
-                <span
-                  className={cn(
-                    'px-2 py-0.5 rounded-full text-[10px] font-headline font-bold uppercase tracking-wider text-white shadow-md backdrop-blur-sm bg-black/45 transition-[opacity,transform] duration-200 ease-out',
-                    starHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1'
-                  )}
-                >
-                  {recommendedLabel}
-                </span>
-              </div>
-            )}
           </div>
         )}
 
-        {/* Content */}
-        <div className="flex flex-col flex-1 p-5 gap-3">
-          {/* Date */}
-          {date && (
-            <time className="text-xs font-headline font-semibold uppercase tracking-widest text-foreground/30" dateTime={date}>
-              {date}{readingTime !== undefined ? ` · ${readingTime} min read` : ''}
-            </time>
-          )}
-
-          {/* Title */}
-          <h3 className="font-headline font-bold text-foreground leading-tight line-clamp-3 text-headline">
+        <div className={cn("grid content-start gap-2", stack ? "flex-1 p-6" : "sm:order-1")}>
+          <div className="flex flex-wrap items-center gap-2">
+            {badges}
+            {meta && (
+              <p className="text-meta text-muted-foreground">
+                {date ? <time dateTime={date}>{meta}</time> : meta}
+              </p>
+            )}
+          </div>
+          <Heading className="text-headline text-foreground transition-colors duration-snap ease-snap group-hover:text-primary motion-reduce:transition-none">
             {title}
-          </h3>
-
-          {/* Excerpt */}
+          </Heading>
           {excerpt && (
-            <p className="text-sm text-foreground/55 leading-relaxed line-clamp-3">
+            <p className="max-w-[62ch] text-[0.9375rem] leading-relaxed text-muted-foreground line-clamp-3">
               {excerpt}
             </p>
           )}
-
-          {/* Tags */}
           {tags.length > 0 && (
-            <div className="flex items-center gap-2 mt-1">
-              {tags.slice(0, 2).map((tag) => (
-                <Pill key={tag} variant="outline" accent="neutral" size="sm" uppercase={false} className="shrink-0">
-                  {tag}
-                </Pill>
-              ))}
-              {tags.length > 2 && (
-                <Pill variant="outline" accent="neutral" size="sm" uppercase={false} className="shrink-0">
-                  +{tags.length - 2}
-                </Pill>
-              )}
-            </div>
+            <p className="text-meta mt-1 text-muted-foreground">{tags.slice(0, 3).join(" · ")}</p>
           )}
-
-          {/* Read more */}
-          <div className="flex items-center gap-1.5 text-xs font-headline font-semibold uppercase tracking-wide mt-auto pt-3 text-foreground/40 group-hover:text-primary transition-colors duration-200">
-            {readMoreLabel}
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-          </div>
         </div>
       </Link>
     </article>

@@ -1,240 +1,246 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { useLocale } from '@/context/locale-context';
-import { useTranslations } from 'next-intl';
-import type { Project } from '@/types';
-import Link from 'next/link';
-import Image from 'next/image';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { skills } from '@/lib/data/skills';
-import { Button } from '@/components/ds';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { ArrowLeft, ExternalLink, Github, Calendar, CheckCircle2, Clock, AlertCircle, PauseCircle } from 'lucide-react';
+import Link from "next/link";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { ChevronLeft, ChevronRight, ExternalLink, Github } from "lucide-react";
+import { useLocale } from "@/context/locale-context";
+import type { Locale } from "@/i18n/config";
+import type { Project } from "@/types";
+import { stackLayers } from "@/lib/stack-layers";
+import {
+  Ambient,
+  Button,
+  PageHeader,
+  Panel,
+  Reveal,
+  StackList,
+} from "@/components/ds";
+import { projectStatusDot, type ProjectStatus } from "@/components/ds/ProjectCard";
+import { PageShell } from "@/components/layout";
+import { cn } from "@/lib/utils";
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+export interface ProjectVersion {
+  project?: Project;
+  next?: Pick<Project, "slug" | "title" | "description" | "imageUrl">;
 }
 
 interface ProjectDetailClientPageProps {
-  project: Project;
+  versions: Partial<Record<Locale, ProjectVersion>>;
+  initialLocale: Locale;
 }
-
-const statusConfig = {
-  completed: { icon: CheckCircle2, className: 'text-emerald-500', label: 'Completed' },
-  'in-progress': { icon: Clock, className: 'text-primary', label: 'In Progress' },
-  archived: { icon: AlertCircle, className: 'text-foreground/40', label: 'Archived' },
-  'on-hold': { icon: PauseCircle, className: 'text-amber-500', label: 'On Hold' },
-} as const;
 
 function formatProjectDate(dateString: string, locale: string) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', {
-    year: 'numeric',
-    month: 'long',
-  });
+  return new Date(dateString).toLocaleDateString(
+    locale === "es" ? "es-ES" : "en-US",
+    { year: "numeric", month: "long" },
+  );
 }
 
-function getSkillIconUrl(tagName: string) {
-  const skill = skills.find(s => s.name.toLowerCase() === tagName.toLowerCase());
-  return skill?.iconUrl;
-}
 
-export function ProjectDetailClientPage({ project }: ProjectDetailClientPageProps) {
+/**
+ * A single project, product-page style: title and actions, the product shot large, three quick facts,
+ * the story at reading width with the stack beside it, then the next project.
+ */
+export function ProjectDetailClientPage({
+  versions,
+  initialLocale,
+}: ProjectDetailClientPageProps) {
   const { locale } = useLocale();
-  const t = useTranslations('project');
-  const contentRef = useRef<HTMLElement>(null);
+  const t = useTranslations("project");
+  const tSala = useTranslations("sala");
+  const version = versions[locale as Locale] ?? versions[initialLocale];
+  const project = version?.project;
+  if (!project) return null;
 
-  useEffect(() => {
-    if (!contentRef.current) return;
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const ctx = gsap.context(() => {
-      if (prefersReducedMotion) return;
-      gsap.fromTo(
-        contentRef.current!.children,
-        { y: 24, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.08, duration: 0.5, ease: 'power2.out' }
-      );
-    }, contentRef);
-
-    return () => ctx.revert();
-  }, [project.slug]);
-
-  const StatusIcon = project.status ? statusConfig[project.status as keyof typeof statusConfig]?.icon : null;
-  const statusClass = project.status ? statusConfig[project.status as keyof typeof statusConfig]?.className : '';
-  const statusLabel = project.status ? t(`status.${project.status}` as any) : '';
-
+  const status = project.status as ProjectStatus | undefined;
   const dateRange = project.startDate
-    ? `${formatProjectDate(project.startDate, locale)}${project.endDate ? ` – ${formatProjectDate(project.endDate, locale)}` : ''}`
-    : '';
+    ? `${formatProjectDate(project.startDate, locale)}${project.endDate ? ` – ${formatProjectDate(project.endDate, locale)}` : ""}`
+    : "";
+
+  const backLink = (
+    <Link
+      href="/projects"
+      className="inline-flex h-9 items-center gap-1 rounded-full bg-foreground/[0.06] pl-2.5 pr-4 text-[0.8125rem] font-medium text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1]"
+    >
+      <ChevronLeft aria-hidden="true" className="h-4 w-4" />
+      {t("allProjects")}
+    </Link>
+  );
+
+  const facts = [
+    project.role && { label: t("role"), value: <span>{project.role}</span> },
+    dateRange && { label: t("timeline"), value: <span>{dateRange}</span> },
+    status && {
+      label: t("statusLabel"),
+      value: (
+        <span className="inline-flex items-center gap-2">
+          <span
+            aria-hidden="true"
+            className={cn("h-2 w-2 rounded-full", projectStatusDot[status])}
+          />
+          {t(`status.${status}`)}
+        </span>
+      ),
+    },
+  ].filter(Boolean) as { label: string; value: React.ReactNode }[];
 
   return (
-    <>
-      <Header />
-      <main className="pt-20 bg-background min-h-screen">
-        <article
-          ref={contentRef}
-          className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-12 md:py-20 space-y-12"
-        >
-          {/* Back link */}
-          <div>
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
+    <PageShell>
+      <PageHeader
+        title={project.title}
+        intro={project.description}
+        nav={backLink}
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          {project.liveDemoUrl && (
+            <Button
+              accent="amber"
+              size="lg"
+              href={project.liveDemoUrl}
+              external
+              className="w-full sm:w-auto"
             >
-              <ArrowLeft className="w-4 h-4" />
-              {t('backToProjects')}
-            </Link>
-          </div>
+              <ExternalLink aria-hidden="true" className="h-4 w-4" />
+              {t("liveDemo")}
+            </Button>
+          )}
+          {project.sourceCodeUrl && (
+            <Button
+              variant="secondary"
+              size="lg"
+              href={project.sourceCodeUrl}
+              external
+              className="w-full sm:w-auto"
+            >
+              <Github aria-hidden="true" className="h-4 w-4" />
+              {t("sourceCode")}
+            </Button>
+          )}
+        </div>
+      </PageHeader>
 
-          {/* Header */}
-          <header className="space-y-5">
-            <span className="inline-block text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary/70">
-              {t('featuredProject')}
-            </span>
-            <h1 className="font-headline font-black text-foreground leading-[0.95] text-display-sm">
-              {project.title}
-            </h1>
-            <p className="text-lg md:text-xl text-foreground/60 leading-relaxed max-w-3xl">
-              {project.description}
-            </p>
-
-            {/* Status + dates */}
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1">
-              {project.status && StatusIcon && (
-                <span className={`inline-flex items-center gap-2 text-sm font-medium ${statusClass}`}>
-                  <StatusIcon className="w-4 h-4" />
-                  {statusLabel}
-                </span>
-              )}
-              {project.startDate && (
-                <span className="inline-flex items-center gap-2 text-sm text-foreground/50">
-                  <Calendar className="w-4 h-4" />
-                  {dateRange}
-                </span>
-              )}
-            </div>
-
-            {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              {project.liveDemoUrl && (
-                <Button
-                  variant="primary"
-                  accent="amber"
-                  size="lg"
-                  href={project.liveDemoUrl}
-                  external
-                  className="gap-2 w-full sm:w-auto"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  {t('liveDemo')}
-                </Button>
-              )}
-              {project.sourceCodeUrl && (
-                <Button
-                  variant="secondary"
-                  accent="neutral"
-                  size="lg"
-                  href={project.sourceCodeUrl}
-                  external
-                  className="gap-2 w-full sm:w-auto"
-                >
-                  <Github className="w-4 h-4" />
-                  {t('sourceCode')}
-                </Button>
-              )}
-            </div>
-          </header>
-
-          {/* Cover image */}
+      {/* The product shot, large, then the quick facts under it. */}
+      <section className="px-gutter">
+        <div className="mx-auto max-w-[1200px]">
           {project.imageUrl && (
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-foreground/[0.08]">
-              <Image
-                src={project.imageUrl}
-                alt={project.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 900px"
-                priority
-                className="object-cover"
-              />
-            </div>
-          )}
-
-          {/* Technologies */}
-          {project.tags && project.tags.length > 0 && (
-            <section className="space-y-4">
-              <h2 className="text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary/70">
-                {t('technologies')}
-              </h2>
-              <div className="flex flex-wrap gap-3">
-                {project.tags.map((tag) => {
-                  const iconUrl = getSkillIconUrl(tag);
-                  return (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-foreground/10 bg-card/40 text-sm text-foreground/70"
-                    >
-                      {iconUrl && (
-                        <Image
-                          src={iconUrl}
-                          alt={tag}
-                          width={16}
-                          height={16}
-                          className="w-4 h-4 object-contain"
-                        />
-                      )}
-                      {tag}
-                    </span>
-                  );
-                })}
+            <Reveal>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-muted shadow-card md:aspect-[16/10]">
+                <Image
+                  src={project.imageUrl}
+                  alt={project.title}
+                  fill
+                  priority
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                  className="object-cover"
+                />
               </div>
-            </section>
+            </Reveal>
           )}
-
-          {/* Long description */}
-          {project.longDescription && (
-            <section className="space-y-4">
-              <h2 className="text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary/70">
-                {t('aboutProject')}
-              </h2>
-              <div className="space-y-4">
-                {project.longDescription.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="text-foreground/75 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Relevance */}
-          {project.relevance && (
-            <aside className="border border-primary/15 bg-primary/[0.02] rounded-xl px-6 py-5">
-              <h2 className="text-xs font-headline font-bold uppercase tracking-[0.2em] text-primary/70 mb-2">
-                {t('relevance')}
-              </h2>
-              <p className="text-foreground/70 leading-relaxed">
-                {project.relevance}
-              </p>
-            </aside>
-          )}
-
-          {/* Back to projects */}
-          <div className="pt-6 border-t border-foreground/10">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-foreground/50 hover:text-foreground transition-colors"
+          {facts.length > 0 && (
+            <dl
+              className={cn(
+                "mt-5 grid gap-3 sm:gap-5",
+                facts.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2",
+              )}
             >
-              <ArrowLeft className="w-4 h-4" />
-              {t('backToProjects')}
+              {facts.map((fact) => (
+                <div key={fact.label} className="panel p-5 md:p-6">
+                  <dt className="text-meta text-muted-foreground">
+                    {fact.label}
+                  </dt>
+                  <dd className="mt-1.5 text-headline">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+      </section>
+
+      {/* Story at reading width; the stack and why it matters stay beside it on desktop. */}
+      <section className="px-gutter py-20 md:py-28">
+        <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-7">
+            {project.longDescription && (
+              <>
+                <h2 className="text-display-sm">{t("aboutProject")}</h2>
+                <div className="mt-8 grid max-w-[66ch] gap-5 text-[1.0625rem] leading-[1.75] text-foreground/85">
+                  {project.longDescription.split("\n\n").map((paragraph) => (
+                    <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          <aside className="grid content-start gap-5 lg:sticky lg:top-[calc(var(--header-h)+1.5rem)] lg:col-span-5 lg:self-start">
+            {project.tags.length > 0 && (
+              <StackList
+                caption={t("technologies")}
+                layers={stackLayers(project.tags).map(({ layer, items }) => ({
+                  name: tSala(`layers.${layer}`),
+                  items,
+                }))}
+              />
+            )}
+            {project.relevance && (
+              <Panel className="p-5 md:p-6">
+                <h2 className="text-meta text-muted-foreground">
+                  {t("relevance")}
+                </h2>
+                <p className="mt-2 text-[1.0625rem] leading-relaxed text-foreground">
+                  {project.relevance}
+                </p>
+              </Panel>
+            )}
+          </aside>
+        </div>
+      </section>
+
+      {/* Next project: the page continues instead of stopping. */}
+      {version?.next && (
+        <section
+          aria-labelledby="next-project"
+          className="relative isolate overflow-clip tint px-gutter py-20 md:py-28"
+        >
+          <Ambient intensity="soft" grid={false} spotlight={false} mirror />
+          <div className="mx-auto max-w-[1200px]">
+            <p id="next-project" className="text-meta text-muted-foreground">
+              {t("nextProject")}
+            </p>
+            <Link
+              href={`/projects/${version.next.slug}`}
+              className="panel group mt-5 grid overflow-hidden no-underline transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float motion-reduce:transition-none md:grid-cols-2"
+            >
+              <span className="flex flex-col justify-center gap-3 p-6 md:p-10">
+                <span className="text-display-sm transition-colors duration-snap ease-snap group-hover:text-primary">
+                  {version.next.title}
+                </span>
+                <span className="line-clamp-3 max-w-[48ch] text-[1.0625rem] leading-relaxed text-muted-foreground">
+                  {version.next.description}
+                </span>
+                <span className="mt-2 inline-flex items-center gap-1 text-[0.9375rem] font-medium text-primary">
+                  {t("nextProject")}
+                  <ChevronRight
+                    aria-hidden="true"
+                    className="h-4 w-4 transition-transform duration-snap ease-snap group-hover:translate-x-0.5"
+                  />
+                </span>
+              </span>
+              {version.next.imageUrl && (
+                <span className="relative order-first aspect-[4/3] overflow-hidden bg-muted md:order-none md:aspect-auto md:min-h-[320px]">
+                  <Image
+                    src={version.next.imageUrl}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, 600px"
+                    className="object-cover transition-transform duration-glide ease-glide group-hover:scale-[1.04] motion-reduce:transition-none"
+                  />
+                </span>
+              )}
             </Link>
           </div>
-        </article>
-      </main>
-      <Footer />
-    </>
+        </section>
+      )}
+    </PageShell>
   );
 }

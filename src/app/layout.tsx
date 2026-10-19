@@ -1,15 +1,15 @@
 import { getMessages } from 'next-intl/server';
 import { LocaleProvider } from '@/context/locale-context';
 import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrapper';
-import { Space_Grotesk, Inter } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
-import { SmoothScrollWrapper, BackToTopButton, CookieBanner, PageTransition, ScrollRestoration, GlobalScrollReveal } from '@/components/common';
+import { BackToTopButton, CookieBanner, ScrollRestoration } from '@/components/common';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
 import { Toaster } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { generatePageMetadata } from '@/lib/metadata';
+import { AUTHOR_NAME, pageMetadata, requestLocale, SITE_NAME, SITE_URL, TITLE_TEMPLATE } from '@/lib/metadata';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 import type { Metadata } from 'next';
@@ -17,48 +17,57 @@ import Script from 'next/script';
 
 import './globals.css';
 
-const fontHeadline = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-unbounded',
-  weight: ['400', '500', '600', '700'],
+// Geist carries the whole voice; tracking tightens as size grows (see .text-* in globals.css).
+const fontSans = Geist({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-sans',
+  display: 'swap',
 });
 
-const fontBody = Inter({
+// Code only.
+const fontMono = Geist_Mono({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-mono',
+  display: 'swap',
 });
+
+// Before first paint: restore the saved theme (cookie or localStorage) and opt into reveal states.
+// Without JS or with reduced motion, content stays visible.
+const prePaintScript = `try{var d=document.documentElement,m=document.cookie.match(/(?:^|; )theme=(light|dark)/),t=(m&&m[1])||localStorage.getItem('theme');if(t==='dark')d.classList.add('dark');if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('js-motion')}catch(e){}`;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
-
-  const baseMetadata = generatePageMetadata('home', locale);
+  const locale = await requestLocale();
+  const home = pageMetadata('home', locale);
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev'),
-    ...baseMetadata,
-    generator: "Next.js",
-    referrer: "origin",
-    publisher: "Vercel",
-    authors: [{ name: 'Sebastian Alvarez', url: 'https://listerineh.dev' }],
-    creator: 'Sebastian Alvarez',
+    ...home,
+    metadataBase: new URL(SITE_URL),
+    // Pages set short titles ("Projects"); the template adds the name. Home sets an absolute title.
+    title: { default: (home.title as { absolute: string }).absolute, template: TITLE_TEMPLATE },
+    applicationName: SITE_NAME,
+    authors: [{ name: AUTHOR_NAME, url: SITE_URL }],
+    creator: AUTHOR_NAME,
+    publisher: AUTHOR_NAME,
+    category: 'technology',
+    referrer: 'origin-when-cross-origin',
+    formatDetection: { email: false, telephone: false, address: false },
     robots: {
       index: true,
       follow: true,
-      nocache: false,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-snippet': -1,
-        'max-image-preview': 'large',
-        'max-video-preview': -1,
-      },
+      googleBot: { index: true, follow: true, 'max-snippet': -1, 'max-image-preview': 'large', 'max-video-preview': -1 },
     },
-    verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+    icons: {
+      icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      ],
+      apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
     },
+    appleWebApp: { capable: true, title: SITE_NAME, statusBarStyle: 'default' },
     manifest: '/manifest.json',
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+      : {}),
   };
 }
 
@@ -73,28 +82,22 @@ export default async function RootLayout({
   const initialLocale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
 
   return (
-    <html lang={initialLocale} className={cn(fontHeadline.variable, fontBody.variable)}>
+    <html lang={initialLocale} className={cn(fontSans.variable, fontMono.variable)} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#f59e0b" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="apple-touch-icon" href="/favicon.svg" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
+        <script dangerouslySetInnerHTML={{ __html: prePaintScript }} />
         <PersonSchema />
         <WebsiteSchema />
         <BreadcrumbSchema />
       </head>
-      <body className="font-body antialiased">
+      <body className="font-sans antialiased">
         <LocaleProvider initialLocale={initialLocale}>
-          <IntlProviderWrapper initialMessages={messages}>
+          <IntlProviderWrapper initialLocale={initialLocale} initialMessages={messages}>
             <ThemeProvider>
-              <PageTransition />
               <ScrollRestoration />
-              <GlobalScrollReveal />
-              <SmoothScrollWrapper>
-                {children}
-              </SmoothScrollWrapper>
+              {children}
               <BackToTopButton />
               <CookieBanner />
               <Toaster />

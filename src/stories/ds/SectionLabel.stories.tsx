@@ -1,48 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SectionLabel } from '@/components/ds/SectionLabel';
 
 const meta: Meta<typeof SectionLabel> = {
-  title: 'DS/SectionLabel',
+  title: 'DS/SectionLabel (Catalog line)',
   component: SectionLabel,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof SectionLabel>;
 
+/** Data printed on a label. Never an eyebrow above a heading. */
 export const Default: Story = {
-  args: {
-    children: 'Section Label',
-  },
+  args: { children: '2025 · Next.js · Python · MCP' },
 };
 
-export const Amber: Story = {
-  args: {
-    accent: 'amber',
-    children: 'Amber Label',
-  },
-};
-
-export const Indigo: Story = {
-  args: {
-    accent: 'indigo',
-    children: 'Indigo Label',
-  },
-};
-
-export const Green: Story = {
-  args: {
-    accent: 'green',
-    children: 'Green Label',
-  },
-};
-
-export const Neutral: Story = {
-  args: {
-    accent: 'neutral',
-    children: 'Neutral Label',
-  },
+export const Live: Story = {
+  args: { accent: 'amber', children: 'Now · Senior Software Engineer' },
 };

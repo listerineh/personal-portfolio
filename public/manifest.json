@@ -1,61 +1,76 @@
 {
-  "name": "Sebastian Alvarez - Full-Stack Software Engineer",
-  "short_name": "Sebastian Alvarez",
-  "description": "Full-stack software engineer specializing in React, Next.js, Python, and cloud technologies. Portfolio showcasing web development projects and technical expertise.",
+  "name": "Sebastian Alvarez — listerineh.dev",
+  "short_name": "listerineh.dev",
+  "description": "Full-stack engineer building AI agents, cloud platforms and web products. Projects, writing and contact.",
+  "lang": "en",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "theme_color": "#3F51B5",
-  "background_color": "#F0F2F5",
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
   "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
-    },
-    {
-      "src": "/favicon.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/images/website_screenshot.webp",
-      "sizes": "1200x630",
-      "type": "image/webp",
-      "form_factor": "wide"
     }
   ],
   "categories": [
-    "productivity",
-    "business"
+    "technology",
+    "portfolio",
+    "education"
   ],
   "shortcuts": [
     {
-      "name": "View Blog",
-      "short_name": "Blog",
-      "description": "Read my technical blog posts",
-      "url": "/blog",
+      "name": "Projects",
+      "url": "/projects",
       "icons": [
         {
-          "src": "/favicon.svg",
-          "sizes": "192x192"
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
       ]
     },
     {
-      "name": "View Projects",
-      "short_name": "Projects",
-      "description": "See my featured projects",
-      "url": "/projects",
+      "name": "Blog",
+      "url": "/blog",
       "icons": [
         {
-          "src": "/favicon.svg",
-          "sizes": "192x192"
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
         }
       ]
     }

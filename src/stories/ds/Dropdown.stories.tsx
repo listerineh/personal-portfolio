@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 import { Button } from '@/components/ds/Button';
 import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem, DropdownSeparator, DropdownLabel, DropdownCheckboxItem } from '@/components/ds/Dropdown';
@@ -15,7 +15,7 @@ const meta: Meta<typeof Dropdown> = {
 export default meta;
 type Story = StoryObj<typeof Dropdown>;
 
-function ControlledDropdown({ children }: { children: React.ReactNode }) {
+export function ControlledDropdown({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
     <Dropdown open={open} onOpenChange={setOpen}>

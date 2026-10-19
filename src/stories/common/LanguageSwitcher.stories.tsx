@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { LanguageSwitcher } from '../../components/common/language-switcher';
 import { LocaleProvider } from '../../context/locale-context';
 

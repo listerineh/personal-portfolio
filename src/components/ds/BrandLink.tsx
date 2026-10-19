@@ -1,64 +1,34 @@
-'use client'
+"use client";
 
-import { type ReactNode } from 'react'
-import { cn } from '@/lib/utils'
+import { type CSSProperties, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface BrandLinkProps {
-  href: string
-  color: string
-  variant?: 'solid' | 'outline'
-  className?: string
-  children: ReactNode
+  href: string;
+  /** Brand color (hex). Solid links keep ink text, so pick a light-enough brand color. */
+  color: string;
+  variant?: "solid" | "outline";
+  className?: string;
+  children: ReactNode;
 }
 
-const base =
-  'inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-full text-sm transition-[filter,background-color,border-color,color,transform] duration-300 ease-out active:scale-[0.97]'
-
-export function BrandLink({
-  href,
-  color,
-  variant = 'outline',
-  className,
-  children,
-}: BrandLinkProps) {
-  if (variant === 'solid') {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(base, 'text-black', className)}
-        style={{ backgroundColor: color }}
-        onMouseEnter={e => (e.currentTarget.style.filter = 'brightness(1.1)')}
-        onMouseLeave={e => (e.currentTarget.style.filter = 'brightness(1)')}
-      >
-        {children}
-      </a>
-    )
-  }
-
+/** External link to a platform (Spotify, YouTube, ...), square, colored by the platform. */
+export function BrandLink({ href, color, variant = "outline", className, children }: BrandLinkProps) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={cn(base, className)}
-      style={{
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: `${color}40`,
-        color,
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.backgroundColor = `${color}1a`
-        e.currentTarget.style.borderColor = `${color}80`
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.backgroundColor = 'transparent'
-        e.currentTarget.style.borderColor = `${color}40`
-      }}
+      style={{ "--brand": color } as CSSProperties}
+      className={cn(
+        "inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-sm font-medium transition-[background-color,color,transform,filter] duration-snap ease-snap active:scale-[0.96] motion-reduce:transition-none",
+        variant === "solid"
+          ? "bg-[var(--brand)] text-[#16181D] hover:brightness-110"
+          : "border border-[var(--brand)] text-foreground hover:bg-foreground/[0.06]",
+        className,
+      )}
     >
       {children}
     </a>
-  )
+  );
 }

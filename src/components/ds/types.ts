@@ -15,3 +15,5 @@ export type SectionAlign = 'left' | 'center'
 export type InputSize = 'sm' | 'md' | 'lg'
 
 export type CardVariant = 'default' | 'ghost' | 'outline'
+
+export type TitleSize = 'display' | 'title' | 'section' | 'work'

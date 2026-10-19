@@ -1,56 +1,30 @@
-'use client';
-
-import { forwardRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeHighlight from 'rehype-highlight';
+import { rehypeHeadingIds } from '@/lib/rehype-heading-ids';
 
 interface BlogPostContentProps {
   content: string;
 }
 
-export const BlogPostContent = forwardRef<HTMLDivElement, BlogPostContentProps>(
-  ({ content }, ref) => {
-    useEffect(() => {
-      if (ref && 'current' in ref && ref.current) {
-        const links = ref.current.querySelectorAll('a');
-        links.forEach((link) => {
-          link.setAttribute('target', '_blank');
-          link.setAttribute('rel', 'noopener noreferrer');
-        });
-      }
-    }, [content, ref]);
-
-    return (
-      <div 
-        ref={ref}
-        className="prose dark:prose-invert max-w-none
-                   prose-headings:font-headline prose-headings:font-bold prose-headings:text-foreground
-                   prose-h1:text-4xl prose-h1:mb-6 prose-h1:mt-8
-                   prose-h2:text-3xl prose-h2:!mb-8 prose-h2:!mt-10 prose-h2:border-b prose-h2:border-border prose-h2:!pb-4
-                   prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-6
-                   prose-h4:text-xl prose-h4:mb-3 prose-h4:mt-5
-                   prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-4
-                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
-                   prose-strong:text-foreground prose-strong:font-semibold
-                   prose-blockquote:border-l prose-blockquote:border-primary/30 prose-blockquote:pl-6 prose-blockquote:italic
-                   prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded-md prose-code:font-code prose-code:text-sm
-                   prose-code:text-foreground prose-code:before:content-none prose-code:after:content-none
-                   prose-pre:bg-muted prose-pre:p-6 prose-pre:rounded-xl prose-pre:font-code prose-pre:shadow-lg
-                   prose-ul:my-6 prose-ol:my-6 prose-li:my-2
-                   prose-img:rounded-xl prose-img:shadow-lg prose-img:h-full prose-img:w-full prose-img:object-cover"
+/**
+ * Server-rendered article body: markdown, sanitizing and syntax highlighting never ship to the client.
+ * Heading ids are added after sanitizing so the table of contents can link to them.
+ */
+export function BlogPostContent({ content }: BlogPostContentProps) {
+  return (
+    <div className="prose prose-article">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw, rehypeSanitize, rehypeHighlight, rehypeHeadingIds]}
+        components={{
+          a: ({ node: _node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />,
+        }}
       >
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw, rehypeSanitize, rehypeHighlight]}
-        >
-          {content}
-        </ReactMarkdown>
-      </div>
-    );
-  }
-);
-
-BlogPostContent.displayName = 'BlogPostContent';
+        {content}
+      </ReactMarkdown>
+    </div>
+  );
+}

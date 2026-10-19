@@ -1,250 +1,92 @@
 'use client';
 
-import { Fragment, useRef, useEffect, useState, useMemo, useCallback } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useLocale } from '@/context/locale-context';
+import { Fragment, useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { BlogSearch } from '@/components/blog/blog-search';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
-import { Title, Text, BlogCard, EndOfList } from '@/components/ds';
-import type { BlogPost } from '@/types';
+import { BlogCard, EndOfList, EntrySkeleton, PageHeader, Reveal } from '@/components/ds';
+import type { BlogListingPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const INITIAL_COUNT = 6;
-const PAGE_SIZE = 6;
-const SKELETON_DELAY = 400;
-
 interface BlogListingClientProps {
-  posts: BlogPost[];
+  posts: BlogListingPost[];
 }
 
+/** Every post at once: the newest leads across the row, the rest follow as cards, a newsletter row after the first full row. */
 export function BlogListingClient({ posts }: BlogListingClientProps) {
-  const { locale } = useLocale();
   const t = useTranslations('blog');
   const tCommon = useTranslations('common');
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
-  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const minutesLabel = t('readingTime', { minutes: '' }).trim();
+  const [filteredPosts, setFilteredPosts] = useState<BlogListingPost[]>(posts);
   const [isGridLoading, setIsGridLoading] = useState(false);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const isLoadMoreRef = useRef(false);
-  const prevCardCountRef = useRef(0);
-  const sentinelRef = useRef<HTMLDivElement>(null);
 
-  const titleRef = useRef<HTMLDivElement>(null);
-  const descRef = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  const displayedPosts = useMemo(
-    () => filteredPosts.slice(0, visibleCount),
-    [filteredPosts, visibleCount]
-  );
-
-  const hasMore = filteredPosts.length > visibleCount;
-  const skeletonCount = Math.min(filteredPosts.length - visibleCount, PAGE_SIZE);
-
-  const handleFilteredPostsChange = useCallback((newPosts: BlogPost[]) => {
-    isLoadMoreRef.current = false;
+  const handleFilteredPostsChange = useCallback((newPosts: BlogListingPost[]) => {
     setFilteredPosts(newPosts);
-    setVisibleCount(INITIAL_COUNT);
-    setIsLoadingMore(false);
   }, []);
 
-  // IntersectionObserver: trigger load when sentinel enters viewport
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
+  const [lead, ...rest] = filteredPosts;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoadingMore && !isGridLoading) {
-          setIsLoadingMore(true);
-          setTimeout(() => {
-            isLoadMoreRef.current = true;
-            setVisibleCount(prev => prev + PAGE_SIZE);
-            setIsLoadingMore(false);
-          }, SKELETON_DELAY);
-        }
-      },
-      { rootMargin: '200px' }
-    );
-
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, [hasMore, isLoadingMore, isGridLoading]);
-
-  // Header elements animate once on mount
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const tl = gsap.timeline();
-
-    if (titleRef.current) tl.fromTo(titleRef.current,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' },
-      '-=0.3'
-    );
-    if (descRef.current) tl.fromTo(descRef.current,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-      '-=0.35'
-    );
-    if (searchRef.current) tl.fromTo(searchRef.current,
-      { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-      '-=0.2'
-    );
-  }, []);
-
-  // Cards re-animate on displayedPosts change, smartly handling load-more vs full refresh
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const cards = cardsRef.current.filter((c): c is HTMLDivElement => c !== null);
-
-    if (isLoadMoreRef.current) {
-      // Animate only the newly added cards
-      const newCards = cards.slice(prevCardCountRef.current);
-      gsap.set(newCards, { opacity: 0, y: 28 });
-      newCards.forEach((card, index) => {
-        gsap.to(card, {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          delay: index * 0.07,
-          ease: 'power2.out',
-        });
-      });
-      isLoadMoreRef.current = false;
-    } else {
-      // Full re-animation: filter changed or initial load
-      cards.forEach(card => {
-        gsap.killTweensOf(card);
-        ScrollTrigger.getAll()
-          .filter(st => st.trigger === card)
-          .forEach(st => st.kill());
-      });
-      gsap.set(cards, { opacity: 0, y: 28 });
-      cards.forEach((card, index) => {
-        gsap.to(card, {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          delay: Math.min(index * 0.07, 0.35),
-          ease: 'power2.out',
-        });
-      });
-    }
-
-    prevCardCountRef.current = cards.length;
-  }, [displayedPosts]);
+  const cardProps = (post: BlogListingPost) => ({
+    headingLevel: 'h2' as const,
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt,
+    date: post.date,
+    tags: post.tags,
+    coverImage: post.imageUrl,
+    readingTime: post.readingTime,
+    readingTimeLabel: minutesLabel,
+    readMoreLabel: tCommon('readMore'),
+    newLabel: t('new'),
+    isRecommended: RECOMMENDED_SLUGS.includes(post.slug),
+    recommendedLabel: t('sortRecommended'),
+  });
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.04] to-amber-950/0 pointer-events-none" />
+    <>
+      <PageHeader ambient title={t('pageTitle')} intro={t('pageDescription')}>
+        <BlogSearch posts={posts} onFilteredPostsChange={handleFilteredPostsChange} onLoadingChange={setIsGridLoading} />
+      </PageHeader>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-        <div className="mb-12 text-center">
-          <div ref={titleRef} style={{ opacity: 0 }}>
-            <Title as="h1" className="mb-4 text-display-sm">
-              {t('pageTitle')}
-            </Title>
-          </div>
-          <div ref={descRef} className="opacity-0">
-            <Text size="base" strength="secondary" className="max-w-2xl mx-auto">
-              {t('pageDescription')}
-            </Text>
-          </div>
-        </div>
-
-        <div ref={searchRef} className="max-w-3xl mx-auto mb-12">
-          <BlogSearch posts={posts} onFilteredPostsChange={handleFilteredPostsChange} onLoadingChange={setIsGridLoading} />
-        </div>
-
-        {isGridLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-2xl border border-foreground/[0.07] overflow-hidden animate-pulse">
-                <div className="h-48 bg-foreground/[0.05]" />
-                <div className="p-5 space-y-3">
-                  <div className="h-3 w-1/3 rounded-full bg-foreground/[0.07]" />
-                  <div className="h-5 w-4/5 rounded-full bg-foreground/[0.08]" />
-                  <div className="h-4 w-full rounded-full bg-foreground/[0.05]" />
-                  <div className="h-4 w-3/4 rounded-full bg-foreground/[0.05]" />
-                  <div className="flex gap-2 pt-1">
-                    <div className="h-5 w-16 rounded-full bg-foreground/[0.06]" />
-                    <div className="h-5 w-20 rounded-full bg-foreground/[0.06]" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : filteredPosts.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-foreground/50 text-headline">{t('noArticles')}</p>
-            <p className="text-sm text-foreground/35 mt-2">{t('tryAdjusting')}</p>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-              {displayedPosts.map((post, index) => (
-                <Fragment key={post.slug}>
-                  <div
-                    ref={(el) => { cardsRef.current[index] = el; }}
-                    className="mt-5"
-                  >
-                    <BlogCard
-                      title={post.title}
-                      slug={post.slug}
-                      excerpt={post.excerpt}
-                      date={post.date}
-                      tags={post.tags}
-                      coverImage={post.imageUrl}
-                      readMoreLabel={tCommon('readMore')}
-                      newLabel={t('new')}
-                      isRecommended={RECOMMENDED_SLUGS.includes(post.slug)}
-                      recommendedLabel={t('sortRecommended')}
-                    />
-                  </div>
-                  {(index + 1) % 5 === 0 && (
-                    <div className="col-span-1 md:col-span-2">
-                      <NewsletterSubscribe variant="default" />
-                    </div>
-                  )}
-                </Fragment>
+      <section className="px-gutter pb-24 pt-2 md:pb-32 md:pt-4" aria-busy={isGridLoading || undefined}>
+        <div className="mx-auto max-w-[1200px]">
+          {isGridLoading ? (
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+              {Array.from({ length: 6 }, (_, i) => (
+                <li key={i}>
+                  <EntrySkeleton />
+                </li>
               ))}
-              {isLoadingMore && Array.from({ length: skeletonCount }).map((_, i) => (
-                <div key={`skel-${i}`} className="rounded-2xl border border-foreground/[0.07] overflow-hidden animate-pulse">
-                  <div className="h-48 bg-foreground/[0.05]" />
-                  <div className="p-5 space-y-3">
-                    <div className="h-3 w-1/3 rounded-full bg-foreground/[0.07]" />
-                    <div className="h-5 w-4/5 rounded-full bg-foreground/[0.08]" />
-                    <div className="h-4 w-full rounded-full bg-foreground/[0.05]" />
-                    <div className="h-4 w-3/4 rounded-full bg-foreground/[0.05]" />
-                    <div className="flex gap-2 pt-1">
-                      <div className="h-5 w-16 rounded-full bg-foreground/[0.06]" />
-                      <div className="h-5 w-20 rounded-full bg-foreground/[0.06]" />
-                    </div>
-                  </div>
-                </div>
-              ))}
+            </ul>
+          ) : !lead ? (
+            <div className="panel max-w-xl p-6 md:p-8">
+              <p className="text-headline">{t('noArticles')}</p>
+              <p className="mt-2 text-muted-foreground">{t('tryAdjusting')}</p>
             </div>
-
-            <div ref={sentinelRef} className="h-1" />
-
-            {!hasMore && !isLoadingMore && (
+          ) : (
+            <>
+              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                <Reveal as="li" className="sm:col-span-2 lg:col-span-3">
+                  <BlogCard layout="wide" {...cardProps(lead)} />
+                </Reveal>
+                {rest.map((post, index) => (
+                  <Fragment key={post.slug}>
+                    <Reveal as="li">
+                      <BlogCard layout="stack" {...cardProps(post)} />
+                    </Reveal>
+                    {index === 2 && rest.length > 3 && (
+                      <li className="sm:col-span-2 lg:col-span-3">
+                        <NewsletterSubscribe variant="default" />
+                      </li>
+                    )}
+                  </Fragment>
+                ))}
+              </ul>
               <EndOfList>{tCommon('endOfList')}</EndOfList>
-            )}
-          </>
-        )}
-      </div>
-    </section>
+            </>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

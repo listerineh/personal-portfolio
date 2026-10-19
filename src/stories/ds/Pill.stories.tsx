@@ -1,97 +1,45 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Pill } from '@/components/ds/Pill';
 
 const meta: Meta<typeof Pill> = {
   title: 'DS/Pill',
   component: Pill,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: { layout: 'centered' },
   tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof Pill>;
 
-export const SolidAmber: Story = {
-  args: {
-    variant: 'solid',
-    accent: 'amber',
-    size: 'md',
-    children: 'Solid Amber',
-  },
+export const Catalog: Story = {
+  args: { variant: 'solid', children: 'Next.js' },
 };
 
-export const SolidIndigo: Story = {
-  args: {
-    variant: 'solid',
-    accent: 'indigo',
-    size: 'md',
-    children: 'Solid Indigo',
-  },
+export const Ruled: Story = {
+  args: { variant: 'outline', children: 'Terraform' },
 };
 
-export const SolidGreen: Story = {
-  args: {
-    variant: 'solid',
-    accent: 'green',
-    size: 'md',
-    children: 'Solid Green',
-  },
-};
-
-export const SolidNeutral: Story = {
-  args: {
-    variant: 'solid',
-    accent: 'neutral',
-    size: 'md',
-    children: 'Solid Neutral',
-  },
-};
-
-export const OutlineAmber: Story = {
-  args: {
-    variant: 'outline',
-    accent: 'amber',
-    size: 'md',
-    children: 'Outline Amber',
-  },
-};
-
-export const OutlineNeutral: Story = {
-  args: {
-    variant: 'outline',
-    accent: 'neutral',
-    size: 'md',
-    children: 'Outline Neutral',
-  },
+/** Amber = live: current role, new post, available. */
+export const Live: Story = {
+  args: { variant: 'solid', accent: 'amber', children: 'In progress' },
 };
 
 export const Small: Story = {
-  args: {
-    variant: 'solid',
-    accent: 'amber',
-    size: 'sm',
-    children: 'Small Pill',
-  },
+  args: { variant: 'outline', size: 'sm', children: 'Python' },
 };
 
-export const Uppercase: Story = {
-  args: {
-    variant: 'solid',
-    accent: 'amber',
-    size: 'md',
-    uppercase: true,
-    children: 'uppercase pill',
-  },
+export const BrandColor: Story = {
+  args: { variant: 'outline', color: '#1DB954', children: 'Listerineh' },
 };
 
-export const CustomColor: Story = {
-  args: {
-    variant: 'solid',
-    accent: 'neutral',
-    size: 'md',
-    color: '#ff6b6b',
-    children: 'Custom Color',
-  },
+export const Row: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      {['Next.js', 'Python', 'PostgreSQL', 'Terraform', 'MCP'].map((tag) => (
+        <Pill key={tag} variant="outline">
+          {tag}
+        </Pill>
+      ))}
+    </div>
+  ),
 };

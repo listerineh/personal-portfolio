@@ -37,15 +37,17 @@ Automatically detects when a new blog post is added to the repository and sends 
 
 ### Environment Variables
 
-The workflow uses the following environment variable:
+The workflow uses the following secrets:
 
+- `NEWSLETTER_SECRET` (required): sent as `Authorization: Bearer …`. The notification endpoint rejects any call without it, so the production step fails with HTTP 401 if it is missing.
+  - Must be the same value as `NEWSLETTER_SECRET` in the Vercel environment
 - `SITE_URL` (optional): The base URL of your site
   - Default: `https://listerineh.dev`
   - Can be set as a GitHub secret for different environments
 
 ### Setting Up
 
-1. **No additional setup required** - The workflow is ready to use once merged to main
+1. **Required:** Add `NEWSLETTER_SECRET` as a GitHub secret (Repository Settings → Secrets and variables → Actions), with the same value as in Vercel
 2. **Optional:** Add `SITE_URL` as a GitHub secret if you need a different URL:
    - Go to Repository Settings → Secrets and variables → Actions
    - Add new secret: `SITE_URL` with value `https://your-domain.com`
@@ -109,6 +111,7 @@ You can monitor the workflow execution in:
 **Notification fails:**
 - Check that your site is accessible at `SITE_URL`
 - Verify the API endpoint `/api/newsletter/send-blog-notification` is working
+- HTTP 401: the `NEWSLETTER_SECRET` GitHub secret is missing or differs from the one in Vercel
 - Check the workflow logs for detailed error messages
 
 **Data extraction fails:**

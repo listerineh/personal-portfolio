@@ -1,30 +1,34 @@
-'use client';
+"use client";
 
-import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { Check } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Dropdown = DropdownMenuPrimitive.Root;
 export const DropdownTrigger = DropdownMenuPrimitive.Trigger;
-export const DropdownSeparator = DropdownMenuPrimitive.Separator;
+
+export function DropdownSeparator({ className, ...props }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>) {
+  return <DropdownMenuPrimitive.Separator className={cn("my-1 h-px bg-foreground/15", className)} {...props} />;
+}
 
 export function DropdownContent({
   children,
-  align = 'end',
-  className = '',
+  align = "end",
+  className = "",
 }: {
   children: React.ReactNode;
-  align?: 'start' | 'center' | 'end';
+  align?: "start" | "center" | "end";
   className?: string;
 }) {
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
         align={align}
-        sideOffset={4}
+        sideOffset={6}
         className={cn(
-          'z-50 min-w-[8rem] overflow-hidden rounded-xl p-1 shadow-xl border border-foreground/[0.08] bg-card backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-          className
+          "panel z-50 min-w-[12rem] overflow-hidden rounded-[14px] bg-popover p-1.5 shadow-float",
+          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[side=bottom]:slide-in-from-top-1 motion-reduce:animate-none",
+          className,
         )}
       >
         {children}
@@ -33,23 +37,21 @@ export function DropdownContent({
   );
 }
 
+const itemBase =
+  "relative flex min-h-11 cursor-pointer select-none items-center gap-2 rounded-[9px] px-3 text-[0.9375rem] text-foreground outline-none transition-colors " +
+  "data-[highlighted]:bg-foreground/[0.07] data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+
 export function DropdownItem({
   children,
   onClick,
-  className = '',
+  className = "",
 }: {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
 }) {
   return (
-    <DropdownMenuPrimitive.Item
-      onClick={onClick}
-      className={cn(
-        'relative flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-2 text-sm outline-none transition-colors hover:bg-foreground/5 focus:bg-foreground/6 data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-        className
-      )}
-    >
+    <DropdownMenuPrimitive.Item onClick={onClick} className={cn(itemBase, className)}>
       {children}
     </DropdownMenuPrimitive.Item>
   );
@@ -59,7 +61,7 @@ export function DropdownCheckboxItem({
   children,
   checked,
   onCheckedChange,
-  className = '',
+  className = "",
 }: {
   children: React.ReactNode;
   checked: boolean;
@@ -70,11 +72,11 @@ export function DropdownCheckboxItem({
     <DropdownMenuPrimitive.CheckboxItem
       checked={checked}
       onCheckedChange={onCheckedChange}
-      className={`relative flex cursor-pointer select-none items-center rounded-lg px-3 py-2 pl-8 text-sm outline-none transition-colors focus:bg-foreground/6 ${className}`}
+      className={cn(itemBase, "pl-9", className)}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <span className="absolute left-3 flex h-4 w-4 items-center justify-center rounded-[5px] border border-current">
         <DropdownMenuPrimitive.ItemIndicator>
-          <Check className="h-4 w-4" />
+          <Check aria-hidden="true" className="h-3.5 w-3.5" />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}
@@ -83,9 +85,5 @@ export function DropdownCheckboxItem({
 }
 
 export function DropdownLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <DropdownMenuPrimitive.Label className="px-3 py-1.5 text-xs font-semibold text-foreground/40 uppercase tracking-wider">
-      {children}
-    </DropdownMenuPrimitive.Label>
-  );
+  return <DropdownMenuPrimitive.Label className="text-meta px-3 py-2 text-muted-foreground">{children}</DropdownMenuPrimitive.Label>;
 }

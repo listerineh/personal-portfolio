@@ -1,69 +1,34 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { AccentCard } from '@/components/ds/AccentCard';
+import { Band } from '@/components/ds/Surface';
 
 const meta: Meta<typeof AccentCard> = {
   title: 'DS/AccentCard',
   component: AccentCard,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: { layout: 'padded' },
   tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof AccentCard>;
 
-export const Default: Story = {
-  args: {
-    accent: 'amber',
-    children: 'Default accent card content',
-  },
+export const Plain: Story = {
+  args: { children: 'A soft rounded panel with ink text.' },
 };
 
-export const Amber: Story = {
-  args: {
-    accent: 'amber',
-    children: 'Amber accent card with warm tones',
-  },
+/** The amber dot marks something live. */
+export const Live: Story = {
+  args: { accent: 'amber', children: 'Organizer at GDG Quito since 2022.' },
 };
 
-export const Indigo: Story = {
-  args: {
-    accent: 'indigo',
-    children: 'Indigo accent card with cool tones',
-  },
-};
-
-export const Green: Story = {
-  args: {
-    accent: 'green',
-    children: 'Green accent card with natural tones',
-  },
-};
-
-export const Neutral: Story = {
-  args: {
-    accent: 'neutral',
-    children: 'Neutral accent card with subtle tones',
-  },
-};
-
-export const WithComplexContent: Story = {
-  args: {
-    accent: 'amber',
-    children: (
-      <div className="space-y-2">
-        <h3 className="font-semibold text-lg">Card Title</h3>
-        <p className="text-sm opacity-80">This is a more complex card with multiple elements inside.</p>
-      </div>
-    ),
-  },
-};
-
-export const WithCustomClass: Story = {
-  args: {
-    accent: 'indigo',
-    className: 'p-8',
-    children: 'Card with custom padding',
-  },
+/** On a tint band the panel flips to white (`.tint` re-scopes `--card`), so it still separates from the ground. */
+export const OnTint: Story = {
+  render: () => (
+    <Band className="py-12">
+      <AccentCard accent="amber" className="max-w-sm">
+        <p className="text-headline">OpenStage</p>
+        <p className="text-meta mt-1 text-muted-foreground">2025 · Next.js · Python</p>
+      </AccentCard>
+    </Band>
+  ),
 };

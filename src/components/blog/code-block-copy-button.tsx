@@ -26,23 +26,22 @@ export function CodeBlockCopyButton({ code }: CodeBlockCopyButtonProps) {
   return (
     <button
       onClick={handleCopy}
+      type="button"
+      aria-live="polite"
       className={cn(
-        'absolute top-3 right-3 p-2 rounded-lg transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97]',
-        'bg-primary/10 hover:bg-primary/20 text-foreground/55 hover:text-foreground',
-        'border border-foreground/10 hover:border-primary/50',
-        'flex items-center gap-2 text-xs font-medium',
-        copied && 'bg-green-500/20 border-green-500/50 text-green-600 dark:text-green-400'
+        'absolute right-2 top-2 inline-flex min-h-9 items-center gap-2 border border-foreground/30 bg-card px-2.5 font-mono text-xs font-medium text-foreground transition-colors duration-snap ease-snap hover:border-foreground',
+        copied && 'border-foreground bg-foreground text-surface'
       )}
       title={copied ? t('copied') : t('copy')}
     >
       {copied ? (
         <>
-          <Check className="h-4 w-4" />
+          <Check aria-hidden="true" className="h-3.5 w-3.5" />
           <span>{t('copied')}</span>
         </>
       ) : (
         <>
-          <Copy className="h-4 w-4" />
+          <Copy aria-hidden="true" className="h-3.5 w-3.5" />
           <span>{t('copy')}</span>
         </>
       )}

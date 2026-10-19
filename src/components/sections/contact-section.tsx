@@ -1,66 +1,35 @@
 'use client';
 
-import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { Mail } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@/hooks/use-gsap';
-import { Title, Button } from '@/components/ds';
+import { ChevronRight } from 'lucide-react';
+import { Ambient, Button, Reveal } from '@/components/ds';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
+/** Closing invitation: one large rounded card, one statement, one action, the address as a fallback.
+ * No top padding: it follows the plain blog section, and the card itself marks the change. */
 export function ContactSection() {
   const t = useTranslations('contact');
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-
-  useGSAP(() => {
-    if (descriptionRef.current) {
-      gsap.fromTo(
-        descriptionRef.current,
-        { opacity: 0 },
-        {
-          opacity: 1,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: descriptionRef.current,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
-    }
-  }, []);
 
   return (
-    <section id="contact" className="relative py-28 md:py-44 px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden">
-      <div className="max-w-2xl mx-auto relative z-10 text-center">
-        <Title as="h2" animate className="mb-6 text-display-sm">
+    <section id="contact" aria-labelledby="contact-title" className="bg-background px-gutter pb-24 md:pb-32 lg:pb-40">
+      <Reveal className="tint relative isolate mx-auto max-w-[1200px] overflow-hidden rounded-xl px-6 py-16 text-center md:px-12 md:py-28">
+        <Ambient intensity="soft" spotlight={false} />
+        <h2 id="contact-title" className="text-display-sm mx-auto max-w-[18ch]">
           {t('title')}
-        </Title>
-        <p
-          ref={descriptionRef}
-          className="reveal-initial text-foreground/50 leading-relaxed mb-10 text-lead"
-        >
-          {t('description')}
-        </p>
-
-        <div className="flex justify-center reveal-up">
-          <Button
-            href="/contact"
-            variant="primary"
-            accent="amber"
-            size="lg"
-            className="w-full sm:w-auto justify-center"
-          >
-            <Mail className="w-4 h-4" />
+        </h2>
+        <p className="text-lead mx-auto mt-5 max-w-[48ch] text-muted-foreground">{t('description')}</p>
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+          <Button href="/contact" accent="amber" size="lg" className="w-full sm:w-auto">
             {t('viewAll')}
           </Button>
+          <a
+            href={`mailto:${t('directEmailAction')}`}
+            className="inline-flex min-h-11 items-center gap-1 break-all rounded-md text-[0.9375rem] font-medium text-primary hover:underline"
+          >
+            {t('directEmailAction')}
+            <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0" />
+          </a>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

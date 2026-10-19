@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
+import { clientIp, isValidSlug } from '@/lib/server/security';
 
 export const runtime = 'edge';
 
@@ -48,6 +49,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
+    if (!isValidSlug(slug)) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     const views = await getViews(slug);
     
     return NextResponse.json({ views }, {
@@ -67,9 +69,10 @@ export async function POST(
 ) {
   try {
     const { slug } = await params;
+    if (!isValidSlug(slug)) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     const redis = getRedisClient();
     
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const ip = clientIp(request);
     const viewKey = `view:${slug}:${ip}`;
     
     if (redis) {

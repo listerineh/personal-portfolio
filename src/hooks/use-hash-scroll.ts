@@ -20,6 +20,8 @@ export function useHashScroll() {
 
     const sectionId = hash.substring(1);
     let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let frame = 0;
     const maxAttempts = 20; // Try for up to 2 seconds
 
     const scrollToSection = () => {
@@ -27,7 +29,7 @@ export function useHashScroll() {
       
       if (section) {
         hasScrolledRef.current = true;
-        requestAnimationFrame(() => {
+        frame = requestAnimationFrame(() => {
           const headerOffset = 100;
           const elementPosition = section.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.scrollY - headerOffset;
@@ -35,12 +37,16 @@ export function useHashScroll() {
         });
       } else if (attempts < maxAttempts) {
         attempts++;
-        setTimeout(scrollToSection, 100);
+        timer = setTimeout(scrollToSection, 100);
       }
     };
 
     // Start trying to scroll
     scrollToSection();
+    return () => {
+      if (timer) clearTimeout(timer);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [pathname]);
 }
 

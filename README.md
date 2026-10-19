@@ -1,395 +1,175 @@
-# 🚀 Personal Portfolio — listerineh.dev
+# listerineh.dev
 
-✨ A modern, high-performance personal portfolio built with Next.js 15, TypeScript, and Tailwind CSS. Features a custom design system, GSAP-powered animations with parallax effects, bilingual (EN/ES) support via `next-intl`, a full technical blog with newsletter, dedicated Experience/Skills/Contact pages, Spotify-powered music showcases, and a `/why` storytelling page.
+Personal site of Sebastian Alvarez, a full-stack engineer working on applied AI. It shows the work (career, projects, skills), a bilingual technical blog with a newsletter, and `/why`, the music behind the username.
 
----
-
-## 🌍 Deployment
-
-Deployed on Vercel with automatic CI/CD.
+Built with Next.js 15 (App Router), React 18, TypeScript, Tailwind CSS 3 and `next-intl` (English and Spanish). The visual system is called **Lumen**: neutral grounds, rounded surfaces, one amber accent (`#D97706`) and spring motion. See [`DESIGN.md`](DESIGN.md) for tokens and rules and [`PRODUCT.md`](PRODUCT.md) for audience and purpose.
 
 | Environment | Branch | URL |
-|-------------|--------|-----|
-| Production  | `main` | [listerineh.dev](https://listerineh.dev) |
-| Staging     | `develop` | [listerineh.vercel.app](https://listerineh.vercel.app) |
+|---|---|---|
+| Production | `main` | [listerineh.dev](https://listerineh.dev) |
+| Staging | `develop` | [listerineh.vercel.app](https://listerineh.vercel.app) |
 
 ---
 
-## 🛠 Tech Stack
+## Quick start
 
-### 🔧 Core
-
-| Technology | Description |
-|------------|-------------|
-| ![Next.js](https://img.shields.io/badge/-Next.js_15-000000?logo=next.js) | App Router, Server Components, SSG/ISR |
-| ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript) | Strict mode throughout |
-| ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css) | Utility-first, CSS variables for theming |
-| ![React](https://img.shields.io/badge/-React_18-61DAFB?logo=react) | Client/server component split |
-| ![next-intl](https://img.shields.io/badge/-next--intl-7C3AED) | EN/ES internationalization |
-
-### 🎨 UI & Animations
-
-- **GSAP + ScrollTrigger** — parallax effects, `reveal-up`/`reveal-stagger` scroll animations, timeline sequences
-- **Custom Design System** (`src/components/ds/`) — see [Design System](#-design-system-srccomponentsds) below
-- **Storybook** — Component documentation and development environment at `/docs/components`
-- **shadcn/ui** (`src/components/ui/`) — accessible primitives (Radix UI based)
-- **Lucide** — icon set
-
-### 📦 Key Dependencies
-
-- **Resend** — email API for the contact form and newsletter
-- **Zod + React Hook Form** — schema validation and form state
-- **Sharp** — image processing (WebP conversion, OG image compositing)
-- **Playwright** (dev only) — E2E test suite (`tests/`) and headless Chromium rendering for OG/project image generation scripts
-- **Vercel Analytics / Speed Insights** — web analytics and performance monitoring
-- **@upstash/redis / @vercel/kv** — blog view counters and reaction storage
-- **react-markdown / remark-gfm / rehype-*** — markdown rendering for blog posts
-
-### 🛠 Development Tools
-
-- **Turbopack** — fast dev server (port 9006)
-- **ESLint** — linting
-- **Storybook** — isolated component development
-
----
-
-## ✨ Features
-
-| Category | Details |
-|----------|---------|
-| **🌍 Internationalization** | Full EN/ES support via `next-intl`; language switcher in header |
-| **🎭 Theme** | Dark/light mode with CSS variable theming; curtain-effect toggle; mode-adaptive component colors |
-| **🎬 Animations** | GSAP parallax on hero, footer, and `/why` backgrounds; `reveal-up` scroll entrances; stagger grids; hover micro-interactions |
-| **📝 Blog** | Markdown blog with SSG; tag filtering via pills; search; sort (recommended/most-viewed/date); reading time; view counters; reactions; newsletter subscription (Resend); blog post notification via GitHub Actions |
-| **💼 Experience** | Homepage teaser (latest 3 roles) + dedicated `/experience` page with a full CV-style timeline |
-| **🧰 Skills** | Homepage animated marquee + dedicated `/skills` page with technologies grouped by category (languages, frontend, backend, mobile, database, AI, DevOps, testing, tools, management), each filterable via pills and multi-category tagging |
-| **📧 Contact** | Homepage teaser CTA + dedicated `/contact` page with a two-column layout (contact info/socials + form) |
-| **🎵 Music (`/why`)** | Spotify top-tracks widget with multi-platform links (Spotify, YouTube, Apple Music, SoundCloud) per track |
-| **📱 Homepage Sections** | Hero · Experience (preview) · Skills (preview) · Projects (preview) · Blog (preview) · Contact (teaser) |
-| **🎨 Component Library** | Storybook documentation at `/docs/components` with interactive examples and theme switching |
-| **📄 Pages** | `/` Homepage · `/about` · `/experience` · `/skills` · `/projects` · `/projects/[slug]` · `/blog` · `/blog/[slug]` · `/contact` · `/why` · `/privacy` · `/terms` · `/docs/components` |
-| **🚀 Performance** | WebP images · SSG/ISR · font optimization · code splitting · smart caching · Service Worker |
-| **♿ Accessibility** | Skip-to-content link · `aria` labels · reduced-motion support throughout GSAP hooks |
-| **🔍 SEO** | Per-page metadata (OpenGraph/Twitter cards), custom OG images per page, `sitemap.xml`, `robots.ts`, JSON-LD structured data |
-
----
-
-## 🏁 Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-
-### Installation
+Requires Node.js 18.18+ (developed on 22).
 
 ```bash
 git clone https://github.com/listerineh/personal-portfolio.git
 cd personal-portfolio
 npm install
+npm run dev          # http://localhost:9008 (webpack)
 ```
 
-### Environment Variables
+Create `.env.local` with the variables below. Locally you can leave most of them out: without Redis the view counters use memory and the rate limits are skipped; the email routes need `RESEND_API_KEY` to work.
 
-Create `.env.local`:
-
-```bash
-# Contact form / email
-RESEND_API_KEY=your_resend_api_key
-EMAIL_FROM=noreply@yourdomain.com
-EMAIL_TO=your@email.com
-
-# Newsletter
-NEWSLETTER_FROM=newsletter@yourdomain.com
-
-# Storage (blog view counters / reactions)
-UPSTASH_REDIS_REST_URL=your_upstash_url
-UPSTASH_REDIS_REST_TOKEN=your_upstash_token
-
-# SEO
-GOOGLE_SITE_VERIFICATION=your_google_site_verification_code
-
-# Cache revalidation (used by the revalidate-on-deploy GitHub Action)
-REVALIDATE_SECRET=your_revalidate_secret
-
-# App
-NEXT_PUBLIC_SITE_URL=http://localhost:9006
-```
-
-### Run
-
-```bash
-npm run dev        # http://localhost:9006
-```
+| Variable | Used by |
+|---|---|
+| `RESEND_API_KEY` | Contact form, newsletter (subscribe, unsubscribe, blog notifications) |
+| `NEWSLETTER_SECRET` | Required to send blog notifications (`Authorization: Bearer …`) and to sign unsubscribe links. Long random string; same value in Vercel, the GitHub secret and your shell when running `npm run notify-blog` |
+| `REVALIDATE_SECRET` | `POST /api/revalidate` (called by the `revalidate-on-deploy` workflow) |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (or `KV_REST_API_URL` / `KV_REST_API_TOKEN`) | Blog views and reactions, API rate limits |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URLs, metadata, links in emails (defaults to `https://listerineh.dev`) |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Search Console verification meta |
+| `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_HOTJAR_SCRIPT` | Analytics, loaded after the page is interactive (only if set) |
 
 ---
 
-## 📜 Scripts
+## Commands
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Dev server with Turbopack on port 9006 |
-| `npm run build` | Production build (runs `prebuild` → bumps Service Worker version) |
-| `npm run build:prod` | Full production build: bumps SW version, builds Storybook, moves it into `public/docs`, then `next build` — used as the Vercel build command |
-| `npm start` | Start production server |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript type check |
-| `npm run analyze` | Build with the bundle analyzer enabled |
-| `npm run storybook` | Start Storybook dev server on port 6006 |
-| `npm run build-storybook` | Build Storybook for production |
-| `npm run test:setup` | Install Playwright browsers (only if not already cached) |
-| `npm run test` | Run the Playwright E2E suite (`tests/`) |
-| `npm run test:ui` / `test:debug` / `test:report` | Playwright UI mode, debug mode, and HTML report |
-| `npm run convert-images` | Batch convert JPEG/PNG → WebP in `/public` |
-| `npm run convert-heic` | Convert HEIC → WebP |
-| `npm run generate-og-images` | Render per-page Open Graph images via headless Chromium (Playwright + Sharp) |
-| `npm run generate-project-images` | Render project showcase screenshots |
-| `npm run notify-blog` | Send a blog notification to subscribers |
-| `npm run update-sw` | Bump Service Worker cache version |
-
-> See `scripts/README.md` for detailed usage of each script.
-
-> **Note:** `playwright` (the browser-download package) lives in `devDependencies` and is only needed for the local test suite and image-generation scripts — it's never invoked during `next build`. Vercel sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` (see `vercel.json`) so browser binaries aren't downloaded on every deploy.
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev server on port 9008 (webpack) |
+| `npm run dev:turbo` | Dev server with Turbopack on port 9006 |
+| `npm run build` | Production build (`prebuild` bumps the service worker cache version) |
+| `npm run build:prod` | Vercel build: SW version, Storybook build moved into `public/docs/components`, then `next build` |
+| `npm start` | Serve the production build |
+| `npm run lint` / `npm run typecheck` | ESLint (flat config) / `tsc --noEmit` |
+| `npm run analyze` | Build with the bundle analyzer |
+| `npm run storybook` / `npm run build-storybook` | Storybook on port 6006 / static build |
+| `npm run test:setup`, `test` | Playwright: install browsers once, then run the suite (it starts the app on port 3001) |
+| `npm run generate-og-images` | Share images into `public/og` and app icons into `public/icons` (see [`scripts/README.md`](scripts/README.md)) |
+| `npm run generate-project-images` | Project product shots into `public/projects` |
+| `npm run notify-blog` | Email a new post to subscribers (needs `NEWSLETTER_SECRET`) |
+| `npm run convert-images` / `convert-heic` | Convert images in `public/` to WebP. **Deletes the originals**; see the scripts README before running |
 
 ---
 
-## 🔄 Cache Strategy
+## Pages
 
-**HTTP Headers** (`next.config.ts`):
+`/` home (hero, career, projects, skills, latest articles, contact) · `/about` · `/projects` and `/projects/[slug]` · `/skills` · `/blog` and `/blog/[slug]` · `/contact` · `/why` · `/privacy` · `/terms` · `/unsubscribe` · `/docs/components` (Storybook) · `/feed.xml` · `/sitemap.xml` · `/robots.txt`
 
-| Path | Strategy |
-|------|----------|
-| `/:path*` (HTML) | `max-age=0, must-revalidate` — always fresh |
-| `/images/`, `/blog/*.webp` | `max-age=3600, stale-while-revalidate=86400` |
-| `/_next/static/` | `max-age=31536000, immutable` |
+`/experience` permanently redirects to `/#career` (the career section lists every role).
 
-**Service Worker** (`public/sw.js`):
-- Cache-first strategy for offline support
-- Auto-bumped version on every `npm run build` via the `prebuild` script
-
-**On-demand revalidation:**
-- `POST /api/revalidate` — triggered by the `revalidate-on-deploy` GitHub Action after every production deploy to refresh ISR pages and recent blog posts
+Error states: `src/app/not-found.tsx`, `error.tsx`, `global-error.tsx`, and `public/offline.html` (served by the service worker without a connection).
 
 ---
 
-## 📁 Project Structure
+## Architecture
 
 ```
-personal-portfolio/
-├── public/
-│   ├── images/              # Site images, per-page OG images (home-og.webp, blog-og.webp, experience-og.webp, skills-og.webp, contact-og.webp, why-og.webp, etc.)
-│   ├── blog/                # Blog post images
-│   ├── projects/            # Project screenshots
-│   ├── docs/                # Storybook static build (served at /docs/components) + downloadable resume PDF
-│   └── sw.js                # Service Worker
-├── scripts/
-│   ├── generate-og-images.js       # Playwright + Sharp OG image renderer (all pages)
-│   ├── generate-project-images.js  # Project screenshot renderer
-│   ├── convert-images-to-webp.js
-│   ├── convert-heic-to-webp.js
-│   ├── send-blog-notification.js
-│   ├── extract-blog-data.js
-│   ├── setup-playwright.js
-│   ├── update-sw-version.js
-│   ├── move-storybook.js
-│   └── README.md
-├── tests/                    # Playwright E2E suite (rendering + action specs per page/section)
-├── .storybook/
-│   ├── main.ts               # Storybook configuration
-│   └── preview.tsx           # Storybook preview with theme integration
-├── messages/
-│   ├── en.json                # English translations
-│   └── es.json                # Spanish translations
-├── src/
-│   ├── app/
-│   │   ├── about/            # /about page
-│   │   ├── api/               # API routes (contact, newsletter, blog views/reactions, revalidate, spotify, etc.)
-│   │   ├── blog/               # /blog list + /blog/[slug] detail
-│   │   ├── contact/            # /contact page
-│   │   ├── docs/                # /docs/components (Storybook)
-│   │   ├── experience/          # /experience page
-│   │   ├── projects/            # /projects list + /projects/[slug] detail
-│   │   ├── skills/               # /skills page
-│   │   ├── feed.xml/              # RSS feed
-│   │   ├── privacy/                # /privacy page
-│   │   ├── terms/                   # /terms page
-│   │   ├── why/                      # /why storytelling page
-│   │   ├── globals.css                # CSS variables (light/dark themes)
-│   │   ├── layout.tsx                  # Root layout with providers
-│   │   ├── page.tsx                     # Homepage
-│   │   ├── robots.ts                     # robots.txt
-│   │   └── sitemap.ts                     # sitemap.xml
-│   ├── components/
-│   │   ├── blog/              # Blog-specific components (BlogSearch, NewsletterSubscribe, TableOfContents, etc.)
-│   │   ├── common/             # Shared UI (ThemeToggle, LanguageSwitcher, CookieSettings, etc.)
-│   │   ├── contact/             # /contact page client component
-│   │   ├── ds/                    # Custom Design System — see below
-│   │   ├── email/                  # Email templates (React Email)
-│   │   ├── experience/              # /experience page client component
-│   │   ├── layout/                   # Header + Footer layout components
-│   │   ├── projects/                  # /projects listing + detail client components
-│   │   ├── providers/                  # React context providers wrapper
-│   │   ├── sections/                    # Homepage sections (Hero, Experience, Skills, Projects, Blog preview, Contact)
-│   │   ├── skills/                       # /skills page client component
-│   │   └── ui/                            # shadcn/ui primitives (do NOT add DS components here)
-│   ├── context/               # ThemeContext, LocaleContext
-│   ├── hooks/                  # useGSAP, useScrollTrigger, useIsMobile, useHashScroll, use-toast, etc.
-│   ├── i18n/                    # next-intl config (`config.ts`, `request.ts`) — messages live in `/messages`
-│   ├── lib/
-│   │   ├── data/                  # Static data: experiences.ts, projects.ts, skills.ts, blog/, music.ts, navigation.ts, hero.ts
-│   │   ├── metadata.ts              # Shared SEO metadata helper (used by /about, /why, /privacy, /terms, home)
-│   │   ├── i18n-data.ts               # getLocalizedData() helper for locale-aware static data
-│   │   ├── performance.ts              # supportsAnimations, isLowEndDevice, prefersReducedMotion
-│   │   └── utils.ts                     # cn() and general helpers
-│   ├── stories/                # Storybook stories mirroring `components/ds` and other shared components
-│   └── types/                   # Shared TypeScript types (Experience, Project, BlogPost, Skill, SkillCategory, etc.)
-├── .env.local                # Environment variables (not in git)
-├── vercel.json                # Vercel build command + build-time env overrides
-├── next.config.ts              # Next.js config + cache headers
-├── tailwind.config.ts           # Tailwind config
-└── tsconfig.json
+src/
+├── app/                 Routes, API routes, root layout, globals.css (Lumen tokens)
+├── components/
+│   ├── ds/              Design system (Button, Section, PageHeader, ProjectCard, BlogCard, Carousel, RoleExplorer, …)
+│   ├── sections/        Home sections and the /about content
+│   ├── blog/ projects/ skills/ contact/   Page-level client components
+│   ├── layout/          Header, footer, PageShell
+│   ├── common/          Language switcher, cookie banner, schema.org, back-to-top, …
+│   ├── email/           Contact email template
+│   └── providers/       next-intl client provider
+├── context/             Locale and theme contexts
+├── i18n/                next-intl config, request config, client-side message loading
+├── lib/
+│   ├── data/            Static content: experiences, projects, skills, blog posts, music, home summaries
+│   ├── server/          API guards (rate limit, secrets, HTML escaping, unsubscribe tokens)
+│   └── metadata.ts      Every page's title, description, canonical, Open Graph and Twitter data
+├── stories/             Storybook stories (+ support/mock-api.ts for the site's /api routes)
+└── types/
+messages/                en.json, es.json
+public/                  og/ (share images), icons/, projects/, blog/, images/, sw.js, offline.html, manifest.json
+scripts/                 Image generation, conversions, SW version, blog notifications
+tests/                   Playwright suite
 ```
 
----
+Decisions worth knowing before changing things:
 
-## 📚 Storybook
-
-Storybook is used for component development and documentation. It provides an interactive environment to develop and test UI components in isolation.
-
-### Running Storybook
-
-```bash
-npm run storybook          # Start dev server on http://localhost:6006
-npm run build-storybook    # Build for production
-```
-
-### Theme Integration
-
-Storybook is integrated with the app's theme system. Use the theme switcher in the Storybook toolbar to toggle between light and dark modes.
-
-### Stories Location
-
-Stories are organized in `src/stories/`, mirroring the structure of `src/components/`.
-
-### Production Deployment
-
-Storybook is built as part of `npm run build:prod` (moved into `public/docs` by `scripts/move-storybook.js`) and served at `/docs/components`. A dedicated GitHub Action (`deploy-storybook.yml`) also verifies the Storybook build on pushes that touch component/story files.
+- **Language lives in a cookie, not the URL.** `NEXT_LOCALE` picks the language on the server; the switcher changes it client-side on the same URL. The server sends only the visitor's messages; the other language loads on demand (`src/i18n/client-messages.ts`). Detail pages receive both language versions so the switch needs no reload. Trade-off: every page is rendered per request, and search engines (which send no cookie) only index English.
+- **Server data is slimmed before it reaches the client.** Lists get summaries (`toBlogSummary`, `toBlogListing`, `src/lib/data/home.ts`), never full posts. Client components import `@/lib/data/<module>`, not the `@/lib/data` barrel.
+- **Motion is opt-in.** A pre-paint script adds `html.js-motion` only when reduced motion is off; reveals, marquees and ambient light hang off that class, so content is visible without JS. GSAP is loaded only for the draggable hero cards (`CardStack`).
+- **Metadata has one source.** Routes export `generateMetadata = metadataFor('<page>')` from `src/lib/metadata.ts`. Share images are PNG/JPG because WebP previews are unreliable on LinkedIn, iMessage and Slack.
 
 ---
 
-## 🧪 Testing
+## API routes
 
-End-to-end tests live in `tests/` and use Playwright, organized by page/section with two layers per area:
+| Route | Access | Notes |
+|---|---|---|
+| `POST /api/send` | Public | Contact form. Validated with Zod, 5 per hour per IP |
+| `POST /api/newsletter/subscribe` | Public | Creates the Resend contact and sends a welcome email. 5 per hour per IP |
+| `POST /api/newsletter/unsubscribe` | Public | Needs a signed link (`email` + `token`, HMAC with `NEWSLETTER_SECRET`); without one it emails a link, same answer whether or not the address is subscribed. Also accepts RFC 8058 one-click POSTs. 10 per hour per IP |
+| `POST /api/newsletter/send-blog-notification` | `Bearer NEWSLETTER_SECRET` | Emails a new post to every subscribed contact, each with its own unsubscribe link and `List-Unsubscribe` headers |
+| `POST /api/revalidate` | `Bearer REVALIDATE_SECRET` | On-demand revalidation of a path |
+| `GET/POST /api/blog/[slug]/views`, `/reactions` | Public | Redis counters, one per IP per hour (views) or day (reactions) |
+| `GET /api/spotify/tracks?ids=` | Public | Spotify oEmbed metadata, up to 10 track ids |
 
-- **Rendering specs** (`*.rendering.spec.ts`) — verify elements, layout, and visual state
-- **Action specs** (`*.actions.spec.ts`) — verify interactions, form submissions, and navigation
-
-```bash
-npm run test:setup   # one-time: installs Playwright browsers locally
-npm run test:server  # runs the app on port 3001 for the test suite
-npm run test         # run the full suite (in another terminal)
-npm run test:ui      # interactive UI mode
-```
-
-> Playwright browser binaries are **not** downloaded during `npm install` in deployment environments — `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` is set in `vercel.json` to keep production builds fast. Run `npm run test:setup` locally before running tests for the first time.
+Every response carries `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`, `Permissions-Policy` and HSTS (`next.config.ts`). There is no CSP yet: the theme script, JSON-LD and analytics are inline and would need nonces first.
 
 ---
 
-## 🎨 Design System (`src/components/ds/`)
+## Caching and offline
 
-The project uses a hand-crafted design system. Components are theme-aware via the `useTheme` hook and/or Tailwind `dark:` variants depending on the component.
+| Path | `Cache-Control` |
+|---|---|
+| Pages | `private, no-cache, max-age=0, must-revalidate` (per-visitor language; `no-cache` keeps the back/forward cache) |
+| `/_next/static/*` | `public, max-age=31536000, immutable` |
+| `/images/*`, `/og/*`, `/icons/*`, `/blog/*.webp`, `/docs/components/*` | `public, max-age=86400, stale-while-revalidate=604800` |
 
-| Component | Notes |
-|-----------|-------|
-| `Button` | `variant`: primary/secondary/ghost · `accent`: amber/indigo/green/neutral · `size` · `href`/`external` · `gradient` |
-| `Input` / `Textarea` / `FormField` | Form primitives with `accent` + validation error states |
-| `Pill` | `variant`: solid/outline · `accent` · `color` (hex override) |
-| `Title` / `Text` / `SectionLabel` | Typography primitives · `gradient`/`accent`/`strength` · `animate` (adds `reveal-up` class) |
-| `AccentCard` | Bordered card with accent tint (used across Experience/Skills/Contact pages) |
-| `MemberCard` | Band/team member card (used on `/why`) |
-| `ExperienceCard` | Job entry card with expandable responsibilities |
-| `ProjectCard` / `BlogCard` | Listing cards for `/projects` and `/blog` |
-| `BrandLink` | Social/platform link pill (solid or outline) |
-| `SpotifyTopTracks` | Fetches track metadata via `/api/spotify/tracks` and renders per-track platform buttons (Spotify/YouTube/Apple Music/SoundCloud) |
-| `SpotifyIcon` / `YoutubeIcon` / `AppleMusicIcon` / `SoundcloudIcon` / `InstagramIcon` | Brand icons; `SpotifyIcon` supports a `base` (fixed brand colors) mode and a `currentColor`-driven mode |
-| `Modal` / `Dropdown` / `Switch` / `Toaster` | Radix-based interactive primitives styled to match the DS |
-
-> Import from `@/components/ds`. Never add DS components to `src/components/ui/` (that folder is reserved for shadcn/ui primitives).
+The service worker (`public/sw.js`) serves pages network-first and keeps every page that loads, so visited pages open offline; static assets are cache-first; anything else falls back to `offline.html`. The cache name is bumped on every build.
 
 ---
 
-## 🌐 Internationalization
+## Design system and Storybook
 
-Translations live in `messages/en.json` and `messages/es.json`, loaded via `next-intl` (configured in `src/i18n/`). The `LanguageSwitcher` component in the header lets users toggle between locales; the selected locale is persisted via the `NEXT_LOCALE` cookie and used for locale-aware metadata and static data (see `getLocalizedData()` in `src/lib/i18n-data.ts`).
+Pages compose components from `src/components/ds` (import from `@/components/ds`). Tokens, type scale, radii, springs and the rules for using them are in [`DESIGN.md`](DESIGN.md). Every ds component has a story in `src/stories/`; the static build is served at `/docs/components`, with light/dark and EN/ES switches in the toolbar.
 
----
-
-## 🔄 Customization Guide
-
-### Personal Information
-
-Edit files in `src/lib/data/`:
-
-| File | Content |
-|------|---------|
-| `experiences.ts` | Work history (`experiencesData`, `getExperiences(locale)`) |
-| `projects.ts` | Project showcase (`projectsData`, `getProjects(locale)`) |
-| `skills.ts` | Technologies, grouped by `category` (`getSkillsByCategory()`) — a skill can belong to multiple categories |
-| `navigation.ts` | Social links and community links |
-| `blog/` | Blog posts (one file per post, registered in `get-blog-posts.ts`) |
-| `music.ts` | Music project links, including per-track Spotify/YouTube/Apple Music/SoundCloud URLs (`musicLinks`) |
-
-Also update translations in `messages/en.json` and `messages/es.json` for hero copy, section labels, page titles/descriptions, etc.
-
-### Theme Colors
-
-CSS variables in `src/app/globals.css` — separate `:root` (light) and `.dark` blocks. Key variables:
-
-```css
---background, --foreground, --primary, --primary-light, --accent
---why-background, --why-foreground   /* /why page */
---wm-indigo, --wm-amber, --wm-green  /* section watermarks */
-```
-
-Text selection color (`::selection`) is tied to `--primary` (brand amber), not `--accent`.
-
-### Blog Posts
-
-Add a new `.ts` file to `src/lib/data/blog/` following the existing post schema, then export it from `get-blog-posts.ts`. Run `npm run notify-blog` to notify subscribers, or let the `notify-new-blog` GitHub Action handle it automatically on push to `main`.
-
-### Adding Animations
-
-Use the `animate` prop on `Title`, `Text`, `SectionLabel` DS components to add the `reveal-up` class. The homepage and `/why` page scan for `.reveal-up`/`.reveal-stagger` elements and animate them on scroll; standalone listing pages (`/projects`, `/blog`, `/experience`, `/skills`, `/contact`) animate specific refs directly with `useGSAP` instead.
-
-### Adding a New Page
-
-1. Create `src/app/<page>/page.tsx` with `generateMetadata()` (title/description/OpenGraph/Twitter/canonical/robots) + JSON-LD structured data — follow `src/app/experience/page.tsx` or `src/app/skills/page.tsx` as a template.
-2. Build the page UI in a client component under `src/components/<page>/`.
-3. Add the route to `src/app/sitemap.ts`.
-4. Add a template function to `scripts/generate-og-images.js` and run `node scripts/generate-og-images.js <page>` to generate its OG image.
-5. Link to it from `Header`/`Footer` nav (`src/components/layout/`) if it should appear in navigation.
+UI text goes in both `messages/en.json` and `messages/es.json`, including `aria-label`s.
 
 ---
 
-## 🚀 Deployment
+## Content
 
-1. Push to `main` (production) or `develop` (staging)
-2. Vercel auto-deploys both branches using the build command in `vercel.json` (`npm run build:prod`)
-3. Set environment variables in the Vercel dashboard (same keys as `.env.local`)
-4. After a production deploy, the `revalidate-on-deploy` GitHub Action refreshes ISR caches for key routes
+| What | Where |
+|---|---|
+| Roles | `src/lib/data/experiences.ts` |
+| Projects | `src/lib/data/projects.ts` (+ product shot via `npm run generate-project-images`, share image via `node scripts/generate-og-images.js projects`) |
+| Skills | `src/lib/data/skills.ts`, categories in `skill-categories.ts` |
+| Blog posts | One file per post in `src/lib/data/blog/`, registered in `get-blog-posts.ts`. Pushing a new post to `main` triggers the `notify-new-blog` workflow |
+| Music | `src/lib/data/music.ts` |
+| Page copy and metadata | `messages/*.json`, `src/lib/metadata.ts` |
 
----
+### Adding a page
 
-## 📝 License
-
-MIT — feel free to adapt for your own portfolio.
-
----
-
-## 👨‍💻 Author
-
-**Sebastian Alvarez**  
-[listerineh.dev](https://listerineh.dev) · [@listerineh](https://github.com/listerineh)
+1. Create `src/app/<page>/page.tsx` and export `generateMetadata = metadataFor('<page>')` after adding the page to `PAGES` in `src/lib/metadata.ts`.
+2. Build it from `PageShell`, `PageHeader` and ds components; put copy in both message files.
+3. Add it to `src/app/sitemap.ts`, and to the header/footer navigation if it belongs there.
+4. Add a template to `scripts/generate-og-images.js` and run `node scripts/generate-og-images.js <page>`.
 
 ---
 
-⭐ If this helped you, a star is appreciated!
+## Testing
+
+Playwright specs live in `tests/` (home sections, header, every page in both languages, and the contact/unsubscribe/search flows; see [`tests/README.md`](tests/README.md)). Run `npm run test:setup` once, then `npm run test`; Playwright starts the app on port 3001 itself. Vercel sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`, so deploys never download browsers.
+
+---
+
+## Deployment
+
+Vercel deploys `main` and `develop` with `npm run build:prod` (`vercel.json`). Set the environment variables above in the Vercel dashboard and add `NEWSLETTER_SECRET` and `REVALIDATE_SECRET` as GitHub Actions secrets for the workflows described in [`.github/workflows/README.md`](.github/workflows/README.md).
+
+---
+
+## License
+
+MIT. Author: **Sebastian Alvarez** · [listerineh.dev](https://listerineh.dev) · [@listerineh](https://github.com/listerineh)

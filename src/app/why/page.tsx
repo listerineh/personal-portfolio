@@ -1,439 +1,361 @@
-'use client';
+"use client";
 
-import { useRef, useState, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { ThemeToggleButton } from '@/components/common/theme-toggle-button';
-import { LanguageSwitcher } from '@/components/common/language-switcher';
-import { useGSAP } from '@/hooks/use-gsap';
-import { musicLinks } from '@/lib/data';
-import { throttle } from '@/lib/performance-utils';
-import { cn } from '@/lib/utils';
-import { Pill, Button, Title, Text, AccentCard, MemberCard, SpotifyTopTracks } from '@/components/ds';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { musicLinks } from "@/lib/data/music";
+import {
+  BrandLink,
+  Button,
+  Exhibit,
+  Reveal,
+  MemberCard,
+  Pill,
+  Panel,
+  SpotifyTopTracks,
+  Ambient,
+  Equalizer,
+  ScrollText,
+  Vinyl,
+} from "@/components/ds";
+import { PageShell } from "@/components/layout";
 
 const members = [
-  { nameKey: 'mnMember1Name' as const, roleKey: 'mnMember1Role' as const },
-  { nameKey: 'mnMember2Name' as const, roleKey: 'mnMember2Role' as const },
-  { nameKey: 'mnMember3Name' as const, roleKey: 'mnMember3Role' as const },
-  { nameKey: 'mnMember4Name' as const, roleKey: 'mnMember4Role' as const },
+  { nameKey: "mnMember1Name" as const, roleKey: "mnMember1Role" as const },
+  { nameKey: "mnMember2Name" as const, roleKey: "mnMember2Role" as const },
+  { nameKey: "mnMember3Name" as const, roleKey: "mnMember3Role" as const },
+  { nameKey: "mnMember4Name" as const, roleKey: "mnMember4Role" as const },
 ];
 
 const ssMembers = [
-  { nameKey: 'ssMember1Name' as const, roleKey: 'ssMember1Role' as const },
-  { nameKey: 'ssMember2Name' as const, roleKey: 'ssMember2Role' as const },
-  { nameKey: 'ssMember3Name' as const, roleKey: 'ssMember3Role' as const },
+  { nameKey: "ssMember1Name" as const, roleKey: "ssMember1Role" as const },
+  { nameKey: "ssMember2Name" as const, roleKey: "ssMember2Role" as const },
+  { nameKey: "ssMember3Name" as const, roleKey: "ssMember3Role" as const },
 ];
 
+// Each project's identity color: used for its marker dot, its soft glow and its platform links.
+const MN = "#D97706";
+const SS = "#5A7799";
+const SOLO = "#1DB954";
+
+/** /why: the artist behind the code, shown as three temporary exhibitions. */
 export default function WhyPage() {
-  const t = useTranslations('why');
-  const heroRef = useRef<HTMLElement>(null);
-  const heroBgRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLElement>(null);
-  const ctaBgRef = useRef<HTMLDivElement>(null);
-  const heroEyebrowRef = useRef<HTMLSpanElement>(null);
-  const heroTitleRef = useRef<HTMLHeadingElement>(null);
-  const heroSubtitleRef = useRef<HTMLParagraphElement>(null);
-
-  const [isOverHero, setIsOverHero] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = throttle(() => {
-      const threshold = (heroRef.current?.offsetHeight ?? window.innerHeight) - 80;
-      setIsOverHero(window.scrollY < threshold);
-    }, 100);
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!prefersReducedMotion && heroBgRef.current && heroRef.current) {
-      gsap.to(heroBgRef.current, {
-        yPercent: 28,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
-    }
-
-    if (!prefersReducedMotion && ctaBgRef.current && ctaRef.current) {
-      gsap.fromTo(ctaBgRef.current,
-        { yPercent: -12 },
-        {
-          yPercent: 12,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: ctaRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        }
-      );
-    }
-
-    if (!prefersReducedMotion) {
-      const heroTl = gsap.timeline({ delay: 0.1, defaults: { ease: 'power3.out' } });
-      heroTl
-        .fromTo(heroEyebrowRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 })
-        .fromTo(heroTitleRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.25')
-        .fromTo(heroSubtitleRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
-    }
-  }, []);
+  const t = useTranslations("why");
 
   return (
-    <div
-      className="why-page min-h-screen overflow-x-hidden"
-    >
-      <style>{`
-        .why-page {
-          font-family: var(--font-outfit), sans-serif;
-          background-color: var(--surface-deep);
-        }
-        .why-page section { opacity: 1 !important; }
-
-      `}</style>
-
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-black">
-        {t('skipToContent')}
-      </a>
-
-      <div className="fixed top-5 left-5 z-[9999]">
-        <Link
-          href="/"
-          className={cn(
-            'inline-flex items-center gap-2 text-sm transition-colors duration-300 group',
-            isOverHero
-              ? 'text-white/70 hover:text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]'
-              : 'text-foreground/70 hover:text-foreground'
-          )}
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-          <span className="hidden sm:inline font-medium">{t('backToPortfolio')}</span>
-        </Link>
-      </div>
-
-      <div className="fixed top-5 right-5 z-[9999] flex items-center gap-2">
-        <LanguageSwitcher
-          className={cn(
-            'transition-colors',
-            isOverHero
-              ? 'text-white/70 hover:text-white hover:bg-white/10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]'
-              : 'text-foreground/70 hover:text-foreground hover:bg-foreground/8'
-          )}
+    <PageShell>
+      {/* A stage that follows the site theme: the photo fades into the ground, the light tints or glows. */}
+      <div>
+      {/* Hero: the photo fills the stage, a spotlight sweeps, the equalizer keeps time. */}
+      <section
+        aria-labelledby="why-title"
+        className="relative isolate flex min-h-[100svh] items-end overflow-clip px-gutter pb-16 pt-[calc(var(--header-h)+3rem)] md:pb-24"
+      >
+        <Image
+          src="/images/sebas-playing.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="-z-30 object-cover object-[60%_30%] opacity-90 dark:opacity-70"
         />
-        <ThemeToggleButton
-          className={cn(
-            'transition-colors',
-            isOverHero
-              ? 'text-white/70 hover:text-white hover:bg-white/10 border-white/20 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]'
-              : 'text-foreground/70 hover:text-foreground hover:bg-foreground/8 border-foreground/15'
-          )}
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 -z-20 bg-gradient-to-t from-background via-background/85 to-background/45 dark:via-background/75 dark:to-background/20"
         />
-      </div>
-
-      <main id="main-content">
-
-        {/* ── HERO ─────────────────────────────────────────────────────────── */}
-        <section
-          ref={heroRef}
-          className="relative h-screen min-h-[600px] overflow-hidden flex items-end"
-        >
-          <div ref={heroBgRef} className="absolute inset-0 scale-[1.12] origin-top">
-            <Image
-              src="/images/sebas-playing.webp"
-              alt="Sebastian Alvarez playing guitar"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/25 to-transparent" />
-          </div>
-
-          <div className="relative z-10 w-full px-6 sm:px-10 md:px-16 lg:px-24 pb-16 md:pb-28">
-            <span
-              ref={heroEyebrowRef}
-              className="reveal-initial block font-headline text-amber-400 text-xs tracking-[0.35em] uppercase mb-5 [text-shadow:0_1px_8px_rgba(0,0,0,0.8)]"
-            >
-              {t('heroEyebrow')}
+        {/* Frosted glass that thickens toward the text, so the photo stays a mood rather than competing with the title. */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 -z-20 backdrop-blur-[10px] [-webkit-mask-image:linear-gradient(to_top,#000_35%,transparent_85%)] [mask-image:linear-gradient(to_top,#000_35%,transparent_85%)] dark:backdrop-blur-[4px]"
+        />
+        <span
+          aria-hidden="true"
+          className="stage-light pointer-events-none absolute -top-[30%] left-1/2 -z-10 h-[130%] w-[60vmax] -translate-x-1/2 opacity-50 mix-blend-multiply dark:opacity-60 dark:mix-blend-screen"
+          style={{ background: 'radial-gradient(ellipse 35% 70% at 50% 0%, rgba(217,119,6,0.55), transparent 70%)' }}
+        />
+        <div className="mx-auto w-full max-w-[1200px]">
+          <p
+            data-intro=""
+            style={{ '--i': 0 } as React.CSSProperties}
+            className="material inline-flex h-9 items-center gap-2 rounded-full px-4 text-[0.8125rem] font-medium text-foreground"
+          >
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
+            {t("heroEyebrow")}
+          </p>
+          <h1 id="why-title" className="mt-8">
+            <span data-intro="" style={{ '--i': 1 } as React.CSSProperties} className="text-display block">
+              {t("heroWhy")}
             </span>
-            <h1 ref={heroTitleRef} className="reveal-initial font-headline font-black leading-[0.9] text-white text-display [text-shadow:0_3px_30px_rgba(0,0,0,0.75)]">
-              <span className="block [text-shadow:0_3px_30px_rgba(0,0,0,0.75)]">{t('heroWhy')}</span>
-              <span className="block text-amber-400 [text-shadow:0_2px_20px_rgba(0,0,0,0.85)]">
-                Listerineh?
-              </span>
-            </h1>
-            <p
-              ref={heroSubtitleRef}
-              className="reveal-initial mt-7 max-w-sm md:max-w-md text-white/85 text-base md:text-lg leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.8)]"
-            >
-              {t('heroSubtitle')}
+            <span data-intro="" style={{ '--i': 2 } as React.CSSProperties} className="text-display block text-primary">
+              Listerineh?
+            </span>
+          </h1>
+          <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <p data-intro="" style={{ '--i': 3 } as React.CSSProperties} className="text-lead max-w-[48ch] text-foreground/80">
+              {t("heroSubtitle")}
             </p>
+            <Equalizer className="h-12 md:h-16" bars={14} />
           </div>
+        </div>
+      </section>
 
-        </section>
+      {/* Where the name comes from: the first paragraph lights up as it scrolls by. */}
+      <section aria-labelledby="origin-title" className="px-gutter py-24 md:py-36">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 id="origin-title" className="text-meta text-primary">
+            {t("originHeadline")}
+          </h2>
+          <ScrollText
+            text={t("originParagraph1")}
+            className="mt-6 max-w-[30ch] text-[clamp(1.625rem,4vw,3.25rem)] font-semibold leading-[1.18] tracking-[-0.035em]"
+          />
+          <p className="text-lead mt-10 max-w-[56ch] text-muted-foreground">{t("originParagraph2")}</p>
+        </div>
+      </section>
 
-        {/* ── ORIGIN / THE NAME ─────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 overflow-hidden">
-          <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24">
-            <Title as="h2" animate className="mb-12 text-display-sm">
-              {t('originHeadline')}
-            </Title>
-            <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-              <Text size="lg" strength="secondary" animate className="md:text-xl">{t('originParagraph1')}</Text>
-              <Text size="lg" strength="secondary" animate className="md:text-xl">{t('originParagraph2')}</Text>
-            </div>
-          </div>
-        </section>
+      {/* Tracklist: the three projects as records; each one jumps to its section. */}
+      <section aria-labelledby="tracklist-title" className="px-gutter pb-24 md:pb-32">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 id="tracklist-title" className="text-display-sm">
+            {t("tracklist")}
+          </h2>
+          <ol className="mt-10 grid gap-4 sm:grid-cols-3 md:gap-6">
+            {[
+              { id: 'margarita-nugget', color: MN, title: t("mnTitle"), genre: t("mnGenre"), status: t("mnStatus") },
+              { id: 'sofones-solares', color: SS, title: t("ssTitle"), genre: t("ssGenre"), status: t("ssPaused") },
+              { id: 'listerineh-solo', color: SOLO, title: 'Listerineh', genre: t("soloGenre"), status: t("soloBadge") },
+            ].map((record, index) => (
+              <Reveal as="li" key={record.id}>
+                <a
+                  href={`#${record.id}`}
+                  className="panel group flex h-full flex-col gap-6 p-5 no-underline transition-[transform,box-shadow] duration-glide ease-glide hover:-translate-y-1 hover:shadow-float motion-reduce:transition-none md:p-6"
+                >
+                  <Vinyl color={record.color} className="w-full max-w-[220px] self-center" />
+                  <span className="flex items-start justify-between gap-3">
+                    <span className="min-w-0">
+                      <span className="text-meta text-muted-foreground">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="mt-1 block text-headline transition-colors duration-snap ease-snap group-hover:text-primary">
+                        {record.title}
+                      </span>
+                      <span className="mt-1 block text-[0.875rem] text-muted-foreground">{record.genre}</span>
+                    </span>
+                    <span className="inline-flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-foreground/[0.07] px-2.5 text-[0.6875rem] font-medium">
+                      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: record.color }} />
+                      {record.status}
+                    </span>
+                  </span>
+                </a>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-        {/* ── MARGARITA NUGGET ──────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.07] to-amber-950/0 pointer-events-none" />
-          <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-
-            <div className="reveal-up flex flex-wrap items-center gap-3 mb-10">
-              <Pill color="#f59e0b">{t('mnBadge')}</Pill>
-              <Pill color="#f59e0b" variant="outline">{t('mnStatus')}</Pill>
-            </div>
-
-            <Title
-              as="h2"
-              animate
-              className="mb-8 pb-4 leading-none text-primary text-display"
-            >
-              {t('mnTitle')}
-            </Title>
-            <p className="reveal-up font-headline text-[10px] tracking-[0.35em] uppercase mb-16 text-amber-400">
-              {t('mnGenre')}
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-12 md:gap-24">
-              <div className="space-y-6">
-                <Text size="lg" strength="primary" accent="amber" animate>{t('mnDescription')}</Text>
-                <Text size="base" strength="secondary" accent="amber" animate>{t('mnDescription2')}</Text>
-                <div className="reveal-up pt-2">
-                  <Button
-                    href={musicLinks.mn.linktree}
-                    external
-                    accent="amber"
-                    variant="primary"
-                    className="gap-3 w-full sm:w-auto justify-center"
-                  >
-                    {t('mnLinktree')}
-                    <ExternalLink className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-
-              <div>
-                <p className="font-headline text-xs tracking-[0.2em] uppercase text-amber-500/70 mb-6">{t('mnMembersTitle')}</p>
-                <div className="reveal-stagger grid grid-cols-2 gap-3">
-                  {members.map(({ nameKey, roleKey }) => (
-                    <MemberCard
-                      key={nameKey}
-                      name={t(nameKey)}
-                      role={t(roleKey)}
-                      accent="amber"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Featured video */}
-            <div className="reveal-up mt-16">
-              <p className="font-headline text-xs tracking-[0.2em] uppercase text-amber-500/70 mb-5">{t('mnVideoTitle')}</p>
-              <div
-                className="relative w-full overflow-hidden rounded-2xl border border-amber-500/20 aspect-video"
+      {/* Margarita Nugget */}
+      <Exhibit
+        tone="tint"
+        id="margarita-nugget"
+        color={MN}
+        visual={<Vinyl color={MN} />}
+        tags={
+          <>
+            <Pill variant="outline">{t("mnBadge")}</Pill>
+            <Pill variant="solid" accent="amber">
+              {t("mnStatus")}
+            </Pill>
+          </>
+        }
+        title={t("mnTitle")}
+        subtitle={t("mnGenre")}
+      >
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="grid content-start gap-5 lg:col-span-6">
+            <p className="text-lead">{t("mnDescription")}</p>
+            <p className="text-muted-foreground">{t("mnDescription2")}</p>
+            <div className="pt-2">
+              <BrandLink
+                href={musicLinks.mn.linktree}
+                color={MN}
+                variant="solid"
               >
-                <iframe
-                  src={`https://www.youtube.com/embed/${musicLinks.mn.featuredVideoId}?rel=0&modestbranding=1`}
-                  title="Margarita Nugget"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full"
+                {t("mnLinktree")}
+                <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+              </BrandLink>
+            </div>
+          </div>
+          <div className="lg:col-span-5 lg:col-start-8">
+            <h3 className="text-headline">{t("mnMembersTitle")}</h3>
+            <ul className="mt-4 grid grid-cols-2 gap-2">
+              {members.map(({ nameKey, roleKey }) => (
+                <li key={nameKey}>
+                  <MemberCard name={t(nameKey)} role={t(roleKey)} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-16">
+          <h3 className="text-headline">{t("mnVideoTitle")}</h3>
+          <div className="mt-4 overflow-hidden rounded-xl shadow-card">
+            <div className="relative aspect-video w-full overflow-hidden bg-muted">
+              <iframe
+                src={`https://www.youtube.com/embed/${musicLinks.mn.featuredVideoId}?rel=0&modestbranding=1`}
+                title={`${t("mnTitle")} · ${t("mnVideoTitle")}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 max-w-3xl">
+          <h3 className="text-headline">{t("topTracksTitle")}</h3>
+          <div className="mt-4">
+            <SpotifyTopTracks
+              tracks={musicLinks.mn.topTracks}
+              accentColor={MN}
+            />
+          </div>
+        </div>
+      </Exhibit>
+
+      {/* Sofones Solares */}
+      <Exhibit
+        id="sofones-solares"
+        color={SS}
+        visual={<Vinyl color={SS} />}
+        tags={
+          <>
+            <Pill variant="outline">{t("ssBadge")}</Pill>
+            <Pill variant="outline">{t("ssPaused")}</Pill>
+          </>
+        }
+        title={t("ssTitle")}
+        subtitle={t("ssGenre")}
+      >
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="grid content-start gap-5 lg:col-span-6">
+            <p className="text-lead">{t("ssDescription")}</p>
+            <p className="text-muted-foreground">{t("ssDescription2")}</p>
+            <Panel className="p-5">
+              <p className="text-meta text-muted-foreground">
+                {t("ssAlbumNote")}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed">{t("ssAlbumDesc")}</p>
+            </Panel>
+            <div className="pt-2">
+              <BrandLink href={musicLinks.ss.instagram} color={SS}>
+                {t("soloIG")}
+                <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+              </BrandLink>
+            </div>
+          </div>
+          <div className="lg:col-span-5 lg:col-start-8">
+            <h3 className="text-headline">{t("ssMembersTitle")}</h3>
+            <ul className="mt-4 grid grid-cols-2 gap-2">
+              {ssMembers.map(({ nameKey, roleKey }) => (
+                <li key={nameKey}>
+                  <MemberCard name={t(nameKey)} role={t(roleKey)} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-16 max-w-3xl">
+          <h3 className="text-headline">{t("topTracksTitle")}</h3>
+          <div className="mt-4">
+            <SpotifyTopTracks
+              tracks={musicLinks.ss.topTracks}
+              accentColor={SS}
+            />
+          </div>
+        </div>
+      </Exhibit>
+
+      {/* Listerineh solo */}
+      <Exhibit
+        tone="tint"
+        id="listerineh-solo"
+        color={SOLO}
+        visual={<Vinyl color={SOLO} />}
+        tags={<Pill variant="outline">{t("soloBadge")}</Pill>}
+        title="Listerineh"
+        subtitle={t("soloGenre")}
+      >
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-6">
+          <div className="grid content-start gap-6 lg:col-span-5">
+            <p className="text-lead">{t("soloDescription")}</p>
+            <div>
+              <BrandLink
+                href={musicLinks.solo.instagram}
+                color={SOLO}
+                variant="solid"
+              >
+                {t("soloIG")}
+                <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+              </BrandLink>
+            </div>
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <h3 className="text-headline">{t("topTracksTitle")}</h3>
+            <div className="mt-4">
+              <SpotifyTopTracks
+                tracks={musicLinks.solo.topTracks}
+                accentColor={SOLO}
+              />
+            </div>
+          </div>
+        </div>
+      </Exhibit>
+
+      {/* Close: a lit card, back to the engineering side */}
+      <section
+        aria-labelledby="why-cta-title"
+        className="bg-background px-gutter py-24 md:py-32"
+      >
+        <div className="tint relative isolate mx-auto grid max-w-[1200px] items-center gap-10 overflow-hidden rounded-xl p-6 md:p-12 lg:grid-cols-12 lg:gap-10">
+          <Ambient intensity="soft" spotlight={false} />
+          <div className="lg:col-span-6">
+            <h2 id="why-cta-title" className="text-display-sm">
+              {t("ctaTitle")}
+            </h2>
+            <p className="text-lead mt-6 max-w-[48ch] text-muted-foreground">
+              {t("ctaDescription")}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button
+                accent="amber"
+                size="lg"
+                href="/contact"
+                className="w-full sm:w-auto"
+              >
+                {t("getInTouch")}
+              </Button>
+              <Button variant="ghost" accent="amber" href="/">
+                {t("backToPortfolio")}
+              </Button>
+            </div>
+          </div>
+          <Reveal className="lg:col-span-5 lg:col-start-8">
+            <div className="overflow-hidden rounded-xl shadow-card">
+              <div className="relative aspect-[3/2] overflow-hidden bg-muted">
+                <Image
+                  src="/images/sebas-playing-footer.webp"
+                  alt="Sebastian Alvarez performing"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover object-center"
                 />
               </div>
             </div>
-
-            <div className="reveal-up mt-12">
-              <p className="font-headline text-xs tracking-[0.2em] uppercase text-amber-500/70 mb-5">{t('topTracksTitle')}</p>
-              <SpotifyTopTracks tracks={musicLinks.mn.topTracks} accentColor="#f59e0b" />
-            </div>
-          </div>
-
-
-        </section>
-
-        {/* ── SOFONES SOLARES ───────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--ss-accent)]/0 via-[var(--ss-accent)]/[0.07] to-[var(--ss-accent)]/0 pointer-events-none" />
-          <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-
-            <div className="reveal-up flex flex-wrap items-center gap-3 mb-10">
-              <Pill color="#818cf8">{t('ssBadge')}</Pill>
-              <Pill color="#818cf8" variant="outline">{t('ssPaused')}</Pill>
-            </div>
-
-            <Title
-              as="h2"
-              animate
-              className="mb-3 leading-none text-indigo-400 text-display"
-            >
-              {t('ssTitle')}
-            </Title>
-            <p className="reveal-up font-headline text-[10px] tracking-[0.35em] uppercase mb-16 text-indigo-400">
-              {t('ssGenre')}
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-start">
-              <div className="space-y-6">
-                <Text size="lg" strength="primary" accent="indigo" animate>{t('ssDescription')}</Text>
-                <Text size="base" strength="secondary" accent="indigo" animate>{t('ssDescription2')}</Text>
-                <AccentCard accent="indigo" animate className="p-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-                    <span className="font-headline text-indigo-400 text-[10px] tracking-[0.25em] uppercase">
-                      {t('ssAlbumNote')}
-                    </span>
-                  </div>
-                  <Text size="sm" strength="secondary" accent="indigo">{t('ssAlbumDesc')}</Text>
-                </AccentCard>
-                <div className="reveal-up pt-2">
-                  <Button
-                    href={musicLinks.ss.instagram}
-                    external
-                    variant="primary"
-                    className="gap-3 bg-indigo-400 text-black hover:bg-indigo-300 w-full sm:w-auto justify-center"
-                  >
-                    {t('soloIG')}
-                    <ExternalLink className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-
-              <div>
-                <p className="font-headline text-xs tracking-[0.2em] uppercase text-indigo-400/70 mb-6">{t('ssMembersTitle')}</p>
-                <div className="reveal-stagger grid grid-cols-2 gap-3">
-                  {ssMembers.map(({ nameKey, roleKey }) => (
-                    <MemberCard
-                      key={nameKey}
-                      name={t(nameKey)}
-                      role={t(roleKey)}
-                      accent="indigo"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="reveal-up mt-12">
-              <p className="font-headline text-xs tracking-[0.2em] uppercase text-indigo-400/70 mb-5">{t('topTracksTitle')}</p>
-              <SpotifyTopTracks tracks={musicLinks.ss.topTracks} accentColor="#818cf8" />
-            </div>
-          </div>
-
-
-        </section>
-
-        {/* ── LISTERINEH SOLO ───────────────────────────────────────────────── */}
-        <section className="relative py-28 md:py-44 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-green-950/0 via-green-950/[0.07] to-green-950/0 pointer-events-none" />
-          <div className="max-w-6xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-
-            <div className="reveal-up flex flex-wrap items-center gap-3 mb-10">
-              <Pill color="#1DB954">{t('soloBadge')}</Pill>
-            </div>
-
-            <Title
-              as="h2"
-              animate
-              className="mb-3 leading-none text-green-500 text-display"
-            >
-              Listerineh
-            </Title>
-            <p className="reveal-up font-headline text-green-500 text-[10px] tracking-[0.35em] uppercase mb-16">
-              {t('soloGenre')}
-            </p>
-
-            <div>
-              <Text size="lg" strength="primary" accent="green" animate className="mb-10">{t('soloDescription')}</Text>
-              <div className="reveal-up mb-14">
-                <Button
-                  href={musicLinks.solo.instagram}
-                  external
-                  variant="primary"
-                  className="gap-3 bg-green-500 text-black hover:bg-green-400 w-full sm:w-auto justify-center"
-                >
-                  {t('soloIG')}
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
-              </div>
-              <div className="reveal-up mt-16">
-                <p className="font-headline text-xs tracking-[0.2em] uppercase text-green-500/70 mb-5">{t('topTracksTitle')}</p>
-                <SpotifyTopTracks tracks={musicLinks.solo.topTracks} accentColor="#1DB954" />
-              </div>
-            </div>
-          </div>
-
-
-        </section>
-
-        {/* ── CTA ───────────────────────────────────────────────────────────── */}
-        <section
-          ref={ctaRef}
-          className="relative overflow-hidden flex items-center justify-center px-6 sm:px-10 md:px-16 lg:px-24"
-          style={{ minHeight: '90vh' }}
-        >
-          {/* Parallax background */}
-          <div ref={ctaBgRef} className="absolute inset-0 scale-[1.25] origin-center">
-            <Image
-              src="/images/sebas-playing-footer.webp"
-              alt="Sebastian Alvarez performing"
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </div>
-          {/* Overlays — static, outside parallax div */}
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/40" />
-
-          <div className="relative z-10 max-w-3xl mx-auto text-center py-24">
-            <Title as="h2" animate className="mb-6 !text-white text-display-sm">
-              {t('ctaTitle')}
-            </Title>
-            <p className="reveal-up text-lg text-white/80 leading-relaxed mb-12">{t('ctaDescription')}</p>
-            <div className="reveal-up flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Button variant="primary" accent="neutral" href="/contact">
-                {t('getInTouch')}
-              </Button>
-              <Link href="/" className="font-headline font-bold text-sm text-white/60 hover:text-white transition-colors duration-300 underline-offset-4 hover:underline">
-                {t('backToPortfolio')}
-              </Link>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
+          </Reveal>
+        </div>
+      </section>
+      </div>
+    </PageShell>
   );
 }

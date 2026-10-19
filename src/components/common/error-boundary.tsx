@@ -48,12 +48,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 Oops! Something went wrong
               </h1>
               <p className="text-muted-foreground">
-                We encountered an unexpected error. Don't worry, we've been notified and are working on it.
+                We encountered an unexpected error. Don&apos;t worry, we&apos;ve been notified and are working on it.
               </p>
             </div>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <div className="bg-muted p-4 rounded-lg text-left">
+              <div className="panel p-4 text-left">
                 <p className="text-xs font-mono text-destructive break-all">
                   {this.state.error.toString()}
                 </p>
@@ -64,7 +64,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               <Button variant="secondary" accent="neutral" size="md" onClick={() => this.setState({ hasError: false, error: null })}>
                 Try again
               </Button>
-              <Button variant="primary" accent="amber" size="md" onClick={() => { window.location.href = '/'; }}>
+              <Button accent="amber" size="md" href="/">
                 Go to homepage
               </Button>
             </div>

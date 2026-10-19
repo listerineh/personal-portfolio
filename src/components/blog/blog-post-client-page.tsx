@@ -1,49 +1,41 @@
-
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
+import Link from 'next/link';
 import { useLocale } from '@/context/locale-context';
 import { useTranslations } from 'next-intl';
-import type { BlogPost } from '@/types';
-import Link from 'next/link';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Button } from '@/components/ds';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { BlogStructuredData } from '@/components/blog/blog-structured-data';
-import { ArticleSchema } from '@/components/blog/article-schema';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import type { BlogPostSummary } from '@/types';
+import type { Locale } from '@/i18n/config';
+import { Ambient, BlogCard, Button, PageHeader, Reveal } from '@/components/ds';
+import { NewsletterSubscribe } from './newsletter-subscribe';
+import { PageShell } from '@/components/layout';
 import { TableOfContents } from './table-of-contents';
 import { BlogPostHeader } from './blog-post-header';
 import { BlogPostHeroImage } from './blog-post-hero-image';
-import { BlogPostContent } from './blog-post-content';
 import { BlogPostActions } from './blog-post-actions';
-import { ArrowLeft } from 'lucide-react';
-import { getBlogPost } from '@/lib/data';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+export interface BlogPostVersion {
+  post: BlogPostSummary;
+  /** Article body rendered on the server (markdown never reaches the client bundle). */
+  body: ReactNode;
+  related: BlogPostSummary[];
 }
 
 interface BlogPostClientPageProps {
-  post: BlogPost;
+  /** Each available language of the post; the active locale picks one, falling back to the request's. */
+  versions: Partial<Record<Locale, BlogPostVersion>>;
+  initialLocale: Locale;
 }
 
-export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProps) {
+export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPageProps) {
   const { locale } = useLocale();
   const t = useTranslations('blog');
-  
-  // Obtener el post en el idioma correcto basado en el locale actual
-  const post = useMemo(() => {
-    const localizedPost = getBlogPost(initialPost.slug, locale);
-    return localizedPost || initialPost;
-  }, [initialPost.slug, locale]);
+  const tCommon = useTranslations('common');
+  const version = versions[locale as Locale] ?? versions[initialLocale]!;
+  const { post } = version;
   const [readingProgress, setReadingProgress] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const proseRef = useRef<HTMLDivElement>(null);
-  const asideRef = useRef<HTMLDivElement>(null);
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -95,142 +87,103 @@ export function BlogPostClientPage({ post: initialPost }: BlogPostClientPageProp
     };
   }, []);
 
-  useEffect(() => {
-    if (proseRef.current) {
-      const headings = proseRef.current.querySelectorAll('h2, h3');
-      
-      headings.forEach((heading, index) => {
-        const text = heading.textContent || '';
-        const id = text
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/\s+/g, '-')
-          .replace(/-+/g, '-');
-        heading.id = id || `heading-${index}`;
-      });
-    }
-  }, [post.content]);
-
-  useEffect(() => {
-    const handleAsideVisibility = () => {
-      if (!asideRef.current) return;
-
-      const footer = document.querySelector('footer');
-      if (!footer) {
-        gsap.to(asideRef.current, {
-          opacity: 1,
-          duration: 0.3,
-          pointerEvents: 'auto',
-        });
-        return;
-      }
-
-      const footerRect = footer.getBoundingClientRect();
-      const asideRect = asideRef.current.getBoundingClientRect();
-
-      if (asideRect.bottom > footerRect.top) {
-        gsap.to(asideRef.current, {
-          opacity: 0,
-          duration: 0.3,
-          pointerEvents: 'none',
-        });
-      } else {
-        gsap.to(asideRef.current, {
-          opacity: 1,
-          duration: 0.3,
-          pointerEvents: 'auto',
-        });
-      }
-    };
-
-    window.addEventListener('scroll', handleAsideVisibility, { passive: true });
-    handleAsideVisibility();
-
-    return () => {
-      window.removeEventListener('scroll', handleAsideVisibility);
-    };
-  }, []);
-
-  useEffect(() => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-
-    const ctx = gsap.context(() => {
-      if (headerRef.current && headerRef.current.children.length > 0) {
-        gsap.fromTo(headerRef.current.children,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.06,
-            duration: 0.5,
-            ease: 'power2.out',
-          }
-        );
-      }
-    });
-
-    return () => {
-      ctx.revert();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, [post.slug]);
+  const url = typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`;
 
   return (
     <>
-      <BlogStructuredData post={post} />
-      <ArticleSchema post={post} />
-      <Header />
-      <aside ref={asideRef} className="hidden xl:block xl:fixed xl:right-4 xl:top-24 xl:w-[280px] xl:max-h-[calc(100vh-6rem)] xl:overflow-y-auto xl:z-40 xl:pointer-events-auto">
-        <div className="pr-2">
-          <TableOfContents content={post.content} />
-        </div>
-      </aside>
-      <main className="pt-20 bg-background">
-        <div className="fixed top-20 left-0 right-0 h-0.5 z-50 bg-foreground/[0.06]">
-          <div className="h-full bg-primary transition-[width] duration-150 ease-out" style={{ width: `${readingProgress}%` }} />
-        </div>
-        <div className="max-w-5xl mx-auto px-6 sm:px-10 md:px-16 py-12 md:py-16 xl:mr-[320px]">
-          <div className="relative">
-            <article key={post.slug} ref={contentRef}>
-          <BlogPostHeader 
-            ref={headerRef}
-            post={post}
-            locale={locale}
-            formatDate={formatDate}
-          />
+      {/* Reading progress: a hairline under the header that fills with amber. */}
+      <div aria-hidden="true" className="fixed inset-x-0 top-header z-40 h-0.5 bg-transparent">
+        <div className="h-full origin-left rounded-r-full bg-primary" style={{ transform: `scaleX(${readingProgress / 100})` }} />
+      </div>
+      <PageShell>
+        <PageHeader
+          title={post.title}
+          titleSize="section"
+          intro={post.excerpt}
+          nav={
+            <Link
+              href="/blog"
+              className="inline-flex h-9 items-center gap-1 rounded-full bg-foreground/[0.06] pl-2.5 pr-4 text-[0.8125rem] font-medium text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1]"
+            >
+              <ChevronLeft aria-hidden="true" className="h-4 w-4" />
+              {t('backToBlog')}
+            </Link>
+          }
+        >
+          <BlogPostHeader post={post} locale={locale} formatDate={formatDate} />
+        </PageHeader>
 
-          {post.imageUrl && (
-            <BlogPostHeroImage
-              ref={imageRef}
-              imageUrl={post.imageUrl}
-              title={post.title}
-              imageAiHint={post.imageAiHint}
-            />
-          )}
-
-          <div className="my-6 md:my-12 h-px bg-foreground/[0.06]" />
-
-          <BlogPostContent ref={proseRef} content={post.content} />
-
-          <BlogPostActions 
-            slug={post.slug}
-            title={post.title}
-            url={typeof window !== 'undefined' ? window.location.href : `https://listerineh.dev/blog/${post.slug}`}
-          />
-
-          <div className="my-12 h-px bg-foreground/[0.06]" />
-
-          <div className="text-center">
-            <Button variant="secondary" accent="neutral" size="md" href="/blog" className="w-full md:w-auto rounded-2xl md:rounded-full justify-center">
-              <ArrowLeft className="w-4 h-4" /> {t('moreArticles')}
-            </Button>
+        {/* The cover, full column width, before the text starts. */}
+        {post.imageUrl && (
+          <div className="px-gutter">
+            <div className="mx-auto max-w-[1200px]">
+              <BlogPostHeroImage imageUrl={post.imageUrl} title={post.title} imageAiHint={post.imageAiHint} />
+            </div>
           </div>
+        )}
 
+        <div className="px-gutter pb-20 pt-4 md:pb-28">
+          <div className="mx-auto grid max-w-[1200px] gap-10 lg:grid-cols-12 lg:gap-10">
+            <aside className="lg:col-span-3">
+              <details className="panel group p-2 lg:hidden">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-[14px] px-3 text-sm font-semibold">
+                  {t('tableOfContents')}
+                  <ChevronDown aria-hidden="true" className="h-4 w-4 transition-transform duration-snap ease-snap group-open:rotate-180" />
+                </summary>
+                <div className="px-1 pb-2 pt-1">
+                  <TableOfContents key={`${post.slug}:${locale}`} contentKey={`${post.slug}:${locale}`} />
+                </div>
+              </details>
+              <div className="sticky top-[calc(var(--header-h)+1.5rem)] hidden max-h-[calc(100vh-8rem)] overflow-y-auto pr-2 lg:block">
+                <TableOfContents key={`${post.slug}:${locale}`} contentKey={`${post.slug}:${locale}`} />
+              </div>
+            </aside>
+
+            <article key={post.slug} ref={contentRef} className="min-w-0 lg:col-span-8 lg:col-start-5">
+              {version.body}
+              <BlogPostActions slug={post.slug} title={post.title} url={url} />
             </article>
           </div>
         </div>
-      </main>
-      <Footer />
+        {/* After the article: related posts as cards, the newsletter, the way back. */}
+        <section aria-labelledby="keep-reading" className="tint relative isolate overflow-clip px-gutter py-20 md:py-28">
+          <Ambient intensity="soft" grid={false} spotlight={false} />
+          <div className="mx-auto max-w-[1200px]">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <h2 id="keep-reading" className="text-display-sm">
+                {t('keepReading')}
+              </h2>
+              <Button variant="ghost" accent="amber" href="/blog" className="self-start md:self-auto">
+                {t('moreArticles')}
+                <ChevronRight aria-hidden="true" className="h-4 w-4" />
+              </Button>
+            </div>
+            {version.related.length > 0 && (
+              <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                {version.related.slice(0, 3).map((related) => (
+                  <Reveal as="li" key={related.slug}>
+                    <BlogCard
+                      layout="stack"
+                      title={related.title}
+                      slug={related.slug}
+                      excerpt={related.excerpt}
+                      date={related.date}
+                      coverImage={related.imageUrl}
+                      readingTime={related.readingTime}
+                      readingTimeLabel={t('readingTime', { minutes: '' }).trim()}
+                      readMoreLabel={tCommon('readMore')}
+                      newLabel={t('new')}
+                    />
+                  </Reveal>
+                ))}
+              </ul>
+            )}
+            <div className="mt-10">
+              <NewsletterSubscribe variant="default" />
+            </div>
+          </div>
+        </section>
+      </PageShell>
     </>
   );
 }

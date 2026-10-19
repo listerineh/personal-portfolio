@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { FormField } from '@/components/ds/FormField';
 import { Input } from '@/components/ds/Input';
 
@@ -35,6 +35,10 @@ export const WithError: Story = {
     error: 'Password must be at least 8 characters',
     children: <Input placeholder="Enter password" error />,
   },
+};
+
+export const WithHint: Story = {
+  args: { label: 'Email', hint: 'I reply within a day.', children: <Input type="email" placeholder="you@company.com" /> },
 };
 
 export const WithTextarea: Story = {

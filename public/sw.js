@@ -1,14 +1,18 @@
-const CACHE_NAME = 'listerineh-portfolio-2026-08-13T19-28-18';
+const CACHE_NAME = 'listerineh-portfolio-2026-10-18T08-22-51';
 const urlsToCache = [
   '/offline.html',
   '/manifest.json',
   '/favicon.svg',
 ];
+// The pages offline.html lists under "Saved for offline". Best effort: a failure here never blocks the install.
+const pagesToCache = ['/', '/blog', '/about'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache).then(() =>
+        Promise.allSettled(pagesToCache.map((page) => cache.add(page)))
+      );
     }).then(() => {
       return caches.keys().then((names) => {
         return Promise.all(
@@ -30,15 +34,24 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
   
-  // Never cache HTML pages (blog posts, pages, etc.)
-  const isHTMLPage = event.request.headers.get('accept')?.includes('text/html');
-  
-  // Network-first strategy for HTML pages
+  const isHTMLPage = event.request.mode === 'navigate' || event.request.headers.get('accept')?.includes('text/html');
+
+  // Pages: always the network first. Each page that loads is kept, so the pages already visited still open offline
+  // (with the assets they used, cached below); anything else falls back to offline.html.
   if (isHTMLPage) {
     event.respondWith(
       fetch(event.request)
-        .then((response) => response)
-        .catch(() => caches.match('/offline.html'))
+        .then((response) => {
+          if (response.ok && response.type === 'basic' && url.origin === self.location.origin) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(url.pathname, copy));
+          }
+          return response;
+        })
+        .catch(() =>
+          caches.match(url.pathname, { ignoreSearch: true, ignoreVary: true })
+            .then((cached) => cached || caches.match('/offline.html'))
+        )
     );
     return;
   }

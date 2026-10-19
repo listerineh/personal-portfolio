@@ -2,14 +2,12 @@ interface EndOfListProps {
   children: React.ReactNode;
 }
 
+/** End of a list: a small dot and a closing line. */
 export function EndOfList({ children }: EndOfListProps) {
   return (
-    <div className="mt-16 w-full flex items-center gap-4">
-      <div className="flex-1 h-px bg-foreground/[0.07]" />
-      <span className="font-headline text-[10px] tracking-[0.3em] uppercase text-foreground/25">
-        {children}
-      </span>
-      <div className="flex-1 h-px bg-foreground/[0.07]" />
+    <div className="mt-16 flex items-center gap-4">
+      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-foreground/30" />
+      <p className="text-meta text-muted-foreground">{children}</p>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type {Config} from 'tailwindcss';
-import plugin from 'tailwindcss/plugin'; // Import plugin
+import tailwindcssAnimate from 'tailwindcss-animate';
+import typography from '@tailwindcss/typography';
 
 export default {
   darkMode: ['class'],
@@ -11,9 +12,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['var(--font-outfit)', 'sans-serif'],
-        headline: ['var(--font-unbounded)', 'sans-serif'],
-        code: ['monospace'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        headline: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+        code: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       colors: {
         background: 'rgb(var(--background) / <alpha-value>)',
@@ -29,6 +32,7 @@ export default {
         primary: {
           DEFAULT: 'rgb(var(--primary) / <alpha-value>)',
           foreground: 'rgb(var(--primary-foreground) / <alpha-value>)',
+          ink: 'rgb(var(--primary-ink) / <alpha-value>)',
         },
         secondary: {
           DEFAULT: 'rgb(var(--secondary) / <alpha-value>)',
@@ -38,6 +42,7 @@ export default {
           DEFAULT: 'rgb(var(--muted) / <alpha-value>)',
           foreground: 'rgb(var(--muted-foreground) / <alpha-value>)',
         },
+        tint: 'rgb(var(--tint) / <alpha-value>)',
         accent: {
           DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
           foreground: 'rgb(var(--accent-foreground) / <alpha-value>)',
@@ -46,88 +51,67 @@ export default {
           DEFAULT: 'rgb(var(--destructive) / <alpha-value>)',
           foreground: 'rgb(var(--destructive-foreground) / <alpha-value>)',
         },
+        // The ground you are on (plain, tint or panel): text on a foreground fill.
+        surface: 'rgb(var(--surface) / <alpha-value>)',
         border: 'rgb(var(--border) / <alpha-value>)',
         input: 'rgb(var(--input) / <alpha-value>)',
         ring: 'rgb(var(--ring) / <alpha-value>)',
-        chart: {
-          '1': 'rgb(var(--chart-1) / <alpha-value>)',
-          '2': 'rgb(var(--chart-2) / <alpha-value>)',
-          '3': 'rgb(var(--chart-3) / <alpha-value>)',
-          '4': 'rgb(var(--chart-4) / <alpha-value>)',
-          '5': 'rgb(var(--chart-5) / <alpha-value>)',
+      },
+      // Small amber text must stay AA: text-primary resolves to the ink tuned per surface.
+      textColor: {
+        primary: {
+          DEFAULT: 'rgb(var(--primary-ink) / <alpha-value>)',
+          foreground: 'rgb(var(--primary-foreground) / <alpha-value>)',
+          ink: 'rgb(var(--primary-ink) / <alpha-value>)',
         },
-        sidebar: {
-          DEFAULT: 'rgb(var(--sidebar-background) / <alpha-value>)',
-          foreground: 'rgb(var(--sidebar-foreground) / <alpha-value>)',
-          primary: 'rgb(var(--sidebar-primary) / <alpha-value>)',
-          'primary-foreground': 'rgb(var(--sidebar-primary-foreground) / <alpha-value>)',
-          accent: 'rgb(var(--sidebar-accent) / <alpha-value>)',
-          'accent-foreground': 'rgb(var(--sidebar-accent-foreground) / <alpha-value>)',
-          border: 'rgb(var(--sidebar-border) / <alpha-value>)',
-          ring: 'rgb(var(--sidebar-ring) / <alpha-value>)',
-        },
+        amber: 'rgb(var(--primary) / <alpha-value>)',
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+      },
+      spacing: {
+        gutter: 'var(--gutter)',
+        header: 'var(--header-h)',
+      },
+      boxShadow: {
+        card: 'var(--shadow-card)',
+        float: 'var(--shadow-float)',
       },
       transitionTimingFunction: {
         out: 'var(--ease-out)',
         'in-out': 'var(--ease-in-out)',
         drawer: 'var(--ease-drawer)',
+        glide: 'var(--spring-glide)',
+        snap: 'var(--spring-snap)',
+        bounce: 'var(--spring-bounce)',
       },
       transitionDuration: {
         '400': '400ms',
+        glide: 'var(--spring-glide-duration)',
+        snap: 'var(--spring-snap-duration)',
+        bounce: 'var(--spring-bounce-duration)',
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
-        },
-        'fade-in': {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.5s ease-out forwards',
-        marquee: 'marquee 30s linear infinite',
       },
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
-    require('@tailwindcss/typography'),
-    plugin(function({ addUtilities }) {
-      const newUtilities = {
-        '.animation-delay-100': { animationDelay: '100ms' },
-        '.animation-delay-200': { animationDelay: '200ms' },
-        '.animation-delay-300': { animationDelay: '300ms' },
-        '.animation-delay-400': { animationDelay: '400ms' },
-        '.animation-delay-500': { animationDelay: '500ms' },
-        '.animation-delay-700': { animationDelay: '700ms' },
-        '.animation-delay-1000': { animationDelay: '1000ms' },
-      };
-      addUtilities(newUtilities);
-    }),
+    tailwindcssAnimate,
+    typography,
   ],
 } satisfies Config;

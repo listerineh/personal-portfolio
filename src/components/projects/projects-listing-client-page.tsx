@@ -1,18 +1,14 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Search, X } from 'lucide-react';
 import type { Project } from '@/types';
-import { Title, ProjectCard, Input, EndOfList } from '@/components/ds';
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
+import { Button, EndOfList, FilterTag, Reveal, PageHeader, ProjectCard, SearchField } from '@/components/ds';
+import { projectStatusDot, type ProjectStatus } from '@/components/ds/ProjectCard';
+import { cn } from '@/lib/utils';
 
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+const STATUS_ORDER: ProjectStatus[] = ['in-progress', 'completed', 'on-hold', 'archived'];
+import { PageShell } from '@/components/layout';
 
 interface ProjectsListingClientPageProps {
   projects: Project[];
@@ -21,19 +17,19 @@ interface ProjectsListingClientPageProps {
 export function ProjectsListingClientPage({ projects }: ProjectsListingClientPageProps) {
   const t = useTranslations('projects');
   const tCommon = useTranslations('common');
+  const tProject = useTranslations('project');
 
   const [search, setSearch] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [status, setStatus] = useState<ProjectStatus | null>(null);
 
-  const titleRef = useRef<HTMLDivElement>(null);
-  const descRef = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  const allTags = useMemo(
-    () => Array.from(new Set(projects.flatMap((p) => p.tags))).sort(),
-    [projects]
+  const allTags = useMemo(() => Array.from(new Set(projects.flatMap((p) => p.tags))).sort(), [projects]);
+  const statuses = useMemo(
+    () => STATUS_ORDER.filter((value) => projects.some((project) => project.status === value)),
+    [projects],
   );
+  const selected = useMemo(() => new Set(selectedTags), [selectedTags]);
+  const filtering = search.trim() !== '' || selectedTags.length > 0 || status !== null;
 
   const filteredProjects = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -43,185 +39,132 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
         project.title.toLowerCase().includes(query) ||
         project.description.toLowerCase().includes(query) ||
         project.tags.some((tag) => tag.toLowerCase().includes(query));
-      const matchesTags =
-        selectedTags.length === 0 ||
-        selectedTags.some((tag) => project.tags.includes(tag));
-      return matchesSearch && matchesTags;
+      const matchesTags = selected.size === 0 || project.tags.some((tag) => selected.has(tag));
+      const matchesStatus = status === null || project.status === status;
+      return matchesSearch && matchesTags && matchesStatus;
     });
-  }, [projects, search, selectedTags]);
+  }, [projects, search, selected, status]);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+  const toggleTag = (tag: string) =>
+    setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((value) => value !== tag) : [...prev, tag]));
 
-    const tl = gsap.timeline();
-    if (titleRef.current) {
-      tl.fromTo(
-        titleRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' },
-        '-=0.3'
-      );
-    }
-    if (descRef.current) {
-      tl.fromTo(
-        descRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-        '-=0.35'
-      );
-    }
-    if (searchRef.current) {
-      tl.fromTo(
-        searchRef.current,
-        { y: 16, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-        '-=0.2'
-      );
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const cards = cardsRef.current.filter((c): c is HTMLDivElement => c !== null);
-    cards.forEach((card) => {
-      gsap.killTweensOf(card);
-      ScrollTrigger.getAll()
-        .filter((st) => st.trigger === card)
-        .forEach((st) => st.kill());
-    });
-    gsap.set(cards, { opacity: 0, y: 28 });
-    cards.forEach((card, index) => {
-      gsap.to(card, {
-        opacity: 1,
-        y: 0,
-        duration: 0.45,
-        delay: Math.min(index * 0.07, 0.35),
-        ease: 'power2.out',
-      });
-    });
-  }, [filteredProjects]);
-
-  const toggleTag = (tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
+  const clearFilters = () => {
+    setSearch('');
+    setSelectedTags([]);
+    setStatus(null);
   };
 
-  const hasFilters = search.trim() !== '' || selectedTags.length > 0;
+  // Unfiltered, the newest project leads across the whole row; while filtering every result is an equal card.
+  const [lead, ...rest] = filtering ? [undefined, ...filteredProjects] : filteredProjects;
+
+  const card = (project: Project, index: number, wide = false) => (
+    <ProjectCard
+      slug={project.slug}
+      title={project.title}
+      description={project.description}
+      imageUrl={project.imageUrl}
+      tags={[...project.tags]}
+      headingLevel="h2"
+      layout={wide ? 'wide' : 'card'}
+      priority={index < 2}
+      status={project.status}
+      statusLabel={project.status ? tProject(`status.${project.status}`) : undefined}
+      viewMoreLabel={tCommon('viewProject')}
+    />
+  );
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-background">
-        <section className="relative py-20 md:py-32 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-amber-950/0 via-amber-950/[0.04] to-amber-950/0 pointer-events-none" />
-
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-24 relative z-10">
-            <div className="mb-12 text-center">
-              <div ref={titleRef} style={{ opacity: 0 }}>
-                <Title as="h1" className="mb-4 text-display-sm">
-                  {t('pageTitle')}
-                </Title>
-              </div>
-              <div ref={descRef} style={{ opacity: 0 }}>
-                <p className="text-base text-foreground/60 max-w-2xl mx-auto leading-relaxed">
-                  {t('pageDescription')}
-                </p>
-              </div>
-            </div>
-
-            <div ref={searchRef} style={{ opacity: 0 }} className="max-w-3xl mx-auto mb-12 space-y-5">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/30 pointer-events-none" />
-                <Input
-                  accent="amber"
-                  placeholder={t('searchPlaceholder')}
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="pl-11 pr-10"
-                />
-                {search && (
+    <PageShell>
+      <PageHeader ambient title={t('pageTitle')} intro={t('pageDescription')}>
+        <div className="grid gap-4">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center">
+            <SearchField
+              value={search}
+              onChange={setSearch}
+              placeholder={t('searchPlaceholder')}
+              label={t('searchPlaceholder')}
+              clearLabel={t('clearFilters')}
+              className="md:flex-1"
+            />
+            {statuses.length > 1 && (
+              <div
+                role="group"
+                aria-label={t('statusFilter')}
+                className="inline-flex h-12 shrink-0 items-center gap-1 self-start rounded-full bg-foreground/[0.06] p-1 md:self-auto"
+              >
+                {[null, ...statuses].map((value) => (
                   <button
+                    key={value ?? 'all'}
                     type="button"
-                    onClick={() => setSearch('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-foreground/40 hover:text-foreground transition-colors"
-                    aria-label="Clear search"
+                    aria-pressed={status === value}
+                    onClick={() => setStatus(value)}
+                    className={cn(
+                      'inline-flex h-full items-center gap-2 rounded-full px-4 text-[0.8125rem] font-medium',
+                      'transition-[background-color,color,box-shadow] duration-snap ease-snap motion-reduce:transition-none',
+                      status === value ? 'bg-background text-foreground shadow-card' : 'text-muted-foreground hover:text-foreground',
+                    )}
                   >
-                    <X className="w-4 h-4" />
+                    {value && <span aria-hidden="true" className={cn('h-1.5 w-1.5 rounded-full', projectStatusDot[value])} />}
+                    {value ? tProject(`status.${value}`) : t('filterAll')}
                   </button>
-                )}
+                ))}
               </div>
-
-              {allTags.length > 0 && (
-                <div className="flex flex-wrap justify-center gap-2">
-                  {allTags.map((tag) => {
-                    const active = selectedTags.includes(tag);
-                    return (
-                      <button
-                        key={tag}
-                        type="button"
-                        onClick={() => toggleTag(tag)}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97] shrink-0 ${
-                          active
-                            ? 'bg-primary/10 border-primary/40 text-primary'
-                            : 'bg-transparent border-foreground/10 text-foreground/50 hover:border-foreground/25 hover:text-foreground/80'
-                        }`}
-                      >
-                        {tag}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            {filteredProjects.length === 0 ? (
-              <div className="text-center py-16">
-                <p className="text-foreground/50 text-headline">{t('noResults')}</p>
-                {hasFilters && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSearch('');
-                      setSelectedTags([]);
-                    }}
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-headline font-semibold uppercase tracking-wide text-primary hover:text-primary/80 transition-colors"
-                  >
-                    {t('clearFilters')}
-                  </button>
-                )}
-              </div>
-            ) : (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {filteredProjects.map((project, index) => (
-                    <div
-                      key={project.id}
-                      ref={(el) => { cardsRef.current[index] = el; }}
-                    >
-                      <ProjectCard
-                        slug={project.slug}
-                        title={project.title}
-                        description={project.description}
-                        imageUrl={project.imageUrl}
-                        tags={[...project.tags]}
-                        viewMoreLabel={tCommon('viewProject')}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <EndOfList>{tCommon('endOfList')}</EndOfList>
-              </>
             )}
           </div>
-        </section>
-      </main>
-      <Footer />
-    </>
+
+          {allTags.length > 0 && (
+            <div className="marquee-edges -mx-gutter overflow-x-auto px-gutter scrollbar-none">
+              <div role="group" aria-label={t('technologies')} className="flex w-max gap-2 py-1">
+                {allTags.map((tag) => (
+                  <FilterTag key={tag} pressed={selected.has(tag)} onPressedChange={() => toggleTag(tag)}>
+                    {tag}
+                  </FilterTag>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="flex min-h-9 items-center gap-3">
+            <p className="text-meta text-muted-foreground" aria-live="polite">
+              {t('showing', { shown: filteredProjects.length, total: projects.length })}
+            </p>
+            {filtering && (
+              <Button variant="ghost" accent="amber" size="sm" onClick={clearFilters}>
+                {t('clearFilters')}
+              </Button>
+            )}
+          </div>
+        </div>
+      </PageHeader>
+
+      <section className="px-gutter pb-24 pt-2 md:pb-32 md:pt-4">
+        <div className="mx-auto max-w-[1200px]">
+          {filteredProjects.length === 0 ? (
+            <div className="panel max-w-xl p-6 md:p-8">
+              <p className="text-headline">{t('noResults')}</p>
+              <Button variant="secondary" onClick={clearFilters} className="mt-6">
+                {t('clearFilters')}
+              </Button>
+            </div>
+          ) : (
+            <>
+              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+                {lead && (
+                  <Reveal as="li" className="sm:col-span-2 lg:col-span-3">
+                    {card(lead, 0, true)}
+                  </Reveal>
+                )}
+                {rest.filter((project): project is Project => Boolean(project)).map((project, index) => (
+                  <Reveal as="li" key={project.id}>
+                    {card(project, index + 1)}
+                  </Reveal>
+                ))}
+              </ul>
+              <EndOfList>{tCommon('endOfList')}</EndOfList>
+            </>
+          )}
+        </div>
+      </section>
+    </PageShell>
   );
 }

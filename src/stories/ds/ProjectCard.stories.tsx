@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ProjectCard } from '@/components/ds/ProjectCard';
 
 const meta: Meta<typeof ProjectCard> = {
@@ -21,6 +21,11 @@ export const Default: Story = {
     imageUrl: '/images/hero-photo.webp',
     tags: ['Next.js', 'React', 'TypeScript', 'AI', 'WebRTC'],
   },
+};
+
+export const Feature: Story = {
+  args: { ...Default.args, size: 'feature', number: '01', status: 'in-progress', statusLabel: 'In progress', priority: true },
+  parameters: { layout: 'padded' },
 };
 
 export const WithoutImage: Story = {
@@ -47,7 +52,7 @@ export const MinimalTags: Story = {
     slug: 'simple-project',
     title: 'Simple Project',
     description: 'A minimal project demonstrating core concepts and best practices.',
-    imageUrl: '/images/sebastian_alvarez_photo.webp',
+    imageUrl: '/images/website_screenshot.webp',
     tags: ['React'],
   },
 };
@@ -71,4 +76,10 @@ export const LongDescription: Story = {
     imageUrl: '/images/footer-photo.webp',
     tags: ['Microservices', 'Kubernetes', 'Go', 'React'],
   },
+};
+
+/** Horizontal lead card spanning a whole row (first project on /projects). */
+export const Wide: Story = {
+  args: { ...Default.args, layout: 'wide', status: 'in-progress', statusLabel: 'In progress' },
+  decorators: [(Story) => <div className="max-w-5xl"><Story /></div>],
 };

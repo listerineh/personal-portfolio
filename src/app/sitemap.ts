@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { blogPosts } from '@/lib/data';
+import { blogPosts } from '@/lib/data/blog';
 import { projectsData } from '@/lib/data/projects';
 import { defaultLocale } from '@/i18n/config';
 
@@ -27,12 +27,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/experience`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,

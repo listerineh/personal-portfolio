@@ -9,7 +9,11 @@ export async function GET(request: Request) {
   }
 
   try {
-    const trackIds = ids.split(',').map((id) => id.trim()).filter(Boolean);
+    // Spotify ids are 22 base62 characters; each one costs an outgoing request, so cap the batch.
+    const trackIds = ids.split(',').map((id) => id.trim()).filter((id) => /^[A-Za-z0-9]{22}$/.test(id));
+    if (trackIds.length === 0 || trackIds.length > 10) {
+      return NextResponse.json({ error: 'Invalid ids' }, { status: 400 });
+    }
 
     const results = await Promise.all(
       trackIds.map(async (id) => {

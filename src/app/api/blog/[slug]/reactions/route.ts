@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
+import { clientIp, isValidSlug } from '@/lib/server/security';
 
 export const runtime = 'edge';
 
@@ -60,6 +61,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
+    if (!isValidSlug(slug)) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     const reactions = await getReactions(slug);
     
     return NextResponse.json(reactions, {
@@ -79,6 +81,7 @@ export async function POST(
 ) {
   try {
     const { slug } = await params;
+    if (!isValidSlug(slug)) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     const body = await request.json();
     const { reaction } = body as { reaction: ReactionType };
     
@@ -86,7 +89,7 @@ export async function POST(
       return NextResponse.json({ error: 'Invalid reaction type' }, { status: 400 });
     }
     
-    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const ip = clientIp(request);
     const reactionKey = `reaction:${slug}:${reaction}:${ip}`;
     const redis = getRedisClient();
     

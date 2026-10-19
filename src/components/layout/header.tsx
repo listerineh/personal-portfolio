@@ -1,359 +1,267 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { Menu, X } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ThemeToggleButton, LanguageSwitcher } from '@/components/common';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { useLocale } from '@/context/locale-context';
-import { locales } from '@/i18n/config';
-import { cn } from '@/lib/utils';
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { ThemeToggleButton, LanguageSwitcher } from "@/components/common";
+import { Mark } from "@/components/ds";
+import { cn } from "@/lib/utils";
 
+/**
+ * Floating translucent bar: the mark, the pages of the site, language and theme.
+ * The hairline appears only once content scrolls under it. On phones, a full-screen sheet.
+ */
 export function Header() {
-  const t = useTranslations('nav');
-  const tCommon = useTranslations('common');
-  const { locale, setLocale } = useLocale();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
+  const t = useTranslations("nav");
+  const tCommon = useTranslations("common");
   const router = useRouter();
   const pathname = usePathname();
-  
-  const navItems = useMemo(() => [
-    { label: t('about'), href: '/about' },
-    { label: t('experience'), href: '/experience' },
-    { label: t('skills'), href: '/skills' },
-    { label: t('projects'), href: '/projects' },
-    { label: t('blog'), href: '/blog' },
-    { label: t('contact'), href: '/contact' },
-    { label: t('why'), href: '/why' },
-  ], [t]);
-  const headerRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLAnchorElement>(null);
-  const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const menuHeaderRef = useRef<HTMLDivElement>(null);
-  const navItemsRef = useRef<(HTMLLIElement | null)[]>([]);
-  const socialLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const scrollYRef = useRef<number>(0);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const scrollYRef = useRef(0);
 
-  useEffect(() => {
-    if (!headerRef.current) return;
+  const navItems = useMemo(
+    () => [
+      { label: t("about"), href: "/about" },
+      { label: t("experience"), href: "/#career" },
+      { label: t("projects"), href: "/projects" },
+      { label: t("skills"), href: "/skills" },
+      { label: t("blog"), href: "/blog" },
+      { label: t("contact"), href: "/contact" },
+      { label: t("why"), href: "/why" },
+    ],
+    [t],
+  );
 
-    gsap.fromTo(headerRef.current,
-      { opacity: 0 },
-      {
-        opacity: 1,
-        duration: 0.6,
-        ease: 'power2.out',
-      }
-    );
-  }, [pathname]);
+  const isCurrent = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
-  useEffect(() => {
-    if (!logoRef.current) return;
+  const lockScroll = () => {
+    scrollYRef.current = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollYRef.current}px`;
+    document.body.style.width = "100%";
+  };
 
-    const logo = logoRef.current;
-    const icon = logo.querySelector('svg');
-    
-    const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    if (isTouchDevice) return;
+  const unlockScroll = () => {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+    window.scrollTo({ top: scrollYRef.current, behavior: "instant" });
+  };
 
-    const handleMouseEnter = () => {
-      gsap.to(icon, {
-        rotation: 360,
-        scale: 1.05,
-        duration: 0.4,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
-    };
+  const openRef = useRef(false);
 
-    const handleMouseLeave = () => {
-      gsap.to(icon, {
-        rotation: 0,
-        scale: 1,
-        duration: 0.25,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
-    };
-
-    logo.addEventListener('mouseenter', handleMouseEnter);
-    logo.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      logo.removeEventListener('mouseenter', handleMouseEnter);
-      logo.removeEventListener('mouseleave', handleMouseLeave);
-    };
+  const closeMenu = useCallback((restoreFocus = true) => {
+    if (!openRef.current) return;
+    openRef.current = false;
+    unlockScroll();
+    setOpen(false);
+    if (restoreFocus) window.requestAnimationFrame(() => menuButtonRef.current?.focus());
   }, []);
 
+  const openMenu = () => {
+    openRef.current = true;
+    lockScroll();
+    setOpen(true);
+  };
+
+  // Escape closes; focus moves into the sheet and stays there while it is open.
   useEffect(() => {
-    const controllers: (() => void)[] = [];
+    if (!open) return;
+    const sheet = sheetRef.current;
+    sheet?.querySelector<HTMLElement>("a, button")?.focus();
 
-    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
-      navLinksRef.current.forEach((link) => {
-        if (!link) return;
-
-        const handleMouseEnter = () => {
-          gsap.to(link, {
-            y: -2,
-            duration: 0.2,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        const handleMouseLeave = () => {
-          gsap.to(link, {
-            y: 0,
-            duration: 0.2,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          });
-        };
-
-        link.addEventListener('mouseenter', handleMouseEnter);
-        link.addEventListener('mouseleave', handleMouseLeave);
-
-        controllers.push(() => {
-          link.removeEventListener('mouseenter', handleMouseEnter);
-          link.removeEventListener('mouseleave', handleMouseLeave);
-        });
-      });
-    }
-
-    return () => {
-      controllers.forEach((cleanup) => cleanup());
-    };
-  }, [navLinksRef]);
-
-  const openMobileMenu = () => {
-    scrollYRef.current = window.scrollY;
-    
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollYRef.current}px`;
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
-
-    setIsMobileMenuOpen(true);
-    
-    if (mobileMenuRef.current) {
-      gsap.fromTo(mobileMenuRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.15, ease: 'power2.out' }
-      );
-    }
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-    
-    if (mobileMenuRef.current) {
-      gsap.to(mobileMenuRef.current, {
-        opacity: 0,
-        duration: 0.15,
-        ease: 'power2.out',
-        onComplete: () => {
-          document.body.style.position = '';
-          document.body.style.top = '';
-          document.body.style.width = '';
-          document.body.style.overflow = '';
-          window.scrollTo({ top: scrollYRef.current, behavior: 'instant' });
-        }
-      });
-    }
-  };
-
-  const toggleMobileMenu = () => {
-    if (isMobileMenuOpen) {
-      closeMobileMenu();
-    } else {
-      openMobileMenu();
-    }
-  };
-
-  const handleNavLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('/#')) {
-      e.preventDefault();
-      const sectionId = href.substring(2);
-      
-      if (pathname === '/') {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          closeMobileMenu();
-          setTimeout(() => {
-            const headerOffset = 100;
-            const elementPosition = section.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-          }, 100);
-        }
-      } else {
-        closeMobileMenu();
-        setTimeout(() => {
-          window.scrollTo({ top: 0, behavior: 'instant' });
-          router.push(href, { scroll: false });
-        }, 150);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMenu();
+        return;
       }
+      if (event.key !== "Tab" || !sheet) return;
+      const focusable = Array.from(
+        sheet.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, closeMenu]);
+
+  // Scroll edge: show the hairline only when content is under the bar.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close the sheet if the viewport grows past the mobile breakpoint.
+  useEffect(() => {
+    if (!open) return;
+    const query = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => query.matches && closeMenu(false);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, [open, closeMenu]);
+
+  const handleHashLink = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (!href.startsWith("/#")) {
+      closeMenu(false);
+      return;
+    }
+    event.preventDefault();
+    const section =
+      pathname === "/" ? document.getElementById(href.slice(2)) : null;
+    closeMenu(false);
+    if (section) {
+      window.requestAnimationFrame(() =>
+        section.scrollIntoView({ behavior: "smooth", block: "start" }),
+      );
     } else {
-      closeMobileMenu();
+      router.push(href);
     }
   };
 
   return (
     <header
-      ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-50 bg-background/92 backdrop-blur-xl border-b border-border/20"
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 print:static",
+        "transition-[box-shadow,background-color] duration-snap ease-snap motion-reduce:transition-none",
+        open ? "bg-background" : "material",
+        scrolled && !open && "shadow-[0_1px_0_rgb(var(--border)/0.8)]",
+      )}
     >
-      <div className="px-6 sm:px-10 md:px-16 lg:px-24 h-20 flex items-center justify-between">
-
-        {/* Logo */}
+      <div className="mx-auto flex h-header max-w-[1200px] items-center justify-between gap-4 px-gutter">
         <Link
-          ref={logoRef}
           href="/"
-          onClick={closeMobileMenu}
-          className="flex items-center gap-2.5 select-none"
+          onClick={() => closeMenu(false)}
+          className="flex shrink-0 items-center gap-2.5"
+          aria-label="listerineh.dev"
         >
-          <svg viewBox="0 0 64 64" className="w-8 h-8 shrink-0" xmlns="http://www.w3.org/2000/svg">
-            <circle fill="rgb(var(--primary))" cx="32" cy="32" r="32" />
-            <g opacity="0.2">
-              <path fill="#231F20" d="M42.5,44c-0.7,0-1.3-0.3-1.7-1c-0.6-0.9-0.3-2.2,0.7-2.8l10.1-6.2c0,0,0,0,0-0.1s0,0,0-0.1l-10.1-6.2c-0.9-0.6-1.2-1.8-0.7-2.8c0.6-0.9,1.8-1.2,2.8-0.7l10.6,6.6l0.2,0.2c0.8,0.8,1.2,1.9,1.2,3c0,1.1-0.4,2.2-1.2,3l-0.2,0.2l-10.6,6.6C43.2,43.9,42.8,44,42.5,44z" />
-              <path fill="#231F20" d="M21.5,44c-0.4,0-0.7-0.1-1-0.3L9.9,37.1L9.7,37c-0.8-0.8-1.2-1.9-1.2-3c0-1.1,0.4-2.2,1.2-3l0.2-0.2l10.6-6.6c0.9-0.6,2.2-0.3,2.8,0.7c0.6,0.9,0.3,2.2-0.7,2.8l-10.1,6.2c0,0,0,0,0,0.1s0,0,0,0.1l10.1,6.2c0.9,0.6,1.2,1.8,0.7,2.8C22.9,43.7,22.2,44,21.5,44z" />
-              <path fill="#231F20" d="M25.5,53c-0.2,0-0.5,0-0.7-0.1c-1-0.4-1.5-1.6-1.2-2.6l13-34c0.4-1,1.6-1.5,2.6-1.2c1,0.4,1.5,1.6,1.2,2.6l-13,34C27.1,52.5,26.3,53,25.5,53z" />
-            </g>
-            <path fill="#ffffff" d="M42.5,42c-0.7,0-1.3-0.3-1.7-1c-0.6-0.9-0.3-2.2,0.7-2.8l10.1-6.2c0,0,0-0.1,0-0.1l-10.1-6.2c-0.9-0.6-1.2-1.8-0.7-2.8c0.6-0.9,1.8-1.2,2.8-0.7l10.6,6.6l0.2,0.2c1.6,1.6,1.6,4.3,0,6l-0.2,0.2l-10.6,6.6C43.2,41.9,42.8,42,42.5,42z" />
-            <path fill="#ffffff" d="M21.5,42c-0.4,0-0.7-0.1-1-0.3L9.9,35.1L9.7,35c-1.6-1.6-1.6-4.3,0-6l0.2-0.2l10.6-6.6c0.9-0.6,2.2-0.3,2.8,0.7c0.6,0.9,0.3,2.2-0.7,2.8l-10.1,6.2c0,0,0,0.1,0,0.1l10.1,6.2c0.9,0.6,1.2,1.8,0.7,2.8C22.9,41.7,22.2,42,21.5,42z" />
-            <path fill="#ffffff" d="M25.5,51c-0.2,0-0.5,0-0.7-0.1c-1-0.4-1.5-1.6-1.2-2.6l13-34c0.4-1,1.6-1.5,2.6-1.2c1,0.4,1.5,1.6,1.2,2.6l-13,34C27.1,50.5,26.3,51,25.5,51z" />
-          </svg>
+          <Mark className="h-7 w-7" />
+          <span className="hidden text-[0.9375rem] font-semibold tracking-[-0.02em] sm:inline">
+            listerineh.dev
+          </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-          {navItems.map((item, index) => (
-            <Link
-              key={item.label}
-              ref={(el) => { navLinksRef.current[index] = el; }}
-              href={item.href}
-              onClick={(e) => {
-                if (item.href.startsWith('/#')) {
-                  e.preventDefault();
-                  const sectionId = item.href.substring(2);
-                  if (pathname === '/') {
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                      const headerOffset = 100;
-                      const offsetPosition = section.getBoundingClientRect().top + window.scrollY - headerOffset;
-                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    }
-                  } else {
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                    router.push(item.href, { scroll: false });
-                  }
-                }
-              }}
-              aria-current={pathname === item.href ? 'page' : undefined}
-              className={cn(
-                'font-headline text-xs tracking-[0.12em] uppercase font-medium transition-colors duration-200',
-                pathname === item.href
-                  ? 'text-primary'
-                  : 'text-foreground/60 hover:text-foreground'
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden lg:block" aria-label={tCommon("menu")}>
+          <ul className="flex items-center gap-0.5 xl:gap-1">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={(event) => handleHashLink(event, item.href)}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                  className={cn(
+                    "relative inline-flex h-8 items-center whitespace-nowrap rounded-full px-3 text-[0.8125rem] font-medium xl:px-3.5 xl:text-[0.875rem]",
+                    "transition-[color,background-color] duration-snap ease-snap motion-reduce:transition-none",
+                    isCurrent(item.href)
+                      ? "bg-foreground/[0.06] text-foreground"
+                      : "text-muted-foreground hover:bg-foreground/[0.04] hover:text-foreground",
+                  )}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        {/* Right controls */}
-        <div className="hidden md:flex items-center gap-1">
-          <LanguageSwitcher className="transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8" />
-          <ThemeToggleButton className="transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8" />
-        </div>
-
-        {/* Mobile: controls + burger */}
-        <div className="md:hidden flex items-center gap-1">
-          <LanguageSwitcher className="transition-colors text-foreground/60 hover:text-foreground" />
-          <ThemeToggleButton className="transition-colors text-foreground/60 hover:text-foreground [&_svg]:w-5 [&_svg]:h-5" />
+        <div className="flex items-center gap-1">
+          <LanguageSwitcher className="hidden sm:inline-flex" />
+          <ThemeToggleButton />
           <button
-            onClick={toggleMobileMenu}
-            aria-label="Toggle mobile menu"
-            className="p-2 rounded-lg transition-colors text-foreground/60 hover:text-foreground hover:bg-foreground/8"
+            ref={menuButtonRef}
+            type="button"
+            onClick={open ? () => closeMenu() : openMenu}
+            aria-expanded={open}
+            aria-controls="site-menu"
+            aria-label={open ? tCommon("close") : tCommon("menu")}
+            className="relative inline-flex h-11 w-11 items-center justify-center rounded-full text-foreground lg:hidden"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {/* Two strokes that fold into an X: the control explains its own state change. */}
+            <span aria-hidden="true" className="relative block h-3 w-[18px]">
+              <span
+                className={cn(
+                  "absolute left-0 block h-[1.5px] w-full rounded-full bg-current",
+                  "transition-transform duration-snap ease-snap motion-reduce:transition-none",
+                  open ? "top-[5px] rotate-45" : "top-0",
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute left-0 block h-[1.5px] w-full rounded-full bg-current",
+                  "transition-transform duration-snap ease-snap motion-reduce:transition-none",
+                  open ? "top-[5px] -rotate-45" : "top-[10px]",
+                )}
+              />
+            </span>
           </button>
         </div>
       </div>
 
-      {/* Mobile menu — always cinematic dark */}
-      {isMobile && isMobileMenuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className="md:hidden fixed inset-0 z-[60] flex flex-col h-dvh bg-[var(--surface-deep)]"
-        >
-          {/* Top bar */}
-          <div ref={menuHeaderRef} className="flex-shrink-0 flex items-center justify-between px-6 py-5">
-            <span className="font-headline font-black text-primary text-xl">S·A</span>
-            <button
-              onClick={closeMobileMenu}
-              className="p-2 text-white/40 hover:text-white transition-colors rounded-lg"
-              aria-label={tCommon('close')}
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-
-          {/* Nav items */}
-          <nav className="flex-1 overflow-y-auto px-6 pt-8" aria-label="Mobile navigation">
-            <ul className="space-y-1">
-              {navItems.map((item, index) => (
-                <li key={item.label} ref={(el) => { navItemsRef.current[index] = el; }}>
-                  <Link
-                    href={item.href}
-                    onClick={(e) => handleNavLinkClick(e, item.href)}
-                    className={cn(
-                      'block py-4 font-headline font-black transition-colors duration-200 text-display-sm !leading-none',
-                      pathname === item.href ? 'text-primary' : 'text-white/40 hover:text-white'
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-
-            {/* Bottom controls */}
-            <div className="mt-16 pb-8 flex items-center justify-between">
-              <div className="flex gap-2">
-                {locales.map((loc) => (
-                  <button
-                    key={loc}
-                    onClick={() => { if (loc !== locale) setLocale(loc); }}
-                    className={cn(
-                      'px-3 py-1.5 rounded-lg text-xs font-headline font-bold tracking-widest uppercase transition-[color,background-color,border-color,transform] duration-200 ease-out active:scale-[0.97]',
-                      locale === loc
-                        ? 'bg-amber-400 text-black'
-                        : 'text-white/30 hover:text-white border border-white/10 hover:border-white/30'
-                    )}
-                  >
-                    {loc.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-              <ThemeToggleButton className="text-white/40 hover:text-white hover:bg-white/10" />
-            </div>
-          </nav>
-
-          {/* Footer */}
-          <div className="flex-shrink-0 px-6 py-4 border-t border-white/5">
-            <p className="text-xs text-white/20 font-headline">
-              © {new Date().getFullYear()} Sebastian Alvarez
-            </p>
-          </div>
+      {/* Phone sheet: pages as large links that arrive one after another. */}
+      <div
+        id="site-menu"
+        ref={sheetRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={tCommon("menu")}
+        className={cn(
+          "fixed inset-x-0 bottom-0 top-header flex-col overflow-y-auto bg-background lg:hidden",
+          open ? "flex" : "hidden",
+        )}
+      >
+        <nav className="flex-1 px-gutter pt-4">
+          <ul>
+            {navItems.map((item, index) => (
+              <li
+                key={item.href}
+                className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-2 motion-safe:fill-mode-both"
+                style={{ animationDelay: `${index * 35}ms`, animationDuration: "380ms" }}
+              >
+                <Link
+                  href={item.href}
+                  onClick={(event) => handleHashLink(event, item.href)}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
+                  className={cn(
+                    "flex min-h-14 items-center justify-between py-2 text-[1.75rem] font-semibold tracking-[-0.03em]",
+                    isCurrent(item.href) ? "text-foreground" : "text-foreground/80",
+                  )}
+                >
+                  {item.label}
+                  {isCurrent(item.href) && (
+                    <span aria-hidden="true" className="h-2 w-2 rounded-full bg-primary" />
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className="flex items-center justify-between px-gutter py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+          <LanguageSwitcher />
+          <p className="text-meta text-muted-foreground">
+            © {new Date().getFullYear()} Sebastian Alvarez
+          </p>
         </div>
-      )}
+      </div>
     </header>
   );
 }

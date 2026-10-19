@@ -1,54 +1,28 @@
-'use client';
+"use client";
 
-import { forwardRef, useState } from 'react';
-import { cn } from '@/lib/utils';
-import type { Accent } from './types';
-
-const accentRingMap: Record<Accent, string> = {
-  amber: 'focus:ring-primary/20 focus:border-primary',
-  indigo: 'focus:ring-indigo-400/20 focus:border-indigo-400',
-  green: 'focus:ring-green-500/20 focus:border-green-500',
-  neutral: 'focus:ring-foreground/10 focus:border-foreground/40',
-};
-
-const accentRingErrorMap: Record<Accent, string> = {
-  amber: 'ring-destructive/30 border-destructive',
-  indigo: 'ring-destructive/30 border-destructive',
-  green: 'ring-destructive/30 border-destructive',
-  neutral: 'ring-destructive/30 border-destructive',
-};
+import { forwardRef } from "react";
+import { cn } from "@/lib/utils";
+import type { Accent } from "./types";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** Kept for API compatibility; focus is always the ink/amber ring of the surface. */
   accent?: Accent;
   error?: boolean;
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ accent = 'indigo', error = false, className = '', ...props }, ref) => {
-    const [focused, setFocused] = useState(false);
+export const fieldBase =
+  "w-full rounded-md bg-background text-foreground placeholder:text-muted-foreground border border-input/60 " +
+  "px-4 text-base outline-none transition-[border-color,box-shadow,background-color] duration-snap ease-snap motion-reduce:transition-none " +
+  "hover:border-input focus-visible:border-primary focus-visible:shadow-[0_0_0_4px_rgb(var(--primary)/0.18)] " +
+  "disabled:cursor-not-allowed disabled:opacity-60";
 
-    return (
-      <input
-        ref={ref}
-        className={cn(
-          'w-full rounded-xl px-4 py-3 text-sm font-medium outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out',
-          'bg-foreground/[0.04] text-foreground/85 placeholder:text-foreground/30',
-          'border border-foreground/[0.15]',
-          error ? accentRingErrorMap[accent] : `focus:ring-2 ${accentRingMap[accent]}`,
-          className
-        )}
-        onFocus={(e) => {
-          setFocused(true);
-          props.onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          setFocused(false);
-          props.onBlur?.(e);
-        }}
-        {...props}
-      />
-    );
-  }
-);
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ accent: _accent, error = false, className, ...props }, ref) => (
+  <input
+    ref={ref}
+    aria-invalid={error || props["aria-invalid"] || undefined}
+    className={cn(fieldBase, "min-h-12", error && "border-destructive shadow-[0_0_0_4px_rgb(var(--destructive)/0.15)]", className)}
+    {...props}
+  />
+));
 
-Input.displayName = 'Input';
+Input.displayName = "Input";

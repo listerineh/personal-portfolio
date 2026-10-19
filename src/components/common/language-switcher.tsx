@@ -1,52 +1,42 @@
 'use client';
 
-import { Check, ChevronDown } from 'lucide-react';
-import { locales, localeNames, localeFlags, type Locale } from '@/i18n/config';
+import { useTranslations } from 'next-intl';
+import { locales, localeNames, type Locale } from '@/i18n/config';
 import { useLocale } from '@/context/locale-context';
-import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from '@/components/ds';
 import { cn } from '@/lib/utils';
+import { loadMessages } from '@/i18n/client-messages';
 
+/** Segmented control: EN / ES, the current one raised on a light thumb. */
 export function LanguageSwitcher({ className }: { className?: string }) {
   const { locale, setLocale } = useLocale();
+  const t = useTranslations('language');
 
-  const switchLocale = (newLocale: Locale) => {
-    if (newLocale === locale) return;
-    setLocale(newLocale);
+  const switchLocale = (next: Locale) => {
+    if (next !== locale) setLocale(next);
   };
 
   return (
-    <Dropdown>
-      <DropdownTrigger asChild>
+    <div role="group" aria-label={t('switchLanguage')} className={cn('inline-flex h-9 items-center rounded-full bg-foreground/[0.06] p-[3px]', className)}>
+      {locales.map((loc) => (
         <button
-          aria-label="Switch language"
+          key={loc}
+          type="button"
+          lang={loc}
+          onClick={() => switchLocale(loc)}
+          // Fetch the other language while the pointer is on its way, so the switch feels instant.
+          onPointerEnter={() => loc !== locale && void loadMessages(loc)}
+          onFocus={() => loc !== locale && void loadMessages(loc)}
+          aria-pressed={locale === loc}
+          aria-label={localeNames[loc]}
           className={cn(
-            "flex items-center gap-1.5 px-2 h-9 rounded-md transition-colors",
-            className
+            'inline-flex h-full min-w-10 items-center justify-center rounded-full px-2.5 text-xs font-semibold uppercase tracking-[0.02em]',
+            'transition-[color,background-color,box-shadow] duration-snap ease-snap motion-reduce:transition-none',
+            locale === loc ? 'bg-background text-foreground shadow-card' : 'text-muted-foreground hover:text-foreground',
           )}
         >
-          <span className="text-base">{localeFlags[locale]}</span>
-          <span className="text-xs font-medium uppercase hidden sm:inline">{locale}</span>
-          <ChevronDown className="h-3.5 w-3.5 opacity-50" />
+          {loc}
         </button>
-      </DropdownTrigger>
-      <DropdownContent align="end" className="w-48">
-        {locales.map((loc) => (
-          <DropdownItem
-            key={loc}
-            onClick={() => switchLocale(loc)}
-            className={cn(
-              "gap-3 py-2.5",
-              locale === loc ? "text-primary font-medium" : ""
-            )}
-          >
-            <span className="text-lg">{localeFlags[loc]}</span>
-            <span className="flex-1">{localeNames[loc]}</span>
-            {locale === loc && (
-              <Check className="h-4 w-4 text-primary" />
-            )}
-          </DropdownItem>
-        ))}
-      </DropdownContent>
-    </Dropdown>
+      ))}
+    </div>
   );
 }

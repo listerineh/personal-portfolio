@@ -39,7 +39,7 @@ export async function submitContactForm(formData: ContactFormData) {
       message: "Thank you for your message! I'll get back to you soon.",
       success: true,
     };
-  } catch (error) {
+  } catch {
     return {
       message: "Failed to send message. Please try again later.",
       success: false,

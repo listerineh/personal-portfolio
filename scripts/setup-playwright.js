@@ -26,7 +26,7 @@ try {
   execSync('npx playwright install', { stdio: 'inherit', env });
   console.log('\n✓ Playwright setup complete!');
   process.exit(0);
-} catch (error) {
+} catch {
   console.error('✗ Failed to install Playwright browsers');
   process.exit(1);
 }

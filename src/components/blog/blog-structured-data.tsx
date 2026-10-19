@@ -7,7 +7,7 @@ interface BlogStructuredDataProps {
 export function BlogStructuredData({ post }: BlogStructuredDataProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
   const postUrl = `${siteUrl}/blog/${post.slug}`;
-  const imageUrl = post.imageUrl ? `${siteUrl}${post.imageUrl}` : `${siteUrl}/og-default.png`;
+  const imageUrl = post.imageUrl ? `${siteUrl}${post.imageUrl.replace(/^\/blog\/(.+)\.\w+$/, '/og/blog/$1.jpg')}` : `${siteUrl}/og/home.png`;
 
   const structuredData = {
     '@context': 'https://schema.org',

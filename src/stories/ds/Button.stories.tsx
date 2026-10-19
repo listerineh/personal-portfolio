@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Button } from '@/components/ds/Button';
+import { Band } from '@/components/ds/Surface';
 
 const meta: Meta<typeof Button> = {
   title: 'DS/Button',
@@ -65,4 +66,15 @@ export const WithIcon: Story = {
     size: 'md',
     children: 'Button with Icon',
   },
+};
+
+/** On a tint band: neutral buttons follow the band's tokens; amber stays the one primary action. */
+export const OnTint: Story = {
+  render: () => (
+    <Band className="flex flex-wrap gap-3 py-10">
+      <Button accent="amber">See the work</Button>
+      <Button variant="secondary">Contact</Button>
+      <Button variant="ghost">Download CV</Button>
+    </Band>
+  ),
 };

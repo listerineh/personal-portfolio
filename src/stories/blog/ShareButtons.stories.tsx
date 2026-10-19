@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { ShareButtons } from '../../components/blog/share-buttons';
 import { NextIntlClientProvider } from 'next-intl';
 

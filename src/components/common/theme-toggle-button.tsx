@@ -1,105 +1,44 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { Sun, Moon } from 'lucide-react';
-import { gsap } from 'gsap';
+import { useTranslations } from 'next-intl';
 import { useTheme } from '@/context/theme-context';
+import { prefersReducedMotion } from '@/lib/motion';
+import { cn } from '@/lib/utils';
 
 interface ThemeToggleButtonProps {
   className?: string;
 }
 
+type DocumentWithTransitions = Document & { startViewTransition?: (update: () => void) => unknown };
+
+/** Lights on / lights off. Cross-fades with the View Transitions API where available. */
 export function ThemeToggleButton({ className }: ThemeToggleButtonProps) {
   const { theme, toggleTheme } = useTheme();
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const iconRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('theme');
+  const nextLabel = theme === 'dark' ? t('lightMode') : t('darkMode');
 
-  useEffect(() => {
-    if (!iconRef.current) return;
-
-    gsap.fromTo(
-      iconRef.current,
-      {
-        rotation: -180,
-        scale: 0.9,
-        opacity: 0,
-      },
-      {
-        rotation: 0,
-        scale: 1,
-        opacity: 1,
-        duration: 0.5,
-        ease: 'back.out(1.7)',
-      }
-    );
-  }, [theme]);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!buttonRef.current) return;
-
-    const overlay = document.createElement('div');
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    
-    overlay.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: ${newTheme === 'dark' ? 'hsl(240, 6%, 10%)' : 'hsl(220, 20%, 96%)'};
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0;
-    `;
-    document.body.appendChild(overlay);
-
-    const tl = gsap.timeline({
-      onComplete: () => {
-        document.body.removeChild(overlay);
-      }
-    });
-
-    tl.to(overlay, {
-      opacity: 1,
-      duration: 0.3,
-      ease: 'power2.inOut',
-    })
-    .call(() => {
+  const handleClick = () => {
+    const doc = document as DocumentWithTransitions;
+    if (doc.startViewTransition && !prefersReducedMotion()) {
+      doc.startViewTransition(toggleTheme);
+    } else {
       toggleTheme();
-    })
-    .to(overlay, {
-      opacity: 0,
-      duration: 0.3,
-      ease: 'power2.inOut',
-    });
-
-    gsap.to(iconRef.current, {
-      rotation: 360,
-      scale: 0.8,
-      duration: 0.3,
-      ease: 'power2.inOut',
-      yoyo: true,
-      repeat: 1,
-      onComplete: () => {
-        gsap.set(iconRef.current, { rotation: 0, scale: 1 });
-      }
-    });
+    }
   };
 
   return (
     <button
-      ref={buttonRef}
+      type="button"
       onClick={handleClick}
-      aria-label="Toggle theme"
-      className={`p-2 rounded-lg transition-colors duration-200 ease-out hover:bg-foreground/8 active:scale-[0.95] ${className ?? ''}`}
+      aria-label={`${t('toggleTheme')}: ${nextLabel}`}
+      title={nextLabel}
+      className={cn(
+        'inline-flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-[color,background-color,transform] duration-snap ease-snap hover:bg-foreground/[0.05] hover:text-foreground active:scale-90 motion-reduce:transition-none',
+        className,
+      )}
     >
-      <div ref={iconRef}>
-        {theme === 'dark' ? (
-          <Sun className="h-5 w-5" />
-        ) : (
-          <Moon className="h-5 w-5" />
-        )}
-      </div>
+      {theme === 'dark' ? <Sun aria-hidden="true" className="h-[18px] w-[18px]" /> : <Moon aria-hidden="true" className="h-[18px] w-[18px]" />}
     </button>
   );
 }

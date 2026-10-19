@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { clientIp, escapeHtml, isValidEmail, listUnsubscribeHeaders, unsubscribeLinks, withinRateLimit } from '@/lib/server/security';
 import { Resend } from 'resend';
 
 export const runtime = 'edge';
@@ -6,11 +7,16 @@ export const runtime = 'edge';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
+  // Public and it triggers outgoing email / contact changes: cap it per visitor.
+  if (!(await withinRateLimit(`subscribe:${clientIp(request)}`, 5, 60 * 60))) {
+    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+  }
+
   try {
     const { email, locale } = await request.json();
     const isEs = locale === 'es';
 
-    if (!email || !email.includes('@')) {
+    if (!isValidEmail(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
         { status: 400 }
@@ -33,7 +39,7 @@ export async function POST(request: NextRequest) {
       const contactData = await contactResponse.json();
       
       if (contactResponse.ok) {
-        console.log('Contact created successfully:', contactData);
+        console.log('Contact created');
       } else {
         console.error('Error creating contact:', contactData);
         
@@ -43,12 +49,16 @@ export async function POST(request: NextRequest) {
           console.log('Contact already exists in Resend, continuing...');
         }
       }
-    } catch (contactError: any) {
+    } catch (contactError) {
       console.error('Exception creating contact:', contactError);
     }
 
-    const { data, error } = await resend.emails.send({
+    const links = await unsubscribeLinks(email);
+    const unsubscribeHref = escapeHtml(links?.page ?? 'https://listerineh.dev/unsubscribe');
+
+    const { error } = await resend.emails.send({
       from: 'Sebastian Alvarez <hello@listerineh.dev>',
+      headers: links ? listUnsubscribeHeaders(links.oneClick) : undefined,
       to: email,
       subject: isEs ? '¡Bienvenido a mi newsletter!' : 'Welcome to my newsletter!',
       html: `
@@ -109,7 +119,7 @@ export async function POST(request: NextRequest) {
                           — Sebastian Alvarez
                         </p>
                         <p style="margin: 0; font-size: 11px; color: rgba(255,255,255,0.15);">
-                          <a href="https://listerineh.dev/unsubscribe" style="color: rgba(251,191,36,0.4); text-decoration: none;">${isEs ? 'Cancelar suscripción' : 'Unsubscribe'}</a>
+                          <a href="${unsubscribeHref}" style="color: rgba(251,191,36,0.4); text-decoration: none;">${isEs ? 'Cancelar suscripción' : 'Unsubscribe'}</a>
                         </p>
                       </td>
                     </tr>

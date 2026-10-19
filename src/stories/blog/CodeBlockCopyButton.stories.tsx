@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { CodeBlockCopyButton } from '../../components/blog/code-block-copy-button';
 
 const meta: Meta<typeof CodeBlockCopyButton> = {
@@ -15,8 +15,8 @@ type Story = StoryObj<typeof CodeBlockCopyButton>;
 
 export const Default: Story = {
   render: () => (
-    <div className="relative w-64 h-32 bg-foreground/5 rounded-lg border border-foreground/10 p-4">
-      <pre className="text-xs text-foreground/60">const example = "code here";</pre>
+    <div className="panel relative h-32 w-64 p-4">
+      <pre className="text-xs text-muted-foreground">{'const example = "code here";'}</pre>
       <CodeBlockCopyButton code="const example = 'code here';" />
     </div>
   ),

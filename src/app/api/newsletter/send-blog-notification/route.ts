@@ -1,18 +1,37 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { escapeHtml, hasBearerSecret, isValidSlug, listUnsubscribeHeaders, unsubscribeLinks } from '@/lib/server/security';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
-  try {
-    const { blogTitle, blogSlug, blogExcerpt, blogExcerptEs, blogImageUrl } = await request.json();
+  // Emails every subscriber from the site's domain: only the owner (scripts/send-blog-notification.js) may call it.
+  if (!hasBearerSecret(request, process.env.NEWSLETTER_SECRET)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
-    if (!blogTitle || !blogSlug) {
+  try {
+    const body = await request.json();
+    const rawTitle = typeof body.blogTitle === 'string' ? body.blogTitle.trim() : '';
+    const rawSlug = typeof body.blogSlug === 'string' ? body.blogSlug.trim() : '';
+    const rawImage = typeof body.blogImageUrl === 'string' ? body.blogImageUrl.trim() : '';
+
+    if (!rawTitle || !isValidSlug(rawSlug)) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       );
     }
+    if (rawImage && !/^https:\/\/[^\s"'<>]+$/.test(rawImage)) {
+      return NextResponse.json({ error: 'blogImageUrl must be an https URL' }, { status: 400 });
+    }
+
+    // Everything below is interpolated into HTML.
+    const blogTitle = escapeHtml(rawTitle);
+    const blogSlug = rawSlug;
+    const blogImageUrl = escapeHtml(rawImage);
+    const blogExcerpt = typeof body.blogExcerpt === 'string' ? escapeHtml(body.blogExcerpt) : '';
+    const blogExcerptEs = typeof body.blogExcerptEs === 'string' ? escapeHtml(body.blogExcerptEs) : '';
 
     const contactsResponse = await fetch('https://api.resend.com/contacts', {
       method: 'GET',
@@ -40,13 +59,24 @@ export async function POST(request: Request) {
       );
     }
 
-    const emails = contactsData.data.map((contact: any) => contact.email);
+    // People who unsubscribed stay in Resend as contacts; never email them.
+    const emails: string[] = contactsData.data
+      .filter((contact: { unsubscribed?: boolean }) => !contact.unsubscribed)
+      .map((contact: { email: string }) => contact.email);
 
-    const { data, error } = await resend.batch.send(
-      emails.map((email: string) => ({
+    if (emails.length === 0) {
+      return NextResponse.json({ message: 'No subscribers found' }, { status: 200 });
+    }
+
+    // Each subscriber gets their own signed unsubscribe link.
+    const recipients = await Promise.all(emails.map(async (email) => ({ email, links: await unsubscribeLinks(email) })));
+
+    const { error } = await resend.batch.send(
+      recipients.map(({ email, links }) => ({
         from: 'Sebastian Alvarez <hello@listerineh.dev>',
+        headers: links ? listUnsubscribeHeaders(links.oneClick) : undefined,
         to: email,
-        subject: `New Blog Post: ${blogTitle}`,
+        subject: `New Blog Post: ${rawTitle}`,
         html: `
           <!DOCTYPE html>
           <html>
@@ -123,9 +153,10 @@ export async function POST(request: Request) {
                           <p style="margin: 0 0 6px; font-size: 12px; color: rgba(255,255,255,0.25);">
                             You're receiving this because you subscribed at / Recibes esto porque te suscribiste en <strong style="color: rgba(251,191,36,0.5);">listerineh.dev</strong>
                           </p>
-                          <p style="margin: 0; font-size: 12px; color: rgba(255,255,255,0.2);">
+                          <p style="margin: 0 0 6px; font-size: 12px; color: rgba(255,255,255,0.2);">
                             — Sebastian Alvarez
                           </p>
+                          ${links ? `<p style="margin: 0; font-size: 11px;"><a href="${escapeHtml(links.page)}" style="color: rgba(251,191,36,0.5); text-decoration: none;">Unsubscribe / Cancelar suscripción</a></p>` : ''}
                         </td>
                       </tr>
                     </table>

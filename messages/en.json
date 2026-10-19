@@ -22,7 +22,10 @@
     "copied": "Copied!",
     "back": "Back",
     "legal": "Legal",
-    "endOfList": "You've seen it all"
+    "endOfList": "You've seen it all",
+    "siteIndex": "Site index",
+    "backToTop": "Back to top",
+    "onThisPage": "On this page"
   },
   "nav": {
     "experience": "Experience",
@@ -39,8 +42,8 @@
   },
   "hero": {
     "title": "Sebastian Alvarez",
-    "subtitle": "Senior Software Engineer & Full-Stack Developer",
-    "description": "I build web applications from backend to frontend. My work spans cloud infrastructure, APIs, and React/Next.js interfaces - with a focus on things that actually ship and scale.",
+    "subtitle": "Full-Stack Engineer · Applied AI",
+    "description": "I build software end to end: backend systems, cloud infrastructure and React/Next.js interfaces. Lately that means AI agents and integrations that automate real business workflows, built to ship and scale.",
     "badge": "+6 Years",
     "statsYears": "6+",
     "statsYearsLabel1": "Years",
@@ -51,18 +54,36 @@
     "downloadCV": "Download CV",
     "getInTouch": "Get in Touch",
     "cvDownloadedTitle": "CV Downloaded!",
-    "cvDownloadedDescription": "Thank you for downloading my CV. I hope you find it useful."
+    "cvDownloadedDescription": "Thank you for downloading my CV. I hope you find it useful.",
+    "buildPrefix": "I build",
+    "buildWords": [
+      "AI agents",
+      "cloud platforms",
+      "web products",
+      "developer tools"
+    ],
+    "buildSentence": "I build AI agents, cloud platforms, web products and developer tools.",
+    "vignettes": {
+      "agentAsk": "Classify ticket #4821 and draft a reply",
+      "agentReply": "Drafted. Priority: high, refund eligible.",
+      "build": "Build",
+      "tests": "Tests",
+      "infra": "Infrastructure",
+      "rollout": "Rolling out"
+    },
+    "scrollToCareer": "Scroll to my experience"
   },
   "experience": {
-    "title": "Work Experience",
+    "title": "Where I've worked",
     "badge": "Career",
     "viewAll": "View All Experience",
     "pageTitle": "My Career Journey",
     "pageDescription": "A detailed look at the roles, companies, and projects that have shaped my journey as a software engineer.",
-    "noResults": "No experience found."
+    "noResults": "No experience found.",
+    "rolesLabel": "Roles"
   },
   "skills": {
-    "title": "Technologies I Work With",
+    "title": "The stack I reach for",
     "badge": "Tech Stack",
     "description": "The tools and frameworks I use day to day.",
     "viewAll": "View All Skills",
@@ -81,17 +102,29 @@
       "testing": "Testing & QA",
       "tools": "Tools & Design",
       "management": "Management & Collaboration"
-    }
+    },
+    "filterLabel": "Filter by area",
+    "transferTitle": "Not on the list? Not a blocker.",
+    "transferBody": "Working with AI every day has made picking up new tools fast. I carry what I know from one technology to ones I haven't used yet: map the concepts, learn the idioms with an AI pair, and ship to the same standard.",
+    "transferFrom": "What I know",
+    "transferTo": "What your team uses",
+    "summary": "{skills} technologies across {areas} areas",
+    "pauseMotion": "Pause the moving rows"
   },
   "projects": {
-    "title": "Featured Projects",
+    "title": "Built and shipped",
     "pageTitle": "Selected Work",
-    "pageDescription": "A few things I've built — open-source tools, side projects, and experiments where design and engineering meet.",
+    "pageDescription": "A few things I've built: open-source tools, side projects, and experiments where design and engineering meet.",
     "searchPlaceholder": "Search projects by name or technology...",
     "noResults": "No projects match your search.",
     "clearFilters": "Clear filters",
     "badge": "Hobbies",
-    "viewAll": "View All Projects"
+    "viewAll": "View All Projects",
+    "filterAll": "All",
+    "statusFilter": "Filter by status",
+    "technologies": "Technologies",
+    "showing": "{shown} of {total} projects",
+    "carouselLabel": "Projects, one at a time"
   },
   "project": {
     "featuredProject": "Featured Project",
@@ -107,10 +140,15 @@
     },
     "backToProjects": "Back to Projects",
     "liveDemo": "Live Demo",
-    "sourceCode": "Source Code"
+    "sourceCode": "Source Code",
+    "dates": "Dates",
+    "statusLabel": "Status",
+    "nextProject": "Next project",
+    "timeline": "Timeline",
+    "allProjects": "All projects"
   },
   "blog": {
-    "title": "From the Blog",
+    "title": "Latest articles",
     "badge": "Blog",
     "readingTime": "{minutes} min read",
     "viewAllPosts": "View All Posts",
@@ -168,20 +206,23 @@
     "sortAscending": "Oldest First",
     "sortDescending": "Newest First",
     "sortBy": "Sort",
-    "loadingViews": "Loading..."
+    "loadingViews": "Loading...",
+    "sectionIntro": "On engineering, cloud and applied AI.",
+    "articleCount": "{count, plural, one {# article} other {# articles}}",
+    "keepReading": "Keep reading"
   },
   "contact": {
     "title": "Work with me",
     "badge": "Contact",
-    "description": "If you have a project or just want to talk tech, send me a message. I reply fast.",
+    "description": "If you have a project or just want to talk tech, send me a message. I usually reply within a day.",
     "viewAll": "Send a message",
     "pageTitle": "Let's talk",
     "pageDescription": "I work remotely from Quito, Ecuador. Whether it's a full project, a code review, or a quick question, my inbox is open.",
-    "note": "I usually reply within a few hours on weekdays. If I'm deep in a build, it might take a bit longer.",
+    "note": "I usually reply within a day on weekdays. If I'm deep in a build, it might take a bit longer.",
     "directEmailTitle": "Email",
     "directEmailAction": "sebask8er.alvarez@gmail.com",
     "connectTitle": "Elsewhere",
-    "responseTime": "Usually replies in 2–4 hours.",
+    "responseTime": "Usually replies within a day.",
     "formTitle": "Send a message",
     "formIntro": "Tell me what you need. The more context, the better I can help.",
     "nameLabel": "Name",
@@ -205,7 +246,12 @@
       "Cloud infrastructure & CI/CD setup",
       "AI integrations & automation",
       "Technical consulting & code reviews"
-    ]
+    ],
+    "localTimeLabel": "Local time in Quito",
+    "copyEmail": "Copy email",
+    "emailCopied": "Email copied",
+    "sentBody": "Thanks for writing. I'll get back to you soon.",
+    "sendAnother": "Send another message"
   },
   "newsletter": {
     "badge": "Newsletter",
@@ -230,7 +276,8 @@
     "failedMessage": "Failed to subscribe. Please try again later.",
     "secureLabel": "Secure",
     "privateLabel": "Private",
-    "dontMissNextPost": "Don't miss the next post"
+    "dontMissNextPost": "Don't miss the next post",
+    "unsubscribeLink": "Unsubscribe"
   },
   "share": {
     "shareArticle": "Share Article",
@@ -244,7 +291,8 @@
     "toastCopiedDesc": "The article link has been copied to your clipboard.",
     "toastOpeningX": "Opening on X...",
     "toastOpeningLinkedIn": "Opening on LinkedIn...",
-    "toastOpeningFacebook": "Opening on Facebook..."
+    "toastOpeningFacebook": "Opening on Facebook...",
+    "checkOutArticle": "Check out this article: \"{title}\""
   },
   "theme": {
     "lightMode": "Light Mode",
@@ -256,10 +304,10 @@
     "currentLanguage": "English"
   },
   "metadata": {
-    "title": "Sebastian Alvarez | Full-Stack Software Engineer & Web Developer",
-    "description": "Full-stack software engineer specializing in React, Next.js, Python, and cloud technologies. View my portfolio, projects, and technical blog on modern web development.",
-    "ogTitle": "Sebastian Alvarez | Full-Stack Software Engineer",
-    "ogDescription": "Explore my portfolio of web development projects and technical expertise in React, Next.js, and Python"
+    "title": "Sebastian Alvarez | Full-Stack Engineer & Applied AI",
+    "description": "Full-stack software engineer building backend systems, cloud infrastructure and React/Next.js interfaces, focused on applied AI: agents and integrations that automate real workflows.",
+    "ogTitle": "Sebastian Alvarez | Full-Stack Engineer & Applied AI",
+    "ogDescription": "Projects, writing and experience: full-stack engineering with a focus on applied AI."
   },
   "badges": {
     "featured": "Featured"
@@ -279,7 +327,7 @@
     "phase1Body": "It started with a screwdriver and curiosity. I spent my early years formatting hard drives, repairing neighbors' PCs, rooting Android phones, and flashing custom ROMs. That obsession with understanding how things work under the hood became the foundation of everything.",
     "phase2Label": "2017 – 2023",
     "phase2Title": "Software Engineering Student",
-    "phase2Body": "I pursued a Software Engineering degree in Quito, Ecuador, where I built solid foundations in algorithms, design patterns, software architecture, databases, and collaborative development practices. University taught me not just how to code — but how to think as an engineer.",
+    "phase2Body": "I pursued a Software Engineering degree in Quito, Ecuador, where I built solid foundations in algorithms, design patterns, software architecture, databases, and collaborative development practices. University taught me not just how to code, but how to think as an engineer.",
     "phase3Label": "2019 – Present",
     "phase3Title": "Senior Engineer & Tech Lead",
     "phase3Body": "Over 6+ years working primarily with US-based companies, I've led engineering teams, owned high-impact features, designed scalable solutions, and grown alongside some truly great colleagues. Today I architect full-stack systems, manage multi-cloud infrastructure, and drive AI integration initiatives.",
@@ -295,7 +343,7 @@
     "expertise4Body": "Generative AI integration, computer vision pipelines, and specialized AI agents using MCP (Model Context Protocol) to automate tailored business workflows.",
     "communityBadge": "Community",
     "communityTitle": "Building Tech Culture in Ecuador",
-    "communityBody": "For over 3 years I've been an active speaker and contributor at Google Developer Groups in Quito / Ecuador. We've built an amazing community that keeps growing in members and knowledge — DevFests, workshops, tech talks, and the shared love of building things.",
+    "communityBody": "For over 3 years I've been an active speaker and contributor at Google Developer Groups in Quito / Ecuador. We've built an amazing community that keeps growing in members and knowledge: DevFests, workshops, tech talks, and the shared love of building things.",
     "communityCardBody": "Join the GDG Quito community and connect with developers, designers, and tech enthusiasts across Ecuador.",
     "communityStat1": "3+",
     "communityStat1Label": "Years as GDG Organizer",
@@ -312,7 +360,14 @@
     "ctaTitle": "Let's Build Something Together",
     "ctaBody": "Always open to interesting projects, collaborations, and conversations about engineering, AI, or music.",
     "ctaPrimary": "Get in Touch",
-    "ctaSecondary": "Back to Portfolio"
+    "ctaSecondary": "Back to Portfolio",
+    "glanceTitle": "At a glance",
+    "glanceYears": "Years building software",
+    "glanceCommunity": "Developers in the GDG community",
+    "glanceOrganizer": "Years organizing GDG Quito",
+    "glanceInstruments": "Instruments I play",
+    "glanceInstrumentsValue": "4",
+    "journeyIntro": "From a screwdriver to leading engineering teams."
   },
   "why": {
     "skipToContent": "Skip to main content",
@@ -322,13 +377,13 @@
     "heroSubtitle": "Beyond code and algorithms lies a whole universe of sound, rhythm, and creative exploration. This is where the name was born.",
     "originBadge": "The Name",
     "originHeadline": "It didn't come from code.",
-    "originParagraph1": "\"Listerineh\" is not a randomly generated username or a clever tech pun. It's a musical identity — one that grew from years of playing, recording, composing and feeling music before I ever wrote a single line of code professionally.",
-    "originParagraph2": "Everything you see on this portfolio — the projects, the skills, the career — is built on top of a foundation that started with a guitar in my hands. The name stuck, and now it represents everything I do.",
+    "originParagraph1": "\"Listerineh\" is not a randomly generated username or a clever tech pun. It's a musical identity, one that grew from years of playing, recording, composing and feeling music before I ever wrote a single line of code professionally.",
+    "originParagraph2": "Everything you see on this portfolio (the projects, the skills, the career) is built on top of a foundation that started with a guitar in my hands. The name stuck, and now it represents everything I do.",
     "mnBadge": "Band",
     "mnStatus": "Active",
     "mnTitle": "Margarita Nugget",
     "mnGenre": "Indie Funk / Pop",
-    "mnDescription": "Margarita Nugget is a fresh, strange, and incredibly alive indie funk/pop project. Not following any playbook — one song might be a dreamy indie pop ballad, the next hits you with distortion pedals and raw funk energy. Modern, unpredictable, and definitely not boring.",
+    "mnDescription": "Margarita Nugget is a fresh, strange, and incredibly alive indie funk/pop project. It doesn't follow a playbook: one song might be a dreamy indie pop ballad, the next hits you with distortion pedals and raw funk energy. Modern, unpredictable, and definitely not boring.",
     "mnDescription2": "We're in the most exciting early phase: composing, connecting, finding our sound together. We've already recorded a live session presenting our raw songs to the world, and after our first show we knew we had something real to build.",
     "mnMembersTitle": "The Band",
     "mnVideoTitle": "Featured Video",
@@ -344,10 +399,10 @@
     "ssBadge": "Band",
     "ssTitle": "Sofones Solares",
     "ssGenre": "Experimental / Indie",
-    "ssDescription": "Two great friends, Andrés and Wlady, brought me into this experimental project where I played guitar, composed, and eventually produced our album. We approached music like engineers — methodical, precise — but let the musical instinct flow freely.",
-    "ssDescription2": "The band is currently on pause — Andrés moved to Portugal, Wlady to Germany — but the album we made together is coming soon. Being in a band of programmer-musicians shaped how I think about creative collaboration.",
+    "ssDescription": "Two great friends, Andrés and Wlady, brought me into this experimental project where I played guitar, composed, and eventually produced our album. We approached music like engineers, methodical and precise, but let the musical instinct flow freely.",
+    "ssDescription2": "The band is currently on pause (Andrés moved to Portugal, Wlady to Germany), but the album we made together is coming soon. Being in a band of programmer-musicians shaped how I think about creative collaboration.",
     "ssAlbumNote": "Album dropping soon",
-    "ssAlbumDesc": "A conceptual album exploring the cyclic stages of love — each track uses a different genre and compositional approach to reflect a distinct emotional phase of love and heartbreak.",
+    "ssAlbumDesc": "A conceptual album exploring the cyclic stages of love. Each track uses a different genre and compositional approach to reflect a distinct emotional phase of love and heartbreak.",
     "ssSpotify": "Listen on Spotify",
     "ssPaused": "On Pause",
     "ssMembersTitle": "The Band",
@@ -359,7 +414,7 @@
     "ssMember3Role": "Drums & Bass",
     "soloBadge": "Personal Project",
     "soloGenre": "Lo-Fi Hip-Hop · Electronic · Ambient",
-    "soloDescription": "The solo project where the name first appeared — and the one that started it all. Born from late-night bedroom sessions, Listerineh is a lo-fi and electronic music project built on layered guitars, sampled textures, and slow-burning ambient soundscapes. It's where the production gets most experimental: blending real instruments with digital synthesis, tape warmth with glitchy rhythms, and introspection with groove. Every track is a snapshot of a particular moment or feeling — unfiltered, unpolished on purpose, and deeply personal.",
+    "soloDescription": "The solo project where the name first appeared, and the one that started it all. Born from late-night bedroom sessions, Listerineh is a lo-fi and electronic music project built on layered guitars, sampled textures, and slow-burning ambient soundscapes. It's where the production gets most experimental: blending real instruments with digital synthesis, tape warmth with glitchy rhythms, and introspection with groove. Every track is a snapshot of a particular moment or feeling: unfiltered, unpolished on purpose, and deeply personal.",
     "soloSpotify": "Listen on Spotify",
     "soloIG": "Follow on Instagram",
     "topTracksTitle": "Top Tracks",
@@ -368,7 +423,9 @@
     "ctaDescription": "Whether it's a software project or a musical collaboration, I'm always open to new opportunities.",
     "getInTouch": "Get in Touch",
     "topTracksError": "Could not load tracks.",
-    "topTracksAttribution": "Top tracks via Spotify"
+    "topTracksAttribution": "Top tracks via Spotify",
+    "listenOn": "Listen to \"{track}\" on {platform}",
+    "tracklist": "Three projects, one name"
   },
   "privacy": {
     "title": "Privacy Policy",
@@ -502,18 +559,59 @@
     "preferencesCookiesDescription": "Remember your settings and preferences (e.g., theme, language).",
     "cancelButton": "Cancel",
     "saveButton": "Save Preferences",
-    "revokeAllButton": "Revoke All"
+    "revokeAllButton": "Revoke All",
+    "alwaysOn": "Always on"
   },
   "unsubscribe": {
     "badge": "Newsletter",
     "title": "Unsubscribe from Newsletter",
-    "description": "Enter your email address to unsubscribe from the newsletter. You'll no longer receive updates about new blog posts, engineering insights, and tech content.",
+    "description": "Use the Unsubscribe link at the bottom of any newsletter email, or enter your address and I'll send you a link to confirm.",
     "emailLabel": "Email Address",
     "unsubscribeButton": "Unsubscribe",
     "unsubscribing": "Unsubscribing...",
     "successMessage": "You have been successfully unsubscribed from the newsletter.",
     "errorMessage": "Failed to unsubscribe. Please check your email and try again.",
     "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "confirmIntro": "Confirm below and this address stops receiving the newsletter.",
+    "confirmFor": "Unsubscribe {email}?",
+    "sendLink": "Email me a link",
+    "sending": "Sending…",
+    "linkSent": "If that address is subscribed, a confirmation link is on its way. Check your inbox.",
+    "invalidLink": "This link isn't valid anymore. Enter your address and I'll send you a new one.",
+    "tooMany": "Too many attempts. Please try again in a while."
+  },
+  "sala": {
+    "entrance": "Entrance",
+    "work": "Work",
+    "writing": "Writing",
+    "career": "Career",
+    "craft": "Craft",
+    "contact": "Contact",
+    "walkTheWork": "Explore my work",
+    "now": "Now",
+    "drawingCaption": "Stack",
+    "layers": {
+      "interface": "Interface",
+      "api": "API & backend",
+      "ai": "AI",
+      "data": "Data",
+      "infra": "Cloud & infra",
+      "tooling": "Tooling"
+    },
+    "route": "Route",
+    "room": "Room",
+    "yearsRemote": "{years} years · {remote} remote",
+    "allSkills": "Full stack index",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "footer": {
+    "groupWork": "Work",
+    "groupAbout": "About me",
+    "groupConnect": "Connect",
+    "tagline": "Full-stack engineer building AI agents, cloud platforms and web products. Based in Quito, working remotely.",
+    "available": "Open to new projects",
+    "unsubscribe": "Unsubscribe from the newsletter"
   }
 }

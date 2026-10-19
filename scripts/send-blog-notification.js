@@ -27,6 +27,12 @@ if (!blogTitle || !blogSlug) {
   process.exit(1);
 }
 
+const secret = process.env.NEWSLETTER_SECRET;
+if (!secret) {
+  console.error('❌ Error: NEWSLETTER_SECRET is not set (same value as in the deployment environment)');
+  process.exit(1);
+}
+
 const apiUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:9002';
 const endpoint = `${apiUrl}/api/newsletter/send-blog-notification`;
 
@@ -52,7 +58,8 @@ const options = {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'Content-Length': data.length,
+    'Content-Length': Buffer.byteLength(data),
+    Authorization: `Bearer ${secret}`,
   },
 };
 
@@ -83,7 +90,7 @@ const req = (url.protocol === 'https:' ? https : require('http')).request(option
         console.error('❌ Error (Status', res.statusCode + '):', response.error || response.message || 'Unknown error');
         process.exit(1);
       }
-    } catch (error) {
+    } catch {
       console.error('❌ Failed to parse response');
       console.error('   Status Code:', res.statusCode);
       console.error('   Response:', responseData);

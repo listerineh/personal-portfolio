@@ -1,441 +1,538 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Lumen: quiet neutral grounds, rounded surfaces, one warm accent.
+ * Sections alternate plain and tint; content sits on soft panels.
+ * Amber #D97706 is the brand accent: the primary action, what is live, the active state.
+ * Small amber text uses --primary-ink, tuned per theme for AA.
+ * Motion is spring-based and tied to scroll where the browser supports it.
+ */
+
 @layer base {
   :root {
-    /* ── Surface ─────────────────────────────────────────── */
-    --background:             240 242 245;   /* #F0F2F5 */
-    --foreground:             45 50 65;      /* #2D3241 */
-    --card:                   255 255 255;   /* #FFFFFF */
-    --card-foreground:        45 50 65;      /* #2D3241 */
-    --popover:                255 255 255;   /* #FFFFFF */
-    --popover-foreground:     45 50 65;      /* #2D3241 */
+    /* ── Grounds ─────────────────────────────────────────── */
+    --background: 255 255 255; /* #FFFFFF */
+    --foreground: 29 29 31; /* #1D1D1F 16.8:1 */
+    --tint: 245 245 247; /* #F5F5F7 alternate section ground */
+    --card: 245 245 247; /* panel on a plain section */
+    --card-foreground: 29 29 31;
+    --popover: 255 255 255;
+    --popover-foreground: 29 29 31;
 
-    /* ── Brand ──────────────────────────────────────────────── */
-    --primary:                217 119 6;     /* #D97706 amber */
-    --primary-light:          245 158 11;    /* #F59E0B amber lighter */
-    --primary-glow:           rgba(217, 119,   6, 0.10);
-    --primary-border:         rgba(217, 119,   6, 0.25);
-    --primary-bg:             rgba(217, 119,   6, 0.08);
-    --primary-bg-hover:       rgba(217, 119,   6, 0.13);
-    --primary-foreground:     20 20 20;      /* #141414 */
-    --secondary:              227 229 235;   /* #E3E5EB */
-    --secondary-foreground:   45 50 65;      /* #2D3241 */
-    --muted:                  211 214 224;   /* #D3D6E0 */
-    --muted-foreground:       101 111 139;   /* #656F8B */
-    --accent:                 15 118 110;    /* #0F766E teal-700 */
-    --accent-foreground:      255 255 255;   /* #FFFFFF */
-    --destructive:            239 68 68;     /* #EF4444 */
-    --destructive-foreground: 250 250 250;   /* #FAFAFA */
+    /* ── Amber (brand) ───────────────────────────────────── */
+    --primary: 217 119 6; /* #D97706 */
+    --primary-foreground: 29 29 31; /* ink on amber 5.3:1 */
+    --primary-ink: 168 75 10; /* #A84B0A small amber text, 5.3:1 on tint */
 
-    /* ── Surface deep ──────────────────────────────────────── */
-    --surface-deep:           #f5f4f0;
+    /* ── Neutrals ────────────────────────────────────────── */
+    --secondary: 232 232 237; /* #E8E8ED */
+    --secondary-foreground: 29 29 31;
+    --muted: 232 232 237;
+    --muted-foreground: 110 110 115; /* #6E6E73 5.1:1 / 4.7:1 on tint */
+    --accent: 245 245 247;
+    --accent-foreground: 29 29 31;
 
-    /* ── Layout ──────────────────────────────────────────────  */
-    --border:                 213 217 228;   /* #D5D9E4 */
-    --input:                  213 217 228;   /* #D5D9E4 */
-    --ring:                   217 119 6;     /* #D97706 */
-    --radius:                 0.5rem;
+    --destructive: 215 0 21; /* #D70015 */
+    --destructive-foreground: 255 255 255;
 
-    /* ── Charts ─────────────────────────────────────────────── */
-    --chart-1:                217 119 6;     /* #D97706 amber  */
-    --chart-2:                75 137 204;    /* #4B89CC blue   */
-    --chart-3:                77 128 179;    /* #4D80B3        */
-    --chart-4:                232 115 34;    /* #E87322 orange */
-    --chart-5:                77 179 77;     /* #4DB34D green  */
+    /* ── Lines ───────────────────────────────────────────── */
+    --border: 210 210 215; /* #D2D2D7 hairline, decorative */
+    --input: 134 134 139; /* #86868B control boundary 3.6:1 */
+    --ring: 217 119 6; /* focus ring: amber */
+    --surface: var(--background);
 
-    /* ── Sidebar ────────────────────────────────────────────── */
-    --sidebar-background:     240 242 245;   /* #F0F2F5 */
-    --sidebar-foreground:     45 50 65;      /* #2D3241 */
-    --sidebar-primary:        217 119 6;     /* #D97706 */
-    --sidebar-primary-foreground: 20 20 20;  /* #141414 */
-    --sidebar-accent:         75 137 204;    /* #4B89CC */
-    --sidebar-accent-foreground:  255 255 255; /* #FFFFFF */
-    --sidebar-border:         213 217 228;   /* #D5D9E4 */
-    --sidebar-ring:           217 119 6;     /* #D97706 */
+    /* ── Shape ───────────────────────────────────────────── */
+    --radius-sm: 10px; /* chips, small controls */
+    --radius: 14px; /* fields, buttons that are not pills */
+    --radius-lg: 22px; /* panels, cards */
+    --radius-xl: 30px; /* media, large showcases */
 
-    /* ── Music / brand ───────────────────────────────────────── */
-    --mn-accent:              #d97706;  /* Margarita Nugget – amber-600 */
-    --mn-accent-muted:        #f59e0b;
-    --mn-accent-foreground:   #000000;
-    --ss-accent:              #4f46e5;  /* Sofones Solares – indigo-600 */
-    --ss-accent-muted:        #818cf8;
-    --ss-accent-foreground:   #ffffff;
-    --solo-accent:            #1DB954;  /* Listerineh solo */
-    --solo-accent-hover:      #1ed760;
+    /* ── Grid ────────────────────────────────────────────── */
+    --gutter: 20px;
+    --header-h: 52px;
+
+    /* ── Depth: soft, only where something floats ────────── */
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 4px 16px -4px rgb(0 0 0 / 0.08);
+    --shadow-float: 0 2px 6px rgb(0 0 0 / 0.05), 0 24px 48px -16px rgb(0 0 0 / 0.18);
+
+    /* ── Motion (springs from src/lib/motion.ts) ─────────── */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    /* critically damped: UI feedback, response 0.35s */
+    --spring-snap: linear(0, 0.0344, 0.1143, 0.2148, 0.3205, 0.4225, 0.5161, 0.599, 0.6707, 0.7317, 0.7828, 0.8251, 0.8598, 0.8882, 0.9111, 0.9295, 0.9443, 0.9561, 0.9655, 0.973, 0.9788, 0.9835, 0.9871, 0.9899, 0.9922, 0.9939, 0.9953, 0.9963, 0.9972, 0.9978, 0.9983, 0.9987, 1);
+    --spring-snap-duration: 514ms;
+    /* critically damped: content settling into place, response 0.55s */
+    --spring-glide: var(--spring-snap);
+    --spring-glide-duration: 808ms;
+    /* damping 0.8: only after a gesture carried momentum (carousel, press release) */
+    --spring-bounce: linear(0, 0.0303, 0.1052, 0.2049, 0.3153, 0.4264, 0.5317, 0.6272, 0.7109, 0.7821, 0.8411, 0.8888, 0.9263, 0.955, 0.9764, 0.9918, 1.0023, 1.009, 1.013, 1.0148, 1.0151, 1.0145, 1.0133, 1.0117, 1.01, 1.0084, 1.0068, 1.0054, 1.0042, 1.0031, 1.0023, 1.0016, 1);
+    --spring-bounce-duration: 606ms;
+
+    /* ── Music identities (about, /why only) ─────────────── */
+    --mn-accent: #d97706; /* Margarita Nugget */
+    --mn-accent-muted: #b45309;
+    --mn-accent-foreground: #1d1d1f;
+    --ss-accent: #3d5a80; /* Sofones Solares */
+    --ss-accent-muted: #5a7799;
+    --ss-accent-foreground: #ffffff;
+    --solo-accent: #1db954; /* Listerineh solo (Spotify) */
+    --solo-accent-hover: #1ed760;
     --solo-accent-foreground: #000000;
 
-    /* ── /why page ───────────────────────────────────────────── */
-    --why-background:         #f5f4f0;
-    --why-foreground:         #111111;
+    --why-background: #ffffff;
+    --why-foreground: #1d1d1f;
+    --surface-deep: #f5f5f7;
 
-    /* ── Motion ─────────────────────────────────────────────── */
-    --ease-out:               cubic-bezier(0.23, 1, 0.32, 1);
-    --ease-in-out:            cubic-bezier(0.77, 0, 0.175, 1);
-    --ease-drawer:            cubic-bezier(0.32, 0.72, 0, 1);
-    --duration-fast:          150ms;
-    --duration-base:          200ms;
-    --duration-slow:          300ms;
-
+    color-scheme: light;
   }
 
   .dark {
-    /* ── Surface ─────────────────────────────────────────────── */
-    --background:             18 18 24;      /* #121218 */
-    --foreground:             229 231 239;   /* #E5E7EF */
-    --card:                   24 24 32;      /* #181820 */
-    --card-foreground:        229 231 239;   /* #E5E7EF */
-    --popover:                21 21 28;      /* #15151C */
-    --popover-foreground:     229 231 239;   /* #E5E7EF */
+    --background: 0 0 0; /* #000000 */
+    --foreground: 245 245 247; /* #F5F5F7 19.3:1 */
+    --tint: 22 22 23; /* #161617 */
+    --card: 28 28 30; /* #1C1C1E */
+    --card-foreground: 245 245 247;
+    --popover: 28 28 30;
+    --popover-foreground: 245 245 247;
 
-    /* ── Brand ────────────────────────────────────────────────── */
-    --primary:                245 158 11;    /* #F59E0B amber */
-    --primary-light:          252 211 77;    /* #FCD34D amber lighter */
-    --primary-glow:           rgba(245, 158,  11, 0.10);
-    --primary-border:         rgba(245, 158,  11, 0.20);
-    --primary-bg:             rgba(245, 158,  11, 0.08);
-    --primary-bg-hover:       rgba(245, 158,  11, 0.13);
-    --primary-foreground:     20 20 20;      /* #141414 */
-    --secondary:              42 42 50;      /* #2A2A32 */
-    --secondary-foreground:   211 215 229;   /* #D3D7E5 */
-    --muted:                  53 53 61;      /* #35353D */
-    --muted-foreground:       147 157 175;   /* #939DAF */
-    --accent:                 45 212 191;    /* #2DD4BF teal-400 */
-    --accent-foreground:      20 20 20;      /* #141414 */
-    --destructive:            217 54 54;     /* #D93636 */
-    --destructive-foreground: 250 250 250;   /* #FAFAFA */
+    --primary: 217 119 6;
+    --primary-foreground: 29 29 31;
+    --primary-ink: 232 137 12; /* #E8890C 5.9:1 on the lightest panel */
 
-    /* ── Surface deep ──────────────────────────────────────── */
-    --surface-deep:           #080808;
+    --secondary: 44 44 46; /* #2C2C2E */
+    --secondary-foreground: 245 245 247;
+    --muted: 44 44 46;
+    --muted-foreground: 161 161 166; /* #A1A1A6 8.2:1 */
+    --accent: 28 28 30;
+    --accent-foreground: 245 245 247;
 
-    /* ── Layout ───────────────────────────────────────────────── */
-    --border:                 58 58 64;      /* #3A3A40 */
-    --input:                  58 58 64;      /* #3A3A40 */
-    --ring:                   245 158 11;    /* #F59E0B */
+    --destructive: 255 69 58; /* #FF453A */
+    --destructive-foreground: 29 29 31;
 
-    /* ── Charts ───────────────────────────────────────────────── */
-    --chart-1:                245 158 11;    /* #F59E0B amber   */
-    --chart-2:                45 212 191;    /* #2DD4BF teal */
-    --chart-3:                107 163 204;   /* #6BA3CC         */
-    --chart-4:                204 96 204;    /* #CC60CC         */
-    --chart-5:                96 170 187;    /* #60AABB         */
+    --border: 56 56 58; /* #38383A */
+    --input: 124 124 128; /* #7C7C80 */
+    --ring: 232 137 12;
 
-    /* ── Sidebar ──────────────────────────────────────────────── */
-    --sidebar-background:     18 18 24;      /* #121218 */
-    --sidebar-foreground:     229 231 239;   /* #E5E7EF */
-    --sidebar-primary:        245 158 11;    /* #F59E0B */
-    --sidebar-primary-foreground: 20 20 20;  /* #141414 */
-    --sidebar-accent:         166 191 217;   /* #A6BFD9 */
-    --sidebar-accent-foreground:  31 35 54;  /* #1F2336 */
-    --sidebar-border:         58 58 64;      /* #3A3A40 */
-    --sidebar-ring:           166 191 217;   /* #A6BFD9 */
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px -4px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 2px 6px rgb(0 0 0 / 0.5), 0 24px 48px -16px rgb(0 0 0 / 0.8);
 
-    /* ── Music / brand ────────────────────────────────────────── */
-    --mn-accent:              #fbbf24;  /* Margarita Nugget – amber-400 */
-    --mn-accent-muted:        #f59e0b;
-    --mn-accent-foreground:   #000000;
-    --ss-accent:              #818cf8;  /* Sofones Solares – indigo-400 */
-    --ss-accent-muted:        #6366f1;
-    --ss-accent-foreground:   #ffffff;
-    --solo-accent:            #1DB954;
-    --solo-accent-hover:      #1ed760;
-    --solo-accent-foreground: #000000;
+    --ss-accent: #8aa4c4;
+    --ss-accent-muted: #5a7799;
+    --why-background: #000000;
+    --why-foreground: #f5f5f7;
+    --surface-deep: #161617;
 
-    /* ── /why page ────────────────────────────────────────────── */
-    --why-background:         #080808;
-    --why-foreground:         #f0f0f0;
-
-    /* ── Motion ─────────────────────────────────────────────── */
-    --ease-out:               cubic-bezier(0.23, 1, 0.32, 1);
-    --ease-in-out:            cubic-bezier(0.77, 0, 0.175, 1);
-    --ease-drawer:            cubic-bezier(0.32, 0.72, 0, 1);
-    --duration-fast:          150ms;
-    --duration-base:          200ms;
-    --duration-slow:          300ms;
-
+    color-scheme: dark;
   }
 
-  /* ── Base resets ──────────────────────────────────────────── */
+  /* A night stage: dark tokens for everything inside, whatever the site theme (used by /why). */
+  .stage {
+    --background: 0 0 0;
+    --foreground: 245 245 247;
+    --tint: 22 22 23;
+    --card: 28 28 30;
+    --card-foreground: 245 245 247;
+    --popover: 28 28 30;
+    --popover-foreground: 245 245 247;
+    --primary-ink: 232 137 12;
+    --primary-foreground: 29 29 31;
+    --secondary: 44 44 46;
+    --secondary-foreground: 245 245 247;
+    --muted: 44 44 46;
+    --muted-foreground: 161 161 166;
+    --border: 56 56 58;
+    --input: 124 124 128;
+    --ring: 232 137 12;
+    --surface: 0 0 0;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px -4px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 2px 6px rgb(0 0 0 / 0.5), 0 24px 48px -16px rgb(0 0 0 / 0.8);
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    color-scheme: dark;
+  }
+  .stage .tint { --card: 36 36 38; }
+
+  /* An alternate section ground; panels inside it turn to the plain ground so they still lift. */
+  .tint {
+    --surface: var(--tint);
+    --card: var(--background);
+    background-color: rgb(var(--tint));
+    color: rgb(var(--foreground));
+  }
+  .dark .tint {
+    --card: 36 36 38; /* #242426 */
+  }
+
+  /* A soft rounded surface: cards, notices, form containers, empty states. */
+  .panel {
+    --surface: var(--card);
+    background-color: rgb(var(--card));
+    color: rgb(var(--card-foreground));
+    border-radius: var(--radius-lg);
+  }
+
+  @media (min-width: 640px) {
+    :root { --gutter: 28px; }
+  }
+  @media (min-width: 1024px) {
+    :root { --gutter: 48px; --header-h: 56px; }
+  }
+  @media (min-width: 1440px) {
+    :root { --gutter: 64px; }
+  }
+
+  /* ── Base ────────────────────────────────────────────── */
   * {
     @apply border-border;
   }
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: var(--font-outfit), sans-serif;
-    overflow-x: hidden;
-    max-width: 100vw;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.006em;
+    overflow-x: clip;
+    caret-color: rgb(var(--primary));
+    scrollbar-color: rgb(var(--muted-foreground) / 0.5) transparent;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-unbounded), sans-serif;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  code, kbd, samp, pre, time, .tabular {
+    font-variant-numeric: tabular-nums;
   }
 
   ::selection {
-    background-color: rgb(var(--primary));
-    color: rgb(var(--primary-foreground));
+    background-color: rgb(var(--primary) / 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--ring));
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
 @layer components {
-  .pause-animation:hover {
-    animation-play-state: paused;
+  /* Type: tight tracking that grows with size, leading that shrinks with it. */
+  .text-display, .text-display-sm { overflow-wrap: break-word; }
+  .text-display {
+    font-weight: 700;
+    font-size: clamp(2.75rem, 11vw, 6.5rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
   }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0);
+  .text-display-sm {
+    font-weight: 700;
+    font-size: clamp(2rem, 6.5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.038em;
   }
-  25% {
-    transform: translate(5%, 15%);
+  .text-subhead {
+    font-weight: 650;
+    font-size: clamp(1.375rem, 3.4vw, 1.875rem);
+    line-height: 1.15;
+    letter-spacing: -0.028em;
   }
-  50% {
-    transform: translate(10%, 5%);
+  .text-headline {
+    font-weight: 600;
+    font-size: clamp(1.125rem, 2vw, 1.3125rem);
+    line-height: 1.25;
+    letter-spacing: -0.018em;
   }
-  75% {
-    transform: translate(5%, 15%);
+  .text-lead {
+    font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+    line-height: 1.5;
+    letter-spacing: -0.012em;
   }
-}
-
-.animate-float {
-  animation: float infinite var(--ease-in-out);
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  .text-caption {
+    font-size: 0.9375rem;
+    line-height: 1.5;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  /* Meta: dates, stacks, counts. Small, medium weight, tabular. */
+  .text-meta {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
   }
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+  .px-gutter {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
   }
-  to {
-    opacity: 1;
+  .mx-gutter {
+    margin-left: var(--gutter);
+    margin-right: var(--gutter);
   }
-}
 
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
+  /* Floating chrome: translucent, content scrolls under it. */
+  .material {
+    background-color: rgb(var(--background) / 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  @media (prefers-reduced-transparency: reduce) {
+    .material {
+      background-color: rgb(var(--background));
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
-}
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s var(--ease-out) forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s var(--ease-out) forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.5s var(--ease-out) forwards;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.6s var(--ease-out) forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.6s var(--ease-out) forwards;
-}
-
-.animate-shimmer {
-  animation: shimmer 2s infinite linear;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  background-size: 1000px 100%;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s var(--ease-in-out) infinite;
-}
-
-.delay-100 {
-  animation-delay: 100ms;
-}
-
-.delay-200 {
-  animation-delay: 200ms;
-}
-
-.delay-300 {
-  animation-delay: 300ms;
-}
-
-.delay-400 {
-  animation-delay: 400ms;
-}
-
-.delay-500 {
-  animation-delay: 500ms;
-}
-
-.delay-600 {
-  animation-delay: 600ms;
-}
-
-.delay-700 {
-  animation-delay: 700ms;
-}
-
-.delay-800 {
-  animation-delay: 800ms;
-}
-
-.prose h2 {
-  margin-top: 2.5rem !important;
-  margin-bottom: 2rem !important;
-  padding-bottom: 1rem !important;
-}
-
-.scrollbar-none {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
-}
-
-/* ── Scroll reveal initial states ─────────────────────────── */
-.reveal-up {
-  opacity: 0;
-  transform: translateY(1.5rem);
-}
-
-.reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(1rem);
+  .scrollbar-none::-webkit-scrollbar { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-up,
-  .reveal-stagger > * {
-    opacity: 1;
-    transform: none;
+  html { scroll-behavior: auto; }
+}
+
+/* ── Motion ──────────────────────────────────────────────────────
+ * Everything here is gated on html.js-motion, which the pre-paint script sets only when
+ * JS runs and reduced motion is off. Content is visible without it.
+ */
+
+/* Intro: the first screen comes into focus once, staggered by --i. */
+@keyframes focus-in {
+  from { opacity: 0; transform: translateY(18px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+html.js-motion [data-intro] {
+  animation: focus-in var(--spring-glide-duration) var(--spring-glide) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 60ms);
+}
+
+/* Reveal: content rises into place as it enters, tied to scroll where supported. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes settle-zoom {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+@supports (animation-timeline: view()) {
+  html.js-motion [data-reveal] {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 90%;
+  }
+  html.js-motion [data-zoom] {
+    animation: settle-zoom linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+}
+@supports not (animation-timeline: view()) {
+  html.js-motion [data-reveal] {
+    transition:
+      opacity 500ms var(--ease-out),
+      transform var(--spring-glide-duration) var(--spring-glide);
+  }
+  html.js-motion [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
   }
 }
 
-/* ── Type scale (replaces inline clamp overuse) ───────────── */
-.text-display {
-  font-size: clamp(3rem, 10vw, 9rem);
-  line-height: 0.88;
+/* ── Ambient light: warm halos that drift, a fading dot grid, an amber spotlight under the pointer ── */
+.ambient-halo {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  will-change: transform;
 }
-.text-display-sm {
-  font-size: clamp(2.4rem, 6vw, 5rem);
-  line-height: 0.95;
+.ambient-halo-a {
+  width: 64vmax; height: 64vmax; top: -30vmax; right: -18vmax;
+  background: radial-gradient(closest-side, rgb(var(--primary) / 0.20), rgb(var(--primary) / 0));
 }
-.text-headline {
-  font-size: clamp(1.05rem, 2vw, 1.3rem);
-  line-height: 1.25;
+.ambient-halo-b {
+  width: 48vmax; height: 48vmax; bottom: -26vmax; left: -16vmax;
+  background: radial-gradient(closest-side, rgb(245 158 11 / 0.13), rgb(245 158 11 / 0));
 }
-.text-subhead {
-  font-size: clamp(1.4rem, 2.8vw, 2.3rem);
-  line-height: 1.15;
+.ambient-halo-c {
+  width: 38vmax; height: 38vmax; top: 18%; left: 30%;
+  background: radial-gradient(closest-side, rgb(251 113 133 / 0.07), rgb(251 113 133 / 0));
 }
-.text-lead {
-  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-  line-height: 1.6;
-}
-.text-caption {
-  font-size: clamp(0.875rem, 1.5vw, 1rem);
-  line-height: 1.5;
-}
+.dark .ambient-halo-a { background: radial-gradient(closest-side, rgb(var(--primary) / 0.26), rgb(var(--primary) / 0)); }
+.dark .ambient-halo-b { background: radial-gradient(closest-side, rgb(245 158 11 / 0.14), rgb(245 158 11 / 0)); }
+.ambient-soft .ambient-halo-a { width: 40vmax; height: 40vmax; top: -22vmax; right: -10vmax; }
+.ambient-soft .ambient-halo-b { width: 30vmax; height: 30vmax; bottom: -18vmax; left: -8vmax; }
+.ambient-soft .ambient-halo-c { display: none; }
 
-/* ── Generic reveal initial state (GPU-only, hides element before GSAP fromTo) ─ */
-.reveal-initial {
+@keyframes drift-a { to { transform: translate3d(-9vmax, 7vmax, 0) scale(1.12); } }
+@keyframes drift-b { to { transform: translate3d(10vmax, -6vmax, 0) scale(1.18); } }
+@keyframes drift-c { to { transform: translate3d(-6vmax, -8vmax, 0) scale(0.9); } }
+html.js-motion .ambient-halo-a { animation: drift-a 26s ease-in-out infinite alternate; }
+html.js-motion .ambient-halo-b { animation: drift-b 33s ease-in-out infinite alternate; }
+html.js-motion .ambient-halo-c { animation: drift-c 41s ease-in-out infinite alternate; }
+
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-image: radial-gradient(rgb(var(--foreground) / 0.13) 1px, transparent 1.2px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 25%, transparent 78%);
+}
+.ambient-spot {
+  background-image: radial-gradient(rgb(var(--primary) / 0.9) 1.2px, transparent 1.6px);
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), #000, transparent 72%);
+  mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), #000, transparent 72%);
   opacity: 0;
+  transition: opacity 500ms var(--ease-out);
 }
-
+.ambient[data-lit] .ambient-spot { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
-  .reveal-initial {
-    opacity: 1 !important;
-    transform: none !important;
-  }
+  .ambient-spot { display: none; }
 }
 
-/* ── Brand color tokens ───────────────────────────────────── */
-.text-brand { color: rgb(var(--primary)); }
-.bg-brand { background-color: rgb(var(--primary)); }
-.border-brand { border-color: rgb(var(--primary)); }
-
-/* ── Reduced motion ────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .animate-fade-in-up,
-  .animate-fade-in,
-  .animate-scale-in,
-  .animate-slide-in-left,
-  .animate-slide-in-right,
-  .animate-shimmer,
-  .animate-pulse-glow,
-  .animate-float {
-    animation: none;
-    transition: none;
-  }
+/* ── Marquee: endless rows that drift sideways, edges fading out ── */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
 }
+.marquee-track { display: flex; width: max-content; }
+@keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
+html.js-motion .marquee-track { animation: marquee var(--marquee-duration, 60s) linear infinite; }
+html.js-motion .marquee-track[data-reverse] { animation-direction: reverse; }
+html.js-motion .marquee:hover .marquee-track,
+html.js-motion .marquee:focus-within .marquee-track,
+html.js-motion .marquee[data-paused] .marquee-track { animation-play-state: paused; }
+/* Edge fade for any horizontally scrolling row (filters). */
+.marquee-edges {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+}
+/* Without motion: one still row you can swipe, no duplicate. */
+html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
+/* Controls that only matter while things move (e.g. a pause button). */
+html:not(.js-motion) .motion-only { display: none; }
+html:not(.js-motion) .marquee-copy { display: none; }
+
+/* Skills note: a pulse of knowledge travelling along a line. */
+@keyframes transfer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(300%); }
+}
+
+/* ── Stage effects (/why): a record that spins, an equalizer that dances, a light that sweeps ── */
+@keyframes vinyl-spin { to { transform: rotate(360deg); } }
+html.js-motion .vinyl-spin { animation: vinyl-spin 9s linear infinite; }
+html.js-motion .group:hover .vinyl-spin { animation-duration: 3s; }
+
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+html.js-motion .eq-bar { animation: eq-bounce var(--eq-speed, 1s) ease-in-out infinite; animation-delay: var(--eq-delay, 0s); }
+
+@keyframes stage-sweep {
+  0%, 100% { transform: translateX(-18%) rotate(-8deg); }
+  50% { transform: translateX(18%) rotate(8deg); }
+}
+html.js-motion .stage-light { animation: stage-sweep 14s ease-in-out infinite; }
+
+/* Theme cross-fade (View Transitions) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+}
+
+/* ── Reading: long-form prose (blog posts, legal pages) ─────────── */
+.prose-article {
+  --tw-prose-body: rgb(var(--foreground) / 0.9);
+  --tw-prose-headings: rgb(var(--foreground));
+  --tw-prose-links: rgb(var(--primary-ink));
+  --tw-prose-bold: rgb(var(--foreground));
+  --tw-prose-quotes: rgb(var(--foreground));
+  --tw-prose-quote-borders: rgb(var(--foreground) / 0.5);
+  --tw-prose-bullets: rgb(var(--foreground));
+  --tw-prose-counters: rgb(var(--muted-foreground));
+  --tw-prose-hr: rgb(var(--foreground) / 0.2);
+  --tw-prose-code: rgb(var(--foreground));
+  --tw-prose-pre-bg: rgb(var(--card));
+  --tw-prose-pre-code: rgb(var(--card-foreground));
+  --tw-prose-captions: rgb(var(--muted-foreground));
+  --tw-prose-kbd: rgb(var(--foreground));
+  --tw-prose-th-borders: rgb(var(--foreground) / 0.4);
+  --tw-prose-td-borders: rgb(var(--foreground) / 0.15);
+  max-width: 68ch;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+.prose-article :where(h2, h3, h4) {
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  scroll-margin-top: 6rem;
+}
+.prose-article :where(h2) { font-size: clamp(1.5rem, 3.6vw, 2rem); line-height: 1.15; margin-top: 3rem; margin-bottom: 1rem; }
+.prose-article :where(h3) { font-size: clamp(1.25rem, 2.6vw, 1.5rem); line-height: 1.2; margin-top: 2.25rem; }
+.prose-article :where(a) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(var(--primary) / 0.5);
+  text-underline-offset: 0.22em;
+  font-weight: 500;
+}
+.prose-article :where(a):hover { text-decoration-color: rgb(var(--primary)); }
+.prose-article :where(blockquote) { border-left-width: 3px; border-left-color: rgb(var(--primary)); font-style: normal; font-size: 1.1875rem; padding-left: 1.25rem; }
+.prose-article :where(code):not(:where(pre code)) {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875em;
+  background: rgb(var(--foreground) / 0.07);
+  padding: 0.1em 0.35em;
+  border-radius: 6px;
+}
+.prose-article :where(code)::before, .prose-article :where(code)::after { content: none; }
+.prose-article :where(pre) {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  background: rgb(var(--card));
+  color: rgb(var(--card-foreground));
+  border: 0;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+}
+.prose-article :where(img) { border-radius: var(--radius-lg); }
+.prose-article :where(table) { font-size: 0.9375rem; }
+.prose-article :where(thead th) { font-size: 0.8125rem; font-weight: 600; }
+
+/* Syntax: ink, amber ink, one cool blue for strings, muted comments. */
+.hljs-comment, .hljs-quote { color: rgb(var(--muted-foreground)); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-type, .hljs-literal { color: rgb(var(--primary-ink)); font-weight: 600; }
+.hljs-string, .hljs-attr, .hljs-template-variable, .hljs-addition { color: rgb(42 74 138); }
+.dark .hljs-string, .dark .hljs-attr, .dark .hljs-template-variable, .dark .hljs-addition { color: rgb(157 180 224); }
+.hljs-number, .hljs-symbol, .hljs-variable, .hljs-title, .hljs-title.function_ { color: rgb(var(--foreground)); font-weight: 600; }
+.hljs-deletion, .hljs-meta { color: rgb(var(--destructive)); }

@@ -41,10 +41,28 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 365,
   },
+  // Lets verification builds write elsewhere (NEXT_DIST_DIR=.next-verify) without disturbing a running dev server.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   compress: true,
   poweredByHeader: false,
+  // /experience was folded into the home page's career section.
+  async redirects() {
+    return [{ source: '/experience', destination: '/#career', permanent: true }];
+  },
   async headers() {
     return [
+      // Baseline hardening for every response. A CSP is left out on purpose: the theme script, JSON-LD and analytics
+      // are inline, so it needs nonces first (and would force every page dynamic for them).
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
+        ],
+      },
       {
         source: '/_next/static/:path*',
         headers: [
@@ -81,12 +99,24 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Share images and app icons change only with a deploy of new files.
       {
-        source: '/:path((?!_next|images|blog/.*\\.webp|docs/components).*)',
+        source: '/:dir(og|icons)/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'no-store, no-cache, must-revalidate, max-age=0',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      // Pages are rendered per visitor (language cookie): always revalidated, never stored by shared caches.
+      // no-cache instead of no-store keeps them eligible for the back/forward cache.
+      {
+        source: '/:path((?!_next|images|og/|icons/|blog/.*\\.webp|docs/components).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'private, no-cache, max-age=0, must-revalidate',
           },
         ],
       },

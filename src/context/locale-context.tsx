@@ -1,7 +1,15 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect, useMemo, useCallback, type ReactNode } from 'react';
-import { type Locale, defaultLocale, locales } from '@/i18n/config';
+import {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useCallback,
+  type ReactNode,
+} from "react";
+import { type Locale, defaultLocale, locales } from "@/i18n/config";
+import { loadMessages } from '@/i18n/client-messages';
 
 interface LocaleContextType {
   locale: Locale;
@@ -18,38 +26,37 @@ export function LocaleProvider({
   initialLocale?: Locale;
 }) {
   const [locale, setLocaleState] = useState<Locale>(
-    initialLocale && locales.includes(initialLocale) ? initialLocale : defaultLocale
+    initialLocale && locales.includes(initialLocale)
+      ? initialLocale
+      : defaultLocale,
   );
 
-  useEffect(() => {
-    const savedLocale = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('NEXT_LOCALE='))
-      ?.split('=')[1] as Locale | undefined;
-
-    if (savedLocale && locales.includes(savedLocale) && savedLocale !== locale) {
-      setLocaleState(savedLocale);
-    }
-  }, [locale]);
-
-  const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale);
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-  }, []);
+  const setLocale = useCallback(
+    (newLocale: Locale) => {
+      const apply = () => {
+        setLocaleState(newLocale);
+        document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+        // Screen readers pick their voice from <html lang>.
+        document.documentElement.lang = newLocale;
+      };
+      // Switch only once the language's messages are here, so the page never shows a mix of both.
+      if (newLocale === initialLocale) apply();
+      else loadMessages(newLocale).then(apply, apply);
+    },
+    [initialLocale],
+  );
 
   const value = useMemo(() => ({ locale, setLocale }), [locale, setLocale]);
 
   return (
-    <LocaleContext.Provider value={value}>
-      {children}
-    </LocaleContext.Provider>
+    <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
   );
 }
 
 export function useLocale() {
   const context = useContext(LocaleContext);
   if (context === undefined) {
-    throw new Error('useLocale must be used within a LocaleProvider');
+    throw new Error("useLocale must be used within a LocaleProvider");
   }
   return context;
 }

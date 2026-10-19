@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { BlogCard } from '@/components/ds/BlogCard';
 
 const meta: Meta<typeof BlogCard> = {
@@ -24,6 +24,11 @@ export const Default: Story = {
   },
 };
 
+export const Stacked: Story = {
+  args: { ...Default.args, layout: 'stack' },
+  decorators: [(Story) => <div className="w-[320px]"><Story /></div>],
+};
+
 export const WithoutImage: Story = {
   args: {
     title: 'Advanced TypeScript Patterns for React Developers',
@@ -41,7 +46,7 @@ export const NewPost: Story = {
     excerpt: 'A comprehensive guide to integrating AI capabilities into your web applications using modern APIs and frameworks.',
     date: 'July 29, 2026',
     tags: ['AI', 'Web Development', 'APIs'],
-    coverImage: '/images/sebastian_alvarez_photo.webp',
+    coverImage: '/images/website_screenshot.webp',
     newLabel: 'New',
   },
 };
@@ -77,7 +82,7 @@ export const CustomLabels: Story = {
     excerpt: 'Explore the latest CSS features and techniques that will transform your styling workflow.',
     date: 'April 15, 2024',
     tags: ['CSS', 'Frontend', 'Styling'],
-    coverImage: '/images/sebastian_alvarez_photo.webp',
+    coverImage: '/images/website_screenshot.webp',
     readMoreLabel: 'Continue reading',
     newLabel: 'Fresh',
   },
@@ -90,4 +95,38 @@ export const Minimal: Story = {
     date: 'March 1, 2024',
     tags: ['Tips', 'Code Quality'],
   },
+};
+
+/** The lead story on the home page: large cover and title, tags as chips. */
+export const Feature: Story = {
+  args: {
+    layout: 'feature',
+    title: 'Modern CSS Techniques for 2024',
+    slug: 'modern-css-techniques',
+    excerpt: 'Explore the latest CSS features and techniques that will transform your styling workflow.',
+    date: 'April 15, 2024',
+    readingTime: 8,
+    tags: ['CSS', 'Frontend', 'Styling'],
+    coverImage: '/images/website_screenshot.webp',
+  },
+  decorators: [(Story) => <div className="max-w-2xl"><Story /></div>],
+};
+
+/** A tight row with a thumbnail, for the list beside the lead story. */
+export const Compact: Story = {
+  args: {
+    layout: 'compact',
+    title: 'Quick Tips for Better Code',
+    slug: 'quick-tips-better-code',
+    date: 'March 1, 2024',
+    readingTime: 4,
+    coverImage: '/images/website_screenshot.webp',
+  },
+  decorators: [(Story) => <div className="max-w-md"><Story /></div>],
+};
+
+/** The lead across a full row on /blog: cover beside the text. */
+export const Wide: Story = {
+  args: { ...Feature.args, layout: 'wide' },
+  decorators: [(Story) => <div className="max-w-5xl"><Story /></div>],
 };

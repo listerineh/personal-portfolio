@@ -53,3 +53,13 @@ firestore-debug.log
 *storybook.log
 storybook-static
 public/docs/components
+
+# impeccable local artifacts
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/build/
+.impeccable/config.local.json
+.impeccable/questions/
+
+# verification builds
+/.next-verify/
