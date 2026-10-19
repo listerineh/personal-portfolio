@@ -61,7 +61,7 @@
     "dotenv": "^16.5.0",
     "gsap": "^3.14.2",
     "lucide-react": "^0.475.0",
-    "next": "^15.5.9",
+    "next": "^15.5.28",
     "next-intl": "^4.8.3",
     "patch-package": "^8.0.0",
     "react": "^18.3.1",
