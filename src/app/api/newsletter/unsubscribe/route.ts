@@ -1,12 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { clientIp, isValidEmail, withinRateLimit } from '@/lib/server/security';
 
 export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
+  // Public and it triggers outgoing email / contact changes: cap it per visitor.
+  if (!(await withinRateLimit(`unsubscribe:${clientIp(request)}`, 10, 60 * 60))) {
+    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+  }
+
   try {
     const { email } = await request.json();
 
-    if (!email || !email.includes('@')) {
+    if (!isValidEmail(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
         { status: 400 }
@@ -29,7 +35,7 @@ export async function POST(request: NextRequest) {
       const contactData = await contactResponse.json();
       
       if (contactResponse.ok) {
-        console.log('Contact unsubscribed successfully:', contactData);
+        console.log('Contact unsubscribed');
       } else {
         console.error('Error unsubscribing contact:', contactData);
         

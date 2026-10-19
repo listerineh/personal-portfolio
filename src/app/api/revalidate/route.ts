@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
+import { hasBearerSecret } from '@/lib/server/security';
 
 export const runtime = 'edge';
 
 export async function POST(request: NextRequest) {
   try {
-    const authHeader = request.headers.get('authorization');
-    const secret = process.env.REVALIDATE_SECRET;
-
-    if (!secret || authHeader !== `Bearer ${secret}`) {
+    if (!hasBearerSecret(request, process.env.REVALIDATE_SECRET)) {
       return NextResponse.json(
         { message: 'Unauthorized' },
         { status: 401 }
@@ -18,7 +16,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { path, type = 'path' } = body;
 
-    if (!path) {
+    if (typeof path !== 'string' || !path.startsWith('/')) {
       return NextResponse.json(
         { message: 'Path is required' },
         { status: 400 }
@@ -45,7 +43,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error revalidating:', error);
     return NextResponse.json(
-      { message: 'Error revalidating', error: String(error) },
+      { message: 'Error revalidating' },
       { status: 500 }
     );
   }

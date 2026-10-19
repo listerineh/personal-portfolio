@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { clientIp, isValidEmail, withinRateLimit } from '@/lib/server/security';
 import { Resend } from 'resend';
 
 export const runtime = 'edge';
@@ -6,11 +7,16 @@ export const runtime = 'edge';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
+  // Public and it triggers outgoing email / contact changes: cap it per visitor.
+  if (!(await withinRateLimit(`subscribe:${clientIp(request)}`, 5, 60 * 60))) {
+    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+  }
+
   try {
     const { email, locale } = await request.json();
     const isEs = locale === 'es';
 
-    if (!email || !email.includes('@')) {
+    if (!isValidEmail(email)) {
       return NextResponse.json(
         { error: 'Invalid email address' },
         { status: 400 }
@@ -33,7 +39,7 @@ export async function POST(request: NextRequest) {
       const contactData = await contactResponse.json();
       
       if (contactResponse.ok) {
-        console.log('Contact created successfully:', contactData);
+        console.log('Contact created');
       } else {
         console.error('Error creating contact:', contactData);
         
