@@ -379,7 +379,8 @@ async function renderWithBrowser(jobs) {
     fs.mkdirSync(path.dirname(job.out), { recursive: true });
     await sharp(png)
       .resize(WIDTH, HEIGHT)
-      .png({ compressionLevel: 9, palette: false })
+      // Quantized PNG: a quarter of the size, still PNG (WebP previews are unreliable on LinkedIn, iMessage, Slack).
+      .png({ palette: true, quality: 90, effort: 10, compressionLevel: 9, dither: 0.6 })
       .toFile(job.out);
     console.log(`✅  ${Math.round(fs.statSync(job.out).size / 1024)} KB`);
   }
