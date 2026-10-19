@@ -70,7 +70,8 @@
       "tests": "Tests",
       "infra": "Infraestructura",
       "rollout": "Desplegando"
-    }
+    },
+    "scrollToCareer": "Bajar a mi experiencia"
   },
   "experience": {
     "title": "Dónde he trabajado",
@@ -372,7 +373,7 @@
     "skipToContent": "Saltar al contenido principal",
     "backToPortfolio": "Volver al Portfolio",
     "heroEyebrow": "El Artista Detrás del Código",
-    "heroWhy": "Por qué",
+    "heroWhy": "¿Por qué",
     "heroSubtitle": "Más allá del código y los algoritmos existe todo un universo de sonido, ritmo y exploración creativa. Aquí nació el nombre.",
     "originBadge": "El Nombre",
     "originHeadline": "No viene del código.",

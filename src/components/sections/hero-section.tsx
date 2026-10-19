@@ -130,7 +130,7 @@ export function HeroSection() {
 
       <a
         href="#career"
-        aria-label={tSala("walkTheWork")}
+        aria-label={t("scrollToCareer")}
         className="absolute bottom-6 left-1/2 inline-flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors duration-snap ease-snap hover:text-foreground md:bottom-8"
       >
         <ChevronDown

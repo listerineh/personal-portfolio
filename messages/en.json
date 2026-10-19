@@ -70,7 +70,8 @@
       "tests": "Tests",
       "infra": "Infrastructure",
       "rollout": "Rolling out"
-    }
+    },
+    "scrollToCareer": "Scroll to my experience"
   },
   "experience": {
     "title": "Where I've worked",
