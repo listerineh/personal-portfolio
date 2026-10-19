@@ -426,6 +426,7 @@ html.js-motion .ambient-halo-c { animation: drift-c 41s ease-in-out infinite alt
 html.js-motion .marquee-track { animation: marquee var(--marquee-duration, 60s) linear infinite; }
 html.js-motion .marquee-track[data-reverse] { animation-direction: reverse; }
 html.js-motion .marquee:hover .marquee-track,
+html.js-motion .marquee:focus-within .marquee-track,
 html.js-motion .marquee[data-paused] .marquee-track { animation-play-state: paused; }
 /* Edge fade for any horizontally scrolling row (filters). */
 .marquee-edges {
@@ -434,6 +435,8 @@ html.js-motion .marquee[data-paused] .marquee-track { animation-play-state: paus
 }
 /* Without motion: one still row you can swipe, no duplicate. */
 html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
+/* Controls that only matter while things move (e.g. a pause button). */
+html:not(.js-motion) .motion-only { display: none; }
 html:not(.js-motion) .marquee-copy { display: none; }
 
 /* Skills note: a pulse of knowledge travelling along a line. */

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Pause } from 'lucide-react';
 import { Button, FilterTag, Marquee, Reveal, Section, SkillTile } from '@/components/ds';
 import { skillCategoryOrder } from '@/lib/data/skill-categories';
 import type { SkillCategory, SkillIconSummary } from '@/types';
@@ -14,6 +14,9 @@ import type { SkillCategory, SkillIconSummary } from '@/types';
 export function SkillsSection({ skills }: { skills: SkillIconSummary[] }) {
   const t = useTranslations('skills');
   const [active, setActive] = useState<SkillCategory | null>(null);
+  // WCAG 2.2.2: anything that keeps moving needs a way to stop it.
+  const [stopped, setStopped] = useState(false);
+  const paused = stopped || active !== null;
 
   // Alternate skills between the rows so each row mixes areas instead of splitting them.
   const [rowA, rowB] = useMemo(
@@ -51,16 +54,26 @@ export function SkillsSection({ skills }: { skills: SkillIconSummary[] }) {
       }
     >
       <Reveal className="grid gap-2">
-        <Marquee label={t('title')} duration={rowA.length * 2.6} paused={active !== null}>
+        <Marquee label={t('title')} duration={rowA.length * 2.6} paused={paused}>
           {tiles(rowA)}
         </Marquee>
-        <Marquee label={t('title')} duration={rowB.length * 2.6} paused={active !== null} reverse>
+        <Marquee label={t('title')} duration={rowB.length * 2.6} paused={paused} reverse>
           {tiles(rowB)}
         </Marquee>
       </Reveal>
 
       <div className="mx-auto mt-10 max-w-[1200px] px-gutter md:mt-12">
         <div role="group" aria-label={t('filterLabel')} className="flex flex-wrap justify-center gap-2">
+          <button
+            type="button"
+            aria-pressed={stopped}
+            aria-label={t('pauseMotion')}
+            title={t('pauseMotion')}
+            onClick={() => setStopped((value) => !value)}
+            className="motion-only inline-flex h-11 w-11 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1] aria-pressed:bg-foreground aria-pressed:text-background motion-reduce:transition-none"
+          >
+            <Pause aria-hidden="true" className="h-4 w-4" />
+          </button>
           {categories.map((category) => (
             <FilterTag
               key={category}

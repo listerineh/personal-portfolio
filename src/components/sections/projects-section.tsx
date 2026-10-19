@@ -26,7 +26,7 @@ export function ProjectsSection({ projects }: { projects: ProjectSummary[] }) {
       }
     >
       <Reveal>
-        <Carousel label={t('title')} previousLabel={tSala('previous')} nextLabel={tSala('next')}>
+        <Carousel label={t('carouselLabel')} previousLabel={tSala('previous')} nextLabel={tSala('next')}>
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}

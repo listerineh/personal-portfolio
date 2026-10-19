@@ -107,7 +107,8 @@
     "transferBody": "Trabajar con IA a diario hace que adoptar herramientas nuevas sea rápido. Llevo lo que sé de una tecnología a otras que aún no he usado: mapeo los conceptos, aprendo sus convenciones con IA como copiloto y entrego con el mismo estándar.",
     "transferFrom": "Lo que sé",
     "transferTo": "Lo que usa tu equipo",
-    "summary": "{skills} tecnologías en {areas} áreas"
+    "summary": "{skills} tecnologías en {areas} áreas",
+    "pauseMotion": "Pausar las filas en movimiento"
   },
   "projects": {
     "title": "Construido y lanzado",
@@ -121,7 +122,8 @@
     "filterAll": "Todos",
     "statusFilter": "Filtrar por estado",
     "technologies": "Tecnologías",
-    "showing": "{shown} de {total} proyectos"
+    "showing": "{shown} de {total} proyectos",
+    "carouselLabel": "Proyectos, uno por uno"
   },
   "project": {
     "featuredProject": "Proyecto Destacado",

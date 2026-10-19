@@ -74,7 +74,7 @@ export function LegalDocument({ sections, tocLabel, className }: LegalDocumentPr
               active === id ? 'bg-foreground/[0.06] text-foreground' : 'text-muted-foreground hover:text-foreground',
             )}
           >
-            <span className={cn('w-5 shrink-0 tabular-nums text-xs font-semibold', active === id ? 'text-primary' : 'text-muted-foreground/70')}>
+            <span className={cn('w-5 shrink-0 tabular-nums text-xs font-semibold', active === id ? 'text-primary' : 'text-muted-foreground')}>
               {String(i + 1).padStart(2, '0')}
             </span>
             <span>{title}</span>

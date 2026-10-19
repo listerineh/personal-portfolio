@@ -46,7 +46,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1200px] px-gutter pb-10 pt-20 md:pt-28">
         <div className="grid gap-12 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-5">
-            <Link href="/" className="inline-flex items-center gap-2.5" aria-label="Sebastian Alvarez">
+            <Link href="/" className="inline-flex items-center gap-2.5" aria-label="listerineh.dev">
               <Mark className="h-9 w-9" />
               <span className="text-xl font-semibold tracking-[-0.02em]">listerineh.dev</span>
             </Link>

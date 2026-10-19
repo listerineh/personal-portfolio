@@ -107,7 +107,8 @@
     "transferBody": "Working with AI every day has made picking up new tools fast. I carry what I know from one technology to ones I haven't used yet: map the concepts, learn the idioms with an AI pair, and ship to the same standard.",
     "transferFrom": "What I know",
     "transferTo": "What your team uses",
-    "summary": "{skills} technologies across {areas} areas"
+    "summary": "{skills} technologies across {areas} areas",
+    "pauseMotion": "Pause the moving rows"
   },
   "projects": {
     "title": "Built and shipped",
@@ -121,7 +122,8 @@
     "filterAll": "All",
     "statusFilter": "Filter by status",
     "technologies": "Technologies",
-    "showing": "{shown} of {total} projects"
+    "showing": "{shown} of {total} projects",
+    "carouselLabel": "Projects, one at a time"
   },
   "project": {
     "featuredProject": "Featured Project",

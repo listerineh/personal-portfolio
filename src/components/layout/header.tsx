@@ -153,7 +153,7 @@ export function Header() {
           href="/"
           onClick={() => closeMenu(false)}
           className="flex shrink-0 items-center gap-2.5"
-          aria-label="Sebastian Alvarez"
+          aria-label="listerineh.dev"
         >
           <Mark className="h-7 w-7" />
           <span className="hidden text-[0.9375rem] font-semibold tracking-[-0.02em] sm:inline">
@@ -229,7 +229,7 @@ export function Header() {
           open ? "flex" : "hidden",
         )}
       >
-        <nav className="flex-1 px-gutter pt-4" aria-label={tCommon("menu")}>
+        <nav className="flex-1 px-gutter pt-4">
           <ul>
             {navItems.map((item, index) => (
               <li
