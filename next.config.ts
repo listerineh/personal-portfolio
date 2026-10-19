@@ -51,6 +51,18 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      // Baseline hardening for every response. A CSP is left out on purpose: the theme script, JSON-LD and analytics
+      // are inline, so it needs nonces first (and would force every page dynamic for them).
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000' },
+        ],
+      },
       {
         source: '/_next/static/:path*',
         headers: [
