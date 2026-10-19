@@ -87,12 +87,24 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Share images and app icons change only with a deploy of new files.
       {
-        source: '/:path((?!_next|images|blog/.*\\.webp|docs/components).*)',
+        source: '/:dir(og|icons)/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'no-store, no-cache, must-revalidate, max-age=0',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      // Pages are rendered per visitor (language cookie): always revalidated, never stored by shared caches.
+      // no-cache instead of no-store keeps them eligible for the back/forward cache.
+      {
+        source: '/:path((?!_next|images|og/|icons/|blog/.*\\.webp|docs/components).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'private, no-cache, max-age=0, must-revalidate',
           },
         ],
       },
