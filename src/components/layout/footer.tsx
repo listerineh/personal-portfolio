@@ -121,6 +121,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/unsubscribe" className={smallLink}>
+                {tFooter("unsubscribe")}
+              </Link>
+            </li>
+            <li>
               <Link href="/docs/components" className={smallLink}>
                 {t("components")}
               </Link>

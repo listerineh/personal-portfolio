@@ -275,7 +275,8 @@
     "failedMessage": "Failed to subscribe. Please try again later.",
     "secureLabel": "Secure",
     "privateLabel": "Private",
-    "dontMissNextPost": "Don't miss the next post"
+    "dontMissNextPost": "Don't miss the next post",
+    "unsubscribeLink": "Unsubscribe"
   },
   "share": {
     "shareArticle": "Share Article",
@@ -609,6 +610,7 @@
     "groupAbout": "About me",
     "groupConnect": "Connect",
     "tagline": "Full-stack engineer building AI agents, cloud platforms and web products. Based in Quito, working remotely.",
-    "available": "Open to new projects"
+    "available": "Open to new projects",
+    "unsubscribe": "Unsubscribe from the newsletter"
   }
 }

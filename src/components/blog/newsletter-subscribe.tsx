@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { Button, Input, Ambient } from '@/components/ds';
 import { Mail, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
@@ -130,7 +131,13 @@ export function NewsletterSubscribe({ variant = 'default' }: NewsletterSubscribe
       </Button>
       {feedback}
       <p className="text-meta text-muted-foreground">
-        {t('secureLabel')} · {t('privateLabel')}
+        {t('secureLabel')} · {t('privateLabel')} ·{' '}
+        <Link
+          href="/unsubscribe"
+          className="underline decoration-foreground/30 underline-offset-[0.2em] transition-colors duration-snap ease-snap hover:text-foreground hover:decoration-foreground motion-reduce:transition-none"
+        >
+          {t('unsubscribeLink')}
+        </Link>
       </p>
     </form>
   );

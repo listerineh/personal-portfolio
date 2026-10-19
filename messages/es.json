@@ -275,7 +275,8 @@
     "failedMessage": "Error al suscribirse. Por favor intenta más tarde.",
     "secureLabel": "Seguro",
     "privateLabel": "Privado",
-    "dontMissNextPost": "No te pierdas la próxima publicación"
+    "dontMissNextPost": "No te pierdas la próxima publicación",
+    "unsubscribeLink": "Darse de baja"
   },
   "share": {
     "shareArticle": "Compartir Artículo",
@@ -609,6 +610,7 @@
     "groupAbout": "Sobre mí",
     "groupConnect": "Conecta",
     "tagline": "Ingeniero full-stack que construye agentes de IA, plataformas cloud y productos web. Desde Quito, trabajando en remoto.",
-    "available": "Disponible para nuevos proyectos"
+    "available": "Disponible para nuevos proyectos",
+    "unsubscribe": "Darse de baja del newsletter"
   }
 }
