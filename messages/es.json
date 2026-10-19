@@ -563,14 +563,21 @@
   "unsubscribe": {
     "badge": "Newsletter",
     "title": "Cancelar Suscripción al Newsletter",
-    "description": "Ingresa tu correo electrónico para cancelar la suscripción al newsletter. Ya no recibirás actualizaciones sobre nuevos posts, insights de ingeniería y contenido tecnológico.",
+    "description": "Usa el enlace para darte de baja al final de cualquier correo del newsletter, o escribe tu dirección y te mando un enlace para confirmar.",
     "emailLabel": "Correo Electrónico",
     "unsubscribeButton": "Cancelar Suscripción",
     "unsubscribing": "Cancelando...",
     "successMessage": "Has sido eliminado exitosamente del newsletter.",
     "errorMessage": "No se pudo cancelar la suscripción. Por favor verifica tu correo e intenta nuevamente.",
     "backToHome": "Volver al Inicio",
-    "tryAgain": "Intentar de Nuevo"
+    "tryAgain": "Intentar de Nuevo",
+    "confirmIntro": "Confirma abajo y esta dirección deja de recibir el newsletter.",
+    "confirmFor": "¿Dar de baja {email}?",
+    "sendLink": "Envíame un enlace",
+    "sending": "Enviando…",
+    "linkSent": "Si esa dirección está suscrita, te llegará un enlace de confirmación. Revisa tu bandeja.",
+    "invalidLink": "Este enlace ya no es válido. Escribe tu dirección y te mando uno nuevo.",
+    "tooMany": "Demasiados intentos. Inténtalo de nuevo en un rato."
   },
   "sala": {
     "entrance": "Entrada",

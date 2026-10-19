@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { escapeHtml, hasBearerSecret, isValidSlug } from '@/lib/server/security';
+import { escapeHtml, hasBearerSecret, isValidSlug, listUnsubscribeHeaders, unsubscribeLinks } from '@/lib/server/security';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -68,9 +68,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'No subscribers found' }, { status: 200 });
     }
 
+    // Each subscriber gets their own signed unsubscribe link.
+    const recipients = await Promise.all(emails.map(async (email) => ({ email, links: await unsubscribeLinks(email) })));
+
     const { error } = await resend.batch.send(
-      emails.map((email: string) => ({
+      recipients.map(({ email, links }) => ({
         from: 'Sebastian Alvarez <hello@listerineh.dev>',
+        headers: links ? listUnsubscribeHeaders(links.oneClick) : undefined,
         to: email,
         subject: `New Blog Post: ${rawTitle}`,
         html: `
@@ -149,9 +153,10 @@ export async function POST(request: Request) {
                           <p style="margin: 0 0 6px; font-size: 12px; color: rgba(255,255,255,0.25);">
                             You're receiving this because you subscribed at / Recibes esto porque te suscribiste en <strong style="color: rgba(251,191,36,0.5);">listerineh.dev</strong>
                           </p>
-                          <p style="margin: 0; font-size: 12px; color: rgba(255,255,255,0.2);">
+                          <p style="margin: 0 0 6px; font-size: 12px; color: rgba(255,255,255,0.2);">
                             — Sebastian Alvarez
                           </p>
+                          ${links ? `<p style="margin: 0; font-size: 11px;"><a href="${escapeHtml(links.page)}" style="color: rgba(251,191,36,0.5); text-decoration: none;">Unsubscribe / Cancelar suscripción</a></p>` : ''}
                         </td>
                       </tr>
                     </table>

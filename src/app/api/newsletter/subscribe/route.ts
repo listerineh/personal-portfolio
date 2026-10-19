@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { clientIp, isValidEmail, withinRateLimit } from '@/lib/server/security';
+import { clientIp, escapeHtml, isValidEmail, listUnsubscribeHeaders, unsubscribeLinks, withinRateLimit } from '@/lib/server/security';
 import { Resend } from 'resend';
 
 export const runtime = 'edge';
@@ -53,8 +53,12 @@ export async function POST(request: NextRequest) {
       console.error('Exception creating contact:', contactError);
     }
 
+    const links = await unsubscribeLinks(email);
+    const unsubscribeHref = escapeHtml(links?.page ?? 'https://listerineh.dev/unsubscribe');
+
     const { error } = await resend.emails.send({
       from: 'Sebastian Alvarez <hello@listerineh.dev>',
+      headers: links ? listUnsubscribeHeaders(links.oneClick) : undefined,
       to: email,
       subject: isEs ? '¡Bienvenido a mi newsletter!' : 'Welcome to my newsletter!',
       html: `
@@ -115,7 +119,7 @@ export async function POST(request: NextRequest) {
                           — Sebastian Alvarez
                         </p>
                         <p style="margin: 0; font-size: 11px; color: rgba(255,255,255,0.15);">
-                          <a href="https://listerineh.dev/unsubscribe" style="color: rgba(251,191,36,0.4); text-decoration: none;">${isEs ? 'Cancelar suscripción' : 'Unsubscribe'}</a>
+                          <a href="${unsubscribeHref}" style="color: rgba(251,191,36,0.4); text-decoration: none;">${isEs ? 'Cancelar suscripción' : 'Unsubscribe'}</a>
                         </p>
                       </td>
                     </tr>

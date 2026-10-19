@@ -76,3 +76,44 @@ export function isValidEmail(email: unknown): email is string {
     EMAIL_PATTERN.test(email)
   );
 }
+
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
+
+function base64url(bytes: ArrayBuffer): string {
+  let binary = '';
+  for (const byte of new Uint8Array(bytes)) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+/**
+ * Signed proof that an unsubscribe request comes from the mailbox itself: HMAC-SHA256 of the address, keyed with
+ * NEWSLETTER_SECRET (domain-separated so it can never double as the blast credential). Null when the secret is unset.
+ */
+export async function unsubscribeToken(email: string): Promise<string | null> {
+  const secret = process.env.NEWSLETTER_SECRET;
+  if (!secret) return null;
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`unsubscribe:${email.trim().toLowerCase()}`));
+  return base64url(signature);
+}
+
+export async function verifyUnsubscribeToken(email: string, token: string): Promise<boolean> {
+  const expected = await unsubscribeToken(email);
+  if (!expected || token.length !== expected.length) return false;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ token.charCodeAt(i);
+  return diff === 0;
+}
+
+/** The page link (people confirm with a button) and the RFC 8058 one-click endpoint for mail clients. */
+export async function unsubscribeLinks(email: string): Promise<{ page: string; oneClick: string } | null> {
+  const token = await unsubscribeToken(email);
+  if (!token) return null;
+  const query = `email=${encodeURIComponent(email)}&token=${token}`;
+  return { page: `${SITE}/unsubscribe?${query}`, oneClick: `${SITE}/api/newsletter/unsubscribe?${query}` };
+}
+
+/** Headers that give mail clients a native "Unsubscribe" button (required by Gmail and Yahoo for bulk senders). */
+export function listUnsubscribeHeaders(oneClick: string): Record<string, string> {
+  return { 'List-Unsubscribe': `<${oneClick}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' };
+}

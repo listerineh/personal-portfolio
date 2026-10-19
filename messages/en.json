@@ -563,14 +563,21 @@
   "unsubscribe": {
     "badge": "Newsletter",
     "title": "Unsubscribe from Newsletter",
-    "description": "Enter your email address to unsubscribe from the newsletter. You'll no longer receive updates about new blog posts, engineering insights, and tech content.",
+    "description": "Use the Unsubscribe link at the bottom of any newsletter email, or enter your address and I'll send you a link to confirm.",
     "emailLabel": "Email Address",
     "unsubscribeButton": "Unsubscribe",
     "unsubscribing": "Unsubscribing...",
     "successMessage": "You have been successfully unsubscribed from the newsletter.",
     "errorMessage": "Failed to unsubscribe. Please check your email and try again.",
     "backToHome": "Back to Home",
-    "tryAgain": "Try Again"
+    "tryAgain": "Try Again",
+    "confirmIntro": "Confirm below and this address stops receiving the newsletter.",
+    "confirmFor": "Unsubscribe {email}?",
+    "sendLink": "Email me a link",
+    "sending": "Sending…",
+    "linkSent": "If that address is subscribed, a confirmation link is on its way. Check your inbox.",
+    "invalidLink": "This link isn't valid anymore. Enter your address and I'll send you a new one.",
+    "tooMany": "Too many attempts. Please try again in a while."
   },
   "sala": {
     "entrance": "Entrance",
