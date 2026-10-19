@@ -94,7 +94,7 @@ export default async function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <LocaleProvider initialLocale={initialLocale}>
-          <IntlProviderWrapper initialMessages={messages}>
+          <IntlProviderWrapper initialLocale={initialLocale} initialMessages={messages}>
             <ThemeProvider>
               <ScrollRestoration />
               {children}

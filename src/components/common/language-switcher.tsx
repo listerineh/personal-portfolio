@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { locales, localeNames, type Locale } from '@/i18n/config';
 import { useLocale } from '@/context/locale-context';
 import { cn } from '@/lib/utils';
+import { loadMessages } from '@/i18n/client-messages';
 
 /** Segmented control: EN / ES, the current one raised on a light thumb. */
 export function LanguageSwitcher({ className }: { className?: string }) {
@@ -22,6 +23,9 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           type="button"
           lang={loc}
           onClick={() => switchLocale(loc)}
+          // Fetch the other language while the pointer is on its way, so the switch feels instant.
+          onPointerEnter={() => loc !== locale && void loadMessages(loc)}
+          onFocus={() => loc !== locale && void loadMessages(loc)}
           aria-pressed={locale === loc}
           aria-label={localeNames[loc]}
           className={cn(

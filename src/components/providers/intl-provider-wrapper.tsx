@@ -1,25 +1,27 @@
-'use client';
+"use client";
 
-import { NextIntlClientProvider, type AbstractIntlMessages } from 'next-intl';
-import { useLocale } from '@/context/locale-context';
-import enMessages from '../../../messages/en.json';
-import esMessages from '../../../messages/es.json';
+import { NextIntlClientProvider, type AbstractIntlMessages } from "next-intl";
+import { useLocale } from "@/context/locale-context";
+import { loadedMessages } from "@/i18n/client-messages";
+import type { Locale } from "@/i18n/config";
 
 interface IntlProviderWrapperProps {
   children: React.ReactNode;
+  initialLocale: Locale;
   initialMessages: AbstractIntlMessages;
 }
 
-const messagesMap = {
-  en: enMessages,
-  es: esMessages,
-} as const;
-
-export function IntlProviderWrapper({ children, initialMessages }: IntlProviderWrapperProps) {
+export function IntlProviderWrapper({
+  children,
+  initialLocale,
+  initialMessages,
+}: IntlProviderWrapperProps) {
   const { locale } = useLocale();
-  // Messages follow the active locale directly; no state to keep in sync.
-  // The JSON includes arrays read via t.raw(), which AbstractIntlMessages does not model.
-  const messages = (messagesMap[locale as keyof typeof messagesMap] as unknown as AbstractIntlMessages | undefined) ?? initialMessages;
+  // The server's language comes with the page; the other one is loaded by setLocale before the switch happens.
+  const messages =
+    locale === initialLocale
+      ? initialMessages
+      : (loadedMessages(locale) ?? initialMessages);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages} timeZone="UTC">
