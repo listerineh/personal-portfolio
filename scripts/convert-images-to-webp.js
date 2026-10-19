@@ -43,13 +43,19 @@ async function convertToWebP(filePath) {
   }
 }
 
+// Must stay PNG/JPG: share images (WebP previews are unreliable on LinkedIn, iMessage, Slack), app icons
+// (manifest and apple-touch-icon), and the Storybook build.
+const SKIP_DIRS = ['og', 'icons', 'docs'].map((dir) => path.join(publicDir, dir));
+
 async function scanDirectory(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     
-    if (entry.isDirectory()) {
+    if (entry.isDirectory() && SKIP_DIRS.includes(fullPath)) {
+      console.log(`⏭️  Skipped folder: ${path.relative(publicDir, fullPath)}/`);
+    } else if (entry.isDirectory()) {
       await scanDirectory(fullPath);
     } else if (entry.isFile()) {
       await convertToWebP(fullPath);
