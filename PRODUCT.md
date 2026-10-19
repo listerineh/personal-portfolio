@@ -30,7 +30,7 @@ Full-stack senior engineer with an applied-AI focus: backend systems, cloud infr
 
 ## Capabilities and Constraints
 
-- Next.js 15 App Router, Tailwind, GSAP + ScrollTrigger, next-intl, Storybook for the design system in `src/components/ds`.
+- Next.js 15 App Router, Tailwind 3, next-intl, Storybook for the design system in `src/components/ds`. Motion is CSS springs and scroll-driven animation; GSAP only for the draggable hero deck.
 - All UI built from `src/components/ds`; no ad-hoc components outside it.
 - Content (projects, posts, experience) must not change during the redesign. Exception approved on 2026-10-15: hero and metadata copy (EN+ES) may be rewritten toward "full-stack + applied AI".
 - Responsive from 360px; loading, empty, and error states designed.
@@ -44,7 +44,7 @@ Full-stack senior engineer with an applied-AI focus: backend systems, cloud infr
 ## Evidence on Hand
 
 - Projects: `src/lib/data/projects.ts`. Blog posts: `src/lib/data/blog/*.ts`.
-- Photos: `public/images/hero-photo.webp`, `sebastian_alvarez_photo.webp`, `sebas-playing.webp`, `footer-photo.webp`.
+- Photos: `public/images/hero-photo.webp`, `sebas-playing.webp`, `sebas-playing-footer.webp`, `footer-photo.webp`. (`sebastian_alvarez_photo.webp` was removed by the owner; don't reintroduce a portrait in the hero.)
 - Employer and community logos: Informat, Blue Express, Galileo Financial Technologies, ioet, GDG Quito (`public/images/*_logo.webp`).
 - No testimonials, client metrics, or benchmarks exist; do not invent any.
 
@@ -57,4 +57,4 @@ Full-stack senior engineer with an applied-AI focus: backend systems, cloud infr
 
 ## Accessibility & Inclusion
 
-WCAG 2.1 AA contrast in both themes, visible focus, and `prefers-reduced-motion` respected in all GSAP animation.
+WCAG 2.2 AA: contrast in both themes, visible focus, `prefers-reduced-motion` respected by every animation (motion only under `html.js-motion`), a way to pause anything that keeps moving, and `<html lang>` that follows the language switch.

@@ -11,7 +11,7 @@ const meta: Meta<typeof NewsletterSubscribe> = {
 export default meta;
 type Story = StoryObj<typeof NewsletterSubscribe>;
 
-/** A plaque notice pinned between written works. Submitting hits the mocked subscribe route. */
+/** A softly lit panel between posts. Submitting hits the mocked subscribe route. */
 export const Default: Story = { args: { variant: 'default' } };
 
 export const Compact: Story = { args: { variant: 'compact' } };

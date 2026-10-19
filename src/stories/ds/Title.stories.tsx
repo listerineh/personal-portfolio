@@ -28,8 +28,8 @@ export const WorkTitle: Story = {
   args: { as: 'h3', size: 'work', children: 'OpenStage' },
 };
 
-/** On a painted wall the title picks up the wall foreground automatically. */
-export const OnWall: Story = {
+/** On a tint band the title keeps the ink token; no per-surface color needed. */
+export const OnTint: Story = {
   render: () => (
     <Band className="py-16">
       <Title as="h1" size="display">

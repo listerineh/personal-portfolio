@@ -41,5 +41,5 @@ const meta: Meta<typeof BlogPostContent> = {
 export default meta;
 type Story = StoryObj<typeof BlogPostContent>;
 
-/** Prose at 68ch with Sala headings, amber-underlined links, plaque code blocks and the syntax palette. */
+/** Article prose (`.prose-article`): Geist headings, amber-underlined links, rounded code blocks and the syntax palette. */
 export const Default: Story = {};

@@ -11,7 +11,7 @@ const meta: Meta<typeof CookieBanner> = {
 export default meta;
 type Story = StoryObj<typeof CookieBanner>;
 
-/** Plaque notice pinned to the bottom edge. Shows while no consent cookie exists; clear cookies to see it again. */
+/** Floating panel pinned to the bottom edge. Shows while no consent cookie exists; clear cookies to see it again. */
 export const Default: Story = {
   render: () => (
     <div className="min-h-[60vh] p-8">

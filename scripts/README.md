@@ -1,100 +1,69 @@
 # Scripts
 
-## Service Worker Cache Management
+Run from the repository root. Scripts that render HTML (`generate-og-images.js` pages/projects, `generate-project-images.js`) need Playwright's Chromium: run `npm run test:setup` once.
 
-### Update Service Worker Version
+## Images
 
-Automatically updates the Service Worker cache version with a timestamp to force cache invalidation for all users.
+### `generate-og-images.js` — share images and app icons
 
-**Usage:**
 ```bash
-npm run update-sw
+node scripts/generate-og-images.js            # everything
+node scripts/generate-og-images.js pages      # public/og/<page>.png (one per page in src/lib/metadata.ts)
+node scripts/generate-og-images.js projects   # public/og/projects/<slug>.png (from src/lib/data/projects.ts)
+node scripts/generate-og-images.js covers     # public/og/blog/<slug>.jpg (each post cover on a blurred backdrop)
+node scripts/generate-og-images.js icons      # public/icons/*.png from public/favicon.svg
+node scripts/generate-og-images.js about      # a single page by id
 ```
 
-**What it does:**
-- Updates `CACHE_NAME` in `public/sw.js` with current timestamp
-- Format: `listerineh-portfolio-2026-03-11T00-40-30`
-- Forces all browsers to download fresh content on next visit
+- 1200×630. Pages and projects are rendered with Playwright and saved as quantized PNG; covers and icons use Sharp only (no browser).
+- Share images stay PNG/JPG on purpose: WebP previews are unreliable on LinkedIn, iMessage and Slack.
+- Adding a page: add its copy to `PAGES` in `src/lib/metadata.ts` and a template here, then run it by id.
 
-**Automatic execution:**
-- Runs automatically before every `npm run build` (via `prebuild` script)
-- Ensures cache is busted on every deployment
+### `generate-project-images.js` — project product shots
 
-**Manual execution:**
 ```bash
-node scripts/update-sw-version.js
+node scripts/generate-project-images.js            # all projects
+node scripts/generate-project-images.js openstage  # one project
 ```
 
-**When to use:**
-- Automatically: Every deployment (already configured)
-- Manually: When you want to force cache refresh without deploying
+Writes `public/projects/<slug>.webp` at 2400×1800 (4:3, 2x): a pastel ground per project with a product window and a floating card, in the site's Lumen style.
 
-**Example output:**
-```
-✅ Service Worker cache version updated
-   Old: listerineh-portfolio-v2-2026-03-11
-   New: listerineh-portfolio-2026-03-11T00-40-30
-```
+### `convert-images-to-webp.js` / `convert-heic-to-webp.js`
 
----
-
-## Blog Notification Scripts
-
-### Extract Blog Data
-
-Extracts metadata from a blog post file for use in notifications.
-
-**Usage:**
 ```bash
-node scripts/extract-blog-data.js <blog-file-path>
+npm run convert-images   # .jpg/.jpeg/.png in public/ -> .webp
+npm run convert-heic     # .heic -> .webp
 ```
 
-**Example:**
+- **Both delete the original file after converting.** Commit or back up first.
+- `convert-images` walks all of `public/` recursively but skips `public/og`, `public/icons` and `public/docs`, which must stay PNG/JPG. Files that already have a `.webp` next to them are skipped.
+- Update the code that references a converted image.
+
+## Newsletter
+
+### `send-blog-notification.js`
+
+```bash
+NEWSLETTER_SECRET=… npm run notify-blog -- --title "Post title" --slug "post-slug" [--excerpt "Summary"] [--image "https://…"]
+```
+
+Calls `POST /api/newsletter/send-blog-notification` on `NEXT_PUBLIC_SITE_URL` (default `http://localhost:9002`; set it to `https://listerineh.dev` for production) with `Authorization: Bearer $NEWSLETTER_SECRET`. The secret must match the one in the deployment. Every subscribed contact gets the post with a personal signed unsubscribe link.
+
+Normally you don't run this by hand: the `notify-new-blog` workflow does it when a new post lands on `main`.
+
+### `extract-blog-data.js`
+
 ```bash
 node scripts/extract-blog-data.js src/lib/data/blog/my-new-post.ts
 ```
 
-**Output:** JSON with title, slug, excerpt, and imageUrl
+Prints JSON with `title`, `slug`, `excerpt` and an absolute `imageUrl`; used by the `notify-new-blog` workflow.
 
-### Send Blog Notification
+## Build and cache
 
-Manually send a blog notification to all subscribers.
-
-**Usage:**
-```bash
-npm run notify-blog -- --title "Blog Title" --slug "blog-slug" [--excerpt "Description"] [--image "URL"]
-```
-
-**Example:**
-```bash
-npm run notify-blog -- --title "Building with Next.js" --slug "building-with-nextjs" --excerpt "Learn how to build modern apps"
-```
-
-**Note:** This is called automatically by GitHub Actions when a new blog is pushed to main.
-
-## Image Conversion Scripts
-
-### Convert Images to WebP
-
-Converts JPEG, JPG, and PNG images to WebP format for better performance.
-
-**Prerequisites:**
-```bash
-npm install sharp --save-dev
-```
-
-**Usage:**
-```bash
-node scripts/convert-images-to-webp.js
-```
-
-**Features:**
-- Converts `.jpg`, `.jpeg`, and `.png` files to `.webp`
-- Quality set to 85% (good balance between quality and file size)
-- Preserves original files (uncomment lines in script to delete originals)
-- Shows progress with emoji indicators
-
-**After Conversion:**
-1. Update image references in your code from `.jpeg`/`.jpg`/`.png` to `.webp`
-2. Test that all images load correctly
-3. Optionally delete original files if everything works
+| Script | What it does |
+|---|---|
+| `update-sw-version.js` (`npm run update-sw`) | Writes a timestamped `CACHE_NAME` into `public/sw.js`. Runs automatically before every `npm run build` (`prebuild`), which is why `public/sw.js` shows up modified after a local build |
+| `move-storybook.js` | Moves the Storybook build into `public/docs/components` (part of `npm run build:prod`) |
+| `revalidate-cache.sh` | Calls `/api/revalidate` by hand. Needs `REVALIDATE_SECRET`; `SITE_URL` defaults to `https://listerineh.dev`. `./scripts/revalidate-cache.sh` (main pages), `… <slug>` (one post), `… --all` |
+| `setup-playwright.js` (`npm run test:setup`) | Installs the Playwright browsers if they are not cached |

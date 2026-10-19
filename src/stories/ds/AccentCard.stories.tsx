@@ -3,7 +3,7 @@ import { AccentCard } from '@/components/ds/AccentCard';
 import { Band } from '@/components/ds/Surface';
 
 const meta: Meta<typeof AccentCard> = {
-  title: 'DS/AccentCard (Plaque)',
+  title: 'DS/AccentCard',
   component: AccentCard,
   parameters: { layout: 'padded' },
   tags: ['autodocs'],
@@ -13,16 +13,16 @@ export default meta;
 type Story = StoryObj<typeof AccentCard>;
 
 export const Plain: Story = {
-  args: { children: 'A paper plaque: flat, square, ink text.' },
+  args: { children: 'A soft rounded panel with ink text.' },
 };
 
-/** The amber corner marks something live. */
+/** The amber dot marks something live. */
 export const Live: Story = {
   args: { accent: 'amber', children: 'Organizer at GDG Quito since 2022.' },
 };
 
-/** A plaque restores ground tokens, so it reads the same on a painted wall. */
-export const OnWall: Story = {
+/** On a tint band the panel flips to white (`.tint` re-scopes `--card`), so it still separates from the ground. */
+export const OnTint: Story = {
   render: () => (
     <Band className="py-12">
       <AccentCard accent="amber" className="max-w-sm">

@@ -26,15 +26,15 @@ export const Accent: Story = {
 };
 
 export const Lead: Story = {
-  args: { size: 'lg', strength: 'secondary', children: 'A lead paragraph sits under a room title and keeps its measure under 68 characters.' },
+  args: { size: 'lg', strength: 'secondary', children: 'A lead paragraph sits under a section title and keeps its measure under 60 characters.' },
 };
 
-export const OnWall: Story = {
+export const OnTint: Story = {
   render: () => (
     <Band className="space-y-3 py-10">
-      <Text>Primary text on a painted wall.</Text>
-      <Text strength="secondary">Secondary text on a painted wall.</Text>
-      <Text strength="accent">Live amber on a painted wall.</Text>
+      <Text>Primary text on a tint band.</Text>
+      <Text strength="secondary">Secondary text on a tint band.</Text>
+      <Text strength="accent">Amber text on a tint band (primary-ink, AA).</Text>
     </Band>
   ),
 };

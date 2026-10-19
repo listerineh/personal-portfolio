@@ -115,7 +115,8 @@ Springs, never fixed easing curves: `duration-snap ease-snap` for feedback, `dur
 - **Intro** (`data-intro`, staggered by `--i`): the first screen comes into focus once (rise + blur → sharp).
 - **Reveal** (`<Reveal>`): content rises in as it enters; scroll-driven (`animation-timeline: view()`) where supported, IntersectionObserver + spring elsewhere.
 - **Ambient** (`<Ambient>`): drifting warm halos, a fading dot grid, an amber spotlight under the pointer. Hero full, other sections soft or grid-only; mirrored on neighbours.
-- **Interactive objects:** `CardStack` (deck with pointer parallax that deals itself), `RotatingWords`, `Carousel` (native snap, arrows, dots), `RoleExplorer` (tabs pattern), `Marquee` (two rows, opposite directions, pause on hover).
+- **Interactive objects:** `CardStack` (deck with pointer parallax that deals itself; the front card can be grabbed and thrown), `RotatingWords`, `Carousel` (native snap, arrows, dots), `RoleExplorer` (tabs pattern), `Marquee` (two rows, opposite directions, pauses on hover and focus, plus a pause button where it is used: WCAG 2.2.2).
+- **Drag:** the only GSAP in the site is Draggable + Inertia for the hero deck, imported on demand inside `CardStack`. A gentle release springs home, a throw sends the card to the back. Touch drags horizontally only so the page still scrolls.
 - Everything is gated on `html.js-motion` (set pre-paint only when JS runs and reduced motion is off). Reduced motion gets still content, never hidden content.
 
 ## Components

@@ -9,9 +9,9 @@ Tests that verify visual elements are rendered correctly:
 - Image loading and display
 - Text content and typography
 - Layout and positioning
-- Animation readiness (GSAP animations)
+- Animation readiness (reveal and intro animations gated on `html.js-motion`)
 
-**Timeout consideration**: Tests account for GSAP animations with appropriate waits.
+**Timeout consideration**: Tests account for entrance animations with appropriate waits.
 
 ## Layer 2: User Action Tests
 Tests that verify functionality and user interactions:
@@ -25,29 +25,22 @@ Tests that verify functionality and user interactions:
 
 ## Structure
 
-Tests are organized by page/section:
+Specs cover the home page sections, once per form factor:
 
 ```
 tests/
-├── README.md (this file)
-├── pages/
-│   ├── home/
-│   │   ├── hero.rendering.spec.ts      (Layer 1: Hero rendering)
-│   │   ├── hero.actions.spec.ts        (Layer 2: Hero interactions)
-│   │   ├── features.rendering.spec.ts
-│   │   ├── features.actions.spec.ts
-│   │   └── ...
-│   ├── blog/
-│   │   ├── post.rendering.spec.ts
-│   │   ├── post.actions.spec.ts
-│   │   └── ...
-│   └── ...
-└── shared/
-    ├── header.rendering.spec.ts
-    ├── header.actions.spec.ts
-    ├── footer.rendering.spec.ts
-    └── ...
+└── home/
+    ├── desktop/
+    │   ├── hero.rendering.spec.ts / hero.actions.spec.ts
+    │   ├── experience.*.spec.ts   (career section, #career)
+    │   ├── projects.*.spec.ts
+    │   ├── skills.*.spec.ts
+    │   ├── blog.*.spec.ts         (latest articles)
+    │   └── contact.*.spec.ts
+    └── mobile/                    (same files, phone layout)
 ```
+
+Inner pages (/about, /projects, /blog, /contact, /why, …) have no specs yet.
 
 ## Naming Convention
 
@@ -63,11 +56,15 @@ All tests run on:
 ## Running Tests
 
 ```bash
-# Run all tests
+# Once: install browsers
+npm run test:setup
+
+# Run all tests (Playwright starts the app on port 3001 itself via `npm run test:server`;
+# don't start it by hand, reuseExistingServer is off)
 npm run test
 
 # Run specific test file
-npm run test -- tests/pages/home/hero.rendering.spec.ts
+npm run test -- tests/home/desktop/hero.rendering.spec.ts
 
 # Run with UI
 npm run test:ui

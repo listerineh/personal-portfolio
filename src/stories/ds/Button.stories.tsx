@@ -68,11 +68,11 @@ export const WithIcon: Story = {
   },
 };
 
-/** On a painted wall, ink buttons pick up the wall foreground; amber stays the one live action. */
-export const OnWall: Story = {
+/** On a tint band: neutral buttons follow the band's tokens; amber stays the one primary action. */
+export const OnTint: Story = {
   render: () => (
     <Band className="flex flex-wrap gap-3 py-10">
-      <Button accent="amber">Walk the work</Button>
+      <Button accent="amber">See the work</Button>
       <Button variant="secondary">Contact</Button>
       <Button variant="ghost">Download CV</Button>
     </Band>
