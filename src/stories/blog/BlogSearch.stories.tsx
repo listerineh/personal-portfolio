@@ -2,12 +2,13 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 import { BlogSearch } from '@/components/blog/blog-search';
 import { getBlogPosts } from '@/lib/data/blog';
-import type { BlogPost } from '@/types';
+import { toBlogListing } from '@/lib/data/blog/summaries';
+import type { BlogListingPost } from '@/types';
 
-const posts = getBlogPosts('en');
+const posts = getBlogPosts('en').map(toBlogListing);
 
 function SearchWithResults() {
-  const [results, setResults] = useState<BlogPost[]>(posts);
+  const [results, setResults] = useState<BlogListingPost[]>(posts);
   return (
     <div className="grid max-w-3xl gap-8">
       <BlogSearch posts={posts} onFilteredPostsChange={setResults} />

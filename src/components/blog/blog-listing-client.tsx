@@ -5,11 +5,11 @@ import { useTranslations } from 'next-intl';
 import { BlogSearch } from '@/components/blog/blog-search';
 import { NewsletterSubscribe } from '@/components/blog/newsletter-subscribe';
 import { BlogCard, EndOfList, EntrySkeleton, PageHeader, Reveal } from '@/components/ds';
-import type { BlogPost } from '@/types';
+import type { BlogListingPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
 interface BlogListingClientProps {
-  posts: BlogPost[];
+  posts: BlogListingPost[];
 }
 
 /** Every post at once: the newest leads across the row, the rest follow as cards, a newsletter row after the first full row. */
@@ -17,16 +17,16 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
   const t = useTranslations('blog');
   const tCommon = useTranslations('common');
   const minutesLabel = t('readingTime', { minutes: '' }).trim();
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(posts);
+  const [filteredPosts, setFilteredPosts] = useState<BlogListingPost[]>(posts);
   const [isGridLoading, setIsGridLoading] = useState(false);
 
-  const handleFilteredPostsChange = useCallback((newPosts: BlogPost[]) => {
+  const handleFilteredPostsChange = useCallback((newPosts: BlogListingPost[]) => {
     setFilteredPosts(newPosts);
   }, []);
 
   const [lead, ...rest] = filteredPosts;
 
-  const cardProps = (post: BlogPost) => ({
+  const cardProps = (post: BlogListingPost) => ({
     headingLevel: 'h2' as const,
     title: post.title,
     slug: post.slug,

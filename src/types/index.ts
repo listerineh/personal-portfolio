@@ -76,6 +76,9 @@ export interface BlogPost {
 /** A post without its body: what lists and previews need, cheap to send to the client. */
 export type BlogPostSummary = Omit<BlogPost, 'content'> & { readingTime: number };
 
+/** A summary plus the distinct words of its body: enough to search posts without shipping them. */
+export type BlogListingPost = BlogPostSummary & { searchText: string };
+
 /** A project as lists and the home page need it: no long-form story. */
 export type ProjectSummary = Omit<Project, 'longDescription' | 'relevance'>;
 

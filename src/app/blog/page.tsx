@@ -1,5 +1,6 @@
 import { metadataFor } from '@/lib/metadata';
 import { getBlogPosts } from '@/lib/data/blog';
+import { toBlogListing } from '@/lib/data/blog/summaries';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 import { PageShell } from '@/components/layout';
@@ -65,7 +66,7 @@ export default async function BlogListingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <PageShell>
-        <BlogListingClient posts={blogPosts} />
+        <BlogListingClient posts={blogPosts.map(toBlogListing)} />
       </PageShell>
     </>
   );

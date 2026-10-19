@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback, type ReactNode } from 'react
 import { useTranslations } from 'next-intl';
 import { X, Filter, TrendingUp, ArrowUpAZ, ArrowDownAZ, Star, Loader2 } from 'lucide-react';
 import { Button, Dropdown, DropdownTrigger, DropdownContent, DropdownCheckboxItem, DropdownItem, DropdownLabel, DropdownSeparator, FilterTag, SearchField } from '@/components/ds';
-import type { BlogPost } from '@/types';
+import type { BlogListingPost } from '@/types';
 import { RECOMMENDED_SLUGS } from '@/lib/blog-constants';
 
 type SortOption = 'all' | 'recommended' | 'most-viewed' | 'asc' | 'desc';
@@ -12,8 +12,8 @@ type SortOption = 'all' | 'recommended' | 'most-viewed' | 'asc' | 'desc';
 const RECOMMENDED_ORDER = RECOMMENDED_SLUGS;
 
 interface BlogSearchProps {
-  posts: BlogPost[];
-  onFilteredPostsChange: (posts: BlogPost[]) => void;
+  posts: BlogListingPost[];
+  onFilteredPostsChange: (posts: BlogListingPost[]) => void;
   onLoadingChange?: (loading: boolean) => void;
 }
 
@@ -66,13 +66,12 @@ export function BlogSearch({ posts, onFilteredPostsChange, onLoadingChange }: Bl
     let filtered = posts;
 
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
-        post.content.toLowerCase().includes(query) ||
-        post.tags.some(tag => tag.toLowerCase().includes(query))
-      );
+      // Every word of the query has to appear somewhere in the post, in any order.
+      const terms = searchQuery.toLowerCase().split(/\s+/).filter(Boolean);
+      filtered = filtered.filter(post => {
+        const haystack = `${post.title} ${post.excerpt} ${post.tags.join(' ')}`.toLowerCase() + ' ' + post.searchText;
+        return terms.every(term => haystack.includes(term));
+      });
     }
 
     if (selectedTags.length > 0) {
