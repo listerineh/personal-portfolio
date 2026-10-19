@@ -160,7 +160,7 @@ UI text goes in both `messages/en.json` and `messages/es.json`, including `aria-
 
 ## Testing
 
-Playwright specs live in `tests/home/{desktop,mobile}` (see [`tests/README.md`](tests/README.md)). Run `npm run test:setup` once, then `npm run test`; Playwright starts the app on port 3001 itself. Vercel sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`, so deploys never download browsers.
+Playwright specs live in `tests/` (home sections, header, every page in both languages, and the contact/unsubscribe/search flows; see [`tests/README.md`](tests/README.md)). Run `npm run test:setup` once, then `npm run test`; Playwright starts the app on port 3001 itself. Vercel sets `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`, so deploys never download browsers.
 
 ---
 

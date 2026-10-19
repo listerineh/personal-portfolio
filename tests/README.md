@@ -1,51 +1,22 @@
-# Testing Strategy
+# Tests
 
-This project uses a **two-layer testing approach** with Playwright:
-
-## Layer 1: Rendering Tests
-Tests that verify visual elements are rendered correctly:
-- Element visibility and presence
-- Visual properties (colors, dimensions, spacing)
-- Image loading and display
-- Text content and typography
-- Layout and positioning
-- Animation readiness (reveal and intro animations gated on `html.js-motion`)
-
-**Timeout consideration**: Tests account for entrance animations with appropriate waits.
-
-## Layer 2: User Action Tests
-Tests that verify functionality and user interactions:
-- Form filling and validation
-- Button clicks and navigation
-- Data submission (without actual API calls)
-- User interactions (TOC navigation, scrolling)
-- Newsletter signup
-- Cookie acceptance
-- Dynamic content updates
+End-to-end tests with Playwright. They check what a visitor relies on: the content is there in both languages, controls have the right names and states (tabs, pressed toggles, expanded menu), keyboard paths work, and the forms behave. Email delivery and third-party APIs are out of scope; those routes are mocked.
 
 ## Structure
 
-Specs cover the home page sections, once per form factor:
-
 ```
 tests/
-└── home/
-    ├── desktop/
-    │   ├── hero.rendering.spec.ts / hero.actions.spec.ts
-    │   ├── experience.*.spec.ts   (career section, #career)
-    │   ├── projects.*.spec.ts
-    │   ├── skills.*.spec.ts
-    │   ├── blog.*.spec.ts         (latest articles)
-    │   └── contact.*.spec.ts
-    └── mobile/                    (same files, phone layout)
+├── support/setup.ts            open(page, path, locale): language cookie + cookie banner already answered
+├── home/                       one spec per home section (hero, career, projects, skills, articles + contact)
+├── layout/header.spec.ts       navigation, phone menu, language switch, theme
+└── pages/
+    ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on /unsubscribe
+    └── flows.spec.ts           contact form, newsletter unsubscribe, blog search (API routes mocked with page.route)
 ```
 
-Inner pages (/about, /projects, /blog, /contact, /why, …) have no specs yet.
+Each spec runs on every project in `playwright.config.ts` (desktop Chromium, Firefox, WebKit; Pixel 5; iPhone 12). Specs that only make sense on one form factor branch on the `isMobile` fixture. Most specs run with `reducedMotion: 'reduce'` so content is still and assertions don't wait on animations; the marquee pause test opts back into motion.
 
-## Naming Convention
-
-- `*.rendering.spec.ts` - Layer 1 tests (visual/rendering)
-- `*.actions.spec.ts` - Layer 2 tests (user interactions)
+Selectors are roles, accessible names and visible text (the same English copy as `messages/en.json`), not CSS classes, so a restyle doesn't break them but a copy change does.
 
 ## Device Coverage
 
@@ -64,7 +35,10 @@ npm run test:setup
 npm run test
 
 # Run specific test file
-npm run test -- tests/home/desktop/hero.rendering.spec.ts
+npm run test -- tests/home/hero.spec.ts
+
+# One browser only
+npm run test -- --project=chromium
 
 # Run with UI
 npm run test:ui
@@ -75,9 +49,8 @@ npm run test:report
 
 ## Best Practices
 
-1. **Rendering tests** should be quick and focus on visual verification
-2. **Action tests** should simulate realistic user behavior
-3. Use descriptive test names that explain what is being tested
-4. Account for animations and async operations with appropriate waits
-5. Use semantic selectors (roles, labels) over brittle selectors
-6. Keep tests independent - each test should be runnable in isolation
+1. Open pages with `open()` from `tests/support/setup.ts`, never a bare `page.goto`, so language and cookie consent are fixed
+2. Select by role, accessible name or visible text; avoid CSS classes and fixed waits (`waitForTimeout`)
+3. Mock `/api/*` with `page.route` when a flow would send email or write data
+4. Name tests after the behavior a visitor relies on
+5. Keep tests independent: each one runnable on its own
