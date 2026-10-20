@@ -58,7 +58,7 @@ Create `.env.local` with the variables below. Locally you can leave most of them
 
 ## Pages
 
-`/` home (hero, career, projects, skills, latest articles, contact) · `/about` · `/projects` and `/projects/[slug]` · `/skills` · `/blog` and `/blog/[slug]` · `/contact` · `/why` · `/privacy` · `/terms` · `/unsubscribe` · `/docs/components` (Storybook) · `/feed.xml` · `/sitemap.xml` · `/robots.txt`
+`/` home (hero, career, projects, skills, latest articles, contact) · `/about` · `/projects` and `/projects/[slug]` · `/skills` · `/blog` and `/blog/[slug]` · `/contact` · `/why` · `/privacy` · `/terms` · `/newsletter/confirm` · `/unsubscribe` · `/docs/components` (Storybook) · `/feed.xml` · `/sitemap.xml` · `/robots.txt`
 
 `/experience` permanently redirects to `/#career` (the career section lists every role).
 
@@ -77,13 +77,13 @@ src/
 │   ├── blog/ projects/ skills/ contact/   Page-level client components
 │   ├── layout/          Header, footer, PageShell
 │   ├── common/          Language switcher, cookie banner, schema.org, back-to-top, …
-│   ├── email/           Contact email template
 │   └── providers/       next-intl client provider
 ├── context/             Locale and theme contexts
 ├── i18n/                next-intl config, request config, client-side message loading
 ├── lib/
 │   ├── data/            Static content: experiences, projects, skills, blog posts, music, home summaries
-│   ├── server/          API guards (rate limit, secrets, HTML escaping, unsubscribe tokens)
+│   ├── email/           Every email the site sends: one Lumen layout (HTML + plain text) and the templates, EN/ES
+│   ├── server/          API guards (rate limit, secrets, HTML escaping, signed subscribe/unsubscribe links)
 │   └── metadata.ts      Every page's title, description, canonical, Open Graph and Twitter data
 ├── stories/             Storybook stories (+ support/mock-api.ts for the site's /api routes)
 └── types/
@@ -107,7 +107,8 @@ Decisions worth knowing before changing things:
 | Route | Access | Notes |
 |---|---|---|
 | `POST /api/send` | Public | Contact form. Validated with Zod, 5 per hour per IP |
-| `POST /api/newsletter/subscribe` | Public | Creates the Resend contact and sends a welcome email. 5 per hour per IP |
+| `POST /api/newsletter/subscribe` | Public | Double opt-in, step one: emails a signed confirmation link (7 days, HMAC with `NEWSLETTER_SECRET`) and adds nobody. Same answer whether or not the address is subscribed. 5 per hour per IP, 3 per day per address |
+| `POST /api/newsletter/confirm` | Public | Step two, posted by `/newsletter/confirm` after a click: with a valid link, creates the contact (or re-activates one who had unsubscribed) and sends the welcome email. 10 per hour per IP |
 | `POST /api/newsletter/unsubscribe` | Public | Needs a signed link (`email` + `token`, HMAC with `NEWSLETTER_SECRET`); without one it emails a link, same answer whether or not the address is subscribed. Also accepts RFC 8058 one-click POSTs. 10 per hour per IP |
 | `POST /api/newsletter/send-blog-notification` | `Bearer NEWSLETTER_SECRET` | Emails a new post to every subscribed contact, each with its own unsubscribe link and `List-Unsubscribe` headers |
 | `POST /api/revalidate` | `Bearer REVALIDATE_SECRET` | On-demand revalidation of a path |

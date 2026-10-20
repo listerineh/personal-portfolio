@@ -85,24 +85,55 @@ function base64url(bytes: ArrayBuffer): string {
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
+/** HMAC-SHA256 of `message` keyed with NEWSLETTER_SECRET, base64url. Null when the secret is unset. */
+async function sign(message: string): Promise<string | null> {
+  const secret = process.env.NEWSLETTER_SECRET;
+  if (!secret) return null;
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  return base64url(await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(message)));
+}
+
+function sameToken(expected: string | null, token: string): boolean {
+  if (!expected || token.length !== expected.length) return false;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ token.charCodeAt(i);
+  return diff === 0;
+}
+
+const normalize = (email: string) => email.trim().toLowerCase();
+
 /**
  * Signed proof that an unsubscribe request comes from the mailbox itself: HMAC-SHA256 of the address, keyed with
  * NEWSLETTER_SECRET (domain-separated so it can never double as the blast credential). Null when the secret is unset.
  */
 export async function unsubscribeToken(email: string): Promise<string | null> {
-  const secret = process.env.NEWSLETTER_SECRET;
-  if (!secret) return null;
-  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const signature = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`unsubscribe:${email.trim().toLowerCase()}`));
-  return base64url(signature);
+  return sign(`unsubscribe:${normalize(email)}`);
 }
 
 export async function verifyUnsubscribeToken(email: string, token: string): Promise<boolean> {
-  const expected = await unsubscribeToken(email);
-  if (!expected || token.length !== expected.length) return false;
-  let diff = 0;
-  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ token.charCodeAt(i);
-  return diff === 0;
+  return sameToken(await unsubscribeToken(email), token);
+}
+
+/** How long a "confirm your subscription" link works. */
+export const SUBSCRIBE_LINK_DAYS = 7;
+
+/** Signed proof that the mailbox asked to subscribe, valid until `expires` (Unix seconds). */
+export async function subscribeToken(email: string, expires: number): Promise<string | null> {
+  return sign(`subscribe:${normalize(email)}:${expires}`);
+}
+
+/** True for a link signed for this address that hasn't expired yet. */
+export async function verifySubscribeToken(email: string, expires: number, token: string, now = Date.now()): Promise<boolean> {
+  if (!Number.isInteger(expires) || expires * 1000 < now) return false;
+  return sameToken(await subscribeToken(email, expires), token);
+}
+
+/** The /newsletter/confirm link sent after someone subscribes. Null when the secret is unset. */
+export async function subscribeLink(email: string, now = Date.now()): Promise<string | null> {
+  const expires = Math.floor(now / 1000) + SUBSCRIBE_LINK_DAYS * 24 * 60 * 60;
+  const token = await subscribeToken(email, expires);
+  if (!token) return null;
+  return `${SITE}/newsletter/confirm?email=${encodeURIComponent(email)}&expires=${expires}&token=${token}`;
 }
 
 /** The page link (people confirm with a button) and the RFC 8058 one-click endpoint for mail clients. */
