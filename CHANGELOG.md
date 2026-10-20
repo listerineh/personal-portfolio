@@ -5,6 +5,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 ## [Unreleased]
 
 ### Added
+- Content Security Policy on every page: per-request nonce, `'strict-dynamic'` in production, host list on previews (Vercel toolbar), violations reported to `/api/csp-report` and logged. Storybook, API routes and static files are excluded.
+- Playwright: CSP header and nonce checks, and no violations on any page in either language.
 - Pause control in the hero (WCAG 2.2.2): stops the card deck, the rotating words, the drifting halos and the looping dots. Per visit; hidden under reduced motion.
 - `PauseButton` in the design system (with a story), now shared by the hero and the skills rows. `CardStack` and `RotatingWords` take a `paused` prop.
 - Playwright: the hero pause is tested with motion on, using a fake clock.

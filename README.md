@@ -113,8 +113,15 @@ Decisions worth knowing before changing things:
 | `POST /api/revalidate` | `Bearer REVALIDATE_SECRET` | On-demand revalidation of a path |
 | `GET/POST /api/blog/[slug]/views`, `/reactions` | Public | Redis counters, one per IP per hour (views) or day (reactions) |
 | `GET /api/spotify/tracks?ids=` | Public | Spotify oEmbed metadata, up to 10 track ids |
+| `POST /api/csp-report` | Public | CSP violation reports (both `report-uri` and Reporting API formats), logged as `[csp]`. 30 per 10 minutes per IP, always `204` |
 
-Every response carries `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`, `Permissions-Policy` and HSTS (`next.config.ts`). There is no CSP yet: the theme script, JSON-LD and analytics are inline and would need nonces first.
+Every response carries `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`, `Permissions-Policy` and HSTS (`next.config.ts`).
+
+### Content Security Policy
+
+Pages get a CSP with a fresh nonce per request (`src/middleware.ts`, policy in `src/lib/csp.ts`). The root layout puts the nonce on every inline or third-party script; Next.js adds it to its own. In production `script-src` is `'self' 'nonce-…' 'strict-dynamic'`, so anything those scripts load (Vercel Analytics, GA, Hotjar) is trusted and no script hosts are listed. Previews list the script hosts instead, because Vercel's comment toolbar doesn't support `'strict-dynamic'`; development adds `'unsafe-eval'`. API routes, static files and the Storybook build in `/docs/components` get no CSP.
+
+Violations go to `POST /api/csp-report` and show up in the Vercel runtime logs as `[csp] {…}`. **Adding a third-party script, iframe, image host or API?** Add its origin to the matching list in `src/lib/csp.ts`, or it will be blocked.
 
 ---
 

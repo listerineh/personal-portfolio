@@ -11,7 +11,8 @@ tests/
 ├── layout/header.spec.ts       navigation, phone menu, language switch, theme
 └── pages/
     ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on /unsubscribe
-    └── flows.spec.ts           contact form, newsletter unsubscribe, blog search (API routes mocked with page.route)
+    ├── flows.spec.ts           contact form, newsletter unsubscribe, blog search (API routes mocked with page.route)
+    └── csp.spec.ts             CSP header and fresh nonce, exclusions, report endpoint, no violations on any page in EN and ES
 ```
 
 Each spec runs on every project in `playwright.config.ts` (desktop Chromium, Firefox, WebKit; Pixel 5; iPhone 12). Specs that only make sense on one form factor branch on the `isMobile` fixture. Most specs run with `reducedMotion: 'reduce'` so content is still and assertions don't wait on animations; the marquee pause test opts back into motion.
