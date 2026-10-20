@@ -2,13 +2,14 @@
 import type { Metadata } from 'next';
 import { requestLocale, shareMetadata } from '@/lib/metadata';
 import { blogShareImage } from '@/lib/og/blog-image';
-import { getBlogPosts, getBlogPost } from '@/lib/data/blog';
+import { getBlogPost } from '@/lib/data/blog';
 import { notFound } from 'next/navigation';
 import { BlogPostClientPage, type BlogPostVersion } from '@/components/blog/blog-post-client-page';
 import { BlogPostContent } from '@/components/blog/blog-post-content';
 import { BlogStructuredData } from '@/components/blog/blog-structured-data';
 import { ArticleSchema } from '@/components/blog/article-schema';
 import { toBlogSummary } from '@/lib/data/blog/summaries';
+import { adjacentSlugs, relatedSlugs } from '@/lib/data/blog/related';
 import { cookies } from 'next/headers';
 import { defaultLocale, locales, type Locale } from '@/i18n/config';
 
@@ -55,17 +56,26 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   // Every language is rendered here, on the server; the client only switches between them.
+  // Related posts (shared tags + similar text) and the neighbours by date are the same in every language.
+  const related = relatedSlugs(slug);
+  const { previous, next } = adjacentSlugs(slug);
   const versions: Partial<Record<Locale, BlogPostVersion>> = {};
   for (const loc of locales) {
     const localized = getBlogPost(slug, loc);
     if (!localized) continue;
+    const link = (target?: string) => {
+      const neighbour = target ? getBlogPost(target, loc) : undefined;
+      return neighbour ? { href: `/blog/${neighbour.slug}`, title: neighbour.title } : undefined;
+    };
     versions[loc] = {
       post: toBlogSummary(localized),
       body: <BlogPostContent content={localized.content} />,
-      related: getBlogPosts(loc)
-        .filter((candidate) => candidate.slug !== slug)
-        .slice(0, 3)
-        .map(toBlogSummary),
+      related: related.flatMap((target) => {
+        const post = getBlogPost(target, loc);
+        return post ? [toBlogSummary(post)] : [];
+      }),
+      previous: link(previous),
+      next: link(next),
     };
   }
 

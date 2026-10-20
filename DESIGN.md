@@ -136,6 +136,7 @@ All in `src/components/ds`, each with a story in `src/stories/ds`:
 | Fields | `FormField` + `Input` / `Textarea` (page ground on panels, amber focus ring) |
 | Project | `ProjectCard` (one status pill style for all statuses; dot color differs) |
 | Post | `BlogCard` (`feature`, `stack`, `row`, `compact`) |
+| Previous / next post | `PostPager` |
 | Roles | `RoleExplorer` |
 | Shelf of cards | `Carousel` |
 | Skills | `Marquee` + `SkillTile` |
