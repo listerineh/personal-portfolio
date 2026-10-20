@@ -5,7 +5,6 @@ import { type ReactNode } from "react";
 interface AccentCardProps {
   /** `amber` adds the live dot; other accents render as a plain panel. */
   accent?: Accent;
-  animate?: boolean;
   className?: string;
   children: ReactNode;
 }
@@ -13,14 +12,12 @@ interface AccentCardProps {
 /** A soft rounded panel; `amber` marks it with a small live dot. */
 export function AccentCard({
   accent = "neutral",
-  animate,
   className,
   children,
 }: AccentCardProps) {
   return (
     <div
       className={cn(
-        animate && "reveal-up",
         "panel relative p-5 md:p-6",
         className,
       )}
