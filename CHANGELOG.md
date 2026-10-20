@@ -11,6 +11,9 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 - `PauseButton` in the design system (with a story), now shared by the hero and the skills rows. `CardStack` and `RotatingWords` take a `paused` prop.
 - Playwright: the hero pause is tested with motion on, using a fake clock.
 
+### Removed
+- The `animate` prop on `Title`, `Text`, `SectionLabel` and `AccentCard`: it added a `reveal-up` class that no longer exists (scroll motion lives in `<Reveal>`).
+
 ## [3.0.0] - 2026-10-19
 
 The whole site redesigned into **Lumen** ([#67](https://github.com/listerineh/personal-portfolio/pull/67)).

@@ -5,7 +5,6 @@ import { type ReactNode } from "react";
 interface SectionLabelProps {
   /** `amber` marks a live item; other accents render muted. */
   accent?: Accent;
-  animate?: boolean;
   className?: string;
   children: ReactNode;
 }
@@ -16,14 +15,12 @@ interface SectionLabelProps {
  */
 export function SectionLabel({
   accent = "neutral",
-  animate,
   className,
   children,
 }: SectionLabelProps) {
   return (
     <p
       className={cn(
-        animate && "reveal-up",
         "text-meta",
         accent === "amber" ? "text-primary" : "text-muted-foreground",
         className,
