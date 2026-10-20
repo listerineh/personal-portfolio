@@ -47,6 +47,13 @@ npm run test:ui
 npm run test:report
 ```
 
+## CI
+
+`.github/workflows/e2e.yml` runs the suite on every pull request to `main` or `develop` and on every push to `develop`:
+Chromium desktop and Pixel 5 (`chromium`, `Mobile Chrome`) against the production build (`npm run build`, then
+`npm run start -- -p 3001`). Run it by hand from the Actions tab to cover every browser. Failures show up as annotations
+on the PR; the HTML report (with traces for retried tests) is uploaded as the `playwright-report` artifact.
+
 ## Best Practices
 
 1. Open pages with `open()` from `tests/support/setup.ts`, never a bare `page.goto`, so language and cookie consent are fixed

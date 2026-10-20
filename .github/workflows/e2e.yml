@@ -1,0 +1,90 @@
+name: E2E Tests
+
+# Pull requests run Chromium on desktop and phone; a manual run covers every browser in playwright.config.ts.
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      all-browsers:
+        description: 'Run Firefox, WebKit and Mobile Safari too'
+        type: boolean
+        default: true
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+      # The build imports the Resend client; tests mock every /api route, so no real key is needed.
+      RESEND_API_KEY: re_dummy_build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+
+      - name: Select browsers
+        id: browsers
+        run: |
+          if [ "${{ inputs.all-browsers }}" == "true" ]; then
+            echo "install=chromium firefox webkit" >> $GITHUB_OUTPUT
+            echo "projects=" >> $GITHUB_OUTPUT
+          else
+            echo "install=chromium" >> $GITHUB_OUTPUT
+            echo "projects=--project=chromium --project='Mobile Chrome'" >> $GITHUB_OUTPUT
+          fi
+          echo "version=$(node -p "require('@playwright/test/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.browsers.outputs.version }}-${{ steps.browsers.outputs.install }}
+
+      - name: Install Playwright browsers
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps ${{ steps.browsers.outputs.install }}
+
+      - name: Install browser system dependencies
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps ${{ steps.browsers.outputs.install }}
+
+      - name: Build
+        run: npm run build
+
+      - name: Run Playwright
+        run: npx playwright test ${{ steps.browsers.outputs.projects }}
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
