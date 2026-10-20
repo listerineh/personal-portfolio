@@ -43,6 +43,65 @@ test.describe("Contact form", () => {
   });
 });
 
+test.describe("Newsletter subscribe (double opt-in)", () => {
+  const link = "/newsletter/confirm?email=reader%40example.com&expires=1893456000&token=signed";
+
+  test("subscribing asks to confirm by email", async ({ page }) => {
+    let body: Record<string, string> = {};
+    await page.route("**/api/newsletter/subscribe", async (route) => {
+      body = route.request().postDataJSON();
+      await route.fulfill({ json: { message: "confirm-sent" } });
+    });
+    await open(page, "/blog");
+    await page.getByRole("textbox", { name: "Enter your email address" }).fill("reader@example.com");
+    await page.getByRole("button", { name: "Subscribe Now" }).click();
+    await expect(page.getByText(/confirm your subscription/)).toBeVisible();
+    expect(body).toMatchObject({ email: "reader@example.com", locale: "en" });
+  });
+
+  test("the emailed link confirms with one click", async ({ page }) => {
+    let body: Record<string, string> = {};
+    await page.route("**/api/newsletter/confirm", async (route) => {
+      body = route.request().postDataJSON();
+      await route.fulfill({ json: { message: "subscribed" } });
+    });
+    await open(page, link);
+    await expect(page.getByText("Subscribe reader@example.com?")).toBeVisible();
+    await page.getByRole("button", { name: "Confirm subscription" }).click();
+    await expect(page.getByText("You're subscribed")).toBeVisible();
+    expect(body).toMatchObject({ email: "reader@example.com", expires: "1893456000", token: "signed" });
+  });
+
+  test("an address already on the list is told so", async ({ page }) => {
+    await page.route("**/api/newsletter/confirm", (route) =>
+      route.fulfill({ json: { message: "already-subscribed" } }),
+    );
+    await open(page, link);
+    await page.getByRole("button", { name: "Confirm subscription" }).click();
+    await expect(page.getByText("Already subscribed")).toBeVisible();
+  });
+
+  test("an expired link offers to send a new one", async ({ page }) => {
+    await page.route("**/api/newsletter/confirm", (route) =>
+      route.fulfill({ status: 400, json: { error: "invalid-link" } }),
+    );
+    await open(page, link);
+    await page.getByRole("button", { name: "Confirm subscription" }).click();
+    await expect(page.getByText("This link isn't valid anymore", { exact: false })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Subscribe Now" })).toBeVisible();
+  });
+
+  test("the confirm route rejects links it didn't sign", async ({ request }) => {
+    const forged = await request.post("/api/newsletter/confirm", {
+      data: { email: "someone@example.com", expires: 1893456000, token: "forged" },
+    });
+    expect(forged.status()).toBe(400);
+    expect(await forged.json()).toEqual({ error: "invalid-link" });
+    const invalid = await request.post("/api/newsletter/subscribe", { data: { email: "not-an-email" } });
+    expect(invalid.status()).toBe(400);
+  });
+});
+
 test.describe("Newsletter unsubscribe", () => {
   test("without a link it asks for the address and emails one", async ({
     page,
@@ -97,8 +156,13 @@ test.describe("Blog search", () => {
       .getByRole("searchbox")
       .or(page.getByRole("textbox", { name: /Search articles/ }))
       .first();
-    await search.fill("terraform");
-    await expect(page.getByText(/Found \d+ articles?/)).toBeVisible();
+    // Retried as a block: a fill that lands before hydration (seen on WebKit in CI) never reaches React's onChange.
+    await expect(async () => {
+      await search.fill("terraform");
+      await expect(page.getByText(/Found \d+ articles?/)).toBeVisible({
+        timeout: 2000,
+      });
+    }).toPass();
     await search.fill("zzqxnotaword");
     await expect(page.getByText("Found 0 articles")).toBeVisible();
   });

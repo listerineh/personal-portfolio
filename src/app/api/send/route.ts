@@ -1,8 +1,9 @@
 import { Resend } from 'resend';
-import React from 'react';
 import { z } from 'zod';
-import EmailTemplate from '@/components/email/email-template';
 import { clientIp, withinRateLimit } from '@/lib/server/security';
+import { FROM, OWNER_EMAIL } from '@/lib/email/layout';
+import { recordEvent } from '@/lib/server/stats';
+import { contactMessageEmail } from '@/lib/email/templates';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -26,12 +27,14 @@ export async function POST(request: Request) {
   const { name, email, message } = parsed.data;
 
   try {
+    const { subject, html, text } = contactMessageEmail({ name, email, message });
     const { error } = await resend.emails.send({
-      from: 'ACME <onboarding@resend.dev>',
-      to: ['sebask8er.alvarez@gmail.com'],
+      from: FROM,
+      to: [OWNER_EMAIL],
       replyTo: email,
-      subject: 'Message from personal web',
-      react: EmailTemplate({ name, email, message }) as React.ReactElement,
+      subject,
+      html,
+      text,
     });
 
     if (error) {
@@ -39,6 +42,7 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Failed to send message' }, { status: 500 });
     }
 
+    await recordEvent('contact');
     return Response.json({ ok: true });
   } catch (error) {
     console.error('[send]', error);

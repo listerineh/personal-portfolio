@@ -71,7 +71,8 @@
       "infra": "Infraestructura",
       "rollout": "Desplegando"
     },
-    "scrollToCareer": "Bajar a mi experiencia"
+    "scrollToCareer": "Bajar a mi experiencia",
+    "pauseMotion": "Pausar las animaciones"
   },
   "experience": {
     "title": "Dónde he trabajado",
@@ -209,7 +210,10 @@
     "loadingViews": "Cargando...",
     "sectionIntro": "Sobre ingeniería, cloud e IA aplicada.",
     "articleCount": "{count, plural, one {# artículo} other {# artículos}}",
-    "keepReading": "Sigue leyendo"
+    "keepReading": "Sigue leyendo",
+    "previousArticle": "Artículo anterior",
+    "nextArticle": "Siguiente artículo",
+    "articleNavigation": "Artículos anterior y siguiente"
   },
   "contact": {
     "title": "Trabajemos juntos",
@@ -268,9 +272,9 @@
     "compactPlaceholder": "tu@correo.com",
     "subscribeButton": "Suscribirse Ahora",
     "subscribingButton": "Suscribiendo...",
-    "subscribedButton": "¡Suscrito!",
+    "subscribedButton": "Revisa tu correo",
     "compactSubscribeButton": "Suscribirse",
-    "successMessage": "¡Gracias por suscribirte! Revisa tu correo.",
+    "successMessage": "Casi listo: abre el correo que te acabo de enviar y confirma tu suscripción.",
     "errorMessage": "Algo salió mal. Por favor intenta de nuevo.",
     "invalidEmailMessage": "Por favor ingresa un correo electrónico válido",
     "failedMessage": "Error al suscribirse. Por favor intenta más tarde.",
@@ -561,6 +565,23 @@
     "saveButton": "Guardar Preferencias",
     "revokeAllButton": "Revocar Todas",
     "alwaysOn": "Siempre activas"
+  },
+  "newsletterConfirm": {
+    "title": "Confirma tu suscripción",
+    "description": "Un último paso: confirma abajo y los posts nuevos llegarán a tu correo.",
+    "confirmFor": "¿Suscribir {email}?",
+    "confirmIntro": "Recibirás un correo cuando publique algo nuevo. Puedes darte de baja cuando quieras desde cualquiera de ellos.",
+    "confirmButton": "Confirmar suscripción",
+    "confirming": "Confirmando…",
+    "subscribedTitle": "Ya estás suscrito",
+    "subscribedMessage": "¡Gracias! Te llegará un correo de bienvenida.",
+    "alreadyTitle": "Ya estabas suscrito",
+    "alreadyMessage": "Esta dirección ya estaba en la lista. No hace falta nada más.",
+    "invalidLink": "Este enlace ya no es válido (duran 7 días). Escribe tu dirección y te envío uno nuevo.",
+    "errorMessage": "No se pudo confirmar ahora. Inténtalo de nuevo.",
+    "tooMany": "Demasiados intentos. Inténtalo más tarde.",
+    "tryAgain": "Intentar de nuevo",
+    "readBlog": "Leer el blog"
   },
   "unsubscribe": {
     "badge": "Newsletter",

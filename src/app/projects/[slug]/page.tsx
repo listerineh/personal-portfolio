@@ -3,8 +3,7 @@ import { requestLocale, shareMetadata } from '@/lib/metadata';
 import { getProject, getProjects } from '@/lib/data/projects';
 import { notFound } from 'next/navigation';
 import { ProjectDetailClientPage, type ProjectVersion } from '@/components/projects/project-detail-client-page';
-import { cookies } from 'next/headers';
-import { defaultLocale, locales, type Locale } from '@/i18n/config';
+import { locales, type Locale } from '@/i18n/config';
 
 interface ProjectPageProps {
   params: Promise<{
@@ -38,9 +37,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const locale = await requestLocale();
   if (!getProject(slug, locale)) {
     notFound();
   }

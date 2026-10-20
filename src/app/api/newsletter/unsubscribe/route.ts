@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { FROM } from "@/lib/email/layout";
+import { unsubscribeLinkEmail } from "@/lib/email/templates";
+import { recordEvent } from "@/lib/server/stats";
 import {
+  addressId,
   clientIp,
-  escapeHtml,
+  followUpKey,
+  getRedis,
   isValidEmail,
   unsubscribeLinks,
   verifyUnsubscribeToken,
@@ -79,6 +84,10 @@ async function unsubscribe(email: string) {
         { status: 500 },
       );
     }
+    if (response.ok) {
+      await recordEvent("unsubscribed");
+      await cancelFollowUp(email);
+    }
     return NextResponse.json({ message: "unsubscribed" }, { status: 200 });
   } catch (error) {
     console.error("[unsubscribe]", error);
@@ -102,29 +111,28 @@ async function sendConfirmationLink(email: string, isEs: boolean) {
     const links = await unsubscribeLinks(email);
     if (!links) return;
 
-    const href = escapeHtml(links.page);
-    await resend.emails.send({
-      from: "Sebastian Alvarez <hello@listerineh.dev>",
-      to: email,
-      subject: isEs
-        ? "Confirma tu baja del newsletter"
-        : "Confirm you want to unsubscribe",
-      html: `<!DOCTYPE html><html lang="${isEs ? "es" : "en"}"><body style="margin:0;padding:32px 20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f7;color:#1d1d1f;">
-<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-<table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:22px;padding:32px;">
-<tr><td>
-<h1 style="margin:0 0 12px;font-size:22px;">${isEs ? "¿Te das de baja?" : "Unsubscribe?"}</h1>
-<p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#6e6e73;">${
-        isEs
-          ? "Alguien pidió dar de baja esta dirección del newsletter de listerineh.dev. Si fuiste tú, confirma con el botón. Si no, ignora este correo."
-          : "Someone asked to remove this address from the listerineh.dev newsletter. If it was you, confirm with the button. If not, ignore this email."
-      }</p>
-<a href="${href}" style="display:inline-block;padding:12px 24px;border-radius:999px;background:#d97706;color:#1d1d1f;font-weight:600;text-decoration:none;">${
-        isEs ? "Confirmar baja" : "Confirm unsubscribe"
-      }</a>
-</td></tr></table></td></tr></table></body></html>`,
-    });
+    const { subject, html, text } = unsubscribeLinkEmail({ lang: isEs ? "es" : "en", unsubscribeUrl: links.page });
+    await resend.emails.send({ from: FROM, to: email, subject, html, text });
   } catch (error) {
     console.error("[unsubscribe] confirmation link", error);
+  }
+}
+
+/** A "three posts to start with" email still scheduled (they left within three days of joining): cancel it. */
+async function cancelFollowUp(email: string) {
+  const redis = getRedis();
+  if (!redis) return;
+  try {
+    const key = followUpKey(await addressId(email));
+    const id = await redis.get<string>(key);
+    if (!id) return;
+    const response = await fetch(`https://api.resend.com/emails/${encodeURIComponent(id)}/cancel`, {
+      method: "POST",
+      headers: resendHeaders(),
+    });
+    if (!response.ok && response.status !== 404) console.error("[unsubscribe] cancel follow-up", response.status);
+    await redis.del(key);
+  } catch (error) {
+    console.error("[unsubscribe] cancel follow-up", error);
   }
 }

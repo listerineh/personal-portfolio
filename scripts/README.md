@@ -10,12 +10,12 @@ Run from the repository root. Scripts that render HTML (`generate-og-images.js` 
 node scripts/generate-og-images.js            # everything
 node scripts/generate-og-images.js pages      # public/og/<page>.png (one per page in src/lib/metadata.ts)
 node scripts/generate-og-images.js projects   # public/og/projects/<slug>.png (from src/lib/data/projects.ts)
-node scripts/generate-og-images.js covers     # public/og/blog/<slug>.jpg (each post cover on a blurred backdrop)
 node scripts/generate-og-images.js icons      # public/icons/*.png from public/favicon.svg
 node scripts/generate-og-images.js about      # a single page by id
 ```
 
-- 1200×630. Pages and projects are rendered with Playwright and saved as quantized PNG; covers and icons use Sharp only (no browser).
+- 1200×630. Pages and projects are rendered with Playwright and saved as quantized PNG; icons use Sharp only (no browser).
+- Blog posts are not here: each post's card is drawn on demand by `src/app/og/blog/[file]/route.tsx` (next/og), so a new post needs nothing.
 - Share images stay PNG/JPG on purpose: WebP previews are unreliable on LinkedIn, iMessage and Slack.
 - Adding a page: add its copy to `PAGES` in `src/lib/metadata.ts` and a template here, then run it by id.
 

@@ -1,0 +1,125 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+import {
+  addressId,
+  clientIp,
+  followUpKey,
+  getRedis,
+  isValidEmail,
+  listUnsubscribeHeaders,
+  unsubscribeLinks,
+  verifySubscribeToken,
+  withinRateLimit,
+} from '@/lib/server/security';
+import { FROM } from '@/lib/email/layout';
+import { startHereEmail, welcomeEmail } from '@/lib/email/templates';
+import { recordEvent } from '@/lib/server/stats';
+import { mostReadPosts } from '@/lib/server/post-stats';
+
+// Node: the follow-up email ranks posts, which needs the blog data (too heavy for an edge bundle).
+export const runtime = 'nodejs';
+
+const FOLLOW_UP_DAYS = 3;
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+const resendHeaders = () => ({
+  Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+  'Content-Type': 'application/json',
+});
+
+/**
+ * Step two of the double opt-in, posted by /newsletter/confirm after a click (mail scanners open links, they don't
+ * press buttons). With a valid, unexpired signed link it adds the contact, or brings back one who had unsubscribed,
+ * and sends the welcome email. Someone already subscribed just hears so, without a second welcome.
+ */
+export async function POST(request: NextRequest) {
+  if (!(await withinRateLimit(`confirm:${clientIp(request)}`, 10, 60 * 60))) {
+    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+  }
+
+  const body: { email?: unknown; expires?: unknown; token?: unknown; locale?: unknown } = await request.json().catch(() => ({}));
+  const { email, token } = body;
+  const expires = Number(body.expires);
+  const lang = body.locale === 'es' ? 'es' : 'en';
+
+  if (!isValidEmail(email) || typeof token !== 'string' || !(await verifySubscribeToken(email, expires, token))) {
+    return NextResponse.json({ error: 'invalid-link' }, { status: 400 });
+  }
+
+  let event: 'subscribed' | 'resubscribed' = 'subscribed';
+  try {
+    const contactUrl = `https://api.resend.com/contacts/${encodeURIComponent(email)}`;
+    const existing = await fetch(contactUrl, { headers: resendHeaders() });
+
+    if (existing.ok) {
+      const contact: { unsubscribed?: boolean } = await existing.json();
+      if (!contact.unsubscribed) return NextResponse.json({ message: 'already-subscribed' }, { status: 200 });
+      // Came back after unsubscribing: switch them on again.
+      const update = await fetch(contactUrl, { method: 'PATCH', headers: resendHeaders(), body: JSON.stringify({ unsubscribed: false }) });
+      if (!update.ok) throw new Error(`Resend PATCH ${update.status}`);
+      event = 'resubscribed';
+    } else if (existing.status === 404) {
+      const create = await fetch('https://api.resend.com/contacts', {
+        method: 'POST',
+        headers: resendHeaders(),
+        body: JSON.stringify({ email, unsubscribed: false }),
+      });
+      if (!create.ok) throw new Error(`Resend POST ${create.status}`);
+    } else {
+      throw new Error(`Resend GET ${existing.status}`);
+    }
+
+    const links = await unsubscribeLinks(email);
+    const { subject, html, text } = welcomeEmail({ lang, unsubscribeUrl: links?.page });
+    const { error } = await resend.emails.send({
+      from: FROM,
+      to: email,
+      subject,
+      html,
+      text,
+      headers: links ? listUnsubscribeHeaders(links.oneClick) : undefined,
+    });
+    // They are subscribed either way; a lost welcome email is not worth failing the confirmation.
+    if (error) console.error('[confirm] welcome email:', error);
+
+    await recordEvent(event);
+    await scheduleFollowUp(email, lang, links);
+
+    return NextResponse.json({ message: 'subscribed' }, { status: 200 });
+  } catch (error) {
+    console.error('[confirm]', error);
+    return NextResponse.json({ error: 'Failed to confirm. Please try again.' }, { status: 500 });
+  }
+}
+
+/**
+ * The "three posts to start with" email, scheduled with Resend for FOLLOW_UP_DAYS later. Its id is kept in Redis
+ * until then so /api/newsletter/unsubscribe can cancel it. Best effort: failing to schedule never fails confirming.
+ */
+async function scheduleFollowUp(
+  email: string,
+  lang: 'en' | 'es',
+  links: { page: string; oneClick: string } | null,
+) {
+  try {
+    const posts = await mostReadPosts(lang, 3);
+    if (posts.length === 0) return;
+    const { subject, html, text } = startHereEmail({ lang, posts, unsubscribeUrl: links?.page });
+    const { data, error } = await resend.emails.send({
+      from: FROM,
+      to: email,
+      subject,
+      html,
+      text,
+      headers: links ? listUnsubscribeHeaders(links.oneClick) : undefined,
+      scheduledAt: new Date(Date.now() + FOLLOW_UP_DAYS * 24 * 60 * 60 * 1000).toISOString(),
+    });
+    if (error || !data?.id) {
+      console.error('[confirm] follow-up:', error);
+      return;
+    }
+    await getRedis()?.set(followUpKey(await addressId(email)), data.id, { ex: (FOLLOW_UP_DAYS + 1) * 24 * 60 * 60 });
+  } catch (error) {
+    console.error('[confirm] follow-up', error);
+  }
+}

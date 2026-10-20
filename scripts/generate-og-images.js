@@ -9,14 +9,13 @@
  * Outputs (PNG/JPG: WebP is not reliably shown by LinkedIn, Facebook, iMessage or Slack):
  *   public/og/<page>.png            1200×630  one per page (Playwright)
  *   public/og/projects/<slug>.png   1200×630  one per project, with its product shot (Playwright)
- *   public/og/blog/<slug>.jpg       1200×630  each post cover, re-encoded (sharp only)
+ *   (blog posts get theirs on demand from src/app/og/blog/[file]/route.tsx, not from this script)
  *   public/icons/*.png              apple-touch-icon 180, icon 192/512, maskable 512 (sharp only)
  *
  * Usage:
  *   node scripts/generate-og-images.js            # everything
  *   node scripts/generate-og-images.js pages      # page images only
  *   node scripts/generate-og-images.js projects   # project images only
- *   node scripts/generate-og-images.js covers     # post covers only (no browser needed)
  *   node scripts/generate-og-images.js icons      # app icons only (no browser needed)
  *   node scripts/generate-og-images.js about      # a single page
  */
@@ -387,40 +386,6 @@ async function renderWithBrowser(jobs) {
   await browser.close();
 }
 
-/**
- * Post covers → 1200×630 JPG. Covers are 3:2, so cropping would cut their titles: instead the whole cover sits
- * centred over a blurred, slightly dimmed copy of itself that fills the sides. No browser needed.
- */
-async function renderBlogCovers() {
-  const dir = path.join(PUBLIC, 'blog');
-  const out = path.join(OG_DIR, 'blog');
-  fs.mkdirSync(out, { recursive: true });
-  for (const file of fs.readdirSync(dir).filter((f) => /\.(webp|png|jpe?g)$/.test(f))) {
-    const source = path.join(dir, file);
-    const target = path.join(out, file.replace(/\.(webp|png|jpe?g)$/, '.jpg'));
-    const backdrop = await sharp(source).resize(WIDTH, HEIGHT, { fit: 'cover' }).blur(40).modulate({ brightness: 0.85 }).toBuffer();
-    const inset = Math.round(HEIGHT * 0.9);
-    const cover = await sharp(source).resize({ height: inset }).png().toBuffer();
-    const { width: coverWidth = inset, height: coverHeight = inset } = await sharp(cover).metadata();
-    const rounded = await sharp(cover)
-      .composite([
-        {
-          input: Buffer.from(
-            `<svg width="${coverWidth}" height="${coverHeight}"><rect width="100%" height="100%" rx="22" ry="22"/></svg>`,
-          ),
-          blend: 'dest-in',
-        },
-      ])
-      .png()
-      .toBuffer();
-    await sharp(backdrop)
-      .composite([{ input: rounded, gravity: 'centre' }])
-      .jpeg({ quality: 86, mozjpeg: true })
-      .toFile(target);
-    console.log(`  ✅  /og/blog/${path.basename(target)} (${Math.round(fs.statSync(target).size / 1024)} KB)`);
-  }
-}
-
 /** App icons from public/favicon.svg. No browser needed. */
 async function renderIcons() {
   fs.mkdirSync(ICON_DIR, { recursive: true });
@@ -466,7 +431,7 @@ async function main() {
   const projects = readProjects();
   const pageHtml = pages(projects);
   const pageIds = Object.keys(pageHtml);
-  const groups = ["pages", "projects", "covers", "icons"];
+  const groups = ["pages", "projects", "icons"];
 
   if (FILTER && !groups.includes(FILTER) && !pageIds.includes(FILTER)) {
     console.error(
@@ -494,7 +459,6 @@ async function main() {
   }
 
   await renderWithBrowser(jobs);
-  if (want("covers")) await renderBlogCovers();
   if (want("icons")) await renderIcons();
   console.log("\n✨  Done.");
 }

@@ -8,7 +8,6 @@ interface TitleProps {
   size?: TitleSize;
   /** @deprecated Gradient text is out of the system; `amber` sets the title in the live amber. */
   gradient?: TitleGradient;
-  animate?: boolean;
   className?: string;
   style?: CSSProperties;
   id?: string;
@@ -26,7 +25,6 @@ export function Title({
   as: Tag = "h2",
   size,
   gradient = false,
-  animate,
   className,
   style,
   id,
@@ -36,7 +34,6 @@ export function Title({
     <Tag
       id={id}
       className={cn(
-        animate && "reveal-up",
         "font-sans text-foreground",
         size && sizeMap[size],
         gradient === "amber" && "text-amber",

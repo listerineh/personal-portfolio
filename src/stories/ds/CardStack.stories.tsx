@@ -12,7 +12,7 @@ const meta: Meta<typeof CardStack> = {
   component: CardStack,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-  args: { interval: 3 },
+  args: { interval: 3, paused: false },
 };
 
 export default meta;
@@ -30,3 +30,6 @@ export const Default: Story = {
     </div>
   ),
 };
+
+/** Held by a pause control (WCAG 2.2.2): no more deals; the front card can still be dragged and tilts with the pointer. */
+export const Paused: Story = { ...Default, args: { paused: true } };

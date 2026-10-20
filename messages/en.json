@@ -71,7 +71,8 @@
       "infra": "Infrastructure",
       "rollout": "Rolling out"
     },
-    "scrollToCareer": "Scroll to my experience"
+    "scrollToCareer": "Scroll to my experience",
+    "pauseMotion": "Pause the animations"
   },
   "experience": {
     "title": "Where I've worked",
@@ -209,7 +210,10 @@
     "loadingViews": "Loading...",
     "sectionIntro": "On engineering, cloud and applied AI.",
     "articleCount": "{count, plural, one {# article} other {# articles}}",
-    "keepReading": "Keep reading"
+    "keepReading": "Keep reading",
+    "previousArticle": "Previous article",
+    "nextArticle": "Next article",
+    "articleNavigation": "Previous and next articles"
   },
   "contact": {
     "title": "Work with me",
@@ -268,9 +272,9 @@
     "compactPlaceholder": "your@email.com",
     "subscribeButton": "Subscribe Now",
     "subscribingButton": "Subscribing...",
-    "subscribedButton": "Subscribed!",
+    "subscribedButton": "Check your email",
     "compactSubscribeButton": "Subscribe",
-    "successMessage": "Thanks for subscribing! Check your email.",
+    "successMessage": "Almost there: open the email I just sent and confirm your subscription.",
     "errorMessage": "Something went wrong. Please try again.",
     "invalidEmailMessage": "Please enter a valid email address",
     "failedMessage": "Failed to subscribe. Please try again later.",
@@ -561,6 +565,23 @@
     "saveButton": "Save Preferences",
     "revokeAllButton": "Revoke All",
     "alwaysOn": "Always on"
+  },
+  "newsletterConfirm": {
+    "title": "Confirm your subscription",
+    "description": "One last step: confirm below and new posts will reach your inbox.",
+    "confirmFor": "Subscribe {email}?",
+    "confirmIntro": "You'll get an email when I publish something new. Unsubscribe any time from any of them.",
+    "confirmButton": "Confirm subscription",
+    "confirming": "Confirming…",
+    "subscribedTitle": "You're subscribed",
+    "subscribedMessage": "Thanks! A welcome email is on its way.",
+    "alreadyTitle": "Already subscribed",
+    "alreadyMessage": "This address was already on the list. Nothing else to do.",
+    "invalidLink": "This link isn't valid anymore (links last 7 days). Enter your address and I'll send you a new one.",
+    "errorMessage": "Couldn't confirm right now. Please try again.",
+    "tooMany": "Too many attempts. Please try again in a while.",
+    "tryAgain": "Try again",
+    "readBlog": "Read the blog"
   },
   "unsubscribe": {
     "badge": "Newsletter",

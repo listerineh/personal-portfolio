@@ -1,4 +1,5 @@
 import type { BlogPost } from '@/types';
+import { blogShareImage } from '@/lib/og/blog-image';
 
 interface ArticleSchemaProps {
   post: BlogPost;
@@ -7,7 +8,7 @@ interface ArticleSchemaProps {
 export function ArticleSchema({ post }: ArticleSchemaProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
   const postUrl = `${siteUrl}/blog/${post.slug}`;
-  const imageUrl = post.imageUrl ? `${siteUrl}${post.imageUrl.replace(/^\/blog\/(.+)\.\w+$/, '/og/blog/$1.jpg')}` : `${siteUrl}/og/home.png`;
+  const imageUrl = `${siteUrl}${blogShareImage(post, 'en')}`;
 
   const schema = {
     '@context': 'https://schema.org',

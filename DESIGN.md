@@ -117,6 +117,7 @@ Springs, never fixed easing curves: `duration-snap ease-snap` for feedback, `dur
 - **Ambient** (`<Ambient>`): drifting warm halos, a fading dot grid, an amber spotlight under the pointer. Hero full, other sections soft or grid-only; mirrored on neighbours.
 - **Interactive objects:** `CardStack` (deck with pointer parallax that deals itself; the front card can be grabbed and thrown), `RotatingWords`, `Carousel` (native snap, arrows, dots), `RoleExplorer` (tabs pattern), `Marquee` (two rows, opposite directions, pauses on hover and focus, plus a pause button where it is used: WCAG 2.2.2).
 - **Drag:** the only GSAP in the site is Draggable + Inertia for the hero deck, imported on demand inside `CardStack`. A gentle release springs home, a throw sends the card to the back. Touch drags horizontally only so the page still scrolls.
+- **Pause (WCAG 2.2.2):** anything that keeps moving on its own gets a `PauseButton`. The skills rows have one; the hero has one that stops the deck, the rotating words and every CSS loop inside it (`data-motion-paused` on the section pauses all animations below it except the one-off intro). Per visit, not remembered.
 - Everything is gated on `html.js-motion` (set pre-paint only when JS runs and reduced motion is off). Reduced motion gets still content, never hidden content.
 
 ## Components
@@ -135,10 +136,12 @@ All in `src/components/ds`, each with a story in `src/stories/ds`:
 | Fields | `FormField` + `Input` / `Textarea` (page ground on panels, amber focus ring) |
 | Project | `ProjectCard` (one status pill style for all statuses; dot color differs) |
 | Post | `BlogCard` (`feature`, `stack`, `row`, `compact`) |
+| Previous / next post | `PostPager` |
 | Roles | `RoleExplorer` |
 | Shelf of cards | `Carousel` |
 | Skills | `Marquee` + `SkillTile` |
-| Hero | `CardStack`, `RotatingWords` |
+| Stop motion (WCAG 2.2.2) | `PauseButton` |
+| Hero | `CardStack`, `RotatingWords` (both take `paused`) |
 | Architecture | `StackList` |
 | Music project (/why) | `Exhibit`, `MemberCard`, `SpotifyTopTracks`, `BrandLink` |
 | Feedback | `Toaster`, `Modal`, `Dropdown`, `Switch`, `EntrySkeleton`, `EndOfList` |

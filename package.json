@@ -1,6 +1,6 @@
 {
   "name": "listerineh-portfolio",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 9008",
@@ -75,6 +75,7 @@
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "resend": "^4.5.2",
+    "sharp": "^0.35.0",
     "swiper": "^12.1.2",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
@@ -94,7 +95,6 @@
     "genkit-cli": "^0.0.2",
     "playwright": "^1.58.2",
     "postcss": "^8.5.17",
-    "sharp": "^0.35.0",
     "storybook": "^10.5.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",

@@ -10,8 +10,7 @@ import { Toaster } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { AUTHOR_NAME, pageMetadata, requestLocale, SITE_NAME, SITE_URL, TITLE_TEMPLATE } from '@/lib/metadata';
-import { cookies } from 'next/headers';
-import { defaultLocale, locales, type Locale } from '@/i18n/config';
+import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 
@@ -77,9 +76,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const messages = await getMessages();
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const initialLocale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  // Set per request by src/middleware.ts; every inline or third-party script below carries it (CSP).
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+  const initialLocale = await requestLocale();
 
   return (
     <html lang={initialLocale} className={cn(fontSans.variable, fontMono.variable)} suppressHydrationWarning>
@@ -87,7 +86,8 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
-        <script dangerouslySetInnerHTML={{ __html: prePaintScript }} />
+        {/* Browsers hide nonce attributes from the DOM after parsing; suppress the resulting hydration mismatch. */}
+        <script nonce={nonce} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: prePaintScript }} />
         <PersonSchema />
         <WebsiteSchema />
         <BreadcrumbSchema />
@@ -110,6 +110,7 @@ export default async function RootLayout({
         {/* Service Worker - lazy load after page is interactive */}
         <Script
           id="service-worker"
+          nonce={nonce}
           strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
@@ -125,10 +126,12 @@ export default async function RootLayout({
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              nonce={nonce}
               strategy="afterInteractive"
             />
             <Script
               id="google-analytics"
+              nonce={nonce}
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
@@ -146,6 +149,7 @@ export default async function RootLayout({
         {process.env.NEXT_PUBLIC_HOTJAR_SCRIPT && (
           <Script
             src={process.env.NEXT_PUBLIC_HOTJAR_SCRIPT}
+            nonce={nonce}
             strategy="lazyOnload"
           />
         )}

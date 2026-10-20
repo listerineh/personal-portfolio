@@ -8,7 +8,6 @@ interface TextProps {
   strength?: TextStrength;
   /** Kept for API compatibility. Only `strength="accent"` uses color (live amber ink). */
   accent?: Accent;
-  animate?: boolean;
   className?: string;
   children: ReactNode;
 }
@@ -33,14 +32,12 @@ export function Text({
   as: Tag = "p",
   size = "base",
   strength = "primary",
-  animate,
   className,
   children,
 }: TextProps) {
   return (
     <Tag
       className={cn(
-        animate && "reveal-up",
         "max-w-[68ch]",
         sizeMap[size],
         strengthMap[strength],

@@ -43,6 +43,10 @@ const nextConfig: NextConfig = {
   },
   // Lets verification builds write elsewhere (NEXT_DIST_DIR=.next-verify) without disturbing a running dev server.
   distDir: process.env.NEXT_DIST_DIR || '.next',
+  // Post share cards (src/app/og/blog/[file]/route.tsx) read Geist and the covers from disk at request time.
+  outputFileTracingIncludes: {
+    '/og/blog/[file]': ['./src/assets/fonts/*.ttf', './public/blog/*'],
+  },
   compress: true,
   poweredByHeader: false,
   // /experience was folded into the home page's career section.
@@ -51,8 +55,8 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      // Baseline hardening for every response. A CSP is left out on purpose: the theme script, JSON-LD and analytics
-      // are inline, so it needs nonces first (and would force every page dynamic for them).
+      // Baseline hardening for every response. The Content Security Policy is set per request with a nonce in
+      // src/middleware.ts (policy in src/lib/csp.ts).
       {
         source: '/:path*',
         headers: [

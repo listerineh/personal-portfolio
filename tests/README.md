@@ -9,9 +9,14 @@ tests/
 ├── support/setup.ts            open(page, path, locale): language cookie + cookie banner already answered
 ├── home/                       one spec per home section (hero, career, projects, skills, articles + contact)
 ├── layout/header.spec.ts       navigation, phone menu, language switch, theme
+├── lib/email.spec.ts           code only: ISO week keys, digest and follow-up email contents; the cron route refuses without CRON_SECRET
 └── pages/
-    ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on /unsubscribe
-    └── flows.spec.ts           contact form, newsletter unsubscribe, blog search (API routes mocked with page.route)
+    ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on the newsletter link pages
+    ├── flows.spec.ts           contact form, newsletter double opt-in and unsubscribe, blog search (API routes mocked with page.route)
+    ├── related.spec.ts         after an article: related posts (same in EN/ES), previous/next by date, first and last post
+    ├── locale.spec.ts          first visit follows the browser's language, the visitor's choice wins, unsupported → English
+    ├── og.spec.ts              each post's share card: og/twitter image in EN/ES, 1200×630 PNG, 404s
+    └── csp.spec.ts             CSP header and fresh nonce, exclusions, report endpoint, no violations on any page in EN and ES
 ```
 
 Each spec runs on every project in `playwright.config.ts` (desktop Chromium, Firefox, WebKit; Pixel 5; iPhone 12). Specs that only make sense on one form factor branch on the `isMobile` fixture. Most specs run with `reducedMotion: 'reduce'` so content is still and assertions don't wait on animations; the marquee pause test opts back into motion.
@@ -46,6 +51,13 @@ npm run test:ui
 # View report
 npm run test:report
 ```
+
+## CI
+
+`.github/workflows/e2e.yml` runs the suite on every pull request to `main` or `develop` and on every push to `develop`:
+Chromium desktop and Pixel 5 (`chromium`, `Mobile Chrome`) against the production build (`npm run build`, then
+`npm run start -- -p 3001`). Run it by hand from the Actions tab to cover every browser. Failures show up as annotations
+on the PR; the HTML report (with traces for retried tests) is uploaded as the `playwright-report` artifact.
 
 ## Best Practices
 
