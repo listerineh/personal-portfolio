@@ -2,8 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { FROM } from "@/lib/email/layout";
 import { unsubscribeLinkEmail } from "@/lib/email/templates";
+import { recordEvent } from "@/lib/server/stats";
 import {
+  addressId,
   clientIp,
+  followUpKey,
+  getRedis,
   isValidEmail,
   unsubscribeLinks,
   verifyUnsubscribeToken,
@@ -80,6 +84,10 @@ async function unsubscribe(email: string) {
         { status: 500 },
       );
     }
+    if (response.ok) {
+      await recordEvent("unsubscribed");
+      await cancelFollowUp(email);
+    }
     return NextResponse.json({ message: "unsubscribed" }, { status: 200 });
   } catch (error) {
     console.error("[unsubscribe]", error);
@@ -107,5 +115,24 @@ async function sendConfirmationLink(email: string, isEs: boolean) {
     await resend.emails.send({ from: FROM, to: email, subject, html, text });
   } catch (error) {
     console.error("[unsubscribe] confirmation link", error);
+  }
+}
+
+/** A "three posts to start with" email still scheduled (they left within three days of joining): cancel it. */
+async function cancelFollowUp(email: string) {
+  const redis = getRedis();
+  if (!redis) return;
+  try {
+    const key = followUpKey(await addressId(email));
+    const id = await redis.get<string>(key);
+    if (!id) return;
+    const response = await fetch(`https://api.resend.com/emails/${encodeURIComponent(id)}/cancel`, {
+      method: "POST",
+      headers: resendHeaders(),
+    });
+    if (!response.ok && response.status !== 404) console.error("[unsubscribe] cancel follow-up", response.status);
+    await redis.del(key);
+  } catch (error) {
+    console.error("[unsubscribe] cancel follow-up", error);
   }
 }

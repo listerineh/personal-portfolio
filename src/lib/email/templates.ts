@@ -161,3 +161,90 @@ export function contactMessageEmail({ name, email, message }: { name: string; em
     footer: { reason: 'Sent from the contact form at listerineh.dev. Replying answers the sender directly.' },
   });
 }
+
+/** Three days after confirming: the most-read posts, so a new subscriber has something to start with. */
+export function startHereEmail({
+  lang,
+  posts,
+  unsubscribeUrl,
+}: {
+  lang: Lang;
+  posts: { slug: string; title: string; excerpt: string }[];
+  unsubscribeUrl?: string;
+}) {
+  return build(pick(lang, 'Three posts to start with', 'Tres posts para empezar'), {
+    lang,
+    preheader: pick(lang, 'The ones people read the most.', 'Los que más se han leído.'),
+    eyebrow: 'Newsletter',
+    title: pick(lang, 'Three posts to start with', 'Tres posts para empezar'),
+    blocks: [
+      {
+        type: 'text',
+        text: pick(
+          lang,
+          "While the next one is on its way, these are the posts readers have spent the most time with:",
+          'Mientras llega el próximo, estos son los posts con los que más tiempo han pasado los lectores:',
+        ),
+      },
+      { type: 'posts', posts: posts.map((post) => ({ title: post.title, excerpt: post.excerpt, href: `${SITE}/blog/${post.slug}` })) },
+      { type: 'action', label: pick(lang, 'See every post', 'Ver todos los posts'), href: `${SITE}/blog` },
+    ],
+    footer: {
+      reason: pick(lang, 'You get this because you subscribed at listerineh.dev.', 'Recibes esto porque te suscribiste en listerineh.dev.'),
+      unsubscribe: unsubscribeUrl ? { label: pick(lang, 'Unsubscribe', 'Darse de baja'), href: unsubscribeUrl } : undefined,
+    },
+  });
+}
+
+export interface WeeklyDigest {
+  /** "Oct 12 – Oct 18, 2026" */
+  range: string;
+  subscribers: { total: number | null; joined: number; left: number };
+  contactMessages: number;
+  /** null on the first run (no earlier snapshot to compare with). */
+  views: { total: number; top: { slug: string; title: string; views: number }[] } | null;
+  reactions: number | null;
+  csp: { total: number; top: { label: string; count: number }[] };
+}
+
+/** Monday morning, to the owner: the week on the site in one email. */
+export function weeklyDigestEmail(d: WeeklyDigest) {
+  const n = (value: number | null) => (value === null ? '–' : value.toLocaleString('en-US'));
+  return build(`Weekly digest · ${d.range}`, {
+    lang: 'en',
+    preheader: `${n(d.views?.total ?? null)} views · ${d.subscribers.joined} new subscribers · ${d.contactMessages} messages`,
+    eyebrow: 'Weekly digest',
+    title: d.range,
+    blocks: [
+      { type: 'heading', text: 'Newsletter' },
+      {
+        type: 'stats',
+        stats: [
+          { value: n(d.subscribers.total), label: 'subscribers' },
+          { value: `+${d.subscribers.joined}`, label: 'joined' },
+          { value: `−${d.subscribers.left}`, label: 'left' },
+        ],
+      },
+      { type: 'heading', text: 'Blog' },
+      {
+        type: 'stats',
+        stats: [
+          { value: n(d.views?.total ?? null), label: 'views' },
+          { value: n(d.reactions), label: 'reactions' },
+          { value: String(d.contactMessages), label: 'contact messages' },
+        ],
+      },
+      ...(d.views === null
+        ? [{ type: 'text' as const, text: 'First digest: totals are saved now, so next week shows what changed.' }]
+        : d.views.top.length
+          ? [{ type: 'list' as const, items: d.views.top.map((post) => `${post.title}: ${post.views.toLocaleString('en-US')} views`) }]
+          : []),
+      { type: 'heading', text: 'Content Security Policy' },
+      d.csp.total === 0
+        ? { type: 'text', text: 'No violations reported this week.' }
+        : { type: 'list', items: [`${d.csp.total} reports`, ...d.csp.top.map((entry) => `${entry.label} (${entry.count})`)] },
+      { type: 'action', label: 'Open the site', href: SITE },
+    ],
+    footer: { reason: 'Sent every Monday by the weekly-digest cron on listerineh.dev.' },
+  });
+}

@@ -1,17 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { clientIp, isValidEmail, SUBSCRIBE_LINK_DAYS, subscribeLink, withinRateLimit } from '@/lib/server/security';
+import { addressId, clientIp, isValidEmail, SUBSCRIBE_LINK_DAYS, subscribeLink, withinRateLimit } from '@/lib/server/security';
 import { FROM } from '@/lib/email/layout';
 import { confirmSubscriptionEmail } from '@/lib/email/templates';
 
 export const runtime = 'edge';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-async function sha256(value: string): Promise<string> {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
 
 /**
  * Step one of the double opt-in: emails a signed "confirm your subscription" link (valid SUBSCRIBE_LINK_DAYS) and
@@ -33,7 +28,7 @@ export async function POST(request: NextRequest) {
 
   const sent = NextResponse.json({ message: 'confirm-sent' }, { status: 200 });
   // Over the per-address cap: answer as if sent, so the cap says nothing about the address.
-  const address = await sha256(email.trim().toLowerCase());
+  const address = await addressId(email);
   if (!(await withinRateLimit(`subscribe-address:${address}`, 3, 24 * 60 * 60))) return sent;
 
   const confirmUrl = await subscribeLink(email);

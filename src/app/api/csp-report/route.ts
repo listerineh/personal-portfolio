@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { clientIp, withinRateLimit } from '@/lib/server/security';
+import { recordCspViolation } from '@/lib/server/stats';
 
 export const runtime = 'edge';
 
@@ -62,7 +63,10 @@ export async function POST(request: Request) {
     }
 
     for (const violation of violations) {
-      if (!isNoise(violation)) console.warn('[csp]', JSON.stringify(violation));
+      if (isNoise(violation)) continue;
+      console.warn('[csp]', JSON.stringify(violation));
+      // Counted for the weekly digest: Vercel keeps runtime logs only an hour on this plan.
+      await recordCspViolation(violation.directive ?? 'unknown', violation.blocked ?? '');
     }
   } catch {
     // Malformed body: nothing to log.

@@ -3,7 +3,8 @@ import { Redis } from "@upstash/redis";
 /** Shared guards for the public API routes (edge and node safe: Web APIs and Upstash's REST client only). */
 
 let redis: Redis | null | undefined;
-function getRedis(): Redis | null {
+/** The shared Upstash client, or null without credentials (local dev). */
+export function getRedis(): Redis | null {
   if (redis !== undefined) return redis;
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const token =
@@ -101,6 +102,15 @@ function sameToken(expected: string | null, token: string): boolean {
 }
 
 const normalize = (email: string) => email.trim().toLowerCase();
+
+/** Redis key holding a new subscriber's scheduled follow-up email id, so unsubscribing early can cancel it. */
+export const followUpKey = (addressHash: string) => `newsletter:follow-up:${addressHash}`;
+
+/** A stable, non-reversible id for an address, for Redis keys (so no key holds an email in clear). */
+export async function addressId(email: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(normalize(email)));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
 
 /**
  * Signed proof that an unsubscribe request comes from the mailbox itself: HMAC-SHA256 of the address, keyed with

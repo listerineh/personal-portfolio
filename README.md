@@ -29,6 +29,8 @@ Create `.env.local` with the variables below. Locally you can leave most of them
 | `RESEND_API_KEY` | Contact form, newsletter (subscribe, unsubscribe, blog notifications) |
 | `NEWSLETTER_SECRET` | Required to send blog notifications (`Authorization: Bearer …`) and to sign unsubscribe links. Long random string; same value in Vercel, the GitHub secret and your shell when running `npm run notify-blog` |
 | `REVALIDATE_SECRET` | `POST /api/revalidate` (called by the `revalidate-on-deploy` workflow) |
+| `CRON_SECRET` | The weekly digest cron (`vercel.json`): Vercel sends it as `Authorization: Bearer …`. Without it the digest never runs |
+| `OWNER_EMAIL` | Where contact messages and the weekly digest go (defaults to the address in `src/lib/email/layout.ts`) |
 | `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (or `KV_REST_API_URL` / `KV_REST_API_TOKEN`) | Blog views and reactions, API rate limits |
 | `NEXT_PUBLIC_SITE_URL` | Canonical URLs, metadata, links in emails (defaults to `https://listerineh.dev`) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Search Console verification meta |
@@ -108,10 +110,11 @@ Decisions worth knowing before changing things:
 |---|---|---|
 | `POST /api/send` | Public | Contact form. Validated with Zod, 5 per hour per IP |
 | `POST /api/newsletter/subscribe` | Public | Double opt-in, step one: emails a signed confirmation link (7 days, HMAC with `NEWSLETTER_SECRET`) and adds nobody. Same answer whether or not the address is subscribed. 5 per hour per IP, 3 per day per address |
-| `POST /api/newsletter/confirm` | Public | Step two, posted by `/newsletter/confirm` after a click: with a valid link, creates the contact (or re-activates one who had unsubscribed) and sends the welcome email. 10 per hour per IP |
+| `POST /api/newsletter/confirm` | Public | Step two, posted by `/newsletter/confirm` after a click: with a valid link, creates the contact (or re-activates one who had unsubscribed), sends the welcome email and schedules "three posts to start with" (the most read) for three days later; unsubscribing before then cancels it. 10 per hour per IP |
 | `POST /api/newsletter/unsubscribe` | Public | Needs a signed link (`email` + `token`, HMAC with `NEWSLETTER_SECRET`); without one it emails a link, same answer whether or not the address is subscribed. Also accepts RFC 8058 one-click POSTs. 10 per hour per IP |
 | `POST /api/newsletter/send-blog-notification` | `Bearer NEWSLETTER_SECRET` | Emails a new post to every subscribed contact, each with its own unsubscribe link and `List-Unsubscribe` headers |
 | `POST /api/revalidate` | `Bearer REVALIDATE_SECRET` | On-demand revalidation of a path |
+| `GET /api/cron/weekly-digest` | `Bearer CRON_SECRET` | Vercel Cron, Mondays 13:00 UTC (08:00 in Quito): emails the owner last week's subscribers, views, reactions, contact messages and CSP reports. `?dry=1` returns the JSON without sending |
 | `GET/POST /api/blog/[slug]/views`, `/reactions` | Public | Redis counters, one per IP per hour (views) or day (reactions) |
 | `GET /api/spotify/tracks?ids=` | Public | Spotify oEmbed metadata, up to 10 track ids |
 | `POST /api/csp-report` | Public | CSP violation reports (`report-uri`; the route also accepts Reporting API batches), logged as `[csp]`. 30 per 10 minutes per IP, always `204` |
@@ -122,9 +125,13 @@ Every response carries `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, 
 
 Pages get a CSP with a fresh nonce per request (`src/middleware.ts`, policy in `src/lib/csp.ts`). The root layout puts the nonce on every inline or third-party script; Next.js adds it to its own. In production `script-src` is `'self' 'nonce-…' 'strict-dynamic'`, so anything those scripts load (Vercel Analytics, GA, Hotjar) is trusted and no script hosts are listed. Previews list the script hosts instead, because Vercel's comment toolbar doesn't support `'strict-dynamic'`; development adds `'unsafe-eval'`. API routes, static files and the Storybook build in `/docs/components` get no CSP.
 
-Violations go to `POST /api/csp-report` and show up in the Vercel runtime logs as `[csp] {…}`. **Adding a third-party script, iframe, image host or API?** Add its origin to the matching list in `src/lib/csp.ts`, or it will be blocked.
+Violations go to `POST /api/csp-report`, show up in the Vercel runtime logs as `[csp] {…}` (kept one hour on Hobby) and are counted by week for the Monday digest. **Adding a third-party script, iframe, image host or API?** Add its origin to the matching list in `src/lib/csp.ts`, or it will be blocked.
 
 ---
+
+## Weekly counters
+
+`src/lib/server/stats.ts` counts newsletter joins and leaves, contact messages and CSP reports per ISO week in Redis (`stats:<VERCEL_ENV>:<week>:…`, kept 10 weeks), so staging and previews never mix into production's numbers. Views and reactions are compared with the totals the previous digest saved. Blog view counters are shared by every environment.
 
 ## Caching and offline
 

@@ -9,10 +9,12 @@ tests/
 ├── support/setup.ts            open(page, path, locale): language cookie + cookie banner already answered
 ├── home/                       one spec per home section (hero, career, projects, skills, articles + contact)
 ├── layout/header.spec.ts       navigation, phone menu, language switch, theme
+├── lib/email.spec.ts           code only: ISO week keys, digest and follow-up email contents; the cron route refuses without CRON_SECRET
 └── pages/
-    ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on /unsubscribe
+    ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on the newsletter link pages
     ├── flows.spec.ts           contact form, newsletter double opt-in and unsubscribe, blog search (API routes mocked with page.route)
     ├── related.spec.ts         after an article: related posts (same in EN/ES), previous/next by date, first and last post
+    ├── og.spec.ts              each post's share card: og/twitter image in EN/ES, 1200×630 PNG, 404s
     └── csp.spec.ts             CSP header and fresh nonce, exclusions, report endpoint, no violations on any page in EN and ES
 ```
 
