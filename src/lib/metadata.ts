@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
-import { defaultLocale, locales, type Locale } from "@/i18n/config";
+import { type Locale } from "@/i18n/config";
 
 /**
  * One place for every page's metadata. Titles are short; the root layout's template adds " · Sebastian Alvarez".
@@ -346,13 +345,9 @@ const PAGES: Record<
   },
 };
 
-/** The visitor's language from the NEXT_LOCALE cookie (the site switches language client-side, same URLs). */
-export async function requestLocale(): Promise<Locale> {
-  const saved = (await cookies()).get("NEXT_LOCALE")?.value;
-  return (
-    saved && locales.includes(saved as Locale) ? saved : defaultLocale
-  ) as Locale;
-}
+/** The visitor's language: their choice (cookie), else their browser's, else English. See src/i18n/locale.ts. */
+import { requestLocale } from "@/i18n/locale";
+export { requestLocale };
 
 interface ShareOptions {
   title: string;

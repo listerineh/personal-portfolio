@@ -10,8 +10,7 @@ import { BlogStructuredData } from '@/components/blog/blog-structured-data';
 import { ArticleSchema } from '@/components/blog/article-schema';
 import { toBlogSummary } from '@/lib/data/blog/summaries';
 import { adjacentSlugs, relatedSlugs } from '@/lib/data/blog/related';
-import { cookies } from 'next/headers';
-import { defaultLocale, locales, type Locale } from '@/i18n/config';
+import { locales, type Locale } from '@/i18n/config';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -46,9 +45,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const locale = await requestLocale();
   const post = getBlogPost(slug, locale);
 
   if (!post) {

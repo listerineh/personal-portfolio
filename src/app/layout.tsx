@@ -10,8 +10,7 @@ import { Toaster } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { AUTHOR_NAME, pageMetadata, requestLocale, SITE_NAME, SITE_URL, TITLE_TEMPLATE } from '@/lib/metadata';
-import { cookies, headers } from 'next/headers';
-import { defaultLocale, locales, type Locale } from '@/i18n/config';
+import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 
@@ -77,11 +76,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const messages = await getMessages();
-  const cookieStore = await cookies();
   // Set per request by src/middleware.ts; every inline or third-party script below carries it (CSP).
   const nonce = (await headers()).get('x-nonce') ?? undefined;
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const initialLocale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const initialLocale = await requestLocale();
 
   return (
     <html lang={initialLocale} className={cn(fontSans.variable, fontMono.variable)} suppressHydrationWarning>

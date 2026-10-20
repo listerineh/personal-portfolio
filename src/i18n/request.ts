@@ -1,11 +1,9 @@
 import { getRequestConfig } from 'next-intl/server';
-import { cookies } from 'next/headers';
-import { defaultLocale, locales, type Locale } from './config';
+import { requestLocale } from './locale';
 
 export default getRequestConfig(async () => {
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale;
+  // Same rule as every page: the visitor's choice, else their browser's language, else English.
+  const locale = await requestLocale();
 
   return {
     locale,

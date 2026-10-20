@@ -14,6 +14,7 @@ tests/
     ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on the newsletter link pages
     ├── flows.spec.ts           contact form, newsletter double opt-in and unsubscribe, blog search (API routes mocked with page.route)
     ├── related.spec.ts         after an article: related posts (same in EN/ES), previous/next by date, first and last post
+    ├── locale.spec.ts          first visit follows the browser's language, the visitor's choice wins, unsupported → English
     ├── og.spec.ts              each post's share card: og/twitter image in EN/ES, 1200×630 PNG, 404s
     └── csp.spec.ts             CSP header and fresh nonce, exclusions, report endpoint, no violations on any page in EN and ES
 ```

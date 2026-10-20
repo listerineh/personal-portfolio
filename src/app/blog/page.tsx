@@ -1,8 +1,7 @@
 import { metadataFor } from '@/lib/metadata';
 import { getBlogPosts } from '@/lib/data/blog';
 import { toBlogListing } from '@/lib/data/blog/summaries';
-import { cookies } from 'next/headers';
-import { defaultLocale, locales, type Locale } from '@/i18n/config';
+import { requestLocale } from '@/i18n/locale';
 import { PageShell } from '@/components/layout';
 import { BlogListingClient } from '@/components/blog/blog-listing-client';
 
@@ -11,9 +10,7 @@ export const dynamic = 'force-dynamic';
 export const generateMetadata = metadataFor('blog');
 
 export default async function BlogListingPage() {
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const locale = await requestLocale();
   const blogPosts = getBlogPosts(locale);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 
