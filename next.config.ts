@@ -43,6 +43,10 @@ const nextConfig: NextConfig = {
   },
   // Lets verification builds write elsewhere (NEXT_DIST_DIR=.next-verify) without disturbing a running dev server.
   distDir: process.env.NEXT_DIST_DIR || '.next',
+  // Post share cards (src/app/og/blog/[file]/route.tsx) read Geist and the covers from disk at request time.
+  outputFileTracingIncludes: {
+    '/og/blog/[file]': ['./src/assets/fonts/*.ttf', './public/blog/*'],
+  },
   compress: true,
   poweredByHeader: false,
   // /experience was folded into the home page's career section.

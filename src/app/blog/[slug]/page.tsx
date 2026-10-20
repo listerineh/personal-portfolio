@@ -1,6 +1,7 @@
 
 import type { Metadata } from 'next';
-import { DEFAULT_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
+import { requestLocale, shareMetadata } from '@/lib/metadata';
+import { blogShareImage } from '@/lib/og/blog-image';
 import { getBlogPosts, getBlogPost } from '@/lib/data/blog';
 import { notFound } from 'next/navigation';
 import { BlogPostClientPage, type BlogPostVersion } from '@/components/blog/blog-post-client-page';
@@ -25,8 +26,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const post = getBlogPost(slug, locale);
   if (!post) return { title: locale === 'es' ? 'Artículo no encontrado' : 'Article not found', robots: { index: false } };
 
-  // The cover re-encoded for sharing (JPG, 1200×630, nothing cropped): see scripts/generate-og-images.js.
-  const cover = post.imageUrl ? post.imageUrl.replace(/^\/blog\/(.+)\.\w+$/, '/og/blog/$1.jpg') : DEFAULT_OG_IMAGE;
   const published = new Date(post.date);
 
   return shareMetadata({
@@ -34,7 +33,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     description: post.excerpt,
     keywords: post.tags,
     path: `/blog/${post.slug}`,
-    image: cover,
+    // A Lumen card with the title, byline and cover, drawn on demand (src/app/og/blog/[file]/route.tsx).
+    image: blogShareImage(post, locale),
     imageAlt: post.title,
     locale,
     type: 'article',

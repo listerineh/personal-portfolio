@@ -152,7 +152,7 @@ UI text goes in both `messages/en.json` and `messages/es.json`, including `aria-
 | Roles | `src/lib/data/experiences.ts` |
 | Projects | `src/lib/data/projects.ts` (+ product shot via `npm run generate-project-images`, share image via `node scripts/generate-og-images.js projects`) |
 | Skills | `src/lib/data/skills.ts`, categories in `skill-categories.ts` |
-| Blog posts | One file per post in `src/lib/data/blog/`, registered in `get-blog-posts.ts`. Pushing a new post to `main` triggers the `notify-new-blog` workflow |
+| Blog posts | One file per post in `src/lib/data/blog/` (cover in `public/blog/`), registered in `get-blog-posts.ts`. The share image is drawn on demand at `/og/blog/<slug>.png` (title, byline, cover; `src/app/og/blog/[file]/route.tsx`), nothing to generate. Pushing a new post to `main` triggers the `notify-new-blog` workflow |
 | Music | `src/lib/data/music.ts` |
 | Page copy and metadata | `messages/*.json`, `src/lib/metadata.ts` |
 
