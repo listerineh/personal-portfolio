@@ -6,8 +6,11 @@ import type { BlogPost } from '@/types';
  * `v` changes whenever what the card shows changes (title, date, cover), so social networks and the CDN never keep a
  * stale card; `lang` only when it isn't English (crawlers send no language cookie, so they normally get English).
  */
+// Bump when the card's design or wording changes, so cached cards are replaced.
+const CARD_VERSION = 2;
+
 export function blogShareImage(post: Pick<BlogPost, 'slug' | 'title' | 'date' | 'imageUrl'>, locale: Locale): string {
-  const key = `${post.title}|${post.date}|${post.imageUrl ?? ''}`;
+  const key = `${CARD_VERSION}|${post.title}|${post.date}|${post.imageUrl ?? ''}`;
   let hash = 5381;
   for (let i = 0; i < key.length; i++) hash = ((hash * 33) ^ key.charCodeAt(i)) >>> 0;
   const query = new URLSearchParams({ v: hash.toString(36) });

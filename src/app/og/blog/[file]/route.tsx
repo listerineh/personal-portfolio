@@ -42,6 +42,13 @@ async function coverDataUri(imageUrl: string | undefined): Promise<string | unde
   }
 }
 
+/** Dates are stored in English ("March 4, 2026"); shown like the article does (blog-post-client-page.tsx). */
+function formatDate(value: string, locale: Locale): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
 /** GET /og/blog/<slug>.png[?lang=es] — the post's 1200×630 share card. */
 export async function GET(request: Request, { params }: { params: Promise<{ file: string }> }) {
   const { file } = await params;
@@ -51,7 +58,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ file
   if (!post) return new Response('Not found', { status: 404 });
 
   const minutes = post.readingTime ?? calculateReadingTime(post.content);
-  const byline = [post.author || AUTHOR_NAME, post.date, formatReadingTime(minutes, locale)].join(' · ');
+  const byline = [post.author || AUTHOR_NAME, formatDate(post.date, locale), formatReadingTime(minutes, locale)].join(' · ');
   const [loadedFonts, cover] = await Promise.all([loadFonts(), coverDataUri(post.imageUrl)]);
 
   return new ImageResponse(<BlogCard title={post.title} byline={byline} cover={cover} />, {
