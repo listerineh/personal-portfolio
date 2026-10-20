@@ -1,5 +1,13 @@
 # GitHub Actions Workflows
 
+## E2E Tests
+
+**File:** `e2e.yml`
+
+Runs the Playwright suite (`tests/`) against the production build on every pull request to `main` or `develop` and on every push to `develop`, in Chromium desktop and Pixel 5. A manual run (**Actions → E2E Tests → Run workflow**) adds Firefox, WebKit and Mobile Safari. No secrets needed: tests mock every `/api` route, and the build uses a placeholder `RESEND_API_KEY`. The HTML report is uploaded as the `playwright-report` artifact (14 days).
+
+To block merges on it, add **E2E Tests / e2e** as a required status check in the branch protection rules for `main` and `develop`.
+
 ## Notify New Blog Post
 
 **File:** `notify-new-blog.yml`

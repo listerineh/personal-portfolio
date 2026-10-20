@@ -97,8 +97,13 @@ test.describe("Blog search", () => {
       .getByRole("searchbox")
       .or(page.getByRole("textbox", { name: /Search articles/ }))
       .first();
-    await search.fill("terraform");
-    await expect(page.getByText(/Found \d+ articles?/)).toBeVisible();
+    // Retried as a block: a fill that lands before hydration (seen on WebKit in CI) never reaches React's onChange.
+    await expect(async () => {
+      await search.fill("terraform");
+      await expect(page.getByText(/Found \d+ articles?/)).toBeVisible({
+        timeout: 2000,
+      });
+    }).toPass();
     await search.fill("zzqxnotaword");
     await expect(page.getByText("Found 0 articles")).toBeVisible();
   });
