@@ -1,7 +1,6 @@
 import { metadataFor } from '@/lib/metadata';
 import { getProjects } from '@/lib/data/projects';
-import { cookies } from 'next/headers';
-import { defaultLocale, locales, type Locale } from '@/i18n/config';
+import { requestLocale } from '@/i18n/locale';
 import { ProjectsListingClientPage } from '@/components/projects/projects-listing-client-page';
 
 export const dynamic = 'force-dynamic';
@@ -9,9 +8,7 @@ export const dynamic = 'force-dynamic';
 export const generateMetadata = metadataFor('projects');
 
 export default async function ProjectsPage() {
-  const cookieStore = await cookies();
-  const savedLocale = cookieStore.get('NEXT_LOCALE')?.value;
-  const locale = (savedLocale && locales.includes(savedLocale as Locale) ? savedLocale : defaultLocale) as Locale;
+  const locale = await requestLocale();
   const projects = getProjects(locale);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 

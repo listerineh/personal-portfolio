@@ -5,6 +5,7 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 ## [Unreleased]
 
 ### Added
+- First visits follow the browser's language (`Accept-Language`) instead of always English; a language picked with the switcher still wins. One `requestLocale()` replaces the cookie checks repeated in each page.
 - Weekly digest for the owner (Vercel Cron, Mondays 08:00 Quito): subscribers, joins and leaves, views and reactions with the top posts, contact messages and CSP reports, from weekly counters in Redis. Needs `CRON_SECRET`.
 - "Three posts to start with": three days after confirming, new subscribers get the most-read posts (scheduled with Resend, cancelled if they unsubscribe first).
 - Newsletter double opt-in: subscribing emails a signed confirmation link (valid 7 days) and only `/newsletter/confirm` adds the contact, so nobody can sign up someone else's address. Per-address limit on confirmation emails. Fixes re-subscribing after unsubscribing (the contact stayed unsubscribed).
