@@ -10,6 +10,8 @@ import { escapeHtml } from '@/lib/server/security';
 
 export const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 export const FROM = 'Sebastian Alvarez <hello@listerineh.dev>';
+/** Where the contact form and the weekly digest go. */
+export const OWNER_EMAIL = process.env.OWNER_EMAIL || 'sebask8er.alvarez@gmail.com';
 
 const C = {
   tint: '#F5F5F7',
@@ -33,6 +35,12 @@ export type EmailBlock =
   | { type: 'list'; items: string[] }
   /** An image that links somewhere (a post's share card). */
   | { type: 'image'; src: string; alt: string; href: string; width: number; height: number }
+  /** Linked posts: title, then a short excerpt. */
+  | { type: 'posts'; posts: { title: string; excerpt: string; href: string }[] }
+  /** Figures side by side, e.g. "12 / new subscribers". */
+  | { type: 'stats'; stats: { value: string; label: string }[] }
+  /** A small heading inside the card. */
+  | { type: 'heading'; text: string }
   /** The one amber pill. */
   | { type: 'action'; label: string; href: string }
   | { type: 'divider' };
@@ -79,6 +87,26 @@ function block(b: EmailBlock): string {
       return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:4px 0 24px;"><tr><td style="border-radius:999px;background:${C.amber};">
         <a href="${escapeHtml(b.href)}" style="display:inline-block;padding:13px 26px;border-radius:999px;font-size:15px;font-weight:600;color:${C.ink};text-decoration:none;">${escapeHtml(b.label)}</a>
       </td></tr></table>`;
+    case 'posts':
+      return b.posts
+        .map(
+          (post) => `<a href="${escapeHtml(post.href)}" style="display:block;margin:0 0 12px;padding:16px 18px;border-radius:14px;background:${C.panel};text-decoration:none;">
+            <span style="display:block;font-size:16px;font-weight:600;line-height:1.3;color:${C.ink};">${escapeHtml(post.title)}</span>
+            <span style="display:block;margin-top:6px;font-size:14px;line-height:1.5;color:${C.muted};">${escapeHtml(post.excerpt)}</span>
+          </a>`,
+        )
+        .join('') + '<div style="height:12px;line-height:12px;font-size:0;">&nbsp;</div>';
+    case 'stats':
+      return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;"><tr>${b.stats
+        .map(
+          (s) => `<td style="width:${Math.floor(100 / b.stats.length)}%;padding:14px 12px;border-radius:14px;background:${C.panel};vertical-align:top;">
+            <div style="font-size:24px;font-weight:700;letter-spacing:-0.5px;color:${C.ink};">${escapeHtml(s.value)}</div>
+            <div style="margin-top:4px;font-size:12px;line-height:1.4;color:${C.muted};">${escapeHtml(s.label)}</div>
+          </td>`,
+        )
+        .join('<td style="width:8px;font-size:0;">&nbsp;</td>')}</tr></table>`;
+    case 'heading':
+      return `<h2 style="margin:8px 0 12px;font-size:17px;font-weight:600;letter-spacing:-0.2px;color:${C.ink};">${escapeHtml(b.text)}</h2>`;
     case 'divider':
       return `<div style="height:1px;margin:8px 0 28px;background:${C.hairline};line-height:1px;font-size:0;">&nbsp;</div>`;
   }
@@ -132,6 +160,9 @@ export function renderText(email: Email): string {
     if (b.type === 'list') lines.push(...b.items.map((item) => `- ${item}`), '');
     if (b.type === 'image') lines.push(`${b.alt}: ${b.href}`, '');
     if (b.type === 'action') lines.push(`${b.label}: ${b.href}`, '');
+    if (b.type === 'posts') lines.push(...b.posts.flatMap((post) => [post.title, `  ${post.href}`]), '');
+    if (b.type === 'stats') lines.push(b.stats.map((s) => `${s.value} ${s.label}`).join(' · '), '');
+    if (b.type === 'heading') lines.push(b.text.toUpperCase(), '');
     if (b.type === 'divider') lines.push('---', '');
   }
   lines.push('--', email.footer.reason);

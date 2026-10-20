@@ -1,7 +1,8 @@
 import { Resend } from 'resend';
 import { z } from 'zod';
 import { clientIp, withinRateLimit } from '@/lib/server/security';
-import { FROM } from '@/lib/email/layout';
+import { FROM, OWNER_EMAIL } from '@/lib/email/layout';
+import { recordEvent } from '@/lib/server/stats';
 import { contactMessageEmail } from '@/lib/email/templates';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
     const { subject, html, text } = contactMessageEmail({ name, email, message });
     const { error } = await resend.emails.send({
       from: FROM,
-      to: ['sebask8er.alvarez@gmail.com'],
+      to: [OWNER_EMAIL],
       replyTo: email,
       subject,
       html,
@@ -41,6 +42,7 @@ export async function POST(request: Request) {
       return Response.json({ error: 'Failed to send message' }, { status: 500 });
     }
 
+    await recordEvent('contact');
     return Response.json({ ok: true });
   } catch (error) {
     console.error('[send]', error);

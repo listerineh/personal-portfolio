@@ -5,6 +5,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 ## [Unreleased]
 
 ### Added
+- Weekly digest for the owner (Vercel Cron, Mondays 08:00 Quito): subscribers, joins and leaves, views and reactions with the top posts, contact messages and CSP reports, from weekly counters in Redis. Needs `CRON_SECRET`.
+- "Three posts to start with": three days after confirming, new subscribers get the most-read posts (scheduled with Resend, cancelled if they unsubscribe first).
 - Newsletter double opt-in: subscribing emails a signed confirmation link (valid 7 days) and only `/newsletter/confirm` adds the contact, so nobody can sign up someone else's address. Per-address limit on confirmation emails. Fixes re-subscribing after unsubscribing (the contact stayed unsubscribed).
 - Every email redesigned in Lumen on one shared layout with a plain-text version (`src/lib/email`): subscription confirmation, welcome, unsubscribe link, new post (now with the post's share card) and the contact form, which now sends from `hello@listerineh.dev` instead of Resend's test sender.
 - After each article: the three most related posts (40% shared tags, 60% similar text, the same in both languages) instead of the latest three, and links to the previous and next post by date (`PostPager` in the design system, with a story).

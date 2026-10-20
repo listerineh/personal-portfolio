@@ -2,5 +2,11 @@
   "buildCommand": "npm run build:prod",
   "env": {
     "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1"
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/weekly-digest",
+      "schedule": "0 13 * * 1"
+    }
+  ]
 }
