@@ -4,8 +4,16 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
-### Added
+## [3.1.0] - 2026-10-20
+
+### Changed
+- Every blog post rewritten in English and Spanish in a more natural, first-person voice (no AI-style scaffolding), with new titles and excerpts. Factual errors fixed along the way (versions, dates, pricing, outdated snippets) and unverifiable claims removed.
 - First visits follow the browser's language (`Accept-Language`) instead of always English; a language picked with the switcher still wins. One `requestLocale()` replaces the cookie checks repeated in each page.
+
+### Fixed
+- The new-post notification only fires when a post file is added. Editing existing posts or helper modules in `src/lib/data/blog` no longer emails every subscriber.
+
+### Added
 - Weekly digest for the owner (Vercel Cron, Mondays 08:00 Quito): subscribers, joins and leaves, views and reactions with the top posts, contact messages and CSP reports, from weekly counters in Redis. Needs `CRON_SECRET`.
 - "Three posts to start with": three days after confirming, new subscribers get the most-read posts (scheduled with Resend, cancelled if they unsubscribe first).
 - Newsletter double opt-in: subscribing emails a signed confirmation link (valid 7 days) and only `/newsletter/confirm` adds the contact, so nobody can sign up someone else's address. Per-address limit on confirmation emails. Fixes re-subscribing after unsubscribing (the contact stayed unsubscribed).
