@@ -17,6 +17,9 @@ export const CSP_REPORT_PATH = '/api/csp-report';
 
 const GOOGLE_ANALYTICS = ['https://www.googletagmanager.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com'];
 const HOTJAR = ['https://*.hotjar.com', 'https://*.hotjar.io', 'wss://*.hotjar.com'];
+// Hotjar now runs on Contentsquare: its tag pulls code from t.contentsquare.net and reports to l.contentsquare.net.
+// https://docs.contentsquare.com/en/web/content-security-policy/
+const CONTENTSQUARE = ['https://*.contentsquare.net', 'https://*.contentsquare.com'];
 // Skill icons render unoptimized straight from these CDNs (src/lib/data/skills.ts).
 const ICON_CDNS = ['https://raw.githubusercontent.com', 'https://cdn.simpleicons.org', 'https://cdn.worldvectorlogo.com'];
 // https://vercel.com/docs/vercel-toolbar/managing-toolbar#using-a-content-security-policy
@@ -43,14 +46,14 @@ export function buildCsp(nonce: string, { mode = cspMode(), https = true }: { mo
     'script-src': [
       "'self'",
       `'nonce-${nonce}'`,
-      ...(preview ? [...VERCEL_TOOLBAR.script, 'https://www.googletagmanager.com', 'https://*.hotjar.com'] : ["'strict-dynamic'"]),
+      ...(preview ? [...VERCEL_TOOLBAR.script, 'https://www.googletagmanager.com', 'https://*.hotjar.com', 'https://*.contentsquare.net'] : ["'strict-dynamic'"]),
       ...(dev ? ["'unsafe-eval'"] : []),
     ],
     // Inline styles are unavoidable (React style attributes in server HTML, next/font, Hotjar) and low risk.
     'style-src': ["'self'", "'unsafe-inline'", ...(preview ? VERCEL_TOOLBAR.style : [])],
-    'img-src': ["'self'", 'data:', 'blob:', ...ICON_CDNS, ...GOOGLE_ANALYTICS, 'https://*.hotjar.com', ...(preview ? VERCEL_TOOLBAR.img : [])],
+    'img-src': ["'self'", 'data:', 'blob:', ...ICON_CDNS, ...GOOGLE_ANALYTICS, 'https://*.hotjar.com', 'https://*.contentsquare.net', ...(preview ? VERCEL_TOOLBAR.img : [])],
     'font-src': ["'self'", 'data:', 'https://*.hotjar.com', ...(preview ? VERCEL_TOOLBAR.font : [])],
-    'connect-src': ["'self'", ...GOOGLE_ANALYTICS, ...HOTJAR, ...(preview ? VERCEL_TOOLBAR.connect : []), ...(dev ? ['ws:'] : [])],
+    'connect-src': ["'self'", ...GOOGLE_ANALYTICS, ...HOTJAR, ...CONTENTSQUARE, ...(preview ? VERCEL_TOOLBAR.connect : []), ...(dev ? ['ws:'] : [])],
     // The /why video, Hotjar's widget frame, and /docs/components (Storybook, same origin; local server in dev).
     'frame-src': ["'self'", 'https://www.youtube.com', 'https://vars.hotjar.com', ...(preview ? VERCEL_TOOLBAR.frame : []), ...(dev ? ['http://localhost:6006'] : [])],
     'worker-src': ["'self'"],
