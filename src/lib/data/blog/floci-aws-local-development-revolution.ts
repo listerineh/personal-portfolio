@@ -1,132 +1,74 @@
 import type { BlogPost } from '@/types';
 import type { Locale } from '@/i18n/config';
 
-const contentEN = `## Introduction
+const contentEN = `## Local AWS was always the annoying part
 
-I've been developing with AWS for years. And honestly? **Local development has always been a pain.**
+I've been building on AWS for years, and local development has always been the part I dreaded. LocalStack was the default answer, but it came with its own problems: slow startup, fiddly configuration, a lot of memory, and constant tweaking before things actually worked. Every time I brought up a local environment I knew I was in for a few minutes of waiting and a bit of hoping.
 
-LocalStack was the go-to solution, but it came with its own headaches: slow startup times, complex configuration, memory-hungry processes, and constant tweaking to get things working. Every time I spun up a local environment, I knew I was in for a 5-minute wait and a prayer that everything would actually work.
+Then, in March 2026, two things happened. LocalStack archived its community edition and went fully paid, and a project called Floci launched.
 
-Then, in March 2026, two things happened:
+I tried Floci, changed one line in my Docker setup, and it just worked. 24ms startup, 13 MiB of memory, 51 AWS services, no cost, no auth token, MIT license. My local workflow got dramatically faster, mostly because the waiting disappeared.
 
-1. LocalStack archived its community edition and went fully paid
-2. A project called **Floci** launched
+This post is about why I think Floci is more than a LocalStack replacement: Terraform, architecture design, learning AWS, testing, and also where it still falls short.
 
-I gave Floci a shot. Changed one line in my Docker config. And everything just... **clicked**.
+## What happened with LocalStack
 
-**24ms startup time.** 13 MiB memory footprint. 51 AWS services. Zero cost. Zero auth tokens. MIT licensed forever.
+On March 23, 2026, LocalStack changed its model. The community edition was archived, auth tokens became mandatory for everyone, security updates stopped for the free tier and many services became paid-only.
 
-Since discovering Floci, my local development workflow has been **10x faster**. No more waiting. No more configuration hell. Just pure, instant AWS emulation.
+A lot of CI pipelines broke overnight, and teams that had built their whole local workflow around LocalStack had to choose between migrating and paying. For reference, LocalStack Pro costs around $50 to $100+ per developer per month. For a team of ten, that's $6,000 to $12,000 a year just to test AWS locally.
 
-In this post, I'll show you why Floci isn't just a LocalStack replacement — it's a **complete rethinking of local AWS development**. From Terraform integration to complex architecture design, from learning environments to production-grade testing, Floci changes everything.
+The community's answer was Floci.
 
----
+## What Floci is
 
-## The LocalStack Sunset: What Actually Happened
+Floci (named after [floccus](https://en.wikipedia.org/wiki/Cirrocumulus_floccus), the cloud formation that looks like popcorn) is a free, open-source AWS emulator built with Quarkus Native and GraalVM. Its own pitch: "Light, fluffy, and always free. No account. No auth token. No feature gates. Just \`docker compose up\`."
 
-On March 23, 2026, LocalStack made a decision that shocked the developer community:
+The numbers it publishes:
 
-**What changed:**
-- Community edition archived
-- Mandatory auth tokens for all users
-- Security updates frozen for free tier
-- Many services moved to paid-only
+- 24ms to start, against roughly 3,300ms for LocalStack
+- 13 MiB of memory at idle, against 143 MiB
+- 51 AWS services, several of them never available in LocalStack Community
+- MIT license, so there's no community edition to sunset
+- drop-in replacement: same port (4566), same protocols
 
-**Why it mattered:**
+And every service is unlocked. No paid tier, no enterprise features, no tokens.
 
-Thousands of CI/CD pipelines broke overnight. Teams that had built their entire local development workflow around LocalStack suddenly faced a choice: migrate or pay.
+## Why it changed my workflow
 
-For context, LocalStack Pro costs **$50-100+ per developer per month**. For a team of 10 developers, that's **$6,000-12,000 per year** just to test AWS services locally.
-
-**The community's response?**
-
-Enter Floci.
-
----
-
-## What is Floci?
-
-Floci (named after [floccus](https://en.wikipedia.org/wiki/Cirrocumulus_floccus), the cloud formation that looks like popcorn) is a **free, open-source AWS emulator** built with Quarkus Native and GraalVM.
-
-**The pitch:**
-
-> "Light, fluffy, and always free. No account. No auth token. No feature gates. Just \`docker compose up\`."
-
-**The numbers:**
-
-- **24ms startup** (vs ~3,300ms for LocalStack)
-- **13 MiB idle memory** (vs 143 MiB)
-- **51 AWS services** (many not available in LocalStack Community)
-- **MIT licensed** (truly open source, no "community edition" sunset)
-- **Drop-in replacement** (same port 4566, same protocols)
-
-**The promise:**
-
-Every service is fully unlocked. No paid tier. No enterprise features. No auth tokens. Ever.
-
----
-
-## Why Floci Changes Everything
-
-### 1. Performance That Actually Matters
-
-**138× faster startup:**
+### Speed you actually notice
 
 \`\`\`bash
 # LocalStack Community
 docker run localstack/localstack
-# ~3,300ms to ready
+# ~3,300ms until ready
 
 # Floci
 docker run floci/floci:latest
-# 24ms to ready
+# ~24ms until ready
 \`\`\`
 
-**Why this matters:**
+That's about 138 times faster to start. In CI it adds up: if your tests bring up the emulator 50 times a day, that's around 2.7 minutes saved every day, and hours over a month. Using about 91% less memory also means smaller (cheaper) runners and more containers on the same machine.
 
-In CI pipelines, every second counts. If your tests spin up LocalStack 50 times a day, that's **2.7 minutes saved per run** with Floci. Over a month? **Hours** of CI time recovered.
+### Real engines behind the complex services
 
-**91% less memory:**
+This is the part I like most. For the heavy services, Floci runs real engines in Docker instead of shallow mocks:
 
-Floci uses **13 MiB at idle** vs LocalStack's 143 MiB. That means:
-- Smaller CI runners (cheaper)
-- More containers on the same machine
-- Faster cold starts
+- **Lambda:** the real AWS runtimes, in containers
+- **RDS:** real PostgreSQL, MySQL and MariaDB
+- **ElastiCache:** real Redis/Valkey
+- **MSK:** Kafka, through Redpanda
+- **EKS:** Kubernetes, through k3s
+- **OpenSearch:** real OpenSearch clusters
 
-### 2. Real Engines, Not Mocks
+So you're testing against the protocols and behavior your code will meet in production, not against an approximation of them.
 
-Here's where Floci gets interesting. Instead of shallow mocks, Floci uses **real Docker-backed engines** for complex services:
+### IAM that actually checks things
 
-**Lambda:** Real AWS runtimes in containers  
-**RDS:** Real PostgreSQL, MySQL, MariaDB  
-**ElastiCache:** Real Redis/Valkey  
-**MSK:** Real Kafka via Redpanda  
-**EKS:** Real Kubernetes via k3s  
-**OpenSearch:** Real OpenSearch clusters
+Floci implements real IAM authentication and SigV4 validation for Lambda, ElastiCache, RDS, ECS, EC2, MSK, EKS, OpenSearch, ECR and CodeBuild. Your policies and auth flows behave locally the way they will in AWS, which kills a whole class of "works locally, fails in AWS because of IAM" bugs.
 
-**Why this matters:**
+## Terraform, entirely on your laptop
 
-You're not testing against mocks. You're testing against **the actual protocols and behaviors** your production code will encounter.
-
-### 3. Full IAM Support
-
-Floci implements **real IAM authentication and SigV4 validation** for:
-- Lambda, ElastiCache, RDS, ECS, EC2
-- MSK, EKS, OpenSearch, ECR, CodeBuild
-
-**What this means:**
-
-Your IAM policies work locally. Your authentication flows work locally. Your security testing works locally.
-
-No more "it works locally but fails in AWS because of IAM."
-
----
-
-## Terraform Integration: Infrastructure as Code, Locally
-
-Here's where Floci becomes a game-changer for infrastructure teams.
-
-### The Setup
+For infrastructure work this is where it really pays off. Point the AWS provider at Floci:
 
 \`\`\`hcl
 provider "aws" {
@@ -141,14 +83,12 @@ provider "aws" {
     s3       = "http://localhost:4566"
     dynamodb = "http://localhost:4566"
     lambda   = "http://localhost:4566"
-    # ... all 51 services
+    # ...one line per service you use
   }
 }
 \`\`\`
 
-### The Workflow
-
-**1. Design locally:**
+Then work as usual:
 
 \`\`\`bash
 docker run -d -p 4566:4566 \\
@@ -159,157 +99,51 @@ terraform init
 terraform apply
 \`\`\`
 
-**2. Test the architecture:**
+Your S3 buckets, Lambda functions, DynamoDB tables and SQS queues run on your laptop. Iterating is \`terraform destroy\` and \`terraform apply\` again, with no cloud bill, no waiting for resources and nothing to clean up. When you're confident, you point the provider back at AWS. Same code, same resources.
 
-Your entire AWS infrastructure runs **on your laptop**. S3 buckets, Lambda functions, DynamoDB tables, SQS queues — all local, all free.
+## Designing architecture without risk
 
-**3. Iterate rapidly:**
+What Floci really unlocks is experimenting without consequences.
 
-\`\`\`bash
-terraform destroy
-terraform apply
-\`\`\`
+**Learning AWS.** The classic path is reading the docs, deploying to AWS, getting surprised by the bill and deleting everything in a panic. With Floci you bring up whatever service you want, break things and learn by doing, for free. For beginners that's a big deal.
 
-No cloud costs. No waiting for resources to provision. No cleanup headaches.
+**Prototyping.** You can build two or three versions of an architecture in parallel on your laptop, compare them and decide with data. It costs nothing and takes hours instead of days.
 
-**4. Deploy to AWS:**
+**Replicating big environments.** If production has 15 microservices, 8 databases and 12 Lambda functions, a full copy in AWS for testing can cost hundreds of dollars a month. Locally, it's \`docker compose up\` and \`terraform apply\`, and a few minutes later the whole thing is running.
 
-Once you're confident, just change the provider endpoint to real AWS. Same code. Same resources. Production-ready.
+## Compared with LocalStack
 
----
+**It's free, and stays free.** LocalStack Community is frozen and Pro is paid. Floci is MIT.
 
-## The Power of Local Architecture Design
+**It's faster and lighter.** 138x faster startup and 13 MiB against 143 MiB are measurable, and your CI will feel both.
 
-Floci unlocks something powerful: **risk-free architecture experimentation**.
+**It has more services for free:** ElastiCache, RDS, API Gateway v2 with WebSocket, Route53, Auto Scaling, Textract, Neptune, EKS and CodeBuild, none of which LocalStack Community offered.
 
-### Scenario 1: Learning AWS
+**It leans on real engines** for the heavy services, which matters when you test realistic workloads.
 
-**Before Floci:**
-- Read documentation
-- Deploy to AWS
-- Get surprised by costs
-- Delete everything in panic
+**No tokens.** Pull the image and run it. No sign-up, no API keys, no telemetry.
 
-**With Floci:**
-- Spin up any AWS service locally
-- Experiment freely
-- Break things without consequences
-- Learn by doing
-- Zero cost
+## Where it falls short
 
-**For beginners, this is transformational.**
+It's not perfect, and it's worth saying:
 
-### Scenario 2: Architecture Prototyping
+- **It's young.** LocalStack has been around since 2017, Floci since March 2026. Some edge cases won't be covered yet.
+- **The community is smaller.** Fewer Stack Overflow answers and tutorials, so you'll read the docs more.
+- **It's not 100% AWS.** No emulator is. Some quirks of the real thing won't be reproduced exactly.
+- **It needs the Docker socket** for the container-backed services (\`/var/run/docker.sock\`), which is a security concern in some environments.
 
-Build multiple architectures in parallel. On your laptop. Compare performance. Make an informed decision.
+For me these are small compared to what you get, and the project is moving fast: more than 10,000 GitHub stars in two months.
 
-**Cost:** $0  
-**Time:** Hours instead of days  
-**Risk:** Zero
+## What this makes possible
 
-### Scenario 3: Complex Environment Replication
+A few things I'd love to see become normal:
 
-Your production environment has 15 microservices, 8 databases, 12 Lambda functions. Replicating this in AWS for testing costs **hundreds of dollars per month**.
+- **One-command dev environments.** Clone the repo, run \`make dev-env\`, and every AWS service, database, queue and function is up in about 30 seconds.
+- **AI-assisted architecture.** Tools that generate Terraform, test it against Floci, tune it based on what they see locally and only then deploy.
+- **Training sandboxes.** Real AWS services for onboarding new hires or preparing certifications, with no risk of a surprise bill.
+- **Full environments per pull request.** Bring up the whole stack, run integration tests, validate infra changes and tear it down, with no cloud cost and as much parallelism as your runners allow.
 
-**With Floci:**
-
-\`\`\`bash
-docker compose up
-terraform apply
-\`\`\`
-
-**Entire environment running locally in minutes.**
-
----
-
-## Advantages Over LocalStack
-
-### 1. It's Actually Free
-
-LocalStack Community is dead. LocalStack Pro costs money. Floci is MIT licensed **forever**.
-
-### 2. It's Faster
-
-138× faster startup isn't marketing. It's measurable. Your CI pipeline will feel it.
-
-### 3. It's Lighter
-
-13 MiB vs 143 MiB. Run more containers. Use smaller machines. Save money on CI runners.
-
-### 4. More Services
-
-Services LocalStack Community doesn't offer:
-- ✅ ElastiCache, RDS, API Gateway v2 + WebSocket
-- ✅ Route53, Auto Scaling, Textract
-- ✅ Neptune, EKS, CodeBuild
-
-All free in Floci.
-
-### 5. Real Docker Integration
-
-Floci uses real engines. LocalStack uses mocks. The difference matters when you're testing production workloads.
-
-### 6. No Auth Tokens
-
-Pull the image. Run it. Done. No sign-ups. No API keys. No telemetry.
-
----
-
-## Disadvantages (Let's Be Honest)
-
-Floci isn't perfect. Here's what you should know:
-
-### 1. Younger Project
-
-LocalStack has been around since 2017. Floci launched in March 2026. Some edge cases might not be covered yet.
-
-### 2. Smaller Community
-
-Fewer Stack Overflow answers. Fewer tutorials. You might need to read the docs more carefully.
-
-### 3. Not 100% AWS-Compatible
-
-No local emulator is perfect. Some AWS quirks and edge cases won't be replicated exactly.
-
-### 4. Requires Docker Socket
-
-For container-backed services, you need to mount \`/var/run/docker.sock\`. This has security implications in some environments.
-
-**My take:** These are minor compared to the benefits. And the project is improving fast (10,000+ GitHub stars in 2 months).
-
----
-
-## The Future: What's Possible
-
-Imagine these scenarios:
-
-### 1. One-Command Dev Environments
-
-\`\`\`bash
-git clone my-project
-cd my-project
-make dev-env
-\`\`\`
-
-Floci spins up all AWS services, databases, queues, Lambda functions. **Ready to code in 30 seconds.**
-
-### 2. AI-Powered Architecture Design
-
-AI tools could generate Terraform configs, test them in Floci, optimize based on local performance, deploy to AWS when ready.
-
-### 3. Training Environments for Teams
-
-Companies could create sandbox environments for new hires, training modules with real AWS services, certification prep environments.
-
-### 4. CI/CD Revolution
-
-Every PR could spin up full AWS environment, run integration tests, validate infrastructure changes, tear down automatically. **No cloud costs. Unlimited parallelization.**
-
----
-
-## Getting Started with Floci
-
-### Quick Start with Floci
+## Getting started
 
 \`\`\`bash
 docker run -d --name floci \\
@@ -321,10 +155,9 @@ aws --endpoint-url http://localhost:4566 s3 mb s3://test-bucket
 aws --endpoint-url http://localhost:4566 s3 ls
 \`\`\`
 
-### With Docker Compose
+Or with Docker Compose:
 
 \`\`\`yaml
-version: '3.8'
 services:
   floci:
     image: floci/floci:latest
@@ -336,21 +169,9 @@ services:
       - FLOCI_STORAGE_MODE=hybrid
 \`\`\`
 
----
+## Bonus: Azure too
 
-## Bonus: Also Need Local Azure? Meet Floci-AZ
-
-Here's where it gets even better: **The same team built a local Azure emulator.**
-
-[Floci-AZ](https://github.com/floci-io/floci-az) brings the same philosophy to Azure development:
-
-**What it emulates:**
-- Blob Storage, Queue Storage, Table Storage, Azure Functions
-
-**Same benefits:**
-- Port 4577, MIT licensed, No Azure account required
-
-### Quick Start with Floci-AZ
+The same team built [Floci-AZ](https://github.com/floci-io/floci-az), the same idea for Azure: Blob Storage, Queue Storage, Table Storage and Azure Functions, on port 4577, MIT licensed and without an Azure account.
 
 \`\`\`bash
 docker run --rm -p 4577:4577 \\
@@ -358,180 +179,88 @@ docker run --rm -p 4577:4577 \\
   floci/floci-az:latest
 \`\`\`
 
-### Why This Matters
+If you work across AWS and Azure, you can run both emulators side by side and test cross-cloud setups locally, without vendor lock-in or cloud bills.
 
-If you're in a **multi-cloud environment** (AWS + Azure), you can now run both emulators simultaneously and test cross-cloud architectures locally.
+## Why this matters to me
 
-**All on your laptop. All for free.**
+Floci is more than a LocalStack alternative. It's a statement that local AWS development should be free, fast and available to everyone. When LocalStack went paid, the community built Floci, the same way Terraform's move to the BSL license gave us OpenTofu. Open source tends to find a way.
 
-This is the future: **cloud-agnostic local development** without vendor lock-in or cloud bills.
+Day to day, it changed how I work: I design architectures locally first, test infrastructure changes without fear, learn new AWS services for free and bring up complex environments in minutes.
 
----
+If you're still on the frozen LocalStack Community, paying for Pro, or skipping local AWS testing altogether, give it a try. It's one line of config.
 
-## Conclusion
+**Resources:** [Floci website](https://floci.io/) · [GitHub](https://github.com/floci-io/floci) · [Documentation](https://floci.io/floci/) · [Migrating from LocalStack](https://floci.io/floci/getting-started/migrate-from-localstack/)
 
-Floci represents something bigger than just a LocalStack alternative.
-
-It's a statement: **Local AWS development should be free, fast, and accessible to everyone.**
-
-When LocalStack went paid, the community responded with Floci. Just like when Terraform went BSL, we got OpenTofu.
-
-**Open source always finds a way.**
-
-For me, Floci has changed how I work:
-- I design architectures locally first
-- I test infrastructure changes without fear
-- I learn new AWS services without cost
-- I build complex environments in minutes
-
-**The numbers speak for themselves:**
-- 24ms startup
-- 13 MiB memory
-- 51 services
-- $0 cost
-- MIT license
-
-If you're still using LocalStack Community (frozen), or paying for LocalStack Pro, or avoiding local AWS testing altogether — give Floci a shot.
-
-Change one line. See the difference.
-
-**The future of local AWS development is here. And it's free.**
-
----
-
-**Resources:**
-- [Floci Website](https://floci.io/)
-- [GitHub Repository](https://github.com/floci-io/floci)
-- [Documentation](https://floci.io/floci/)
-- [Migration Guide from LocalStack](https://floci.io/floci/getting-started/migrate-from-localstack/)
 `;
 
-const contentES = `## Introducción
+const contentES = `## AWS en local siempre fue la parte molesta
 
-He estado desarrollando con AWS durante años. ¿Y honestamente? **El desarrollo local siempre ha sido un dolor de cabeza.**
+Llevo años construyendo sobre AWS, y el desarrollo local siempre fue la parte que más me daba pereza. LocalStack era la respuesta por defecto, pero tenía sus propios problemas: arranque lento, configuración enredada, mucha memoria y ajustes constantes antes de que las cosas funcionaran. Cada vez que levantaba un entorno local sabía que me tocaban unos minutos de espera y un poco de fe.
 
-LocalStack era la solución de referencia, pero venía con sus propios problemas: tiempos de inicio lentos, configuración compleja, procesos que consumen mucha memoria, y ajustes constantes para que las cosas funcionaran. Cada vez que levantaba un entorno local, sabía que me esperaban 5 minutos de espera y una oración para que todo funcionara.
+Entonces, en marzo de 2026, pasaron dos cosas. LocalStack archivó su edición community y pasó a ser completamente de pago, y salió un proyecto llamado Floci.
 
-Luego, en marzo de 2026, pasaron dos cosas:
+Probé Floci, cambié una línea en mi configuración de Docker y funcionó a la primera. 24ms de arranque, 13 MiB de memoria, 51 servicios de AWS, gratis, sin token de autenticación y con licencia MIT. Mi flujo local se volvió muchísimo más rápido, sobre todo porque desapareció la espera.
 
-1. LocalStack archivó su edición comunitaria y se volvió completamente de pago
-2. Un proyecto llamado **Floci** se lanzó
+Este post va de por qué creo que Floci es más que un reemplazo de LocalStack: Terraform, diseño de arquitectura, aprender AWS, pruebas, y también dónde todavía se queda corto.
 
-Le di una oportunidad a Floci. Cambié una línea en mi configuración de Docker. Y todo simplemente... **encajó**.
+## Qué pasó con LocalStack
 
-**Tiempo de inicio de 24ms.** Huella de memoria de 13 MiB. 51 servicios AWS. Costo cero. Cero tokens de autenticación. Licencia MIT para siempre.
+El 23 de marzo de 2026, LocalStack cambió su modelo. Archivó la edición community, volvió obligatorio el token de autenticación para todos, congeló las actualizaciones de seguridad del plan gratuito y pasó muchos servicios a solo pago.
 
-Desde que descubrí Floci, mi flujo de desarrollo local ha sido **10x más rápido**. No más esperas. No más infierno de configuración. Solo emulación AWS pura e instantánea.
+Un montón de pipelines de CI se rompieron de la noche a la mañana, y los equipos que tenían todo su flujo local montado sobre LocalStack tuvieron que elegir entre migrar o pagar. Como referencia, LocalStack Pro cuesta entre $50 y más de $100 por desarrollador al mes. Para un equipo de diez, son entre $6.000 y $12.000 al año solo para probar AWS en local.
 
-En este post, te mostraré por qué Floci no es solo un reemplazo de LocalStack — es un **replanteamiento completo del desarrollo local de AWS**. Desde integración con Terraform hasta diseño de arquitecturas complejas, desde entornos de aprendizaje hasta pruebas de grado producción, Floci lo cambia todo.
+La respuesta de la comunidad fue Floci.
 
----
+## Qué es Floci
 
-## El Ocaso de LocalStack: Qué Pasó Realmente
+Floci (por [floccus](https://en.wikipedia.org/wiki/Cirrocumulus_floccus), la formación de nubes que parece canguil) es un emulador de AWS gratuito y open source, hecho con Quarkus Native y GraalVM. Su propia carta de presentación: "Light, fluffy, and always free. No account. No auth token. No feature gates. Just \`docker compose up\`."
 
-El 23 de marzo de 2026, LocalStack tomó una decisión que sorprendió a la comunidad de desarrolladores:
+Los números que publica:
 
-**Qué cambió:**
-- Edición comunitaria archivada
-- Tokens de autenticación obligatorios para todos los usuarios
-- Actualizaciones de seguridad congeladas para el tier gratuito
-- Muchos servicios movidos a solo-pago
+- 24ms para arrancar, frente a unos 3.300ms de LocalStack
+- 13 MiB de memoria en reposo, frente a 143 MiB
+- 51 servicios de AWS, varios que LocalStack Community nunca tuvo
+- licencia MIT, así que no hay edición community que se pueda archivar
+- reemplazo directo: mismo puerto (4566), mismos protocolos
 
-**Por qué importó:**
+Y todos los servicios están desbloqueados. Sin plan de pago, sin funciones enterprise, sin tokens.
 
-Miles de pipelines de CI/CD se rompieron de la noche a la mañana. Equipos que habían construido todo su flujo de desarrollo local alrededor de LocalStack de repente enfrentaron una decisión: migrar o pagar.
+## Por qué me cambió el flujo de trabajo
 
-Para contexto, LocalStack Pro cuesta **$50-100+ por desarrollador por mes**. Para un equipo de 10 desarrolladores, eso es **$6,000-12,000 por año** solo para probar servicios AWS localmente.
-
-**¿La respuesta de la comunidad?**
-
-Entró Floci.
-
----
-
-## ¿Qué es Floci?
-
-Floci (nombrado por [floccus](https://es.wikipedia.org/wiki/Cirrocumulus_floccus), la formación de nubes que parece palomitas de maíz) es un **emulador AWS gratuito y de código abierto** construido con Quarkus Native y GraalVM.
-
-**El pitch:**
-
-> "Ligero, esponjoso y siempre gratuito. Sin cuenta. Sin token de autenticación. Sin puertas de funcionalidades. Solo \`docker compose up\`."
-
-**Los números:**
-
-- **Inicio en 24ms** (vs ~3,300ms para LocalStack)
-- **13 MiB de memoria idle** (vs 143 MiB)
-- **51 servicios AWS** (muchos no disponibles en LocalStack Community)
-- **Licencia MIT** (verdadero código abierto, sin ocaso de "edición comunitaria")
-- **Reemplazo directo** (mismo puerto 4566, mismos protocolos)
-
-**La promesa:**
-
-Cada servicio está completamente desbloqueado. Sin tier de pago. Sin funcionalidades enterprise. Sin tokens de autenticación. Nunca.
-
----
-
-## Por Qué Floci Lo Cambia Todo
-
-### 1. Rendimiento Que Realmente Importa
-
-**138× más rápido al iniciar:**
+### Una velocidad que se nota
 
 \`\`\`bash
 # LocalStack Community
 docker run localstack/localstack
-# ~3,300ms hasta estar listo
+# ~3.300ms hasta estar listo
 
 # Floci
 docker run floci/floci:latest
-# 24ms hasta estar listo
+# ~24ms hasta estar listo
 \`\`\`
 
-**Por qué esto importa:**
+Es unas 138 veces más rápido para arrancar. En CI se acumula: si tus pruebas levantan el emulador 50 veces al día, son unos 2,7 minutos ahorrados cada día, y horas al mes. Usar alrededor de un 91% menos de memoria también significa runners más pequeños (y baratos) y más contenedores en la misma máquina.
 
-En pipelines de CI, cada segundo cuenta. Si tus tests levantan LocalStack 50 veces al día, eso son **2.7 minutos ahorrados por ejecución** con Floci. ¿En un mes? **Horas** de tiempo de CI recuperado.
+### Motores reales detrás de los servicios complejos
 
-**91% menos memoria:**
+Esta es la parte que más me gusta. Para los servicios pesados, Floci corre motores reales en Docker en vez de mocks superficiales:
 
-Floci usa **13 MiB en idle** vs los 143 MiB de LocalStack. Eso significa:
-- Runners de CI más pequeños (más baratos)
-- Más contenedores en la misma máquina
-- Arranques en frío más rápidos
+- **Lambda:** los runtimes reales de AWS, en contenedores
+- **RDS:** PostgreSQL, MySQL y MariaDB de verdad
+- **ElastiCache:** Redis/Valkey reales
+- **MSK:** Kafka, mediante Redpanda
+- **EKS:** Kubernetes, mediante k3s
+- **OpenSearch:** clusters reales de OpenSearch
 
-### 2. Motores Reales, No Mocks
+Así que pruebas contra los protocolos y el comportamiento que tu código va a encontrar en producción, no contra una aproximación.
 
-Aquí es donde Floci se pone interesante. En lugar de mocks superficiales, Floci usa **motores reales respaldados por Docker** para servicios complejos:
+### IAM que de verdad valida
 
-**Lambda:** Runtimes AWS reales en contenedores  
-**RDS:** PostgreSQL, MySQL, MariaDB reales  
-**ElastiCache:** Redis/Valkey real  
-**MSK:** Kafka real vía Redpanda  
-**EKS:** Kubernetes real vía k3s  
-**OpenSearch:** Clusters OpenSearch reales
+Floci implementa autenticación IAM real y validación SigV4 para Lambda, ElastiCache, RDS, ECS, EC2, MSK, EKS, OpenSearch, ECR y CodeBuild. Tus políticas y flujos de autenticación se comportan en local como lo harán en AWS, y eso elimina toda una familia de bugs del tipo "en local funciona, en AWS falla por IAM".
 
-**Por qué esto importa:**
+## Terraform, todo en tu laptop
 
-No estás probando contra mocks. Estás probando contra **los protocolos y comportamientos reales** que tu código de producción encontrará.
-
-### 3. Soporte IAM Completo
-
-Floci implementa **autenticación IAM real y validación SigV4** para:
-- Lambda, ElastiCache, RDS, ECS, EC2
-- MSK, EKS, OpenSearch, ECR, CodeBuild
-
-**Qué significa esto:**
-
-Tus políticas IAM funcionan localmente. Tus flujos de autenticación funcionan localmente. Tus pruebas de seguridad funcionan localmente.
-
-No más "funciona localmente pero falla en AWS por IAM."
-
----
-
-## Integración con Terraform: Infraestructura como Código, Localmente
-
-Aquí es donde Floci se convierte en un cambio de juego para equipos de infraestructura.
-
-### La Configuración
+Para trabajo de infraestructura es donde más rinde. Apunta el provider de AWS a Floci:
 
 \`\`\`hcl
 provider "aws" {
@@ -546,14 +275,12 @@ provider "aws" {
     s3       = "http://localhost:4566"
     dynamodb = "http://localhost:4566"
     lambda   = "http://localhost:4566"
-    # ... los 51 servicios
+    # ...una línea por cada servicio que uses
   }
 }
 \`\`\`
 
-### El Flujo de Trabajo
-
-**1. Diseña localmente:**
+Y trabaja como siempre:
 
 \`\`\`bash
 docker run -d -p 4566:4566 \\
@@ -564,157 +291,51 @@ terraform init
 terraform apply
 \`\`\`
 
-**2. Prueba la arquitectura:**
+Tus buckets de S3, funciones Lambda, tablas de DynamoDB y colas de SQS corren en tu laptop. Iterar es \`terraform destroy\` y otra vez \`terraform apply\`, sin factura de la nube, sin esperar a que se creen los recursos y sin nada que limpiar. Cuando estés seguro, vuelves a apuntar el provider a AWS. El mismo código, los mismos recursos.
 
-Tu infraestructura AWS completa corre **en tu laptop**. Buckets S3, funciones Lambda, tablas DynamoDB, colas SQS — todo local, todo gratis.
+## Diseñar arquitectura sin riesgo
 
-**3. Itera rápidamente:**
+Lo que Floci realmente desbloquea es experimentar sin consecuencias.
 
-\`\`\`bash
-terraform destroy
-terraform apply
-\`\`\`
+**Aprender AWS.** El camino clásico es leer la documentación, desplegar en AWS, llevarte una sorpresa con la factura y borrar todo con pánico. Con Floci levantas el servicio que quieras, rompes cosas y aprendes haciendo, gratis. Para quien está empezando, es enorme.
 
-Sin costos de nube. Sin esperar que los recursos se aprovisionen. Sin dolores de cabeza de limpieza.
+**Prototipar.** Puedes armar dos o tres versiones de una arquitectura en paralelo en tu laptop, compararlas y decidir con datos. No cuesta nada y toma horas en vez de días.
 
-**4. Despliega a AWS:**
+**Replicar entornos grandes.** Si producción tiene 15 microservicios, 8 bases de datos y 12 funciones Lambda, una copia completa en AWS para pruebas puede costar cientos de dólares al mes. En local es \`docker compose up\` y \`terraform apply\`, y unos minutos después está todo corriendo.
 
-Una vez que estés seguro, solo cambia el endpoint del provider a AWS real. Mismo código. Mismos recursos. Listo para producción.
+## Frente a LocalStack
 
----
+**Es gratis y lo va a seguir siendo.** LocalStack Community está congelado y Pro es de pago. Floci es MIT.
 
-## El Poder del Diseño de Arquitectura Local
+**Es más rápido y más liviano.** Arrancar 138 veces más rápido y usar 13 MiB contra 143 MiB son cosas medibles, y tu CI va a notar las dos.
 
-Floci desbloquea algo poderoso: **experimentación de arquitectura sin riesgos**.
+**Tiene más servicios gratis:** ElastiCache, RDS, API Gateway v2 con WebSocket, Route53, Auto Scaling, Textract, Neptune, EKS y CodeBuild, ninguno disponible en LocalStack Community.
 
-### Escenario 1: Aprender AWS
+**Se apoya en motores reales** para los servicios pesados, y eso importa cuando pruebas cargas de trabajo realistas.
 
-**Antes de Floci:**
-- Leer documentación
-- Desplegar a AWS
-- Sorprenderse con los costos
-- Borrar todo en pánico
+**Sin tokens.** Bajas la imagen y la corres. Sin registro, sin API keys, sin telemetría.
 
-**Con Floci:**
-- Levantar cualquier servicio AWS localmente
-- Experimentar libremente
-- Romper cosas sin consecuencias
-- Aprender haciendo
-- Costo cero
+## Dónde se queda corto
 
-**Para principiantes, esto es transformador.**
+No es perfecto, y vale la pena decirlo:
 
-### Escenario 2: Prototipado de Arquitectura
+- **Es joven.** LocalStack existe desde 2017; Floci, desde marzo de 2026. Algunos casos borde todavía no van a estar cubiertos.
+- **La comunidad es más pequeña.** Menos respuestas en Stack Overflow y menos tutoriales, así que te va a tocar leer más la documentación.
+- **No es 100% AWS.** Ningún emulador lo es. Algunas rarezas del servicio real no se van a reproducir igual.
+- **Necesita el socket de Docker** para los servicios que corren en contenedores (\`/var/run/docker.sock\`), y eso es un tema de seguridad en algunos entornos.
 
-Construye múltiples arquitecturas en paralelo. En tu laptop. Compara rendimiento. Toma una decisión informada.
+Para mí son detalles comparados con lo que ganas, y el proyecto avanza rápido: más de 10.000 estrellas en GitHub en dos meses.
 
-**Costo:** $0  
-**Tiempo:** Horas en lugar de días  
-**Riesgo:** Cero
+## Lo que esto hace posible
 
-### Escenario 3: Replicación de Entornos Complejos
+Algunas cosas que me encantaría ver como algo normal:
 
-Tu entorno de producción tiene 15 microservicios, 8 bases de datos, 12 funciones Lambda. Replicar esto en AWS para pruebas cuesta **cientos de dólares por mes**.
+- **Entornos de desarrollo con un solo comando.** Clonas el repo, corres \`make dev-env\` y en unos 30 segundos tienes arriba todos los servicios de AWS, bases de datos, colas y funciones.
+- **Arquitectura asistida por IA.** Herramientas que generen Terraform, lo prueben contra Floci, lo ajusten según lo que ven en local y recién ahí lo desplieguen.
+- **Sandboxes de capacitación.** Servicios reales de AWS para el onboarding de gente nueva o para preparar certificaciones, sin riesgo de una factura sorpresa.
+- **Entornos completos por pull request.** Levantar todo el stack, correr pruebas de integración, validar cambios de infraestructura y bajarlo, sin costo de nube y con todo el paralelismo que aguanten tus runners.
 
-**Con Floci:**
-
-\`\`\`bash
-docker compose up
-terraform apply
-\`\`\`
-
-**Entorno completo corriendo localmente en minutos.**
-
----
-
-## Ventajas Sobre LocalStack
-
-### 1. Es Realmente Gratis
-
-LocalStack Community está muerto. LocalStack Pro cuesta dinero. Floci tiene licencia MIT **para siempre**.
-
-### 2. Es Más Rápido
-
-138× más rápido al iniciar no es marketing. Es medible. Tu pipeline de CI lo sentirá.
-
-### 3. Es Más Ligero
-
-13 MiB vs 143 MiB. Ejecuta más contenedores. Usa máquinas más pequeñas. Ahorra dinero en runners de CI.
-
-### 4. Más Servicios
-
-Servicios que LocalStack Community no ofrece:
-- ✅ ElastiCache, RDS, API Gateway v2 + WebSocket
-- ✅ Route53, Auto Scaling, Textract
-- ✅ Neptune, EKS, CodeBuild
-
-Todos gratis en Floci.
-
-### 5. Integración Docker Real
-
-Floci usa motores reales. LocalStack usa mocks. La diferencia importa cuando pruebas cargas de producción.
-
-### 6. Sin Tokens de Autenticación
-
-Descarga la imagen. Ejecútala. Listo. Sin registros. Sin API keys. Sin telemetría.
-
----
-
-## Desventajas (Seamos Honestos)
-
-Floci no es perfecto. Esto es lo que debes saber:
-
-### 1. Proyecto Más Joven
-
-LocalStack existe desde 2017. Floci lanzó en marzo 2026. Algunos casos edge podrían no estar cubiertos aún.
-
-### 2. Comunidad Más Pequeña
-
-Menos respuestas en Stack Overflow. Menos tutoriales. Podrías necesitar leer la documentación más cuidadosamente.
-
-### 3. No es 100% Compatible con AWS
-
-Ningún emulador local es perfecto. Algunas peculiaridades y casos edge de AWS no se replicarán exactamente.
-
-### 4. Requiere Docker Socket
-
-Para servicios respaldados por contenedores, necesitas montar \`/var/run/docker.sock\`. Esto tiene implicaciones de seguridad en algunos entornos.
-
-**Mi opinión:** Estos son menores comparados con los beneficios. Y el proyecto está mejorando rápido (10,000+ estrellas en GitHub en 2 meses).
-
----
-
-## El Futuro: Qué es Posible
-
-Imagina estos escenarios:
-
-### 1. Entornos de Dev con Un Comando
-
-\`\`\`bash
-git clone my-project
-cd my-project
-make dev-env
-\`\`\`
-
-Floci levanta todos los servicios AWS, bases de datos, colas, funciones Lambda. **Listo para codear en 30 segundos.**
-
-### 2. Diseño de Arquitectura Potenciado por IA
-
-Herramientas de IA podrían generar configs de Terraform, probarlas en Floci, optimizar basado en rendimiento local, desplegar a AWS cuando esté listo.
-
-### 3. Entornos de Entrenamiento para Equipos
-
-Las empresas podrían crear entornos sandbox para nuevos empleados, módulos de entrenamiento con servicios AWS reales, entornos de preparación para certificaciones.
-
-### 4. Revolución CI/CD
-
-Cada PR podría levantar entorno AWS completo, ejecutar tests de integración, validar cambios de infraestructura, destruir automáticamente. **Sin costos de nube. Paralelización ilimitada.**
-
----
-
-## Comenzando con Floci
-
-### Inicio Rápido con Floci
+## Para empezar
 
 \`\`\`bash
 docker run -d --name floci \\
@@ -726,10 +347,9 @@ aws --endpoint-url http://localhost:4566 s3 mb s3://test-bucket
 aws --endpoint-url http://localhost:4566 s3 ls
 \`\`\`
 
-### Con Docker Compose
+O con Docker Compose:
 
 \`\`\`yaml
-version: '3.8'
 services:
   floci:
     image: floci/floci:latest
@@ -741,21 +361,9 @@ services:
       - FLOCI_STORAGE_MODE=hybrid
 \`\`\`
 
----
+## Extra: también para Azure
 
-## Bonus: ¿También Necesitas Azure Local? Conoce Floci-AZ
-
-Aquí es donde se pone aún mejor: **El mismo equipo construyó un emulador local de Azure.**
-
-[Floci-AZ](https://github.com/floci-io/floci-az) trae la misma filosofía al desarrollo de Azure:
-
-**Qué emula:**
-- Blob Storage, Queue Storage, Table Storage, Azure Functions
-
-**Mismos beneficios:**
-- Puerto 4577, Licencia MIT, No requiere cuenta de Azure
-
-### Inicio Rápido con Floci-AZ
+El mismo equipo hizo [Floci-AZ](https://github.com/floci-io/floci-az), la misma idea para Azure: Blob Storage, Queue Storage, Table Storage y Azure Functions, en el puerto 4577, con licencia MIT y sin cuenta de Azure.
 
 \`\`\`bash
 docker run --rm -p 4577:4577 \\
@@ -763,52 +371,18 @@ docker run --rm -p 4577:4577 \\
   floci/floci-az:latest
 \`\`\`
 
-### Por Qué Esto Importa
+Si trabajas con AWS y Azure, puedes correr los dos emuladores a la vez y probar arquitecturas multi-nube en local, sin quedar atado a un proveedor ni pagar facturas de nube.
 
-Si estás en un **entorno multi-nube** (AWS + Azure), ahora puedes ejecutar ambos emuladores simultáneamente y probar arquitecturas cross-cloud localmente.
+## Por qué me importa
 
-**Todo en tu laptop. Todo gratis.**
+Floci es más que una alternativa a LocalStack. Es una declaración de que el desarrollo local con AWS debería ser gratis, rápido y para todos. Cuando LocalStack pasó a ser de pago, la comunidad construyó Floci, igual que el cambio de Terraform a la licencia BSL nos dio OpenTofu. El open source suele encontrar la forma.
 
-Este es el futuro: **desarrollo local agnóstico a la nube** sin vendor lock-in ni facturas de nube.
+En el día a día, me cambió cómo trabajo: diseño las arquitecturas primero en local, pruebo cambios de infraestructura sin miedo, aprendo servicios nuevos de AWS sin pagar y levanto entornos complejos en minutos.
 
----
+Si sigues con LocalStack Community congelado, pagando Pro o directamente sin probar AWS en local, dale una oportunidad. Es una línea de configuración.
 
-## Conclusión
+**Recursos:** [sitio de Floci](https://floci.io/) · [GitHub](https://github.com/floci-io/floci) · [Documentación](https://floci.io/floci/) · [Migrar desde LocalStack](https://floci.io/floci/getting-started/migrate-from-localstack/)
 
-Floci representa algo más grande que solo una alternativa a LocalStack.
-
-Es una declaración: **El desarrollo local de AWS debería ser gratuito, rápido y accesible para todos.**
-
-Cuando LocalStack se volvió de pago, la comunidad respondió con Floci. Igual que cuando Terraform se volvió BSL, obtuvimos OpenTofu.
-
-**El código abierto siempre encuentra un camino.**
-
-Para mí, Floci ha cambiado cómo trabajo:
-- Diseño arquitecturas localmente primero
-- Pruebo cambios de infraestructura sin miedo
-- Aprendo nuevos servicios AWS sin costo
-- Construyo entornos complejos en minutos
-
-**Los números hablan por sí mismos:**
-- 24ms de inicio
-- 13 MiB de memoria
-- 51 servicios
-- $0 de costo
-- Licencia MIT
-
-Si todavía usas LocalStack Community (congelado), o pagas por LocalStack Pro, o evitas las pruebas locales de AWS por completo — dale una oportunidad a Floci.
-
-Cambia una línea. Ve la diferencia.
-
-**El futuro del desarrollo local de AWS está aquí. Y es gratis.**
-
----
-
-**Recursos:**
-- [Sitio Web de Floci](https://floci.io/)
-- [Repositorio GitHub](https://github.com/floci-io/floci)
-- [Documentación](https://floci.io/floci/)
-- [Guía de Migración desde LocalStack](https://floci.io/floci/getting-started/migrate-from-localstack/)
 `;
 
 export const flociAwsLocalDevelopmentRevolution: Record<Locale, BlogPost> = {
@@ -816,22 +390,22 @@ export const flociAwsLocalDevelopmentRevolution: Record<Locale, BlogPost> = {
     slug: 'floci-aws-local-development-revolution',
     title: 'Floci: The AWS Local Emulator That Starts in 24ms and Costs $0',
     date: 'May 21, 2026',
-    excerpt: "LocalStack went paid. Floci emerged as the free, MIT-licensed alternative. 138× faster startup, 91% less memory, 51 AWS services, and perfect Terraform integration. Here's why local AWS development just got a massive upgrade.",
+    excerpt: 'When LocalStack went paid I tried Floci, a free, MIT-licensed AWS emulator. It starts in 24ms and runs real engines. How I use it with Terraform, and where it still falls short.',
     imageUrl: '/blog/floci-aws-local-development-revolution.webp',
     imageAiHint: 'modern cloud development visualization: laptop with docker containers showing AWS services running locally; speed indicators showing 24ms startup; terraform code flowing into local AWS architecture; comparison chart showing Floci vs LocalStack performance; developer workspace with multiple environments (dev, staging, prod) running simultaneously; professional tech illustration with cloud blue, docker blue, and green success colors; clean modern design',
     author: 'Sebastian Alvarez',
     tags: ['AWS', 'Floci', 'LocalStack', 'Docker', 'Terraform', 'IaC', 'DevOps', 'Local Development'],
-    content: contentEN,
+    content: contentEN
   },
   es: {
     slug: 'floci-aws-local-development-revolution',
-    title: 'Floci: El Emulador AWS Local que Inicia en 24ms y Cuesta $0',
+    title: 'Floci: el emulador local de AWS que arranca en 24ms y no cuesta nada',
     date: 'May 21, 2026',
-    excerpt: "LocalStack se volvió de pago. Floci emergió como la alternativa gratuita con licencia MIT. 138× más rápido, 91% menos memoria, 51 servicios AWS, e integración perfecta con Terraform. Por qué el desarrollo local de AWS acaba de recibir una mejora masiva.",
+    excerpt: 'Cuando LocalStack pasó a ser de pago probé Floci, un emulador de AWS gratuito y con licencia MIT. Arranca en 24ms y usa motores reales. Cómo lo uso con Terraform y dónde todavía se queda corto.',
     imageUrl: '/blog/floci-aws-local-development-revolution.webp',
     imageAiHint: 'visualización moderna de desarrollo en la nube: laptop con contenedores docker mostrando servicios AWS corriendo localmente; indicadores de velocidad mostrando inicio de 24ms; código terraform fluyendo hacia arquitectura AWS local; gráfico de comparación mostrando rendimiento Floci vs LocalStack; espacio de trabajo de desarrollador con múltiples entornos (dev, staging, prod) corriendo simultáneamente; ilustración técnica profesional con azul nube, azul docker, y colores verdes de éxito; diseño moderno limpio',
     author: 'Sebastian Alvarez',
     tags: ['AWS', 'Floci', 'LocalStack', 'Docker', 'Terraform', 'IaC', 'DevOps', 'Desarrollo Local'],
-    content: contentES,
+    content: contentES
   }
 };

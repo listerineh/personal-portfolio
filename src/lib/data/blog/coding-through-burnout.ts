@@ -6,192 +6,140 @@ export const codingThroughBurnout: Record<Locale, BlogPost> = {
     slug: 'coding-through-burnout',
     title: 'Coding Through Burnout: How Hobbies Helped Me Heal',
     date: 'July 31, 2025',
-    excerpt: 'Burnout is real — especially when code is both your job and your hobby. Here\'s how I navigated it using rest, rhythm, and side projects that gave me purpose beyond productivity.',
+    excerpt: 'When code is both your job and your hobby, burnout sneaks up on you. What pulled me out: my cats, playing guitar for no reason, and a side project built just for me.',
     imageUrl: '/blog/coding-through-burnout.webp',
     imageAiHint: 'split scene showing developer burnout recovery journey: left side shows exhausted developer at desk surrounded by code, endless meetings, stress indicators; right side shows same developer relaxed with cat on lap, guitar nearby, music notes floating, peaceful environment; center shows transition with healing elements like meditation, nature, creative tools; warm comforting colors with soft lighting, illustrative style',
     content: `
-## Introduction
+## When the job and the hobby are the same thing
 
-Being a fullstack developer sounds exciting on paper — and it *is*. But over the years, working across **different projects, stacks, products, industries, and teams**, I found myself teetering on the edge of burnout more than once.
+Being a full-stack developer is fun, and I mean that. But after years of moving between projects, stacks, products, industries and teams, I've been close to burnout more than once.
 
-I love what I do, but when your profession is also your hobby, the lines blur dangerously fast. I was coding all day for work… and still coding at night for personal projects. There were weeks where I felt more like a machine than a person.
+Part of the problem is that I love this. When your job is also your hobby, the line between them disappears fast. I'd code all day for work and then keep coding at night on personal projects. Some weeks I felt more like a machine than a person.
 
-And yet, what helped me recover wasn't stepping away from development completely — it was **redefining what coding meant to me**, and reconnecting with the things that remind me why I create in the first place.
+What got me out wasn't quitting development. It was changing what coding meant to me, and making room again for the things that remind me why I like building stuff at all.
 
----
+## How it showed up
 
-## When the Burnout Hits
+It came in slowly: tiredness that didn't go away with sleep, a short temper, brain fog. I'd open the editor and feel nothing. No curiosity, no itch to try something, just a mechanical push to get tickets done.
 
-The signs came slowly at first: exhaustion, irritability, brain fog. I'd sit in front of the editor and feel nothing. No curiosity. No drive. Just a mechanical push to "get things done."
+That's the thing nobody tells you about burnout. It isn't only being tired. It's losing the connection with the stuff that used to make you happy.
 
-Burnout isn't just being tired — it's feeling **disconnected from what used to bring you joy**.
+I tried the usual fixes: weekends off, closing Slack, muting notifications. They helped a bit. The real change came when I learned to disconnect properly, on purpose, and not just "work less".
 
-I tried taking weekends off, turning off Slack, muting notifications. But the real shift came when I learned how to **disconnect deeply and with purpose**.
+## My cats got there first
 
----
+It sounds silly, I know. But my cats were the first thing that pulled me out of it.
 
-## My Cats Were My First Wake-Up Call
+Watching them sleep in a patch of sun, chase shadows and demand attention at the worst possible moment brought me back to the ground. They don't care about deadlines, and they definitely don't measure your worth in commits. They just want you there.
 
-Sounds silly, right? But my cats reminded me how to *exist* without performance.
+Those quiet moments reminded me I'm a person first and a developer second.
 
-Watching them nap in sunbeams, chase shadows, demand affection — it grounded me. Pets don't care about your deadlines. They don't measure your worth in commits.
+## Playing just to play
 
-They just want you *present*.
+I've always been an amateur musician. At some of my lowest points I'd pick up the guitar, not to write anything, just to play and feel something again.
 
-In the quiet moments with them, I remembered I was a person first — not just a developer.
+Music has no backlog, no Jira tickets and no standups. It's you and whatever you're playing right now.
 
----
+And then, almost without noticing, tech came back in. In a good way this time.
 
-## Music Helped Me Breathe Again
+## Cadenza
 
-I've always been an amateur musician. During some of my lowest points, I'd pick up the guitar, not to write songs, but just to *play*. To *feel* again.
+At some point it clicked: maybe I didn't have to keep tech and music in separate boxes. Maybe they could feed each other.
 
-Playing music has no backlog, no Jira tickets, no standups. It's just you and the moment.
+That's how [Cadenza](https://cadenza-app.vercel.app) started, a tool to help me with composition and music theory practice. I made it for myself, a simple way to play with harmony, find new voicings and explore theory interactively.
 
-And yet, my love for tech snuck back in — in a good way.
+Then friends and other musicians started telling me it was useful to them too. That hit harder than I expected. It reminded me why I started building things in the first place: not for performance reviews or productivity, but to solve real problems and connect the things I care about through code.
 
----
+That's what brought me back as a developer.
 
-## Turning Burnout Into Creation: Cadenza
+## What I'd tell another dev in the same spot
 
-At some point, I realized: maybe I didn't need to separate my love for tech and music — maybe I could let them **feed each other**.
+A lot of us live with this contradiction: code is how we pay the bills and also how we have fun. That's great, until it isn't. A few things I learned the hard way:
 
-That's how I ended up building [Cadenza](https://cadenza-app.vercel.app), a tool to help me with **musical composition and music theory practice**.
+**Not every side project has to ship.** Sometimes building something just for you is the whole point.
 
-I made it for myself — a simple way to experiment with harmony, discover new voicings, and explore theory in an interactive way. But without even realizing it, I was also building something **genuinely useful for other musicians**.
+**Rest isn't laziness.** It's fuel. And real rest sometimes means stepping away from side projects too, not only from work.
 
-That moment — when friends and fellow musicians started telling me they found value in it — reminded me **why I started building things** in the first place.
+**Purpose helps more than time off.** When I stopped coding to produce and started coding to express something, I remembered why I got into this.
 
-Not for performance. Not for productivity. But to *solve real problems*, to *create tools that matter*, and to *bridge passions through code*.
+## If you're burned out right now
 
-That realization brought me back to life as a developer.
+It doesn't mean you're broken. It means you've been running on empty for too long. When you juggle a lot of roles it's easy to forget you're not a feature factory. You're a person, with rhythms and a creative side that needs looking after.
 
----
+So pet a cat, play a chord, build something only for you. The same skills that wore you down can be the ones that bring you back, if you let them reconnect you with what you enjoy.
 
-## When Your Hobby Is Also Your Career
-
-This is the paradox a lot of us devs face: code is what we do for a living *and* what we do for fun.
-
-That's powerful — but also dangerous.
-
-### Here's what I learned:
-
-- Not every side project needs to be "shipped." Sometimes, building something just for yourself is enough.
-- Rest isn't laziness — it's fuel. True rest means *disconnecting completely*, even from side projects.
-- Purpose heals. When I stopped coding for output and started coding for *expression*, I remembered why I fell in love with tech in the first place.
-
----
-
-## Conclusion
-
-Burnout doesn't mean you're broken — it means you've been running on empty. As a fullstack dev juggling many roles, it's easy to forget you're not just a producer of features. You're a human with needs, rhythms, and a creative spark that needs care.
-
-So if you're feeling burned out:
-
-- Pet a cat
-- Play a chord
-- Build something just for you
-
-And remember: the same skills that wear you down can also be the ones that lift you back up — if you let them reconnect you with joy.
-
-Try [Cadenza](https://cadenza-app.vercel.app) if you're into music too — maybe it helps you like it helped me.
+And if you're into music too, give [Cadenza](https://cadenza-app.vercel.app) a try. Maybe it helps you the way it helped me.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Burnout', 'Developer Life', 'Mental Health', 'Side Projects', 'Music', 'Productivity']
   },
   es: {
     slug: 'coding-through-burnout',
-    title: 'Programando a Través del Burnout: Cómo los Hobbies Me Ayudaron a Sanar',
+    title: 'Programar con burnout: cómo los hobbies me ayudaron a salir',
     date: 'July 31, 2025',
-    excerpt: 'El burnout es real — especialmente cuando el código es tanto tu trabajo como tu hobby. Aquí está cómo lo navegué usando descanso, ritmo y proyectos paralelos que me dieron propósito más allá de la productividad.',
+    excerpt: 'Cuando el código es tu trabajo y tu hobby, el burnout llega sin avisar. Lo que me sacó: mis gatos, tocar guitarra porque sí y un proyecto personal hecho solo para mí.',
     imageUrl: '/blog/coding-through-burnout.webp',
     imageAiHint: 'escena dividida mostrando viaje de recuperación de burnout de desarrollador: lado izquierdo muestra desarrollador exhausto en escritorio rodeado de código, reuniones interminables, indicadores de estrés; lado derecho muestra mismo desarrollador relajado con gato en regazo, guitarra cerca, notas musicales flotando, ambiente pacífico; centro muestra transición con elementos de sanación como meditación, naturaleza, herramientas creativas; colores cálidos reconfortantes con iluminación suave, estilo ilustrativo',
     content: `
-## Introducción
+## Cuando el trabajo y el hobby son lo mismo
 
-Ser desarrollador fullstack suena emocionante en papel — y lo *es*. Pero a lo largo de los años, trabajando en **diferentes proyectos, stacks, productos, industrias y equipos**, me encontré al borde del burnout más de una vez.
+Ser desarrollador full-stack es divertido, y lo digo en serio. Pero después de años moviéndome entre proyectos, stacks, productos, industrias y equipos, he estado cerca del burnout más de una vez.
 
-Amo lo que hago, pero cuando tu profesión también es tu hobby, las líneas se difuminan peligrosamente rápido. Estaba programando todo el día para el trabajo… y aún programando por la noche en proyectos personales. Hubo semanas donde me sentí más como una máquina que como una persona.
+Parte del problema es que esto me encanta. Cuando tu trabajo también es tu hobby, la línea entre los dos se borra rapidísimo. Programaba todo el día para el trabajo y luego seguía en la noche con proyectos personales. Hubo semanas en que me sentía más máquina que persona.
 
-Y sin embargo, lo que me ayudó a recuperarme no fue alejarme completamente del desarrollo — fue **redefinir lo que programar significaba para mí**, y reconectar con las cosas que me recuerdan por qué creo en primer lugar.
+Lo que me sacó no fue dejar el desarrollo. Fue cambiar lo que programar significaba para mí y volver a hacerle espacio a las cosas que me recuerdan por qué me gusta construir cosas.
 
----
+## Cómo se manifestó
 
-## Cuando el Burnout Golpea
+Llegó de a poco: un cansancio que no se iba durmiendo, poca paciencia, la cabeza nublada. Abría el editor y no sentía nada. Ni curiosidad, ni ganas de probar algo, solo un empuje mecánico para cerrar tickets.
 
-Las señales llegaron lentamente al principio: agotamiento, irritabilidad, niebla mental. Me sentaba frente al editor y no sentía nada. Sin curiosidad. Sin impulso. Solo un empuje mecánico para "hacer las cosas".
+Eso es lo que nadie te cuenta del burnout. No es solo estar cansado. Es perder la conexión con lo que antes te hacía feliz.
 
-El burnout no es solo estar cansado — es sentirse **desconectado de lo que solía traerte alegría**.
+Probé lo típico: fines de semana libres, cerrar Slack, silenciar notificaciones. Ayudó un poco. El cambio de verdad llegó cuando aprendí a desconectarme bien, con intención, y no solo a "trabajar menos".
 
-Intenté tomar fines de semana libres, apagar Slack, silenciar notificaciones. Pero el verdadero cambio llegó cuando aprendí cómo **desconectar profundamente y con propósito**.
+## Mis gatos llegaron primero
 
----
+Suena tonto, ya sé. Pero mis gatos fueron lo primero que me sacó de ahí.
 
-## Mis Gatos Fueron Mi Primera Llamada de Atención
+Verlos dormir en un pedazo de sol, perseguir sombras y pedir atención en el peor momento posible me bajó a tierra. No les importan los deadlines y, definitivamente, no miden tu valor en commits. Solo quieren que estés ahí.
 
-¿Suena tonto, verdad? Pero mis gatos me recordaron cómo *existir* sin rendimiento.
+Esos momentos tranquilos me recordaron que primero soy una persona y después un desarrollador.
 
-Verlos dormir en rayos de sol, perseguir sombras, exigir afecto — me aterrizó. Las mascotas no se preocupan por tus deadlines. No miden tu valor en commits.
+## Tocar por tocar
 
-Solo te quieren *presente*.
+Siempre he sido músico aficionado. En algunos de mis peores momentos agarraba la guitarra, no para componer nada, solo para tocar y volver a sentir algo.
 
-En los momentos tranquilos con ellos, recordé que era una persona primero — no solo un desarrollador.
+La música no tiene backlog, ni tickets de Jira, ni dailies. Eres tú y lo que estás tocando en ese momento.
 
----
+Y después, casi sin darme cuenta, la tecnología volvió a colarse. Esta vez para bien.
 
-## La Música Me Ayudó a Respirar de Nuevo
+## Cadenza
 
-Siempre he sido músico amateur. Durante algunos de mis puntos más bajos, tomaba la guitarra, no para escribir canciones, sino solo para *tocar*. Para *sentir* de nuevo.
+En algún momento me cayó la ficha: a lo mejor no tenía que tener la tecnología y la música en cajones separados. A lo mejor podían alimentarse una a la otra.
 
-Tocar música no tiene backlog, ni tickets de Jira, ni standups. Es solo tú y el momento.
+Así empezó [Cadenza](https://cadenza-app.vercel.app), una herramienta para ayudarme con la composición y la práctica de teoría musical. La hice para mí, una forma sencilla de jugar con armonía, encontrar voicings nuevos y explorar teoría de manera interactiva.
 
-Y sin embargo, mi amor por la tecnología regresó sigilosamente — de una buena manera.
+Después, amigos y otros músicos empezaron a decirme que a ellos también les servía. Eso me pegó más de lo que esperaba. Me recordó por qué empecé a construir cosas: no por evaluaciones de desempeño ni por productividad, sino para resolver problemas reales y conectar, con código, las cosas que me importan.
 
----
+Eso fue lo que me devolvió las ganas como desarrollador.
 
-## Convirtiendo el Burnout en Creación: Cadenza
+## Lo que le diría a otro dev en la misma situación
 
-En algún punto, me di cuenta: tal vez no necesitaba separar mi amor por la tecnología y la música — tal vez podría dejar que se **alimentaran mutuamente**.
+Muchos vivimos con esta contradicción: el código es como pagamos las cuentas y también como nos divertimos. Eso está buenísimo, hasta que deja de estarlo. Algunas cosas que aprendí a golpes:
 
-Así es como terminé construyendo [Cadenza](https://cadenza-app.vercel.app), una herramienta para ayudarme con **composición musical y práctica de teoría musical**.
+**No todo proyecto personal tiene que salir a producción.** A veces construir algo solo para ti es todo el punto.
 
-La hice para mí mismo — una forma simple de experimentar con armonía, descubrir nuevas voicings y explorar teoría de manera interactiva. Pero sin siquiera darme cuenta, también estaba construyendo algo **genuinamente útil para otros músicos**.
+**Descansar no es flojera.** Es combustible. Y descansar de verdad a veces significa alejarte también de los proyectos personales, no solo del trabajo.
 
-Ese momento — cuando amigos y compañeros músicos comenzaron a decirme que encontraron valor en ella — me recordó **por qué comencé a construir cosas** en primer lugar.
+**El propósito ayuda más que los días libres.** Cuando dejé de programar para producir y empecé a programar para expresar algo, me acordé de por qué me metí en esto.
 
-No por rendimiento. No por productividad. Sino para *resolver problemas reales*, para *crear herramientas que importan*, y para *unir pasiones a través del código*.
+## Si ahora mismo estás quemado
 
-Esa realización me devolvió a la vida como desarrollador.
+No significa que estés roto. Significa que llevas demasiado tiempo funcionando en reserva. Cuando haces malabares con muchos roles es fácil olvidar que no eres una fábrica de features. Eres una persona, con sus ritmos y un lado creativo que hay que cuidar.
 
----
+Así que acaricia a un gato, toca un acorde, construye algo solo para ti. Las mismas habilidades que te desgastaron pueden ser las que te levanten, si las dejas reconectarte con lo que disfrutas.
 
-## Cuando Tu Hobby También Es Tu Carrera
-
-Esta es la paradoja que muchos de nosotros los devs enfrentamos: el código es lo que hacemos para vivir *y* lo que hacemos por diversión.
-
-Eso es poderoso — pero también peligroso.
-
-### Esto es lo que aprendí:
-
-- No todos los proyectos paralelos necesitan ser "enviados". A veces, construir algo solo para ti es suficiente.
-- El descanso no es pereza — es combustible. El verdadero descanso significa *desconectar completamente*, incluso de proyectos paralelos.
-- El propósito sana. Cuando dejé de programar por producción y comencé a programar por *expresión*, recordé por qué me enamoré de la tecnología en primer lugar.
-
----
-
-## Conclusión
-
-El burnout no significa que estés roto — significa que has estado corriendo en vacío. Como desarrollador fullstack haciendo malabarismos con muchos roles, es fácil olvidar que no eres solo un productor de características. Eres un humano con necesidades, ritmos y una chispa creativa que necesita cuidado.
-
-Así que si te sientes quemado:
-
-- Acaricia un gato
-- Toca un acorde
-- Construye algo solo para ti
-
-Y recuerda: las mismas habilidades que te desgastan también pueden ser las que te levanten de nuevo — si les permites reconectarte con la alegría.
-
-Prueba [Cadenza](https://cadenza-app.vercel.app) si también te gusta la música — tal vez te ayude como me ayudó a mí.
+Y si también te gusta la música, prueba [Cadenza](https://cadenza-app.vercel.app). A lo mejor te ayuda como me ayudó a mí.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Burnout', 'Vida de Desarrollador', 'Salud Mental', 'Proyectos Paralelos', 'Música', 'Productividad']

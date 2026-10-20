@@ -6,370 +6,164 @@ export const fromJuniorToSenior: Record<Locale, BlogPost> = {
     slug: 'from-junior-to-senior-engineer',
     title: 'From Junior to Senior: The Shift Nobody Tells You About',
     date: 'December 21, 2025',
-    excerpt: "Becoming a senior engineer isn't just about writing better code. It's about making better decisions, leading without authority, and navigating interviews that feel more like strategic conversations than coding tests.",
+    excerpt: "Becoming senior wasn't about writing better code. It was about deciding instead of executing, leading without the title, and interviews that turned into conversations about judgment.",
     imageUrl: '/blog/from-junior-to-senior-engineer.webp',
     imageAiHint: 'career progression visualization: engineer climbing upward path from junior to senior level; left side shows junior developer at desk coding alone; middle shows mid-level engineer in code review; right side shows senior engineer mentoring team, making architectural decisions, leading discussions; growth arrows and skill badges (communication, leadership, decision-making) appearing along the path; professional tech illustration with warm colors',
     content: `
-## Introduction
+## It wasn't the title
 
-I remember the exact moment I realized I had become a senior engineer — and it wasn't when my title changed.
+I remember the moment I realized I'd become a senior engineer, and it had nothing to do with my title changing.
 
-It was during a technical discussion where I found myself not arguing for my solution, but **asking questions to understand the problem better**. I was thinking about trade-offs, team velocity, and long-term maintenance instead of just "what's the coolest tech stack."
+We were in a technical discussion and I caught myself not pushing for my solution. I was asking questions to understand the problem better, thinking about trade-offs, the team's pace and who would maintain this in a year, instead of which stack would be the most fun.
 
-That shift — from **"how do I solve this?"** to **"should we even solve this?"** — is what separates junior and mid-level engineers from senior ones.
+Going from "how do I solve this?" to "should we even solve this?" is, for me, the real line between mid-level and senior. This post is about what changed on the other side of it: the kind of decisions you make, the skills that suddenly matter, and how different senior interviews turned out to be.
 
-In this post, I want to share what I've learned about this transition: the technical decisions that matter, the soft skills that become critical, and how the interview process completely changes when you're being evaluated as a senior.
+## From doing to deciding
 
----
+As a junior or mid-level engineer, most of the job is execution. Take a ticket, build it well, get it reviewed, ship it.
 
-## The Technical Shift: From Execution to Decision-Making
+As a senior, more of the job is deciding. Which approach, what you give up with it, and what it will cost you months from now. A small example I've seen many times:
 
-As a junior or mid-level engineer, your job is mostly about **execution**: take a ticket, implement it well, get it reviewed, ship it.
+> "Let's use GraphQL, it's modern and I want to learn it."
 
-As a senior, your job becomes about **decision-making**: choosing the right approach, weighing trade-offs, and thinking about consequences months or years down the line.
+versus
 
-### What This Looks Like in Practice
+> "Do we actually need GraphQL's flexibility, or is REST easier to maintain here? Has anyone on the team used it? Is the learning curve worth what we get?"
 
-**Junior/Mid mindset:**
-> "I'll use GraphQL because it's modern and I want to learn it."
+The second person doesn't necessarily know more GraphQL. They know more about the context. Every technical decision trades something: performance against maintainability, speed now against debt later, trying something new against keeping things stable. At some point you stop choosing what's interesting and start choosing what has the most impact.
 
-**Senior mindset:**
-> "Do we need GraphQL's flexibility, or will REST be simpler to maintain? What's our team's experience with it? What's the learning curve vs. the actual benefit?"
+## Leading without being the boss
 
-The difference isn't technical knowledge — it's **context awareness**.
+Nobody told me this early on: seniors lead, with or without the title. Some of the best technical leadership I've seen came from people with no formal authority at all.
 
-Seniors understand that every technical decision is a trade-off:
-- **Performance vs. Maintainability**
-- **Speed to market vs. Technical debt**
-- **Innovation vs. Stability**
+In practice it looks like mentoring juniors (teaching them how to think about a problem, not just handing them answers), pushing technical decisions forward and getting people to agree on them, unblocking the team when something is stuck even if it isn't strictly yours, and setting the standards everyone else follows: docs, templates, conventions.
 
-You stop optimizing for "cool" and start optimizing for **impact**.
+I got this wrong at first. I thought leading meant telling people what to do. It's closer to the opposite: making it easier for others to do good work. When a junior brings you a problem, the answer is usually a couple of good questions, not the solution. That's how your impact grows beyond what you can type yourself.
 
----
+## The skills that start mattering more than code
 
-## The Leadership Shift: Leading Without Authority
+Technical skills get you in the door. The rest is what gets you promoted. As a senior I spend more time communicating than coding, reviewing than writing, and planning than executing. The skills that turned out to matter most:
 
-Here's the thing nobody tells you: **senior engineers are leaders, even without the title**.
+**Communication.** Explaining a technical decision to someone non-technical, writing docs people actually read, giving feedback that helps instead of hurts.
 
-You don't need to be a manager to lead. In fact, some of the best technical leadership happens **without formal authority**.
+**Empathy.** Noticing when a teammate is stuck or overwhelmed, and knowing when to push and when to back them up.
 
-### What Senior Leadership Looks Like
+**Pragmatism.** Knowing when good enough really is enough. Perfect is the enemy of shipped.
 
-- **Mentoring juniors** — not just answering questions, but teaching them *how to think* about problems
-- **Driving technical decisions** — proposing solutions, facilitating discussions, building consensus
-- **Unblocking the team** — stepping in when something is stuck, even if it's not your responsibility
-- **Setting standards** — writing docs, creating templates, establishing best practices
+**Seeing the bigger picture.** Asking "why are we building this?" before "how do we build it?".
 
-I learned this the hard way. Early in my career, I thought leadership meant telling people what to do. But real leadership is about **enabling others to succeed**.
+None of these are extras. I've seen brilliant engineers stall for years because they couldn't get their ideas across or work well with others.
 
-When a junior engineer comes to you with a problem, you don't just give them the answer — you ask questions that help them discover it themselves. That's how you scale your impact.
+## Senior interviews are a different game
 
----
+This one surprised me the most. Junior and mid-level interviews were mostly LeetCode-style exercises: implement this algorithm, fast, with clean syntax.
 
-## The Soft Skills That Actually Matter
+Senior interviews were conversations. System design, architecture decisions and their trade-offs, talks with CTOs and engineering leads, "tell me about a hard technical decision you made". They assume you can code. What they want to see is how you handle an ambiguous problem, what you've built and what went wrong, how you influence people without authority, and whether you can explain complex things clearly.
 
-Technical skills get you in the door. Soft skills get you promoted.
+I've had interviews where I barely wrote code. I spent an hour drawing a system on a whiteboard, discussing trade-offs and explaining why I'd pick Postgres over MongoDB for that particular case. It was deep and technical, but it was about judgment, not syntax.
 
-As a senior, you'll spend more time:
-- **Communicating** than coding
-- **Reviewing** than writing
-- **Planning** than executing
+## What actually helped me make the jump
 
-### The Skills That Became Critical for Me
+**Own outcomes, not tickets.** If you see a problem, propose a fix. If something is unclear, clarify it for everyone, not only for you.
 
-**1. Communication**
+**Mentor someone.** Explaining things forces you to understand them properly, and it's the cheapest way to practice leading.
 
-You need to explain complex technical concepts to non-technical stakeholders. You need to write clear documentation. You need to give feedback that's constructive, not crushing.
+**Make decisions and write them down.** Even small ones. ADRs (Architecture Decision Records) are great practice for explaining why you picked one option over another.
 
-**2. Empathy**
+**Communicate more.** Write more, speak up in meetings, give the occasional talk. The clearer you are, the more your work counts.
 
-Understanding what your teammates are struggling with. Recognizing when someone is overwhelmed. Knowing when to push and when to support.
+**Learn the business.** Understand why you're building what you're building. Talk to product. Code is a means, not the goal.
 
-**3. Pragmatism**
+**Know people outside your team.** A lot of a senior's value is knowing who to talk to and how to get things moving in the organization.
 
-Knowing when "good enough" is actually good enough. Understanding that perfect is the enemy of shipped.
+## The short version
 
-**4. Strategic Thinking**
+Becoming senior is mostly a change in what you're trying to prove. You go from "I need to show I'm smart" to "I need the team to do well", from "I want the newest tech" to "I want the right tech", and from "I can do this alone" to "how do we do this together?".
 
-Seeing the bigger picture. Asking "why are we building this?" before asking "how should we build this?"
-
-These aren't "nice to have" — they're **essential**. I've seen brilliant engineers plateau because they couldn't communicate their ideas or work well with others.
-
----
-
-## The Interview Process Changes Completely
-
-This was one of the biggest surprises for me: **senior interviews are nothing like junior interviews**.
-
-### Junior/Mid Interviews
-- LeetCode-style coding challenges
-- "Implement this algorithm"
-- Focus on syntax and problem-solving speed
-
-### Senior Interviews
-- System design discussions
-- Architecture decisions and trade-offs
-- Conversations with CTOs and engineering leaders
-- "Tell me about a time you made a difficult technical decision"
-
-### What They're Really Evaluating
-
-When you interview for senior roles, they're not testing if you can code — they assume you can. They're evaluating:
-
-- **Decision-making**: How do you approach ambiguous problems?
-- **Experience**: What have you built? What went wrong? What did you learn?
-- **Leadership**: How do you influence without authority?
-- **Communication**: Can you explain complex ideas clearly?
-
-I've had interviews where I barely wrote any code. Instead, I spent an hour whiteboarding a system design, discussing trade-offs, and explaining why I'd choose Postgres over MongoDB for a specific use case.
-
-The conversation was deep, technical, and strategic — not about syntax, but about **judgment**.
-
----
-
-## How to Actually Make the Transition
-
-So how do you go from mid-level to senior? Here's what worked for me:
-
-### 1. Take Ownership Beyond Your Tickets
-
-Don't just complete tasks — **own outcomes**. If you see a problem, propose a solution. If something is unclear, clarify it for everyone.
-
-### 2. Mentor Someone
-
-Teaching forces you to think deeper. When you explain concepts to others, you solidify your own understanding — and you build leadership skills.
-
-### 3. Make Technical Decisions (Even Small Ones)
-
-Start documenting your decisions. Write ADRs (Architecture Decision Records). Practice explaining *why* you chose one approach over another.
-
-### 4. Improve Your Communication
-
-Write more. Speak up in meetings. Give presentations. The better you communicate, the more impact you'll have.
-
-### 5. Think About the Business, Not Just the Code
-
-Understand *why* you're building what you're building. Talk to product managers. Learn about the business goals. Code is a means to an end, not the end itself.
-
-### 6. Build Relationships Across Teams
-
-Senior engineers are connectors. They know who to talk to, how to navigate the organization, and how to get things done.
-
----
-
-## The Mindset Shift
-
-Ultimately, becoming senior is a **mindset shift**:
-
-- From "I need to prove I'm smart" → "I need to make the team successful"
-- From "I want to use the latest tech" → "I want to use the right tech"
-- From "I can do this alone" → "How can we do this together?"
-
-It's less about your individual output and more about your **multiplier effect** on the team.
-
----
-
-## Conclusion
-
-The transition from junior/mid to senior isn't a straight line. It's messy, non-linear, and different for everyone.
-
-But if I could summarize it in one sentence: **Senior engineers make everyone around them better**.
-
-They make better decisions. They lead without needing a title. They communicate clearly. They think strategically. And they understand that their job isn't just to write code — it's to **deliver value**.
-
-If you're on this journey, remember:
-- Focus on impact, not just output
-- Communicate more than you think you need to
-- Lead by enabling others
-- Learn the business, not just the tech
-
-The title will come. But the mindset shift? That's what really matters.
+It isn't a straight line and it looks different for everyone. If I had to put it in one sentence: senior engineers make the people around them better. Focus on impact over output, communicate more than feels necessary, lead by making others effective, and learn the business as well as the tech. The title follows.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Career Growth', 'Leadership', 'Senior Engineer', 'Soft Skills', 'Interviews', 'Mentorship']
   },
   es: {
     slug: 'from-junior-to-senior-engineer',
-    title: 'De Junior a Senior: El Cambio que Nadie Te Cuenta',
+    title: 'De junior a senior: el cambio del que nadie te habla',
     date: 'December 21, 2025',
-    excerpt: "Convertirse en ingeniero senior no se trata solo de escribir mejor código. Se trata de tomar mejores decisiones, liderar sin autoridad y navegar entrevistas que se sienten más como conversaciones estratégicas que pruebas de código.",
+    excerpt: 'Volverme senior no fue escribir mejor código. Fue pasar de ejecutar a decidir, liderar sin el título y descubrir que las entrevistas se vuelven conversaciones sobre criterio.',
     imageUrl: '/blog/from-junior-to-senior-engineer.webp',
     imageAiHint: 'visualización de progresión de carrera: ingeniero escalando camino ascendente de nivel junior a senior; lado izquierdo muestra desarrollador junior en escritorio programando solo; medio muestra ingeniero mid-level en revisión de código; lado derecho muestra ingeniero senior mentoreando equipo, tomando decisiones arquitectónicas, liderando discusiones; flechas de crecimiento y badges de habilidades (comunicación, liderazgo, toma de decisiones) apareciendo a lo largo del camino; ilustración técnica profesional con colores cálidos',
     content: `
-## Introducción
+## No fue el título
 
-Recuerdo el momento exacto en que me di cuenta de que me había convertido en ingeniero senior — y no fue cuando cambió mi título.
+Me acuerdo del momento en que me di cuenta de que ya era senior, y no tuvo nada que ver con que me cambiaran el cargo.
 
-Fue durante una discusión técnica donde me encontré no defendiendo mi solución, sino **haciendo preguntas para entender mejor el problema**. Estaba pensando en trade-offs, velocidad del equipo y mantenimiento a largo plazo en lugar de solo "cuál es el stack tecnológico más cool".
+Estábamos en una discusión técnica y me pillé a mí mismo sin defender mi solución. Estaba haciendo preguntas para entender mejor el problema, pensando en trade-offs, en el ritmo del equipo y en quién iba a mantener eso en un año, en vez de en qué stack sería el más entretenido.
 
-Ese cambio — de **"¿cómo resuelvo esto?"** a **"¿deberíamos siquiera resolver esto?"** — es lo que separa a los ingenieros junior y mid-level de los senior.
+Pasar de "¿cómo lo resuelvo?" a "¿de verdad hay que resolver esto?" es, para mí, la línea real entre un nivel intermedio y un senior. Este post va de lo que cambió al otro lado: el tipo de decisiones que tomas, las habilidades que de repente importan y lo distintas que resultaron las entrevistas para senior.
 
-En este post, quiero compartir lo que he aprendido sobre esta transición: las decisiones técnicas que importan, las habilidades blandas que se vuelven críticas, y cómo el proceso de entrevista cambia completamente cuando te evalúan como senior.
+## De hacer a decidir
 
----
+Como junior o mid, la mayor parte del trabajo es ejecutar. Tomas un ticket, lo construyes bien, pasa la revisión y sale.
 
-## El Cambio Técnico: De la Ejecución a la Toma de Decisiones
+Como senior, cada vez más del trabajo es decidir. Qué enfoque tomar, qué sacrificas con él y cuánto te va a costar dentro de unos meses. Un ejemplo pequeño que he visto mil veces:
 
-Como ingeniero junior o mid-level, tu trabajo se trata principalmente de **ejecución**: toma un ticket, impleméntalo bien, revísalo, envíalo.
+> "Usemos GraphQL, es moderno y quiero aprenderlo."
 
-Como senior, tu trabajo se convierte en **toma de decisiones**: elegir el enfoque correcto, sopesar trade-offs y pensar en consecuencias meses o años adelante.
+contra
 
-### Cómo Se Ve Esto en la Práctica
+> "¿De verdad necesitamos la flexibilidad de GraphQL o REST es más fácil de mantener aquí? ¿Alguien del equipo lo ha usado? ¿La curva de aprendizaje vale lo que ganamos?"
 
-**Mentalidad Junior/Mid:**
-> "Usaré GraphQL porque es moderno y quiero aprenderlo."
+La segunda persona no necesariamente sabe más GraphQL. Sabe más del contexto. Toda decisión técnica cambia una cosa por otra: rendimiento contra mantenibilidad, velocidad ahora contra deuda después, probar algo nuevo contra mantener las cosas estables. En algún punto dejas de elegir lo interesante y empiezas a elegir lo que más impacto tiene.
 
-**Mentalidad Senior:**
-> "¿Necesitamos la flexibilidad de GraphQL, o REST será más simple de mantener? ¿Cuál es la experiencia de nuestro equipo con esto? ¿Cuál es la curva de aprendizaje vs. el beneficio real?"
+## Liderar sin ser el jefe
 
-La diferencia no es el conocimiento técnico — es la **conciencia del contexto**.
+Nadie me lo dijo al principio: los seniors lideran, con título o sin él. Algunos de los mejores liderazgos técnicos que he visto vinieron de gente sin ninguna autoridad formal.
 
-Los seniors entienden que cada decisión técnica es un trade-off:
-- **Rendimiento vs. Mantenibilidad**
-- **Velocidad al mercado vs. Deuda técnica**
-- **Innovación vs. Estabilidad**
+En la práctica se ve así: mentorear juniors (enseñarles a pensar el problema, no solo darles la respuesta), empujar decisiones técnicas y lograr que el equipo se ponga de acuerdo, desbloquear al equipo cuando algo está trabado aunque no sea estrictamente tuyo, y poner los estándares que siguen los demás: documentación, plantillas, convenciones.
 
-Dejas de optimizar para "cool" y empiezas a optimizar para **impacto**.
+Al principio lo entendí al revés. Pensaba que liderar era decirle a la gente qué hacer. Se parece más a lo contrario: hacer que a los demás les sea más fácil hacer buen trabajo. Cuando un junior te trae un problema, la respuesta suele ser un par de buenas preguntas, no la solución. Así es como tu impacto crece más allá de lo que puedes programar tú solo.
 
----
+## Las habilidades que empiezan a pesar más que el código
 
-## El Cambio de Liderazgo: Liderar Sin Autoridad
+Lo técnico te abre la puerta. Lo demás es lo que te hace crecer. Como senior paso más tiempo comunicando que programando, revisando que escribiendo y planificando que ejecutando. Lo que más terminó importando:
 
-Aquí está lo que nadie te dice: **los ingenieros senior son líderes, incluso sin el título**.
+**Comunicar.** Explicarle una decisión técnica a alguien que no es técnico, escribir documentación que la gente de verdad lea, dar feedback que ayude en vez de hundir.
 
-No necesitas ser manager para liderar. De hecho, algo del mejor liderazgo técnico ocurre **sin autoridad formal**.
+**Empatía.** Darte cuenta de cuándo alguien del equipo está trabado o saturado, y saber cuándo presionar y cuándo respaldar.
 
-### Cómo Se Ve el Liderazgo Senior
+**Pragmatismo.** Saber cuándo "suficientemente bueno" de verdad es suficiente. Lo perfecto es enemigo de lo que sale a producción.
 
-- **Mentoría a juniors** — no solo responder preguntas, sino enseñarles *cómo pensar* sobre problemas
-- **Impulsar decisiones técnicas** — proponer soluciones, facilitar discusiones, construir consenso
-- **Desbloquear al equipo** — intervenir cuando algo está atascado, incluso si no es tu responsabilidad
-- **Establecer estándares** — escribir docs, crear templates, establecer mejores prácticas
+**Ver el panorama completo.** Preguntar "¿por qué estamos construyendo esto?" antes que "¿cómo lo construimos?".
 
-Aprendí esto de la manera difícil. Al principio de mi carrera, pensaba que liderazgo significaba decirle a la gente qué hacer. Pero el verdadero liderazgo se trata de **permitir que otros tengan éxito**.
+Nada de esto es un extra. He visto ingenieros brillantes estancarse años porque no lograban transmitir sus ideas o trabajar bien con otros.
 
-Cuando un ingeniero junior viene a ti con un problema, no solo le das la respuesta — haces preguntas que les ayudan a descubrirla ellos mismos. Así es como escalas tu impacto.
+## Las entrevistas para senior son otro juego
 
----
+Esto fue lo que más me sorprendió. Las entrevistas de junior y mid eran casi todas ejercicios tipo LeetCode: implementa este algoritmo, rápido y con sintaxis limpia.
 
-## Las Habilidades Blandas que Realmente Importan
+Las de senior fueron conversaciones. Diseño de sistemas, decisiones de arquitectura y sus trade-offs, charlas con CTOs y líderes de ingeniería, "cuéntame de una decisión técnica difícil que hayas tomado". Dan por hecho que sabes programar. Lo que quieren ver es cómo manejas un problema ambiguo, qué has construido y qué salió mal, cómo influyes en la gente sin autoridad y si puedes explicar cosas complejas con claridad.
 
-Las habilidades técnicas te abren la puerta. Las habilidades blandas te hacen ascender.
+He tenido entrevistas en las que casi no escribí código. Pasé una hora dibujando un sistema en una pizarra, discutiendo trade-offs y explicando por qué elegiría Postgres en vez de MongoDB para ese caso en particular. Fue una conversación profunda y técnica, pero sobre criterio, no sobre sintaxis.
 
-Como senior, pasarás más tiempo:
-- **Comunicando** que programando
-- **Revisando** que escribiendo
-- **Planificando** que ejecutando
+## Lo que de verdad me ayudó a dar el salto
 
-### Las Habilidades que Se Volvieron Críticas para Mí
+**Hazte cargo de resultados, no de tickets.** Si ves un problema, propone una solución. Si algo no está claro, acláralo para todos, no solo para ti.
 
-**1. Comunicación**
+**Mentorea a alguien.** Explicar te obliga a entender de verdad, y es la forma más barata de practicar liderazgo.
 
-Necesitas explicar conceptos técnicos complejos a stakeholders no técnicos. Necesitas escribir documentación clara. Necesitas dar feedback que sea constructivo, no destructivo.
+**Toma decisiones y escríbelas.** Aunque sean pequeñas. Los ADRs (Architecture Decision Records) son una gran práctica para explicar por qué elegiste una opción sobre otra.
 
-**2. Empatía**
+**Comunica más.** Escribe más, habla en las reuniones, da alguna charla de vez en cuando. Mientras más claro seas, más cuenta tu trabajo.
 
-Entender con qué están luchando tus compañeros de equipo. Reconocer cuando alguien está abrumado. Saber cuándo presionar y cuándo apoyar.
+**Aprende del negocio.** Entiende por qué construyes lo que construyes. Habla con producto. El código es un medio, no el objetivo.
 
-**3. Pragmatismo**
+**Conoce gente fuera de tu equipo.** Buena parte del valor de un senior es saber con quién hablar y cómo mover las cosas dentro de la organización.
 
-Saber cuándo "suficientemente bueno" es realmente suficientemente bueno. Entender que lo perfecto es enemigo de lo enviado.
+## La versión corta
 
-**4. Pensamiento Estratégico**
+Volverse senior es sobre todo un cambio en lo que intentas demostrar. Pasas de "tengo que demostrar que soy inteligente" a "necesito que al equipo le vaya bien", de "quiero la tecnología más nueva" a "quiero la tecnología correcta" y de "puedo hacerlo solo" a "¿cómo lo hacemos juntos?".
 
-Ver el panorama general. Preguntar "¿por qué estamos construyendo esto?" antes de preguntar "¿cómo deberíamos construir esto?"
-
-Estas no son "nice to have" — son **esenciales**. He visto ingenieros brillantes estancarse porque no podían comunicar sus ideas o trabajar bien con otros.
-
----
-
-## El Proceso de Entrevista Cambia Completamente
-
-Esta fue una de las mayores sorpresas para mí: **las entrevistas senior no son nada como las entrevistas junior**.
-
-### Entrevistas Junior/Mid
-- Desafíos de código estilo LeetCode
-- "Implementa este algoritmo"
-- Enfoque en sintaxis y velocidad de resolución de problemas
-
-### Entrevistas Senior
-- Discusiones de diseño de sistemas
-- Decisiones de arquitectura y trade-offs
-- Conversaciones con CTOs y líderes de ingeniería
-- "Cuéntame sobre una vez que tomaste una decisión técnica difícil"
-
-### Lo Que Realmente Están Evaluando
-
-Cuando entrevistas para roles senior, no están probando si puedes programar — asumen que puedes. Están evaluando:
-
-- **Toma de decisiones**: ¿Cómo abordas problemas ambiguos?
-- **Experiencia**: ¿Qué has construido? ¿Qué salió mal? ¿Qué aprendiste?
-- **Liderazgo**: ¿Cómo influyes sin autoridad?
-- **Comunicación**: ¿Puedes explicar ideas complejas claramente?
-
-He tenido entrevistas donde apenas escribí código. En su lugar, pasé una hora haciendo whiteboarding de un diseño de sistema, discutiendo trade-offs y explicando por qué elegiría Postgres sobre MongoDB para un caso de uso específico.
-
-La conversación fue profunda, técnica y estratégica — no sobre sintaxis, sino sobre **juicio**.
-
----
-
-## Cómo Hacer la Transición Realmente
-
-Entonces, ¿cómo pasas de mid-level a senior? Esto es lo que funcionó para mí:
-
-### 1. Toma Propiedad Más Allá de Tus Tickets
-
-No solo completes tareas — **adueñate de resultados**. Si ves un problema, propón una solución. Si algo no está claro, aclaralo para todos.
-
-### 2. Mentorea a Alguien
-
-Enseñar te fuerza a pensar más profundo. Cuando explicas conceptos a otros, solidificas tu propio entendimiento — y construyes habilidades de liderazgo.
-
-### 3. Toma Decisiones Técnicas (Incluso Pequeñas)
-
-Comienza a documentar tus decisiones. Escribe ADRs (Architecture Decision Records). Practica explicar *por qué* elegiste un enfoque sobre otro.
-
-### 4. Mejora Tu Comunicación
-
-Escribe más. Habla en reuniones. Da presentaciones. Mientras mejor comuniques, más impacto tendrás.
-
-### 5. Piensa en el Negocio, No Solo en el Código
-
-Entiende *por qué* estás construyendo lo que estás construyendo. Habla con product managers. Aprende sobre los objetivos del negocio. El código es un medio para un fin, no el fin en sí mismo.
-
-### 6. Construye Relaciones Entre Equipos
-
-Los ingenieros senior son conectores. Saben con quién hablar, cómo navegar la organización y cómo hacer que las cosas sucedan.
-
----
-
-## El Cambio de Mentalidad
-
-En última instancia, convertirse en senior es un **cambio de mentalidad**:
-
-- De "Necesito demostrar que soy inteligente" → "Necesito hacer que el equipo tenga éxito"
-- De "Quiero usar la última tecnología" → "Quiero usar la tecnología correcta"
-- De "Puedo hacer esto solo" → "¿Cómo podemos hacer esto juntos?"
-
-Se trata menos de tu producción individual y más de tu **efecto multiplicador** en el equipo.
-
----
-
-## Conclusión
-
-La transición de junior/mid a senior no es una línea recta. Es desordenada, no lineal y diferente para todos.
-
-Pero si pudiera resumirlo en una oración: **Los ingenieros senior hacen mejores a todos a su alrededor**.
-
-Toman mejores decisiones. Lideran sin necesitar un título. Comunican claramente. Piensan estratégicamente. Y entienden que su trabajo no es solo escribir código — es **entregar valor**.
-
-Si estás en este viaje, recuerda:
-- Enfócate en impacto, no solo en producción
-- Comunica más de lo que crees que necesitas
-- Lidera habilitando a otros
-- Aprende el negocio, no solo la tecnología
-
-El título vendrá. Pero el cambio de mentalidad? Eso es lo que realmente importa.
+No es una línea recta y es distinto para cada persona. Si tuviera que resumirlo en una frase: los seniors hacen mejores a los que tienen alrededor. Enfócate en el impacto más que en el volumen, comunica más de lo que crees necesario, lidera haciendo que otros rindan y aprende del negocio tanto como de la tecnología. El título llega solo.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Crecimiento Profesional', 'Liderazgo', 'Ingeniero Senior', 'Habilidades Blandas', 'Entrevistas', 'Mentoría']
