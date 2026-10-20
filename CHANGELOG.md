@@ -5,6 +5,7 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 ## [Unreleased]
 
 ### Added
+- Share image per blog post with its title, byline and cover, drawn on demand by `next/og` at `/og/blog/<slug>.png` (Geist TTF in `src/assets/fonts`, cover converted with sharp, cached on the CDN by a versioned URL). Also used as the article's structured-data image.
 - Content Security Policy on every page: per-request nonce, `'strict-dynamic'` in production, host list on previews (Vercel toolbar), violations reported to `/api/csp-report` and logged. Storybook, API routes and static files are excluded.
 - Playwright: CSP header and nonce checks, and no violations on any page in either language.
 - Pause control in the hero (WCAG 2.2.2): stops the card deck, the rotating words, the drifting halos and the looping dots. Per visit; hidden under reduced motion.
@@ -12,6 +13,7 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 - Playwright: the hero pause is tested with motion on, using a fake clock.
 
 ### Removed
+- `public/og/blog/*.jpg` and the `covers` step of `generate-og-images.js`: the blurred-cover share images the new cards replace.
 - The `animate` prop on `Title`, `Text`, `SectionLabel` and `AccentCard`: it added a `reveal-up` class that no longer exists (scroll motion lives in `<Reveal>`).
 
 ## [3.0.0] - 2026-10-19
