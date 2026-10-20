@@ -1,539 +1,287 @@
 import type { BlogPost } from '@/types';
 import type { Locale } from '@/i18n/config';
 
-const enContent = `## The Statement That Stuck With Me
+const enContent = `## Something I said in 2022
 
-It was 2022. I was standing in front of a university classroom, presenting on AI, neural networks, and the future of brain-computer interfaces. I was young, confident, maybe a little too comfortable making bold predictions. So I said something that's been living rent-free in my head ever since:
+In 2022 I was giving a talk in a university classroom about AI, neural networks and where brain-computer interfaces were heading. I was young, confident and maybe a bit too comfortable making bold predictions. So I said something that has been stuck in my head ever since:
 
-**"In 10 years, we're going to see the first person die from a computer virus."**
+**"Within ten years, we'll see the first person die because of a computer virus."**
 
-The room went silent. A few nervous laughs. My professor raised an eyebrow. But I wasn't joking — I was extrapolating. Looking at where the technology was heading and connecting the dots.
+The room went quiet. A couple of nervous laughs. My professor raised an eyebrow. I wasn't joking, though. I was extrapolating: looking at where the technology was going and connecting the dots.
 
-That was 2022. We're now in 2026. Six years left on that prediction.
+That was 2022. It's 2026 now, so six years left on that prediction. And honestly, it looks a lot more plausible than I'd like.
 
-And honestly? **It's looking way more plausible than I'd like it to be.**
+## What changed in four years
 
----
+When I said it, neural interfaces were mostly lab work. Neuralink was a moonshot, and a virus attacking a human brain sounded like pure science fiction. A lot has moved since then.
 
-## Why This Matters Now
+### Neuralink left the lab
 
-When I made that prediction, neural interfaces were theoretical. Brain-computer interfaces existed in labs. Neuralink was a moonshot. The idea of a computer virus targeting a human brain seemed like pure science fiction.
+In 2025 Neuralink implanted its device in 12 people with paralysis, and by early 2026 the number was over 20. Real people are using these implants to control robotic arms, use computers and play video games just by thinking. We went from "this might be possible one day" to "people are doing it right now" very quickly.
 
-But here's what's changed in just four years — and it's wild:
+What worries me about that:
 
-### Neuralink Went From Lab to Reality
+- the implants are wireless and talk to external devices over Bluetooth
+- they decode movement intentions with increasing precision
+- users control external devices in real time
+- Neuralink is planning to scale up production in 2026
 
-In 2025, Neuralink successfully implanted its chips in **12 people with paralysis**. These aren't theoretical anymore. Real people are using them to control robotic arms, navigate computers, and play video games with just their thoughts. By early 2026, that number grew to **over 20 people** with active neural implants.
+This is no longer a "maybe in twenty years" problem.
 
-Think about that for a second. We went from "this might be possible someday" to "people are literally using this right now" in less than a year.
+### Biotech is moving faster than we notice
 
-**What makes this scary:**
-- The implants are wireless, communicating via WiFi
-- They decode motor intentions with increasing precision
-- Users have real-time control of external devices
-- Neuralink is planning **mass production** in 2026
+The rest of the field isn't standing still either:
 
-This isn't a "maybe in 20 years" situation anymore. This is happening *right now*.
+- **Neuro-integrated prosthetics.** At MIT, prosthetics that don't just respond to neural signals but run their own AI, working together with the patient's intentions.
+- **Digital bridges for spinal injuries.** EPFL and CHUV built a system that lets people with spinal cord injuries walk again by connecting brain signals to spinal stimulation.
+- **Neural stem cells as targeted therapy.** Cells programmed to go after brain tumors at the cellular level.
+- **CRISPR in the brain.** Gene editing that could eventually modify neural tissue directly.
 
-### Biotechnology Is Moving Faster Than We Realize
+We're not only connecting to the brain anymore. We're starting to modify it.
 
-The advances in biotechnology are equally wild:
+### Security isn't keeping up
 
-- **Neuro-integrated bionic prosthetics**: MIT developed prosthetics that don't just respond to neural signals — they have "minds of their own" with AI algorithms that collaborate with the patient's intentions
-- **Digital bridges for spinal injuries**: Researchers at EPFL and CHUV created systems that let people with spinal cord injuries walk again by connecting brain signals directly to spinal stimulators
-- **Neural stem cells as targeted weapons**: Cells being programmed to attack brain tumors at the cellular level
-- **CRISPR in the brain**: Gene editing technologies that could eventually modify neural tissue directly
+Meanwhile, cybersecurity isn't getting better. Experian's 2026 data breach forecast describes AI as the main driver of new threats, counts more than 8,000 breaches in the first half of 2025 alone, notes criminals using AI to create synthetic identities and evade detection, and lists brain-computer interfaces as an emerging category of vulnerability.
 
-We're not just interfacing with the brain anymore. We're **modifying it at the cellular level**.
+That last point is the one I can't ignore. Security researchers are already talking about attacks on neural interfaces as a real threat model, not a movie plot.
 
-### The Cybersecurity Threat Is Real
+## The scenario that keeps me up at night
 
-Meanwhile, the cybersecurity situation is getting worse, not better.
+Here's a picture that no longer feels like pure fiction.
 
-According to Experian's 2026 Data Breach Report:
-- **AI is now the primary threat** to cybersecurity
-- Over 8,000 data breaches in just the first half of 2025
-- Cybercriminals are using AI to create synthetic identities, evade detection, and launch increasingly sophisticated attacks
-- **A new category of vulnerability has emerged: brain-computer interface vulnerabilities**
+Sometime around 2029, 2030 or 2032, someone with a neural implant goes about their day. The implant is paired with their phone, which syncs with cloud services. They use it to move a prosthetic limb, to communicate, to work.
 
-The report explicitly mentions attacks targeting neural interfaces. This isn't hypothetical anymore — security researchers are actively discussing the threat landscape.
+An AI-assisted attack goes after neural interface systems. Not to steal data, but for something worse. It exploits a flaw in the wireless protocol, in the cloud sync or in the implant's firmware. And instead of exfiltrating anything, it corrupts the signal processing: it sends malformed signals and messes with the feedback loops that keep the implant in sync with the brain.
 
----
+The result is a cascade of neurological damage. Seizures, stroke-like symptoms, harm caused by corrupted signals the brain takes as real activity. The person dies, and the headline reads: "First death caused by a computer virus".
 
-## The Scenario That Keeps Me Up at Night
+## Why I don't think this is just paranoia
 
-Let me paint a picture that's no longer purely fictional:
+The scenario is built on real technical limits.
 
-**Year 2029 (or 2030, or 2032):**
+**Timing.** Neurons work on the scale of a few milliseconds. Wireless links add latency on the order of tens of milliseconds, plus jitter. That gap is a synchronization problem, and anything that distorts timing or corrupts the signal can feed the brain conflicting information. The brain's plasticity is remarkable, but it has limits.
 
-Someone with a Neuralink implant (or a competitor's device) goes about their day. The implant is connected wirelessly to their smartphone, which syncs with cloud services. They use it to control a prosthetic limb, to communicate, to work.
+**The decoders can be fooled.** Current interfaces decode neural activity with machine learning models, and ML models can be attacked with adversarial inputs designed to produce the wrong output. In theory, an attacker could make the decoder misread activity, send feedback that confuses sensorimotor integration, or trigger neurological responses in cascade.
 
-A sophisticated AI-powered cyberattack targets neural interface systems. Not for data theft — for something worse. The attack exploits a vulnerability in the wireless communication protocol, or in the cloud synchronization, or in the implant's firmware.
+**Wireless has a long history of being broken.** WiFi has been hacked. Bluetooth has been hacked. The security of implant communication is still being worked out.
 
-The malicious code doesn't steal data. **It corrupts the neural interface's signal processing**. It sends malformed signals directly to the brain. It manipulates the feedback loops that keep the implant synchronized with neural activity.
+**Scale.** The more implants there are, the bigger the attack surface. More devices means more targets and a higher chance that one attack works.
 
-The result? A cascade of neurological damage. Seizures. Stroke-like symptoms. Brain damage from corrupted signals being interpreted as legitimate neural activity.
+## Black Mirror saw it coming
 
-**The person dies.**
+If you've watched Black Mirror, you know it has an uncomfortable talent for predicting where technology goes. A few episodes feel very relevant:
 
-And the headlines read: "First Death Caused by Computer Virus."
+**"White Christmas" (S2E4).** Eye implants let other people see through your eyes and let you block anyone out of your perception, and a digital copy of a person's mind is tortured as a kind of tool. Technology that reaches inside your senses and mind can be used against you.
 
----
+**"Arkangel" (S4E2).** A mother implants a chip in her daughter to monitor and filter what she sees. Nobody has to hack it: the person with the tablet is enough. A brain interface built to protect turns into a tool of control.
 
-## Why This Isn't Just Speculation
+**"Hated in the Nation" (S3E6).** A network of autonomous robotic bees is hijacked to kill people, in a distributed attack that's almost impossible to stop. Scale plus automation is exactly what worries me about connected neural devices.
 
-This scenario isn't pulled from thin air. It's based on real vulnerabilities and real technical limitations:
+**"Metalhead" (S4E5).** Autonomous, networked robot dogs hunting people. Once machines are networked and autonomous, they can be turned into weapons.
 
-### 1. The Latency Problem
+What makes Black Mirror work is that it doesn't invent new physics. It takes technology that exists and asks what happens if we connect the dots. We're connecting them in real life now.
 
-Neural communication happens in **2 milliseconds**. Wireless communication introduces **50-100 millisecond latencies** even in optimal conditions. This creates a synchronization problem that could be exploited.
+## The ethical side
 
-If an attacker can introduce timing distortions or signal corruption, they can make the brain receive conflicting or malformed information. The brain's plasticity is remarkable, but it has limits.
+The scientific community knows about these risks. Work from UNSAM (Universidad Nacional de San Martín) on neuroethics and "neurorights" argues that, before neural interfaces are everywhere, we need to guarantee a few things:
 
-### 2. Signal Integrity Vulnerabilities
+- **neural privacy:** your thoughts protected like medical data
+- **neural autonomy:** control over your own neural signals
+- **neural integrity:** your brain shouldn't be open to outside manipulation
+- **neural dignity:** your neural data shouldn't become a commodity
 
-Current brain-computer interfaces decode neural signals using machine learning algorithms. These algorithms can be **adversarially attacked** — fed inputs designed to cause incorrect outputs.
+These are practical problems that need solving before this goes mainstream, not after.
 
-An attacker could theoretically craft signals that:
-- Cause the decoding algorithm to misinterpret neural activity
-- Send feedback signals that confuse the brain's sensorimotor integration
-- Trigger cascading neurological responses
+There's also the integration problem. The brain isn't a computer, it's a biological system shaped over millions of years. When you connect it to a digital system you get a hybrid with weaknesses neither part has on its own: the brain can be hurt by corrupted signals, the device can be hacked, and the link between them can be exploited. We're still learning how to secure that.
 
-### 3. Wireless Security Is Weak
+## The next six years
 
-Neural implants communicate wirelessly. Wireless protocols have been hacked before. WiFi has been hacked. Bluetooth has been hacked. The security of neural implant communication is still being developed.
+If the prediction comes true, this is roughly how I'd expect it to go:
 
-**Experian's report specifically mentions this as an emerging vulnerability category.**
+- **2026–2027:** neural interfaces move from clinical trials toward products, thousands of people have implants, and the attack surface grows fast.
+- **2027–2028:** the first serious security incidents, early regulation, and more research papers on implant vulnerabilities.
+- **2028–2030:** the critical window. More devices, more sophisticated AI-assisted attacks, and a rising chance of a fatal one.
+- **2030–2032:** either we solved the security problem or we didn't. If we didn't, the first death becomes likely.
 
-### 4. The Scale Problem
+## The uncomfortable part
 
-As neural interfaces become more common (Neuralink's goal is mass production), the attack surface grows exponentially. More devices = more targets = higher probability of successful attacks.
+I don't want to be right about this. But I'm not naive about the direction we're going either.
 
----
+We're building technology that connects directly to the human brain, quickly, with a lot of money behind it and security that is still immature, and we're racing to deploy it before we understand the risks. We've seen this pattern before: social media at scale before we understood what it does to people, autonomous cars on the road before all the edge cases were understood, AI systems deployed before alignment was figured out. With neural interfaces, the stakes are life and death.
 
-## The Black Mirror Connection
+The good news is that this is preventable. Invest seriously in implant security, build solid regulation, require rigorous testing before deployment, design privacy and security in from the start, and talk honestly about the risks. The bad news is that we're not doing most of that yet.
 
-If you've watched Black Mirror, you know the show has an uncanny ability to predict technological futures. Several episodes are disturbingly relevant here:
+## Six years
 
-### "White Christmas" (Season 2, Episode 4)
+In 2022 I made a bold prediction. In 2026 it looks less like speculation and more like a reasonable extrapolation of where things are going.
 
-This episode features a neural implant that allows one person to control another's body and sensations. The implant can be manipulated, causing psychological torture.
+We have six years to secure neural interfaces, agree on an ethical framework, regulate the industry responsibly and prepare society for what this means. Or six years until someone dies from a computer virus.
 
-**The parallel:** If neural implants can be used to control or manipulate, they can also be weaponized. The technology that enables therapeutic control can enable malicious control.
+I really hope I'm wrong. And if I turn out to be right, I'd want it to be because we took the warning seriously and prevented it, not because we ignored it. The technology is being built right now. The question is whether we build it safely.
 
-### "Arkangel" (Season 4, Episode 2)
+## References and further reading
 
-A neural implant allows parents to monitor and control their children's experiences. The implant gets hacked, manipulated, and turned against its user.
+- **Neuralink clinical trial updates (2025–2026):** progress with implants in 20+ patients with paralysis. [neuralink.com/trials](https://neuralink.com/trials/)
+- **Experian, 2026 Data Breach Industry Forecast:** emerging threats, including brain-computer interfaces. [experian.com](https://www.experian.com/thought-leadership/business/2026-data-breach-industry-forecast-report)
+- **MIT, neuro-integrated bionic prosthetics.** [biomech.media.mit.edu](https://biomech.media.mit.edu/portfolio_page/neural-interface-technology-for-advanced-prosthetic-limbs/)
+- **EPFL/CHUV, digital bridge for spinal cord injury.** [actu.epfl.ch](https://actu.epfl.ch/news/thought-controlled-walking-again-after-spinal-co-3/)
+- **IEEE, neurotechnology standards roadmap for brain-machine interfaces.** [standards.ieee.org](https://standards.ieee.org/wp-content/uploads/import/documents/presentations/ieee-neurotech-for-bmi-standards-roadmap.pdf)
+- **Standardization of neurotechnology for brain-machine interfacing.** [pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC8846370/)
+- **IEEE P7700, safety guidelines for consumer neurotech.** [spectrum.ieee.org](https://spectrum.ieee.org/ieee-safety-guidelines-neurotech)
 
-**The parallel:** Any system designed to interface with the brain can be compromised. The same wireless connection that allows a doctor to adjust your implant can be exploited by an attacker.
-
-### "Hated in the Nation" (Season 3, Episode 6)
-
-AI-powered autonomous systems are weaponized to kill people. The attack is distributed, coordinated, and nearly impossible to stop.
-
-**The parallel:** As AI becomes more sophisticated and integrated with neural technology, the potential for AI-driven attacks on neural interfaces becomes real. An AI could theoretically target multiple neural implants simultaneously.
-
-### "Metalhead" (Season 4, Episode 5)
-
-Autonomous robots hunt humans. The robots are networked and can be remotely controlled.
-
-**The parallel:** Neural implants are essentially biological-digital hybrids. If autonomous systems can be weaponized, so can the neural interfaces that control them — or that are controlled by them.
-
-Black Mirror's genius is that it takes real technology and extrapolates logically to dystopian conclusions. The show doesn't invent new physics; it just asks, "What if we connected these dots?"
-
-We're now connecting those dots in real life.
-
----
-
-## The Ethical Minefield We're Walking Into
-
-The scientific community is aware of these risks. According to research from UNSAM (Universidad Nacional de San Martín), there are critical ethical and technical considerations:
-
-### Neuroethics and Neuroderechos
-
-Before neural interfaces become ubiquitous, society needs to establish:
-
-- **Neural privacy**: Your thoughts should be protected like medical data
-- **Neural autonomy**: You should have control over your own neural signals
-- **Neural integrity**: Your brain shouldn't be vulnerable to external manipulation
-- **Neural dignity**: Your neural data shouldn't be commodified
-
-These aren't abstract concerns. They're urgent practical problems that need solving *before* neural interfaces become mainstream.
-
-### The Integration Problem
-
-The brain isn't a computer. It's a biological system that evolved over millions of years. When we interface it with digital systems, we're creating a hybrid that has properties neither system alone possesses.
-
-This hybrid system has:
-- **Biological vulnerabilities**: The brain can be damaged by corrupted signals
-- **Digital vulnerabilities**: The interface can be hacked
-- **Integration vulnerabilities**: The connection between brain and device can be exploited
-
-We're still learning how to secure this integration.
-
----
-
-## What Happens in the Next 6 Years?
-
-If my prediction is going to come true, the next 6 years are critical. Here's what I expect to see:
-
-**2026-2027: Rapid Adoption**
-- Neural interfaces move from clinical trials to consumer products
-- Thousands of people have active implants
-- The attack surface grows exponentially
-
-**2027-2028: Security Incidents**
-- First major security breaches of neural interface systems
-- Regulatory frameworks start to emerge
-- Researchers publish papers on neural interface vulnerabilities
-
-**2028-2030: The Critical Window**
-- Neural interfaces become more common
-- AI-powered attacks become more sophisticated
-- The probability of a fatal attack increases
-
-**2030-2032: The Reckoning**
-- Either we've solved the security problem, or we haven't
-- If we haven't, the first death is likely
-
----
-
-## The Uncomfortable Truth
-
-I don't want my prediction to come true. I'm not hoping for it. But I'm also not naive about the trajectory we're on.
-
-We're building technology that directly interfaces with the human brain. We're doing it rapidly, with massive investment, and with relatively immature security frameworks. We're also racing to deploy it at scale before we've fully understood the risks.
-
-This is the same pattern we've seen before:
-- **Social media**: Deployed at scale before we understood the psychological impacts
-- **Autonomous vehicles**: Deployed before we fully understood the edge cases
-- **AI systems**: Deployed before we fully understood the alignment problems
-
-With neural interfaces, the stakes are literally life and death.
-
-The good news? We can prevent this. We can:
-- Invest heavily in neural interface security
-- Establish robust regulatory frameworks
-- Require rigorous testing before deployment
-- Build privacy and security into the design from the start
-- Have honest conversations about the risks
-
-The bad news? We're not doing most of these things yet.
-
----
-
-## Conclusion: 6 Years Left
-
-In 2022, I made a bold prediction. In 2026, it's looking less like speculation and more like a logical extrapolation of current trends.
-
-We have 6 years. Six years to:
-- Secure neural interfaces against cyberattacks
-- Establish ethical frameworks for neural technology
-- Regulate the industry responsibly
-- Prepare society for the implications
-
-Or we have 6 years until someone dies from a computer virus.
-
-I hope I'm wrong. I genuinely do. But if I'm right, I want it to be because we took the warning seriously and prevented it — not because we ignored it and let it happen.
-
-The future isn't written yet. But the technology is being built right now. The question is: will we build it safely?
-
----
-
-## References & Further Reading
-
-- **Neuralink's 2025-2026 Clinical Trial Updates**: Progress reports on successful implants in 20+ patients with paralysis and motor control restoration — [https://neuralink.com/trials/](https://neuralink.com/trials/)
-
-- **Experian's 2026 Data Breach Industry Forecast**: Analysis of emerging cybersecurity threats, including vulnerabilities in brain-computer interfaces — [https://www.experian.com/thought-leadership/business/2026-data-breach-industry-forecast-report](https://www.experian.com/thought-leadership/business/2026-data-breach-industry-forecast-report)
-
-- **MIT's Neuro-Integrated Bionic Prosthetics Research**: Development of AI-collaborative prosthetics with autonomous decision-making — [https://biomech.media.mit.edu/portfolio_page/neural-interface-technology-for-advanced-prosthetic-limbs/](https://biomech.media.mit.edu/portfolio_page/neural-interface-technology-for-advanced-prosthetic-limbs/)
-
-- **EPFL/CHUV's Digital Bridge for Spinal Cord Injury Recovery**: System enabling voluntary movement through brain-spinal interface integration — [https://actu.epfl.ch/news/thought-controlled-walking-again-after-spinal-co-3/](https://actu.epfl.ch/news/thought-controlled-walking-again-after-spinal-co-3/)
-
-- **IEEE Standards for Neural Interface Security**: Emerging standards for securing brain-computer interface communications — [https://standards.ieee.org/wp-content/uploads/import/documents/presentations/ieee-neurotech-for-bmi-standards-roadmap.pdf](https://standards.ieee.org/wp-content/uploads/import/documents/presentations/ieee-neurotech-for-bmi-standards-roadmap.pdf)
-
-- **Standardization of Neurotechnology for Brain-Machine Interfacing**: Comprehensive standards roadmap for BMI/BCI applications — [https://pmc.ncbi.nlm.nih.gov/articles/PMC8846370/](https://pmc.ncbi.nlm.nih.gov/articles/PMC8846370/)
-
-- **IEEE P7700 Safety Guidelines for Neurotech Consumer Products**: Uniform safety standards for brain-interfacing technologies — [https://spectrum.ieee.org/ieee-safety-guidelines-neurotech](https://spectrum.ieee.org/ieee-safety-guidelines-neurotech)
 `;
 
-const esContent = `## La Predicción Que Me Persigue
+const esContent = `## Algo que dije en 2022
 
-Era 2022. Estaba de pie frente a un aula universitaria, presentando sobre IA, redes neuronales y el futuro de las interfaces cerebro-computadora. Era joven, confiado, tal vez demasiado cómodo haciendo predicciones audaces. Así que dije algo que ha estado viviendo en mi cabeza desde entonces:
+En 2022 estaba dando una charla en un aula universitaria sobre IA, redes neuronales y hacia dónde iban las interfaces cerebro-computadora. Era joven, confiado y quizá demasiado cómodo haciendo predicciones atrevidas. Así que dije algo que desde entonces no me sale de la cabeza:
 
-**"En 10 años, vamos a ver a la primera persona morir por un virus de computadora."**
+**"En diez años vamos a ver a la primera persona morir por un virus informático."**
 
-La sala se quedó en silencio. Algunas risas nerviosas. Mi profesor levantó una ceja. Pero no estaba bromeando — estaba extrapolando. Mirando hacia dónde se dirigía la tecnología y conectando los puntos.
+El aula se quedó en silencio. Un par de risas nerviosas. Mi profesor levantó una ceja. Pero no estaba bromeando. Estaba extrapolando: mirando hacia dónde iba la tecnología y uniendo los puntos.
 
-Eso fue en 2022. Estamos ahora en 2026. Seis años quedan en esa predicción.
+Eso fue en 2022. Ahora estamos en 2026, así que le quedan seis años a esa predicción. Y, sinceramente, se ve mucho más posible de lo que me gustaría.
 
-Y honestamente? **Se ve mucho más plausible de lo que me gustaría.**
+## Lo que cambió en cuatro años
 
----
+Cuando lo dije, las interfaces neuronales eran sobre todo trabajo de laboratorio. Neuralink era una apuesta lejana, y un virus atacando un cerebro humano sonaba a ciencia ficción pura. Desde entonces se movió mucho.
 
-## Por Qué Esto Importa Ahora
+### Neuralink salió del laboratorio
 
-Cuando hice esa predicción, las interfaces neurales eran teóricas. Las interfaces cerebro-computadora existían en laboratorios. Neuralink era un proyecto ambicioso. La idea de un virus de computadora dirigido al cerebro humano parecía pura ciencia ficción.
+En 2025 Neuralink implantó su dispositivo en 12 personas con parálisis, y a inicios de 2026 ya eran más de 20. Personas reales usan estos implantes para mover brazos robóticos, manejar computadoras y jugar videojuegos solo con el pensamiento. Pasamos de "algún día podría ser posible" a "la gente ya lo está haciendo" muy rápido.
 
-Pero aquí está lo que ha cambiado en solo cuatro años — y es alucinante:
+Lo que me preocupa de eso:
 
-### Neuralink Pasó de Laboratorio a Realidad
+- los implantes son inalámbricos y se comunican con dispositivos externos por Bluetooth
+- decodifican las intenciones de movimiento con cada vez más precisión
+- quienes los usan controlan dispositivos externos en tiempo real
+- Neuralink planea escalar la producción en 2026
 
-En 2025, Neuralink implantó exitosamente sus chips en **12 personas con parálisis**. Estos no son teóricos más. Personas reales los están usando para controlar brazos robóticos, navegar computadoras y jugar videojuegos solo con sus pensamientos. A principios de 2026, ese número creció a **más de 20 personas** con implantes neurales activos.
+Esto ya no es un problema de "quizá en veinte años".
 
-Piénsalo por un segundo. Pasamos de "esto podría ser posible algún día" a "personas literalmente están usando esto ahora" en menos de un año.
+### La biotecnología avanza más rápido de lo que notamos
 
-**Lo que hace esto aterrador:**
-- Los implantes son inalámbricos, comunicándose vía WiFi
-- Decodifican intenciones motoras con precisión creciente
-- Los usuarios tienen control en tiempo real de dispositivos externos
-- Neuralink planea **producción masiva** en 2026
+El resto del campo tampoco está quieto:
 
-Esta no es una situación de "tal vez en 20 años". Esto está sucediendo *ahora mismo*.
+- **Prótesis neurointegradas.** En el MIT, prótesis que no solo responden a señales neuronales sino que tienen su propia IA, trabajando junto con las intenciones del paciente.
+- **Puentes digitales para lesiones medulares.** La EPFL y el CHUV crearon un sistema que permite volver a caminar a personas con lesiones de médula conectando las señales del cerebro con estimulación espinal.
+- **Células madre neuronales como terapia dirigida.** Células programadas para atacar tumores cerebrales a nivel celular.
+- **CRISPR en el cerebro.** Edición genética que eventualmente podría modificar tejido neuronal directamente.
 
-### La Biotecnología Se Está Moviendo Más Rápido de Lo Que Creemos
+Ya no solo nos conectamos al cerebro. Estamos empezando a modificarlo.
 
-Los avances en biotecnología son igualmente salvajes:
+### La seguridad no va al mismo ritmo
 
-- **Prótesis biónicas neuro-integradas**: MIT desarrolló prótesis que no solo responden a señales neurales — tienen "mentes propias" con algoritmos de IA que colaboran con las intenciones del paciente
-- **Puentes digitales para lesiones espinales**: Investigadores en EPFL y CHUV crearon sistemas que permiten a personas con lesiones de médula espinal volver a caminar conectando señales cerebrales directamente a estimuladores espinales
-- **Células madre neurales como armas dirigidas**: Células siendo programadas para atacar tumores cerebrales a nivel celular
-- **CRISPR en el cerebro**: Tecnologías de edición genética que podrían eventualmente modificar tejido neural directamente
+Mientras tanto, la ciberseguridad no mejora. El pronóstico de filtraciones de datos 2026 de Experian describe a la IA como el principal motor de las nuevas amenazas, cuenta más de 8.000 filtraciones solo en el primer semestre de 2025, menciona a criminales usando IA para crear identidades sintéticas y evadir la detección, y pone a las interfaces cerebro-computadora como una nueva categoría de vulnerabilidad.
 
-Ya no solo estamos interfaceando con el cerebro. Lo estamos **modificando a nivel celular**.
+Ese último punto es el que no puedo ignorar. Los investigadores de seguridad ya hablan de ataques a interfaces neuronales como un modelo de amenaza real, no como guion de película.
 
-### La Amenaza de Ciberseguridad Es Real
+## El escenario que no me deja dormir
 
-Mientras tanto, la situación de ciberseguridad está empeorando, no mejorando.
+Este es un escenario que ya no se siente pura ficción.
 
-Según el Informe de Predicciones de Brechas de Datos 2026 de Experian:
-- **La IA es ahora la amenaza principal** para la ciberseguridad
-- Más de 8,000 brechas de datos en solo la primera mitad de 2025
-- Los ciberdelincuentes están usando IA para crear identidades sintéticas, evadir detección y lanzar ataques cada vez más sofisticados
-- **Ha emergido una nueva categoría de vulnerabilidad: vulnerabilidades en interfaces cerebro-computadora**
+En algún momento entre 2029, 2030 o 2032, alguien con un implante neuronal hace su vida normal. El implante está emparejado con su celular, que se sincroniza con servicios en la nube. Lo usa para mover una prótesis, para comunicarse, para trabajar.
 
-El informe menciona explícitamente ataques dirigidos a interfaces neurales. Esto no es hipotético más — los investigadores de seguridad están discutiendo activamente el panorama de amenazas.
+Un ataque asistido por IA va contra sistemas de interfaces neuronales. No para robar datos, sino para algo peor. Aprovecha una falla en el protocolo inalámbrico, en la sincronización con la nube o en el firmware del implante. Y en vez de sacar información, corrompe el procesamiento de la señal: envía señales malformadas y altera los ciclos de retroalimentación que mantienen al implante sincronizado con el cerebro.
 
----
+El resultado es una cascada de daño neurológico. Convulsiones, síntomas parecidos a un derrame, lesiones causadas por señales corruptas que el cerebro toma como actividad real. La persona muere, y el titular dice: "Primera muerte causada por un virus informático".
 
-## El Escenario Que Me Mantiene Despierto
+## Por qué no creo que sea solo paranoia
 
-Déjame pintar un cuadro que ya no es puramente ficticio:
+El escenario se apoya en límites técnicos reales.
 
-**Año 2029 (o 2030, o 2032):**
+**Los tiempos.** Las neuronas trabajan en la escala de unos pocos milisegundos. Los enlaces inalámbricos agregan latencias del orden de decenas de milisegundos, además de variaciones. Esa diferencia es un problema de sincronización, y cualquier cosa que distorsione los tiempos o corrompa la señal puede darle información contradictoria al cerebro. La plasticidad del cerebro es increíble, pero tiene límites.
 
-Alguien con un implante Neuralink (o un dispositivo de un competidor) va sobre su día. El implante está conectado inalámbricamente a su smartphone, que se sincroniza con servicios en la nube. Lo usa para controlar una extremidad protésica, para comunicarse, para trabajar.
+**Los decodificadores se pueden engañar.** Las interfaces actuales decodifican la actividad neuronal con modelos de machine learning, y esos modelos se pueden atacar con entradas adversarias diseñadas para producir la salida equivocada. En teoría, un atacante podría hacer que el decodificador lea mal la actividad, enviar retroalimentación que confunda la integración sensoriomotora o disparar respuestas neurológicas en cadena.
 
-Un sofisticado ataque cibernético impulsado por IA se dirige a sistemas de interfaces neurales. No para robar datos — para algo peor. El ataque explota una vulnerabilidad en el protocolo de comunicación inalámbrica, o en la sincronización en la nube, o en el firmware del implante.
+**Lo inalámbrico tiene un largo historial de vulneraciones.** Han hackeado WiFi. Han hackeado Bluetooth. La seguridad de la comunicación de los implantes todavía se está resolviendo.
 
-El código malicioso no roba datos. **Corrompe el procesamiento de señales de la interfaz neural**. Envía señales malformadas directamente al cerebro. Manipula los bucles de retroalimentación que mantienen el implante sincronizado con la actividad neural.
+**La escala.** Mientras más implantes haya, más grande es la superficie de ataque. Más dispositivos significan más objetivos y más probabilidad de que un ataque funcione.
 
-El resultado? Una cascada de daño neurológico. Convulsiones. Síntomas similares a un accidente cerebrovascular. Daño cerebral por señales corruptas siendo interpretadas como actividad neural legítima.
+## Black Mirror lo vio venir
 
-**La persona muere.**
+Si has visto Black Mirror, sabes que tiene un talento incómodo para anticipar hacia dónde va la tecnología. Algunos episodios se sienten muy relevantes:
 
-Y los titulares leen: "Primera Muerte Causada por Virus de Computadora."
+**"Blanca Navidad" (T2E4).** Implantes en los ojos que dejan a otros ver lo que tú ves y te permiten bloquear a cualquiera de tu percepción, y una copia digital de la mente de una persona torturada como si fuera una herramienta. La tecnología que entra en tus sentidos y en tu mente puede usarse contra ti.
 
----
+**"Arkangel" (T4E2).** Una madre le pone un chip a su hija para vigilar y filtrar lo que ve. Nadie tiene que hackearlo: basta con quien tiene la tablet. Una interfaz cerebral pensada para proteger se vuelve una herramienta de control.
 
-## Por Qué Esto No Es Solo Especulación
+**"Odio nacional" (T3E6).** Una red de abejas robóticas autónomas es secuestrada para matar gente, en un ataque distribuido casi imposible de detener. Escala más automatización es justo lo que me preocupa de los dispositivos neuronales conectados.
 
-Este escenario no surge de la nada. Se basa en vulnerabilidades reales y limitaciones técnicas reales:
+**"Cabeza de metal" (T4E5).** Perros robot autónomos y conectados en red cazando personas. Cuando las máquinas están en red y son autónomas, se pueden convertir en armas.
 
-### 1. El Problema de Latencia
+Lo que hace funcionar a Black Mirror es que no inventa física nueva. Toma tecnología que existe y pregunta qué pasa si unimos los puntos. Ahora los estamos uniendo en la vida real.
 
-La comunicación neural sucede en **2 milisegundos**. La comunicación inalámbrica introduce **latencias de 50-100 milisegundos** incluso en condiciones óptimas. Esto crea un problema de sincronización que podría ser explotado.
+## El lado ético
 
-Si un atacante puede introducir distorsiones de tiempo o corrupción de señal, puede hacer que el cerebro reciba información conflictiva o malformada. La plasticidad del cerebro es notable, pero tiene límites.
+La comunidad científica conoce estos riesgos. Trabajos de la UNSAM (Universidad Nacional de San Martín) sobre neuroética y "neuroderechos" plantean que, antes de que las interfaces neuronales estén en todos lados, hay que garantizar algunas cosas:
 
-### 2. Vulnerabilidades de Integridad de Señal
+- **privacidad neuronal:** tus pensamientos protegidos como datos médicos
+- **autonomía neuronal:** control sobre tus propias señales neuronales
+- **integridad neuronal:** tu cerebro no debería estar expuesto a manipulación externa
+- **dignidad neuronal:** tus datos neuronales no deberían volverse mercancía
 
-Las interfaces cerebro-computadora actuales decodifican señales neurales usando algoritmos de aprendizaje automático. Estos algoritmos pueden ser **atacados adversarialmente** — alimentados con entradas diseñadas para causar salidas incorrectas.
+Son problemas prácticos que hay que resolver antes de que esto se masifique, no después.
 
-Un atacante podría teóricamente crear señales que:
-- Causen que el algoritmo de decodificación malinterprete la actividad neural
-- Envíen señales de retroalimentación que confundan la integración sensoriomotora del cerebro
-- Desencadenen respuestas neurológicas en cascada
+También está el problema de la integración. El cerebro no es una computadora, es un sistema biológico moldeado durante millones de años. Cuando lo conectas a un sistema digital obtienes un híbrido con debilidades que ninguna de las dos partes tiene por separado: el cerebro puede dañarse con señales corruptas, el dispositivo puede ser hackeado y la conexión entre ambos puede ser explotada. Todavía estamos aprendiendo a asegurar eso.
 
-### 3. La Seguridad Inalámbrica Es Débil
+## Los próximos seis años
 
-Los implantes neurales se comunican inalámbricamente. Los protocolos inalámbricos han sido hackeados antes. WiFi ha sido hackeado. Bluetooth ha sido hackeado. La seguridad de la comunicación de implantes neurales todavía se está desarrollando.
+Si la predicción se cumple, así es más o menos como esperaría que fuera:
 
-**El informe de Experian menciona específicamente esto como una categoría de vulnerabilidad emergente.**
+- **2026–2027:** las interfaces neuronales pasan de ensayos clínicos a productos, miles de personas tienen implantes y la superficie de ataque crece rápido.
+- **2027–2028:** los primeros incidentes de seguridad serios, las primeras regulaciones y más investigación publicada sobre vulnerabilidades de implantes.
+- **2028–2030:** la ventana crítica. Más dispositivos, ataques asistidos por IA más sofisticados y una probabilidad creciente de uno fatal.
+- **2030–2032:** o resolvimos el problema de seguridad o no. Si no, la primera muerte se vuelve probable.
 
-### 4. El Problema de Escala
+## La parte incómoda
 
-A medida que las interfaces neurales se vuelven más comunes (el objetivo de Neuralink es la producción masiva), la superficie de ataque crece exponencialmente. Más dispositivos = más objetivos = mayor probabilidad de ataques exitosos.
+No quiero tener razón con esto. Pero tampoco soy ingenuo con la dirección en la que vamos.
 
----
+Estamos construyendo tecnología que se conecta directamente al cerebro humano, rápido, con mucho dinero detrás y con una seguridad todavía inmadura, y estamos corriendo para desplegarla antes de entender los riesgos. Ya vimos este patrón: redes sociales a escala antes de entender lo que le hacen a la gente, autos autónomos en la calle antes de entender todos los casos borde, sistemas de IA desplegados antes de resolver el alineamiento. Con las interfaces neuronales, lo que está en juego es la vida.
 
-## La Conexión con Black Mirror
+La buena noticia es que se puede prevenir. Invertir en serio en la seguridad de los implantes, construir una regulación sólida, exigir pruebas rigurosas antes de desplegar, diseñar la privacidad y la seguridad desde el inicio y hablar con honestidad de los riesgos. La mala noticia es que todavía no estamos haciendo casi nada de eso.
 
-Si has visto Black Mirror, sabes que el show tiene una capacidad inquietante de predecir futuros tecnológicos. Varios episodios son disturbantemente relevantes aquí:
+## Seis años
 
-### "White Christmas" (Temporada 2, Episodio 4)
+En 2022 hice una predicción atrevida. En 2026 se parece menos a una especulación y más a una extrapolación razonable de hacia dónde van las cosas.
 
-Este episodio presenta un implante neural que permite a una persona controlar el cuerpo y las sensaciones de otra. El implante puede ser manipulado, causando tortura psicológica.
+Tenemos seis años para asegurar las interfaces neuronales, ponernos de acuerdo en un marco ético, regular la industria con responsabilidad y preparar a la sociedad para lo que esto significa. O seis años hasta que alguien muera por un virus informático.
 
-**El paralelismo:** Si los implantes neurales pueden ser usados para controlar o manipular, también pueden ser armarizados. La tecnología que permite el control terapéutico puede permitir el control malicioso.
+De verdad espero equivocarme. Y si resulta que tengo razón, me gustaría que fuera porque tomamos en serio la advertencia y lo evitamos, no porque la ignoramos. La tecnología se está construyendo ahora mismo. La pregunta es si la vamos a construir de forma segura.
 
-### "Arkangel" (Temporada 4, Episodio 2)
+## Referencias y lecturas
 
-Un implante neural permite a los padres monitorear y controlar las experiencias de sus hijos. El implante es hackeado, manipulado y convertido contra su usuario.
+- **Actualizaciones de los ensayos clínicos de Neuralink (2025–2026):** avances con implantes en más de 20 pacientes con parálisis. [neuralink.com/trials](https://neuralink.com/trials/)
+- **Experian, 2026 Data Breach Industry Forecast:** amenazas emergentes, incluidas las interfaces cerebro-computadora. [experian.com](https://www.experian.com/thought-leadership/business/2026-data-breach-industry-forecast-report)
+- **MIT, prótesis biónicas neurointegradas.** [biomech.media.mit.edu](https://biomech.media.mit.edu/portfolio_page/neural-interface-technology-for-advanced-prosthetic-limbs/)
+- **EPFL/CHUV, puente digital para lesiones medulares.** [actu.epfl.ch](https://actu.epfl.ch/news/thought-controlled-walking-again-after-spinal-co-3/)
+- **IEEE, hoja de ruta de estándares de neurotecnología para interfaces cerebro-máquina.** [standards.ieee.org](https://standards.ieee.org/wp-content/uploads/import/documents/presentations/ieee-neurotech-for-bmi-standards-roadmap.pdf)
+- **Estandarización de neurotecnología para interfaces cerebro-máquina.** [pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC8846370/)
+- **IEEE P7700, guías de seguridad para neurotecnología de consumo.** [spectrum.ieee.org](https://spectrum.ieee.org/ieee-safety-guidelines-neurotech)
 
-**El paralelismo:** Cualquier sistema diseñado para interfacear con el cerebro puede ser comprometido. La misma conexión inalámbrica que permite a un doctor ajustar tu implante puede ser explotada por un atacante.
-
-### "Hated in the Nation" (Temporada 3, Episodio 6)
-
-Los sistemas autónomos impulsados por IA son armarizados para matar personas. El ataque es distribuido, coordinado e imposible de detener.
-
-**El paralelismo:** A medida que la IA se vuelve más sofisticada e integrada con la tecnología neural, el potencial para ataques impulsados por IA en interfaces neurales se vuelve real. Una IA podría teóricamente dirigirse a múltiples implantes neurales simultáneamente.
-
-### "Metalhead" (Temporada 4, Episodio 5)
-
-Robots autónomos cazan humanos. Los robots están en red y pueden ser controlados remotamente.
-
-**El paralelismo:** Los implantes neurales son esencialmente híbridos biológico-digitales. Si los sistemas autónomos pueden ser armarizados, también pueden serlo las interfaces neurales que los controlan — o que son controladas por ellos.
-
-El genio de Black Mirror es que toma tecnología real y extrapola lógicamente a conclusiones distópicas. El show no inventa nueva física; simplemente pregunta, "¿Y si conectáramos estos puntos?"
-
-Ahora estamos conectando esos puntos en la vida real.
-
----
-
-## El Campo Minado Ético Que Estamos Pisando
-
-La comunidad científica es consciente de estos riesgos. Según investigación de UNSAM (Universidad Nacional de San Martín), hay consideraciones éticas y técnicas críticas:
-
-### Neuroética y Neuroderechos
-
-Antes de que las interfaces neurales se vuelvan ubicuas, la sociedad necesita establecer:
-
-- **Privacidad neural**: Tus pensamientos deberían estar protegidos como datos médicos
-- **Autonomía neural**: Deberías tener control sobre tus propias señales neurales
-- **Integridad neural**: Tu cerebro no debería ser vulnerable a manipulación externa
-- **Dignidad neural**: Tus datos neurales no deberían ser mercantilizados
-
-Estas no son preocupaciones abstractas. Son problemas prácticos urgentes que necesitan solución *antes* de que las interfaces neurales se vuelvan convencionales.
-
-### El Problema de Integración
-
-El cerebro no es una computadora. Es un sistema biológico que evolucionó durante millones de años. Cuando lo interfaceamos con sistemas digitales, estamos creando un híbrido que tiene propiedades que ninguno de los dos sistemas solo posee.
-
-Este sistema híbrido tiene:
-- **Vulnerabilidades biológicas**: El cerebro puede ser dañado por señales corruptas
-- **Vulnerabilidades digitales**: La interfaz puede ser hackeada
-- **Vulnerabilidades de integración**: La conexión entre cerebro y dispositivo puede ser explotada
-
-Todavía estamos aprendiendo cómo asegurar esta integración.
-
----
-
-## Qué Sucede en los Próximos 6 Años?
-
-Si mi predicción va a hacerse realidad, los próximos 6 años son críticos. Aquí está lo que espero ver:
-
-**2026-2027: Adopción Rápida**
-- Las interfaces neurales se mueven de ensayos clínicos a productos de consumidor
-- Miles de personas tienen implantes activos
-- La superficie de ataque crece exponencialmente
-
-**2027-2028: Incidentes de Seguridad**
-- Primeras brechas de seguridad importantes de sistemas de interfaces neurales
-- Los marcos regulatorios comienzan a emerger
-- Los investigadores publican artículos sobre vulnerabilidades de interfaces neurales
-
-**2028-2030: La Ventana Crítica**
-- Las interfaces neurales se vuelven más comunes
-- Los ataques impulsados por IA se vuelven más sofisticados
-- La probabilidad de un ataque fatal aumenta
-
-**2030-2032: El Reckoning**
-- O hemos resuelto el problema de seguridad, o no
-- Si no lo hemos hecho, la primera muerte es probable
-
----
-
-## La Verdad Incómoda
-
-No quiero que mi predicción se haga realidad. No estoy esperando que suceda. Pero tampoco soy ingenuo sobre la trayectoria en la que estamos.
-
-Estamos construyendo tecnología que interfacee directamente con el cerebro humano. Lo estamos haciendo rápidamente, con inversión masiva, y con marcos de seguridad relativamente inmaduros. También estamos corriendo para desplegarlo a escala antes de haber entendido completamente los riesgos.
-
-Este es el mismo patrón que hemos visto antes:
-- **Redes sociales**: Desplegadas a escala antes de entender los impactos psicológicos
-- **Vehículos autónomos**: Desplegados antes de entender completamente los casos límite
-- **Sistemas de IA**: Desplegados antes de entender completamente los problemas de alineación
-
-Con interfaces neurales, las apuestas son literalmente vida y muerte.
-
-La buena noticia? Podemos prevenir esto. Podemos:
-- Invertir fuertemente en seguridad de interfaces neurales
-- Establecer marcos regulatorios robustos
-- Requerir pruebas rigurosas antes del despliegue
-- Construir privacidad y seguridad en el diseño desde el principio
-- Tener conversaciones honestas sobre los riesgos
-
-La mala noticia? No estamos haciendo la mayoría de estas cosas aún.
-
----
-
-## Conclusión: 6 Años Quedan
-
-En 2022, hice una predicción audaz. En 2026, se ve menos como especulación y más como una extrapolación lógica de tendencias actuales.
-
-Tenemos 6 años. Seis años para:
-- Asegurar interfaces neurales contra ciberataques
-- Establecer marcos éticos para la tecnología neural
-- Regular la industria responsablemente
-- Preparar a la sociedad para las implicaciones
-
-O tenemos 6 años hasta que alguien muera por un virus de computadora.
-
-Espero estar equivocado. Genuinamente. Pero si tengo razón, quiero que sea porque tomamos la advertencia en serio y la prevenimos — no porque la ignoramos y dejamos que sucediera.
-
-El futuro no está escrito aún. Pero la tecnología se está construyendo ahora mismo. La pregunta es: ¿la construiremos de forma segura?
-
----
-
-## Referencias y Lecturas Adicionales
-
-- **Actualizaciones de Ensayos Clínicos de Neuralink 2025-2026**: Reportes de progreso sobre implantes exitosos en 20+ pacientes con parálisis y restauración de control motor — [https://neuralink.com/trials/](https://neuralink.com/trials/)
-
-- **Informe de Predicciones de Brechas de Datos 2026 de Experian**: Análisis de amenazas cibernéticas emergentes, incluyendo vulnerabilidades en interfaces cerebro-computadora — [https://www.experian.com/thought-leadership/business/2026-data-breach-industry-forecast-report](https://www.experian.com/thought-leadership/business/2026-data-breach-industry-forecast-report)
-
-- **Investigación de Prótesis Biónicas Neuro-Integradas del MIT**: Desarrollo de prótesis colaborativas con IA con toma de decisiones autónoma — [https://biomech.media.mit.edu/portfolio_page/neural-interface-technology-for-advanced-prosthetic-limbs/](https://biomech.media.mit.edu/portfolio_page/neural-interface-technology-for-advanced-prosthetic-limbs/)
-
-- **Puente Digital EPFL/CHUV para Recuperación de Lesión de Médula Espinal**: Sistema que permite movimiento voluntario a través de integración de interfaz cerebro-espinal — [https://actu.epfl.ch/news/thought-controlled-walking-again-after-spinal-co-3/](https://actu.epfl.ch/news/thought-controlled-walking-again-after-spinal-co-3/)
-
-- **Estándares IEEE para Seguridad de Interfaces Neurales**: Estándares emergentes para asegurar comunicaciones de interfaces cerebro-computadora — [https://standards.ieee.org/wp-content/uploads/import/documents/presentations/ieee-neurotech-for-bmi-standards-roadmap.pdf](https://standards.ieee.org/wp-content/uploads/import/documents/presentations/ieee-neurotech-for-bmi-standards-roadmap.pdf)
-
-- **Estandarización de Neurotecnología para Interfaces Cerebro-Máquina**: Hoja de ruta integral de estándares para aplicaciones BMI/BCI — [https://pmc.ncbi.nlm.nih.gov/articles/PMC8846370/](https://pmc.ncbi.nlm.nih.gov/articles/PMC8846370/)
-
-- **Directrices de Seguridad IEEE P7700 para Productos Neurotech de Consumidor**: Estándares de seguridad uniformes para tecnologías de interfaz cerebral — [https://spectrum.ieee.org/ieee-safety-guidelines-neurotech](https://spectrum.ieee.org/ieee-safety-guidelines-neurotech)
 `;
 
 export const theFirstDigitalDeath: Record<Locale, BlogPost> = {
   en: {
     slug: 'the-first-digital-death',
-    title: 'The First Digital Death: A Prediction from 2022 That\'s Looking Disturbingly Plausible',
+    title: 'The First Digital Death: A Prediction from 2022 That Looks More Plausible Every Year',
     date: 'March 4, 2026',
-    excerpt: 'Four years ago, I made a bold prediction during a university presentation on AI and neural interfaces: "In 10 years, we\'ll see the first person die from a computer virus." With 6 years left on that prediction, the convergence of AI, brain-computer interfaces, and cybersecurity threats makes it feel less like science fiction and more like an inevitable future.',
+    excerpt: "In 2022 I told a university classroom that within ten years someone would die from a computer virus. With neural implants in real patients and security lagging behind, I'm less comfortable with that prediction every year.",
     imageUrl: '/blog/the-first-digital-death.webp',
     imageAiHint: 'dystopian sci-fi illustration: split screen showing a human brain with neural implants on left side glowing with digital connections, and a virus-like digital entity spreading through neural networks on right side; dark red and blue color scheme; cyberpunk aesthetic; warning symbols; interconnected nodes showing data flow; professional technical illustration style',
     author: 'Sebastian Alvarez',
     tags: ['AI', 'Neurotechnology', 'Cybersecurity', 'Ethics', 'Future', 'Black Mirror', 'Science Fiction', 'Predictions'],
-    content: enContent,
+    content: enContent
   },
   es: {
     slug: 'the-first-digital-death',
-    title: 'La Primera Muerte Digital: Una Predicción de 2022 Que Se Ve Disturbantemente Plausible',
+    title: 'La primera muerte digital: una predicción de 2022 que cada año se ve más posible',
     date: 'March 4, 2026',
-    excerpt: 'Hace cuatro años, hice una predicción audaz durante una presentación universitaria sobre IA e interfaces cerebrales: "En 10 años, veremos a la primera persona morir por un virus de computadora." Con 6 años restantes en esa predicción, la convergencia de IA, interfaces cerebro-computadora y amenazas cibernéticas hace que se sienta menos como ciencia ficción y más como un futuro inevitable.',
+    excerpt: 'En 2022 dije en un aula universitaria que en diez años alguien moriría por un virus informático. Con implantes neuronales en pacientes reales y una seguridad que va por detrás, cada año esa predicción me incomoda más.',
     imageUrl: '/blog/the-first-digital-death.webp',
     imageAiHint: 'ilustración distópica de ciencia ficción: pantalla dividida mostrando un cerebro humano con implantes neurales en el lado izquierdo brillando con conexiones digitales, y una entidad viral digital propagándose a través de redes neuronales en el lado derecho; esquema de colores rojo oscuro y azul; estética cyberpunk; símbolos de advertencia; nodos interconectados mostrando flujo de datos; estilo de ilustración técnica profesional',
     author: 'Sebastian Alvarez',
     tags: ['IA', 'Neurotecnología', 'Ciberseguridad', 'Ética', 'Futuro', 'Black Mirror', 'Ciencia Ficción', 'Predicciones'],
-    content: esContent,
-  },
+    content: esContent
+  }
 };

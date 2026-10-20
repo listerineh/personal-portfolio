@@ -4,40 +4,21 @@ import type { Locale } from '@/i18n/config';
 export const whyMarkdownForBlogs: Record<Locale, BlogPost> = {
   en: {
     slug: 'why-markdown-for-blogs',
-    title: 'Is Markdown the Best Format for Blogs?',
+    title: 'Why I Write This Blog in Markdown',
     date: 'June 15, 2025',
-    excerpt: 'Explore why Markdown is a powerful and flexible format for blog content — from developer ergonomics to performance and long-term maintainability.',
+    excerpt: 'I tried JSON, a WYSIWYG editor and a headless CMS before settling on Markdown in the repo. Here is why it stuck, and how the posts get rendered today.',
     imageUrl: '/blog/markdown-basics.webp',
     imageAiHint: 'markdown writing workflow visualization: code editor showing markdown syntax with headers, lists, code blocks; markdown symbols (#, -, *, `) floating around; transformation arrow showing markdown converting to beautiful rendered blog post; git version control symbols indicating version history; comparison showing markdown simplicity vs complex JSON structure; developer typing at keyboard; clean minimalist design with monospace font aesthetic, professional tech illustration',
     content: `
-## Introduction
+## How I got here
 
-When building a developer blog, choosing how to store and write your content matters as much as how you display it. After experimenting with JSON, WYSIWYG editors, and headless CMSes, I found Markdown to be the cleanest, most scalable solution.
+Before settling on Markdown I tried the usual suspects for this blog: a WYSIWYG editor, a headless CMS, and, for a while, posts stored as JSON. All of them worked. None of them felt like writing.
 
-In this post, I'll explain **why I use Markdown to structure my blog content**, how it's stored, how it's dynamically rendered in the frontend — and why Markdown solves problems that plain JSON couldn't.
+Markdown is what stuck, and this post is about why: how the posts are stored, how they get rendered, and the JSON experiment that convinced me.
 
----
+## The JSON phase
 
-## Why I Store Blog Posts in Markdown
-
-Here's why Markdown is my go-to format:
-
-### 1. Simple, Human-Readable Syntax
-
-Markdown feels natural to write. Headers, lists, code blocks, and links are quick to type, with zero friction. It's like writing an email with formatting superpowers — no UI lag, no weird HTML artifacts.
-
-### 2. Easy to Store, Version, and Track
-
-Each post in my blog is stored as a simple JavaScript object that includes a Markdown \`content\` field. This means I can:
-
-- Store content in Git (like code)
-- Track changes over time
-- Use pull requests for content reviews
-- Move fast without external tooling
-
-### 3. Dynamic and Flexible Rendering
-
-One major pain point I faced early on was using raw JSON to structure post content. That meant manually defining paragraphs, code blocks, and titles like this:
+My first version described every post as a list of blocks:
 
 \`\`\`json
 [
@@ -47,189 +28,152 @@ One major pain point I faced early on was using raw JSON to structure post conte
 ]
 \`\`\`
 
-This quickly became **messy and hard to scale**. Every post had a slightly different structure, and I found myself writing a custom renderer to deal with all the variations. Markdown solved that instantly.
+It looks tidy for three blocks. By the third post it was a mess. Every post needed a slightly different block type (a quote, a list inside a list, a table), each one meant another case in a custom renderer, and writing a paragraph meant escaping quotes inside a JSON string. I was spending more time on the format than on the posts.
 
-With Markdown, I can write naturally and let a parser like \`marked\` or \`remark\` handle the conversion to HTML, cleanly and consistently.
+Switching to Markdown made all of that go away. I write the post, a parser turns it into HTML, and nobody has to invent a new block type for a table.
 
-### 4. Developer-First Writing Experience
+## Why it works for me
 
-Since my entire blog is code-based, it makes sense that writing should happen in code too. I can write a new blog post in my code editor, commit it with Git, and deploy. No extra UIs or plugins needed.
+**It reads like text.** A heading is a \`#\`, a list is a \`-\`, code goes between backticks. Writing a post feels like writing a long, well-formatted message, not filling in a form.
 
----
+**It lives in Git.** Each post is a file in the repo with its content in a Markdown string. That means history for every edit, pull requests when I want someone to review a post, and no external service that can go down or change its pricing.
 
-## How I Use It in My Blog
+**The structure is the content.** With JSON, the structure was something I had to maintain separately. With Markdown, it's just how the text is written.
 
-Here's what a blog post structure looks like in my setup:
+**I write where I already work.** The whole site is code, so writing a post in the same editor, committing and deploying is the shortest path. No admin panel, no plugins.
+
+## What a post looks like
+
+A post is an object with some metadata and the body as Markdown:
 
 \`\`\`ts
 {
-  slug: 'mastering-async-javascript',
-  title: 'Mastering Asynchronous JavaScript',
-  date: 'October 26, 2023',
-  excerpt: 'A deep dive into Promises, async/await...',
-  content: \`## Introduction\\nAsynchronous programming is...\`,
+  slug: 'my-first-post',
+  title: 'My first post',
+  date: 'June 15, 2025',
+  excerpt: 'A short summary for lists and share cards.',
+  content: \`## Hello\\nThis is **Markdown**...\`,
   author: 'Sebastian Alvarez',
-  tags: ['JavaScript', 'Async']
+  tags: ['Markdown', 'Blogging'],
 }
 \`\`\`
 
-The \`content\` is raw Markdown. In the frontend, I convert it using \`marked\`:
+When I first wrote this post I rendered \`content\` with \`marked\` and \`dangerouslySetInnerHTML\`. It worked, but injecting HTML like that is asking for trouble the day some content isn't fully under your control. Today the body is rendered on the server with \`react-markdown\`, and every post goes through a sanitizer before it reaches the page:
 
 \`\`\`tsx
-<div
-  className="prose dark:prose-invert max-w-none"
-  dangerouslySetInnerHTML={{ __html: marked(post.content) }}
-/>
+<ReactMarkdown
+  remarkPlugins={[remarkGfm]}
+  rehypePlugins={[rehypeRaw, rehypeSanitize, rehypeHighlight]}
+>
+  {post.content}
+</ReactMarkdown>
 \`\`\`
 
-This gives me the freedom of Markdown plus full control of rendering.
+\`remark-gfm\` adds tables and task lists, \`rehype-sanitize\` strips anything that shouldn't be there (scripts, iframes), and \`rehype-highlight\` colors the code. Since it all runs on the server, none of these libraries ship to the reader's browser.
 
----
+## Making it look good
 
-## Styling with Tailwind
+For styles I use Tailwind's \`@tailwindcss/typography\`. Wrapping the content in a \`prose\` class gives sensible defaults for headings, paragraphs, lists, code and tables, and modifiers let me adjust just the pieces I care about:
 
-To make the Markdown look good, I use Tailwind's \`@tailwindcss/typography\` plugin. It gives me a \`prose\` class that adds consistent styles to elements like \`<h1>\`, \`<p>\`, \`<pre>\`, and more.
-
-Tailwind's utility-based customization lets me tweak the style without touching the HTML. For example:
-
-\`\`\`css
-prose-headings:text-primary
-prose-a:text-accent hover:prose-a:text-primary
-prose-code:font-code
-prose-pre:bg-muted
+\`\`\`html
+<div class="prose prose-headings:tracking-tight prose-a:text-primary prose-pre:bg-muted">
 \`\`\`
 
-This means I don't have to worry about content authors messing up the layout — Markdown handles structure, and Tailwind handles appearance.
+The nice side effect is the separation: Markdown decides the structure, the stylesheet decides how it looks, and I can't break the layout by writing a post.
 
----
+## Would I recommend it?
 
-## Conclusion
+For a developer writing their own blog, yes. It's fast to write, lives next to the code, renders the same way everywhere, and if I ever move the site to another stack, the posts come with me as plain text.
 
-Markdown hits the sweet spot for blogging as a developer:
-
-- Fast to write
-- Easy to maintain
-- Dynamic to render
-- Portable across tech stacks
-- Perfect for Git-based workflows
-
-If you're building a blog or dev-focused site, consider Markdown as your foundation — and let styling be a second step, not the first problem to solve.
+Where I'd think twice: if people who don't use Git need to write and publish, a CMS will make them happier. For a site like this one, Markdown in the repo is the simplest thing that works, and it has kept working.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Markdown', 'Blogging', 'Developer Tools', 'Content Creation', 'Writing']
   },
   es: {
     slug: 'why-markdown-for-blogs',
-    title: '¿Es Markdown el Mejor Formato para Blogs?',
+    title: 'Por qué escribo este blog en Markdown',
     date: 'June 15, 2025',
-    excerpt: 'Explora por qué Markdown es un formato poderoso y flexible para contenido de blog — desde ergonomía para desarrolladores hasta rendimiento y mantenibilidad a largo plazo.',
+    excerpt: 'Probé JSON, un editor WYSIWYG y un CMS headless antes de quedarme con Markdown dentro del repo. Aquí cuento por qué se quedó y cómo se renderizan hoy los posts.',
     imageUrl: '/blog/markdown-basics.webp',
     imageAiHint: 'visualización de flujo de trabajo de escritura markdown: editor de código mostrando sintaxis markdown con encabezados, listas, bloques de código; símbolos markdown (#, -, *, `) flotando alrededor; flecha de transformación mostrando markdown convirtiéndose en hermoso post de blog renderizado; símbolos de control de versiones git indicando historial de versiones; comparación mostrando simplicidad de markdown vs estructura JSON compleja; desarrollador escribiendo en teclado; diseño minimalista limpio con estética de fuente monoespaciada, ilustración técnica profesional',
     content: `
-## Introducción
+## Cómo llegué aquí
 
-Cuando construyes un blog de desarrollador, elegir cómo almacenar y escribir tu contenido importa tanto como cómo lo muestras. Después de experimentar con JSON, editores WYSIWYG y CMSes headless, encontré que Markdown es la solución más limpia y escalable.
+Antes de quedarme con Markdown probé lo típico para este blog: un editor WYSIWYG, un CMS headless y, durante un tiempo, posts guardados como JSON. Todo funcionaba. Ninguno se sentía como escribir.
 
-En este post, explicaré **por qué uso Markdown para estructurar el contenido de mi blog**, cómo se almacena, cómo se renderiza dinámicamente en el frontend — y por qué Markdown resuelve problemas que JSON plano no podía.
+Markdown es lo que se quedó, y este post va de por qué: cómo guardo los posts, cómo se renderizan y el experimento con JSON que terminó de convencerme.
 
----
+## La etapa del JSON
 
-## Por Qué Almaceno Posts de Blog en Markdown
-
-Aquí está por qué Markdown es mi formato preferido:
-
-### 1. Sintaxis Simple y Legible para Humanos
-
-Markdown se siente natural de escribir. Encabezados, listas, bloques de código y enlaces son rápidos de escribir, con cero fricción. Es como escribir un email con superpoderes de formato — sin lag de UI, sin artefactos HTML extraños.
-
-### 2. Fácil de Almacenar, Versionar y Rastrear
-
-Cada post en mi blog se almacena como un objeto JavaScript simple que incluye un campo Markdown \`content\`. Esto significa que puedo:
-
-- Almacenar contenido en Git (como código)
-- Rastrear cambios a lo largo del tiempo
-- Usar pull requests para revisiones de contenido
-- Moverme rápido sin herramientas externas
-
-### 3. Renderizado Dinámico y Flexible
-
-Un punto de dolor importante que enfrenté temprano fue usar JSON crudo para estructurar el contenido del post. Eso significaba definir manualmente párrafos, bloques de código y títulos así:
+Mi primera versión describía cada post como una lista de bloques:
 
 \`\`\`json
 [
   { "type": "h2", "text": "Introducción" },
-  { "type": "p", "text": "Este post cubrirá..." },
+  { "type": "p", "text": "En este post veremos..." },
   { "type": "code", "language": "js", "text": "const x = 42;" }
 ]
 \`\`\`
 
-Esto rápidamente se volvió **desordenado y difícil de escalar**. Cada post tenía una estructura ligeramente diferente, y me encontré escribiendo un renderizador personalizado para lidiar con todas las variaciones. Markdown resolvió eso instantáneamente.
+Con tres bloques se ve ordenado. Para el tercer post ya era un desastre. Cada post necesitaba un tipo de bloque un poco distinto (una cita, una lista dentro de otra, una tabla), cada uno era otro caso en un renderer hecho a mano, y escribir un párrafo implicaba escapar comillas dentro de un string de JSON. Me pasaba más tiempo peleando con el formato que escribiendo.
 
-Con Markdown, puedo escribir naturalmente y dejar que un parser como \`marked\` o \`remark\` maneje la conversión a HTML, limpia y consistentemente.
+Cambiar a Markdown hizo desaparecer todo eso. Escribo el post, un parser lo convierte en HTML y nadie tiene que inventar un tipo de bloque nuevo para una tabla.
 
-### 4. Experiencia de Escritura Enfocada en Desarrolladores
+## Por qué me funciona
 
-Dado que todo mi blog está basado en código, tiene sentido que la escritura también suceda en código. Puedo escribir un nuevo post de blog en mi editor de código, hacer commit con Git y desplegar. No se necesitan UIs o plugins extra.
+**Se lee como texto.** Un título es un \`#\`, una lista es un \`-\`, el código va entre backticks. Escribir un post se siente como escribir un mensaje largo con buen formato, no como llenar un formulario.
 
----
+**Vive en Git.** Cada post es un archivo del repo con su contenido en un string de Markdown. Eso me da historial de cada cambio, pull requests cuando quiero que alguien revise un post y ningún servicio externo que se pueda caer o cambiar de precio.
 
-## Cómo Lo Uso en Mi Blog
+**La estructura es el contenido.** Con JSON, la estructura era algo que tenía que mantener aparte. Con Markdown es simplemente cómo está escrito el texto.
 
-Aquí está cómo se ve la estructura de un post de blog en mi configuración:
+**Escribo donde ya trabajo.** Todo el sitio es código, así que escribir un post en el mismo editor, hacer commit y desplegar es el camino más corto. Sin panel de administración ni plugins.
+
+## Cómo se ve un post
+
+Un post es un objeto con algunos metadatos y el cuerpo en Markdown:
 
 \`\`\`ts
 {
-  slug: 'mastering-async-javascript',
-  title: 'Dominando JavaScript Asíncrono',
-  date: 'October 26, 2023',
-  excerpt: 'Una inmersión profunda en Promises, async/await...',
-  content: \`## Introducción\\nLa programación asíncrona es...\`,
+  slug: 'mi-primer-post',
+  title: 'Mi primer post',
+  date: 'June 15, 2025',
+  excerpt: 'Un resumen corto para listas y tarjetas al compartir.',
+  content: \`## Hola\\nEsto es **Markdown**...\`,
   author: 'Sebastian Alvarez',
-  tags: ['JavaScript', 'Async']
+  tags: ['Markdown', 'Blogging'],
 }
 \`\`\`
 
-El \`content\` es Markdown crudo. En el frontend, lo convierto usando \`marked\`:
+Cuando escribí este post por primera vez, renderizaba \`content\` con \`marked\` y \`dangerouslySetInnerHTML\`. Funcionaba, pero inyectar HTML así es buscarse problemas el día que algún contenido no esté del todo bajo tu control. Hoy el cuerpo se renderiza en el servidor con \`react-markdown\`, y cada post pasa por un sanitizador antes de llegar a la página:
 
 \`\`\`tsx
-<div
-  className="prose dark:prose-invert max-w-none"
-  dangerouslySetInnerHTML={{ __html: marked(post.content) }}
-/>
+<ReactMarkdown
+  remarkPlugins={[remarkGfm]}
+  rehypePlugins={[rehypeRaw, rehypeSanitize, rehypeHighlight]}
+>
+  {post.content}
+</ReactMarkdown>
 \`\`\`
 
-Esto me da la libertad de Markdown más control total del renderizado.
+\`remark-gfm\` agrega tablas y listas de tareas, \`rehype-sanitize\` quita lo que no debería estar ahí (scripts, iframes) y \`rehype-highlight\` le da color al código. Como todo corre en el servidor, ninguna de estas librerías llega al navegador de quien lee.
 
----
+## Que se vea bien
 
-## Estilizado con Tailwind
+Para los estilos uso \`@tailwindcss/typography\` de Tailwind. Envolver el contenido en una clase \`prose\` da estilos razonables para títulos, párrafos, listas, código y tablas, y con modificadores ajusto solo lo que me interesa:
 
-Para hacer que el Markdown se vea bien, uso el plugin \`@tailwindcss/typography\` de Tailwind. Me da una clase \`prose\` que agrega estilos consistentes a elementos como \`<h1>\`, \`<p>\`, \`<pre>\`, y más.
-
-La personalización basada en utilidades de Tailwind me permite ajustar el estilo sin tocar el HTML. Por ejemplo:
-
-\`\`\`css
-prose-headings:text-primary
-prose-a:text-accent hover:prose-a:text-primary
-prose-code:font-code
-prose-pre:bg-muted
+\`\`\`html
+<div class="prose prose-headings:tracking-tight prose-a:text-primary prose-pre:bg-muted">
 \`\`\`
 
-Esto significa que no tengo que preocuparme de que los autores de contenido arruinen el layout — Markdown maneja la estructura, y Tailwind maneja la apariencia.
+El efecto secundario que más me gusta es la separación: Markdown decide la estructura, la hoja de estilos decide cómo se ve, y no puedo romper el diseño escribiendo un post.
 
----
+## ¿Lo recomiendo?
 
-## Conclusión
+Para alguien que escribe su propio blog técnico, sí. Es rápido de escribir, vive junto al código, se renderiza igual en todos lados y, si algún día muevo el sitio a otro stack, los posts se vienen conmigo como texto plano.
 
-Markdown alcanza el punto ideal para blogging como desarrollador:
-
-- Rápido de escribir
-- Fácil de mantener
-- Dinámico de renderizar
-- Portable entre stacks tecnológicos
-- Perfecto para flujos de trabajo basados en Git
-
-Si estás construyendo un blog o sitio enfocado en desarrollo, considera Markdown como tu base — y deja que el estilizado sea un segundo paso, no el primer problema a resolver.
+Donde lo pensaría dos veces: si van a escribir y publicar personas que no usan Git, un CMS las va a hacer más felices. Para un sitio como este, Markdown en el repo es lo más simple que funciona, y ha seguido funcionando.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Markdown', 'Blogging', 'Herramientas de Desarrollador', 'Creación de Contenido', 'Escritura']

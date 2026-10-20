@@ -6,582 +6,224 @@ export const adaptingToNewJobs: Record<Locale, BlogPost> = {
     slug: 'adapting-to-new-jobs',
     title: 'Adapting to New Jobs: From Well-Structured Teams to Chaotic Startups',
     date: 'February 10, 2026',
-    excerpt: 'Every company is different. Some have perfect processes, documentation, and clear roles. Others are complete chaos. Here\'s how to spot the red flags early, adapt quickly, and improve things without burning out.',
+    excerpt: 'I have joined teams with great processes and teams in total chaos. How to spot the difference in the interview, what to do in the first two weeks, and how to improve things without burning out.',
     imageUrl: '/blog/adapting-to-new-jobs.webp',
     imageAiHint: 'split screen showing two contrasting developer work environments: left side shows organized modern office with clear processes, documentation, structured meetings, clean code reviews, automated pipelines; right side shows chaotic startup with scattered notes, endless meetings, micromanagement, manual deployments, confusion; developer in center navigating between both worlds, professional illustration',
     content: `
-## Introduction
+## Same job, very different companies
 
-I've worked at companies on both ends of the spectrum. Some had beautifully documented processes, clear roles, automated deployments, and structured sprints. Others had documentation scattered across Slack messages, micromanaging leaders, endless meetings, and zero testing infrastructure.
+I've worked at companies on both ends of the spectrum. Some had well-documented processes, clear roles, automated deploys and structured sprints. Others had documentation scattered across Slack threads, leads who micromanaged, back-to-back meetings and no tests at all.
 
-The shocking part? The technical work was often similar. The difference was **everything else** — the culture, processes, communication, and how decisions get made.
+What surprised me is that the technical work was often pretty similar. What changed was everything around it: the culture, the processes, how people talk to each other and how decisions get made.
 
-In this post, I want to share what I've learned about spotting these differences **before you join**, how to adapt quickly once you're in, and how to improve things without burning out. Because adapting to a new job isn't just about learning the codebase — it's about understanding the **organizational DNA** and finding your place in it.
+This post is what I've learned about spotting those differences before you sign, adapting fast once you're in, and improving things without burning out. Adapting to a new job isn't only learning the codebase. It's figuring out how the company actually works, and where you fit in it.
 
----
+## Two first months
 
-## The Two Extremes
+Picture day one at two different places.
 
-Let me paint two pictures of what a developer's day looks like at different companies.
+At the structured one, there's an onboarding doc that's actually up to date. Your tech lead has time to show you around. Roles are clear, CI/CD is automated, code reviews are there to help and not to gatekeep, meetings have an agenda, tests are expected, infrastructure lives in code and important decisions are written down in ADRs. You can focus on building. You're contributing in week two and productive by week four.
 
-### The Well-Structured Company
+At the chaotic one, onboarding is "ask someone if you get stuck". The tech lead is buried in meetings. Everyone does a bit of everything. Deploys are manual and stressful, code reviews are either missing or brutally nitpicky, meetings never end, testing is "nice to have", nobody fully knows how the infrastructure works, and decisions are made in Slack and forgotten the next day. Week one is confusing, week two is frustrating, and by week four you're wondering if you should leave.
 
-You arrive on day one and immediately notice:
-- Clear onboarding documentation
-- A tech lead who has time to mentor you
-- Well-defined roles and responsibilities
-- Automated CI/CD pipelines
-- Code reviews that are constructive, not gatekeeping
-- Meetings are scheduled with clear agendas
-- Testing is expected, not optional
-- Infrastructure is managed as code
-- Decisions are documented in ADRs (Architecture Decision Records)
-- You can actually focus on building features
+Both could be building the exact same product. Working there feels completely different.
 
-Your first week is smooth. By week two, you're contributing. By week four, you're productive.
+## Red flags in the interview
 
-### The Chaotic Startup
+The good news is you can usually see this coming before you accept the offer.
 
-You arrive and notice:
-- Onboarding is "ask someone if you get stuck"
-- The tech lead is drowning in meetings and has no time for you
-- Roles are unclear — everyone does everything
-- Deployments are manual and stressful
-- Code reviews are either non-existent or brutally nitpicky
-- Meetings are constant and often pointless
-- Testing is "nice to have" but never prioritized
-- Infrastructure is a mystery (who knows how it works?)
-- Decisions are made in Slack and forgotten by tomorrow
-- You spend half your time in meetings, half your time context-switching
+**A vague job description.** "A full-stack developer who can wear many hats" often means nobody has defined the role. Companies that know what they need write specific descriptions. Ask: "What does a normal day look like in this role?"
 
-Your first week is confusing. By week two, you're frustrated. By week four, you're considering leaving.
+**An interview that asks for too much.** Building a full project, debugging something from their production, and a complex system design, all in one round. That isn't measuring skill, it's testing how desperate you are. If the process feels disorganized or keeps growing, the job will feel the same.
 
-Both companies might be building the same product. But the **experience** is completely different.
+**Vague answers about process.** Ask how they deploy and how they test, and listen closely. "Automated pipelines, every PR needs tests and a review, staging first and then production" is a good sign. "We deploy when it's ready, testing is important but we're always in a hurry" tells you plenty.
 
----
+**A tech lead who's clearly overwhelmed.** If the person interviewing you can barely focus on the conversation, they won't have time to help you later either.
 
-## Red Flags During the Interview Process
+**Different people, different answers.** If two interviewers describe the same thing in different ways, nobody agrees on how things work.
 
-The good news? You can spot these differences **before you accept the offer**. Here's what to watch for:
+## The first two weeks: watch before you act
 
-### Red Flag #1: Vague Job Descriptions
+You took the job. Now what?
 
-If the JD is generic ("We're looking for a fullstack developer who can wear many hats"), that's a sign of unclear roles. Well-structured companies have specific JDs because they know what they need.
+In week one, your job is to gather information, not to be productive. Read the documentation (or notice there isn't any), sit in meetings and listen to how decisions get made, ask a lot of questions and don't try to fix anything yet. Pay attention to who actually decides things. It's often not who the org chart says.
 
-**What to ask:** "Can you describe a typical day for someone in this role?"
+By week two you'll start seeing the real process, not the official one. Is the documentation current? Do people follow the process or work around it? Where do things get stuck? Who has influence, regardless of title?
 
-### Red Flag #2: They Ask You to Do Too Much During the Interview
+## If you landed somewhere structured
 
-Some companies ask you to build a full project, debug production issues, or solve complex system design problems in a single interview. That's not assessing your skills — that's **testing your desperation**.
+Your job is easy: follow the process and contribute. Read the docs properly, respect the review process (it's there for a reason), ask for help (people have time) and suggest improvements gradually. The real risk here is getting too comfortable and stopping growing. Watch out for that.
 
-Well-structured companies have clear interview processes. Chaotic ones are just throwing everything at you to see what sticks.
+## If you landed in chaos
 
-**What to watch:** If the interview feels disorganized or the scope keeps expanding, that's how the job will feel too.
+This is the hard one. A few things that have worked for me, in this order.
 
-### Red Flag #3: Vague Answers About Process
+**Don't try to fix everything.** Your instinct will be to improve things right away. Hold off. You don't have the full context yet.
 
-When you ask "How do you handle deployments?" or "What's your testing strategy?", listen carefully.
+**Understand why it's chaotic.** There's usually a reason. An early startup that's been moving too fast to build process. Leadership that doesn't value process. A team so understaffed everyone is in survival mode. Years of shipping fast that are now catching up. The cause changes how you should respond.
 
-- **Good answer:** "We have automated CI/CD pipelines. Every PR requires tests and code review. We deploy to staging first, then production."
-- **Bad answer:** "Uh, we just deploy when things are ready. Testing is important but we're always in a rush."
+**Set your own boundaries.** In chaotic places everyone pulls you in every direction, so protect your focus. Ask whether you really need to be in a meeting. Check Slack at set times instead of all day. Ask your manager exactly what you're responsible for. And when a task is unclear, ask what "done" looks like before starting.
 
-### Red Flag #4: The Tech Lead Seems Overworked
+**Improve gradually, and with buy-in.** Something like: "I noticed the payments module has no automated tests, and that worries me. Could I spend a few hours this week setting up a basic suite?" You're showing you understand the problem, you're offering a fix instead of a complaint, you're asking instead of imposing, and you're taking initiative.
 
-If the person interviewing you is clearly drowning in meetings and can barely focus on the conversation, that's a sign. They won't have time to mentor you.
+**Write things down.** In chaotic companies the documentation usually doesn't exist. Start it yourself: how to set up the environment, how deploys work, architecture decisions, the usual gotchas. It helps whoever comes next, and it makes you very hard to replace.
 
-### Red Flag #5: Inconsistent Information
+## Communication works everywhere
 
-If different people give you different answers about the same question, that's a red flag. It means there's no alignment on how things work.
+In a structured company, use the channels that exist, ask in the right place, document your decisions and keep reviews constructive.
 
----
+In a chaotic one, communicate more than feels necessary. Because there's no process, you have to be explicit. Write things in documents, not only in Slack. Confirm expectations ("so, to be sure: I own X, Y and Z, right?"). And bring proposals, not just problems: "we don't have a deployment process, here's what I suggest".
 
-## The First Two Weeks: Assess and Adapt
+## Figuring out how the company really works
 
-You've accepted the offer. Now what?
+Every company has its own way of operating, and understanding it tells you how to move. A few questions I ask myself:
 
-### Week 1: Observe, Don't Judge
+- How are decisions made? By the CEO, by consensus, or by whoever shouts loudest?
+- What matters most here: speed, quality, stability, innovation?
+- How do people communicate: formal meetings, Slack, hallway chats?
+- What happens when someone disagrees: healthy debate, avoidance, or the hierarchy wins?
+- How are failures handled: something to learn from, a career problem, or ignored?
 
-Your job in week one is **information gathering**, not productivity.
+## Proactivity is what gets you to senior
 
-- Read the documentation (or lack thereof)
-- Attend meetings and listen to how decisions are made
-- Ask questions, but don't try to fix things yet
-- Notice the communication patterns
-- Understand who actually makes decisions (it's often not who you think)
+In a structured company you can be productive just by following the process. In a chaotic one, you have to create the structure. That's exactly where a mid-level engineer starts acting like a senior.
 
-### Week 2: Identify the Real Process
+The difference is in how you say it:
 
-By week two, you'll see the **actual process**, not the official one.
+- Instead of "the code is a mess and nobody documents anything": "I'll spend a few hours this week documenting the architecture, this is what I plan to cover. Would that help?"
+- Instead of "we have no tests and deploys are scary": "the critical paths have no automated tests. Can I set up a basic suite for payments? About four hours."
+- Instead of "there are too many meetings": "we have 15 meetings a week. Can we review which ones we actually need? Happy to help organize it."
 
-- Is the documentation accurate or outdated?
-- Do people follow the process or work around it?
-- Where are the bottlenecks?
-- Who are the key people (not by title, but by influence)?
-- What's actually blocking progress?
+Same problems, but you go from complaining to proposing.
 
----
+## When to stay and when to leave
 
-## Scenario 1: The Well-Structured Company
+Sometimes no amount of adapting is enough, and it's worth knowing when.
 
-If you're lucky enough to land here, your job is simple: **follow the process and contribute**.
+It's worth staying if the chaos is temporary (a startup that's growing into its processes), if leadership is open to improving, if the work is interesting, if you're learning a lot, or if the pay justifies the stress.
 
-### What to Do
+It's worth leaving if leadership actively resists improving things, if you're burning out, if the work is boring and you've stopped learning, if the pay doesn't make up for the stress, or if your mental health is taking the hit.
 
-- Read the documentation thoroughly
-- Respect the code review process — it exists for a reason
-- Ask for help when you need it — people have time
-- Contribute to improving processes, but incrementally
-- Focus on learning the codebase and delivering features
+There's nothing wrong with leaving. Sometimes a company just isn't a fit.
 
-### The Risk
+## What I'd keep from all this
 
-The risk here is **complacency**. It's easy to get comfortable and stop growing. Don't fall into that trap.
+Your career is long and you'll go through many companies. Some will be great, some terrible, most somewhere in between. The skill isn't finding the perfect one. It's adapting to whichever one you're in while you protect your own growth and wellbeing.
 
----
-
-## Scenario 2: The Chaotic Company
-
-This is where it gets tricky. You're in a company with poor processes, unclear roles, and constant chaos.
-
-### First: Don't Try to Fix Everything
-
-Your instinct will be to "improve things." Resist that urge. You're new. You don't understand the full context yet.
-
-### Second: Understand Why It's Chaotic
-
-There are usually reasons:
-
-- **Early-stage startup:** They're moving fast and haven't had time to build processes yet.
-- **Poor leadership:** The tech lead or manager doesn't value process.
-- **Resource constraints:** They're understaffed and everyone is in survival mode.
-- **Technical debt:** They've been shipping fast for years and now it's catching up.
-
-Understanding the root cause helps you decide how to respond.
-
-### Third: Establish Your Own Boundaries
-
-In chaotic companies, people will try to pull you in all directions. You need to protect your focus.
-
-- **Limit meeting attendance:** Ask "Is my attendance critical?" If not, skip it.
-- **Batch communication:** Check Slack at specific times, not constantly.
-- **Clarify your role:** Ask your manager exactly what you're responsible for.
-- **Push back on unclear work:** "I need a clearer description of what success looks like."
-
-### Fourth: Improve Incrementally
-
-Once you understand the situation, you can start improving things. But do it **incrementally and with buy-in**.
-
-**Example:** "I noticed we don't have automated tests for the payment module. This is risky. Can I spend a few hours this week setting up a basic test suite?"
-
-This shows:
-- You understand the problem
-- You're not criticizing, you're solving
-- You're asking permission, not demanding change
-- You're taking initiative (which improves seniority)
-
-### Fifth: Document Everything
-
-In chaotic companies, documentation is often missing. Start documenting:
-- How to set up the dev environment
-- How deployments work
-- Architecture decisions
-- Common gotchas
-
-This helps the next person and makes you invaluable.
-
----
-
-## Communication: The Universal Skill
-
-Whether you're in a well-structured company or chaos, **communication is everything**.
-
-### In Well-Structured Companies
-
-- Respect the process for communication (Slack, email, meetings)
-- Ask clarifying questions in the right channels
-- Document your decisions
-- Participate in code reviews constructively
-
-### In Chaotic Companies
-
-- **Over-communicate:** Because there's no process, you need to be explicit.
-- **Write things down:** Don't rely on Slack conversations. Create documents.
-- **Clarify expectations:** "So, to confirm, I'm responsible for X, Y, and Z. Is that right?"
-- **Propose solutions, not problems:** "I noticed we don't have a deployment process. Here's what I propose..."
-
----
-
-## Reading the Room: Understanding Your Company's DNA
-
-Every company has a DNA. Understanding it helps you adapt.
-
-### Questions to Ask Yourself
-
-- How are decisions made? (By the CEO? By consensus? By whoever shouts loudest?)
-- What's valued? (Speed? Quality? Stability? Innovation?)
-- How do people communicate? (Formal meetings? Slack? Hallway conversations?)
-- What happens when someone disagrees? (Healthy debate? Conflict avoidance? Hierarchy wins?)
-- How is failure handled? (Learning opportunity? Career damage? Ignored?)
-
-Your answers to these questions will tell you **how to operate** in that company.
-
----
-
-## Proactivity: The Seniority Accelerator
-
-Here's a secret: **proactivity is what separates mid-level engineers from senior ones**, especially in chaotic companies.
-
-In a well-structured company, you can be productive by following the process. In a chaotic company, you need to **create structure**.
-
-### Examples of Proactivity
-
-**Bad:** "The codebase is a mess and nobody documents anything."
-
-**Good:** "I'm going to spend a few hours this week documenting the architecture. Here's what I'm planning to cover. Does that help?"
-
-**Bad:** "We have no testing and deployments are scary."
-
-**Good:** "I noticed we don't have automated tests for critical paths. Can I set up a basic test suite for the payment module? It would take about 4 hours."
-
-**Bad:** "Meetings are out of control."
-
-**Good:** "I've noticed we have 15 meetings a week. Can we audit which ones are actually necessary? I'm happy to help organize this."
-
-Notice the pattern: **You're not complaining, you're proposing solutions.**
-
----
-
-## When to Stay, When to Leave
-
-Sometimes, no amount of adaptation will help. You need to know when to leave.
-
-### Stay If
-
-- The chaos is temporary (early-stage startup scaling up)
-- Leadership is open to improvement
-- The technical work is interesting
-- You're learning a lot
-- The compensation is good enough to justify the stress
-
-### Leave If
-
-- Leadership actively resists improvement
-- You're burning out
-- The technical work is boring
-- You're not learning anything
-- The compensation doesn't justify the stress
-- Your mental health is suffering
-
-There's no shame in leaving. Sometimes the company isn't a fit, and that's okay.
-
----
-
-## Conclusion
-
-Adapting to a new job is about more than learning the codebase. It's about understanding the **organizational culture**, spotting red flags early, and knowing how to operate effectively in different environments.
-
-The best developers aren't just technically skilled — they're **adaptable**. They can thrive in a well-structured company by respecting the process. They can improve a chaotic company by being proactive and communicating clearly.
-
-Remember:
-- **Assess before you act.** Understand the company's DNA first.
-- **Communicate clearly.** Especially in chaotic environments.
-- **Be proactive.** Propose solutions, not problems.
-- **Protect your energy.** Don't burn out trying to fix everything.
-- **Know when to leave.** Not every company is worth your time.
-
-Your career is long. You'll work at many companies. Some will be amazing, some will be terrible, most will be somewhere in between. The skill isn't finding the perfect company — it's **adapting to any company** while protecting your own growth and well-being.
+Read the place before you act, communicate clearly (especially when there's chaos), bring solutions instead of complaints, don't burn yourself out trying to fix everything, and know when it's time to go.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Career', 'Company Culture', 'Onboarding', 'Communication', 'Adaptation', 'Seniority']
   },
   es: {
     slug: 'adapting-to-new-jobs',
-    title: 'Adaptándose a Nuevos Trabajos: De Equipos Bien Estructurados a Startups Caóticas',
+    title: 'Adaptarte a un trabajo nuevo: de equipos ordenados a startups caóticas',
     date: 'February 10, 2026',
-    excerpt: 'Cada empresa es diferente. Algunas tienen procesos perfectos, documentación y roles claros. Otras son un caos total. Aquí te muestro cómo detectar las señales de alerta temprano, adaptarte rápidamente y mejorar las cosas sin quemarte.',
+    excerpt: 'He entrado a equipos con procesos impecables y a equipos en caos total. Cómo notar la diferencia en la entrevista, qué hacer las dos primeras semanas y cómo mejorar las cosas sin quemarte.',
     imageUrl: '/blog/adapting-to-new-jobs.webp',
     imageAiHint: 'split screen showing two contrasting developer work environments: left side shows organized modern office with clear processes, documentation, structured meetings, clean code reviews, automated pipelines; right side shows chaotic startup with scattered notes, endless meetings, micromanagement, manual deployments, confusion; developer in center navigating between both worlds, professional illustration',
     content: `
-## Introducción
+## El mismo trabajo, empresas muy distintas
 
-He trabajado en empresas en ambos extremos del espectro. Algunas tenían procesos bellamente documentados, roles claros, despliegues automatizados y sprints estructurados. Otras tenían documentación dispersa en mensajes de Slack, líderes microgestores, reuniones interminables y cero infraestructura de testing.
+He trabajado en empresas de los dos extremos. Algunas tenían procesos bien documentados, roles claros, despliegues automatizados y sprints ordenados. Otras tenían la documentación regada en hilos de Slack, líderes que hacían micromanagement, reuniones una tras otra y cero pruebas.
 
-¿La parte impactante? El trabajo técnico era a menudo similar. La diferencia era **todo lo demás** — la cultura, los procesos, la comunicación y cómo se toman las decisiones.
+Lo que me sorprendió es que el trabajo técnico muchas veces era bastante parecido. Lo que cambiaba era todo lo de alrededor: la cultura, los procesos, cómo se habla la gente y cómo se toman las decisiones.
 
-En este post, quiero compartir lo que he aprendido sobre detectar estas diferencias **antes de unirte**, cómo adaptarte rápidamente una vez que estás dentro, y cómo mejorar las cosas sin quemarte. Porque adaptarse a un nuevo trabajo no se trata solo de aprender el código base — se trata de entender el **ADN organizacional** y encontrar tu lugar en él.
+Este post va de lo que he aprendido para detectar esas diferencias antes de firmar, adaptarte rápido una vez adentro y mejorar las cosas sin quemarte. Adaptarte a un trabajo nuevo no es solo aprender el código. Es entender cómo funciona de verdad la empresa y dónde encajas tú.
 
----
+## Dos primeros meses
 
-## Los Dos Extremos
+Imagina el primer día en dos lugares distintos.
 
-Déjame pintar dos cuadros de cómo se ve el día de un desarrollador en diferentes empresas.
+En la empresa ordenada hay un documento de onboarding que de verdad está al día. Tu tech lead tiene tiempo para mostrarte cómo funciona todo. Los roles están claros, el CI/CD es automático, los code reviews están para ayudar y no para poner trabas, las reuniones tienen agenda, se espera que escribas pruebas, la infraestructura vive en código y las decisiones importantes quedan escritas en ADRs. Puedes enfocarte en construir. En la segunda semana ya aportas y en la cuarta eres productivo.
 
-### La Empresa Bien Estructurada
+En la caótica, el onboarding es "pregunta si te trabas". El tech lead está enterrado en reuniones. Todos hacen un poco de todo. Los despliegues son manuales y estresantes, los code reviews o no existen o son quisquillosos a muerte, las reuniones no se acaban, las pruebas son "deseables", nadie sabe del todo cómo funciona la infraestructura y las decisiones se toman en Slack y se olvidan al día siguiente. La primera semana es confusa, la segunda frustrante y en la cuarta ya te estás preguntando si deberías irte.
 
-Llegas el primer día y notas inmediatamente:
-- Documentación clara de onboarding
-- Un tech lead que tiene tiempo para mentorearte
-- Roles y responsabilidades bien definidos
-- Pipelines de CI/CD automatizados
-- Code reviews que son constructivos, no restrictivos
-- Reuniones programadas con agendas claras
-- Testing es esperado, no opcional
-- La infraestructura se gestiona como código
-- Las decisiones se documentan en ADRs (Architecture Decision Records)
-- Realmente puedes enfocarte en construir funcionalidades
+Las dos podrían estar construyendo exactamente el mismo producto. Trabajar ahí se siente completamente distinto.
 
-Tu primera semana es fluida. Para la segunda semana, estás contribuyendo. Para la cuarta semana, eres productivo.
+## Señales de alerta en la entrevista
 
-### La Startup Caótica
+La buena noticia es que normalmente se ve venir antes de aceptar la oferta.
 
-Llegas y notas:
-- El onboarding es "pregunta a alguien si te atascas"
-- El tech lead está ahogado en reuniones y no tiene tiempo para ti
-- Los roles no están claros — todos hacen de todo
-- Los despliegues son manuales y estresantes
-- Los code reviews son inexistentes o brutalmente quisquillosos
-- Las reuniones son constantes y a menudo sin sentido
-- Testing es "nice to have" pero nunca se prioriza
-- La infraestructura es un misterio (¿quién sabe cómo funciona?)
-- Las decisiones se toman en Slack y se olvidan para mañana
-- Pasas la mitad de tu tiempo en reuniones, la otra mitad cambiando de contexto
+**Una descripción del puesto vaga.** "Un desarrollador full-stack que pueda ponerse muchos sombreros" muchas veces significa que nadie definió el rol. Las empresas que saben lo que necesitan escriben descripciones concretas. Pregunta: "¿Cómo es un día normal en este puesto?".
 
-Tu primera semana es confusa. Para la segunda semana, estás frustrado. Para la cuarta semana, estás considerando irte.
+**Una entrevista que te pide demasiado.** Construir un proyecto completo, depurar algo de su producción y un diseño de sistemas complejo, todo en una sola ronda. Eso no mide habilidad, mide qué tan desesperado estás. Si el proceso se siente desordenado o no para de crecer, el trabajo se va a sentir igual.
 
-Ambas empresas podrían estar construyendo el mismo producto. Pero la **experiencia** es completamente diferente.
+**Respuestas vagas sobre el proceso.** Pregunta cómo despliegan y cómo prueban, y escucha con atención. "Pipelines automatizados, cada PR lleva pruebas y revisión, primero staging y después producción" es buena señal. "Desplegamos cuando está listo, las pruebas son importantes pero siempre andamos apurados" te dice mucho.
 
----
+**Un tech lead claramente desbordado.** Si quien te entrevista casi no puede concentrarse en la conversación, tampoco va a tener tiempo para ayudarte después.
 
-## Señales de Alerta Durante el Proceso de Entrevista
+**Distinta gente, distintas respuestas.** Si dos entrevistadores describen lo mismo de forma diferente, nadie está de acuerdo en cómo funcionan las cosas.
 
-¿Las buenas noticias? Puedes detectar estas diferencias **antes de aceptar la oferta**. Aquí está lo que debes observar:
+## Las dos primeras semanas: mirar antes de actuar
 
-### Señal de Alerta #1: Descripciones de Trabajo Vagas
+Aceptaste el trabajo. ¿Y ahora?
 
-Si la descripción es genérica ("Buscamos un desarrollador fullstack que pueda usar muchos sombreros"), esa es una señal de roles poco claros. Las empresas bien estructuradas tienen descripciones específicas porque saben lo que necesitan.
+En la primera semana tu trabajo es recoger información, no ser productivo. Lee la documentación (o date cuenta de que no hay), métete en las reuniones y escucha cómo se deciden las cosas, pregunta mucho y no intentes arreglar nada todavía. Fíjate en quién decide de verdad. Muchas veces no es quien dice el organigrama.
 
-**Qué preguntar:** "¿Puedes describir un día típico para alguien en este rol?"
+En la segunda semana empiezas a ver el proceso real, no el oficial. ¿La documentación está al día? ¿La gente sigue el proceso o le da la vuelta? ¿Dónde se traban las cosas? ¿Quién tiene influencia, más allá del cargo?
 
-### Señal de Alerta #2: Te Piden Hacer Demasiado Durante la Entrevista
+## Si caíste en un lugar ordenado
 
-Algunas empresas te piden construir un proyecto completo, depurar problemas de producción, o resolver problemas complejos de diseño de sistemas en una sola entrevista. Eso no está evaluando tus habilidades — está **probando tu desesperación**.
+Tu trabajo es fácil: sigue el proceso y aporta. Lee bien la documentación, respeta el proceso de revisión (está ahí por algo), pide ayuda (la gente tiene tiempo) y sugiere mejoras de a poco. El riesgo real aquí es acomodarte demasiado y dejar de crecer. Cuídate de eso.
 
-Las empresas bien estructuradas tienen procesos de entrevista claros. Las caóticas solo te lanzan todo para ver qué funciona.
+## Si caíste en el caos
 
-**Qué observar:** Si la entrevista se siente desorganizada o el alcance sigue expandiéndose, así se sentirá el trabajo también.
+Este es el difícil. Algunas cosas que me han funcionado, en este orden.
 
-### Señal de Alerta #3: Respuestas Vagas Sobre Procesos
+**No intentes arreglarlo todo.** Tu instinto va a ser mejorar las cosas ya. Aguanta. Todavía no tienes el contexto completo.
 
-Cuando preguntas "¿Cómo manejan los despliegues?" o "¿Cuál es su estrategia de testing?", escucha cuidadosamente.
+**Entiende por qué hay caos.** Casi siempre hay una razón. Una startup temprana que ha ido demasiado rápido para armar procesos. Un liderazgo que no valora los procesos. Un equipo tan corto de gente que todos están en modo supervivencia. Años de sacar cosas rápido que ahora pasan factura. La causa cambia cómo deberías responder.
 
-- **Buena respuesta:** "Tenemos pipelines de CI/CD automatizados. Cada PR requiere tests y code review. Desplegamos primero a staging, luego a producción."
-- **Mala respuesta:** "Eh, simplemente desplegamos cuando las cosas están listas. El testing es importante pero siempre estamos apurados."
+**Pon tus propios límites.** En lugares caóticos todos te jalan para todos lados, así que protege tu foco. Pregunta si de verdad tienes que estar en una reunión. Revisa Slack a horas fijas y no todo el día. Pregúntale a tu jefe exactamente de qué eres responsable. Y cuando una tarea no esté clara, pregunta cómo se ve "terminado" antes de empezar.
 
-### Señal de Alerta #4: El Tech Lead Parece Sobrecargado
+**Mejora de a poco y con apoyo.** Algo como: "Vi que el módulo de pagos no tiene pruebas automatizadas y eso me preocupa. ¿Podría dedicar unas horas esta semana a armar una suite básica?". Muestras que entiendes el problema, ofreces una solución en vez de una queja, pides en vez de imponer y tomas la iniciativa.
 
-Si la persona que te entrevista claramente está ahogada en reuniones y apenas puede enfocarse en la conversación, esa es una señal. No tendrá tiempo para mentorearte.
+**Escribe las cosas.** En las empresas caóticas la documentación normalmente no existe. Empiézala tú: cómo montar el entorno, cómo funcionan los despliegues, las decisiones de arquitectura, las trampas de siempre. Le sirve a quien venga después, y te vuelve muy difícil de reemplazar.
 
-### Señal de Alerta #5: Información Inconsistente
+## Comunicar funciona en todos lados
 
-Si diferentes personas te dan diferentes respuestas sobre la misma pregunta, esa es una señal de alerta. Significa que no hay alineación sobre cómo funcionan las cosas.
+En una empresa ordenada, usa los canales que existen, pregunta en el lugar correcto, documenta tus decisiones y mantén las revisiones constructivas.
 
----
+En una caótica, comunica más de lo que parece necesario. Como no hay proceso, tienes que ser explícito. Deja las cosas en documentos, no solo en Slack. Confirma expectativas ("para estar seguro: yo me encargo de X, Y y Z, ¿cierto?"). Y lleva propuestas, no solo problemas: "no tenemos un proceso de despliegue, esto es lo que propongo".
 
-## Las Primeras Dos Semanas: Evalúa y Adáptate
+## Entender cómo funciona de verdad la empresa
 
-Has aceptado la oferta. ¿Ahora qué?
+Cada empresa tiene su propia forma de operar, y entenderla te dice cómo moverte. Algunas preguntas que me hago:
 
-### Semana 1: Observa, No Juzgues
+- ¿Cómo se toman las decisiones? ¿El CEO, por consenso o quien grita más fuerte?
+- ¿Qué importa más aquí: velocidad, calidad, estabilidad, innovación?
+- ¿Cómo se comunica la gente: reuniones formales, Slack, conversaciones de pasillo?
+- ¿Qué pasa cuando alguien no está de acuerdo: debate sano, se evita el tema o gana la jerarquía?
+- ¿Cómo se manejan los errores: algo de lo que aprender, un problema para tu carrera o se ignoran?
 
-Tu trabajo en la semana uno es **recopilar información**, no productividad.
+## La proactividad es lo que te lleva a senior
 
-- Lee la documentación (o la falta de ella)
-- Asiste a reuniones y escucha cómo se toman las decisiones
-- Haz preguntas, pero no intentes arreglar cosas todavía
-- Nota los patrones de comunicación
-- Entiende quién realmente toma las decisiones (a menudo no es quien piensas)
+En una empresa ordenada puedes ser productivo solo siguiendo el proceso. En una caótica, tienes que crear la estructura. Ahí es justamente donde un mid empieza a comportarse como senior.
 
-### Semana 2: Identifica el Proceso Real
+La diferencia está en cómo lo dices:
 
-Para la semana dos, verás el **proceso real**, no el oficial.
+- En vez de "el código es un desastre y nadie documenta nada": "voy a dedicar unas horas esta semana a documentar la arquitectura, esto es lo que pienso cubrir. ¿Les sirve?"
+- En vez de "no tenemos pruebas y desplegar da miedo": "los flujos críticos no tienen pruebas automatizadas. ¿Puedo armar una suite básica para pagos? Son unas cuatro horas."
+- En vez de "hay demasiadas reuniones": "tenemos 15 reuniones a la semana. ¿Revisamos cuáles necesitamos de verdad? Feliz de ayudar a organizarlo."
 
-- ¿La documentación es precisa o está desactualizada?
-- ¿La gente sigue el proceso o lo evita?
-- ¿Dónde están los cuellos de botella?
-- ¿Quiénes son las personas clave (no por título, sino por influencia)?
-- ¿Qué está realmente bloqueando el progreso?
+Los mismos problemas, pero pasas de quejarte a proponer.
 
----
+## Cuándo quedarte y cuándo irte
 
-## Escenario 1: La Empresa Bien Estructurada
+A veces no hay forma de adaptarse lo suficiente, y vale la pena saber cuándo.
 
-Si tienes la suerte de aterrizar aquí, tu trabajo es simple: **sigue el proceso y contribuye**.
+Vale la pena quedarte si el caos es temporal (una startup que está creciendo hacia sus procesos), si el liderazgo está abierto a mejorar, si el trabajo es interesante, si estás aprendiendo mucho o si el sueldo justifica el estrés.
 
-### Qué Hacer
+Vale la pena irte si el liderazgo se resiste activamente a mejorar, si te estás quemando, si el trabajo es aburrido y dejaste de aprender, si el sueldo no compensa el estrés o si tu salud mental lo está pagando.
 
-- Lee la documentación a fondo
-- Respeta el proceso de code review — existe por una razón
-- Pide ayuda cuando la necesites — la gente tiene tiempo
-- Contribuye a mejorar procesos, pero incrementalmente
-- Enfócate en aprender el código base y entregar características
+No tiene nada de malo irse. A veces una empresa simplemente no es para ti.
 
-### El Riesgo
+## Con qué me quedo
 
-El riesgo aquí es la **complacencia**. Es fácil ponerse cómodo y dejar de crecer. No caigas en esa trampa.
+Tu carrera es larga y vas a pasar por muchas empresas. Algunas van a ser buenísimas, otras terribles, y la mayoría algo intermedio. La habilidad no es encontrar la perfecta. Es adaptarte a la que te toque mientras cuidas tu propio crecimiento y tu bienestar.
 
----
-
-## Escenario 2: La Empresa Caótica
-
-Aquí es donde se pone complicado. Estás en una empresa con procesos pobres, roles poco claros y caos constante.
-
-### Primero: No Intentes Arreglar Todo
-
-Tu instinto será "mejorar las cosas". Resiste ese impulso. Eres nuevo. No entiendes el contexto completo todavía.
-
-### Segundo: Entiende Por Qué Es Caótico
-
-Usualmente hay razones:
-
-- **Startup en etapa temprana:** Se están moviendo rápido y no han tenido tiempo de construir procesos todavía.
-- **Liderazgo pobre:** El tech lead o manager no valora el proceso.
-- **Restricciones de recursos:** Están con poco personal y todos están en modo supervivencia.
-- **Deuda técnica:** Han estado enviando rápido por años y ahora los está alcanzando.
-
-Entender la causa raíz te ayuda a decidir cómo responder.
-
-### Tercero: Establece Tus Propios Límites
-
-En empresas caóticas, la gente intentará jalarte en todas direcciones. Necesitas proteger tu enfoque.
-
-- **Limita asistencia a reuniones:** Pregunta "¿Es crítica mi asistencia?" Si no, omítela.
-- **Agrupa comunicación:** Revisa Slack en momentos específicos, no constantemente.
-- **Clarifica tu rol:** Pregunta a tu manager exactamente de qué eres responsable.
-- **Rechaza trabajo poco claro:** "Necesito una descripción más clara de cómo se ve el éxito."
-
-### Cuarto: Mejora Incrementalmente
-
-Una vez que entiendas la situación, puedes empezar a mejorar las cosas. Pero hazlo **incrementalmente y con aprobación**.
-
-**Ejemplo:** "Noté que no tenemos tests automatizados para el módulo de pagos. Esto es riesgoso. ¿Puedo pasar unas horas esta semana configurando una suite de tests básica?"
-
-Esto muestra:
-- Entiendes el problema
-- No estás criticando, estás resolviendo
-- Estás pidiendo permiso, no exigiendo cambio
-- Estás tomando iniciativa (lo que mejora seniority)
-
-### Quinto: Documenta Todo
-
-En empresas caóticas, la documentación a menudo falta. Empieza a documentar:
-- Cómo configurar el entorno de desarrollo
-- Cómo funcionan los despliegues
-- Decisiones de arquitectura
-- Problemas comunes
-
-Esto ayuda a la siguiente persona y te hace invaluable.
-
----
-
-## Comunicación: La Habilidad Universal
-
-Ya sea que estés en una empresa bien estructurada o caótica, **la comunicación lo es todo**.
-
-### En Empresas Bien Estructuradas
-
-- Respeta el proceso de comunicación (Slack, email, reuniones)
-- Haz preguntas aclaratorias en los canales correctos
-- Documenta tus decisiones
-- Participa en code reviews constructivamente
-
-### En Empresas Caóticas
-
-- **Sobre-comunica:** Porque no hay proceso, necesitas ser explícito.
-- **Escribe las cosas:** No confíes en conversaciones de Slack. Crea documentos.
-- **Clarifica expectativas:** "Entonces, para confirmar, soy responsable de X, Y y Z. ¿Es correcto?"
-- **Propón soluciones, no problemas:** "Noté que no tenemos un proceso de despliegue. Esto es lo que propongo..."
-
----
-
-## Leyendo el Ambiente: Entendiendo el ADN de Tu Empresa
-
-Cada empresa tiene un ADN. Entenderlo te ayuda a adaptarte.
-
-### Preguntas para Hacerte
-
-- ¿Cómo se toman las decisiones? (¿Por el CEO? ¿Por consenso? ¿Por quien grita más fuerte?)
-- ¿Qué se valora? (¿Velocidad? ¿Calidad? ¿Estabilidad? ¿Innovación?)
-- ¿Cómo se comunica la gente? (¿Reuniones formales? ¿Slack? ¿Conversaciones de pasillo?)
-- ¿Qué pasa cuando alguien no está de acuerdo? (¿Debate saludable? ¿Evitar conflicto? ¿Gana la jerarquía?)
-- ¿Cómo se maneja el fracaso? (¿Oportunidad de aprendizaje? ¿Daño a la carrera? ¿Ignorado?)
-
-Tus respuestas a estas preguntas te dirán **cómo operar** en esa empresa.
-
----
-
-## Proactividad: El Acelerador de Seniority
-
-Aquí hay un secreto: **la proactividad es lo que separa a los ingenieros mid-level de los senior**, especialmente en empresas caóticas.
-
-En una empresa bien estructurada, puedes ser productivo siguiendo el proceso. En una empresa caótica, necesitas **crear estructura**.
-
-### Ejemplos de Proactividad
-
-**Malo:** "El código base es un desastre y nadie documenta nada."
-
-**Bueno:** "Voy a pasar unas horas esta semana documentando la arquitectura. Esto es lo que planeo cubrir. ¿Ayuda?"
-
-**Malo:** "No tenemos testing y los despliegues dan miedo."
-
-**Bueno:** "Noté que no tenemos tests automatizados para rutas críticas. ¿Puedo configurar una suite de tests básica para el módulo de pagos? Tomaría unas 4 horas."
-
-**Malo:** "Las reuniones están fuera de control."
-
-**Bueno:** "Noté que tenemos 15 reuniones a la semana. ¿Podemos auditar cuáles son realmente necesarias? Estoy feliz de ayudar a organizar esto."
-
-Nota el patrón: **No estás quejándote, estás proponiendo soluciones.**
-
----
-
-## Cuándo Quedarte, Cuándo Irte
-
-A veces, ninguna cantidad de adaptación ayudará. Necesitas saber cuándo irte.
-
-### Quédate Si
-
-- El caos es temporal (startup en etapa temprana escalando)
-- El liderazgo está abierto a mejoras
-- El trabajo técnico es interesante
-- Estás aprendiendo mucho
-- La compensación es suficientemente buena para justificar el estrés
-
-### Vete Si
-
-- El liderazgo resiste activamente las mejoras
-- Te estás quemando
-- El trabajo técnico es aburrido
-- No estás aprendiendo nada
-- La compensación no justifica el estrés
-- Tu salud mental está sufriendo
-
-No hay vergüenza en irte. A veces la empresa no es un buen ajuste, y eso está bien.
-
----
-
-## Conclusión
-
-Adaptarse a un nuevo trabajo es más que aprender el código base. Se trata de entender la **cultura organizacional**, detectar señales de alerta temprano, y saber cómo operar efectivamente en diferentes entornos.
-
-Los mejores desarrolladores no son solo técnicamente hábiles — son **adaptables**. Pueden prosperar en una empresa bien estructurada respetando el proceso. Pueden mejorar una empresa caótica siendo proactivos y comunicándose claramente.
-
-Recuerda:
-- **Evalúa antes de actuar.** Entiende el ADN de la empresa primero.
-- **Comunícate claramente.** Especialmente en entornos caóticos.
-- **Sé proactivo.** Propón soluciones, no problemas.
-- **Protege tu energía.** No te quemes tratando de arreglar todo.
-- **Sabe cuándo irte.** No toda empresa vale tu tiempo.
-
-Tu carrera es larga. Trabajarás en muchas empresas. Algunas serán increíbles, algunas serán terribles, la mayoría estará en algún punto intermedio. La habilidad no es encontrar la empresa perfecta — es **adaptarse a cualquier empresa** mientras proteges tu propio crecimiento y bienestar.
+Lee el lugar antes de actuar, comunica con claridad (sobre todo cuando hay caos), lleva soluciones en vez de quejas, no te quemes intentando arreglarlo todo y aprende a reconocer cuándo es momento de irte.
 `,
     author: 'Sebastian Alvarez',
     tags: ['Carrera', 'Cultura Empresarial', 'Onboarding', 'Comunicación', 'Adaptación', 'Seniority']

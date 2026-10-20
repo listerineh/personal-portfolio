@@ -154,9 +154,11 @@ Moving up a tier means changing one variable and running \`apply\`. Because the 
 
 ## A real example
 
-The project that convinced me was a platform with eight microservices, an API Gateway, three databases, a message queue and a monitoring stack, across three environments. With the modules and per-environment variables above, bringing up a complete environment took about two hours. The first time we did it by hand it took around two weeks, and the result wasn't even consistent.
+The project that convinced me was a platform with eight microservices, an API Gateway, three databases, a message queue and a monitoring stack, across three environments. With the modules and per-environment variables above, bringing up a complete environment took about two hours, and most of that was sorting out permissions and access, not Terraform.
 
-The other numbers I tracked: roughly 60% lower monthly cost after right-sizing dev and staging, and new services live in about ten minutes. Worth more than either: every infrastructure change went through a pull request, so we always knew who changed what, and why.
+Before, the same thing took around two weeks. Everything was done by hand, and we depended on people from several teams finding the time to set up what we needed, so most of those two weeks was simply waiting.
+
+The other numbers: monthly cost went down 63% after right-sizing dev and staging (that one comes from the cost report, not from my memory), and a new service was live in about ten minutes, which is just the time to commit a copy of the service module and let the pipelines run. Worth more than either: every infrastructure change went through a pull request, so we always knew who changed what, and why.
 
 ## What I'd tell myself earlier
 
@@ -349,9 +351,11 @@ Subir de nivel es cambiar una variable y correr \`apply\`. Como el salto es así
 
 ## Un caso real
 
-El proyecto que me terminó de convencer fue una plataforma con ocho microservicios, un API Gateway, tres bases de datos, una cola de mensajes y un stack de monitoreo, en tres entornos. Con los módulos y las variables por entorno de arriba, levantar un entorno completo tomaba unas dos horas. La primera vez que lo hicimos a mano nos tomó cerca de dos semanas, y encima no quedó consistente.
+El proyecto que me terminó de convencer fue una plataforma con ocho microservicios, un API Gateway, tres bases de datos, una cola de mensajes y un stack de monitoreo, en tres entornos. Con los módulos y las variables por entorno de arriba, levantar un entorno completo tomaba unas dos horas, y la mayor parte de ese tiempo se iba en conseguir permisos y accesos, no en Terraform.
 
-Los otros números que medí: alrededor de un 60% menos de costo mensual después de ajustar dev y staging, y servicios nuevos en producción en unos diez minutos. Lo que más valió, igual: cada cambio de infraestructura pasaba por un pull request, así que siempre sabíamos quién cambió qué y por qué.
+Antes, lo mismo tomaba cerca de dos semanas. Todo se hacía a mano y dependíamos de que gente de varios equipos encontrara tiempo para configurar lo que necesitábamos, así que la mayor parte de esas dos semanas era pura espera.
+
+Los otros números: el costo mensual bajó un 63% después de ajustar dev y staging (ese dato sale del informe de costos, no de mi memoria), y un servicio nuevo estaba en producción en unos diez minutos, que es justo lo que tomaba subir el commit con la copia del módulo de servicio y esperar a que corrieran los pipelines. Lo que más valió, igual: cada cambio de infraestructura pasaba por un pull request, así que siempre sabíamos quién cambió qué y por qué.
 
 ## Lo que me habría gustado saber antes
 
