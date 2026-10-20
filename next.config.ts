@@ -51,8 +51,8 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      // Baseline hardening for every response. A CSP is left out on purpose: the theme script, JSON-LD and analytics
-      // are inline, so it needs nonces first (and would force every page dynamic for them).
+      // Baseline hardening for every response. The Content Security Policy is set per request with a nonce in
+      // src/middleware.ts (policy in src/lib/csp.ts).
       {
         source: '/:path*',
         headers: [
