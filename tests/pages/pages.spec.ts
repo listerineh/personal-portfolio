@@ -65,7 +65,7 @@ for (const locale of ["en", "es"] as const) {
   test.describe(`Pages (${locale})`, () => {
     for (const { path, h1, title } of pages) {
       test(`${path} renders`, async ({ page }) => {
-        const response = await open(page, path, locale);
+        const response = await open(page, path, locale, "domcontentloaded");
         expect(response?.status()).toBe(200);
         await expect(page.locator("html")).toHaveAttribute("lang", locale);
         await expect(page.getByRole("heading", { level: 1 })).toHaveText(
@@ -77,7 +77,12 @@ for (const locale of ["en", "es"] as const) {
     }
 
     test("an unknown route answers 404 with a way back", async ({ page }) => {
-      const response = await open(page, "/this-page-does-not-exist", locale);
+      const response = await open(
+        page,
+        "/this-page-does-not-exist",
+        locale,
+        "domcontentloaded",
+      );
       expect(response?.status()).toBe(404);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
         locale === "es" ? /Página No Encontrada/ : /Page Not Found/,
@@ -90,7 +95,7 @@ for (const locale of ["en", "es"] as const) {
 test("the newsletter unsubscribe page is kept out of search results", async ({
   page,
 }) => {
-  await open(page, "/unsubscribe");
+  await open(page, "/unsubscribe", "en", "domcontentloaded");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
     /noindex/,
