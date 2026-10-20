@@ -210,7 +210,10 @@
     "loadingViews": "Loading...",
     "sectionIntro": "On engineering, cloud and applied AI.",
     "articleCount": "{count, plural, one {# article} other {# articles}}",
-    "keepReading": "Keep reading"
+    "keepReading": "Keep reading",
+    "previousArticle": "Previous article",
+    "nextArticle": "Next article",
+    "articleNavigation": "Previous and next articles"
   },
   "contact": {
     "title": "Work with me",

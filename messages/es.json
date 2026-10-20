@@ -210,7 +210,10 @@
     "loadingViews": "Cargando...",
     "sectionIntro": "Sobre ingeniería, cloud e IA aplicada.",
     "articleCount": "{count, plural, one {# artículo} other {# artículos}}",
-    "keepReading": "Sigue leyendo"
+    "keepReading": "Sigue leyendo",
+    "previousArticle": "Artículo anterior",
+    "nextArticle": "Siguiente artículo",
+    "articleNavigation": "Artículos anterior y siguiente"
   },
   "contact": {
     "title": "Trabajemos juntos",

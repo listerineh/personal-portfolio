@@ -5,6 +5,7 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 ## [Unreleased]
 
 ### Added
+- After each article: the three most related posts (40% shared tags, 60% similar text, the same in both languages) instead of the latest three, and links to the previous and next post by date (`PostPager` in the design system, with a story).
 - Share image per blog post with its title, byline and cover, drawn on demand by `next/og` at `/og/blog/<slug>.png` (Geist TTF in `src/assets/fonts`, cover converted with sharp, cached on the CDN by a versioned URL). Also used as the article's structured-data image.
 - Content Security Policy on every page: per-request nonce, `'strict-dynamic'` in production, host list on previews (Vercel toolbar), violations reported to `/api/csp-report` and logged. Storybook, API routes and static files are excluded.
 - Playwright: CSP header and nonce checks, and no violations on any page in either language.

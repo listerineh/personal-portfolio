@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { BlogPostSummary } from '@/types';
 import type { Locale } from '@/i18n/config';
-import { Ambient, BlogCard, Button, PageHeader, Reveal } from '@/components/ds';
+import { Ambient, BlogCard, Button, PageHeader, PostPager, Reveal } from '@/components/ds';
 import { NewsletterSubscribe } from './newsletter-subscribe';
 import { PageShell } from '@/components/layout';
 import { TableOfContents } from './table-of-contents';
@@ -19,7 +19,11 @@ export interface BlogPostVersion {
   post: BlogPostSummary;
   /** Article body rendered on the server (markdown never reaches the client bundle). */
   body: ReactNode;
+  /** The most related posts, best first. */
   related: BlogPostSummary[];
+  /** Neighbours by publication date. */
+  previous?: { href: string; title: string };
+  next?: { href: string; title: string };
 }
 
 interface BlogPostClientPageProps {
@@ -142,10 +146,16 @@ export function BlogPostClientPage({ versions, initialLocale }: BlogPostClientPa
             <article key={post.slug} ref={contentRef} className="min-w-0 lg:col-span-8 lg:col-start-5">
               {version.body}
               <BlogPostActions slug={post.slug} title={post.title} url={url} />
+              <PostPager
+                className="mt-12 md:mt-16"
+                previous={version.previous}
+                next={version.next}
+                labels={{ previous: t('previousArticle'), next: t('nextArticle'), nav: t('articleNavigation') }}
+              />
             </article>
           </div>
         </div>
-        {/* After the article: related posts as cards, the newsletter, the way back. */}
+        {/* After the article: the most related posts as cards, the newsletter, the way back. */}
         <section aria-labelledby="keep-reading" className="tint relative isolate overflow-clip px-gutter py-20 md:py-28">
           <Ambient intensity="soft" grid={false} spotlight={false} />
           <div className="mx-auto max-w-[1200px]">
