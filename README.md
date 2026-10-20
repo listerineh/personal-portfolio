@@ -113,7 +113,7 @@ Decisions worth knowing before changing things:
 | `POST /api/revalidate` | `Bearer REVALIDATE_SECRET` | On-demand revalidation of a path |
 | `GET/POST /api/blog/[slug]/views`, `/reactions` | Public | Redis counters, one per IP per hour (views) or day (reactions) |
 | `GET /api/spotify/tracks?ids=` | Public | Spotify oEmbed metadata, up to 10 track ids |
-| `POST /api/csp-report` | Public | CSP violation reports (both `report-uri` and Reporting API formats), logged as `[csp]`. 30 per 10 minutes per IP, always `204` |
+| `POST /api/csp-report` | Public | CSP violation reports (`report-uri`; the route also accepts Reporting API batches), logged as `[csp]`. 30 per 10 minutes per IP, always `204` |
 
 Every response carries `X-Content-Type-Options`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`, `Permissions-Policy` and HSTS (`next.config.ts`).
 
