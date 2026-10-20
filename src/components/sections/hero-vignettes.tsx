@@ -142,9 +142,9 @@ function DeployWindow() {
 }
 
 /** What I build, shown rather than listed: an agent, its code, its deploy. */
-export function HeroVignettes() {
+export function HeroVignettes({ paused = false }: { paused?: boolean }) {
   return (
-    <CardStack>
+    <CardStack paused={paused}>
       <AgentWindow />
       <CodeWindow />
       <DeployWindow />

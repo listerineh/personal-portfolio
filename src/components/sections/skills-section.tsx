@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { ChevronRight, Pause } from 'lucide-react';
-import { Button, FilterTag, Marquee, Reveal, Section, SkillTile } from '@/components/ds';
+import { ChevronRight } from 'lucide-react';
+import { Button, FilterTag, Marquee, PauseButton, Reveal, Section, SkillTile } from '@/components/ds';
 import { skillCategoryOrder } from '@/lib/data/skill-categories';
 import type { SkillCategory, SkillIconSummary } from '@/types';
 
@@ -64,16 +64,7 @@ export function SkillsSection({ skills }: { skills: SkillIconSummary[] }) {
 
       <div className="mx-auto mt-10 max-w-[1200px] px-gutter md:mt-12">
         <div role="group" aria-label={t('filterLabel')} className="flex flex-wrap justify-center gap-2">
-          <button
-            type="button"
-            aria-pressed={stopped}
-            aria-label={t('pauseMotion')}
-            title={t('pauseMotion')}
-            onClick={() => setStopped((value) => !value)}
-            className="motion-only inline-flex h-11 w-11 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.1] aria-pressed:bg-foreground aria-pressed:text-background motion-reduce:transition-none"
-          >
-            <Pause aria-hidden="true" className="h-4 w-4" />
-          </button>
+          <PauseButton paused={stopped} onPausedChange={setStopped} label={t('pauseMotion')} />
           {categories.map((category) => (
             <FilterTag
               key={category}

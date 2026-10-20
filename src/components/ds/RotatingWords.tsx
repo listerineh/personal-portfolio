@@ -7,6 +7,8 @@ interface RotatingWordsProps {
   words: string[];
   /** Seconds each word stays. */
   interval?: number;
+  /** Hold the current word (e.g. a pause control, WCAG 2.2.2). */
+  paused?: boolean;
   className?: string;
 }
 
@@ -17,12 +19,14 @@ interface RotatingWordsProps {
 export function RotatingWords({
   words,
   interval = 2.4,
+  paused = false,
   className,
 }: RotatingWordsProps) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (
+      paused ||
       !document.documentElement.classList.contains("js-motion") ||
       words.length < 2
     )
@@ -32,7 +36,7 @@ export function RotatingWords({
         setActive((value) => (value + 1) % words.length);
     }, interval * 1000);
     return () => window.clearInterval(id);
-  }, [words.length, interval]);
+  }, [words.length, interval, paused]);
 
   return (
     <span

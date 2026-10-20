@@ -2,6 +2,13 @@
 
 Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`, `1.0.0`) predate this file.
 
+## [Unreleased]
+
+### Added
+- Pause control in the hero (WCAG 2.2.2): stops the card deck, the rotating words, the drifting halos and the looping dots. Per visit; hidden under reduced motion.
+- `PauseButton` in the design system (with a story), now shared by the hero and the skills rows. `CardStack` and `RotatingWords` take a `paused` prop.
+- Playwright: the hero pause is tested with motion on, using a fake clock.
+
 ## [3.0.0] - 2026-10-19
 
 The whole site redesigned into **Lumen** ([#67](https://github.com/listerineh/personal-portfolio/pull/67)).

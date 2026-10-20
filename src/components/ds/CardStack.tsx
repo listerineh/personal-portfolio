@@ -13,8 +13,10 @@ import { cn } from "@/lib/utils";
 interface CardStackProps {
   /** Up to three cards; the first starts in front. */
   children: ReactNode;
-  /** Seconds between deals; the deck pauses while hovered. */
+  /** Seconds between deals; the deck also holds while hovered or dragged. */
   interval?: number;
+  /** Stop dealing (e.g. a pause control, WCAG 2.2.2). The front card can still be dragged. */
+  paused?: boolean;
   className?: string;
 }
 
@@ -33,12 +35,14 @@ const poses = [
 export function CardStack({
   children,
   interval = 5,
+  paused = false,
   className,
 }: CardStackProps) {
   const cards = Children.toArray(children).slice(0, poses.length);
   const [order, setOrder] = useState(() => cards.map((_, index) => index));
   const [leaving, setLeaving] = useState<number | null>(null);
-  const [paused, setPaused] = useState(false);
+  // Held while the pointer is over the deck or a card is being dragged.
+  const [held, setHeld] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const orderRef = useRef(order);
@@ -84,7 +88,7 @@ export function CardStack({
         allowNativeTouchScrolling: coarse,
         zIndexBoost: false,
         onPress() {
-          setPaused(true);
+          setHeld(true);
           gsap.killTweensOf(el);
         },
         onDrag() {
@@ -115,7 +119,7 @@ export function CardStack({
             // Not far enough: spring home, with a little overshoot because the gesture carried momentum.
             gsap.to(el, { x: 0, y: 0, rotation: 0, duration: motion ? 0.7 : 0, ease: "elastic.out(1, 0.55)" });
           }
-          setPaused(false);
+          setHeld(false);
         },
       });
 
@@ -135,12 +139,12 @@ export function CardStack({
 
   useEffect(() => {
     const motionOk = document.documentElement.classList.contains("js-motion");
-    if (!motionOk || paused || cards.length < 2) return;
+    if (!motionOk || paused || held || cards.length < 2) return;
     const id = window.setInterval(() => {
       if (document.visibilityState === "visible") deal();
     }, interval * 1000);
     return () => window.clearInterval(id);
-  }, [paused, interval, deal, cards.length]);
+  }, [paused, held, interval, deal, cards.length]);
 
   // Pointer parallax: the deck leans toward the cursor, nearer cards move more.
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -159,7 +163,7 @@ export function CardStack({
   };
 
   const onPointerLeave = () => {
-    setPaused(false);
+    setHeld(false);
     rootRef.current?.style.setProperty("--px", "0");
     rootRef.current?.style.setProperty("--py", "0");
   };
@@ -168,8 +172,9 @@ export function CardStack({
     <div
       ref={rootRef}
       aria-hidden="true"
+      data-card-stack=""
       onPointerMove={onPointerMove}
-      onPointerEnter={() => setPaused(true)}
+      onPointerEnter={() => setHeld(true)}
       onPointerLeave={onPointerLeave}
       className={cn(
         "relative aspect-[6/5] w-full select-none [--px:0] [--py:0]",
