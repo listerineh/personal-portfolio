@@ -63,8 +63,9 @@ export function buildCsp(nonce: string, { mode = cspMode(), https = true }: { mo
     'base-uri': ["'self'"],
     'form-action': ["'self'"],
     'frame-ancestors': ["'self'"],
+    // report-uri only: with `report-to` present Chrome switches to the Reporting API, which batches and delays
+    // delivery (and some embedded Chromiums never send). report-uri posts right away in every browser.
     'report-uri': [CSP_REPORT_PATH],
-    'report-to': ['csp'],
   };
 
   const policy = Object.entries(directives).map(([name, values]) => `${name} ${values.join(' ')}`);
