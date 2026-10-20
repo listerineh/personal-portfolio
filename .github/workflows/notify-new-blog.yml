@@ -37,8 +37,13 @@ jobs:
       - name: Detect new or modified blog files
         id: detect
         run: |
-          # Get list of added or modified files in src/lib/data/blog/ (excluding get-blog-posts.ts)
-          NEW_FILES=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD | grep '^src/lib/data/blog/.*\.ts$' | grep -v 'get-blog-posts\.ts$' || true)
+          # Only posts added by this push notify subscribers. Edits to existing posts (rewrites, typo fixes)
+          # and helper modules in the folder (get-blog-posts, related, summaries) must not email anyone.
+          NEW_FILES=""
+          for f in $(git diff --name-only --diff-filter=A HEAD~1 HEAD | grep '^src/lib/data/blog/.*\.ts$' || true); do
+            if grep -qE "^\s+slug: ['\"]" "$f"; then NEW_FILES="$NEW_FILES $f"; fi
+          done
+          NEW_FILES=$(echo $NEW_FILES | tr ' ' '\n' | sed '/^$/d')
           
           if [ -z "$NEW_FILES" ]; then
             echo "No new or modified blog files detected"
