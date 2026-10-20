@@ -59,6 +59,11 @@ const pages: {
     h1: { en: /Unsubscribe/, es: /Cancelar Suscripción/ },
     title: { en: /^Unsubscribe ·/, es: /^Darse de baja ·/ },
   },
+  {
+    path: "/newsletter/confirm",
+    h1: { en: /Confirm your subscription/, es: /Confirma tu suscripción/ },
+    title: { en: /^Confirm subscription ·/, es: /^Confirmar suscripción ·/ },
+  },
 ];
 
 for (const locale of ["en", "es"] as const) {
@@ -92,12 +97,14 @@ for (const locale of ["en", "es"] as const) {
   });
 }
 
-test("the newsletter unsubscribe page is kept out of search results", async ({
+test("the newsletter link pages are kept out of search results", async ({
   page,
 }) => {
-  await open(page, "/unsubscribe", "en", "domcontentloaded");
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
-    "content",
-    /noindex/,
-  );
+  for (const path of ["/unsubscribe", "/newsletter/confirm"]) {
+    await open(page, path, "en", "domcontentloaded");
+    await expect(page.locator('meta[name="robots"]'), path).toHaveAttribute(
+      "content",
+      /noindex/,
+    );
+  }
 });

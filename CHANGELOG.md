@@ -5,6 +5,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 ## [Unreleased]
 
 ### Added
+- Newsletter double opt-in: subscribing emails a signed confirmation link (valid 7 days) and only `/newsletter/confirm` adds the contact, so nobody can sign up someone else's address. Per-address limit on confirmation emails. Fixes re-subscribing after unsubscribing (the contact stayed unsubscribed).
+- Every email redesigned in Lumen on one shared layout with a plain-text version (`src/lib/email`): subscription confirmation, welcome, unsubscribe link, new post (now with the post's share card) and the contact form, which now sends from `hello@listerineh.dev` instead of Resend's test sender.
 - After each article: the three most related posts (40% shared tags, 60% similar text, the same in both languages) instead of the latest three, and links to the previous and next post by date (`PostPager` in the design system, with a story).
 - Share image per blog post with its title, byline and cover, drawn on demand by `next/og` at `/og/blog/<slug>.png` (Geist TTF in `src/assets/fonts`, cover converted with sharp, cached on the CDN by a versioned URL). Also used as the article's structured-data image.
 - Content Security Policy on every page: per-request nonce, `'strict-dynamic'` in production, host list on previews (Vercel toolbar), violations reported to `/api/csp-report` and logged. Storybook, API routes and static files are excluded.

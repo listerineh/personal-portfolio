@@ -79,6 +79,7 @@ test.describe("Content Security Policy", () => {
     "/privacy",
     "/terms",
     "/unsubscribe",
+    "/newsletter/confirm",
     "/this-page-does-not-exist",
   ];
   for (const locale of ["en", "es"] as Locale[]) {

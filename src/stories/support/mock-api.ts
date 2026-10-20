@@ -16,7 +16,12 @@ export function installMockApi() {
     const path = url.replace(window.location.origin, '');
     if (/^\/api\/blog\/[^/]+\/reactions/.test(path)) return json({ like: 12, love: 7, fire: 4, idea: 9 });
     if (/^\/api\/blog\/[^/]+\/views/.test(path)) return json({ views: 1284 });
-    if (path.startsWith('/api/newsletter/subscribe')) return json({ ok: true });
+    if (path.startsWith('/api/newsletter/subscribe')) return json({ message: 'confirm-sent' });
+    if (path.startsWith('/api/newsletter/confirm')) {
+      const body = JSON.parse(typeof init?.body === 'string' ? init.body : '{}') as { email?: string; token?: string };
+      if (body.token === 'expired') return json({ error: 'invalid-link' }, 400);
+      return json({ message: body.email?.startsWith('already') ? 'already-subscribed' : 'subscribed' });
+    }
     if (path.startsWith('/api/newsletter/unsubscribe')) {
       const body = JSON.parse(typeof init?.body === 'string' ? init.body : '{}') as { email?: string; token?: string };
       if (body.email?.startsWith('fail')) return json({ error: 'Failed to unsubscribe. Please try again.' }, 500);

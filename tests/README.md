@@ -11,7 +11,7 @@ tests/
 ├── layout/header.spec.ts       navigation, phone menu, language switch, theme
 └── pages/
     ├── pages.spec.ts           every route in EN and ES: status, <html lang>, h1, <title>; 404; noindex on /unsubscribe
-    ├── flows.spec.ts           contact form, newsletter unsubscribe, blog search (API routes mocked with page.route)
+    ├── flows.spec.ts           contact form, newsletter double opt-in and unsubscribe, blog search (API routes mocked with page.route)
     ├── related.spec.ts         after an article: related posts (same in EN/ES), previous/next by date, first and last post
     └── csp.spec.ts             CSP header and fresh nonce, exclusions, report endpoint, no violations on any page in EN and ES
 ```
