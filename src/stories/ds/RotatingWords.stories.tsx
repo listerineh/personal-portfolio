@@ -6,7 +6,7 @@ const meta: Meta<typeof RotatingWords> = {
   component: RotatingWords,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
-  args: { words: ['AI agents', 'cloud platforms', 'web products', 'developer tools'], interval: 2 },
+  args: { words: ['AI agents', 'cloud platforms', 'web products', 'developer tools'], interval: 2, paused: false },
 };
 
 export default meta;
@@ -20,3 +20,6 @@ export const InSentence: Story = {
     </p>
   ),
 };
+
+/** Held by a pause control (WCAG 2.2.2): the current word stays. */
+export const Paused: Story = { ...InSentence, args: { paused: true } };

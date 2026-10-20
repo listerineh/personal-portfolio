@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Ambient, Button, RotatingWords } from "@/components/ds";
+import { Ambient, Button, PauseButton, RotatingWords } from "@/components/ds";
 import { HeroVignettes } from "./hero-vignettes";
 
 const step = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -11,12 +12,15 @@ const step = (i: number) => ({ "--i": i }) as React.CSSProperties;
 /**
  * First screen, full height. Left: who, what I build (the noun keeps changing), the actions.
  * Right: what I build, shown as a deck of small app windows that leans toward the pointer and deals itself.
+ * One pause control stops everything that keeps moving here (deck, words, halos, loops): WCAG 2.2.2.
  */
 export function HeroSection() {
   const t = useTranslations("hero");
   const tSala = useTranslations("sala");
   const { toast } = useToast();
   const words = t.raw("buildWords") as string[];
+  // Per visit only, like the skills rows: not remembered.
+  const [paused, setPaused] = useState(false);
 
   const downloadCv = () => {
     const link = document.createElement("a");
@@ -33,6 +37,7 @@ export function HeroSection() {
     <section
       id="hero"
       aria-labelledby="hero-title"
+      data-motion-paused={paused ? "" : undefined}
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-background px-gutter pb-28 pt-[calc(var(--header-h)+2.5rem)] md:pb-32"
     >
       <Ambient />
@@ -61,7 +66,11 @@ export function HeroSection() {
             >
               <span className="sr-only">{t("buildSentence")}</span>
               <span aria-hidden="true">{t("buildPrefix")} </span>
-              <RotatingWords words={words} className="text-primary" />
+              <RotatingWords
+                words={words}
+                paused={paused}
+                className="text-primary"
+              />
             </span>
           </h1>
 
@@ -124,7 +133,19 @@ export function HeroSection() {
           style={step(3)}
           className="mx-auto w-full max-w-[480px] lg:col-span-5 lg:max-w-none"
         >
-          <HeroVignettes />
+          <HeroVignettes paused={paused} />
+        </div>
+      </div>
+
+      {/* Same line as the scroll cue, at the right edge of the content column (under the deck on desktop). */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-6 px-gutter md:bottom-8">
+        <div className="mx-auto flex max-w-[1200px] justify-end">
+          <PauseButton
+            paused={paused}
+            onPausedChange={setPaused}
+            label={t("pauseMotion")}
+            className="pointer-events-auto"
+          />
         </div>
       </div>
 

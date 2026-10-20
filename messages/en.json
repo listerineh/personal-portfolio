@@ -71,7 +71,8 @@
       "infra": "Infrastructure",
       "rollout": "Rolling out"
     },
-    "scrollToCareer": "Scroll to my experience"
+    "scrollToCareer": "Scroll to my experience",
+    "pauseMotion": "Pause the animations"
   },
   "experience": {
     "title": "Where I've worked",

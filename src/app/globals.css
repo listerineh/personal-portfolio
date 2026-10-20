@@ -435,6 +435,9 @@ html.js-motion .marquee[data-paused] .marquee-track { animation-play-state: paus
 }
 /* Without motion: one still row you can swipe, no duplicate. */
 html:not(.js-motion) .marquee { overflow-x: auto; scrollbar-width: none; }
+/* A pause control (WCAG 2.2.2) freezes every CSS loop inside the marked area: halos, pings, pulses, bounces.
+   The one-off intro is left alone so nothing stays half-blurred if paused mid-entrance. */
+html.js-motion [data-motion-paused] :not([data-intro]) { animation-play-state: paused; }
 /* Controls that only matter while things move (e.g. a pause button). */
 html:not(.js-motion) .motion-only { display: none; }
 html:not(.js-motion) .marquee-copy { display: none; }
