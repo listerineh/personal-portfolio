@@ -95,7 +95,8 @@ test.describe("Slides owner area", () => {
 
   test("a refused account is told so", async ({ page }) => {
     await open(page, "/slides/manage?error=AccessDenied");
-    await expect(page.getByRole("alert")).toHaveText("This GitHub account can't manage slides.");
+    // Next's route announcer is also role=alert, so look for the message itself.
+    await expect(page.getByRole("alert").filter({ hasText: /\S/ })).toHaveText("This GitHub account can't manage slides.");
   });
 });
 
@@ -111,7 +112,7 @@ test.describe("Talks listing", () => {
   test("a public deck has its own share card", async ({ page }) => {
     await open(page, DECK, "en", "domcontentloaded");
     const image = await page.locator('meta[property="og:image"]').getAttribute("content");
-    expect(image).toMatch(/\/og\/slides\/test-presentation\.png\?v=\d+$/);
+    expect(image).toMatch(/\/og\/slides\/test-presentation\.png\?v=\d+&lang=es$/);
     const response = await page.request.get(image!);
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toBe("image/png");
@@ -130,6 +131,6 @@ test.describe("Slides print and PDF", () => {
 
   test("the viewer offers the PDF of the current version", async ({ page }) => {
     await open(page, DECK);
-    await expect(page.getByRole("link", { name: "Download PDF" })).toHaveAttribute("href", /\/slides\/test-presentation\/pdf\?v=\d+$/);
+    await expect(page.getByRole("link", { name: "Download PDF" })).toHaveAttribute("href", /\/slides\/test-presentation\/pdf\?v=\d+&lang=es$/);
   });
 });
