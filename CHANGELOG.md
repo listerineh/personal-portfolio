@@ -4,6 +4,14 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.2.1] - 2026-10-23
+
+### Fixed
+- Saving a deck from the editor failed in production with "Firestore has already been initialized": Firestore is now configured with `initializeFirestore`, which is safe however many server chunks load it.
+
+### Changed
+- The e2e job runs on `ubuntu-24.04`: Playwright 1.58 can't install its browsers on `ubuntu-latest` now that it resolves to 26.04.
+
 ## [3.2.0] - 2026-10-23
 
 ### Added
