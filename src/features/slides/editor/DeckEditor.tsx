@@ -9,6 +9,7 @@ import { ThemeToggleButton } from "@/components/common/theme-toggle-button";
 import { useTheme } from "@/context/theme-context";
 import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
+import { prefersReducedMotion } from "@/lib/motion";
 import { DECK_LANGS, deckSchema, type Deck, type DeckLang, type Slide, type SlideLayout } from "../schema";
 import { applySlideEdit, deckLanguages, hasLanguage, localizeDeck, translationProgress } from "../i18n";
 import { stepCount } from "../steps";
@@ -95,6 +96,24 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
   const shownSlide = shown.slides[current];
   const highlights = useCodeHighlights(shownSlide, initialHighlights);
   const progress = translating ? translationProgress(deck, lang) : null;
+
+  // Keep the current slide's thumbnail in view when it changes (added, moved, picked), across the strip or the column.
+  const rail = useRef<HTMLOListElement>(null);
+  // Only the rail scrolls, never the page, so the form below keeps its place on phones.
+  useEffect(() => {
+    const list = rail.current;
+    const item = list?.querySelector<HTMLElement>("[aria-current]")?.closest("li");
+    if (!list || !item) return;
+    const horizontal = list.scrollWidth > list.clientWidth;
+    const [start, size, view, scroll] = horizontal
+      ? [item.offsetLeft, item.offsetWidth, list.clientWidth, list.scrollLeft]
+      : [item.offsetTop, item.offsetHeight, list.clientHeight, list.scrollTop];
+    const pad = 12;
+    let to: number | null = null;
+    if (start - pad < scroll) to = start - pad;
+    else if (start + size + pad > scroll + view) to = start + size + pad - view;
+    if (to !== null) list.scrollTo({ [horizontal ? "left" : "top"]: Math.max(0, to), behavior: prefersReducedMotion() ? "auto" : "smooth" });
+  }, [current, deck.slides.length]);
 
   const update = useCallback((next: Deck) => {
     deckRef.current = next;
@@ -214,7 +233,8 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
     <DeckSlugProvider value={deck.slug}>
     <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme, lang }}>
     <div className="fixed inset-0 flex flex-col bg-background text-foreground">
-      <header className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
+      {/* On phones the header wraps onto a second row, so saving is always in reach. */}
+      <header className="flex min-h-14 shrink-0 flex-wrap items-center gap-x-3 gap-y-2 border-b px-4 py-2">
         <Link
           href="/slides/manage"
           aria-label={t("backToManage")}
@@ -222,7 +242,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
         >
           <ArrowLeft aria-hidden="true" className="h-5 w-5" />
         </Link>
-        <h1 className="min-w-0 truncate text-[0.9375rem] font-semibold">
+        <h1 className="hidden min-w-0 truncate text-[0.9375rem] font-semibold sm:block">
           {shown.title}
         </h1>
         {deckLanguages(deck).length > 1 && (
@@ -239,7 +259,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
           </p>
         )}
         <SaveStatus state={state === "dirty" && !issues.valid ? "invalid" : state} errorCount={issues.count} />
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
           <ThemeToggleButton />
           <label className="sr-only" htmlFor="deck-status">
             {t("field.status")}
@@ -247,7 +267,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
           <Select
             id="deck-status"
             size="sm"
-            className="w-36"
+            className="w-32 sm:w-36"
             value={deck.status}
             onValueChange={(value) => update({ ...deck, status: value as Deck["status"] })}
             options={(["draft", "unlisted", "published"] as const).map((status) => ({ value: status, label: t(`status.${status}`) }))}
@@ -255,10 +275,11 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
           <Link
             href={`/slides/${deck.slug}#/${selected + 1}`}
             target="_blank"
-            className="inline-flex min-h-10 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium hover:bg-foreground/[0.07]"
+            aria-label={t("view")}
+            className="inline-flex min-h-10 items-center gap-1.5 rounded-full px-3 text-sm font-medium hover:bg-foreground/[0.07] sm:px-3.5"
           >
             <ExternalLink aria-hidden="true" className="h-4 w-4" />
-            {t("view")}
+            <span className="hidden sm:inline">{t("view")}</span>
           </Link>
           <button
             type="button"
@@ -311,12 +332,16 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
         {/* Slides */}
         <nav
           aria-label={t("slides")}
-          className="deck hidden min-h-0 flex-col border-r lg:flex"
+          // A strip you swipe on phones and tablets, a column beside the preview on desktop.
+          className="deck flex min-h-0 flex-col border-b lg:border-b-0 lg:border-r"
           {...deckScope}
         >
-          <ol className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-3">
+          <ol
+            ref={rail}
+            className="relative flex min-h-0 flex-1 gap-3 overflow-x-auto p-3 [scroll-snap-type:x_proximity] lg:flex-col lg:overflow-x-visible lg:overflow-y-auto"
+          >
             {shown.slides.map((item, index) => (
-              <li key={item.id}>
+              <li key={item.id} className="w-36 shrink-0 [scroll-snap-align:start] sm:w-44 lg:w-auto">
                 <button
                   type="button"
                   onClick={() => {
@@ -367,7 +392,8 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
               </li>
             ))}
           </ol>
-          <div className="border-t bg-background p-3">
+          {/* Phones and tablets add slides from the slide panel. */}
+          <div className="hidden border-t bg-background p-3 lg:block">
             <AddSlide onAdd={addSlide} />
           </div>
         </nav>
