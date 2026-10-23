@@ -4,6 +4,21 @@ import type { Locale } from '@/i18n/config';
 export const projectsData: Record<Locale, Project[]> = {
   en: [
     {
+      id: 'kairo',
+      slug: 'kairo',
+      title: 'Kairo',
+      description: 'Open-source tasks for iOS and Android. Shared calendars, realtime sync with friends, and focus tools for ADHD.',
+      longDescription: "Kairo is a collaborative task app for iPhone and Android. The name comes from the Greek kairos, the right moment. It keeps tasks, shows the day on a calendar, and stays in sync with friends, in language that does not scold you for falling behind.\n\nA task has a title, a description, a priority, and an optional start and end. Swipe to complete or delete, and the streak only counts the day you actually finished. The calendar shows day, week, and month, including a friend's public tasks or a Busy block when their calendar is private. Focus mode is a 25-minute timer on one task, with a short break after, and a reminder can nudge you to start in 10, 15, 30, or 60 minutes. A calico cat, also named Kairo, reflects how the day is going. The app is in English and Spanish.\n\nI started it in August 2026 because I wanted a task app that matched how my attention works, and that I could change myself. It is Flutter, with Supabase for Postgres, auth, and realtime, and Firebase Cloud Messaging for push. Each feature follows Clean Architecture and BLoC. Tasks work offline: the list opens from a copy on the device, and edits wait in order until the connection comes back. It is MIT-licensed and still in active development.",
+      imageUrl: '/projects/kairo.webp',
+      imageAiHint: 'Kairo phone with a task list and a focus timer',
+      sourceCodeUrl: 'https://github.com/listerineh/kairo-tasks',
+      tags: ['Flutter', 'Dart', 'BLoC', 'Supabase', 'PostgreSQL', 'Firebase'],
+      role: 'Full Stack Developer',
+      status: 'in-progress',
+      relevance: 'A mobile app past the prototype: Flutter, Clean Architecture, realtime collaboration, and offline sync designed around ADHD.',
+      startDate: '2026-08',
+    },
+    {
       id: 'openstage',
       slug: 'openstage',
       title: 'OpenStage',
@@ -101,6 +116,21 @@ export const projectsData: Record<Locale, Project[]> = {
     },
   ],
   es: [
+    {
+      id: 'kairo',
+      slug: 'kairo',
+      title: 'Kairo',
+      description: 'App de tareas open source para iOS y Android. Calendarios compartidos, sincronización en tiempo real con amigos y herramientas de foco pensadas para el TDAH.',
+      longDescription: "Kairo es una app de tareas colaborativa para iPhone y Android. El nombre viene del griego kairos, el momento oportuno. Sirve para llevar tareas, ver el día en un calendario y mantenerse al día con amigos, con un lenguaje que no te regaña por quedarte atrás.\n\nCada tarea tiene título, descripción, prioridad y una hora de inicio y de fin opcionales. Un swipe la completa o la borra, y la racha solo cuenta el día en que de verdad la terminaste. El calendario muestra el día, la semana y el mes, incluidas las tareas públicas de un amigo o un bloque de Ocupado si su calendario es privado. El modo foco es un temporizador de 25 minutos sobre una sola tarea, con un descanso corto después, y un recordatorio puede avisarte para empezar en 10, 15, 30 o 60 minutos. Un gato tricolor, que también se llama Kairo, refleja cómo va el día. La app está en inglés y en español.\n\nLa empecé en agosto de 2026 porque quería una app de tareas que coincidiera con cómo funciona mi atención, y que yo mismo pudiera cambiar. Está hecha en Flutter, con Supabase para Postgres, autenticación y tiempo real, y Firebase Cloud Messaging para las notificaciones. Cada funcionalidad sigue Clean Architecture y BLoC. Las tareas funcionan sin conexión: la lista se abre desde una copia en el dispositivo y los cambios esperan en orden hasta que vuelve la red. Tiene licencia MIT y sigue en desarrollo.",
+      imageUrl: '/projects/kairo.webp',
+      imageAiHint: 'Kairo en un teléfono, con la lista de tareas y el temporizador de foco',
+      sourceCodeUrl: 'https://github.com/listerineh/kairo-tasks',
+      tags: ['Flutter', 'Dart', 'BLoC', 'Supabase', 'PostgreSQL', 'Firebase'],
+      role: 'Desarrollador Full Stack',
+      status: 'in-progress',
+      relevance: 'Una app móvil más allá del prototipo: Flutter, Clean Architecture, colaboración en tiempo real y sincronización offline pensada para el TDAH.',
+      startDate: '2026-08',
+    },
     {
       id: 'openstage',
       slug: 'openstage',

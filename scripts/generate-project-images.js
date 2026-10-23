@@ -436,9 +436,116 @@ function htmlFlights() {
   );
 }
 
+// ─── 7. Kairo: tasks, calendar, focus ─────────────────────────────────────
+
+function htmlKairo() {
+  const days = [
+    ["Mon", "20"],
+    ["Tue", "21"],
+    ["Wed", "22"],
+    ["Thu", "23"],
+    ["Fri", "24", true],
+    ["Sat", "25"],
+    ["Sun", "26"],
+  ];
+  const week = days
+    .map(
+      ([name, n, on]) =>
+        `<div class="day ${on ? "on" : ""}"><span>${name}</span><b>${n}</b></div>`,
+    )
+    .join("");
+  const task = (title, meta, color) => `
+    <div class="task">
+      <span class="prio" style="background:${color}"></span>
+      <div style="min-width:0">
+        <div class="task-title">${title}</div>
+        <div class="label">${meta}</div>
+      </div>
+    </div>`;
+  return page(
+    { ground: "#E6F0EA", accent: "#1E5B45", accentSoft: "#E3EEE8" },
+    `
+    .scene { display: block; }
+    .phone {
+      position: absolute; left: 276px; top: 46px; width: 430px; background: #fff; border-radius: 48px; padding: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 24px -8px rgba(0,0,0,0.08), 0 40px 80px -24px rgba(0,0,0,0.22);
+    }
+    .screen {
+      border-radius: 38px; background: #F1F2EF; overflow: hidden;
+      padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .island { width: 108px; height: 22px; border-radius: 999px; background: #121417; margin: 2px auto 2px; }
+    .hello { font-size: 32px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+    .day { height: 54px; border-radius: 14px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
+    .day span { font-size: 11px; font-weight: 500; color: var(--muted); }
+    .day b { font-size: 15px; font-weight: 600; }
+    .day.on { background: var(--accent); }
+    .day.on span, .day.on b { color: #fff; }
+    .ahora { background: #121417; color: #F3F5F2; border-radius: 22px; padding: 16px; display: grid; gap: 8px; }
+    .ahora .kicker { font-size: 12px; font-weight: 500; color: #A7AFB7; }
+    .ahora .h { font-size: 20px; font-weight: 600; letter-spacing: -0.03em; }
+    .lime { display: inline-flex; align-items: center; height: 34px; padding: 0 14px; border-radius: 999px; background: #C6E96F; color: #121417; font-size: 14px; font-weight: 600; }
+    .task { display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 16px; padding: 12px 14px; }
+    .task-title { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+    .prio { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .focus { left: 628px; top: 548px; width: 280px; }
+    .ring {
+      width: 88px; height: 88px; border-radius: 50%; flex-shrink: 0;
+      background: conic-gradient(#1E5B45 0 72%, #E6E9E5 72% 100%);
+      display: grid; place-items: center;
+    }
+    .ring i {
+      width: 70px; height: 70px; border-radius: 50%; background: #fff;
+      display: grid; place-items: center; font-size: 18px; font-weight: 700;
+      letter-spacing: -0.03em; font-style: normal;
+    }
+    `,
+    `
+    <div class="phone">
+      <div class="screen">
+        <div class="island"></div>
+        <div>
+          <div class="hello">Good morning</div>
+          <div class="label" style="margin-top:6px;">3 open · one with Ana</div>
+        </div>
+        <div class="week">${week}</div>
+        <div class="ahora">
+          <div class="kicker">Now</div>
+          <div class="h">Ship the focus timer</div>
+          <div class="row" style="justify-content:space-between;margin-top:4px;">
+            <span class="kicker">Shared with Ana</span>
+            <span class="lime">Focus</span>
+          </div>
+        </div>
+        <div>
+          <div class="label" style="margin-bottom:10px;">Pending</div>
+          <div style="display:grid;gap:8px;">
+            ${task("Write the release notes", "Urgent · today", "#C8323F")}
+            ${task("Call the studio", "High · 16:30", "#A9550E")}
+            ${task("Grocery run", "Low", "#646C75")}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="float focus">
+      <div class="label">Focus</div>
+      <div class="row" style="justify-content:space-between;align-items:center;margin-top:8px;">
+        <div>
+          <div style="font-size:32px;font-weight:700;letter-spacing:-0.04em;line-height:1;">25:00</div>
+          <div class="label" style="margin-top:6px;">One task · 25 min</div>
+        </div>
+        <div class="ring"><i>25</i></div>
+      </div>
+    </div>
+    `,
+  );
+}
+
 // ─── Runner ────────────────────────────────────────────────────────────────
 
 const ALL_PROJECTS = [
+  { id: "kairo", filename: "kairo.webp", html: htmlKairo() },
   { id: "openstage", filename: "openstage.webp", html: htmlOpenStage() },
   {
     id: "vibe-architect",

@@ -70,6 +70,7 @@ test.describe("Content Security Policy", () => {
     "/",
     "/about",
     "/projects",
+    "/projects/kairo",
     "/projects/openstage",
     "/skills",
     "/blog",

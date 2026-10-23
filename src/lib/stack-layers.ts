@@ -15,6 +15,8 @@ const TAG_LAYER: Record<string, StackLayer> = {
   pwa: 'interface',
   i18n: 'interface',
   'ffmpeg wasm': 'interface',
+  flutter: 'interface',
+  bloc: 'interface',
   'gemini ai': 'ai',
   whisper: 'ai',
   mcp: 'ai',
@@ -30,6 +32,7 @@ const TAG_LAYER: Record<string, StackLayer> = {
   aws: 'infra',
   terraform: 'infra',
   typescript: 'tooling',
+  dart: 'tooling',
 };
 
 export function stackLayers(tags: readonly string[]): { layer: StackLayer; items: string[] }[] {
