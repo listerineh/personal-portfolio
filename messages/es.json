@@ -634,5 +634,18 @@
     "tagline": "Ingeniero full-stack que construye agentes de IA, plataformas cloud y productos web. Desde Quito, trabajando en remoto.",
     "available": "Disponible para nuevos proyectos",
     "unsubscribe": "Darse de baja del newsletter"
+  },
+  "slides": {
+    "back": "Volver a listerineh.dev",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "slideOf": "Diapositiva {current} de {total}",
+    "progress": "Progreso de la presentación",
+    "fullscreen": "Pantalla completa (F)",
+    "exitFullscreen": "Salir de pantalla completa",
+    "darkTheme": "Diapositivas oscuras",
+    "lightTheme": "Diapositivas claras",
+    "roleDeck": "presentación",
+    "roleSlide": "diapositiva"
   }
 }

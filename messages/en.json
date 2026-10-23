@@ -634,5 +634,18 @@
     "tagline": "Full-stack engineer building AI agents, cloud platforms and web products. Based in Quito, working remotely.",
     "available": "Open to new projects",
     "unsubscribe": "Unsubscribe from the newsletter"
+  },
+  "slides": {
+    "back": "Back to listerineh.dev",
+    "previous": "Previous",
+    "next": "Next",
+    "slideOf": "Slide {current} of {total}",
+    "progress": "Presentation progress",
+    "fullscreen": "Full screen (F)",
+    "exitFullscreen": "Exit full screen",
+    "darkTheme": "Dark slides",
+    "lightTheme": "Light slides",
+    "roleDeck": "presentation",
+    "roleSlide": "slide"
   }
 }
