@@ -61,7 +61,8 @@ export function buildCsp(nonce: string, { mode = cspMode(), https = true }: { mo
     'media-src': ["'self'"],
     'object-src': ["'none'"],
     'base-uri': ["'self'"],
-    'form-action': ["'self'"],
+    // The owner's GitHub sign-in posts here and is redirected to GitHub, which form-action also governs (Chrome).
+    'form-action': ["'self'", 'https://github.com'],
     'frame-ancestors': ["'self'"],
     // report-uri only: with `report-to` present Chrome switches to the Reporting API, which batches and delays
     // delivery (and some embedded Chromiums never send). report-uri posts right away in every browser.

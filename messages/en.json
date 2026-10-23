@@ -646,6 +646,23 @@
     "darkTheme": "Dark slides",
     "lightTheme": "Light slides",
     "roleDeck": "presentation",
-    "roleSlide": "slide"
+    "roleSlide": "slide",
+    "draft": "Draft"
+  },
+  "slidesManage": {
+    "title": "Slides",
+    "signInIntro": "Editing is for the owner only. Sign in with GitHub to manage presentations.",
+    "signIn": "Sign in with GitHub",
+    "signOut": "Sign out",
+    "accessDenied": "This GitHub account can't manage slides.",
+    "signInFailed": "Sign-in didn't work. Try again.",
+    "ownerIntro": "{count, plural, one {# presentation} other {# presentations}}, drafts included.",
+    "decks": "Presentations",
+    "updated": "updated {date}",
+    "status": {
+      "draft": "Draft",
+      "unlisted": "Unlisted",
+      "published": "Published"
+    }
   }
 }

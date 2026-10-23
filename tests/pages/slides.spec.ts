@@ -78,3 +78,17 @@ test.describe("Slides viewer", () => {
     expect(response?.status()).toBe(404);
   });
 });
+
+test.describe("Slides owner area", () => {
+  test("anyone who isn't signed in only gets the GitHub sign-in", async ({ page }) => {
+    await open(page, "/slides/manage");
+    await expect(page.getByRole("button", { name: "Sign in with GitHub" })).toBeVisible();
+    await expect(page.getByRole("list", { name: "Presentations" })).toHaveCount(0);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  });
+
+  test("a refused account is told so", async ({ page }) => {
+    await open(page, "/slides/manage?error=AccessDenied");
+    await expect(page.getByRole("alert")).toHaveText("This GitHub account can't manage slides.");
+  });
+});

@@ -646,6 +646,23 @@
     "darkTheme": "Diapositivas oscuras",
     "lightTheme": "Diapositivas claras",
     "roleDeck": "presentación",
-    "roleSlide": "diapositiva"
+    "roleSlide": "diapositiva",
+    "draft": "Borrador"
+  },
+  "slidesManage": {
+    "title": "Slides",
+    "signInIntro": "Solo el dueño puede editar. Entra con GitHub para gestionar las presentaciones.",
+    "signIn": "Entrar con GitHub",
+    "signOut": "Cerrar sesión",
+    "accessDenied": "Esta cuenta de GitHub no puede gestionar slides.",
+    "signInFailed": "No se pudo iniciar sesión. Inténtalo de nuevo.",
+    "ownerIntro": "{count, plural, one {# presentación} other {# presentaciones}}, borradores incluidos.",
+    "decks": "Presentaciones",
+    "updated": "actualizada {date}",
+    "status": {
+      "draft": "Borrador",
+      "unlisted": "Oculta",
+      "published": "Publicada"
+    }
   }
 }

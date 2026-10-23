@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DEFAULT_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
-import { getPublicDeck } from '@/features/slides/store';
+import { getDeckForOwner, getPublicDeck } from '@/features/slides/store';
+import { isOwner } from '@/features/slides/auth';
 import type { Deck } from '@/features/slides/schema';
 import { DeckViewer } from '@/features/slides/viewer/DeckViewer';
 
@@ -11,10 +12,15 @@ interface DeckPageProps {
 
 export const dynamic = 'force-dynamic';
 
+/** Public decks for everyone; drafts too when the owner is signed in (the session is only read on a miss). */
+async function findDeck(slug: string): Promise<Deck | undefined> {
+  return (await getPublicDeck(slug)) ?? ((await isOwner()) ? await getDeckForOwner(slug) : undefined);
+}
+
 export async function generateMetadata({ params }: DeckPageProps): Promise<Metadata> {
   const { slug } = await params;
   const locale = await requestLocale();
-  const deck = await getPublicDeck(slug);
+  const deck = await findDeck(slug);
   if (!deck) return { title: locale === 'es' ? 'Presentación no encontrada' : 'Presentation not found', robots: { index: false } };
 
   return {
@@ -29,7 +35,7 @@ export async function generateMetadata({ params }: DeckPageProps): Promise<Metad
       type: 'article',
       modifiedTime: deck.updatedAt,
     }),
-    ...(deck.status === 'unlisted' ? { robots: { index: false, follow: false } } : {}),
+    ...(deck.status !== 'published' ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -40,7 +46,7 @@ function forAudience(deck: Deck): Deck {
 
 export default async function DeckPage({ params }: DeckPageProps) {
   const { slug } = await params;
-  const deck = await getPublicDeck(slug);
+  const deck = await findDeck(slug);
   if (!deck) notFound();
 
   return <DeckViewer deck={forAudience(deck)} />;

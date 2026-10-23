@@ -259,8 +259,13 @@ export function DeckViewer({ deck }: { deck: Deck }) {
           <ArrowLeft aria-hidden="true" className="h-5 w-5" />
         </Link>
         <div className="min-w-0">
-          <h1 className="truncate text-[0.9375rem] font-semibold tracking-[-0.01em]">
-            {deck.title}
+          <h1 className="flex items-center gap-2 text-[0.9375rem] font-semibold tracking-[-0.01em]">
+            <span className="truncate">{deck.title}</span>
+            {deck.status === "draft" && (
+              <span className="text-meta shrink-0 rounded-full bg-primary/[0.14] px-2.5 py-0.5 text-primary">
+                {t("draft")}
+              </span>
+            )}
           </h1>
           {deck.event && (
             <p className="text-meta truncate text-muted-foreground">
