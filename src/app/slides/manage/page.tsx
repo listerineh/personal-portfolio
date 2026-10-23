@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { Github, LogOut } from 'lucide-react';
+import { Github, LogOut, Pencil } from 'lucide-react';
 import { signIn, signOut } from '@/auth';
 import { PageShell } from '@/components/layout';
 import { Button, PageHeader, Pill } from '@/components/ds';
 import { isOwner } from '@/features/slides/auth';
 import { listDecksForOwner } from '@/features/slides/store';
+import { NewDeckForm } from '@/features/slides/editor/NewDeckForm';
 import { requestLocale } from '@/lib/metadata';
 
 export const dynamic = 'force-dynamic';
@@ -68,23 +69,35 @@ export default async function ManageSlidesPage({ searchParams }: { searchParams:
         </form>
       </PageHeader>
       <section className="px-gutter pb-24" aria-label={t('decks')}>
-        <ul className="mx-auto flex max-w-[1200px] flex-col gap-3">
-          {decks.map((deck) => (
-            <li key={deck.slug} className="panel flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-              <div className="min-w-0">
-                <Link href={`/slides/${deck.slug}`} className="text-headline hover:underline">
-                  {deck.title}
-                </Link>
-                <p className="text-meta mt-1 truncate text-muted-foreground">
-                  /slides/{deck.slug} · v{deck.version} · {t('updated', { date: date.format(new Date(deck.updatedAt)) })}
-                </p>
-              </div>
-              <Pill size="sm" accent={deck.status === 'published' ? 'amber' : undefined} className="self-start sm:self-auto">
-                {t(`status.${deck.status}`)}
-              </Pill>
-            </li>
-          ))}
-        </ul>
+        <div className="mx-auto flex max-w-[1200px] flex-col gap-6">
+          <NewDeckForm />
+          <ul className="flex flex-col gap-3">
+            {decks.map((deck) => (
+              <li key={deck.slug} className="panel flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+                <div className="min-w-0">
+                  <Link href={`/slides/${deck.slug}/edit`} className="text-headline hover:underline">
+                    {deck.title}
+                  </Link>
+                  <p className="text-meta mt-1 truncate text-muted-foreground">
+                    <Link href={`/slides/${deck.slug}`} className="hover:underline">
+                      /slides/{deck.slug}
+                    </Link>{' '}
+                    · v{deck.version} · {t('updated', { date: date.format(new Date(deck.updatedAt)) })}
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 self-start sm:self-auto">
+                  <Pill size="sm" accent={deck.status === 'published' ? 'amber' : undefined}>
+                    {t(`status.${deck.status}`)}
+                  </Pill>
+                  <Button href={`/slides/${deck.slug}/edit`} variant="secondary" size="sm">
+                    <Pencil aria-hidden="true" className="h-4 w-4" />
+                    {t('edit')}
+                  </Button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     </PageShell>
   );

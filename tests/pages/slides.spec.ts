@@ -87,6 +87,12 @@ test.describe("Slides owner area", () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   });
 
+  test("the editor sends anyone who isn't the owner to the sign-in", async ({ page }) => {
+    await open(page, "/slides/test-presentation/edit");
+    await expect(page).toHaveURL(/\/slides\/manage$/);
+    await expect(page.getByRole("button", { name: "Sign in with GitHub" })).toBeVisible();
+  });
+
   test("a refused account is told so", async ({ page }) => {
     await open(page, "/slides/manage?error=AccessDenied");
     await expect(page.getByRole("alert")).toHaveText("This GitHub account can't manage slides.");
