@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import { cn } from "@/lib/utils";
-import { SITE_NAME } from "@/lib/metadata";
+import { SITE_NAME } from "@/lib/site";
 import type { SlideLayout, SlideOf } from "../schema";
 import { useBuild, useSlide } from "./context";
 import { RichText } from "./RichText";
