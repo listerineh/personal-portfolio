@@ -4,10 +4,17 @@ import { stepCount } from "../../src/features/slides/steps";
 import { ACCENT_PRESETS, accentTokens, contrast, hexToRgb } from "../../src/features/slides/theme";
 import { testPresentation } from "../../src/features/slides/decks/test-presentation";
 import { toDeckSummary } from "../../src/features/slides/summary";
+import { gitGithubGitflow } from "../../src/features/slides/decks/git-github-gitflow";
 
 // Code-only checks (no page): the deck contract and the accent math behind every deck's colors.
 
 test.describe("Deck schema", () => {
+  test("the Git talk seed is valid and starts as a draft", () => {
+    const result = deckSchema.safeParse(gitGithubGitflow);
+    expect(result.success, result.success ? "" : JSON.stringify(result.error.issues)).toBe(true);
+    expect(gitGithubGitflow.status).toBe("draft");
+  });
+
   test("the seed deck is valid", () => {
     const deck = deckSchema.parse(testPresentation);
     expect(deck.slides.length).toBeGreaterThan(0);
