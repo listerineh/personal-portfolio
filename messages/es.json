@@ -759,7 +759,8 @@
       "diagram": "Diagrama",
       "embed": "Video",
       "icons-grid": "Iconos",
-      "closing": "Cierre"
+      "closing": "Cierre",
+      "intro": "Presentación personal"
     },
     "field": {
       "eyebrow": "Antetítulo",
@@ -803,7 +804,13 @@
       "event": "Evento",
       "eventName": "Nombre del evento",
       "eventDate": "Fecha",
-      "eventUrl": "URL del evento"
+      "eventUrl": "URL del evento",
+      "photo": "Foto",
+      "greeting": "Saludo",
+      "name": "Nombre",
+      "bio": "Sobre ti",
+      "highlights": "Destacados",
+      "handle": "Usuario"
     },
     "required": "Obligatorio"
   }

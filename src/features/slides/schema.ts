@@ -162,6 +162,18 @@ export const slideSchema = z.discriminatedUnion("layout", [
   }),
   z.object({
     ...base,
+    /** Who's speaking: a photo, a name and a few lines on them, usually right after the cover. */
+    layout: z.literal("intro"),
+    photo: image,
+    greeting: text.optional(),
+    name: text,
+    role: text.optional(),
+    bio: richText.optional(),
+    highlights: z.array(richText).max(4).optional(),
+    handle: text.optional(),
+  }),
+  z.object({
+    ...base,
     layout: z.literal("closing"),
     title: text,
     subtitle: richText.optional(),

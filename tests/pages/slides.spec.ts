@@ -11,45 +11,45 @@ test.describe("Slides viewer", () => {
     await open(page, DECK);
     await expect(page).toHaveTitle(/^Slides en listerineh\.dev ·/);
     await expect(page.getByRole("heading", { level: 1, name: "Slides en listerineh.dev" }).first()).toBeVisible();
-    await expect(counter(page)).toHaveText("1 / 12");
+    await expect(counter(page)).toHaveText("1 / 13");
     await expect(page).toHaveURL(/#\/1$/);
   });
 
   test("arrows move between slides and the hash follows", async ({ page }) => {
     await open(page, DECK);
     await page.keyboard.press("ArrowRight");
-    await expect(counter(page)).toHaveText("2 / 12");
+    await expect(counter(page)).toHaveText("2 / 13");
     await expect(page).toHaveURL(/#\/2$/);
     await page.keyboard.press("ArrowLeft");
-    await expect(counter(page)).toHaveText("1 / 12");
+    await expect(counter(page)).toHaveText("1 / 13");
     await page.keyboard.press("End");
-    await expect(counter(page)).toHaveText("12 / 12");
+    await expect(counter(page)).toHaveText("13 / 13");
     await expect(page.getByRole("button", { name: "Next" })).toBeDisabled();
   });
 
   test("a deep link opens that slide, and editing the hash moves", async ({ page }) => {
-    await open(page, `${DECK}#/10`);
-    await expect(counter(page)).toHaveText("10 / 12");
+    await open(page, `${DECK}#/11`);
+    await expect(counter(page)).toHaveText("11 / 13");
     await expect(page.locator(".slide-canvas")).toHaveAttribute("data-layout", "code");
     await page.evaluate(() => (window.location.hash = "#/3"));
-    await expect(counter(page)).toHaveText("3 / 12");
+    await expect(counter(page)).toHaveText("3 / 13");
   });
 
   test("build steps reveal one item per step before the next slide", async ({ page }) => {
-    await open(page, `${DECK}#/4`);
+    await open(page, `${DECK}#/5`);
     const items = page.locator(".slide-canvas li");
     await expect(items).toHaveCount(4);
     await expect(page.locator(".slide-canvas [data-pending]")).toHaveCount(4);
     for (let pending = 3; pending >= 0; pending--) {
       await page.keyboard.press("ArrowRight");
       await expect(page.locator(".slide-canvas [data-pending]")).toHaveCount(pending);
-      await expect(counter(page)).toHaveText("4 / 12");
+      await expect(counter(page)).toHaveText("5 / 13");
     }
     await page.keyboard.press("ArrowRight");
-    await expect(counter(page)).toHaveText("5 / 12");
+    await expect(counter(page)).toHaveText("6 / 13");
     // Back lands on the previous slide fully built.
     await page.keyboard.press("ArrowLeft");
-    await expect(counter(page)).toHaveText("4 / 12");
+    await expect(counter(page)).toHaveText("5 / 13");
     await expect(page.locator(".slide-canvas [data-pending]")).toHaveCount(0);
   });
 

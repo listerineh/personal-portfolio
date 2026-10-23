@@ -4,7 +4,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowLeft, Copy, ExternalLink, Plus, Trash2 } from "lucide-react";
-import { Switch } from "@/components/ds";
+import { Select, Switch } from "@/components/ds";
 import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
 import { deckSchema, type Deck, type Slide, type SlideLayout } from "../schema";
@@ -207,20 +207,14 @@ export function DeckEditor({ initialDeck }: { initialDeck: Deck }) {
           <label className="sr-only" htmlFor="deck-status">
             {t("field.status")}
           </label>
-          <select
+          <Select
             id="deck-status"
-            className={cn(inputClass, "w-auto")}
+            size="sm"
+            className="w-36"
             value={deck.status}
-            onChange={(e) =>
-              update({ ...deck, status: e.target.value as Deck["status"] })
-            }
-          >
-            {(["draft", "unlisted", "published"] as const).map((status) => (
-              <option key={status} value={status}>
-                {t(`status.${status}`)}
-              </option>
-            ))}
-          </select>
+            onValueChange={(value) => update({ ...deck, status: value as Deck["status"] })}
+            options={(["draft", "unlisted", "published"] as const).map((status) => ({ value: status, label: t(`status.${status}`) }))}
+          />
           <Link
             href={`/slides/${deck.slug}#/${selected + 1}`}
             target="_blank"
@@ -445,20 +439,14 @@ function AddSlide({ onAdd }: { onAdd: (layout: SlideLayout) => void }) {
         <Plus aria-hidden="true" className="h-4 w-4" />
         {t("addSlide")}
       </label>
-      <select id={id}
-        className={inputClass}
+      <Select
+        id={id}
+        size="sm"
         value=""
-        onChange={(e) => {
-          if (e.target.value) onAdd(e.target.value as SlideLayout);
-        }}
-      >
-        <option value="">{t("chooseLayout")}</option>
-        {LAYOUTS.map((layout) => (
-          <option key={layout} value={layout}>
-            {t(`layout.${layout}`)}
-          </option>
-        ))}
-      </select>
+        placeholder={t("chooseLayout")}
+        onValueChange={(value) => value && onAdd(value as SlideLayout)}
+        options={LAYOUTS.map((layout) => ({ value: layout, label: t(`layout.${layout}`) }))}
+      />
     </div>
   );
 }
@@ -495,19 +483,13 @@ function SlidePanel({
         </p>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="editor-field-2" className="text-sm font-medium">{t("field.layout")}</label>
-          <select id="editor-field-2"
-            className={inputClass}
+          <Select
+            id="editor-field-2"
+            size="sm"
             value={slide.layout}
-            onChange={(e) =>
-              onChange(changeLayout(slide, e.target.value as SlideLayout))
-            }
-          >
-            {LAYOUTS.map((layout) => (
-              <option key={layout} value={layout}>
-                {t(`layout.${layout}`)}
-              </option>
-            ))}
-          </select>
+            onValueChange={(value) => onChange(changeLayout(slide, value as SlideLayout))}
+            options={LAYOUTS.map((layout) => ({ value: layout, label: t(`layout.${layout}`) }))}
+          />
         </div>
         <div className="-ml-3 flex flex-wrap items-center">
           <button
@@ -651,25 +633,29 @@ function DeckSettings({
       <div className="grid grid-cols-2 gap-3">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="editor-field-6" className="text-sm font-medium">{t("field.lang")}</label>
-          <select id="editor-field-6"
-            className={inputClass}
+          <Select
+            id="editor-field-6"
+            size="sm"
             value={deck.lang}
-            onChange={(e) => set("lang", e.target.value)}
-          >
-            <option value="es">Español</option>
-            <option value="en">English</option>
-          </select>
+            onValueChange={(value) => set("lang", value)}
+            options={[
+              { value: "es", label: "Español" },
+              { value: "en", label: "English" },
+            ]}
+          />
         </div>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="editor-field-7" className="text-sm font-medium">{t("field.theme")}</label>
-          <select id="editor-field-7"
-            className={inputClass}
+          <Select
+            id="editor-field-7"
+            size="sm"
             value={deck.theme}
-            onChange={(e) => set("theme", e.target.value)}
-          >
-            <option value="light">{t("option.light")}</option>
-            <option value="dark">{t("option.dark")}</option>
-          </select>
+            onValueChange={(value) => set("theme", value)}
+            options={[
+              { value: "light", label: t("option.light") },
+              { value: "dark", label: t("option.dark") },
+            ]}
+          />
         </div>
       </div>
 

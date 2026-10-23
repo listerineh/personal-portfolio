@@ -759,7 +759,8 @@
       "diagram": "Diagram",
       "embed": "Embed",
       "icons-grid": "Icon grid",
-      "closing": "Closing"
+      "closing": "Closing",
+      "intro": "Introduction"
     },
     "field": {
       "eyebrow": "Eyebrow",
@@ -803,7 +804,13 @@
       "event": "Event",
       "eventName": "Event name",
       "eventDate": "Date",
-      "eventUrl": "Event URL"
+      "eventUrl": "Event URL",
+      "photo": "Photo",
+      "greeting": "Greeting",
+      "name": "Name",
+      "bio": "About",
+      "highlights": "Highlights",
+      "handle": "Handle"
     },
     "required": "Required"
   }

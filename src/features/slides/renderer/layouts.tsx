@@ -545,3 +545,65 @@ export function ClosingLayout({ slide }: LayoutProps<"closing">) {
     </>
   );
 }
+
+export function IntroLayout({ slide }: LayoutProps<"intro">) {
+  const build = useBuild(slide.build);
+  return (
+    <>
+      <Light placement="bottom-left" />
+      <div className="slide-pad">
+        <div className="grid flex-1 grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] items-center gap-28 pb-8">
+          <div className="relative h-[760px] overflow-hidden rounded-[30px] shadow-float" {...enter(0)}>
+            <Image
+              src={slide.photo.src}
+              alt={slide.photo.alt}
+              fill
+              sizes="45vw"
+              loading="eager"
+              className="object-cover object-[50%_30%]"
+            />
+          </div>
+          <div className="min-w-0">
+            {slide.greeting && (
+              <p className="sl-subhead text-primary" {...enter(1)}>
+                {slide.greeting}
+              </p>
+            )}
+            <h2 className="sl-display mt-4 text-[120px]" {...enter(2)}>
+              {slide.name}
+            </h2>
+            {slide.role && (
+              <p className="sl-subhead mt-8 text-muted-foreground" {...enter(3)}>
+                {slide.role}
+              </p>
+            )}
+            {slide.bio && (
+              <div {...enter(4)}>
+                <RichText as="p" text={slide.bio} className="sl-body mt-10 max-w-[900px] text-muted-foreground" />
+              </div>
+            )}
+            {slide.highlights && slide.highlights.length > 0 && (
+              <ul className="mt-12 flex flex-wrap gap-4">
+                {slide.highlights.map((item, i) => (
+                  <li
+                    key={i}
+                    className="sl-meta flex min-h-[64px] items-center gap-4 rounded-full bg-foreground/[0.06] px-8 text-[28px] text-foreground"
+                    {...(slide.build ? build(i + 1) : enter(5 + i))}
+                  >
+                    <span aria-hidden="true" className="h-[12px] w-[12px] shrink-0 rounded-full bg-primary" />
+                    <RichText text={item} />
+                  </li>
+                ))}
+              </ul>
+            )}
+            {slide.handle && (
+              <p className="sl-meta mt-12 text-[30px] text-primary" {...enter(9)}>
+                {slide.handle}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

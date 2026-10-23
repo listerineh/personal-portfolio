@@ -8,6 +8,8 @@ export function stepCount(slide: Slide): number {
       return slide.items.length;
     case "icons-grid":
       return slide.items.length;
+    case "intro":
+      return slide.highlights?.length ?? 0;
     case "stats":
       return slide.stats.length;
     case "two-column":

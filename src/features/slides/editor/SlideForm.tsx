@@ -4,6 +4,7 @@ import { useId, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowDown, ArrowUp, Plus, X } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
+import { Select } from "@/components/ds";
 import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
 import type { Slide } from "../schema";
@@ -172,18 +173,14 @@ function FieldControl({ field, path, value, errors, onChange }: ControlProps) {
     case "select":
       return (
         <Labelled label={label} error={error} htmlFor={id}>
-          <select
+          <Select
             id={id}
-            className={inputClass}
+            size="sm"
+            aria-invalid={invalid}
             value={(value as string) ?? field.options[0]}
-            onChange={(e) => onChange(e.target.value)}
-          >
-            {field.options.map((option) => (
-              <option key={option} value={option}>
-                {t(`option.${option}`)}
-              </option>
-            ))}
-          </select>
+            onValueChange={onChange}
+            options={field.options.map((option) => ({ value: option, label: t(`option.${option}`) }))}
+          />
         </Labelled>
       );
     case "image": {

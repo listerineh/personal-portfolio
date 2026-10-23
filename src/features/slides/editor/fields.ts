@@ -108,6 +108,15 @@ export const LAYOUT_FIELDS: Record<SlideLayout, readonly Field[]> = {
       template: { icon: "sparkles", title: "Item" },
     },
   ],
+  intro: [
+    { key: "photo", kind: "image" },
+    text("greeting", true),
+    text("name"),
+    text("role", true),
+    rich("bio", true, true),
+    { key: "highlights", kind: "list", min: 0, max: 4, optional: true },
+    text("handle", true),
+  ],
   closing: [
     text("title"),
     rich("subtitle", true),
@@ -131,6 +140,7 @@ export const BUILDABLE = new Set<SlideLayout>([
   "two-column",
   "stats",
   "icons-grid",
+  "intro",
 ]);
 
 /** A valid starting point for each layout; content to overwrite, not to ship. */
@@ -166,6 +176,14 @@ const TEMPLATES: {
       { icon: "sparkles", title: "One" },
       { icon: "layers", title: "Two" },
     ],
+  },
+  intro: {
+    photo: { src: "/images/sebas-playing.webp", alt: "Sebastian Alvarez" },
+    greeting: "Hi, I'm",
+    name: "Sebastian Alvarez",
+    role: "Full-stack engineer · Applied AI",
+    highlights: ["Quito, Ecuador", "GDG Quito"],
+    handle: "@listerineh",
   },
   closing: { title: "Thank you!" },
 };

@@ -28,6 +28,9 @@ function decks(): DeckRepo {
 
 export const deckTag = (slug: string) => `deck:${slug}`;
 const LIST_TAG = "decks";
+// Saves invalidate by tag right away; the hour only bounds how long an entry can outlive a deploy (the data cache
+// persists across deployments, so a code or seed change would otherwise never show).
+const CACHE_SECONDS = 3600;
 
 const isPublic = (deck: Deck | undefined): deck is Deck =>
   !!deck && deck.status !== "draft";
@@ -40,7 +43,7 @@ export async function getPublicDeck(slug: string): Promise<Deck | undefined> {
       return isPublic(deck) ? deck : null;
     },
     ["slides", "public-deck", slug],
-    { tags: [deckTag(slug)] },
+    { tags: [deckTag(slug)], revalidate: CACHE_SECONDS },
   );
   return (await cached()) ?? undefined;
 }
@@ -50,7 +53,7 @@ export const listPublishedDecks = unstable_cache(
   async (): Promise<Deck[]> =>
     (await decks().list()).filter((deck) => deck.status === "published"),
   ["slides", "published-decks"],
-  { tags: [LIST_TAG] },
+  { tags: [LIST_TAG], revalidate: CACHE_SECONDS },
 );
 
 // ── Owner only: callers must have checked the session (requireOwner) ──────────

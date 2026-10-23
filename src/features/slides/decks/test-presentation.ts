@@ -22,6 +22,17 @@ export const testPresentation: DeckInput = {
       notes: 'Presentarse. Contar por qué dejé de compartir links de Canva.',
     },
     {
+      id: "speaker",
+      layout: "intro",
+      photo: { src: "/images/sebas-playing.webp", alt: "Sebastian Alvarez sonriendo con una guitarra eléctrica" },
+      greeting: "Hola, soy",
+      name: "Sebastian Alvarez",
+      role: "Ingeniero full-stack · IA aplicada",
+      bio: "Construyo agentes de IA, plataformas cloud y productos web.",
+      highlights: ["Quito, Ecuador", "GDG Quito"],
+      handle: "@listerineh",
+    },
+    {
       id: 'why',
       layout: 'statement',
       statement: 'Las diapositivas de una charla deberían vivir ==donde vive el speaker==.',

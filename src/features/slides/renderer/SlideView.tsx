@@ -24,6 +24,7 @@ const LAYOUTS: Record<SlideLayout, (props: { slide: any; lang: string }) => Reac
   diagram: L.DiagramLayout,
   embed: L.EmbedLayout,
   'icons-grid': L.IconsGridLayout,
+  intro: L.IntroLayout,
   closing: L.ClosingLayout,
 };
 
