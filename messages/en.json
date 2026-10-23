@@ -836,7 +836,10 @@
     "embedUnsupported": "That link isn't from a site we can embed.",
     "iconSearch": "Search icons",
     "iconEmpty": "No icon with that name",
-    "iconChoose": "Choose an icon"
+    "iconChoose": "Choose an icon",
+    "diagramHint": "Mermaid: flowchart, sequenceDiagram, classDiagram… The diagram redraws as you type.",
+    "diagramRendering": "Drawing the diagram…",
+    "diagramError": "The diagram couldn't be drawn: {message}"
   },
   "slidesPage": {
     "title": "Talks",

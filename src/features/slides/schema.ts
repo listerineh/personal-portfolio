@@ -42,6 +42,14 @@ const iconItem = z.object({
 // Embeds: supported sites only, in their embed form (embeds.ts; the CSP frames the same hosts).
 const embedUrl = httpsUrl.refine(isEmbedUrl, "Use a YouTube, Vimeo, Loom, CodeSandbox, StackBlitz or Figma link");
 
+// Rendered diagrams are sanitized in the editor (DOMPurify) and shown inline; this is the server's second check, and
+// the site's CSP (no inline scripts or handlers) is the third.
+const UNSAFE_SVG = /<\s*(script|iframe|object|embed)\b|\son[a-z]+\s*=|javascript:/i;
+const diagramSvg = z
+  .string()
+  .max(200_000)
+  .refine((value) => value.trimStart().startsWith("<svg") && !UNSAFE_SVG.test(value), "Not a safe rendered diagram");
+
 const base = {
   id: z.string().regex(/^[a-z0-9-]{1,40}$/),
   /** Speaker notes: shown on the remote, never to the audience. */
@@ -140,9 +148,10 @@ export const slideSchema = z.discriminatedUnion("layout", [
     ...base,
     layout: z.literal("diagram"),
     title: text.optional(),
-    /** Mermaid source; the editor stores the rendered, sanitized SVG next to it (phase 3). */
+    /** Mermaid source; the editor renders it and stores the sanitized SVG for each slide theme next to it. */
     source: z.string().min(1).max(4000),
-    svg: z.string().max(200_000).optional(),
+    svg: diagramSvg.optional(),
+    svgDark: diagramSvg.optional(),
     caption: richText.optional(),
   }),
   z.object({

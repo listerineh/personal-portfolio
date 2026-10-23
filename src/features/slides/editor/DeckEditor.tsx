@@ -21,7 +21,7 @@ import {
   slideTemplate,
 } from "./fields";
 import { SlideForm, type FieldErrors } from "./SlideForm";
-import { DeckSlugProvider } from "./upload";
+import { DeckLookProvider, DeckSlugProvider } from "./upload";
 import { useCodeHighlights } from "./use-code-highlights";
 import type { DeckHighlights } from "../code-tokens";
 
@@ -195,6 +195,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
 
   return (
     <DeckSlugProvider value={deck.slug}>
+    <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme: deck.theme }}>
     <div className="fixed inset-0 flex flex-col bg-background text-foreground">
       <header className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
         <Link
@@ -411,6 +412,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
         </aside>
       </div>
     </div>
+    </DeckLookProvider>
     </DeckSlugProvider>
   );
 }

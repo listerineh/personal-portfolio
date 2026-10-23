@@ -16,6 +16,8 @@ export type FieldKind =
   | { kind: "icon" }
   /** A link to a supported site, turned into its embed form. */
   | { kind: "embed" }
+  /** Mermaid source, rendered to SVG (both slide themes) as you type. */
+  | { kind: "diagram" }
   | { kind: "list"; min: number; max: number }
   | {
       kind: "objects";
@@ -91,7 +93,7 @@ export const LAYOUT_FIELDS: Record<SlideLayout, readonly Field[]> = {
   ],
   diagram: [
     text("title", true),
-    { key: "source", kind: "code" },
+    { key: "source", kind: "diagram" },
     rich("caption", true),
   ],
   embed: [text("title", true), { key: "url", kind: "embed", optional: true }, rich("caption", true)],

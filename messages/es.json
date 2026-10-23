@@ -836,7 +836,10 @@
     "embedUnsupported": "Ese link no es de un sitio que podamos incrustar.",
     "iconSearch": "Buscar iconos",
     "iconEmpty": "Ningún icono con ese nombre",
-    "iconChoose": "Elige un icono"
+    "iconChoose": "Elige un icono",
+    "diagramHint": "Mermaid: flowchart, sequenceDiagram, classDiagram… El diagrama se redibuja mientras escribes.",
+    "diagramRendering": "Dibujando el diagrama…",
+    "diagramError": "No se pudo dibujar el diagrama: {message}"
   },
   "slidesPage": {
     "title": "Charlas",

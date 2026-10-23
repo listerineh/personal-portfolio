@@ -154,6 +154,12 @@
 .sl-code [data-tok] { color: var(--l, inherit); }
 .deck[data-theme="dark"] .sl-code [data-tok] { color: var(--d, inherit); }
 
+/* Mermaid diagrams: the stored SVG fills its panel; with two variants, the deck theme picks one. */
+.sl-diagram { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.sl-diagram svg { width: 100%; height: 100%; max-width: none !important; }
+.deck[data-theme="dark"] .sl-diagram[data-variant="light"]:has(+ .sl-diagram[data-variant="dark"]),
+.deck:not([data-theme="dark"]) .sl-diagram[data-variant="dark"] { display: none; }
+
 /* Inline rich text */
 .sl-rich code {
   font-family: var(--font-mono), ui-monospace, monospace;

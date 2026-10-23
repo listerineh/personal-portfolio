@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowDown, ArrowUp, Plus, X } from "lucide-react";
 import { IconPicker, Select } from "@/components/ds";
@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import type { Slide } from "../schema";
 import { LAYOUT_FIELDS, setField, type Field } from "./fields";
 import { ImageField } from "./ImageField";
+import { renderDiagram } from "./mermaid";
+import { useDeckLook } from "./upload";
 import { embedProvider, toEmbedUrl } from "../embeds";
 
 /** path ("items.2.title") → message, for the slide being edited. */
@@ -32,7 +34,21 @@ export function SlideForm({
   const record = slide as unknown as Record<string, unknown>;
   return (
     <div className="flex flex-col gap-5">
-      {LAYOUT_FIELDS[slide.layout].map((field) => (
+      {LAYOUT_FIELDS[slide.layout].map((field) =>
+        field.kind === "diagram" ? (
+          <DiagramField
+            key={`${slide.id}-${field.key}`}
+            slideId={slide.id}
+            source={(record.source as string) ?? ""}
+            svg={record.svg as string | undefined}
+            error={errors[field.key] ?? errors.svg ?? errors.svgDark}
+            onPatch={(patch) => {
+              let next = record;
+              for (const [key, value] of Object.entries(patch)) next = setField(next, key, value, key !== "source");
+              onChange(next as unknown as Slide);
+            }}
+          />
+        ) : (
         <FieldControl
           key={`${slide.id}-${field.key}`}
           field={field}
@@ -50,7 +66,8 @@ export function SlideForm({
             )
           }
         />
-      ))}
+        ),
+      )}
     </div>
   );
 }
@@ -463,6 +480,72 @@ function EmbedField({ id, label, value, error, onChange }: { id: string; label: 
           setDraft(e.target.value);
           onChange(next === "" ? "" : (toEmbedUrl(next) ?? next));
         }}
+      />
+    </Labelled>
+  );
+}
+
+/** Mermaid source; renders for both slide themes shortly after typing stops and stores the SVGs with the slide. */
+function DiagramField({
+  slideId,
+  source,
+  svg,
+  error,
+  onPatch,
+}: {
+  slideId: string;
+  source: string;
+  svg?: string;
+  error?: string;
+  onPatch: (patch: { source?: string; svg?: string; svgDark?: string }) => void;
+}) {
+  const t = useTranslations("slidesEditor");
+  const id = useId();
+  const { accent } = useDeckLook();
+  const [renderError, setRenderError] = useState<string | null>(null);
+  const [rendering, setRendering] = useState(false);
+  const latest = useRef({ svg, onPatch });
+  useEffect(() => {
+    latest.current = { svg, onPatch };
+  });
+
+  useEffect(() => {
+    if (!source.trim()) return;
+    let cancelled = false;
+    const timer = window.setTimeout(async () => {
+      setRendering(true);
+      const result = await renderDiagram(source, accent, `d-${slideId}`);
+      if (cancelled) return;
+      setRendering(false);
+      if (!result.ok) {
+        setRenderError(result.error);
+        return;
+      }
+      setRenderError(null);
+      // Same output (a slide opened again): nothing to save.
+      if (result.svg !== latest.current.svg) latest.current.onPatch({ svg: result.svg, svgDark: result.svgDark });
+    }, 500);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [source, accent, slideId]);
+
+  return (
+    <Labelled
+      label={t("field.source")}
+      error={renderError ? t("diagramError", { message: renderError }) : error}
+      hint={rendering ? t("diagramRendering") : t("diagramHint")}
+      htmlFor={id}
+    >
+      <textarea
+        id={id}
+        rows={9}
+        spellCheck={false}
+        className={cn(areaClass, "font-mono text-[0.8125rem]")}
+        aria-invalid={renderError ? true : undefined}
+        value={source}
+        onChange={(e) => onPatch({ source: e.target.value })}
       />
     </Labelled>
   );

@@ -70,3 +70,26 @@ test.describe("Deck summaries", () => {
     expect(JSON.stringify(summary)).not.toContain(deck.slides[1].id);
   });
 });
+
+test.describe("Diagram slides", () => {
+  const withSvg = (svg: string) => ({
+    ...testPresentation,
+    slides: [{ id: "d", layout: "diagram", source: "flowchart LR\n  A --> B", svg }],
+  });
+
+  test("accept a rendered SVG", () => {
+    expect(deckSchema.safeParse(withSvg('<svg xmlns="http://www.w3.org/2000/svg"><g><text>A</text></g></svg>')).success).toBe(true);
+  });
+
+  test("refuse anything that could run code", () => {
+    for (const svg of [
+      "<svg><script>alert(1)</script></svg>",
+      '<svg><g onclick="alert(1)"/></svg>',
+      '<svg><a href="javascript:alert(1)"><text>x</text></a></svg>',
+      '<svg><foreignObject><iframe src="https://evil.example"/></foreignObject></svg>',
+      "<div>not an svg</div>",
+    ]) {
+      expect(deckSchema.safeParse(withSvg(svg)).success, svg).toBe(false);
+    }
+  });
+});

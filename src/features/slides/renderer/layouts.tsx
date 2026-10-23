@@ -420,11 +420,12 @@ export function DiagramLayout({ slide }: LayoutProps<"diagram">) {
       >
         <div className="panel flex min-h-0 flex-1 items-center justify-center p-14">
           {slide.svg ? (
-            // Stored already sanitized by the editor (phase 3); the viewer never runs Mermaid.
-            <div
-              className="h-full w-full [&_svg]:h-full [&_svg]:w-full"
-              dangerouslySetInnerHTML={{ __html: slide.svg }}
-            />
+            // Rendered and sanitized by the editor (and checked by the schema); the viewer never runs Mermaid.
+            // Both themes ship; the slide CSS shows the one matching the deck.
+            <>
+              <div className="sl-diagram" data-variant="light" dangerouslySetInnerHTML={{ __html: slide.svg }} />
+              {slide.svgDark && <div className="sl-diagram" data-variant="dark" dangerouslySetInnerHTML={{ __html: slide.svgDark }} />}
+            </>
           ) : (
             <pre className="sl-code whitespace-pre-wrap text-muted-foreground">
               {slide.source}
