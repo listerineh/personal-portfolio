@@ -8,6 +8,7 @@ import {
   useReducer,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import { flushSync } from "react-dom";
 import Link from "next/link";
@@ -37,6 +38,18 @@ type Action =
   | { type: "go"; index: number; step?: "start" | "end" };
 
 const IDLE_AFTER = 2500;
+
+// Full screen, including Safari's prefixed API (before 16.4). iPhone Safari has neither for elements.
+type FullscreenDocument = Document & {
+  webkitFullscreenElement?: Element | null;
+  webkitFullscreenEnabled?: boolean;
+  webkitExitFullscreen?: () => void;
+};
+type FullscreenElement = HTMLElement & { webkitRequestFullscreen?: () => void };
+
+const fullscreenElement = () => document.fullscreenElement ?? (document as FullscreenDocument).webkitFullscreenElement ?? null;
+const canFullscreen = () => !!(document.fullscreenEnabled || (document as FullscreenDocument).webkitFullscreenEnabled);
+const noSubscribe = () => () => {};
 
 /** `#/3` (1-based) ↔ slide index. */
 function indexFromHash(hash: string, total: number): number | null {
@@ -147,16 +160,32 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
       window.history.replaceState(null, "", hash);
   }, [position.index]);
 
+  // Known only in the browser; the button stays out of the server HTML and of browsers that can't do it.
+  const fullscreenAvailable = useSyncExternalStore(noSubscribe, canFullscreen, () => false);
+
   const toggleFullscreen = useCallback(() => {
-    if (document.fullscreenElement) void document.exitFullscreen();
-    else void root.current?.requestFullscreen?.();
+    const doc = document as FullscreenDocument;
+    const element = root.current as FullscreenElement | null;
+    // A refused request (no user gesture, a frame without permission) leaves the deck as it was.
+    const ignore = () => {};
+    if (fullscreenElement()) {
+      if (document.exitFullscreen) document.exitFullscreen().catch(ignore);
+      else doc.webkitExitFullscreen?.();
+    } else if (element?.requestFullscreen) {
+      element.requestFullscreen().catch(ignore);
+    } else {
+      element?.webkitRequestFullscreen?.();
+    }
   }, []);
 
   useEffect(() => {
-    const onChange = () =>
-      setFullscreen(document.fullscreenElement === root.current);
+    const onChange = () => setFullscreen(fullscreenElement() === root.current);
     document.addEventListener("fullscreenchange", onChange);
-    return () => document.removeEventListener("fullscreenchange", onChange);
+    document.addEventListener("webkitfullscreenchange", onChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onChange);
+      document.removeEventListener("webkitfullscreenchange", onChange);
+    };
   }, []);
 
   // Keyboard: arrows, space, page keys and presenter clickers (which send PageUp/PageDown), Home/End, F.
@@ -375,16 +404,18 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
               <Moon aria-hidden="true" className="h-5 w-5" />
             )}
           </ChromeButton>
-          <ChromeButton
-            label={fullscreen ? t("exitFullscreen") : t("fullscreen")}
-            onClick={toggleFullscreen}
-          >
-            {fullscreen ? (
-              <Minimize aria-hidden="true" className="h-5 w-5" />
-            ) : (
-              <Maximize aria-hidden="true" className="h-5 w-5" />
-            )}
-          </ChromeButton>
+          {fullscreenAvailable && (
+            <ChromeButton
+              label={fullscreen ? t("exitFullscreen") : t("fullscreen")}
+              onClick={toggleFullscreen}
+            >
+              {fullscreen ? (
+                <Minimize aria-hidden="true" className="h-5 w-5" />
+              ) : (
+                <Maximize aria-hidden="true" className="h-5 w-5" />
+              )}
+            </ChromeButton>
+          )}
         </div>
       </footer>
     </div>
