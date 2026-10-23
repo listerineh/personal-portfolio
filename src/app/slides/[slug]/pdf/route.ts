@@ -18,7 +18,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
   try {
     let pdf = await readStoredPdf(slug, deck.version).catch(() => null);
     if (!pdf) {
-      pdf = await printDeckPdf(new URL(request.url).origin, slug);
+      pdf = await printDeckPdf(new URL(request.url).origin, slug, deck.slides.length);
       await storePdf(slug, deck.version, pdf).catch((error) => console.error('[slides] storing PDF failed', error));
     }
     const current = new URL(request.url).searchParams.get('v') === String(deck.version);

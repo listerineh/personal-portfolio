@@ -20,8 +20,11 @@ async function launch(): Promise<Browser> {
   return puppeteer.launch({ executablePath: process.env.CHROME_PATH || MAC_CHROME, headless: true, defaultViewport: viewport });
 }
 
-/** Prints a public deck from the given origin (this deployment) and returns the PDF bytes. */
-export async function printDeckPdf(origin: string, slug: string): Promise<Buffer> {
+/**
+ * Prints a public deck from the given origin (this deployment) and returns the PDF bytes: exactly `pages` pages of
+ * 1920×1080, so nothing else on the print page can ever add a sheet of another size.
+ */
+export async function printDeckPdf(origin: string, slug: string, pages: number): Promise<Buffer> {
   const browser = await launch();
   try {
     const page = await browser.newPage();
@@ -40,7 +43,14 @@ export async function printDeckPdf(origin: string, slug: string): Promise<Buffer
         Array.from(document.images, (image) => (image.complete ? null : new Promise((done) => image.addEventListener('load', done, { once: true })))),
       );
     });
-    const pdf = await page.pdf({ printBackground: true, preferCSSPageSize: true, timeout: 30_000 });
+    const pdf = await page.pdf({
+      printBackground: true,
+      width: '1920px',
+      height: '1080px',
+      margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      pageRanges: `1-${pages}`,
+      timeout: 30_000,
+    });
     return Buffer.from(pdf);
   } finally {
     await browser.close();
