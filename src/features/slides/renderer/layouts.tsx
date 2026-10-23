@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 import { cn } from "@/lib/utils";
+import { SITE_NAME } from "@/lib/metadata";
 import type { SlideLayout, SlideOf } from "../schema";
 import { useBuild, useSlide } from "./context";
 import { RichText } from "./RichText";
@@ -39,9 +40,9 @@ function Light({
   );
 }
 
-/** Deck title and slide number along the bottom edge of content slides. */
+/** Where the slides live and the slide number, along the bottom edge of content slides. */
 function Footer() {
-  const { deckTitle, index, total } = useSlide();
+  const { index, total } = useSlide();
   return (
     <div
       className="sl-meta absolute bottom-[56px] left-[128px] right-[128px] flex items-center justify-between text-muted-foreground"
@@ -49,7 +50,7 @@ function Footer() {
     >
       <span className="flex items-center gap-4">
         <span className="h-[10px] w-[10px] rounded-full bg-primary" />
-        {deckTitle}
+        {SITE_NAME}/slides
       </span>
       <span className="tabular-nums">
         {index + 1} / {total}
