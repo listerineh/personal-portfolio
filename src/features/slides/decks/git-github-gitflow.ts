@@ -1,9 +1,10 @@
 import type { DeckInput } from "../schema";
 
 /**
- * "Git, GitHub y GitFlow", the GDG Quito talk, rebuilt from its Canva version in the slide system. Ships as a draft:
- * it appears in /slides/manage for the owner, and the first save from the editor stores it. Diagrams carry only their
- * Mermaid source; opening each diagram slide in the editor draws and saves them.
+ * "Git, GitHub y GitFlow", the GDG Quito talk, rebuilt from its Canva version in the slide system, in Spanish with an
+ * English translation. Ships as a draft: it appears in /slides/manage for the owner, and the first save from the editor
+ * stores it. Diagrams carry only their Mermaid source; opening each diagram slide in the editor (in each language)
+ * draws and saves them.
  */
 export const gitGithubGitflow: DeckInput = {
   slug: "git-github-gitflow",
@@ -391,4 +392,179 @@ export const gitGithubGitflow: DeckInput = {
       ],
     },
   ],
+  // English: the same slides, translated. Only text that differs is stored (see i18n.ts).
+  translations: {
+    en: {
+      title: "Git, GitHub and GitFlow",
+      description: "First steps with Git: why it exists, what GitHub adds, how to organize branches with GitFlow, and the commands you use every day.",
+      slides: {
+        cover: {
+          subtitle: "First steps to version, collaborate and ship *without fear*.",
+          notes: "Welcome. Quick poll: who uses Git every day? Who only uses it through their editor's buttons?",
+        },
+        speaker: {
+          photo: { src: "/images/sebas-playing.webp", alt: "Sebastian Alvarez smiling with an electric guitar" },
+          greeting: "Hi, I'm",
+          bio: "I build backends, cloud infrastructure and web products. Git is the tool I use every day, on every project.",
+        },
+        agenda: {
+          items: [
+            "**01** Introduction to Git",
+            "**02** Introduction to GitHub",
+            "**03** GitFlow: a branching model",
+            "**04** Everyday Git commands",
+            "**05** Demo: from `git init` to a pull request",
+          ],
+        },
+        "part-git": { title: "Introduction to Git", subtitle: "What problem it solves and where it comes from." },
+        problem: {
+          statement: "How do five people work on the same code ==without stepping on each other==?",
+          emphasis: "The problem before Git.",
+          notes: "Let the question hang for a few seconds. Ask for examples: \"final_v2\" folders, files over email, USB sticks.",
+        },
+        "before-after": {
+          title: "Without version control vs. with Git",
+          columns: [
+            {
+              heading: "Without version control",
+              items: ["ZIP copies sent by email", "`project_final_v3_for_real.zip`", "Nobody knows which version is the right one", "One mistake and work is lost"],
+            },
+            {
+              heading: "With Git",
+              items: ["Full history of every change", "Branches to work in parallel", "Merge changes without copying them by hand", "Go back in seconds"],
+            },
+          ],
+          notes: "Tell the ZIP-by-email story: several people sending their own version and someone merging by hand.",
+        },
+        history: {
+          title: "A bit of history",
+          items: [
+            "**2005**: the Linux kernel loses free access to *BitKeeper*, its version control system",
+            "**Linus Torvalds** decides to write his own: Git",
+            "Goals: **fast**, **distributed** and with guaranteed integrity",
+            "Every commit is identified by a *hash* of its content: if anything changes, you notice",
+            "Today it is the de facto standard in the industry",
+          ],
+          notes: "Distributed = every clone has the full history; you can work offline and there is no single point of failure.",
+        },
+        numbers: {
+          title: "Git in numbers",
+          stats: [
+            { value: 2005, label: "year it was born" },
+            { value: 93, suffix: "%", label: "of developers use Git" },
+            { value: 100, suffix: "M+", label: "developers on GitHub" },
+          ],
+          notes: "Sources: Stack Overflow Developer Survey 2022 (93.87% use Git). GitHub passed 100 million developers in January 2023.",
+        },
+        concepts: {
+          title: "Key concepts",
+          items: [
+            { icon: "folder-git-2", title: "Repository", body: "The project plus its whole history." },
+            { icon: "git-commit-horizontal", title: "Commit", body: "A snapshot of changes, with an author and a message." },
+            { icon: "git-branch", title: "Branch", body: "An independent line of work." },
+            { icon: "git-merge", title: "Merge", body: "Joining the work of two branches." },
+            { icon: "layers", title: "Staging", body: "What goes into the next commit." },
+            { icon: "cloud", title: "Remote", body: "A shared copy, on GitHub for example." },
+          ],
+        },
+        "team-flow": {
+          title: "How work flows in a team",
+          source:
+            "flowchart LR\n  a[Dev A] --> f1[feature/login]\n  b[Dev B] --> f2[feature/payments]\n  c[Dev C] --> f3[fix/header]\n  f1 --> v{{Pull request + review + CI}}\n  f2 --> v\n  f3 --> v\n  v --> m[main]",
+          caption: "Everyone works on their own branch; nothing reaches `main` without a review.",
+          notes: "This is the \"validation\" diagram from the Canva deck: everyone on their own branch, everything goes through a PR before main.",
+        },
+        "part-github": { title: "Introduction to GitHub", subtitle: "Git in the cloud, with tools to collaborate." },
+        "git-vs-github": {
+          title: "Git is not GitHub",
+          columns: [
+            { heading: "Git", items: ["A version control tool", "Runs on your machine, no internet needed", "Open source, created in 2005"] },
+            { heading: "GitHub", items: ["A service that hosts Git repositories", "Adds collaboration: PRs, issues, Actions", "Alternatives: GitLab, Bitbucket"] },
+          ],
+          notes: "The most common mix-up. Git is the tool; GitHub is a place to store and share repositories.",
+        },
+        "github-features": {
+          title: "What GitHub adds",
+          items: [
+            { icon: "monitor-smartphone", title: "Accessibility", body: "A visual platform with a friendly interface." },
+            { icon: "layout-dashboard", title: "Tools", body: "Projects, Issues and Wikis." },
+            { icon: "git-pull-request", title: "Collaboration", body: "Pull requests, reviews and forks." },
+            { icon: "workflow", title: "Automation", body: "GitHub Actions: tests and deploys on every push." },
+            { icon: "shield-check", title: "Protection", body: "Branch rules and required reviews." },
+            { icon: "globe", title: "Publishing", body: "GitHub Pages for static sites." },
+          ],
+        },
+        "part-gitflow": { subtitle: "A branching model for teams that ship versions." },
+        "gitflow-graph": {
+          title: "GitFlow at a glance",
+          caption: "`main` always mirrors production; everything else is integrated into `develop`.",
+          notes: "Walk the graph left to right: feature goes back to develop, hotfix leaves main and returns to main and develop, release stabilizes and gets tagged.",
+        },
+        "gitflow-branches": {
+          title: "The GitFlow branches",
+          items: [
+            "`main`: what runs in production, tagged by version",
+            "`develop`: where the next release comes together",
+            "`feature/*`: one feature; branches off develop and goes back to develop",
+            "`release/*`: stabilizes a version before it ships",
+            "`hotfix/*`: fixes production from main and goes back to main and develop",
+            "With continuous deployment, **GitHub Flow** or *trunk-based* development is usually simpler",
+          ],
+          notes: "GitFlow shines with numbered versions (apps, libraries). For websites that deploy several times a day, fewer long-lived branches is better.",
+        },
+        "part-commands": { title: "Git commands", subtitle: "What you will use every day." },
+        setup: {
+          code: '# Once per machine\ngit config --global user.name "Your Name"\ngit config --global user.email "you@email.com"\n\n# Only for this repository\ngit config --local user.name "Your Name"\ngit config --local user.email "you@work.com"',
+          caption: "`--local` wins over `--global`: handy to keep work and personal projects apart.",
+        },
+        init: {
+          title: "Starting a repository",
+          code: "# A new project\ngit init\ngit remote add origin <url>\n\n# A project that already exists\ngit clone <url>",
+          caption: "`git clone` brings the full history and sets up the `origin` remote.",
+        },
+        areas: {
+          title: "The three areas of Git",
+          source:
+            "flowchart LR\n  wd[Working directory] -->|git add| st[Staging]\n  st -->|git commit| repo[Local repository]\n  repo -->|git push| rem[Remote]\n  rem -->|git pull| wd",
+          caption: "Understanding this path explains almost every command.",
+          notes: "Key for beginners: a modified file is not in the commit until it is added to staging.",
+        },
+        branching: {
+          title: "Branches",
+          code: "git branch                 # list branches\ngit branch <branch>        # create a branch\ngit switch <branch>        # switch branches\ngit switch -c <branch>     # create and switch\n\n# The classic way, still works\ngit checkout <branch>\ngit checkout -b <branch>",
+          caption: "`git switch` (Git 2.23+) splits \"changing branches\" from what `checkout` did with files.",
+        },
+        staging: {
+          title: "Staging and commits",
+          code: 'git status                     # what changed\ngit diff                       # unstaged changes\ngit add <file>                 # move to staging\ngit diff --staged              # what goes into the commit\ngit restore --staged <file>    # take it out of staging\ngit commit -m "feat: descriptive message"',
+          caption: "`git restore --staged` is the modern form of `git reset <file>`.",
+        },
+        syncing: {
+          title: "Syncing",
+          code: "git fetch                  # get changes without applying them\ngit merge <branch>         # merge another branch into this one\ngit rebase <branch>        # replay your commits on top\ngit pull                   # fetch + merge\ngit push -u origin <branch> # publish your branch",
+          caption: "`git pull --rebase` keeps history linear when you work on the same branch.",
+        },
+        practices: {
+          title: "Good practices",
+          items: [
+            "**Small** commits with clear messages (`feat:`, `fix:`, `docs:`)",
+            "One branch per change, with a name that explains it",
+            "`pull` before you start and before you `push`",
+            "Never rewrite shared history; if you must, use `--force-with-lease`",
+            "A `.gitignore` from day one: no secrets, no builds",
+            "Every change goes in through a **pull request**, with a review",
+          ],
+          notes: "Conventional Commits: feat, fix, docs, refactor, chore. Mention that .env files and keys never go into the repo.",
+        },
+        "part-demo": {
+          subtitle: "From `git init` to a pull request.",
+          notes: "Demo: git init, first commit, create a feature branch, change, push, open a PR on GitHub, review, merge, pull on main.",
+        },
+        thanks: {
+          title: "More questions? Let's connect",
+          subtitle: "The slides stay at listerineh.dev/slides.",
+        },
+      },
+    },
+  },
 };

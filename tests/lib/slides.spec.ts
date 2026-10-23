@@ -13,6 +13,10 @@ test.describe("Deck schema", () => {
     const result = deckSchema.safeParse(gitGithubGitflow);
     expect(result.success, result.success ? "" : JSON.stringify(result.error.issues)).toBe(true);
     expect(gitGithubGitflow.status).toBe("draft");
+    // The English translation covers every slide that has text of its own.
+    const deck = deckSchema.parse(gitGithubGitflow);
+    const untranslated = deck.slides.filter((slide) => !deck.translations?.en?.slides[slide.id]).map((slide) => slide.id);
+    expect(untranslated).toEqual([]);
   });
 
   test("the seed deck is valid", () => {
