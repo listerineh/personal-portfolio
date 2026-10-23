@@ -1,0 +1,334 @@
+/*
+ * Slides: Lumen on a fixed 1920×1080 canvas. Sizes are canvas pixels (the canvas is scaled as a whole), so type is set
+ * in px here instead of the site's fluid clamp() scale. The deck root carries its own theme tokens, so a light deck stays
+ * light on a dark site and the reverse; the accent tokens are set inline from theme.ts.
+ */
+
+.deck[data-theme="light"] {
+  --background: 255 255 255;
+  --foreground: 29 29 31;
+  --tint: 245 245 247;
+  --card: 245 245 247;
+  --card-foreground: 29 29 31;
+  --muted: 232 232 237;
+  --muted-foreground: 110 110 115;
+  --border: 210 210 215;
+  --surface: var(--background);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 4px 16px -4px rgb(0 0 0 / 0.08);
+  --shadow-float:
+    0 2px 6px rgb(0 0 0 / 0.05), 0 24px 48px -16px rgb(0 0 0 / 0.18);
+  color-scheme: light;
+}
+.deck[data-theme="dark"] {
+  --background: 0 0 0;
+  --foreground: 245 245 247;
+  --tint: 22 22 23;
+  --card: 28 28 30;
+  --card-foreground: 245 245 247;
+  --muted: 44 44 46;
+  --muted-foreground: 161 161 166;
+  --border: 56 56 58;
+  --surface: var(--background);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px -4px rgb(0 0 0 / 0.6);
+  --shadow-float:
+    0 2px 6px rgb(0 0 0 / 0.5), 0 24px 48px -16px rgb(0 0 0 / 0.8);
+  color-scheme: dark;
+}
+/* The viewer stage sits on the tint ground so the plain canvas lifts off it, like a panel on a tint section. */
+.deck {
+  background-color: rgb(var(--tint));
+  color: rgb(var(--foreground));
+}
+.deck:fullscreen { background-color: rgb(var(--background)); }
+.deck[data-theme="dark"] .tint {
+  --card: 36 36 38;
+}
+
+/* ── Canvas ─────────────────────────────────────────────── */
+.slide-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-float);
+}
+@media (max-width: 639px) {
+  .slide-frame { border-radius: var(--radius-lg); }
+}
+.slide-frame[data-bare] {
+  border-radius: 0;
+  box-shadow: none;
+}
+.slide-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  overflow: hidden;
+  view-transition-name: deck-slide;
+}
+.slide-canvas.tint {
+  background-color: rgb(var(--tint));
+}
+.slide-pad {
+  position: absolute;
+  inset: 0;
+  padding: 112px 128px 128px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Type (canvas px) ──────────────────────────────────── */
+.sl-display {
+  font-size: 136px;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.sl-title {
+  font-size: 84px;
+  line-height: 1.04;
+  letter-spacing: -0.038em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.sl-statement {
+  font-size: 104px;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.sl-subhead {
+  font-size: 50px;
+  line-height: 1.2;
+  letter-spacing: -0.028em;
+  font-weight: 650;
+  text-wrap: balance;
+}
+.sl-headline {
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.sl-lead {
+  font-size: 44px;
+  line-height: 1.38;
+  letter-spacing: -0.014em;
+  text-wrap: pretty;
+}
+.sl-body {
+  font-size: 34px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+.sl-meta {
+  font-size: 26px;
+  line-height: 1.4;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+.sl-stat {
+  font-size: 184px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.sl-code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 32px;
+  line-height: 1.55;
+  letter-spacing: 0;
+  tab-size: 2;
+}
+
+/* Highlighted code (shiki tokens carry a color per slide theme) */
+.sl-code [data-tok] { color: var(--l, inherit); }
+.deck[data-theme="dark"] .sl-code [data-tok] { color: var(--d, inherit); }
+
+/* Mermaid diagrams: the stored SVG fills its panel; with two variants, the deck theme picks one. */
+.sl-diagram { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.sl-diagram svg { width: 100%; height: 100%; max-width: none !important; }
+.deck[data-theme="dark"] .sl-diagram[data-variant="light"]:has(+ .sl-diagram[data-variant="dark"]),
+.deck:not([data-theme="dark"]) .sl-diagram[data-variant="dark"] { display: none; }
+
+/* Inline rich text */
+.sl-rich code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.84em;
+  background: rgb(var(--foreground) / 0.07);
+  padding: 0.06em 0.32em;
+  border-radius: 10px;
+}
+.sl-rich mark {
+  color: rgb(var(--primary-ink));
+  background: rgb(var(--primary) / 0.14);
+  padding: 0 0.16em;
+  border-radius: 0.18em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.sl-rich a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--primary) / 0.6);
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.18em;
+}
+
+/* ── Light: an accent halo and a fading dot grid (title, section, closing) ── */
+.sl-halo {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgb(var(--primary) / 0.24),
+    rgb(var(--primary) / 0)
+  );
+}
+.sl-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgb(var(--foreground) / 0.13) 2px,
+    transparent 2.4px
+  );
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 70% at 70% 30%,
+    #000 20%,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 70% 70% at 70% 30%,
+    #000 20%,
+    transparent 75%
+  );
+}
+@keyframes sl-drift {
+  to {
+    transform: translate3d(-120px, 90px, 0) scale(1.12);
+  }
+}
+html.js-motion .slide-canvas[data-active] .sl-halo {
+  animation: sl-drift 18s ease-in-out infinite alternate;
+}
+
+/* ── Motion ─────────────────────────────────────────────
+ * Entering: elements marked data-enter focus in, staggered by --i, each time a slide becomes current.
+ * Building: data-build items wait (data-pending) until their step comes.
+ * Only under html.js-motion; reduced motion shows everything still and in place.
+ */
+html.js-motion .slide-canvas[data-active] [data-enter] {
+  animation: focus-in var(--spring-glide-duration) var(--spring-glide) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 40ms);
+}
+.slide-canvas [data-build] {
+  transition:
+    opacity 420ms var(--ease-out),
+    transform var(--spring-glide-duration) var(--spring-glide),
+    filter 420ms var(--ease-out);
+}
+.slide-canvas [data-build][data-pending] {
+  opacity: 0;
+}
+html.js-motion .slide-canvas [data-build][data-pending] {
+  transform: translateY(28px);
+  filter: blur(6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide-canvas [data-build] {
+    transition: none;
+  }
+}
+
+/* Slide change (View Transitions): the outgoing slide slips back, the new one slides in from the travel direction. */
+@keyframes sl-out-next {
+  to {
+    opacity: 0;
+    transform: translateX(-6%) scale(0.96);
+  }
+}
+@keyframes sl-in-next {
+  from {
+    opacity: 0;
+    transform: translateX(8%) scale(0.98);
+  }
+}
+@keyframes sl-out-prev {
+  to {
+    opacity: 0;
+    transform: translateX(6%) scale(0.96);
+  }
+}
+@keyframes sl-in-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-8%) scale(0.98);
+  }
+}
+::view-transition-group(deck-slide) {
+  animation-duration: var(--spring-glide-duration);
+  animation-timing-function: var(--spring-glide);
+}
+html[data-deck-dir="next"]::view-transition-old(deck-slide) {
+  animation: sl-out-next 360ms var(--ease-out) both;
+}
+html[data-deck-dir="next"]::view-transition-new(deck-slide) {
+  animation: sl-in-next var(--spring-glide-duration) var(--spring-glide) both;
+}
+html[data-deck-dir="prev"]::view-transition-old(deck-slide) {
+  animation: sl-out-prev 360ms var(--ease-out) both;
+}
+html[data-deck-dir="prev"]::view-transition-new(deck-slide) {
+  animation: sl-in-prev var(--spring-glide-duration) var(--spring-glide) both;
+}
+
+/* Viewer chrome hides itself while presenting full screen and the pointer rests. */
+.deck-chrome {
+  transition:
+    opacity 300ms var(--ease-out),
+    transform var(--spring-snap-duration) var(--spring-snap);
+}
+.deck[data-idle] .deck-chrome {
+  opacity: 0;
+  pointer-events: none;
+}
+.deck[data-idle] {
+  cursor: none;
+}
+
+/* ── Print and PDF (/slides/<slug>/print) ───────────────────
+ * Each slide is one 1920×1080 page of a named page type, so printing any other part of the site keeps its own size.
+ */
+@page slide { size: 1920px 1080px; margin: 0; }
+.print-deck { background: none; }
+.print-page {
+  page: slide;
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  break-after: page;
+}
+.print-page:last-child { break-after: auto; }
+@media screen {
+  /* On screen it is a plain column of slides, for checking what the PDF will hold. */
+  .print-deck { display: flex; flex-direction: column; align-items: center; gap: 48px; padding: 48px 0; background: rgb(var(--tint)); }
+  .print-page { box-shadow: var(--shadow-float); }
+}
+@media print {
+  html, body { background: none !important; margin: 0 !important; padding: 0 !important; }
+  /* Only the slides: whatever else the root layout adds (toasts, back-to-top, banners) would spill onto a blank page. */
+  body:has(.print-deck) > :not(.print-deck) { display: none !important; }
+}

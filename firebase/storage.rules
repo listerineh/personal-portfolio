@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Deck images and PDFs are uploaded through the site's server (signed URLs from the Admin SDK) and served by URL.
+// Clients never use the Firebase Storage SDK, so rules deny it.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

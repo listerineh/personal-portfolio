@@ -4,6 +4,24 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.2.0] - 2026-10-23
+
+### Added
+- Talks at `/slides/<slug>` ([#83](https://github.com/listerineh/personal-portfolio/pull/83)): presentations in Lumen where only the accent changes per deck, drawn on a fixed 1920×1080 canvas from a closed set of 15 layouts (title, intro, section, statement, bullets, two columns, images, stats, quote, code, Mermaid diagram, embed, icon grid, closing) validated with zod. Keyboard and touch navigation, build steps, deep links, fullscreen, speaker notes kept out of the public page, and the site's light/dark theme.
+- Bilingual decks: one deck with an optional translation into the other language (only the text that differs is stored); the viewer follows the site's EN/ES switch on the same URL.
+- Owner-only editor at `/slides/<slug>/edit`: a form per layout with a live preview, drag-and-drop image upload (WebP, EXIF stripped), icon picker, gallery of layouts to add, per-language editing with translation progress, and versioned saves that refuse to overwrite a newer version. `/slides/manage` creates and deletes decks. Sign-in is Auth.js with GitHub, allowlisted to one account id. Needs `AUTH_SECRET`, `AUTH_GITHUB_ID`, `AUTH_GITHUB_SECRET` and `SLIDES_OWNER_GITHUB_ID`.
+- Decks in Firestore and images and PDFs in Firebase Storage (server-only access, deny-all rules), with the last 20 versions kept. Without Firebase, decks come from the repo seeds.
+- Code highlighted with shiki on the server, Mermaid diagrams rendered in the editor and stored as sanitized SVG, and embeds from an allowlist (YouTube, Vimeo, CodeSandbox, StackBlitz, Figma).
+- PDF download per deck, version and language: headless Chromium prints `/slides/<slug>/print` and the file is cached in Storage.
+- Talks on the home page and in a `/slides` listing, a Talks link in the header, mobile menu and footer, a share image per deck at `/og/slides/<slug>.png`, and published decks in the sitemap.
+- The "Git, GitHub & GitFlow" talk as a draft, in Spanish and English.
+- Design system: `Select`, `SegmentedControl`, `ImageDropzone`, `IconPicker`, `GalleryPicker` and `DeckCard`, each with a story.
+- Kairo, the open-source iOS and Android task app, in the projects list (English and Spanish), with a product shot and a share image.
+
+### Changed
+- Node 22 is required (`engines`), for the Firebase Admin SDK; CI workflows moved to Node 22.
+- Content Security Policy allows the GitHub sign-in form and the embed origins.
+
 ## [3.1.0] - 2026-10-20
 
 ### Changed

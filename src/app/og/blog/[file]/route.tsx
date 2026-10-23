@@ -7,28 +7,13 @@ import { BlogCard, OG_HEIGHT, OG_WIDTH } from '@/lib/og/blog-card';
 import { AUTHOR_NAME } from '@/lib/metadata';
 import { calculateReadingTime, formatReadingTime } from '@/lib/reading-time';
 import { isValidSlug } from '@/lib/server/security';
+import { loadOgFonts } from '@/lib/og/fonts';
 import type { Locale } from '@/i18n/config';
 
 // Node runtime: the cover is WebP, which Satori can't decode, so sharp turns it into a JPEG first.
 export const runtime = 'nodejs';
 
 const ROOT = process.cwd();
-
-// Geist as TTF (next/og can't read woff2). Loaded once per instance. Files are traced in next.config.ts.
-let fonts: Promise<{ name: string; data: Buffer; weight: 500 | 600 | 700; style: 'normal' }[]> | undefined;
-function loadFonts() {
-  fonts ??= Promise.all(
-    ([['Geist-Medium.ttf', 500], ['Geist-SemiBold.ttf', 600], ['Geist-Bold.ttf', 700]] as const).map(
-      async ([file, weight]) => ({
-        name: 'Geist',
-        data: await readFile(path.join(ROOT, 'src/assets/fonts', file)),
-        weight,
-        style: 'normal' as const,
-      }),
-    ),
-  );
-  return fonts;
-}
 
 /** The cover from public/blog, as a JPEG data URI sized for the card's panel (2x). Missing or unreadable: none. */
 async function coverDataUri(imageUrl: string | undefined): Promise<string | undefined> {
@@ -59,7 +44,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ file
 
   const minutes = post.readingTime ?? calculateReadingTime(post.content);
   const byline = [post.author || AUTHOR_NAME, formatDate(post.date, locale), formatReadingTime(minutes, locale)].join(' · ');
-  const [loadedFonts, cover] = await Promise.all([loadFonts(), coverDataUri(post.imageUrl)]);
+  const [loadedFonts, cover] = await Promise.all([loadOgFonts(), coverDataUri(post.imageUrl)]);
 
   return new ImageResponse(<BlogCard title={post.title} byline={byline} cover={cover} />, {
     width: OG_WIDTH,

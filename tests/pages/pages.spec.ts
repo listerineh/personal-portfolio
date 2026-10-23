@@ -20,6 +20,11 @@ const pages: {
     title: { en: /^Projects ·/, es: /^Proyectos ·/ },
   },
   {
+    path: "/projects/kairo",
+    h1: { en: /Kairo/, es: /Kairo/ },
+    title: { en: /^Kairo ·/, es: /^Kairo ·/ },
+  },
+  {
     path: "/projects/openstage",
     h1: { en: /OpenStage/, es: /OpenStage/ },
     title: { en: /^OpenStage ·/, es: /^OpenStage ·/ },

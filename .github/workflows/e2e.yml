@@ -25,13 +25,18 @@ permissions:
 
 jobs:
   e2e:
-    runs-on: ubuntu-latest
+    # Pinned: Playwright 1.58 can't install its browsers on ubuntu-latest once that is 26.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
       CI: 'true'
       NEXT_TELEMETRY_DISABLED: '1'
       # The build imports the Resend client; tests mock every /api route, so no real key is needed.
       RESEND_API_KEY: re_dummy_build
+      # Auth.js on `next start` outside Vercel: a throwaway secret for test sessions, and trust for the localhost host.
+      # No SLIDES_OWNER_GITHUB_ID, so nobody is the slides owner and the tests see the signed-out site.
+      AUTH_SECRET: ci-only-throwaway-not-a-real-secret
+      AUTH_TRUST_HOST: 'true'
 
     steps:
       - name: Checkout code
@@ -40,7 +45,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
 
       - name: Install dependencies

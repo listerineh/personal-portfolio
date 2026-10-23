@@ -13,14 +13,18 @@ import { BlogPreviewSection } from './blog-preview-section';
 import { ExperienceSection } from './experience-section';
 import { SkillsSection } from './skills-section';
 import { ContactSection } from './contact-section';
+import { TalksSection } from './talks-section';
+import type { DeckSummary } from '@/features/slides/summary';
 
 interface HomePageProps {
   byLocale: Record<Locale, HomeLocaleData>;
   skills: SkillIconSummary[];
+  /** Published talks; the section only shows when there is one. */
+  talks: Record<Locale, DeckSummary[]>;
 }
 
-/** Home: hero, experience, projects, skills, blog, contact. Data arrives per language from the server. */
-export function HomePage({ byLocale, skills }: HomePageProps) {
+/** Home: hero, experience, projects, skills, blog, talks, contact. Data arrives per language from the server. */
+export function HomePage({ byLocale, skills, talks }: HomePageProps) {
   const t = useTranslations('common');
   const { locale } = useLocale();
   const data = byLocale[locale as Locale] ?? byLocale.en;
@@ -37,6 +41,7 @@ export function HomePage({ byLocale, skills }: HomePageProps) {
         <ProjectsSection projects={data.projects} />
         <SkillsSection skills={skills} />
         <BlogPreviewSection posts={data.posts} />
+        <TalksSection talks={talks[locale as Locale] ?? talks.en} />
         <ContactSection />
       </main>
       <Footer />
