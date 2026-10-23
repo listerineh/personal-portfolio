@@ -1,5 +1,5 @@
 import { cert, getApps, initializeApp, type App } from 'firebase-admin/app';
-import { getFirestore, type Firestore } from 'firebase-admin/firestore';
+import { initializeFirestore, type Firestore } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
 
 /**
@@ -31,9 +31,10 @@ export function getDb(): Firestore | null {
   if (db !== undefined) return db;
   const instance = firebaseApp();
   if (!instance) return (db = null);
-  db = getFirestore(instance);
-  // REST instead of gRPC: much faster cold starts on serverless functions, same API.
-  db.settings({ preferRest: true });
+  // REST instead of gRPC: much faster cold starts on serverless functions, same API. initializeFirestore, not
+  // getFirestore + settings(): Next can bundle this module into several chunks, and calling settings() on the shared
+  // instance a second time throws. initializeFirestore returns the existing instance when the settings match.
+  db = initializeFirestore(instance, { preferRest: true });
   return db;
 }
 
