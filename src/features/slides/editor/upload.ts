@@ -49,6 +49,6 @@ export const DeckSlugProvider = DeckSlugContext.Provider;
 export const useDeckSlug = () => useContext(DeckSlugContext);
 
 /** The deck's look, so fields that render (diagrams) can match the slide. */
-const DeckLookContext = createContext<{ accent: string; theme: 'light' | 'dark' }>({ accent: '#d97706', theme: 'light' });
+const DeckLookContext = createContext<{ accent: string; theme: 'light' | 'dark'; lang: string }>({ accent: '#d97706', theme: 'light', lang: 'en' });
 export const DeckLookProvider = DeckLookContext.Provider;
 export const useDeckLook = () => useContext(DeckLookContext);

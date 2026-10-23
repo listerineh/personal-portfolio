@@ -691,7 +691,7 @@
     "slideN": "Diapositiva {n}: {layout}",
     "slideOf": "Diapositiva {n} de {total}",
     "addSlide": "Añadir diapositiva",
-    "chooseLayout": "Elige un layout…",
+    "chooseLayout": "Elige un layout",
     "moveUp": "Subir",
     "moveDown": "Bajar",
     "duplicate": "Duplicar",

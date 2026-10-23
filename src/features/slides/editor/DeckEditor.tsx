@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { ArrowLeft, Copy, ExternalLink, Plus, Trash2 } from "lucide-react";
-import { Select, Switch } from "@/components/ds";
+import { ArrowLeft, Copy, ExternalLink, Trash2 } from "lucide-react";
+import { GalleryPicker, Select, Switch } from "@/components/ds";
 import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
 import { deckSchema, type Deck, type Slide, type SlideLayout } from "../schema";
@@ -21,7 +21,7 @@ import {
   slideTemplate,
 } from "./fields";
 import { SlideForm, type FieldErrors } from "./SlideForm";
-import { DeckLookProvider, DeckSlugProvider } from "./upload";
+import { DeckLookProvider, DeckSlugProvider, useDeckLook } from "./upload";
 import { useCodeHighlights } from "./use-code-highlights";
 import type { DeckHighlights } from "../code-tokens";
 
@@ -195,7 +195,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
 
   return (
     <DeckSlugProvider value={deck.slug}>
-    <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme: deck.theme }}>
+    <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme: deck.theme, lang: deck.lang }}>
     <div className="fixed inset-0 flex flex-col bg-background text-foreground">
       <header className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
         <Link
@@ -440,25 +440,30 @@ function SaveStatus({
   );
 }
 
-function AddSlide({ onAdd }: { onAdd: (layout: SlideLayout) => void }) {
-  const id = useId();
+/** Add a slide by seeing it: every layout's starting point, drawn in this deck's theme and accent. */
+function AddSlide({ onAdd, side = "right" }: { onAdd: (layout: SlideLayout) => void; side?: "right" | "top" }) {
   const t = useTranslations("slidesEditor");
-  return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="flex items-center gap-1.5 text-sm font-medium">
-        <Plus aria-hidden="true" className="h-4 w-4" />
-        {t("addSlide")}
-      </label>
-      <Select
-        id={id}
-        size="sm"
-        value=""
-        placeholder={t("chooseLayout")}
-        onValueChange={(value) => value && onAdd(value as SlideLayout)}
-        options={LAYOUTS.map((layout) => ({ value: layout, label: t(`layout.${layout}`) }))}
-      />
-    </div>
+  const { accent, theme, lang } = useDeckLook();
+  const options = useMemo(
+    () =>
+      LAYOUTS.map((layout) => ({
+        value: layout,
+        label: t(`layout.${layout}`),
+        preview: (
+          <span className="deck !bg-transparent block" data-theme={theme} style={accentStyle(accent, theme)}>
+            <SlideFrame bare>
+              <SlideCanvas
+                slide={slideTemplate(layout, "preview")}
+                lang={lang}
+                state={{ active: false, still: true, step: 0, deckTitle: "", index: 0, total: 1 }}
+              />
+            </SlideFrame>
+          </span>
+        ),
+      })),
+    [t, accent, theme, lang],
   );
+  return <GalleryPicker label={t("addSlide")} title={t("chooseLayout")} options={options} side={side} onSelect={(value) => onAdd(value as SlideLayout)} />;
 }
 
 function SlidePanel({
@@ -534,7 +539,7 @@ function SlidePanel({
         </div>
         {/* Phones and tablets have no thumbnail rail: slides are added here. */}
         <div className="lg:hidden">
-          <AddSlide onAdd={onAdd} />
+          <AddSlide onAdd={onAdd} side="top" />
         </div>
       </div>
 

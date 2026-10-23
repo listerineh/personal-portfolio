@@ -691,7 +691,7 @@
     "slideN": "Slide {n}: {layout}",
     "slideOf": "Slide {n} of {total}",
     "addSlide": "Add slide",
-    "chooseLayout": "Choose a layout…",
+    "chooseLayout": "Choose a layout",
     "moveUp": "Move up",
     "moveDown": "Move down",
     "duplicate": "Duplicate",
