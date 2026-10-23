@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DEFAULT_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
+import { forAudience } from '@/features/slides/audience';
 import { getDeckForOwner, getPublicDeck } from '@/features/slides/store';
 import { isOwner } from '@/features/slides/auth';
 import type { Deck } from '@/features/slides/schema';
@@ -40,10 +41,6 @@ export async function generateMetadata({ params }: DeckPageProps): Promise<Metad
   };
 }
 
-/** Speaker notes never reach the audience's browser. */
-function forAudience(deck: Deck): Deck {
-  return { ...deck, slides: deck.slides.map(({ notes: _notes, ...slide }) => slide) };
-}
 
 export default async function DeckPage({ params }: DeckPageProps) {
   const { slug } = await params;

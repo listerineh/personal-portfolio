@@ -648,7 +648,8 @@
     "lightTheme": "Light slides",
     "roleDeck": "presentation",
     "roleSlide": "slide",
-    "draft": "Draft"
+    "draft": "Draft",
+    "downloadPdf": "Download PDF"
   },
   "slidesManage": {
     "title": "Slides",

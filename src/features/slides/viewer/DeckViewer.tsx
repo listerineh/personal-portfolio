@@ -16,6 +16,7 @@ import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
+  FileDown,
   Maximize,
   Minimize,
   Moon,
@@ -353,6 +354,17 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
           />
         </div>
         <div className="flex items-center gap-1">
+          {deck.status !== "draft" && (
+            <a
+              href={`/slides/${deck.slug}/pdf?v=${deck.version}`}
+              download={`${deck.slug}.pdf`}
+              aria-label={t("downloadPdf")}
+              title={t("downloadPdf")}
+              className={CHROME_BUTTON}
+            >
+              <FileDown aria-hidden="true" className="h-5 w-5" />
+            </a>
+          )}
           <ChromeButton
             label={theme === "dark" ? t("lightTheme") : t("darkTheme")}
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -379,6 +391,9 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
   );
 }
 
+const CHROME_BUTTON =
+  "flex h-11 w-11 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-snap ease-snap hover:bg-foreground/[0.07] active:scale-90 disabled:opacity-35 disabled:hover:bg-transparent motion-reduce:transition-none";
+
 function ChromeButton({
   label,
   onClick,
@@ -397,7 +412,7 @@ function ChromeButton({
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className="flex h-11 w-11 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-snap ease-snap hover:bg-foreground/[0.07] active:scale-90 disabled:opacity-35 disabled:hover:bg-transparent motion-reduce:transition-none"
+      className={CHROME_BUTTON}
     >
       {children}
     </button>

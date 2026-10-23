@@ -307,3 +307,28 @@ html[data-deck-dir="prev"]::view-transition-new(deck-slide) {
 .deck[data-idle] {
   cursor: none;
 }
+
+/* ── Print and PDF (/slides/<slug>/print) ───────────────────
+ * Each slide is one 1920×1080 page of a named page type, so printing any other part of the site keeps its own size.
+ */
+@page slide { size: 1920px 1080px; margin: 0; }
+.print-deck { background: none; }
+.print-page {
+  page: slide;
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  break-after: page;
+}
+.print-page:last-child { break-after: auto; }
+@media screen {
+  /* On screen it is a plain column of slides, for checking what the PDF will hold. */
+  .print-deck { display: flex; flex-direction: column; align-items: center; gap: 48px; padding: 48px 0; background: rgb(var(--tint)); }
+  .print-page { box-shadow: var(--shadow-float); }
+}
+@media print {
+  html, body { background: none !important; margin: 0 !important; padding: 0 !important; }
+  /* Only the slides: whatever else the root layout adds (toasts, back-to-top, banners) would spill onto a blank page. */
+  body:has(.print-deck) > :not(.print-deck) { display: none !important; }
+}

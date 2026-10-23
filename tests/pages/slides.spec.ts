@@ -117,3 +117,19 @@ test.describe("Talks listing", () => {
     expect(response.headers()["content-type"]).toBe("image/png");
   });
 });
+
+test.describe("Slides print and PDF", () => {
+  test("the print page lays out every slide, fully built, one 1920×1080 page each", async ({ page }) => {
+    await open(page, `${DECK}/print`, "en", "domcontentloaded");
+    const pages = page.locator(".print-page");
+    await expect(pages).toHaveCount(13);
+    expect(await pages.first().evaluate((el) => [el.clientWidth, el.clientHeight])).toEqual([1920, 1080]);
+    await expect(page.locator("[data-pending]")).toHaveCount(0);
+    expect(await page.content()).not.toContain("Presentarse. Contar por qué");
+  });
+
+  test("the viewer offers the PDF of the current version", async ({ page }) => {
+    await open(page, DECK);
+    await expect(page.getByRole("link", { name: "Download PDF" })).toHaveAttribute("href", /\/slides\/test-presentation\/pdf\?v=\d+$/);
+  });
+});

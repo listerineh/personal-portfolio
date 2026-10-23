@@ -76,7 +76,7 @@ export function CookieBanner() {
         role="region"
         aria-label={t('bannerTitle')}
         className={cn(
-          'panel fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 mx-auto max-w-3xl bg-popover px-5 py-5 shadow-float sm:inset-x-6 md:px-6',
+          'panel fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 mx-auto max-w-3xl bg-popover px-5 py-5 shadow-float sm:inset-x-6 md:px-6 print:hidden',
           'transition-transform duration-500',
           isVisible && !isClosing ? 'translate-y-0' : 'translate-y-full'
         )}
