@@ -797,7 +797,7 @@
       "notes": "Notas del speaker",
       "status": "Visibilidad",
       "description": "Descripción",
-      "lang": "Idioma",
+      "lang": "Idioma principal",
       "accent": "Color de acento",
       "event": "Evento",
       "eventName": "Nombre del evento",
@@ -837,7 +837,22 @@
     "iconChoose": "Elige un icono",
     "diagramHint": "Mermaid: flowchart, sequenceDiagram, classDiagram… El diagrama se redibuja mientras escribes.",
     "diagramRendering": "Dibujando el diagrama…",
-    "diagramError": "No se pudo dibujar el diagrama: {message}"
+    "diagramError": "No se pudo dibujar el diagrama: {message}",
+    "editingLanguage": "Idioma que editas",
+    "languageName": {
+      "es": "Español",
+      "en": "English"
+    },
+    "translatedCount": "{translated} de {total} diapositivas traducidas",
+    "untranslated": "Sin traducir todavía: muestra el idioma principal",
+    "structureShared": "El layout y los pasos se comparten entre idiomas; cámbialos en el idioma principal.",
+    "languages": "Idiomas",
+    "mainLanguageLocked": "Quita la traducción para cambiar el idioma principal.",
+    "translationTo": "Traducción al {language}",
+    "editTranslation": "Editar {language}",
+    "removeTranslation": "Quitar traducción",
+    "removeTranslationConfirm": "Sí, quitarla",
+    "addTranslation": "Añadir traducción al {language}"
   },
   "slidesPage": {
     "title": "Charlas",

@@ -506,6 +506,7 @@ function AddSlide({ onAdd, side = "right" }: { onAdd: (layout: SlideLayout) => v
 
 function SlidePanel({
   slide,
+  translating,
   index,
   total,
   errors,
@@ -516,6 +517,8 @@ function SlidePanel({
   onAdd,
 }: {
   slide: Slide;
+  /** Editing the translation: texts change, the slide's kind and build steps stay shared with the base. */
+  translating: boolean;
   index: number;
   total: number;
   errors: FieldErrors;
@@ -540,9 +543,11 @@ function SlidePanel({
             id="editor-field-2"
             size="sm"
             value={slide.layout}
+            disabled={translating}
             onValueChange={(value) => onChange(changeLayout(slide, value as SlideLayout))}
             options={LAYOUTS.map((layout) => ({ value: layout, label: t(`layout.${layout}`) }))}
           />
+          {translating && <span className="text-xs text-muted-foreground">{t("structureShared")}</span>}
         </div>
         <div className="-ml-3 flex flex-wrap items-center">
           <button
@@ -593,6 +598,7 @@ function SlidePanel({
           </label>
           <Switch
             id="slide-build"
+            disabled={translating}
             checked={!!slide.build}
             onCheckedChange={(checked) =>
               onChange(
@@ -632,15 +638,45 @@ function SlidePanel({
 
 function DeckSettings({
   deck,
+  lang,
   errors,
   onChange,
+  onEditLanguage,
 }: {
   deck: Deck;
+  /** The language being edited: title and description are per language, everything else is shared. */
+  lang: DeckLang;
   errors: FieldErrors;
   onChange: (deck: Deck) => void;
+  onEditLanguage: (lang: DeckLang) => void;
 }) {
   const t = useTranslations("slidesEditor");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmRemoveTranslation, setConfirmRemoveTranslation] = useState(false);
+  const translating = lang !== deck.lang;
+  const other = DECK_LANGS.find((code) => code !== deck.lang)!;
+  const translation = deck.translations?.[other];
+  const otherName = t(`languageName.${other}`);
+  /** Title or description: the base deck's, or the translation's (emptied means "use the base"). */
+  const text = (key: "title" | "description") => (translating ? (deck.translations?.[lang]?.[key] ?? "") : deck[key]);
+  const setText = (key: "title" | "description", value: string) => {
+    if (!translating) return set(key, value);
+    const current = deck.translations?.[lang] ?? { slides: {} };
+    onChange({
+      ...deck,
+      translations: { ...deck.translations, [lang]: setField(current as unknown as Record<string, unknown>, key, value, true) },
+    } as Deck);
+  };
+  const addTranslation = () => {
+    onChange({ ...deck, translations: { ...deck.translations, [other]: { slides: {} } } });
+    onEditLanguage(other);
+  };
+  const removeTranslation = () => {
+    const { [other]: _removed, ...rest } = deck.translations ?? {};
+    onChange({ ...deck, translations: rest });
+    onEditLanguage(deck.lang);
+    setConfirmRemoveTranslation(false);
+  };
   const set = (key: keyof Deck, value: unknown, optional = false) =>
     onChange(
       setField(
@@ -665,8 +701,9 @@ function DeckSettings({
         <label htmlFor="editor-field-4" className="text-sm font-medium">{t("field.title")}</label>
         <input id="editor-field-4"
           className={inputClass}
-          value={deck.title}
-          onChange={(e) => set("title", e.target.value)}
+          value={text("title")}
+          placeholder={translating ? deck.title : undefined}
+          onChange={(e) => setText("title", e.target.value)}
         />
         {error("title")}
       </div>
@@ -674,8 +711,9 @@ function DeckSettings({
         <label htmlFor="editor-field-5" className="text-sm font-medium">{t("field.description")}</label>
         <textarea id="editor-field-5"
           className={cn(fieldBase, "min-h-20 px-3 py-2 text-sm")}
-          value={deck.description}
-          onChange={(e) => set("description", e.target.value)}
+          value={text("description")}
+          placeholder={translating ? deck.description : undefined}
+          onChange={(e) => setText("description", e.target.value)}
         />
         <span className="text-xs text-muted-foreground">
           {t("descriptionHint")}
@@ -684,21 +722,59 @@ function DeckSettings({
       </div>
       <p className="text-meta text-muted-foreground">/slides/{deck.slug}</p>
 
-      <div className="grid gap-3">
+      <fieldset className="flex flex-col gap-3">
+        <legend className="mb-1.5 text-sm font-medium">{t("languages")}</legend>
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="editor-field-6" className="text-sm font-medium">{t("field.lang")}</label>
+          <label htmlFor="editor-field-6" className="text-sm">{t("field.lang")}</label>
           <Select
             id="editor-field-6"
             size="sm"
             value={deck.lang}
+            // With a translation, switching the main language would leave it translating into itself.
+            disabled={!!translation}
             onValueChange={(value) => set("lang", value)}
-            options={[
-              { value: "es", label: "Español" },
-              { value: "en", label: "English" },
-            ]}
+            options={DECK_LANGS.map((code) => ({ value: code, label: t(`languageName.${code}`) }))}
           />
+          {translation && <span className="text-xs text-muted-foreground">{t("mainLanguageLocked")}</span>}
         </div>
-      </div>
+        {translation ? (
+          <div className="flex flex-col gap-2 rounded-[14px] bg-foreground/[0.04] p-4">
+            <p className="text-sm">
+              <span className="font-medium">{t("translationTo", { language: otherName })}</span>
+              <span className="block text-xs text-muted-foreground">{t("translatedCount", translationProgress(deck, other))}</span>
+            </p>
+            <div className="-ml-3 flex flex-wrap items-center">
+              {lang !== other && (
+                <button type="button" onClick={() => onEditLanguage(other)} className="min-h-9 rounded-full px-3 text-sm font-medium hover:bg-foreground/[0.07]">
+                  {t("editTranslation", { language: otherName })}
+                </button>
+              )}
+              {confirmRemoveTranslation ? (
+                <>
+                  <button type="button" onClick={removeTranslation} className="min-h-9 rounded-full px-3 text-sm font-medium text-destructive hover:bg-destructive/10">
+                    {t("removeTranslationConfirm")}
+                  </button>
+                  <button type="button" onClick={() => setConfirmRemoveTranslation(false)} className="min-h-9 rounded-full px-3 text-sm font-medium hover:bg-foreground/[0.07]">
+                    {t("cancel")}
+                  </button>
+                </>
+              ) : (
+                <button type="button" onClick={() => setConfirmRemoveTranslation(true)} className="min-h-9 rounded-full px-3 text-sm font-medium text-destructive hover:bg-destructive/10">
+                  {t("removeTranslation")}
+                </button>
+              )}
+            </div>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={addTranslation}
+            className="inline-flex min-h-10 items-center self-start rounded-full bg-foreground/[0.07] px-4 text-sm font-medium hover:bg-foreground/[0.11]"
+          >
+            {t("addTranslation", { language: otherName })}
+          </button>
+        )}
+      </fieldset>
 
       <fieldset className="flex flex-col gap-2">
         <legend className="mb-1.5 text-sm font-medium">
