@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { getBucket, getDb } from "../../src/lib/server/firebase";
 import { firestoreBackend } from "../../src/features/slides/firestore-backend";
-import { createDeckRepo, VersionConflictError } from "../../src/features/slides/repo";
+import {
+  createDeckRepo,
+  VersionConflictError,
+} from "../../src/features/slides/repo";
 import { testPresentation } from "../../src/features/slides/decks/test-presentation";
 
 // Live check against the real Firebase project. Opt-in: needs the FIREBASE_* variables and SLIDES_FIRESTORE_LIVE=1,
@@ -10,7 +13,10 @@ import { testPresentation } from "../../src/features/slides/decks/test-presentat
 const live = process.env.SLIDES_FIRESTORE_LIVE === "1";
 
 test.describe("Slides on real Firebase", () => {
-  test.skip(!live, "Set SLIDES_FIRESTORE_LIVE=1 and the FIREBASE_* variables to run");
+  test.skip(
+    !live,
+    "Set SLIDES_FIRESTORE_LIVE=1 and the FIREBASE_* variables to run",
+  );
   test.describe.configure({ mode: "serial", timeout: 60_000 });
 
   const slug = `smoke-${Date.now().toString(36)}`;
@@ -21,17 +27,40 @@ test.describe("Slides on real Firebase", () => {
   });
 
   test("Firebase is configured", () => {
-    expect(getDb(), "FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL and FIREBASE_PRIVATE_KEY").not.toBeNull();
+    // Names only, never values.
+    const required = [
+      "FIREBASE_PROJECT_ID",
+      "FIREBASE_CLIENT_EMAIL",
+      "FIREBASE_PRIVATE_KEY",
+      "FIREBASE_STORAGE_BUCKET",
+    ];
+    expect(
+      required.filter((name) => !process.env[name]?.trim()),
+      "missing variables",
+    ).toEqual([]);
+    expect(
+      process.env.FIREBASE_PRIVATE_KEY,
+      "FIREBASE_PRIVATE_KEY should be the PEM key",
+    ).toMatch(/^-----BEGIN PRIVATE KEY-----/);
+    expect(getDb()).not.toBeNull();
   });
 
   test("decks save, version, conflict, keep history and delete", async () => {
     const repo = createDeckRepo(firestoreBackend(getDb()!));
-    const created = await repo.save({ ...testPresentation, slug, status: "draft", title: "Smoke test" }, null);
+    const created = await repo.save(
+      { ...testPresentation, slug, status: "draft", title: "Smoke test" },
+      null,
+    );
     expect(created.version).toBe(1);
 
-    const edited = await repo.save({ ...created, title: "Smoke test, edited" }, created.version);
+    const edited = await repo.save(
+      { ...created, title: "Smoke test, edited" },
+      created.version,
+    );
     expect(edited.version).toBe(2);
-    await expect(repo.save({ ...created, title: "Stale tab" }, created.version)).rejects.toBeInstanceOf(VersionConflictError);
+    await expect(
+      repo.save({ ...created, title: "Stale tab" }, created.version),
+    ).rejects.toBeInstanceOf(VersionConflictError);
 
     expect((await repo.get(slug))?.title).toBe("Smoke test, edited");
     expect((await repo.history(slug)).map((deck) => deck.version)).toEqual([1]);
