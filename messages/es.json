@@ -708,7 +708,7 @@
     "descriptionHint": "Se muestra al compartir el link.",
     "accentPicker": "Elegir color",
     "accentHex": "Color hex",
-    "accentWarning": "Este color es tenue sobre el fondo de la slide. El texto sigue legible, pero las formas y los números grandes se verán lavados.",
+    "accentWarning": "Este color se ve tenue en las diapositivas claras u oscuras. El texto sigue legible, pero las formas y los números grandes se verán lavados.",
     "accent": {
       "amber": "Ámbar",
       "blue": "Azul",
@@ -742,9 +742,7 @@
     },
     "option": {
       "left": "Izquierda",
-      "right": "Derecha",
-      "light": "Claras",
-      "dark": "Oscuras"
+      "right": "Derecha"
     },
     "layout": {
       "title": "Portada",
@@ -800,7 +798,6 @@
       "status": "Visibilidad",
       "description": "Descripción",
       "lang": "Idioma",
-      "theme": "Diapositivas",
       "accent": "Color de acento",
       "event": "Evento",
       "eventName": "Nombre del evento",

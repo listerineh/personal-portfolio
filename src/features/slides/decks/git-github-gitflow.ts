@@ -13,7 +13,6 @@ export const gitGithubGitflow: DeckInput = {
   lang: "es",
   status: "draft",
   accent: "#f05032",
-  theme: "dark",
   updatedAt: "2026-10-24T00:00:00.000Z",
   version: 1,
   slides: [

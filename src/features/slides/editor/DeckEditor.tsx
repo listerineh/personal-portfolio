@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowLeft, Copy, ExternalLink, Trash2 } from "lucide-react";
 import { GalleryPicker, Select, Switch } from "@/components/ds";
+import { ThemeToggleButton } from "@/components/common/theme-toggle-button";
+import { useTheme } from "@/context/theme-context";
 import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
 import { deckSchema, type Deck, type Slide, type SlideLayout } from "../schema";
@@ -58,6 +60,7 @@ function groupIssues(deck: Deck, required: string) {
 }
 
 export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDeck: Deck; initialHighlights?: DeckHighlights }) {
+  const { theme } = useTheme();
   const t = useTranslations("slidesEditor");
   const [deck, setDeck] = useState<Deck>(initialDeck);
   const [selected, setSelected] = useState(0);
@@ -187,15 +190,15 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
   };
 
   const deckScope = {
-    "data-theme": deck.theme,
+    "data-theme": theme,
     style: HEX.test(deck.accent)
-      ? accentStyle(deck.accent, deck.theme)
+      ? accentStyle(deck.accent, theme)
       : undefined,
   };
 
   return (
     <DeckSlugProvider value={deck.slug}>
-    <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme: deck.theme, lang: deck.lang }}>
+    <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme, lang: deck.lang }}>
     <div className="fixed inset-0 flex flex-col bg-background text-foreground">
       <header className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
         <Link
@@ -210,6 +213,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
         </h1>
         <SaveStatus state={state === "dirty" && !issues.valid ? "invalid" : state} errorCount={issues.count} />
         <div className="ml-auto flex items-center gap-2">
+          <ThemeToggleButton />
           <label className="sr-only" htmlFor="deck-status">
             {t("field.status")}
           </label>
@@ -612,8 +616,9 @@ function DeckSettings({
         optional,
       ) as unknown as Deck,
     );
+  // Slides can be shown light or dark, so the accent has to hold up on both grounds.
   const warning = HEX.test(deck.accent)
-    ? accentTokens(deck.accent, deck.theme).warning
+    ? accentTokens(deck.accent, "light").warning ?? accentTokens(deck.accent, "dark").warning
     : undefined;
   const error = (key: string) =>
     errors[key] && (
@@ -645,7 +650,7 @@ function DeckSettings({
       </div>
       <p className="text-meta text-muted-foreground">/slides/{deck.slug}</p>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid gap-3">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="editor-field-6" className="text-sm font-medium">{t("field.lang")}</label>
           <Select
@@ -656,19 +661,6 @@ function DeckSettings({
             options={[
               { value: "es", label: "Español" },
               { value: "en", label: "English" },
-            ]}
-          />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="editor-field-7" className="text-sm font-medium">{t("field.theme")}</label>
-          <Select
-            id="editor-field-7"
-            size="sm"
-            value={deck.theme}
-            onValueChange={(value) => set("theme", value)}
-            options={[
-              { value: "light", label: t("option.light") },
-              { value: "dark", label: t("option.dark") },
             ]}
           />
         </div>

@@ -708,7 +708,7 @@
     "descriptionHint": "Shown when the link is shared.",
     "accentPicker": "Pick a color",
     "accentHex": "Hex color",
-    "accentWarning": "This color is faint against the slide ground. Text stays readable, but shapes and big numbers will look washed out.",
+    "accentWarning": "This color is faint on the light or the dark slides. Text stays readable, but shapes and big numbers will look washed out.",
     "accent": {
       "amber": "Amber",
       "blue": "Blue",
@@ -742,9 +742,7 @@
     },
     "option": {
       "left": "Left",
-      "right": "Right",
-      "light": "Light",
-      "dark": "Dark"
+      "right": "Right"
     },
     "layout": {
       "title": "Title",
@@ -800,7 +798,6 @@
       "status": "Visibility",
       "description": "Description",
       "lang": "Language",
-      "theme": "Slides",
       "accent": "Accent color",
       "event": "Event",
       "eventName": "Event name",

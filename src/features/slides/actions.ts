@@ -84,7 +84,6 @@ export async function createDeckAction(
     lang,
     status: "draft",
     accent: BRAND_AMBER,
-    theme: "light",
     updatedAt: new Date().toISOString(),
     version: 0,
     slides: [

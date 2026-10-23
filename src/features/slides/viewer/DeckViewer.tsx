@@ -28,7 +28,8 @@ import { prefersReducedMotion } from "@/lib/motion";
 import type { Deck } from "../schema";
 import type { DeckHighlights } from "../code-tokens";
 import { stepCount } from "../steps";
-import { accentStyle, type DeckTheme } from "../theme";
+import { accentStyle } from "../theme";
+import { useTheme } from "@/context/theme-context";
 import { SlideCanvas, SlideFrame } from "../renderer/SlideView";
 
 type Position = { index: number; step: number };
@@ -99,7 +100,8 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
   );
 
   const [position, dispatch] = useReducer(reducer, { index: 0, step: 0 });
-  const [theme, setTheme] = useState<DeckTheme>(deck.theme);
+  // Slides follow the site theme; the button here switches it (and it is remembered like the header toggle).
+  const { theme, toggleTheme } = useTheme();
   const [fullscreen, setFullscreen] = useState(false);
   const [idle, setIdle] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -396,7 +398,7 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
           )}
           <ChromeButton
             label={theme === "dark" ? t("lightTheme") : t("darkTheme")}
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={toggleTheme}
           >
             {theme === "dark" ? (
               <Sun aria-hidden="true" className="h-5 w-5" />

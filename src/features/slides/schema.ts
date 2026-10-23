@@ -201,7 +201,6 @@ export const deckSchema = z
     status: z.enum(["draft", "unlisted", "published"]),
     /** Replaces the brand amber inside this deck; ink and foreground are derived for AA (theme.ts). */
     accent: z.string().regex(HEX_PATTERN),
-    theme: z.enum(["light", "dark"]).default("light"),
     event: z
       .object({ name: text, date: z.string().date(), url: httpsUrl.optional() })
       .optional(),

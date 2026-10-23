@@ -8,7 +8,6 @@ export const testPresentation: DeckInput = {
   lang: 'es',
   status: 'unlisted',
   accent: '#2563eb',
-  theme: 'light',
   event: { name: 'Demo interna', date: '2026-10-22' },
   updatedAt: '2026-10-22T00:00:00.000Z',
   version: 1,

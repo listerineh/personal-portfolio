@@ -7,7 +7,6 @@ export interface DeckSummary {
   description: string;
   lang: Deck['lang'];
   accent: string;
-  theme: Deck['theme'];
   event?: Deck['event'];
   updatedAt: string;
   cover: Slide;
@@ -21,7 +20,6 @@ export function toDeckSummary(deck: Deck): DeckSummary {
     description: deck.description,
     lang: deck.lang,
     accent: deck.accent,
-    theme: deck.theme,
     event: deck.event,
     updatedAt: deck.updatedAt,
     cover,
