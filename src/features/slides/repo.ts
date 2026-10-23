@@ -1,21 +1,14 @@
-import type { Redis } from "@upstash/redis";
 import { deckSchema, type Deck, type DeckInput } from "./schema";
 
 /**
- * Deck persistence, free of Next.js so it can be tested directly. Decks live in Redis:
- * - slides:deck:<slug>     the current JSON document
- * - slides:index           sorted set of slugs by last update (ms)
- * - slides:history:<slug>  the previous HISTORY_LIMIT versions, newest first
+ * Deck persistence, free of Next.js so it can be tested directly. A backend stores each deck as its JSON document plus
+ * the previous HISTORY_LIMIT versions (Firestore in production: firestore-backend.ts; memory in tests and local dev).
  *
  * Seed decks shipped in the repo are always readable; once saved, the stored copy wins.
  * Saves are compare-and-set on `version`, so two editor tabs can't silently overwrite each other.
  */
 
 export const HISTORY_LIMIT = 20;
-
-const deckKey = (slug: string) => `slides:deck:${slug}`;
-const historyKey = (slug: string) => `slides:history:${slug}`;
-const INDEX_KEY = "slides:index";
 
 export class VersionConflictError extends Error {
   constructor(
@@ -31,7 +24,7 @@ export class VersionConflictError extends Error {
 
 export type CasResult = { ok: true } | { ok: false; currentVersion: number };
 
-/** The few storage operations the repo needs; Redis in production, memory in tests and local dev without Redis. */
+/** The few storage operations the repo needs. */
 export interface DeckBackend {
   get(slug: string): Promise<string | null>;
   /** Atomically: if the stored version equals `expectedVersion` (-1 = must not exist), archive it and write `json`. */
@@ -42,72 +35,9 @@ export interface DeckBackend {
     updatedAtMs: number,
   ): Promise<CasResult>;
   remove(slug: string): Promise<void>;
-  slugs(): Promise<string[]>;
+  /** Every stored deck's JSON, most recently updated first. */
+  all(): Promise<string[]>;
   history(slug: string): Promise<string[]>;
-}
-
-// KEYS: deck, history, index · ARGV: expectedVersion, json, score, slug, historyLimit
-const CAS_SCRIPT = `
-local current = redis.call('GET', KEYS[1])
-local expected = tonumber(ARGV[1])
-if current then
-  local version = cjson.decode(current)['version']
-  if version ~= expected then return version end
-  redis.call('LPUSH', KEYS[2], current)
-  redis.call('LTRIM', KEYS[2], 0, tonumber(ARGV[5]) - 1)
-elseif expected ~= -1 then
-  return -1
-end
-redis.call('SET', KEYS[1], ARGV[2])
-redis.call('ZADD', KEYS[3], tonumber(ARGV[3]), ARGV[4])
-return 'OK'
-`;
-
-export function redisBackend(redis: Redis): DeckBackend {
-  return {
-    // Upstash parses JSON values by default; ask for the raw string so parsing stays in one place.
-    get: async (slug) => {
-      const value = await redis.get<unknown>(deckKey(slug));
-      return value == null
-        ? null
-        : typeof value === "string"
-          ? value
-          : JSON.stringify(value);
-    },
-    async compareAndSet(slug, expectedVersion, json, updatedAtMs) {
-      const result = await redis.eval<string[], string | number>(
-        CAS_SCRIPT,
-        [deckKey(slug), historyKey(slug), INDEX_KEY],
-        [
-          String(expectedVersion),
-          json,
-          String(updatedAtMs),
-          slug,
-          String(HISTORY_LIMIT),
-        ],
-      );
-      return result === "OK"
-        ? { ok: true }
-        : { ok: false, currentVersion: Number(result) };
-    },
-    async remove(slug) {
-      await Promise.all([
-        redis.del(deckKey(slug), historyKey(slug)),
-        redis.zrem(INDEX_KEY, slug),
-      ]);
-    },
-    slugs: () => redis.zrange<string[]>(INDEX_KEY, 0, -1, { rev: true }),
-    history: async (slug) => {
-      const items = await redis.lrange<unknown>(
-        historyKey(slug),
-        0,
-        HISTORY_LIMIT - 1,
-      );
-      return items.map((item) =>
-        typeof item === "string" ? item : JSON.stringify(item),
-      );
-    },
-  };
 }
 
 export function memoryBackend(): DeckBackend {
@@ -138,10 +68,10 @@ export function memoryBackend(): DeckBackend {
       decks.delete(slug);
       histories.delete(slug);
     },
-    slugs: async () =>
-      [...decks.entries()]
-        .sort((a, b) => b[1].score - a[1].score)
-        .map(([slug]) => slug),
+    all: async () =>
+      [...decks.values()]
+        .sort((a, b) => b.score - a.score)
+        .map(({ json }) => json),
     history: async (slug) => histories.get(slug) ?? [],
   };
 }
@@ -183,12 +113,8 @@ export function createDeckRepo(
   return {
     get,
     async list() {
-      const stored = await Promise.all(
-        (await backend.slugs()).map((slug) => backend.get(slug)),
-      );
       const decks = new Map<string, Deck>();
-      for (const json of stored) {
-        if (!json) continue;
+      for (const json of await backend.all()) {
         const deck = parse(json);
         decks.set(deck.slug, deck);
       }

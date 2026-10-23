@@ -1,12 +1,8 @@
 import { revalidateTag, unstable_cache } from "next/cache";
-import { getRedis } from "@/lib/server/security";
+import { getDb } from "@/lib/server/firebase";
 import { parseDeck, type Deck, type DeckInput } from "./schema";
-import {
-  createDeckRepo,
-  memoryBackend,
-  redisBackend,
-  type DeckRepo,
-} from "./repo";
+import { createDeckRepo, memoryBackend, type DeckRepo } from "./repo";
+import { firestoreBackend } from "./firestore-backend";
 import { testPresentation } from "./decks/test-presentation";
 
 /**
@@ -20,13 +16,13 @@ const seeds: Deck[] = [parseDeck(testPresentation)];
 let repo: DeckRepo | undefined;
 function decks(): DeckRepo {
   if (repo) return repo;
-  const redis = getRedis();
-  if (!redis && process.env.NODE_ENV === "production") {
+  const db = getDb();
+  if (!db && process.env.NODE_ENV === "production") {
     console.warn(
-      "[slides] No Redis configured: decks are read from repo seeds and saves last until the server restarts.",
+      "[slides] Firebase isn't configured: decks are read from repo seeds and saves last until the server restarts.",
     );
   }
-  repo = createDeckRepo(redis ? redisBackend(redis) : memoryBackend(), seeds);
+  repo = createDeckRepo(db ? firestoreBackend(db) : memoryBackend(), seeds);
   return repo;
 }
 
