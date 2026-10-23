@@ -98,3 +98,22 @@ test.describe("Slides owner area", () => {
     await expect(page.getByRole("alert")).toHaveText("This GitHub account can't manage slides.");
   });
 });
+
+test.describe("Talks listing", () => {
+  test("lists published talks or says there are none yet", async ({ page }) => {
+    await open(page, "/slides");
+    await expect(page.getByRole("heading", { level: 1, name: "Talks" })).toBeVisible();
+    await expect(page).toHaveTitle(/^Talks ·/);
+    const cards = page.locator('a[href^="/slides/"]');
+    if ((await cards.count()) === 0) await expect(page.getByText("No talks published yet")).toBeVisible();
+  });
+
+  test("a public deck has its own share card", async ({ page }) => {
+    await open(page, DECK, "en", "domcontentloaded");
+    const image = await page.locator('meta[property="og:image"]').getAttribute("content");
+    expect(image).toMatch(/\/og\/slides\/test-presentation\.png\?v=\d+$/);
+    const response = await page.request.get(image!);
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toBe("image/png");
+  });
+});

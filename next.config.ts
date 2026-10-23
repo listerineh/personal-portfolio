@@ -53,6 +53,7 @@ const nextConfig: NextConfig = {
   // Post share cards (src/app/og/blog/[file]/route.tsx) read Geist and the covers from disk at request time.
   outputFileTracingIncludes: {
     '/og/blog/[file]': ['./src/assets/fonts/*.ttf', './public/blog/*'],
+    '/og/slides/[file]': ['./src/assets/fonts/*.ttf'],
   },
   compress: true,
   poweredByHeader: false,

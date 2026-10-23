@@ -38,7 +38,8 @@
     "whyListerineh": "¿Por qué Listerineh?",
     "privacyPolicy": "Política de Privacidad",
     "termsOfUse": "Términos de Uso",
-    "components": "Librería de componentes"
+    "components": "Librería de componentes",
+    "talks": "Charlas"
   },
   "hero": {
     "title": "Sebastian Alvarez",
@@ -830,6 +831,23 @@
         "unauthorized": "Tu sesión terminó. Vuelve a entrar para subir imágenes.",
         "network": "No se pudo subir: revisa tu conexión."
       }
+    }
+  },
+  "slidesPage": {
+    "title": "Charlas",
+    "intro": "Las diapositivas de mis charlas, listas para recorrer o presentar.",
+    "listLabel": "Charlas",
+    "view": "Ver diapositivas",
+    "emptyTitle": "Todavía no hay charlas publicadas",
+    "emptyBody": "Aquí van a vivir las diapositivas de mis charlas. ¿Quieres que hable en tu evento?",
+    "emptyAction": "Escríbeme",
+    "sectionTitle": "Charlas",
+    "sectionIntro": "Diapositivas del escenario, con el mismo estilo de este sitio.",
+    "viewAll": "Todas las charlas",
+    "carouselLabel": "Charlas",
+    "lang": {
+      "en": "En inglés",
+      "es": "En español"
     }
   }
 }

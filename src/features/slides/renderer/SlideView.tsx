@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import type { Slide, SlideLayout } from '../schema';
 import { SlideProvider, type SlideState } from './context';
 import * as L from './layouts';
+import '../slides.css';
 
 export const CANVAS_WIDTH = 1920;
 export const CANVAS_HEIGHT = 1080;

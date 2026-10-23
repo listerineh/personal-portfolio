@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: DeckPageProps): Promise<Metad
       title: deck.title,
       description: deck.description,
       path: `/slides/${deck.slug}`,
-      // A per-deck cover image arrives with the OG route (phase 2).
-      image: DEFAULT_OG_IMAGE,
+      // Drafts have no public card (the route serves public decks only); everyone else gets the deck's own.
+      image: deck.status === 'draft' ? DEFAULT_OG_IMAGE : `/og/slides/${deck.slug}.png?v=${deck.version}`,
       imageAlt: deck.title,
       locale: deck.lang,
       type: 'article',

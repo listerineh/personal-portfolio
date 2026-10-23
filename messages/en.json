@@ -38,7 +38,8 @@
     "whyListerineh": "Why Listerineh?",
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
-    "components": "Component Library"
+    "components": "Component Library",
+    "talks": "Talks"
   },
   "hero": {
     "title": "Sebastian Alvarez",
@@ -830,6 +831,23 @@
         "unauthorized": "Your session ended. Sign in again to upload.",
         "network": "Upload failed: check your connection."
       }
+    }
+  },
+  "slidesPage": {
+    "title": "Talks",
+    "intro": "Slides from the talks I've given, ready to flip through or present.",
+    "listLabel": "Talks",
+    "view": "View slides",
+    "emptyTitle": "No talks published yet",
+    "emptyBody": "The slides from my talks will live here. Want me to speak at your event?",
+    "emptyAction": "Get in touch",
+    "sectionTitle": "Talks",
+    "sectionIntro": "Slides from the stage, in the same style as this site.",
+    "viewAll": "All talks",
+    "carouselLabel": "Talks",
+    "lang": {
+      "en": "In English",
+      "es": "In Spanish"
     }
   }
 }

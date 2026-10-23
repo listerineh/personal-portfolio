@@ -24,6 +24,7 @@ export function Footer() {
         { label: t("experience"), href: "/#career" },
         { label: t("skills"), href: "/skills" },
         { label: t("blog"), href: "/blog" },
+        { label: t("talks"), href: "/slides" },
       ],
     },
     {

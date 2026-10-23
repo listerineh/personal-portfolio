@@ -22,6 +22,7 @@ export { Modal, ModalTrigger, ModalContent, ModalHeader, ModalTitle, ModalDescri
 export { Switch } from './Switch'
 export { Select } from './Select'
 export { ImageDropzone } from './ImageDropzone'
+export { DeckCard } from './DeckCard'
 export type { ImageDropzoneLabels } from './ImageDropzone'
 export type { SelectOption } from './Select'
 export { Dropdown, DropdownTrigger, DropdownContent, DropdownItem, DropdownCheckboxItem, DropdownLabel, DropdownSeparator } from './Dropdown'

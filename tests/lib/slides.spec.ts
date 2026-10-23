@@ -3,6 +3,7 @@ import { deckSchema } from "../../src/features/slides/schema";
 import { stepCount } from "../../src/features/slides/steps";
 import { ACCENT_PRESETS, accentTokens, contrast, hexToRgb } from "../../src/features/slides/theme";
 import { testPresentation } from "../../src/features/slides/decks/test-presentation";
+import { toDeckSummary } from "../../src/features/slides/summary";
 
 // Code-only checks (no page): the deck contract and the accent math behind every deck's colors.
 
@@ -56,5 +57,16 @@ test.describe("Accent tokens", () => {
   test("a fill too faint for its ground is flagged", () => {
     expect(accentTokens("#fef9c3", "light").warning).toBe("low-fill-contrast");
     expect(accentTokens("#2563eb", "light").warning).toBeUndefined();
+  });
+});
+
+test.describe("Deck summaries", () => {
+  test("carry the cover slide without speaker notes, and nothing else of the deck", () => {
+    const deck = deckSchema.parse(testPresentation);
+    const summary = toDeckSummary(deck);
+    expect(summary.cover.id).toBe(deck.slides[0].id);
+    expect(deck.slides[0].notes).toBeTruthy();
+    expect(summary.cover).not.toHaveProperty("notes");
+    expect(JSON.stringify(summary)).not.toContain(deck.slides[1].id);
   });
 });
