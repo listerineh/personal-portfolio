@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext } from 'react';
+import type { CodeTokens } from '../code-tokens';
 
 export interface SlideState {
   /** The slide is the one on screen (enter animations and loops run only then). */
@@ -12,6 +13,8 @@ export interface SlideState {
   deckTitle: string;
   index: number;
   total: number;
+  /** Highlighted tokens for a code slide (computed on the server); plain text without them. */
+  code?: CodeTokens;
 }
 
 const SlideContext = createContext<SlideState>({ active: false, step: 0, still: true, deckTitle: '', index: 0, total: 1 });

@@ -5,6 +5,7 @@ import { getDeckForOwner, getPublicDeck } from '@/features/slides/store';
 import { isOwner } from '@/features/slides/auth';
 import type { Deck } from '@/features/slides/schema';
 import { DeckViewer } from '@/features/slides/viewer/DeckViewer';
+import { highlightDeck } from '@/features/slides/highlight';
 
 interface DeckPageProps {
   params: Promise<{ slug: string }>;
@@ -49,5 +50,5 @@ export default async function DeckPage({ params }: DeckPageProps) {
   const deck = await findDeck(slug);
   if (!deck) notFound();
 
-  return <DeckViewer deck={forAudience(deck)} />;
+  return <DeckViewer deck={forAudience(deck)} highlights={await highlightDeck(deck)} />;
 }

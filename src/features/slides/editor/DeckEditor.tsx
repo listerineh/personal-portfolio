@@ -22,6 +22,8 @@ import {
 } from "./fields";
 import { SlideForm, type FieldErrors } from "./SlideForm";
 import { DeckSlugProvider } from "./upload";
+import { useCodeHighlights } from "./use-code-highlights";
+import type { DeckHighlights } from "../code-tokens";
 
 type SaveState =
   | "saved"
@@ -55,7 +57,7 @@ function groupIssues(deck: Deck, required: string) {
   return { valid: false, slides, settings, count: parsed.error.issues.length };
 }
 
-export function DeckEditor({ initialDeck }: { initialDeck: Deck }) {
+export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDeck: Deck; initialHighlights?: DeckHighlights }) {
   const t = useTranslations("slidesEditor");
   const [deck, setDeck] = useState<Deck>(initialDeck);
   const [selected, setSelected] = useState(0);
@@ -71,6 +73,7 @@ export function DeckEditor({ initialDeck }: { initialDeck: Deck }) {
 
   const issues = useMemo(() => groupIssues(deck, t("required")), [deck, t]);
   const slide = deck.slides[Math.min(selected, deck.slides.length - 1)];
+  const highlights = useCodeHighlights(slide, initialHighlights);
 
   const update = useCallback((next: Deck) => {
     deckRef.current = next;
@@ -319,6 +322,7 @@ export function DeckEditor({ initialDeck }: { initialDeck: Deck }) {
                           deckTitle: deck.title,
                           index,
                           total: deck.slides.length,
+                          code: highlights[item.id],
                         }}
                       />
                     </SlideFrame>
@@ -349,6 +353,7 @@ export function DeckEditor({ initialDeck }: { initialDeck: Deck }) {
                 deckTitle: deck.title,
                 index: selected,
                 total: deck.slides.length,
+                code: highlights[slide.id],
               }}
             />
           </SlideFrame>

@@ -150,6 +150,10 @@
   tab-size: 2;
 }
 
+/* Highlighted code (shiki tokens carry a color per slide theme) */
+.sl-code [data-tok] { color: var(--l, inherit); }
+.deck[data-theme="dark"] .sl-code [data-tok] { color: var(--d, inherit); }
+
 /* Inline rich text */
 .sl-rich code {
   font-family: var(--font-mono), ui-monospace, monospace;

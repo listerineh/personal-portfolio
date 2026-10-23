@@ -24,6 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { prefersReducedMotion } from "@/lib/motion";
 import type { Deck } from "../schema";
+import type { DeckHighlights } from "../code-tokens";
 import { stepCount } from "../steps";
 import { accentStyle, type DeckTheme } from "../theme";
 import { SlideCanvas, SlideFrame } from "../renderer/SlideView";
@@ -53,7 +54,7 @@ function isInteractive(target: EventTarget | null): boolean {
   );
 }
 
-export function DeckViewer({ deck }: { deck: Deck }) {
+export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?: DeckHighlights }) {
   const t = useTranslations("slides");
   const total = deck.slides.length;
   const steps = useMemo(() => deck.slides.map(stepCount), [deck.slides]);
@@ -302,6 +303,7 @@ export function DeckViewer({ deck }: { deck: Deck }) {
                 deckTitle: deck.title,
                 index: position.index,
                 total,
+                code: highlights[slide.id],
               }}
             />
           </div>

@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 import { isOwner } from '@/features/slides/auth';
 import { getDeckForOwner } from '@/features/slides/store';
 import { DeckEditor } from '@/features/slides/editor/DeckEditor';
+import { highlightDeck } from '@/features/slides/highlight';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,5 +19,5 @@ export default async function EditDeckPage({ params }: { params: Promise<{ slug:
   const deck = await getDeckForOwner(slug);
   if (!deck) notFound();
   // Saves refresh this route (revalidateTag); the editor keeps its own state, so the new props are ignored on purpose.
-  return <DeckEditor initialDeck={deck} />;
+  return <DeckEditor initialDeck={deck} initialHighlights={await highlightDeck(deck)} />;
 }

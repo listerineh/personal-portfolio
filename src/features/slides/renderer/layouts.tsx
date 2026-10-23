@@ -359,6 +359,25 @@ export function QuoteLayout({ slide }: LayoutProps<"quote">) {
   );
 }
 
+/** Code with its highlighted tokens when the server sent them; each token holds both themes' colors. */
+function CodeBody({ text }: { text: string }) {
+  const { code } = useSlide();
+  if (!code) return <code>{text}</code>;
+  return (
+    <code>
+      {code.map((line, i) => (
+        <span key={i} className="block min-h-[1.55em]">
+          {line.map((token, j) => (
+            <span key={j} data-tok="" style={{ "--l": token.l, "--d": token.d } as React.CSSProperties}>
+              {token.t}
+            </span>
+          ))}
+        </span>
+      ))}
+    </code>
+  );
+}
+
 export function CodeLayout({ slide }: LayoutProps<"code">) {
   return (
     <div className="slide-pad">
@@ -373,7 +392,7 @@ export function CodeLayout({ slide }: LayoutProps<"code">) {
           </span>
           {/* Syntax highlighting arrives with shiki in phase 3. */}
           <pre className="sl-code overflow-hidden whitespace-pre-wrap">
-            <code>{slide.code}</code>
+            <CodeBody text={slide.code} />
           </pre>
         </div>
         {slide.caption && (
