@@ -5,19 +5,22 @@ import { ACCENT_PRESETS, accentTokens, contrast, hexToRgb } from "../../src/feat
 import { testPresentation } from "../../src/features/slides/decks/test-presentation";
 import { toDeckSummary } from "../../src/features/slides/summary";
 import { gitGithubGitflow } from "../../src/features/slides/decks/git-github-gitflow";
+import { pythonTyping } from "../../src/features/slides/decks/python-typing";
 
 // Code-only checks (no page): the deck contract and the accent math behind every deck's colors.
 
 test.describe("Deck schema", () => {
-  test("the Git talk seed is valid and starts as a draft", () => {
-    const result = deckSchema.safeParse(gitGithubGitflow);
-    expect(result.success, result.success ? "" : JSON.stringify(result.error.issues)).toBe(true);
-    expect(gitGithubGitflow.status).toBe("draft");
-    // The English translation covers every slide that has text of its own.
-    const deck = deckSchema.parse(gitGithubGitflow);
-    const untranslated = deck.slides.filter((slide) => !deck.translations?.en?.slides[slide.id]).map((slide) => slide.id);
-    expect(untranslated).toEqual([]);
-  });
+  for (const talk of [gitGithubGitflow, pythonTyping]) {
+    test(`the ${talk.slug} talk seed is valid and starts as a draft`, () => {
+      const result = deckSchema.safeParse(talk);
+      expect(result.success, result.success ? "" : JSON.stringify(result.error.issues)).toBe(true);
+      expect(talk.status).toBe("draft");
+      // The English translation covers every slide that has text of its own.
+      const deck = deckSchema.parse(talk);
+      const untranslated = deck.slides.filter((slide) => !deck.translations?.en?.slides[slide.id]).map((slide) => slide.id);
+      expect(untranslated).toEqual([]);
+    });
+  }
 
   test("the seed deck is valid", () => {
     const deck = deckSchema.parse(testPresentation);

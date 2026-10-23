@@ -5,6 +5,7 @@ import { createDeckRepo, memoryBackend, type DeckRepo } from "./repo";
 import { firestoreBackend } from "./firestore-backend";
 import { testPresentation } from "./decks/test-presentation";
 import { gitGithubGitflow } from "./decks/git-github-gitflow";
+import { pythonTyping } from "./decks/python-typing";
 
 /**
  * Server-side entry point for decks. Public reads are cached per deck and invalidated on save; owner reads and writes
@@ -12,7 +13,7 @@ import { gitGithubGitflow } from "./decks/git-github-gitflow";
  */
 
 // Seeds are validated once, at module load, so a broken seed fails loudly in dev and in the build.
-const seeds: Deck[] = [parseDeck(testPresentation), parseDeck(gitGithubGitflow)];
+const seeds: Deck[] = [parseDeck(testPresentation), parseDeck(gitGithubGitflow), parseDeck(pythonTyping)];
 
 let repo: DeckRepo | undefined;
 function decks(): DeckRepo {
