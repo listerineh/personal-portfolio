@@ -30,6 +30,7 @@ export function Header() {
       { label: t("projects"), href: "/projects" },
       { label: t("skills"), href: "/skills" },
       { label: t("blog"), href: "/blog" },
+      { label: t("talks"), href: "/slides" },
       { label: t("contact"), href: "/contact" },
       { label: t("why"), href: "/why" },
     ],
