@@ -9,6 +9,7 @@ import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
 import type { Slide } from "../schema";
 import { LAYOUT_FIELDS, setField, type Field } from "./fields";
+import { ImageField } from "./ImageField";
 
 /** path ("items.2.title") → message, for the slide being edited. */
 export type FieldErrors = Record<string, string>;
@@ -183,40 +184,15 @@ function FieldControl({ field, path, value, errors, onChange }: ControlProps) {
           />
         </Labelled>
       );
-    case "image": {
-      const image = (value as { src?: string; alt?: string }) ?? {};
+    case "image":
       return (
-        <fieldset className="flex flex-col gap-3">
-          <legend className="mb-1.5 text-sm font-medium">{label}</legend>
-          <Labelled
-            label={t("field.src")}
-            error={errors[`${path}.src`]}
-            hint={t("imageHint")}
-            htmlFor={`${id}-src`}
-          >
-            <input
-              id={`${id}-src`}
-              className={inputClass}
-              value={image.src ?? ""}
-              onChange={(e) => onChange({ ...image, src: e.target.value })}
-            />
-          </Labelled>
-          <Labelled
-            label={t("field.alt")}
-            error={errors[`${path}.alt`]}
-            hint={t("altHint")}
-            htmlFor={`${id}-alt`}
-          >
-            <input
-              id={`${id}-alt`}
-              className={inputClass}
-              value={image.alt ?? ""}
-              onChange={(e) => onChange({ ...image, alt: e.target.value })}
-            />
-          </Labelled>
-        </fieldset>
+        <ImageField
+          label={label}
+          value={(value as { src?: string; alt?: string }) ?? {}}
+          errors={{ src: errors[`${path}.src`] ?? error, alt: errors[`${path}.alt`] }}
+          onChange={onChange}
+        />
       );
-    }
     case "icon":
       return (
         <Labelled label={label} error={error} hint={t("iconHint")} htmlFor={id}>

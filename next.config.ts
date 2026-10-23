@@ -34,6 +34,13 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      // Slide images uploaded from the editor (src/features/slides/images.ts).
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        port: '',
+        pathname: '/v0/b/**',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
     qualities: [75, 90],

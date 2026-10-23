@@ -699,7 +699,7 @@
     "add": "Añadir",
     "optional": "opcional",
     "richHint": "**negrita**, *cursiva*, `código`, ==resaltado==, [link](https://…)",
-    "imageHint": "Una ruta como /images/foto.webp o una URL https. La subida llega después.",
+    "imageHint": "Un archivo en /public, como /images/foto.webp. Para cualquier otra imagen, súbela.",
     "altHint": "Qué muestra la imagen, para lectores de pantalla.",
     "iconHint": "Un nombre de icono de Lucide, como file-down o sparkles.",
     "buildHint": "Cada punto aparece con su propio clic.",
@@ -812,6 +812,24 @@
       "highlights": "Destacados",
       "handle": "Usuario"
     },
-    "required": "Obligatorio"
+    "required": "Obligatorio",
+    "upload": {
+      "prompt": "Suelta una imagen aquí",
+      "hint": "JPG, PNG, WebP, AVIF o GIF. Las fotos grandes se ajustan solas.",
+      "choose": "Elegir imagen",
+      "replace": "Cambiar imagen",
+      "busy": "Subiendo…",
+      "useUrl": "Usar una ruta",
+      "hideUrl": "Ocultar ruta",
+      "error": {
+        "type": "Ese archivo no es una imagen que podamos usar (JPG, PNG, WebP, AVIF o GIF).",
+        "size": "La imagen sigue pesando más de 4 MB después de ajustarla.",
+        "unreadable": "No se pudo leer la imagen. Prueba a exportarla de nuevo.",
+        "storage": "No se pudo subir: el almacenamiento no está disponible. Inténtalo de nuevo.",
+        "slug": "Guarda la presentación antes de subir imágenes.",
+        "unauthorized": "Tu sesión terminó. Vuelve a entrar para subir imágenes.",
+        "network": "No se pudo subir: revisa tu conexión."
+      }
+    }
   }
 }

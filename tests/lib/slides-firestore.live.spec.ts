@@ -6,6 +6,8 @@ import {
   VersionConflictError,
 } from "../../src/features/slides/repo";
 import { testPresentation } from "../../src/features/slides/decks/test-presentation";
+import { processImage, storeDeckImage } from "../../src/features/slides/images";
+import sharp from "sharp";
 
 // Live check against the real Firebase project. Opt-in: needs the FIREBASE_* variables and SLIDES_FIRESTORE_LIVE=1,
 // so CI and everyday runs skip it. It writes a throwaway deck (and file), checks the rules of the game, then deletes them.
@@ -78,5 +80,16 @@ test.describe("Slides on real Firebase", () => {
     await file.save("ok", { contentType: "text/plain" });
     expect((await file.exists())[0]).toBe(true);
     await file.delete();
+  });
+
+  test("an uploaded slide image is stored and readable by its URL", async () => {
+    const png = await sharp({ create: { width: 64, height: 48, channels: 3, background: "#d97706" } }).png().toBuffer();
+    const stored = await storeDeckImage(slug, await processImage(png, "image/png"));
+    expect(stored, "FIREBASE_STORAGE_BUCKET").not.toBeNull();
+    const response = await fetch(stored!.src);
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe("image/webp");
+    const path = decodeURIComponent(new URL(stored!.src).pathname.split("/o/")[1]);
+    await getBucket()!.file(path).delete();
   });
 });

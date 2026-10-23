@@ -21,6 +21,7 @@ import {
   slideTemplate,
 } from "./fields";
 import { SlideForm, type FieldErrors } from "./SlideForm";
+import { DeckSlugProvider } from "./upload";
 
 type SaveState =
   | "saved"
@@ -190,6 +191,7 @@ export function DeckEditor({ initialDeck }: { initialDeck: Deck }) {
   };
 
   return (
+    <DeckSlugProvider value={deck.slug}>
     <div className="fixed inset-0 flex flex-col bg-background text-foreground">
       <header className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
         <Link
@@ -404,6 +406,7 @@ export function DeckEditor({ initialDeck }: { initialDeck: Deck }) {
         </aside>
       </div>
     </div>
+    </DeckSlugProvider>
   );
 }
 

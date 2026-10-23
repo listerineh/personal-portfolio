@@ -16,8 +16,13 @@ const httpsUrl = z
   .string()
   .url()
   .refine((value) => value.startsWith("https://"), "Must be an https URL");
-// Images live in /public for now (Vercel Blob URLs once the editor uploads them).
-const imageSrc = z.union([z.string().regex(/^\/[\w\-./]+$/), httpsUrl]);
+// Images are files in /public or uploads from the editor (Firebase Storage). Other hosts aren't allowed: next/image
+// only serves hosts listed in next.config.ts, and an unlisted one would break the slide.
+const IMAGE_HOSTS = ["firebasestorage.googleapis.com"];
+const imageSrc = z.union([
+  z.string().regex(/^\/[\w\-./]+$/, "Use a path in /public or upload the image"),
+  httpsUrl.refine((value) => IMAGE_HOSTS.includes(new URL(value).hostname), "Upload the image instead of linking it"),
+]);
 // A lucide icon name ("file-down"). Checked by shape only: lucide's name list ships as ESM or a client module, neither
 // loadable everywhere this schema runs. The renderer falls back to a neutral mark and the editor's picker offers real names.
 const iconName = z.string().regex(/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/).max(40);
