@@ -113,7 +113,9 @@ test.describe("Talks listing", () => {
     await open(page, DECK, "en", "domcontentloaded");
     const image = await page.locator('meta[property="og:image"]').getAttribute("content");
     expect(image).toMatch(/\/og\/slides\/test-presentation\.png\?v=\d+&lang=es$/);
-    const response = await page.request.get(image!);
+    // The tag is absolute on the production host; fetch the same path from the server under test.
+    const { pathname, search } = new URL(image!);
+    const response = await page.request.get(pathname + search);
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toBe("image/png");
   });
