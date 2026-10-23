@@ -3,8 +3,7 @@
 import { useId, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowDown, ArrowUp, Plus, X } from "lucide-react";
-import { DynamicIcon, type IconName } from "lucide-react/dynamic";
-import { Select } from "@/components/ds";
+import { IconPicker, Select } from "@/components/ds";
 import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
 import type { Slide } from "../schema";
@@ -198,28 +197,14 @@ function FieldControl({ field, path, value, errors, onChange }: ControlProps) {
       return <EmbedField id={id} label={label} value={(value as string) ?? ""} error={error} onChange={onChange} />;
     case "icon":
       return (
-        <Labelled label={label} error={error} hint={t("iconHint")} htmlFor={id}>
-          <div className="flex items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/[0.14] text-primary"
-            >
-              <DynamicIcon
-                name={(value as IconName) ?? "circle"}
-                size={18}
-                fallback={() => (
-                  <span className="h-2 w-2 rounded-full bg-current" />
-                )}
-              />
-            </span>
-            <input
-              id={id}
-              className={inputClass}
-              aria-invalid={invalid}
-              value={(value as string) ?? ""}
-              onChange={(e) => onChange(e.target.value.trim().toLowerCase())}
-            />
-          </div>
+        <Labelled label={label} error={error} htmlFor={id}>
+          <IconPicker
+            id={id}
+            value={(value as string) ?? ""}
+            onChange={onChange}
+            aria-invalid={invalid}
+            labels={{ search: t("iconSearch"), empty: t("iconEmpty"), choose: t("iconChoose") }}
+          />
         </Labelled>
       );
     case "list":

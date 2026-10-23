@@ -702,7 +702,6 @@
     "richHint": "**negrita**, *cursiva*, `código`, ==resaltado==, [link](https://…)",
     "imageHint": "Un archivo en /public, como /images/foto.webp. Para cualquier otra imagen, súbela.",
     "altHint": "Qué muestra la imagen, para lectores de pantalla.",
-    "iconHint": "Un nombre de icono de Lucide, como file-down o sparkles.",
     "buildHint": "Cada punto aparece con su propio clic.",
     "notesHint": "Solo las ves tú, nunca el público.",
     "descriptionHint": "Se muestra al compartir el link.",
@@ -834,7 +833,10 @@
     },
     "embedHint": "Pega un link de YouTube, Vimeo, Loom, CodeSandbox, StackBlitz o Figma.",
     "embedReady": "Listo para incrustar desde {provider}.",
-    "embedUnsupported": "Ese link no es de un sitio que podamos incrustar."
+    "embedUnsupported": "Ese link no es de un sitio que podamos incrustar.",
+    "iconSearch": "Buscar iconos",
+    "iconEmpty": "Ningún icono con ese nombre",
+    "iconChoose": "Elige un icono"
   },
   "slidesPage": {
     "title": "Charlas",

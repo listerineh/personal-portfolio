@@ -702,7 +702,6 @@
     "richHint": "**bold**, *italic*, `code`, ==highlight==, [link](https://…)",
     "imageHint": "A file in /public, like /images/photo.webp. To use any other image, upload it.",
     "altHint": "What the image shows, for screen readers.",
-    "iconHint": "A Lucide icon name, like file-down or sparkles.",
     "buildHint": "Each item appears on its own click.",
     "notesHint": "Only you see these, never the audience.",
     "descriptionHint": "Shown when the link is shared.",
@@ -834,7 +833,10 @@
     },
     "embedHint": "Paste a YouTube, Vimeo, Loom, CodeSandbox, StackBlitz or Figma link.",
     "embedReady": "{provider} embed ready.",
-    "embedUnsupported": "That link isn't from a site we can embed."
+    "embedUnsupported": "That link isn't from a site we can embed.",
+    "iconSearch": "Search icons",
+    "iconEmpty": "No icon with that name",
+    "iconChoose": "Choose an icon"
   },
   "slidesPage": {
     "title": "Talks",
