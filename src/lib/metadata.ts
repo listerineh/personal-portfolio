@@ -7,9 +7,9 @@ import { type Locale } from "@/i18n/config";
  * by scripts/generate-og-images.js into /public/og.
  */
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://listerineh.dev";
-export const SITE_NAME = "listerineh.dev";
+import { SITE_NAME, SITE_URL } from "./site";
+
+export { SITE_NAME, SITE_URL };
 export const AUTHOR_NAME = "Sebastian Alvarez";
 export const TWITTER_HANDLE = "@listerineh";
 export const TITLE_TEMPLATE = `%s · ${AUTHOR_NAME}`;

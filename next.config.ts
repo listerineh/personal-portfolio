@@ -34,6 +34,13 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      // Slide images uploaded from the editor (src/features/slides/images.ts).
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        port: '',
+        pathname: '/v0/b/**',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
     qualities: [75, 90],
@@ -41,11 +48,16 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 365,
   },
+  // Loaded at runtime from node_modules, not bundled: Chromium's binary and the library that drives it.
+  serverExternalPackages: ['@sparticuz/chromium', 'puppeteer-core'],
   // Lets verification builds write elsewhere (NEXT_DIST_DIR=.next-verify) without disturbing a running dev server.
   distDir: process.env.NEXT_DIST_DIR || '.next',
   // Post share cards (src/app/og/blog/[file]/route.tsx) read Geist and the covers from disk at request time.
   outputFileTracingIncludes: {
     '/og/blog/[file]': ['./src/assets/fonts/*.ttf', './public/blog/*'],
+    '/og/slides/[file]': ['./src/assets/fonts/*.ttf'],
+    // Headless Chromium for slide PDFs (src/features/slides/pdf.ts): the compressed binary ships with the route.
+    '/slides/[slug]/pdf': ['./node_modules/@sparticuz/chromium/bin/**'],
   },
   compress: true,
   poweredByHeader: false,

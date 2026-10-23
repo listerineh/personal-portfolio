@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Slide decks are read and written only by the site's server (Admin SDK, which bypasses these rules).
+// No browser ever talks to Firestore directly, so clients get nothing.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
