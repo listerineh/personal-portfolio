@@ -11,6 +11,8 @@
  *
  * Violations are reported to /api/csp-report, which logs them (Vercel runtime logs).
  */
+import { EMBED_ORIGINS } from '@/features/slides/embeds';
+
 export type CspMode = 'production' | 'preview' | 'development';
 
 export const CSP_REPORT_PATH = '/api/csp-report';
@@ -54,8 +56,8 @@ export function buildCsp(nonce: string, { mode = cspMode(), https = true }: { mo
     'img-src': ["'self'", 'data:', 'blob:', ...ICON_CDNS, ...GOOGLE_ANALYTICS, 'https://*.hotjar.com', 'https://*.contentsquare.net', ...(preview ? VERCEL_TOOLBAR.img : [])],
     'font-src': ["'self'", 'data:', 'https://*.hotjar.com', ...(preview ? VERCEL_TOOLBAR.font : [])],
     'connect-src': ["'self'", ...GOOGLE_ANALYTICS, ...HOTJAR, ...CONTENTSQUARE, ...(preview ? VERCEL_TOOLBAR.connect : []), ...(dev ? ['ws:'] : [])],
-    // The /why video, Hotjar's widget frame, and /docs/components (Storybook, same origin; local server in dev).
-    'frame-src': ["'self'", 'https://www.youtube.com', 'https://vars.hotjar.com', ...(preview ? VERCEL_TOOLBAR.frame : []), ...(dev ? ['http://localhost:6006'] : [])],
+    // The /why video, slide embeds, Hotjar's widget frame, and /docs/components (Storybook, same origin; local server in dev).
+    'frame-src': ["'self'", 'https://www.youtube.com', ...EMBED_ORIGINS, 'https://vars.hotjar.com', ...(preview ? VERCEL_TOOLBAR.frame : []), ...(dev ? ['http://localhost:6006'] : [])],
     'worker-src': ["'self'"],
     'manifest-src': ["'self'"],
     'media-src': ["'self'"],

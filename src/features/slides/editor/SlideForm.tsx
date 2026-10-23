@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowDown, ArrowUp, Plus, X } from "lucide-react";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import type { Slide } from "../schema";
 import { LAYOUT_FIELDS, setField, type Field } from "./fields";
 import { ImageField } from "./ImageField";
+import { embedProvider, toEmbedUrl } from "../embeds";
 
 /** path ("items.2.title") → message, for the slide being edited. */
 export type FieldErrors = Record<string, string>;
@@ -193,6 +194,8 @@ function FieldControl({ field, path, value, errors, onChange }: ControlProps) {
           onChange={onChange}
         />
       );
+    case "embed":
+      return <EmbedField id={id} label={label} value={(value as string) ?? ""} error={error} onChange={onChange} />;
     case "icon":
       return (
         <Labelled label={label} error={error} hint={t("iconHint")} htmlFor={id}>
@@ -447,5 +450,35 @@ function ObjectsControl({
         />
       )}
     </fieldset>
+  );
+}
+
+/** A pasted link becomes its embed form right away; the field keeps what was typed until it is a supported link. */
+function EmbedField({ id, label, value, error, onChange }: { id: string; label: string; value: string; error?: string; onChange: (value: unknown) => void }) {
+  const t = useTranslations("slidesEditor");
+  const [draft, setDraft] = useState(value);
+  const embed = toEmbedUrl(draft);
+  const provider = embedProvider(embed ?? undefined);
+  return (
+    <Labelled
+      label={label}
+      error={draft && !embed ? t("embedUnsupported") : error}
+      hint={provider ? t("embedReady", { provider }) : t("embedHint")}
+      htmlFor={id}
+    >
+      <input
+        id={id}
+        className={inputClass}
+        inputMode="url"
+        placeholder="https://youtu.be/…"
+        aria-invalid={draft && !embed ? true : undefined}
+        value={draft}
+        onChange={(e) => {
+          const next = e.target.value.trim();
+          setDraft(e.target.value);
+          onChange(next === "" ? "" : (toEmbedUrl(next) ?? next));
+        }}
+      />
+    </Labelled>
   );
 }

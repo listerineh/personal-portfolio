@@ -21,7 +21,7 @@ test.describe("Deck schema", () => {
       deckSchema.safeParse({ ...base, slides: [{ id: "i", layout: "icons-grid", title: "T", items: [{ icon: "Not An Icon", title: "a" }, { icon: "keyboard", title: "b" }] }] }).success,
     ).toBe(false);
     expect(deckSchema.safeParse({ ...base, slides: [{ id: "e", layout: "embed", url: "https://evil.example/x" }] }).success).toBe(false);
-    expect(deckSchema.safeParse({ ...base, slides: [{ id: "e", layout: "embed", url: "https://www.youtube.com/embed/abc" }] }).success).toBe(true);
+    expect(deckSchema.safeParse({ ...base, slides: [{ id: "e", layout: "embed", url: "https://www.youtube-nocookie.com/embed/abcdefghijk" }] }).success).toBe(true);
     expect(deckSchema.safeParse({ ...base, slug: "Not A Slug" }).success).toBe(false);
     expect(deckSchema.safeParse({ ...base, accent: "blue" }).success).toBe(false);
   });

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isEmbedUrl } from "./embeds";
 
 /**
  * A deck is one JSON document. Slides pick from a closed set of layouts, so every talk shares the same look; only the
@@ -38,16 +39,8 @@ const iconItem = z.object({
   body: richText.optional(),
 });
 
-// Embeds are limited to hosts the CSP already frames (src/lib/csp.ts).
-export const EMBED_HOSTS = [
-  "www.youtube.com",
-  "www.youtube-nocookie.com",
-] as const;
-const embedUrl = httpsUrl.refine(
-  (value) =>
-    (EMBED_HOSTS as readonly string[]).includes(new URL(value).hostname),
-  `Embeds are limited to ${EMBED_HOSTS.join(", ")}`,
-);
+// Embeds: supported sites only, in their embed form (embeds.ts; the CSP frames the same hosts).
+const embedUrl = httpsUrl.refine(isEmbedUrl, "Use a YouTube, Vimeo, Loom, CodeSandbox, StackBlitz or Figma link");
 
 const base = {
   id: z.string().regex(/^[a-z0-9-]{1,40}$/),
@@ -156,7 +149,8 @@ export const slideSchema = z.discriminatedUnion("layout", [
     ...base,
     layout: z.literal("embed"),
     title: text.optional(),
-    url: embedUrl,
+    /** Optional while drafting: the slide shows a placeholder until a link is pasted. */
+    url: embedUrl.optional(),
     caption: richText.optional(),
   }),
   z.object({

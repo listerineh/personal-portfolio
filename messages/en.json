@@ -790,7 +790,7 @@
       "language": "Language",
       "code": "Code",
       "source": "Mermaid source",
-      "url": "YouTube embed URL",
+      "url": "Link",
       "icon": "Icon",
       "links": "Links",
       "href": "URL",
@@ -831,7 +831,10 @@
         "unauthorized": "Your session ended. Sign in again to upload.",
         "network": "Upload failed: check your connection."
       }
-    }
+    },
+    "embedHint": "Paste a YouTube, Vimeo, Loom, CodeSandbox, StackBlitz or Figma link.",
+    "embedReady": "{provider} embed ready.",
+    "embedUnsupported": "That link isn't from a site we can embed."
   },
   "slidesPage": {
     "title": "Talks",

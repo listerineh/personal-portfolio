@@ -790,7 +790,7 @@
       "language": "Lenguaje",
       "code": "Código",
       "source": "Código Mermaid",
-      "url": "URL de embed de YouTube",
+      "url": "Link",
       "icon": "Icono",
       "links": "Links",
       "href": "URL",
@@ -831,7 +831,10 @@
         "unauthorized": "Tu sesión terminó. Vuelve a entrar para subir imágenes.",
         "network": "No se pudo subir: revisa tu conexión."
       }
-    }
+    },
+    "embedHint": "Pega un link de YouTube, Vimeo, Loom, CodeSandbox, StackBlitz o Figma.",
+    "embedReady": "Listo para incrustar desde {provider}.",
+    "embedUnsupported": "Ese link no es de un sitio que podamos incrustar."
   },
   "slidesPage": {
     "title": "Charlas",

@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { DynamicIcon, type IconName } from "lucide-react/dynamic";
+import { MonitorPlay } from "lucide-react";
+import { embedProvider } from "../embeds";
 import { cn } from "@/lib/utils";
 import { SITE_NAME } from "@/lib/site";
 import type { SlideLayout, SlideOf } from "../schema";
@@ -435,8 +437,8 @@ export function EmbedLayout({ slide }: LayoutProps<"embed">) {
         {...enter(1)}
       >
         <div className="relative min-h-0 flex-1 overflow-hidden rounded-[30px] bg-tint shadow-card">
-          {/* Mounted only on screen, so off-screen slides and thumbnails never load third-party frames. */}
-          {active && !still && (
+          {/* Mounted only on screen, so off-screen slides, thumbnails and the editor never load third-party frames. */}
+          {active && !still && slide.url ? (
             <iframe
               src={slide.url}
               title={slide.title ?? slide.caption ?? "Embed"}
@@ -445,6 +447,13 @@ export function EmbedLayout({ slide }: LayoutProps<"embed">) {
               sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
               loading="lazy"
             />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 text-muted-foreground">
+              <span aria-hidden="true" className="flex h-[120px] w-[120px] items-center justify-center rounded-full bg-primary/[0.14] text-primary">
+                <MonitorPlay size={56} strokeWidth={1.75} />
+              </span>
+              <span className="sl-headline">{embedProvider(slide.url) ?? "Embed"}</span>
+            </div>
           )}
         </div>
         {slide.caption && (

@@ -14,6 +14,8 @@ export type FieldKind =
   | { kind: "select"; options: readonly string[] }
   | { kind: "image" }
   | { kind: "icon" }
+  /** A link to a supported site, turned into its embed form. */
+  | { kind: "embed" }
   | { kind: "list"; min: number; max: number }
   | {
       kind: "objects";
@@ -92,7 +94,7 @@ export const LAYOUT_FIELDS: Record<SlideLayout, readonly Field[]> = {
     { key: "source", kind: "code" },
     rich("caption", true),
   ],
-  embed: [text("title", true), text("url"), rich("caption", true)],
+  embed: [text("title", true), { key: "url", kind: "embed", optional: true }, rich("caption", true)],
   "icons-grid": [
     text("title"),
     {
@@ -169,7 +171,7 @@ const TEMPLATES: {
   quote: { quote: "A quote worth repeating.", author: "Author" },
   code: { language: "ts", code: "console.log('hello');" },
   diagram: { source: "flowchart LR\n  A --> B" },
-  embed: { url: "https://www.youtube.com/embed/" },
+  embed: { title: "Demo" },
   "icons-grid": {
     title: "Title",
     items: [
