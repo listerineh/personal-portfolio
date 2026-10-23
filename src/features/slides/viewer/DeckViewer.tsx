@@ -25,8 +25,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { prefersReducedMotion } from "@/lib/motion";
-import type { Deck } from "../schema";
-import type { DeckHighlights } from "../code-tokens";
+import type { DeckLang } from "../schema";
+import type { AudienceVersions } from "../audience";
+import { useLocale } from "@/context/locale-context";
+import { LanguageSwitcher } from "@/components/common/language-switcher";
 import { stepCount } from "../steps";
 import { accentStyle } from "../theme";
 import { useTheme } from "@/context/theme-context";
@@ -69,8 +71,16 @@ function isInteractive(target: EventTarget | null): boolean {
   );
 }
 
-export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?: DeckHighlights }) {
+/**
+ * The deck in every language it has; the one shown follows the site language (the header's EN/ES switch, also shown
+ * here when the deck has both), falling back to the deck's own language.
+ */
+export function DeckViewer({ versions, primaryLang }: { versions: AudienceVersions; primaryLang: DeckLang }) {
   const t = useTranslations("slides");
+  const { locale } = useLocale();
+  const lang: DeckLang = versions[locale as DeckLang] ? (locale as DeckLang) : primaryLang;
+  const { deck, highlights } = versions[lang]!;
+  const multilingual = Object.keys(versions).length > 1;
   const total = deck.slides.length;
   const steps = useMemo(() => deck.slides.map(stepCount), [deck.slides]);
 
@@ -306,6 +316,7 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
             </p>
           )}
         </div>
+        {multilingual && <LanguageSwitcher className="ml-auto shrink-0" />}
       </header>
 
       <main
@@ -387,8 +398,8 @@ export function DeckViewer({ deck, highlights = {} }: { deck: Deck; highlights?:
         <div className="flex items-center gap-1">
           {deck.status !== "draft" && (
             <a
-              href={`/slides/${deck.slug}/pdf?v=${deck.version}`}
-              download={`${deck.slug}.pdf`}
+              href={`/slides/${deck.slug}/pdf?v=${deck.version}&lang=${lang}`}
+              download={multilingual ? `${deck.slug}-${lang}.pdf` : `${deck.slug}.pdf`}
               aria-label={t("downloadPdf")}
               title={t("downloadPdf")}
               className={CHROME_BUTTON}

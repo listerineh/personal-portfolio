@@ -20,7 +20,7 @@ interface HomePageProps {
   byLocale: Record<Locale, HomeLocaleData>;
   skills: SkillIconSummary[];
   /** Published talks; the section only shows when there is one. */
-  talks: DeckSummary[];
+  talks: Record<Locale, DeckSummary[]>;
 }
 
 /** Home: hero, experience, projects, skills, blog, talks, contact. Data arrives per language from the server. */
@@ -41,7 +41,7 @@ export function HomePage({ byLocale, skills, talks }: HomePageProps) {
         <ProjectsSection projects={data.projects} />
         <SkillsSection skills={skills} />
         <BlogPreviewSection posts={data.posts} />
-        <TalksSection talks={talks} />
+        <TalksSection talks={talks[locale as Locale] ?? talks.en} />
         <ContactSection />
       </main>
       <Footer />

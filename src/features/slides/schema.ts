@@ -192,12 +192,28 @@ export const slideSchema = z.discriminatedUnion("layout", [
   }),
 ]);
 
+export const DECK_LANGS = ["en", "es"] as const;
+export type DeckLang = (typeof DECK_LANGS)[number];
+
+/** Fields a translation can never change: a translated slide keeps the base slide's identity and kind. */
+export const SHARED_SLIDE_FIELDS = ["id", "layout", "build"] as const;
+
+/**
+ * A deck's second language: its own title and description, and per slide only the fields that differ from the base
+ * (texts, alt texts, code comments, a translated diagram). Everything else is shared with the base deck.
+ */
+const translationSchema = z.object({
+  title: text.optional(),
+  description: z.string().trim().min(1).max(300).optional(),
+  slides: z.record(z.string(), z.record(z.string(), z.unknown())).default({}),
+});
+
 export const deckSchema = z
   .object({
     slug: z.string().regex(SLUG_PATTERN).max(80),
     title: text,
     description: z.string().trim().min(1).max(300),
-    lang: z.enum(["en", "es"]),
+    lang: z.enum(DECK_LANGS),
     status: z.enum(["draft", "unlisted", "published"]),
     /** Replaces the brand amber inside this deck; ink and foreground are derived for AA (theme.ts). */
     accent: z.string().regex(HEX_PATTERN),
@@ -207,6 +223,7 @@ export const deckSchema = z
     slides: z.array(slideSchema).min(1).max(120),
     updatedAt: z.string().datetime(),
     version: z.number().int().nonnegative(),
+    translations: z.object({ en: translationSchema.optional(), es: translationSchema.optional() }).optional(),
   })
   .superRefine((deck, ctx) => {
     const seen = new Set<string>();
@@ -220,6 +237,45 @@ export const deckSchema = z
       }
       seen.add(slide.id);
     });
+
+    // Each translated slide must still be a valid slide once merged with its base.
+    for (const lang of DECK_LANGS) {
+      const translation = deck.translations?.[lang];
+      if (!translation) continue;
+      if (lang === deck.lang) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["translations", lang], message: "A deck can't be translated into its own language" });
+        continue;
+      }
+      for (const slide of deck.slides) {
+        const overlay = translation.slides[slide.id];
+        if (!overlay) continue;
+        const merged = slideSchema.safeParse({ ...slide, ...overlay, id: slide.id, layout: slide.layout, build: slide.build });
+        if (merged.success) continue;
+        for (const issue of merged.error.issues) {
+          ctx.addIssue({ ...issue, path: ["translations", lang, "slides", slide.id, ...issue.path] });
+        }
+      }
+    }
+  })
+  // Translations of slides that no longer exist, and shared fields that slipped into one, are dropped.
+  .transform((deck) => {
+    if (!deck.translations) return deck;
+    const ids = new Set(deck.slides.map((slide) => slide.id));
+    const translations: typeof deck.translations = {};
+    for (const lang of DECK_LANGS) {
+      const translation = deck.translations[lang];
+      if (!translation || lang === deck.lang) continue;
+      const slides = Object.fromEntries(
+        Object.entries(translation.slides)
+          .filter(([id]) => ids.has(id))
+          .map(([id, overlay]) => [
+            id,
+            Object.fromEntries(Object.entries(overlay).filter(([key]) => !(SHARED_SLIDE_FIELDS as readonly string[]).includes(key))),
+          ]),
+      );
+      translations[lang] = { ...translation, slides };
+    }
+    return { ...deck, translations };
   });
 
 export type Deck = z.infer<typeof deckSchema>;

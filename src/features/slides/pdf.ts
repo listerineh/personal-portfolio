@@ -24,7 +24,7 @@ async function launch(): Promise<Browser> {
  * Prints a public deck from the given origin (this deployment) and returns the PDF bytes: exactly `pages` pages of
  * 1920×1080, so nothing else on the print page can ever add a sheet of another size.
  */
-export async function printDeckPdf(origin: string, slug: string, pages: number): Promise<Buffer> {
+export async function printDeckPdf(origin: string, slug: string, pages: number, lang: string): Promise<Buffer> {
   const browser = await launch();
   try {
     const page = await browser.newPage();
@@ -35,7 +35,7 @@ export async function printDeckPdf(origin: string, slug: string, pages: number):
       value: JSON.stringify({ necessary: true, analytics: false, preferences: false, timestamp: 0 }),
       url: origin,
     });
-    const response = await page.goto(`${origin}/slides/${slug}/print`, { waitUntil: 'networkidle0', timeout: 30_000 });
+    const response = await page.goto(`${origin}/slides/${slug}/print?lang=${lang}`, { waitUntil: 'networkidle0', timeout: 30_000 });
     if (!response?.ok()) throw new Error(`Print page answered ${response?.status()}`);
     await page.evaluate(async () => {
       await document.fonts.ready;
@@ -57,21 +57,21 @@ export async function printDeckPdf(origin: string, slug: string, pages: number):
   }
 }
 
-const storedPath = (slug: string, version: number) => `slides/${slug}/pdf/v${version}.pdf`;
+const storedPath = (slug: string, version: number, lang: string) => `slides/${slug}/pdf/v${version}-${lang}.pdf`;
 
-/** The PDF printed earlier for this deck version, if there is one (and Cloud Storage is configured). */
-export async function readStoredPdf(slug: string, version: number): Promise<Buffer | null> {
+/** The PDF printed earlier for this deck version and language, if there is one (and Cloud Storage is configured). */
+export async function readStoredPdf(slug: string, version: number, lang: string): Promise<Buffer | null> {
   const bucket = getBucket();
   if (!bucket) return null;
-  const file = bucket.file(storedPath(slug, version));
+  const file = bucket.file(storedPath(slug, version, lang));
   const [exists] = await file.exists();
   if (!exists) return null;
   const [data] = await file.download();
   return data;
 }
 
-export async function storePdf(slug: string, version: number, pdf: Buffer): Promise<void> {
+export async function storePdf(slug: string, version: number, lang: string, pdf: Buffer): Promise<void> {
   const bucket = getBucket();
   if (!bucket) return;
-  await bucket.file(storedPath(slug, version)).save(pdf, { resumable: false, contentType: 'application/pdf' });
+  await bucket.file(storedPath(slug, version, lang)).save(pdf, { resumable: false, contentType: 'application/pdf' });
 }

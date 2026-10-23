@@ -4,6 +4,7 @@ import { loadOgFonts } from '@/lib/og/fonts';
 import { OG_HEIGHT, OG_WIDTH } from '@/lib/og/blog-card';
 import { SlidesCard } from '@/lib/og/slides-card';
 import { getPublicDeck } from '@/features/slides/store';
+import { hasLanguage, localizeDeck } from '@/features/slides/i18n';
 import { SLUG_PATTERN } from '@/features/slides/schema';
 import { accentTokens, rgbToHex } from '@/features/slides/theme';
 
@@ -11,12 +12,14 @@ export const runtime = 'nodejs';
 
 const LABEL = { en: 'Talk', es: 'Charla' } as const;
 
-/** GET /og/slides/<slug>.png?v=<version> — a public deck's 1200×630 share card, in its language and accent. */
-export async function GET(_request: Request, { params }: { params: Promise<{ file: string }> }) {
+/** GET /og/slides/<slug>.png?v=<version>&lang=<lang> — a public deck's 1200×630 share card, in that language and its accent. */
+export async function GET(request: Request, { params }: { params: Promise<{ file: string }> }) {
   const { file } = await params;
   const slug = file.endsWith('.png') ? file.slice(0, -4) : '';
-  const deck = SLUG_PATTERN.test(slug) ? await getPublicDeck(slug) : undefined;
-  if (!deck) return new Response('Not found', { status: 404 });
+  const found = SLUG_PATTERN.test(slug) ? await getPublicDeck(slug) : undefined;
+  if (!found) return new Response('Not found', { status: 404 });
+  const lang = new URL(request.url).searchParams.get('lang') ?? '';
+  const deck = localizeDeck(found, hasLanguage(found, lang) ? lang : found.lang);
 
   const when = deck.event?.date
     ? new Intl.DateTimeFormat(deck.lang === 'es' ? 'es-ES' : 'en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(

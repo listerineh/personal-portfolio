@@ -4,12 +4,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowLeft, Copy, ExternalLink, Trash2 } from "lucide-react";
-import { GalleryPicker, Select, Switch } from "@/components/ds";
+import { GalleryPicker, SegmentedControl, Select, Switch } from "@/components/ds";
 import { ThemeToggleButton } from "@/components/common/theme-toggle-button";
 import { useTheme } from "@/context/theme-context";
 import { fieldBase } from "@/components/ds/Input";
 import { cn } from "@/lib/utils";
-import { deckSchema, type Deck, type Slide, type SlideLayout } from "../schema";
+import { DECK_LANGS, deckSchema, type Deck, type DeckLang, type Slide, type SlideLayout } from "../schema";
+import { applySlideEdit, deckLanguages, hasLanguage, localizeDeck, translationProgress } from "../i18n";
 import { stepCount } from "../steps";
 import { ACCENT_PRESETS, accentStyle, accentTokens } from "../theme";
 import { SlideCanvas, SlideFrame } from "../renderer/SlideView";
@@ -40,8 +41,11 @@ const AUTOSAVE_AFTER = 1500;
 const inputClass = cn(fieldBase, "min-h-10 px-3 text-sm");
 const HEX = /^#[0-9a-f]{6}$/i;
 
-/** Issues grouped by where they show: deck settings ("title") or a slide (index → "items.2"). */
-function groupIssues(deck: Deck, required: string) {
+/**
+ * Issues grouped by where they show: deck settings ("title") or a slide (index → "items.2"). Issues of the language
+ * being edited land on its slides and fields; the other language's still count, so saving stays blocked.
+ */
+function groupIssues(deck: Deck, required: string, lang: DeckLang) {
   const parsed = deckSchema.safeParse(deck);
   const slides: Record<number, FieldErrors> = {};
   const settings: FieldErrors = {};
@@ -51,7 +55,12 @@ function groupIssues(deck: Deck, required: string) {
     // An emptied required field is the common case; say it plainly instead of zod's wording.
     const message = issue.code === "too_small" && issue.type === "string" && issue.minimum === 1 ? required : issue.message;
     if (head === "slides" && typeof index === "number") {
-      (slides[index] ??= {})[rest.join(".") || ""] = message;
+      if (lang === deck.lang) (slides[index] ??= {})[rest.join(".") || ""] = message;
+    } else if (head === "translations" && index === lang) {
+      const [kind, id, ...field] = rest;
+      const at = kind === "slides" ? deck.slides.findIndex((slide) => slide.id === id) : -1;
+      if (at >= 0) (slides[at] ??= {})[field.join(".") || ""] = message;
+      else settings[String(kind)] = message;
     } else {
       settings[issue.path.join(".")] = message;
     }
@@ -64,6 +73,8 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
   const t = useTranslations("slidesEditor");
   const [deck, setDeck] = useState<Deck>(initialDeck);
   const [selected, setSelected] = useState(0);
+  // The language being edited: the deck's own, or its translation.
+  const [editLang, setEditLang] = useState<DeckLang>(initialDeck.lang);
   const [panel, setPanel] = useState<"slide" | "deck">("slide");
   const [state, setState] = useState<SaveState>("saved");
   const [conflictVersion, setConflictVersion] = useState<number | null>(null);
@@ -74,9 +85,16 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
   const editSeq = useRef(0);
   const saving = useRef(false);
 
-  const issues = useMemo(() => groupIssues(deck, t("required")), [deck, t]);
-  const slide = deck.slides[Math.min(selected, deck.slides.length - 1)];
-  const highlights = useCodeHighlights(slide, initialHighlights);
+  const lang: DeckLang = hasLanguage(deck, editLang) ? editLang : deck.lang;
+  const translating = lang !== deck.lang;
+  // What the editor shows: the deck in the language being edited. Edits are written back with applySlideEdit.
+  const shown = useMemo(() => localizeDeck(deck, lang), [deck, lang]);
+  const issues = useMemo(() => groupIssues(deck, t("required"), lang), [deck, t, lang]);
+  const current = Math.min(selected, deck.slides.length - 1);
+  const slide = deck.slides[current];
+  const shownSlide = shown.slides[current];
+  const highlights = useCodeHighlights(shownSlide, initialHighlights);
+  const progress = translating ? translationProgress(deck, lang) : null;
 
   const update = useCallback((next: Deck) => {
     deckRef.current = next;
@@ -88,12 +106,8 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
   }, []);
 
   const updateSlide = useCallback(
-    (index: number, next: Slide) =>
-      update({
-        ...deckRef.current,
-        slides: deckRef.current.slides.map((s, i) => (i === index ? next : s)),
-      }),
-    [update],
+    (index: number, next: Slide) => update(applySlideEdit(deckRef.current, lang, index, next)),
+    [update, lang],
   );
 
   const save = useCallback(async (expected = versionRef.current) => {
@@ -198,7 +212,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
 
   return (
     <DeckSlugProvider value={deck.slug}>
-    <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme, lang: deck.lang }}>
+    <DeckLookProvider value={{ accent: HEX.test(deck.accent) ? deck.accent : "#d97706", theme, lang }}>
     <div className="fixed inset-0 flex flex-col bg-background text-foreground">
       <header className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
         <Link
@@ -209,8 +223,21 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
           <ArrowLeft aria-hidden="true" className="h-5 w-5" />
         </Link>
         <h1 className="min-w-0 truncate text-[0.9375rem] font-semibold">
-          {deck.title}
+          {shown.title}
         </h1>
+        {deckLanguages(deck).length > 1 && (
+          <SegmentedControl
+            label={t("editingLanguage")}
+            value={lang}
+            onChange={(value) => setEditLang(value as DeckLang)}
+            options={deckLanguages(deck).map((code) => ({ value: code, label: code.toUpperCase(), ariaLabel: t(`languageName.${code}`) }))}
+          />
+        )}
+        {progress && (
+          <p className="text-meta shrink-0 text-muted-foreground">
+            {t("translatedCount", progress)}
+          </p>
+        )}
         <SaveStatus state={state === "dirty" && !issues.valid ? "invalid" : state} errorCount={issues.count} />
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggleButton />
@@ -288,7 +315,7 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
           {...deckScope}
         >
           <ol className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-3">
-            {deck.slides.map((item, index) => (
+            {shown.slides.map((item, index) => (
               <li key={item.id}>
                 <button
                   type="button"
@@ -309,8 +336,12 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
                     issues.slides[index] && "ring-2 ring-destructive",
                   )}
                 >
-                  <span className="text-meta w-4 shrink-0 pt-0.5 text-muted-foreground">
-                    {index + 1}
+                  <span className="flex w-4 shrink-0 flex-col items-center gap-1 pt-0.5">
+                    <span className="text-meta text-muted-foreground">{index + 1}</span>
+                    {translating && !deck.translations?.[lang]?.slides[item.id] && (
+                      // Not translated yet: this slide still shows the deck's own language.
+                      <span title={t("untranslated")} className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+                    )}
                   </span>
                   <span
                     className="pointer-events-none min-w-0 flex-1"
@@ -319,12 +350,12 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
                     <SlideFrame bare>
                       <SlideCanvas
                         slide={item}
-                        lang={deck.lang}
+                        lang={lang}
                         state={{
                           active: false,
                           still: true,
                           step: 0,
-                          deckTitle: deck.title,
+                          deckTitle: shown.title,
                           index,
                           total: deck.slides.length,
                           code: highlights[item.id],
@@ -349,16 +380,16 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
         >
           <SlideFrame fit="contain">
             <SlideCanvas
-              slide={slide}
-              lang={deck.lang}
+              slide={shownSlide}
+              lang={lang}
               state={{
                 active: false,
                 still: false,
-                step: stepCount(slide),
-                deckTitle: deck.title,
-                index: selected,
+                step: stepCount(shownSlide),
+                deckTitle: shown.title,
+                index: current,
                 total: deck.slides.length,
-                code: highlights[slide.id],
+                code: highlights[shownSlide.id],
               }}
             />
           </SlideFrame>
@@ -395,8 +426,9 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
           <div role="tabpanel" className="min-h-0 flex-1 overflow-y-auto p-5">
             {panel === "slide" ? (
               <SlidePanel
-                slide={slide}
-                index={selected}
+                slide={shownSlide}
+                translating={translating}
+                index={current}
                 total={deck.slides.length}
                 errors={issues.slides[selected] ?? {}}
                 onChange={(next) => updateSlide(selected, next)}
@@ -408,8 +440,10 @@ export function DeckEditor({ initialDeck, initialHighlights = {} }: { initialDec
             ) : (
               <DeckSettings
                 deck={deck}
+                lang={lang}
                 errors={issues.settings}
                 onChange={update}
+                onEditLanguage={setEditLang}
               />
             )}
           </div>

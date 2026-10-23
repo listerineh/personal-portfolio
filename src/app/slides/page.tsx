@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { ArrowRight } from 'lucide-react';
 import { PageShell } from '@/components/layout';
-import { Button, PageHeader, Reveal } from '@/components/ds';
+import { Button, PageHeader } from '@/components/ds';
 import { DEFAULT_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
 import { listPublishedDecks } from '@/features/slides/store';
-import { toDeckSummary } from '@/features/slides/summary';
-import { TalkCard } from '@/features/slides/TalkCard';
+import { deckSummariesByLocale } from '@/features/slides/summary';
+import { TalkGrid } from '@/features/slides/TalkGrid';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SlidesPage() {
   const t = await getTranslations('slidesPage');
   // Storage trouble shouldn't take the page down: it shows the empty state instead.
-  const decks = (await listPublishedDecks().catch(() => [])).map(toDeckSummary);
+  const decks = await listPublishedDecks().catch(() => []);
 
   return (
     <PageShell>
@@ -37,13 +37,7 @@ export default async function SlidesPage() {
               </Button>
             </div>
           ) : (
-            <Reveal as="ul" className="grid gap-6 md:grid-cols-2 md:gap-8">
-              {decks.map((deck) => (
-                <li key={deck.slug}>
-                  <TalkCard deck={deck} headingLevel="h2" />
-                </li>
-              ))}
-            </Reveal>
+            <TalkGrid byLocale={deckSummariesByLocale(decks)} />
           )}
         </div>
       </section>
