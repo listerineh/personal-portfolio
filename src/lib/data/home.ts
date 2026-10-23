@@ -12,7 +12,7 @@ export function getHomeData(): { byLocale: Record<Locale, HomeLocaleData>; skill
   for (const locale of locales) {
     byLocale[locale] = {
       projects: getProjects(locale)
-        .slice(0, 6)
+        .slice(0, 7)
         .map(({ longDescription: _long, relevance: _relevance, ...project }): ProjectSummary => project),
       posts: getBlogPosts(locale).slice(0, 4).map(toBlogSummary),
       experiences: getExperiences(locale), // every role: the home page is the only place they live

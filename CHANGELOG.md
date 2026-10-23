@@ -4,6 +4,9 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+### Added
+- Kairo, the open-source iOS and Android task app, in the projects list (English and Spanish), with a product shot and a share image.
+
 ## [3.1.0] - 2026-10-20
 
 ### Changed
