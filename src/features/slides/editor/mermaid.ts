@@ -38,6 +38,19 @@ const PALETTES: Record<DeckTheme, Record<string, string>> = {
   },
 };
 
+// Branch colors for gitGraph (main first, then branches in the order they are created): distinct hues that read
+// on both slide grounds, with white labels on them.
+const GIT_BRANCHES = ['#3B82F6', '#8B5CF6', '#22C55E', '#EF4444', '#F59E0B', '#06B6D4', '#EC4899', '#84CC16'];
+const gitVariables = (theme: DeckTheme) => ({
+  ...Object.fromEntries(GIT_BRANCHES.map((color, i) => [`git${i}`, color])),
+  ...Object.fromEntries(GIT_BRANCHES.map((_, i) => [`gitBranchLabel${i}`, '#FFFFFF'])),
+  commitLabelColor: PALETTES[theme].textColor,
+  commitLabelBackground: PALETTES[theme].secondaryColor,
+  tagLabelColor: PALETTES[theme].textColor,
+  tagLabelBackground: PALETTES[theme].primaryColor,
+  tagLabelBorder: PALETTES[theme].lineColor,
+});
+
 export type DiagramRender = { ok: true; svg: string; svgDark: string } | { ok: false; error: string };
 
 let renderCount = 0;
@@ -55,7 +68,14 @@ export async function renderDiagram(source: string, accent: string, idBase: stri
         htmlLabels: false,
         flowchart: { htmlLabels: false, curve: 'basis', padding: 16 },
         fontFamily: 'Geist, system-ui, sans-serif',
-        themeVariables: { ...PALETTES[theme], primaryBorderColor: accent, fontFamily: 'Geist, system-ui, sans-serif', fontSize: '20px' },
+        gitGraph: { mainBranchName: 'main', showCommitLabel: true, rotateCommitLabel: false },
+        themeVariables: {
+          ...PALETTES[theme],
+          ...gitVariables(theme),
+          primaryBorderColor: accent,
+          fontFamily: 'Geist, system-ui, sans-serif',
+          fontSize: '20px',
+        },
       });
       renderCount += 1;
       const { svg } = await mermaid.render(`${idBase}-${theme}-${renderCount}`, source);
