@@ -230,6 +230,8 @@ export const firebaseVsSupabase: DeckInput = {
         { value: 10.5, prefix: "$", suffix: "B", label: "de valoración" },
         { value: 70, suffix: "%", label: "de bases nuevas, creadas por IA" },
       ],
+      citation:
+        "Fuente: cifras de Supabase al anunciar su Serie F, junio de 2026 (CNBC).",
       notes:
         "Cifras de la propia Supabase al anunciar su Serie F de 500 millones (junio de 2026, CNBC). El 70 % son bases creadas por agentes o herramientas de IA: el vibe coding empuja a Postgres.",
     },
@@ -548,6 +550,7 @@ export const firebaseVsSupabase: DeckInput = {
               label: "of new databases, created by AI",
             },
           ],
+          citation: "Source: Supabase's figures when announcing its Series F, June 2026 (CNBC).",
           notes:
             "Supabase's own figures when it announced its $500M Series F (June 2026, CNBC). The 70% are databases created by agents or AI tools: vibe coding is pushing people to Postgres.",
         },

@@ -14,6 +14,8 @@ export const AUTHOR_NAME = "Sebastian Alvarez";
 export const TWITTER_HANDLE = "@listerineh";
 export const TITLE_TEMPLATE = `%s · ${AUTHOR_NAME}`;
 export const DEFAULT_OG_IMAGE = "/og/home.png";
+/** The talks listing's card, also used by a deck that has no public card of its own (a draft). */
+export const SLIDES_OG_IMAGE = "/og/slides.png";
 
 const OG_SIZE = { width: 1200, height: 630 };
 const ogLocale = (locale: Locale) => (locale === "es" ? "es_ES" : "en_US");
@@ -24,6 +26,7 @@ export type PageKey =
   | "projects"
   | "skills"
   | "blog"
+  | "slides"
   | "contact"
   | "why"
   | "privacy"
@@ -225,6 +228,46 @@ const PAGES: Record<
           "Terraform",
           "carrera en tecnología",
           "blog Sebastian Alvarez",
+        ],
+      },
+    },
+  },
+  slides: {
+    path: "/slides",
+    image: SLIDES_OG_IMAGE,
+    copy: {
+      en: {
+        title: "Talks",
+        description:
+          "Slides from the talks I've given at GDG Quito and other events, on Git, Python, Firebase, AI and building products. Flip through them, present them or download the PDF.",
+        keywords: [
+          "Sebastian Alvarez talks",
+          "tech talks",
+          "slides",
+          "presentations",
+          "GDG Quito",
+          "speaker",
+          "Python",
+          "Firebase",
+          "Git",
+          "AI",
+        ],
+      },
+      es: {
+        title: "Charlas",
+        description:
+          "Las diapositivas de mis charlas en GDG Quito y otros eventos, sobre Git, Python, Firebase, IA y cómo construir productos. Recórrelas, preséntalas o descarga el PDF.",
+        keywords: [
+          "charlas Sebastian Alvarez",
+          "charlas de tecnología",
+          "diapositivas",
+          "presentaciones",
+          "GDG Quito",
+          "speaker",
+          "Python",
+          "Firebase",
+          "Git",
+          "IA",
         ],
       },
     },

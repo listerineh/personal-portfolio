@@ -124,6 +124,8 @@ export const gitGithubGitflow: DeckInput = {
         { value: 93, suffix: "%", label: "de devs usa Git" },
         { value: 100, suffix: "M+", label: "devs en GitHub" },
       ],
+      citation:
+        "Fuentes: Stack Overflow Developer Survey 2022 (93,87 % usa Git) y GitHub (100 millones de desarrolladores, enero de 2023).",
       notes:
         "Fuentes: Stack Overflow Developer Survey 2022 (93,87 % usa Git). GitHub superó los 100 millones de desarrolladores en enero de 2023.",
     },
@@ -454,6 +456,7 @@ export const gitGithubGitflow: DeckInput = {
             { value: 93, suffix: "%", label: "of developers use Git" },
             { value: 100, suffix: "M+", label: "developers on GitHub" },
           ],
+          citation: "Sources: Stack Overflow Developer Survey 2022 (93.87% use Git) and GitHub (100 million developers, January 2023).",
           notes: "Sources: Stack Overflow Developer Survey 2022 (93.87% use Git). GitHub passed 100 million developers in January 2023.",
         },
         concepts: {

@@ -1,29 +1,27 @@
-import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { ArrowRight } from 'lucide-react';
 import { PageShell } from '@/components/layout';
 import { Button, PageHeader } from '@/components/ds';
-import { DEFAULT_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
+import { metadataFor, requestLocale } from '@/lib/metadata';
 import { listPublishedDecks } from '@/features/slides/store';
 import { deckSummariesByLocale } from '@/features/slides/summary';
 import { TalkGrid } from '@/features/slides/TalkGrid';
+import { talksStructuredData } from '@/features/slides/structured-data';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await requestLocale();
-  const t = await getTranslations({ locale, namespace: 'slidesPage' });
-  return shareMetadata({ title: t('title'), description: t('intro'), path: '/slides', image: DEFAULT_OG_IMAGE, locale });
-}
+export const generateMetadata = metadataFor('slides');
 
 /** Every published talk, newest first, each opening in the viewer. */
 export default async function SlidesPage() {
   const t = await getTranslations('slidesPage');
   // Storage trouble shouldn't take the page down: it shows the empty state instead.
   const decks = await listPublishedDecks().catch(() => []);
+  const structuredData = talksStructuredData(decks, await requestLocale());
 
   return (
     <PageShell>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <PageHeader title={t('title')} intro={t('intro')} ambient />
       <section aria-label={t('listLabel')} className="px-gutter pb-24 md:pb-32">
         <div className="mx-auto max-w-[1200px]">

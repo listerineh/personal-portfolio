@@ -78,6 +78,8 @@ export const slideSchema = z.discriminatedUnion("layout", [
     layout: z.literal("statement"),
     statement: richText,
     emphasis: text.optional(),
+    /** Where a figure in the statement comes from, shown small underneath. */
+    citation: richText.optional(),
   }),
   z.object({
     ...base,
@@ -128,6 +130,8 @@ export const slideSchema = z.discriminatedUnion("layout", [
       )
       .min(1)
       .max(4),
+    /** Where the numbers come from, shown small under them. */
+    citation: richText.optional(),
   }),
   z.object({
     ...base,

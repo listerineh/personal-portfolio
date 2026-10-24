@@ -142,6 +142,11 @@ export function StatementLayout({ slide }: LayoutProps<"statement">) {
           {slide.emphasis}
         </p>
       )}
+      {slide.citation && (
+        <div {...enter(2)}>
+          <RichText as="p" text={slide.citation} className="sl-body mt-10 text-muted-foreground" />
+        </div>
+      )}
       <Footer />
     </div>
   );
@@ -318,6 +323,11 @@ export function StatsLayout({ slide, lang }: LayoutProps<"stats">) {
           </div>
         ))}
       </dl>
+      {slide.citation && (
+        <div className="-mt-8 mb-10" {...enter(slide.stats.length + 1)}>
+          <RichText as="p" text={slide.citation} className="sl-body text-muted-foreground" />
+        </div>
+      )}
       <Footer />
     </div>
   );

@@ -4,6 +4,16 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.5.1] - 2026-10-24
+
+### Added
+- `/slides` follows the site's metadata pattern: it's in the page registry with its own title, description and keywords in both languages, and its own share card (`/og/slides.png`, from `scripts/generate-og-images.js`). Structured data: the listing is a `CollectionPage` of talks and each published deck a `PresentationDigitalDocument` with its PDF.
+- Stats and statement slides can show where their figures come from (a citation under them, editable in the editor). The Git, Python and Firebase vs Supabase talks show their sources.
+- The "De la idea al Micro-SaaS" talk reworked: the engineer's role shifting from writing code to architecture, deployment, costs and risk; a new module on security in the AI era (OWASP Top 10:2025, insecure AI-generated code, package hallucinations); the speaker's story; and a source under every figure.
+
+### Changed
+- A draft deck's share image is the talks card instead of the home one, and a deck's Open Graph locale matches the language it's shown in.
+
 ## [3.5.0] - 2026-10-23
 
 ### Added
