@@ -15,6 +15,11 @@ test.describe("Slides viewer", () => {
     await expect(page).toHaveURL(/#\/1$/);
   });
 
+  test("the back button returns to the talks listing", async ({ page }) => {
+    await open(page, DECK);
+    await expect(page.getByRole("link", { name: "Back to talks" })).toHaveAttribute("href", "/slides");
+  });
+
   test("arrows move between slides and the hash follows", async ({ page }) => {
     await open(page, DECK);
     await page.keyboard.press("ArrowRight");
@@ -24,7 +29,7 @@ test.describe("Slides viewer", () => {
     await expect(counter(page)).toHaveText("1 / 13");
     await page.keyboard.press("End");
     await expect(counter(page)).toHaveText("13 / 13");
-    await expect(page.getByRole("button", { name: "Next" })).toBeDisabled();
+    await expect(page.getByRole("button", { name: "Next", exact: true })).toBeDisabled();
   });
 
   test("a deep link opens that slide, and editing the hash moves", async ({ page }) => {
