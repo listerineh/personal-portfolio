@@ -44,7 +44,7 @@ const rich = (key: string, optional = false, multiline = false): Field => ({
 export const LAYOUT_FIELDS: Record<SlideLayout, readonly Field[]> = {
   title: [text("eyebrow", true), text("title"), rich("subtitle", true)],
   section: [text("number", true), text("title"), rich("subtitle", true)],
-  statement: [rich("statement", false, true), text("emphasis", true)],
+  statement: [rich("statement", false, true), text("emphasis", true), rich("citation", true)],
   bullets: [text("title"), { key: "items", kind: "list", min: 1, max: 7 }],
   "two-column": [
     text("title"),
@@ -83,6 +83,7 @@ export const LAYOUT_FIELDS: Record<SlideLayout, readonly Field[]> = {
       ],
       template: { value: 10, label: "Label" },
     },
+    rich("citation", true),
   ],
   quote: [rich("quote", false, true), text("author"), text("role", true)],
   code: [
