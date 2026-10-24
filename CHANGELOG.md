@@ -4,7 +4,7 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
-## [3.6.0] - 2026-10-24
+## [3.5.1] - 2026-10-24
 
 ### Added
 - `/slides` follows the site's metadata pattern: it's in the page registry with its own title, description and keywords in both languages, and its own share card (`/og/slides.png`, from `scripts/generate-og-images.js`). Structured data: the listing is a `CollectionPage` of talks and each published deck a `PresentationDigitalDocument` with its PDF.
