@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.5.2] - 2026-10-24
+
+### Fixed
+- The "De la idea al Micro-SaaS" seed mirrors the talk in production: the owner's edited copy (without the case study and a few slides) restructured with the new material, 44 slides with a source under every figure. The 3.5.1 rework had only reached the seed, so production, which serves the stored copy, never showed it.
+
 ## [3.5.1] - 2026-10-24
 
 ### Added
