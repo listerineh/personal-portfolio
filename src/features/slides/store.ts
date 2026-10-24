@@ -7,6 +7,7 @@ import { testPresentation } from "./decks/test-presentation";
 import { gitGithubGitflow } from "./decks/git-github-gitflow";
 import { pythonTyping } from "./decks/python-typing";
 import { firebaseVsSupabase } from "./decks/firebase-vs-supabase";
+import { ideaMicroSaas } from "./decks/idea-micro-saas";
 
 /**
  * Server-side entry point for decks. Public reads are cached per deck and invalidated on save; owner reads and writes
@@ -14,7 +15,7 @@ import { firebaseVsSupabase } from "./decks/firebase-vs-supabase";
  */
 
 // Seeds are validated once, at module load, so a broken seed fails loudly in dev and in the build.
-const seeds: Deck[] = [parseDeck(testPresentation), parseDeck(gitGithubGitflow), parseDeck(pythonTyping), parseDeck(firebaseVsSupabase)];
+const seeds: Deck[] = [parseDeck(testPresentation), parseDeck(gitGithubGitflow), parseDeck(pythonTyping), parseDeck(firebaseVsSupabase), parseDeck(ideaMicroSaas)];
 
 let repo: DeckRepo | undefined;
 function decks(): DeckRepo {
