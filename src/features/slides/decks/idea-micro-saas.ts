@@ -2,11 +2,9 @@ import type { DeckInput } from "../schema";
 
 /**
  * "De la idea al Micro-SaaS", a university talk for students and professors (11 November 2026), in Spanish with an
- * English translation. Five modules: finding real problems; how AI shifts the engineer's job from writing code to
- * architecture, deployment, costs and risk; industry standards with a live case (a pipe head-loss calculator from
- * Excel to a web app); security in the AI era (OWASP Top 10:2025); and the student Micro-SaaS. Every module has a
- * slide for professors, and every figure shows its source on the slide. The case-study code runs as shown (Python
- * 3.12, FastAPI, pytest, Next.js). Ships as a draft; opening the diagram slides in each language draws their SVG.
+ * English translation. Built on the owner's edited copy (stored version 34) plus the new material: the speaker's story,
+ * the engineer's role moving to architecture, costs and risk, a short security module (OWASP Top 10:2025) and a source
+ * under every figure. Production serves the stored copy; this seed mirrors it, without the drawn diagram SVGs.
  */
 export const ideaMicroSaas: DeckInput = {
   slug: "idea-micro-saas",
@@ -16,22 +14,25 @@ export const ideaMicroSaas: DeckInput = {
   lang: "es",
   status: "draft",
   accent: "#7c3aed",
-  event: { name: "Charla universitaria", date: "2026-11-11" },
-  updatedAt: "2026-10-24T00:00:00.000Z",
-  version: 1,
+  event: {
+    name: "Charla universitaria",
+    date: "2026-11-11",
+  },
   slides: [
     {
       id: "cover",
+      notes:
+        "Duración objetivo: 60 minutos + preguntas. Módulos de ~12 minutos. Saludar a estudiantes y docentes por separado: esta charla tiene algo para cada uno.",
       layout: "title",
       eyebrow: "11 de noviembre de 2026",
       title: "De la idea al Micro-SaaS",
       subtitle:
         "Innovación real, ingeniería ágil e IA para estudiantes en la era del software moderno.",
-      notes:
-        "Duración objetivo: 60 a 75 minutos + preguntas. Si hay que recortar: el caso práctico se puede mostrar solo con la función y el test, y las diapositivas de ideas y balance se pueden resumir. Saludar a estudiantes y docentes por separado.",
     },
     {
       id: "speaker",
+      notes:
+        "Presentación corta (30 segundos). Conectar: yo también estuve sentado ahí, con exámenes y un proyecto a medias.",
       layout: "intro",
       photo: {
         src: "/images/sebas-playing.webp",
@@ -39,12 +40,10 @@ export const ideaMicroSaas: DeckInput = {
       },
       greeting: "Hola, soy",
       name: "Sebastian Alvarez",
-      role: "Sr Full-Stack Engineer · GDG Quito Organizer",
+      role: "Senior Software Engineer · GDG Quito Organizer",
       bio: "Construyo backends, productos web y herramientas con IA aplicada. También fui estudiante intentando construir cosas entre exámenes.",
       highlights: ["GDG Quito", "Quito, Ecuador"],
       handle: "@listerineh",
-      notes:
-        "Presentación corta (30 segundos). La historia va en la siguiente diapositiva.",
     },
     {
       id: "story",
@@ -60,12 +59,12 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "hook",
+      notes:
+        "Pausa de 3 segundos. Pregunta al público: ¿quién tiene un proyecto en un repositorio que nadie usa? Levantar la mano uno mismo.",
       layout: "statement",
       statement:
         "La pregunta no es ==qué puedo programar==, sino ==qué problema vale la pena resolver==.",
       emphasis: "Esa es la idea de toda la charla.",
-      notes:
-        "Pausa de 3 segundos. Pregunta al público: ¿quién tiene un proyecto en un repositorio que nadie usa? Levantar la mano uno mismo.",
     },
     {
       id: "agenda",
@@ -82,8 +81,6 @@ export const ideaMicroSaas: DeckInput = {
       ],
       notes: "Avisar que cada módulo cierra con una diapositiva para docentes.",
     },
-
-    // ── 01 · El ADN de la innovación ─────────────────────────
     {
       id: "part-innovation",
       layout: "section",
@@ -93,9 +90,11 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "street-lab",
+      notes:
+        "La falacia del inventor encerrado: crear tecnología buscando un problema. No es culpa de nadie: así se suelen plantear los proyectos de materia.",
+      build: true,
       layout: "two-column",
       title: "Dos formas de empezar un proyecto",
-      build: true,
       columns: [
         {
           heading: "Desde el laboratorio",
@@ -116,8 +115,6 @@ export const ideaMicroSaas: DeckInput = {
           ],
         },
       ],
-      notes:
-        "La falacia del inventor encerrado: crear tecnología buscando un problema. No es culpa de nadie: así se suelen plantear los proyectos de materia.",
     },
     {
       id: "no-market-need",
@@ -133,9 +130,11 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "where-to-look",
+      notes:
+        "Pedir al público un ejemplo de su propia facultad. Casi siempre aparece la reserva de laboratorios o la inscripción.",
+      build: true,
       layout: "icons-grid",
       title: "Dónde están los problemas",
-      build: true,
       items: [
         {
           icon: "school",
@@ -168,14 +167,14 @@ export const ideaMicroSaas: DeckInput = {
           body: "Lo que la gente repite en voz alta es un mapa.",
         },
       ],
-      notes:
-        "Pedir al público un ejemplo de su propia facultad. Casi siempre aparece la reserva de laboratorios o la inscripción.",
     },
     {
       id: "real-pain",
+      notes:
+        "Si no se cumplen al menos tres, probablemente no es un dolor, es una molestia.",
+      build: true,
       layout: "bullets",
       title: "Cómo reconocer un dolor real",
-      build: true,
       items: [
         "Alguien lo resuelve **a mano**, todas las semanas",
         "Un Excel o un grupo de WhatsApp sostiene el proceso",
@@ -183,24 +182,24 @@ export const ideaMicroSaas: DeckInput = {
         "Lo puedes explicar en **una frase**",
         "Puedes hablar esta semana con **5 personas** que lo viven",
       ],
-      notes:
-        "Si no se cumplen al menos tres, probablemente no es un dolor, es una molestia.",
     },
     {
       id: "purpose-loop",
+      notes: "Cada vuelta del ciclo debería durar días, no meses.",
       layout: "diagram",
       title: "Ingeniería con propósito",
       source:
         "flowchart LR\n  o[Observar] --> e[Entrevistar]\n  e --> p[Prototipar]\n  p --> m[Medir]\n  m -->|aprender| o",
       caption:
         "La tecnología existe para quitar fricción a la vida de alguien. El ciclo no termina en el código.",
-      notes: "Cada vuelta del ciclo debería durar días, no meses.",
     },
     {
       id: "teachers-innovation",
+      notes:
+        "Mensaje para docentes: el pensamiento crítico se entrena detectando problemas, no solo resolviendo ejercicios ya planteados.",
+      build: true,
       layout: "bullets",
       title: "Para docentes: problemas reales en el aula",
-      build: true,
       items: [
         "Proyectos que parten de un problema con **un usuario real**",
         "Evaluar la validación, no solo el código entregado",
@@ -208,11 +207,7 @@ export const ideaMicroSaas: DeckInput = {
         "Investigación aplicada con la industria y la comunidad local",
         "Premiar la pregunta correcta, no solo la respuesta correcta",
       ],
-      notes:
-        "Mensaje para docentes: el pensamiento crítico se entrena detectando problemas, no solo resolviendo ejercicios ya planteados.",
     },
-
-    // ── 02 · De programador a arquitecto ─────────────────────
     {
       id: "part-ai",
       layout: "section",
@@ -221,22 +216,25 @@ export const ideaMicroSaas: DeckInput = {
       subtitle: "La IA escribe más código; tú tomas más decisiones.",
     },
     {
-      id: "bottleneck",
-      layout: "statement",
-      statement:
-        "El cuello de botella del estudiante: ==estudiar, rendir y emprender== al mismo tiempo.",
-      emphasis: "Sin método, eso termina en burnout.",
-      notes:
-        "Preguntar: ¿cuántos han dejado un proyecto personal por los exámenes? Es normal. La respuesta no es trabajar más horas, es trabajar distinto.",
-    },
-    {
       id: "ai-numbers",
       layout: "stats",
       title: "La IA ya es parte del oficio",
       stats: [
-        { value: 83, suffix: "%", label: "de devs usa herramientas de IA" },
-        { value: 66, suffix: "%", label: "usa asistentes o agentes de código" },
-        { value: 48, suffix: "%", label: "solo confía si puede verificarlo" },
+        {
+          value: 83,
+          suffix: "%",
+          label: "de devs usa herramientas de IA",
+        },
+        {
+          value: 66,
+          suffix: "%",
+          label: "usa asistentes o agentes de código",
+        },
+        {
+          value: 48,
+          suffix: "%",
+          label: "solo confía si puede verificarlo",
+        },
       ],
       citation:
         "Fuente: Stack Overflow Developer Survey 2026, unas 30 900 respuestas de 169 países.",
@@ -254,9 +252,11 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "then-now",
+      notes:
+        "El enfoque senior: el código se escribe más rápido que nunca; lo escaso es saber qué construir y cómo comprobar que está bien.",
+      build: true,
       layout: "two-column",
       title: "Cómo cambió el trabajo",
-      build: true,
       columns: [
         {
           heading: "Antes",
@@ -277,8 +277,6 @@ export const ideaMicroSaas: DeckInput = {
           ],
         },
       ],
-      notes:
-        "El código se escribe más rápido que nunca; lo escaso es saber qué construir, cómo y cómo comprobar que está bien.",
     },
     {
       id: "role-grows",
@@ -321,21 +319,6 @@ export const ideaMicroSaas: DeckInput = {
         "Este es el mensaje central del módulo: el trabajo a nivel código se reduce, pero crece mucho a nivel de arquitectura, soluciones y riesgos.",
     },
     {
-      id: "decisions",
-      layout: "bullets",
-      title: "Las preguntas que ahora son tuyas",
-      build: true,
-      items: [
-        "¿Qué arquitectura usamos, y **por qué** esta y no otra?",
-        "¿Dónde se despliega, y qué pasa cuando falla?",
-        "¿Cuánto cuesta hoy, y cuánto con 100 veces más usuarios?",
-        "¿Qué datos guardamos, y cómo los protegemos?",
-        "¿Qué riesgos aceptamos, y cuáles no?",
-      ],
-      notes:
-        "Ninguna de estas preguntas la responde la IA por ti. Te puede dar opciones; decidir y justificar es tu trabajo.",
-    },
-    {
       id: "arch-decision",
       layout: "two-column",
       title: "Una decisión, dos caminos",
@@ -366,7 +349,11 @@ export const ideaMicroSaas: DeckInput = {
       layout: "stats",
       title: "Cuánto cuesta empezar",
       stats: [
-        { value: 0, prefix: "$", label: "Vercel Hobby, solo uso no comercial" },
+        {
+          value: 0,
+          prefix: "$",
+          label: "Vercel Hobby, solo uso no comercial",
+        },
         {
           value: 20,
           prefix: "$",
@@ -385,63 +372,23 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "conductor-flow",
+      notes:
+        "Remarcar la flecha de vuelta: revisar y corregir la especificación es parte del trabajo, no un fracaso.",
       layout: "diagram",
       title: "El flujo del director de orquesta",
       source:
         "flowchart LR\n  i[Idea] --> s[Especificación]\n  s --> a[Agente de IA]\n  a --> r[Revisión humana]\n  r --> t[Tests y CI]\n  t --> d[Producción]\n  r -->|corregir| s",
       caption:
         "Tú decides qué se construye y qué se acepta. La IA ejecuta dentro de esos límites.",
-      notes:
-        "Remarcar la flecha de vuelta: revisar y corregir la especificación es parte del trabajo, no un fracaso.",
-    },
-    {
-      id: "stack",
-      layout: "icons-grid",
-      title: "Un stack pequeño y moderno",
-      build: true,
-      items: [
-        {
-          icon: "layout-template",
-          title: "Next.js + TypeScript",
-          body: "La interfaz web, con tipos estrictos.",
-        },
-        {
-          icon: "code",
-          title: "Python",
-          body: "Lógica de negocio, datos e IA, con FastAPI.",
-        },
-        {
-          icon: "server",
-          title: "Go",
-          body: "Servicios rápidos que se despliegan como un solo binario.",
-        },
-        {
-          icon: "database",
-          title: "PostgreSQL",
-          body: "Los datos, cuando el prototipo se vuelve producto.",
-        },
-        {
-          icon: "cloud",
-          title: "Despliegue gestionado",
-          body: "Vercel o Cloud Run: sin administrar servidores.",
-        },
-        {
-          icon: "credit-card",
-          title: "Pagos",
-          body: "Una pasarela local o un merchant of record.",
-        },
-      ],
-      notes:
-        "No hace falta todo el primer día. Un MVP puede ser solo Next.js con una base gestionada. Go y Python entran cuando la lógica lo pide.",
     },
     {
       id: "ai-multiplies",
-      layout: "statement",
-      statement:
-        "La IA ==multiplica== lo que sabes. Si no entiendes el código, multiplica tus errores.",
-      emphasis: "Usarla bien es una habilidad que se entrena.",
       notes:
         "Dato para el debate: en un ensayo controlado de METR (2025), desarrolladores experimentados tardaron un 19 % más con IA en sus propios proyectos, aunque creían que iban un 20 % más rápido. METR lo considera ya histórico, pero la lección sigue: la percepción engaña, hay que medir y verificar.",
+      layout: "statement",
+      statement:
+        "La IA ==multiplica== lo que sabes. Si no entiendes el proyecto, multiplica tus errores.",
+      emphasis: "Usarla bien es una habilidad que se entrena.",
     },
     {
       id: "teachers-ai",
@@ -458,8 +405,6 @@ export const ideaMicroSaas: DeckInput = {
       notes:
         "La universidad tiene que formar visión de proyecto en alto nivel. Según la misma encuesta de Stack Overflow, solo una de cada cuatro personas dice que su empresa tiene una política oficial de IA: la academia puede adelantarse.",
     },
-
-    // ── 03 · Ingeniería industrializada ──────────────────────
     {
       id: "part-engineering",
       layout: "section",
@@ -469,17 +414,17 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "skills",
+      notes:
+        "Una skill es conocimiento de ingeniería empaquetado: lo que un senior le explicaría a un junior, escrito una vez y aplicado siempre.",
+      build: true,
       layout: "bullets",
       title: "¿Qué es una skill?",
-      build: true,
       items: [
         "Instrucciones reutilizables que un agente carga **cuando las necesita**",
         "Guardan cómo trabaja tu equipo: estándares, pasos y ejemplos",
         "Se versionan en Git como cualquier otro código",
         "La idea no es nueva: plantillas, generadores y design systems",
       ],
-      notes:
-        "Una skill es conocimiento de ingeniería empaquetado: lo que un senior le explicaría a un junior, escrito una vez y aplicado siempre.",
     },
     {
       id: "skill-example",
@@ -492,117 +437,22 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "agents-md",
+      notes:
+        "Sirve igual para personas: es lo primero que lee alguien nuevo en el equipo.",
       layout: "code",
       title: "Las reglas del proyecto",
       language: "markdown",
       code: "# AGENTS.md\n- Python 3.12 con FastAPI; Next.js con TypeScript estricto.\n- Nada de `any`: los tipos son la documentación.\n- Todo cambio de comportamiento lleva su test.\n- Nunca subas secretos ni archivos .env al repositorio.",
       caption:
         "El contexto que la IA lee en cada tarea: tus estándares, por escrito.",
-      notes:
-        "Sirve igual para personas: es lo primero que lee alguien nuevo en el equipo.",
-    },
-    {
-      id: "data-evolution",
-      layout: "two-column",
-      title: "Del prototipo al producto: los datos",
-      columns: [
-        {
-          heading: "Prototipo: un archivo JSON",
-          items: [
-            "Cero configuración",
-            "Ideal para validar en días",
-            "Se rompe con varios usuarios a la vez",
-          ],
-        },
-        {
-          heading: "Producto: PostgreSQL",
-          items: [
-            "Relaciones y transacciones",
-            "Migraciones versionadas",
-            "Escala cuando llegan los clientes",
-          ],
-        },
-      ],
-      notes:
-        "Una decisión de arquitectura en pequeño: el truco no es elegir bien el primer día, sino poder cambiar sin reescribir. Siguiente diapositiva.",
-    },
-    {
-      id: "repository",
-      layout: "code",
-      title: "Un contrato, dos implementaciones",
-      language: "python",
-      code: "class TurnoRepo(Protocol):\n    def disponibles(self, dia: date) -> list[Turno]: ...\n\nclass JsonTurnoRepo:  # prototipo: un archivo turnos.json\n    ...\n\nclass SqlTurnoRepo:  # producto: PostgreSQL con SQLAlchemy\n    ...",
-      caption:
-        "La lógica de negocio no sabe dónde viven los datos: pasar de JSON a SQL es cambiar una línea.",
-      notes:
-        "Ejemplo de gestión de turnos (barberías, consultorios). El patrón se llama repositorio.",
-    },
-    {
-      id: "case-intro",
-      layout: "statement",
-      statement:
-        "Caso práctico: un laboratorio calcula pérdidas en tuberías ==a mano, en Excel==.",
-      emphasis:
-        "Lo convertimos en una aplicación web, con estándares, en minutos.",
-      notes:
-        "Elegido para que conecte con ingeniería civil, mecánica y ambiental. Si el público es de sistemas, sirve igual: es lógica de negocio pura.",
-    },
-    {
-      id: "case-logic",
-      layout: "code",
-      title: "1. La lógica: una función pura",
-      language: "python",
-      code: 'def perdida_hazen_williams(caudal: float, diametro: float,\n                           longitud: float, c: float = 130) -> float:\n    """Pérdida de carga en metros (SI): Q en m³/s, D y L en metros."""\n    return 10.67 * longitud * caudal**1.852 / (c**1.852 * diametro**4.87)',
-      caption:
-        "La fórmula de Hazen-Williams: tipada, documentada y sin efectos secundarios.",
-      notes:
-        "C = 130 es un valor típico para tuberías de acero nuevas o PVC envejecido. Una función pura es la parte más fácil de probar y de pedirle a la IA.",
-    },
-    {
-      id: "case-test",
-      layout: "code",
-      title: "2. El test, antes que la interfaz",
-      language: "python",
-      code: "def test_perdida_crece_con_el_caudal():\n    base = perdida_hazen_williams(0.01, 0.1, 100)\n    assert perdida_hazen_williams(0.02, 0.1, 100) > base\n\ndef test_valor_de_referencia():\n    # 10 L/s en 100 m de tubería de 100 mm\n    perdida = perdida_hazen_williams(0.01, 0.1, 100)\n    assert perdida == pytest.approx(1.90, rel=0.01)",
-      caption:
-        "Si la IA cambia la fórmula por error, el test lo detecta. Así se verifica.",
-      notes:
-        "El valor de referencia sale de calcularlo una vez a mano o con el Excel del laboratorio. Ese Excel se convierte en el test.",
-    },
-    {
-      id: "case-api",
-      layout: "code",
-      title: "3. La API",
-      language: "python",
-      code: 'class Tramo(BaseModel):\n    caudal: PositiveFloat\n    diametro: PositiveFloat\n    longitud: PositiveFloat\n@app.post("/perdida")\ndef perdida(t: Tramo) -> dict[str, float]:\n    metros = perdida_hazen_williams(t.caudal, t.diametro, t.longitud)\n    return {"perdida_m": metros}',
-      caption:
-        "FastAPI valida la entrada: un diámetro negativo ni siquiera llega a la fórmula.",
-    },
-    {
-      id: "case-ui",
-      layout: "code",
-      title: "4. La interfaz",
-      language: "typescript",
-      code: '"use server";\nexport async function calcular(form: FormData) {\n  const res = await fetch(`${process.env.API_URL}/perdida`, {\n    method: "POST", headers: { "Content-Type": "application/json" },\n    body: JSON.stringify(Object.fromEntries(form)),\n  });\n  return (await res.json()) as { perdida_m: number };\n}',
-      caption:
-        "Una server action de Next.js: el formulario llama a la API sin exponerla al navegador.",
-    },
-    {
-      id: "case-flow",
-      layout: "diagram",
-      title: "El flujo completo",
-      source:
-        "flowchart LR\n  u[Formulario Next.js] --> a[API FastAPI]\n  a --> f[Función tipada]\n  g[git push] --> c[CI: ruff + pytest]\n  c --> d[Despliegue]",
-      caption:
-        "Arriba lo que ve el usuario; abajo lo que garantiza que nada se rompa en cada cambio.",
-      notes:
-        "Si hay tiempo, demo en vivo: pedirle al agente que agregue el cálculo de velocidad del flujo, ver cómo escribe el test y correrlo.",
     },
     {
       id: "quality",
+      notes:
+        "Nada de esto es burocracia: es lo que permite cambiar rápido sin miedo, que es exactamente lo que necesita un Micro-SaaS.",
+      build: true,
       layout: "bullets",
       title: "Calidad desde el primer día",
-      build: true,
       items: [
         "Git desde el primer commit, con ramas y pull requests",
         "Contratos claros: tipos, validación y APIs versionadas",
@@ -611,25 +461,22 @@ export const ideaMicroSaas: DeckInput = {
         "Variables de entorno: nunca secretos en el código",
         "Un README y las decisiones importantes por escrito",
       ],
-      notes:
-        "Nada de esto es burocracia: es lo que permite cambiar rápido sin miedo, que es exactamente lo que necesita un Micro-SaaS.",
     },
     {
       id: "teachers-engineering",
+      notes:
+        "La brecha academia-industria se cierra más con hábitos que con tecnologías de moda.",
+      build: true,
       layout: "bullets",
       title: "Para docentes: estándares desde el primer semestre",
-      build: true,
       items: [
         "Entregas por pull request, con revisión entre pares",
         "Un pipeline de CI como parte de la nota",
         "Tests como especificación: el enunciado viene con tests",
         "Proyectos que sobreviven al semestre y pasan a otro curso",
+        "Revisión de seguridad (OWASP) como criterio de evaluación",
       ],
-      notes:
-        "La brecha academia-industria se cierra más con hábitos que con tecnologías de moda.",
     },
-
-    // ── 04 · Seguridad ───────────────────────────────────────
     {
       id: "part-security",
       layout: "section",
@@ -673,7 +520,7 @@ export const ideaMicroSaas: DeckInput = {
         "**A06** Diseño inseguro: el riesgo nace en la arquitectura",
       ],
       notes:
-        "Fuente: top10.owasp.org/2025. La lista sigue: A07 fallas de autenticación, A08 integridad de software y datos, A09 registro y alertas, A10 manejo de condiciones excepcionales. Notar que A06 conecta con el módulo anterior: la seguridad también es una decisión de arquitectura.",
+        "Fuente: top10.owasp.org/2025. La lista sigue: A07 fallas de autenticación, A08 integridad de software y datos, A09 registro y alertas, A10 manejo de condiciones excepcionales. Notar que A06 conecta con el módulo anterior: la seguridad también es una decisión de arquitectura. Sobre A03: en un estudio de USENIX Security 2025, el 19,7 % de los paquetes sugeridos por modelos de IA no existía (slopsquatting).",
     },
     {
       id: "owasp-a01",
@@ -685,27 +532,6 @@ export const ideaMicroSaas: DeckInput = {
         "Autenticado no es autorizado: cada endpoint comprueba de quién es el dato.",
       notes:
         "Es el error más común en código generado por IA: el endpoint funciona en la demo, pero cualquier usuario autenticado puede cambiar el número en la URL y ver datos ajenos (IDOR). Devolver 404 en vez de 403 evita confirmar que la factura existe.",
-    },
-    {
-      id: "slopsquatting",
-      layout: "stats",
-      title: "A03: paquetes que la IA inventa",
-      stats: [
-        {
-          value: 19.7,
-          suffix: "%",
-          label: "de los paquetes sugeridos no existía",
-        },
-        {
-          value: 205,
-          suffix: "K",
-          label: "nombres de paquetes inventados, distintos",
-        },
-      ],
-      citation:
-        "Fuente: Spracklen et al., «We Have a Package for You!», USENIX Security 2025 (16 modelos).",
-      notes:
-        "Slopsquatting: un atacante registra con código malicioso el nombre que la IA suele inventar, y espera a que alguien lo instale. En modelos de 2026 la tasa baja a entre 4,6 % y 6,1 % (arXiv 2605.17062), pero no desaparece. Regla: verificar que cada dependencia exista, sea la correcta y esté mantenida.",
     },
     {
       id: "security-review",
@@ -724,24 +550,9 @@ export const ideaMicroSaas: DeckInput = {
         "Herramientas gratuitas para proyectos públicos: Dependabot, CodeQL y el escaneo de secretos de GitHub; en Python, pip-audit.",
     },
     {
-      id: "teachers-security",
-      layout: "bullets",
-      title: "Para docentes: la seguridad no es optativa",
-      build: true,
-      items: [
-        "El OWASP Top 10 como lectura de todas las materias de desarrollo",
-        "Revisión de seguridad como criterio de evaluación",
-        "Ejercicios de encontrar fallas en código generado por IA",
-      ],
-      notes:
-        "Un ejercicio que funciona: entregar a los estudiantes un endpoint generado por IA con una falla A01 y pedirles que la encuentren y la prueben.",
-    },
-
-    // ── 05 · Micro-SaaS ──────────────────────────────────────
-    {
       id: "part-saas",
       layout: "section",
-      number: "05",
+      number: "04",
       title: "El Micro-SaaS universitario",
       subtitle: "Del prototipo al ingreso real.",
     },
@@ -787,9 +598,11 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "what-saas",
+      notes:
+        "No es una startup que busca inversión: es un negocio pequeño, rentable y manejable, que puede crecer o no.",
+      build: true,
       layout: "icons-grid",
       title: "¿Qué es un Micro-SaaS?",
-      build: true,
       items: [
         {
           icon: "target",
@@ -812,29 +625,28 @@ export const ideaMicroSaas: DeckInput = {
           body: "Comercios, consultorios y colegios de tu ciudad.",
         },
       ],
-      notes:
-        "No es una startup que busca inversión: es un negocio pequeño, rentable y manejable, que puede crecer o no.",
     },
     {
       id: "ideas",
+      notes:
+        "Ninguna idea es original, y está bien: lo valioso es ejecutarla para un nicho que conoces mejor que nadie.",
+      build: true,
       layout: "bullets",
       title: "Ideas para empezar",
-      build: true,
       items: [
         "Turnos y recordatorios para barberías y consultorios",
         "Inventario simple para tiendas de barrio",
         "Reservas de laboratorios y equipos de la facultad",
-        "Calculadoras técnicas para ingenieros, como la de tuberías",
         "Reportes automáticos para pequeños negocios",
       ],
-      notes:
-        "Ninguna idea es original, y está bien: lo valioso es ejecutarla para un nicho que conoces mejor que nadie.",
     },
     {
       id: "launch",
+      notes:
+        "Validar antes de escribir código masivo. Si nadie se anota en la lista de espera, ahorraste meses.",
+      build: true,
       layout: "bullets",
       title: "Lanzamiento exprés",
-      build: true,
       items: [
         "**Semana 1**: 10 conversaciones con personas que viven el problema",
         "**Semana 2**: una landing con lista de espera o preventa",
@@ -842,17 +654,26 @@ export const ideaMicroSaas: DeckInput = {
         "**Semana 5**: 3 usuarios reales usándolo, y cobra aunque sea poco",
         "**Después**: medir, escuchar e iterar",
       ],
-      notes:
-        "Validar antes de escribir código masivo. Si nadie se anota en la lista de espera, ahorraste meses.",
     },
     {
       id: "math",
       layout: "stats",
       title: "Las cuentas de un Micro-SaaS",
       stats: [
-        { value: 30, label: "comercios de tu ciudad" },
-        { value: 15, prefix: "$", label: "al mes cada uno" },
-        { value: 450, prefix: "$", label: "de ingreso recurrente mensual" },
+        {
+          value: 30,
+          label: "comercios de tu ciudad",
+        },
+        {
+          value: 15,
+          prefix: "$",
+          label: "al mes cada uno",
+        },
+        {
+          value: 450,
+          prefix: "$",
+          label: "de ingreso recurrente mensual",
+        },
       ],
       citation:
         "Ejemplo ilustrativo para hacer las cuentas, no un dato de mercado.",
@@ -861,28 +682,28 @@ export const ideaMicroSaas: DeckInput = {
     },
     {
       id: "balance",
+      notes:
+        "La salud mental no es negociable. Un proyecto que te cuesta la carrera o la salud no es un buen negocio.",
+      build: true,
       layout: "bullets",
       title: "El balance de vida",
-      build: true,
       items: [
         "Bloques fijos de 1 a 2 horas, no maratones de fin de semana",
         "En época de exámenes, la carrera primero: el proyecto espera",
         "Un solo proyecto a la vez",
         "Automatiza lo repetitivo: despliegues, cobros y recordatorios",
-        "Busca un socio que venda mientras tú construyes",
+        '"Busca un socio que venda mientras tú construyes"',
         "Duerme: el burnout no escala",
       ],
-      notes:
-        "La salud mental no es negociable. Un proyecto que te cuesta la carrera o la salud no es un buen negocio.",
     },
     {
       id: "teachers-saas",
+      notes:
+        "Para docentes y autoridades: vincular tesis con necesidades de la propia institución y de la comunidad es investigación aplicada con impacto medible.",
       layout: "statement",
       statement: "La universidad puede ser ==el primer cliente==.",
       emphasis:
         "Proyectos de titulación que terminan en productos que usa la comunidad.",
-      notes:
-        "Para docentes y autoridades: vincular tesis con necesidades de la propia institución y de la comunidad es investigación aplicada con impacto medible.",
     },
     {
       id: "this-week",
@@ -899,10 +720,10 @@ export const ideaMicroSaas: DeckInput = {
       notes:
         "Cierre del contenido. Que se lleven algo accionable para mañana, no solo inspiración.",
     },
-
-    // ── 06 · Preguntas ───────────────────────────────────────
     {
       id: "qa",
+      notes:
+        "Preguntas semilla por si nadie empieza: ¿Con qué stack empiezo? ¿Cómo cobro siendo estudiante? Para docentes: ¿cómo evaluamos un trabajo hecho con IA?",
       layout: "closing",
       title: "¿Preguntas?",
       subtitle:
@@ -921,11 +742,8 @@ export const ideaMicroSaas: DeckInput = {
           href: "https://listerineh.dev/slides",
         },
       ],
-      notes:
-        "Preguntas semilla por si nadie empieza: ¿Con qué stack empiezo? ¿Cómo cobro siendo estudiante? Para docentes: ¿cómo evaluamos un trabajo hecho con IA? ¿Qué materias deberían cambiar?",
     },
   ],
-  // English: the same slides, translated. Only text that differs is stored (see i18n.ts).
   translations: {
     en: {
       title: "From idea to Micro-SaaS",
@@ -938,7 +756,7 @@ export const ideaMicroSaas: DeckInput = {
           subtitle:
             "Real innovation, agile engineering and AI for students in the era of modern software.",
           notes:
-            "Target length: 60 to 75 minutes + questions. If you need to cut: the case study can be shown with just the function and the test, and the ideas and balance slides can be summarized. Greet students and professors separately.",
+            "Target length: 60 minutes + questions. Modules of ~12 minutes. Greet students and professors separately: this talk has something for each.",
         },
         speaker: {
           photo: {
@@ -947,17 +765,8 @@ export const ideaMicroSaas: DeckInput = {
           },
           greeting: "Hi, I'm",
           bio: "I build backends, web products and tools with applied AI. I was also a student trying to build things between exams.",
-          notes: "Short intro (30 seconds). The story is on the next slide.",
-        },
-        story: {
-          statement:
-            "I finished my thesis the same month ==ChatGPT reached the world==.",
-          emphasis:
-            "My whole degree was without AI. Yours won't be, and that changes what you need to learn.",
-          citation:
-            "ChatGPT was released to the public on November 30, 2022 (OpenAI).",
           notes:
-            "Tell it in first person: I couldn't use AI for anything at university; it arrived just as I was finishing. You have it from your first semester. The question of the talk: what changes in what we need to learn and teach?",
+            "Short intro (30 seconds). Connect: I also sat where you are, with exams and a half-finished project.",
         },
         hook: {
           statement:
@@ -1065,14 +874,6 @@ export const ideaMicroSaas: DeckInput = {
           notes:
             "If at least three don't apply, it's probably not a pain, just an annoyance.",
         },
-        "purpose-loop": {
-          title: "Engineering with purpose",
-          source:
-            "flowchart LR\n  o[Observe] --> e[Interview]\n  e --> p[Prototype]\n  p --> m[Measure]\n  m -->|learn| o",
-          caption:
-            "Technology exists to remove friction from someone's life. The loop doesn't end at the code.",
-          notes: "Each turn of the loop should take days, not months.",
-        },
         "teachers-innovation": {
           title: "For professors: real problems in the classroom",
           items: [
@@ -1090,17 +891,14 @@ export const ideaMicroSaas: DeckInput = {
           subtitle:
             "AI writes more of the code; you make more of the decisions.",
         },
-        bottleneck: {
-          statement:
-            "The student's bottleneck: ==studying, passing exams and building a business== at the same time.",
-          emphasis: "Without a method, that ends in burnout.",
-          notes:
-            "Ask: how many of you have dropped a personal project because of exams? It's normal. The answer isn't working more hours, it's working differently.",
-        },
         "ai-numbers": {
           title: "AI is already part of the job",
           stats: [
-            { value: 83, suffix: "%", label: "of developers use AI tools" },
+            {
+              value: 83,
+              suffix: "%",
+              label: "of developers use AI tools",
+            },
             {
               value: 66,
               suffix: "%",
@@ -1116,13 +914,6 @@ export const ideaMicroSaas: DeckInput = {
             "Source: Stack Overflow Developer Survey 2026, about 30,900 responses from 169 countries.",
           notes:
             "Only 17% say they don't use AI. The third number matters most: half trust AI only when they can easily verify the result. Verifying is the skill.",
-        },
-        "still-code": {
-          statement: "The industry ==does== require knowing how to code.",
-          emphasis:
-            "But with AI, writing code moves to the background. What matters most now are the decisions.",
-          notes:
-            "Important so the message isn't misread: without programming fundamentals you can't review or fix what the AI generates. But an engineer's value no longer lies in typing fast.",
         },
         "then-now": {
           title: "How the work changed",
@@ -1147,149 +938,7 @@ export const ideaMicroSaas: DeckInput = {
             },
           ],
           notes:
-            "Code is written faster than ever; what's scarce is knowing what to build, how, and how to check it's right.",
-        },
-        "role-grows": {
-          title: "Less code, a bigger role",
-          items: [
-            {
-              icon: "layers",
-              title: "Software architect",
-              body: "Which architecture to use, and why that one and not another.",
-            },
-            {
-              icon: "cloud",
-              title: "Solutions architect",
-              body: "Where it's deployed and which services hold it up.",
-            },
-            {
-              icon: "calculator",
-              title: "Cost analysis",
-              body: "What it costs with 10, 1,000 and 100,000 users.",
-            },
-            {
-              icon: "shield-alert",
-              title: "Risk analyst",
-              body: "What can fail and who might attack it.",
-            },
-            {
-              icon: "code",
-              title: "Code reviewer",
-              body: "Read, understand and approve what the AI proposes.",
-            },
-            {
-              icon: "target",
-              title: "Product vision",
-              body: "What's worth building first.",
-            },
-          ],
-          notes:
-            "This is the core message of the module: the work at the code level shrinks, but it grows a lot at the level of architecture, solutions and risk.",
-        },
-        decisions: {
-          title: "The questions that are now yours",
-          items: [
-            "Which architecture do we use, and **why** this one and not another?",
-            "Where is it deployed, and what happens when it fails?",
-            "What does it cost today, and with 100 times more users?",
-            "What data do we keep, and how do we protect it?",
-            "Which risks do we accept, and which don't we?",
-          ],
-          notes:
-            "AI doesn't answer any of these for you. It can give you options; deciding and justifying is your job.",
-        },
-        "arch-decision": {
-          title: "One decision, two paths",
-          columns: [
-            {
-              heading: "Serverless (Cloud Run, Vercel)",
-              items: [
-                "Pay for what you use, scales to zero",
-                "No servers to maintain",
-                "Cold starts and platform limits",
-              ],
-            },
-            {
-              heading: "Always-on server",
-              items: [
-                "A fixed cost, even when nobody uses it",
-                "Full control of the environment",
-                "You update, monitor and back it up",
-              ],
-            },
-          ],
-          notes:
-            "There's no universally right answer: it depends on traffic, the team and the budget. For a Micro-SaaS that's starting, serverless usually wins; with high, steady traffic, a dedicated server can be cheaper.",
-        },
-        costs: {
-          title: "What it costs to start",
-          stats: [
-            {
-              value: 0,
-              prefix: "$",
-              label: "Vercel Hobby, non-commercial use only",
-            },
-            {
-              value: 20,
-              prefix: "$",
-              label: "Vercel Pro, per developer per month",
-            },
-            {
-              value: 2,
-              suffix: "M",
-              label: "free requests a month on Cloud Run",
-            },
-          ],
-          citation:
-            "Sources: Vercel and Google Cloud Run pricing pages, October 2026.",
-          notes:
-            "The risk analyst example: Vercel's free plan doesn't allow commercial use. If your Micro-SaaS charges, you need Pro or another provider. Reading the terms is engineering too.",
-        },
-        "conductor-flow": {
-          title: "The conductor's workflow",
-          source:
-            "flowchart LR\n  i[Idea] --> s[Specification]\n  s --> a[AI agent]\n  a --> r[Human review]\n  r --> t[Tests and CI]\n  t --> d[Production]\n  r -->|fix| s",
-          caption:
-            "You decide what gets built and what gets accepted. The AI works within those limits.",
-          notes:
-            "Point at the arrow going back: reviewing and fixing the spec is part of the job, not a failure.",
-        },
-        stack: {
-          title: "A small, modern stack",
-          items: [
-            {
-              icon: "layout-template",
-              title: "Next.js + TypeScript",
-              body: "The web interface, with strict types.",
-            },
-            {
-              icon: "code",
-              title: "Python",
-              body: "Business logic, data and AI, with FastAPI.",
-            },
-            {
-              icon: "server",
-              title: "Go",
-              body: "Fast services that deploy as a single binary.",
-            },
-            {
-              icon: "database",
-              title: "PostgreSQL",
-              body: "The data, once the prototype becomes a product.",
-            },
-            {
-              icon: "cloud",
-              title: "Managed deployment",
-              body: "Vercel or Cloud Run: no servers to run.",
-            },
-            {
-              icon: "credit-card",
-              title: "Payments",
-              body: "A local gateway or a merchant of record.",
-            },
-          ],
-          notes:
-            "You don't need all of it on day one. An MVP can be just Next.js with a managed database. Go and Python come in when the logic calls for them.",
+            "The senior approach: code is written faster than ever; what's scarce is knowing what to build and how to check it's right.",
         },
         "ai-multiplies": {
           statement:
@@ -1339,82 +988,6 @@ export const ideaMicroSaas: DeckInput = {
           notes:
             "It works for people too: it's the first thing someone new on the team reads.",
         },
-        "data-evolution": {
-          title: "From prototype to product: the data",
-          columns: [
-            {
-              heading: "Prototype: a JSON file",
-              items: [
-                "Zero setup",
-                "Great for validating in days",
-                "Breaks with several users at once",
-              ],
-            },
-            {
-              heading: "Product: PostgreSQL",
-              items: [
-                "Relations and transactions",
-                "Versioned migrations",
-                "Scales when customers arrive",
-              ],
-            },
-          ],
-          notes:
-            "An architecture decision in miniature: the trick isn't choosing right on day one, but being able to switch without rewriting. Next slide.",
-        },
-        repository: {
-          title: "One contract, two implementations",
-          code: "class BookingRepo(Protocol):\n    def available(self, day: date) -> list[Booking]: ...\n\nclass JsonBookingRepo:  # prototype: a bookings.json file\n    ...\n\nclass SqlBookingRepo:  # product: PostgreSQL with SQLAlchemy\n    ...",
-          caption:
-            "The business logic doesn't know where the data lives: going from JSON to SQL is changing one line.",
-          notes:
-            "An appointment-booking example (barbershops, clinics). The pattern is called a repository.",
-        },
-        "case-intro": {
-          statement:
-            "Case study: a lab computes pipe head loss ==by hand, in Excel==.",
-          emphasis:
-            "We turn it into a web app, to industry standards, in minutes.",
-          notes:
-            "Chosen to connect with civil, mechanical and environmental engineering. For a computer science audience it works just as well: it's pure business logic.",
-        },
-        "case-logic": {
-          title: "1. The logic: a pure function",
-          code: 'def head_loss_hazen_williams(flow: float, diameter: float,\n                             length: float, c: float = 130) -> float:\n    """Head loss in meters (SI): Q in m³/s, D and L in meters."""\n    return 10.67 * length * flow**1.852 / (c**1.852 * diameter**4.87)',
-          caption:
-            "The Hazen-Williams formula: typed, documented and free of side effects.",
-          notes:
-            "C = 130 is a typical value for new steel or aged PVC pipe. A pure function is the easiest part to test and to ask the AI for.",
-        },
-        "case-test": {
-          title: "2. The test, before the interface",
-          code: "def test_loss_grows_with_flow():\n    base = head_loss_hazen_williams(0.01, 0.1, 100)\n    assert head_loss_hazen_williams(0.02, 0.1, 100) > base\n\ndef test_reference_value():\n    # 10 L/s through 100 m of 100 mm pipe\n    loss = head_loss_hazen_williams(0.01, 0.1, 100)\n    assert loss == pytest.approx(1.90, rel=0.01)",
-          caption:
-            "If the AI changes the formula by mistake, the test catches it. That's how you verify.",
-          notes:
-            "The reference value comes from computing it once by hand or with the lab's Excel. That Excel becomes the test.",
-        },
-        "case-api": {
-          title: "3. The API",
-          code: 'class Segment(BaseModel):\n    flow: PositiveFloat\n    diameter: PositiveFloat\n    length: PositiveFloat\n@app.post("/head-loss")\ndef head_loss(s: Segment) -> dict[str, float]:\n    meters = head_loss_hazen_williams(s.flow, s.diameter, s.length)\n    return {"head_loss_m": meters}',
-          caption:
-            "FastAPI validates the input: a negative diameter never reaches the formula.",
-        },
-        "case-ui": {
-          title: "4. The interface",
-          code: '"use server";\nexport async function calculate(form: FormData) {\n  const res = await fetch(`${process.env.API_URL}/head-loss`, {\n    method: "POST", headers: { "Content-Type": "application/json" },\n    body: JSON.stringify(Object.fromEntries(form)),\n  });\n  return (await res.json()) as { head_loss_m: number };\n}',
-          caption:
-            "A Next.js server action: the form calls the API without exposing it to the browser.",
-        },
-        "case-flow": {
-          title: "The full flow",
-          source:
-            "flowchart LR\n  u[Next.js form] --> a[FastAPI API]\n  a --> f[Typed function]\n  g[git push] --> c[CI: ruff + pytest]\n  c --> d[Deploy]",
-          caption:
-            "On top, what the user sees; below, what makes sure nothing breaks on every change.",
-          notes:
-            "If there's time, live demo: ask the agent to add the flow velocity calculation, watch it write the test, and run it.",
-        },
         quality: {
           title: "Quality from day one",
           items: [
@@ -1435,134 +1008,14 @@ export const ideaMicroSaas: DeckInput = {
             "A CI pipeline as part of the grade",
             "Tests as the specification: the assignment comes with tests",
             "Projects that outlive the semester and pass to the next course",
+            "Security review (OWASP) as a grading criterion",
           ],
           notes:
             "The gap between academia and industry closes more through habits than through trendy technologies.",
         },
-        "part-security": {
-          title: "Security in the AI era",
-          subtitle:
-            "More code, faster. And more vulnerabilities, just as fast.",
-        },
-        "ai-vulns": {
-          title: "AI code isn't secure by default",
-          stats: [
-            {
-              value: 45,
-              suffix: "%",
-              label: "of tests produced OWASP Top 10 vulnerabilities",
-            },
-            {
-              value: 86,
-              suffix: "%",
-              label: "of XSS cases were left unprotected",
-            },
-          ],
-          citation:
-            "Source: Veracode, 2025 GenAI Code Security Report (80 coding tasks, over 100 models).",
-          notes:
-            "A key finding: newer and larger models didn't produce more secure code than smaller ones. Security doesn't come free with a better model: it comes from whoever reviews.",
-        },
-        owasp: {
-          items: [
-            "**A01** Broken access control: seeing or changing other people's data",
-            "**A02** Security misconfiguration: defaults, errors that reveal too much",
-            "**A03** Software supply chain: compromised or invented dependencies",
-            "**A04** Cryptographic failures: unprotected passwords and data",
-            "**A05** Injection: SQL, commands and XSS",
-            "**A06** Insecure design: the risk starts in the architecture",
-          ],
-          notes:
-            "Source: top10.owasp.org/2025. The list goes on: A07 authentication failures, A08 software and data integrity, A09 logging and alerting, A10 mishandling of exceptional conditions. Note that A06 ties back to the previous module: security is an architecture decision too.",
-        },
-        "owasp-a01": {
-          title: "A01 in practice",
-          code: '@app.get("/invoices/{invoice_id}")\ndef get_invoice(invoice_id: int, user: User = Depends(current_user)):\n    invoice = db.get(Invoice, invoice_id)\n    # Without this line, any user sees every invoice\n    if invoice is None or invoice.customer_id != user.id:\n        raise HTTPException(status_code=404)\n    return invoice',
-          caption:
-            "Authenticated isn't authorized: every endpoint checks whose data it is.",
-          notes:
-            "The most common mistake in AI-generated code: the endpoint works in the demo, but any signed-in user can change the number in the URL and see other people's data (IDOR). Returning 404 instead of 403 avoids confirming the invoice exists.",
-        },
-        slopsquatting: {
-          title: "A03: packages the AI invents",
-          stats: [
-            {
-              value: 19.7,
-              suffix: "%",
-              label: "of suggested packages didn't exist",
-            },
-            {
-              value: 205,
-              suffix: "K",
-              label: "distinct invented package names",
-            },
-          ],
-          citation:
-            'Source: Spracklen et al., "We Have a Package for You!", USENIX Security 2025 (16 models).',
-          notes:
-            "Slopsquatting: an attacker registers, with malicious code, the name the AI tends to invent, and waits for someone to install it. On 2026 models the rate drops to between 4.6% and 6.1% (arXiv 2605.17062), but it doesn't go away. Rule: check that every dependency exists, is the right one and is maintained.",
-        },
-        "security-review": {
-          title: "Review AI code the way an attacker would",
-          items: [
-            "Access control on **every** endpoint, not just sign-in",
-            "Validate every input: types, ranges and sizes",
-            "Every dependency: it exists, it's the right one and it's maintained",
-            "Secrets in environment variables, never in the code or the prompt",
-            "Automatic scanning in CI: dependencies, secrets and code",
-            "If your app uses LLMs: the OWASP Top 10 for LLMs, starting with prompt injection",
-          ],
-          notes:
-            "Free tools for public projects: Dependabot, CodeQL and GitHub secret scanning; in Python, pip-audit.",
-        },
-        "teachers-security": {
-          title: "For professors: security isn't optional",
-          items: [
-            "The OWASP Top 10 as reading for every development course",
-            "Security review as a grading criterion",
-            "Exercises on finding flaws in AI-generated code",
-          ],
-          notes:
-            "An exercise that works: give students an AI-generated endpoint with an A01 flaw and ask them to find it and prove it.",
-        },
         "part-saas": {
           title: "The student Micro-SaaS",
           subtitle: "From prototype to real income.",
-        },
-        "launch-then-now": {
-          title: "Launching an app: then and now",
-          columns: [
-            {
-              heading: "A few years ago",
-              items: [
-                "Your own servers, or ones set up by hand",
-                "A team: backend, frontend, mobile and operations",
-                "Months to the first version",
-                "Investment before the first customer",
-                "Charging online was complicated",
-              ],
-            },
-            {
-              heading: "Now",
-              items: [
-                "Managed deployment with free tiers",
-                "One person with AI can cover the stack",
-                "Weeks to the MVP",
-                "Almost zero starting cost",
-                "Payment gateways and merchants of record",
-              ],
-            },
-          ],
-          notes:
-            "Shipping a web or mobile app used to take a lot of knowledge and a lot of resources. Today the barrier to entry is much lower.",
-        },
-        "never-easier": {
-          statement:
-            "It's never been easier to run a Micro-SaaS ==while you study==.",
-          emphasis:
-            "As long as it's done right: a considered architecture, measured costs and security from day one.",
-          notes:
-            "Ties the previous modules together: shipping is the easy part; what sets an engineer apart is shipping something that doesn't break or leak.",
         },
         "what-saas": {
           title: "What is a Micro-SaaS?",
@@ -1618,9 +1071,20 @@ export const ideaMicroSaas: DeckInput = {
         math: {
           title: "The math of a Micro-SaaS",
           stats: [
-            { value: 30, label: "shops in your city" },
-            { value: 15, prefix: "$", label: "a month each" },
-            { value: 450, prefix: "$", label: "in monthly recurring revenue" },
+            {
+              value: 30,
+              label: "shops in your city",
+            },
+            {
+              value: 15,
+              prefix: "$",
+              label: "a month each",
+            },
+            {
+              value: 450,
+              prefix: "$",
+              label: "in monthly recurring revenue",
+            },
           ],
           citation: "An illustrative example to do the math, not market data.",
           notes:
@@ -1662,9 +1126,221 @@ export const ideaMicroSaas: DeckInput = {
           subtitle:
             "Tools, first projects or the future of teaching software with AI: let's talk.",
           notes:
-            "Seed questions in case nobody starts: Which stack do I start with? How do I charge as a student? For professors: how do we grade work done with AI? Which courses should change?",
+            "Seed questions in case nobody starts: Which stack do I start with? How do I charge as a student? For professors: how do we grade work done with AI?",
+        },
+        "conductor-flow": {
+          notes:
+            "Point at the arrow going back: reviewing and fixing the spec is part of the job, not a failure.",
+          title: "The conductor's workflow",
+          source:
+            "flowchart LR\n  i[Idea] --> s[Specification]\n  s --> a[AI agent]\n  a --> r[Human review]\n  r --> t[Tests and CI]\n  t --> d[Production]\n  r -->|fix| s",
+          caption:
+            "You decide what gets built and what gets accepted. The AI works within those limits.",
+        },
+        "purpose-loop": {
+          notes: "Each turn of the loop should take days, not months.",
+          title: "Engineering with purpose",
+          source:
+            "flowchart LR\n  o[Observe] --> e[Interview]\n  e --> p[Prototype]\n  p --> m[Measure]\n  m -->|learn| o",
+          caption:
+            "Technology exists to remove friction from someone's life. The loop doesn't end at the code.",
+        },
+        story: {
+          statement:
+            "I finished my thesis the same month ==ChatGPT reached the world==.",
+          emphasis:
+            "My whole degree was without AI. Yours won't be, and that changes what you need to learn.",
+          citation:
+            "ChatGPT was released to the public on November 30, 2022 (OpenAI).",
+          notes:
+            "Tell it in first person: I couldn't use AI for anything at university; it arrived just as I was finishing. You have it from your first semester. The question of the talk: what changes in what we need to learn and teach?",
+        },
+        "still-code": {
+          statement: "The industry ==does== require knowing how to code.",
+          emphasis:
+            "But with AI, writing code moves to the background. What matters most now are the decisions.",
+          notes:
+            "Important so the message isn't misread: without programming fundamentals you can't review or fix what the AI generates. But an engineer's value no longer lies in typing fast.",
+        },
+        "role-grows": {
+          title: "Less code, a bigger role",
+          items: [
+            {
+              icon: "layers",
+              title: "Software architect",
+              body: "Which architecture to use, and why that one and not another.",
+            },
+            {
+              icon: "cloud",
+              title: "Solutions architect",
+              body: "Where it's deployed and which services hold it up.",
+            },
+            {
+              icon: "calculator",
+              title: "Cost analysis",
+              body: "What it costs with 10, 1,000 and 100,000 users.",
+            },
+            {
+              icon: "shield-alert",
+              title: "Risk analyst",
+              body: "What can fail and who might attack it.",
+            },
+            {
+              icon: "code",
+              title: "Code reviewer",
+              body: "Read, understand and approve what the AI proposes.",
+            },
+            {
+              icon: "target",
+              title: "Product vision",
+              body: "What's worth building first.",
+            },
+          ],
+          notes:
+            "This is the core message of the module: the work at the code level shrinks, but it grows a lot at the level of architecture, solutions and risk.",
+        },
+        "arch-decision": {
+          title: "One decision, two paths",
+          columns: [
+            {
+              heading: "Serverless (Cloud Run, Vercel)",
+              items: [
+                "Pay for what you use, scales to zero",
+                "No servers to maintain",
+                "Cold starts and platform limits",
+              ],
+            },
+            {
+              heading: "Always-on server",
+              items: [
+                "A fixed cost, even when nobody uses it",
+                "Full control of the environment",
+                "You update, monitor and back it up",
+              ],
+            },
+          ],
+          notes:
+            "There's no universally right answer: it depends on traffic, the team and the budget. For a Micro-SaaS that's starting, serverless usually wins; with high, steady traffic, a dedicated server can be cheaper.",
+        },
+        costs: {
+          title: "What it costs to start",
+          stats: [
+            {
+              value: 0,
+              prefix: "$",
+              label: "Vercel Hobby, non-commercial use only",
+            },
+            {
+              value: 20,
+              prefix: "$",
+              label: "Vercel Pro, per developer per month",
+            },
+            {
+              value: 2,
+              suffix: "M",
+              label: "free requests a month on Cloud Run",
+            },
+          ],
+          citation:
+            "Sources: Vercel and Google Cloud Run pricing pages, October 2026.",
+          notes:
+            "The risk analyst example: Vercel's free plan doesn't allow commercial use. If your Micro-SaaS charges, you need Pro or another provider. Reading the terms is engineering too.",
+        },
+        "part-security": {
+          title: "Security in the AI era",
+          subtitle:
+            "More code, faster. And more vulnerabilities, just as fast.",
+        },
+        "ai-vulns": {
+          title: "AI code isn't secure by default",
+          stats: [
+            {
+              value: 45,
+              suffix: "%",
+              label: "of tests produced OWASP Top 10 vulnerabilities",
+            },
+            {
+              value: 86,
+              suffix: "%",
+              label: "of XSS cases were left unprotected",
+            },
+          ],
+          citation:
+            "Source: Veracode, 2025 GenAI Code Security Report (80 coding tasks, over 100 models).",
+          notes:
+            "A key finding: newer and larger models didn't produce more secure code than smaller ones. Security doesn't come free with a better model: it comes from whoever reviews.",
+        },
+        owasp: {
+          items: [
+            "**A01** Broken access control: seeing or changing other people's data",
+            "**A02** Security misconfiguration: defaults, errors that reveal too much",
+            "**A03** Software supply chain: compromised or invented dependencies",
+            "**A04** Cryptographic failures: unprotected passwords and data",
+            "**A05** Injection: SQL, commands and XSS",
+            "**A06** Insecure design: the risk starts in the architecture",
+          ],
+          notes:
+            "Source: top10.owasp.org/2025. The list goes on: A07 authentication failures, A08 software and data integrity, A09 logging and alerting, A10 mishandling of exceptional conditions. Note that A06 ties back to the previous module: security is an architecture decision too. On A03: in a USENIX Security 2025 study, 19.7% of packages suggested by AI models didn't exist (slopsquatting).",
+        },
+        "owasp-a01": {
+          title: "A01 in practice",
+          code: '@app.get("/invoices/{invoice_id}")\ndef get_invoice(invoice_id: int, user: User = Depends(current_user)):\n    invoice = db.get(Invoice, invoice_id)\n    # Without this line, any user sees every invoice\n    if invoice is None or invoice.customer_id != user.id:\n        raise HTTPException(status_code=404)\n    return invoice',
+          caption:
+            "Authenticated isn't authorized: every endpoint checks whose data it is.",
+          notes:
+            "The most common mistake in AI-generated code: the endpoint works in the demo, but any signed-in user can change the number in the URL and see other people's data (IDOR). Returning 404 instead of 403 avoids confirming the invoice exists.",
+        },
+        "security-review": {
+          title: "Review AI code the way an attacker would",
+          items: [
+            "Access control on **every** endpoint, not just sign-in",
+            "Validate every input: types, ranges and sizes",
+            "Every dependency: it exists, it's the right one and it's maintained",
+            "Secrets in environment variables, never in the code or the prompt",
+            "Automatic scanning in CI: dependencies, secrets and code",
+            "If your app uses LLMs: the OWASP Top 10 for LLMs, starting with prompt injection",
+          ],
+          notes:
+            "Free tools for public projects: Dependabot, CodeQL and GitHub secret scanning; in Python, pip-audit.",
+        },
+        "launch-then-now": {
+          title: "Launching an app: then and now",
+          columns: [
+            {
+              heading: "A few years ago",
+              items: [
+                "Your own servers, or ones set up by hand",
+                "A team: backend, frontend, mobile and operations",
+                "Months to the first version",
+                "Investment before the first customer",
+                "Charging online was complicated",
+              ],
+            },
+            {
+              heading: "Now",
+              items: [
+                "Managed deployment with free tiers",
+                "One person with AI can cover the stack",
+                "Weeks to the MVP",
+                "Almost zero starting cost",
+                "Payment gateways and merchants of record",
+              ],
+            },
+          ],
+          notes:
+            "Shipping a web or mobile app used to take a lot of knowledge and a lot of resources. Today the barrier to entry is much lower.",
+        },
+        "never-easier": {
+          statement:
+            "It's never been easier to run a Micro-SaaS ==while you study==.",
+          emphasis:
+            "As long as it's done right: a considered architecture, measured costs and security from day one.",
+          notes:
+            "Ties the previous modules together: shipping is the easy part; what sets an engineer apart is shipping something that doesn't break or leak.",
         },
       },
     },
   },
+  updatedAt: "2026-10-24T00:00:00.000Z",
+  version: 1,
 };
