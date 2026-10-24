@@ -355,6 +355,8 @@ export const pythonTyping: DeckInput = {
         { value: 19.23, suffix: "%", label: "de cuota en TIOBE" },
         { value: 58, suffix: "%", label: "de devs lo usa" },
       ],
+      citation:
+        "Fuentes: índice TIOBE, octubre de 2026, y Stack Overflow Developer Survey 2026.",
       notes:
         "Fuentes: índice TIOBE de octubre de 2026 (Python primero, 19,23 %). Stack Overflow Developer Survey 2026: 58,0 % usa Python, cuarto detrás de JavaScript, SQL y HTML/CSS.",
     },
@@ -709,6 +711,7 @@ export const pythonTyping: DeckInput = {
             { value: 19.23, suffix: "%", label: "TIOBE share" },
             { value: 58, suffix: "%", label: "of developers use it" },
           ],
+          citation: "Sources: TIOBE index, October 2026, and Stack Overflow Developer Survey 2026.",
           notes:
             "Sources: TIOBE index, October 2026 (Python first, 19.23%). Stack Overflow Developer Survey 2026: 58.0% use Python, fourth behind JavaScript, SQL and HTML/CSS.",
         },
