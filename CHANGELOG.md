@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.5.0] - 2026-10-23
+
+### Added
+- The "De la idea al Micro-SaaS" talk as a draft deck (`/slides/idea-micro-saas`) for a university talk on 11 November 2026, in Spanish and English: finding real problems, building with AI as a conductor, industry standards with a pipe head-loss case study (Python, FastAPI, Next.js), and the student Micro-SaaS, with a slide for professors in each module.
+
 ## [3.4.0] - 2026-10-23
 
 ### Added
