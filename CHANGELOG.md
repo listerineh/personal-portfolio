@@ -4,6 +4,14 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.3.0] - 2026-10-23
+
+### Added
+- The "Python tipado" talk as a draft deck (`/slides/python-typing`, [#88](https://github.com/listerineh/personal-portfolio/pull/88)), rebuilt from its Canva version and updated to Python 3.15, in Spanish and English: type systems, type hints from PEP 484 to 3.15, good practices and tools, Python against other languages, and a before/after example.
+
+### Fixed
+- The back button in a presentation returns to the `/slides` listing instead of the home page, and is labeled "Back to talks".
+
 ## [3.2.1] - 2026-10-23
 
 ### Fixed

@@ -295,7 +295,7 @@ export function DeckViewer({ versions, primaryLang }: { versions: AudienceVersio
     >
       <header className="deck-chrome flex h-16 shrink-0 items-center gap-4 px-gutter">
         <Link
-          href="/"
+          href="/slides"
           aria-label={t("back")}
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-foreground transition-colors duration-snap ease-snap hover:bg-foreground/[0.07] motion-reduce:transition-none"
         >

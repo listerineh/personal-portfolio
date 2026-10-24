@@ -637,7 +637,7 @@
     "unsubscribe": "Darse de baja del newsletter"
   },
   "slides": {
-    "back": "Volver a listerineh.dev",
+    "back": "Volver a las charlas",
     "previous": "Anterior",
     "next": "Siguiente",
     "slideOf": "Diapositiva {current} de {total}",
