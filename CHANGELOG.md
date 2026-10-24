@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.4.0] - 2026-10-23
+
+### Added
+- The "Firebase vs Supabase" talk as a draft deck (`/slides/firebase-vs-supabase`), grown from the GDG Quito Firebase talk and the blog post of the same name, updated to October 2026, in Spanish and English: what a BaaS is, each platform's model and features, a head-to-head comparison with pricing and Firebase SQL Connect, and how to choose.
+
 ## [3.3.0] - 2026-10-23
 
 ### Added
