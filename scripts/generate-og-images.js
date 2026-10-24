@@ -281,6 +281,19 @@ function pages(projects) {
         <div class="eq">${[40, 70, 30, 85, 55, 95, 45, 75, 35, 60].map((h) => `<i style="height:${h}%"></i>`).join("")}</div>`,
     }),
 
+    slides: card({
+      title: "Talks",
+      subtitle: "Slides from my talks, ready to flip through or present.",
+      byline: "Sebastian Alvarez · GDG Quito Organizer",
+      css: `.slide { width: 440px; height: 248px; padding: 26px 30px; overflow: hidden; display: flex; flex-direction: column; }
+            .slide .bar { height: 12px; border-radius: 999px; background: var(--fill); }
+            .slide .mono { font-family: 'Geist Mono', monospace; font-size: 15px; line-height: 1.75; }
+            .slide .foot { margin-top: auto; display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); }
+            .slide .track { flex: 1; height: 4px; border-radius: 999px; background: var(--fill); overflow: hidden; }
+            .slide .track i { display: block; height: 100%; width: 38%; background: var(--amber); }`,
+      visual: slideDeck(),
+    }),
+
     privacy: card({
       title: "Privacy Policy",
       subtitle: "What is collected, why, and what you can do about it.",
@@ -305,6 +318,35 @@ function pages(projects) {
       ]),
     }),
   };
+}
+
+/** A stack of three slides as the viewer shows them: a cover, a code slide and stats, with the progress bar. */
+function slideDeck() {
+  const cover = `
+    <span class="label" style="color:var(--amber-ink);font-weight:600">GDG Quito</span>
+    <span style="font-size:38px;font-weight:700;letter-spacing:-0.04em;line-height:1.05;margin-top:14px">De la idea<br>al producto</span>
+    <span class="bar" style="width:62%;margin-top:18px"></span>
+    <div class="foot"><span>listerineh.dev/slides</span><span class="track"><i></i></span><span>1 / 24</span></div>`;
+  const code = `
+    <span style="font-size:22px;font-weight:700;letter-spacing:-0.03em">Lo básico</span>
+    <div class="panel mono" style="position:relative;margin-top:14px;padding:14px 18px;box-shadow:none;background:var(--fill);border-radius:14px">
+      <span style="color:#7c3aed">def</span> saludar(nombre: <span style="color:var(--amber-ink)">str</span>) -&gt; <span style="color:var(--amber-ink)">str</span>:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#7c3aed">return</span> <span style="color:#16a34a">f"Hola, {nombre}"</span>
+    </div>`;
+  const stats = `
+    <span style="font-size:22px;font-weight:700;letter-spacing:-0.03em">En números</span>
+    <div class="row" style="gap:34px;margin-top:22px">
+      ${[["83%", "usa IA"], ["13M+", "devs"], ["#1", "TIOBE"]]
+        .map(([value, label]) => `<div><div style="font-size:40px;font-weight:700;letter-spacing:-0.04em;color:var(--amber)">${value}</div><div class="label" style="margin-top:4px">${label}</div></div>`)
+        .join("")}
+    </div>`;
+  return [cover, code, stats]
+    .map(
+      (content, i) =>
+        `<div class="panel slide" style="left:${20 + i * 26}px;top:${150 - i * 70}px;transform:rotate(${-3 + i * 4}deg);z-index:${3 - i}">${content}</div>`,
+    )
+    .reverse()
+    .join("");
 }
 
 function legalDoc(sections) {

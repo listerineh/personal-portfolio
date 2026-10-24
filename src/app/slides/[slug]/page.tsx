@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { DEFAULT_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
+import { SLIDES_OG_IMAGE, requestLocale, shareMetadata } from '@/lib/metadata';
 import { audienceVersions } from '@/features/slides/audience';
 import { hasLanguage, localizeDeck } from '@/features/slides/i18n';
 import { getDeckForOwner, getPublicDeck } from '@/features/slides/store';
 import { isOwner } from '@/features/slides/auth';
 import type { Deck } from '@/features/slides/schema';
 import { DeckViewer } from '@/features/slides/viewer/DeckViewer';
+import { deckStructuredData } from '@/features/slides/structured-data';
 
 interface DeckPageProps {
   params: Promise<{ slug: string }>;
@@ -34,9 +35,9 @@ export async function generateMetadata({ params }: DeckPageProps): Promise<Metad
       description: deck.description,
       path: `/slides/${deck.slug}`,
       // Drafts have no public card (the route serves public decks only); everyone else gets the deck's own.
-      image: deck.status === 'draft' ? DEFAULT_OG_IMAGE : `/og/slides/${deck.slug}.png?v=${deck.version}&lang=${lang}`,
+      image: deck.status === 'draft' ? SLIDES_OG_IMAGE : `/og/slides/${deck.slug}.png?v=${deck.version}&lang=${lang}`,
       imageAlt: deck.title,
-      locale: deck.lang,
+      locale: lang,
       type: 'article',
       modifiedTime: deck.updatedAt,
     }),
@@ -49,6 +50,14 @@ export default async function DeckPage({ params }: DeckPageProps) {
   const { slug } = await params;
   const deck = await findDeck(slug);
   if (!deck) notFound();
+  const structuredData = deckStructuredData(deck, await requestLocale());
 
-  return <DeckViewer versions={await audienceVersions(deck)} primaryLang={deck.lang} />;
+  return (
+    <>
+      {deck.status === 'published' && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      )}
+      <DeckViewer versions={await audienceVersions(deck)} primaryLang={deck.lang} />
+    </>
+  );
 }

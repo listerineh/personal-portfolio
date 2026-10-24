@@ -114,6 +114,26 @@ test.describe("Talks listing", () => {
     if ((await cards.count()) === 0) await expect(page.getByText("No talks published yet")).toBeVisible();
   });
 
+  test("follows the site's metadata pattern, with its own share card and structured data", async ({ page }) => {
+    await open(page, "/slides", "en", "domcontentloaded");
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://listerineh.dev/slides");
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", "Talks · Sebastian Alvarez");
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+    const image = await page.locator('meta[property="og:image"]').getAttribute("content");
+    expect(image).toBe("https://listerineh.dev/og/slides.png");
+    const response = await page.request.get("/og/slides.png");
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toBe("image/png");
+    // Text filters skip <script> contents, so read every JSON-LD block and pick the collection.
+    const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const data = blocks.map((block) => JSON.parse(block)).find((item) => item["@type"] === "CollectionPage");
+    expect(data?.["@id"]).toBe("https://listerineh.dev/slides");
+
+    await open(page, "/slides", "es", "domcontentloaded");
+    await expect(page).toHaveTitle(/^Charlas ·/);
+    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute("content", "es_ES");
+  });
+
   test("a public deck has its own share card", async ({ page }) => {
     await open(page, DECK, "en", "domcontentloaded");
     const image = await page.locator('meta[property="og:image"]').getAttribute("content");
