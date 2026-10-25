@@ -278,7 +278,7 @@ export const theFirstDigitalDeath: Record<Locale, BlogPost> = {
     title: 'La primera muerte digital: una predicción de 2022 que cada año se ve más posible',
     date: 'March 4, 2026',
     excerpt: 'En 2022 dije en un aula universitaria que en diez años alguien moriría por un virus informático. Con implantes neuronales en pacientes reales y una seguridad que va por detrás, cada año esa predicción me incomoda más.',
-    imageUrl: '/blog/the-first-digital-death.webp',
+    imageUrl: '/blog/the-first-digital-death.es.webp',
     imageAiHint: 'ilustración distópica de ciencia ficción: pantalla dividida mostrando un cerebro humano con implantes neurales en el lado izquierdo brillando con conexiones digitales, y una entidad viral digital propagándose a través de redes neuronales en el lado derecho; esquema de colores rojo oscuro y azul; estética cyberpunk; símbolos de advertencia; nodos interconectados mostrando flujo de datos; estilo de ilustración técnica profesional',
     author: 'Sebastian Alvarez',
     tags: ['IA', 'Neurotecnología', 'Ciberseguridad', 'Ética', 'Futuro', 'Black Mirror', 'Ciencia Ficción', 'Predicciones'],

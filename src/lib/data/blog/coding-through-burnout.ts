@@ -78,7 +78,7 @@ And if you're into music too, give [Cadenza](https://cadenza-app.vercel.app) a t
     title: 'Programar con burnout: cómo los hobbies me ayudaron a salir',
     date: 'July 31, 2025',
     excerpt: 'Cuando el código es tu trabajo y tu hobby, el burnout llega sin avisar. Lo que me sacó: mis gatos, tocar guitarra porque sí y un proyecto personal hecho solo para mí.',
-    imageUrl: '/blog/coding-through-burnout.webp',
+    imageUrl: '/blog/coding-through-burnout.es.webp',
     imageAiHint: 'escena dividida mostrando viaje de recuperación de burnout de desarrollador: lado izquierdo muestra desarrollador exhausto en escritorio rodeado de código, reuniones interminables, indicadores de estrés; lado derecho muestra mismo desarrollador relajado con gato en regazo, guitarra cerca, notas musicales flotando, ambiente pacífico; centro muestra transición con elementos de sanación como meditación, naturaleza, herramientas creativas; colores cálidos reconfortantes con iluminación suave, estilo ilustrativo',
     content: `
 ## Cuando el trabajo y el hobby son lo mismo

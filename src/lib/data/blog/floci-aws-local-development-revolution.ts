@@ -402,7 +402,7 @@ export const flociAwsLocalDevelopmentRevolution: Record<Locale, BlogPost> = {
     title: 'Floci: el emulador local de AWS que arranca en 24ms y no cuesta nada',
     date: 'May 21, 2026',
     excerpt: 'Cuando LocalStack pasó a ser de pago probé Floci, un emulador de AWS gratuito y con licencia MIT. Arranca en 24ms y usa motores reales. Cómo lo uso con Terraform y dónde todavía se queda corto.',
-    imageUrl: '/blog/floci-aws-local-development-revolution.webp',
+    imageUrl: '/blog/floci-aws-local-development-revolution.es.webp',
     imageAiHint: 'visualización moderna de desarrollo en la nube: laptop con contenedores docker mostrando servicios AWS corriendo localmente; indicadores de velocidad mostrando inicio de 24ms; código terraform fluyendo hacia arquitectura AWS local; gráfico de comparación mostrando rendimiento Floci vs LocalStack; espacio de trabajo de desarrollador con múltiples entornos (dev, staging, prod) corriendo simultáneamente; ilustración técnica profesional con azul nube, azul docker, y colores verdes de éxito; diseño moderno limpio',
     author: 'Sebastian Alvarez',
     tags: ['AWS', 'Floci', 'LocalStack', 'Docker', 'Terraform', 'IaC', 'DevOps', 'Desarrollo Local'],

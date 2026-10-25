@@ -120,7 +120,7 @@ Read the place before you act, communicate clearly (especially when there's chao
     title: 'Adaptarte a un trabajo nuevo: de equipos ordenados a startups caóticas',
     date: 'February 10, 2026',
     excerpt: 'He entrado a equipos con procesos impecables y a equipos en caos total. Cómo notar la diferencia en la entrevista, qué hacer las dos primeras semanas y cómo mejorar las cosas sin quemarte.',
-    imageUrl: '/blog/adapting-to-new-jobs.webp',
+    imageUrl: '/blog/adapting-to-new-jobs.es.webp',
     imageAiHint: 'split screen showing two contrasting developer work environments: left side shows organized modern office with clear processes, documentation, structured meetings, clean code reviews, automated pipelines; right side shows chaotic startup with scattered notes, endless meetings, micromanagement, manual deployments, confusion; developer in center navigating between both worlds, professional illustration',
     content: `
 ## El mismo trabajo, empresas muy distintas

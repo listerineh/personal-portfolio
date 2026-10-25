@@ -7,7 +7,7 @@ export const whyMarkdownForBlogs: Record<Locale, BlogPost> = {
     title: 'Why I Write This Blog in Markdown',
     date: 'June 15, 2025',
     excerpt: 'I tried JSON, a WYSIWYG editor and a headless CMS before settling on Markdown in the repo. Here is why it stuck, and how the posts get rendered today.',
-    imageUrl: '/blog/markdown-basics.webp',
+    imageUrl: '/blog/why-markdown-for-blogs.webp',
     imageAiHint: 'markdown writing workflow visualization: code editor showing markdown syntax with headers, lists, code blocks; markdown symbols (#, -, *, `) floating around; transformation arrow showing markdown converting to beautiful rendered blog post; git version control symbols indicating version history; comparison showing markdown simplicity vs complex JSON structure; developer typing at keyboard; clean minimalist design with monospace font aesthetic, professional tech illustration',
     content: `
 ## How I got here
@@ -95,7 +95,7 @@ Where I'd think twice: if people who don't use Git need to write and publish, a 
     title: 'Por qué escribo este blog en Markdown',
     date: 'June 15, 2025',
     excerpt: 'Probé JSON, un editor WYSIWYG y un CMS headless antes de quedarme con Markdown dentro del repo. Aquí cuento por qué se quedó y cómo se renderizan hoy los posts.',
-    imageUrl: '/blog/markdown-basics.webp',
+    imageUrl: '/blog/why-markdown-for-blogs.es.webp',
     imageAiHint: 'visualización de flujo de trabajo de escritura markdown: editor de código mostrando sintaxis markdown con encabezados, listas, bloques de código; símbolos markdown (#, -, *, `) flotando alrededor; flecha de transformación mostrando markdown convirtiéndose en hermoso post de blog renderizado; símbolos de control de versiones git indicando historial de versiones; comparación mostrando simplicidad de markdown vs estructura JSON compleja; desarrollador escribiendo en teclado; diseño minimalista limpio con estética de fuente monoespaciada, ilustración técnica profesional',
     content: `
 ## Cómo llegué aquí
