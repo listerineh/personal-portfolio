@@ -240,7 +240,7 @@ export const whenAiCanCloneYourApp: Record<Locale, BlogPost> = {
     date: "October 25, 2026",
     excerpt:
       "Trece apps gratis y open source que reimplementan herramientas al estilo de Adobe, construidas sobre todo por agentes de IA. Como fan del software libre me emociona, y como desarrollador me preocupa: entregar un binario ya no protege a nadie, y no sé cuánto va a valer una buena idea cuando copiarla cueste casi nada.",
-    imageUrl: "/blog/when-ai-can-clone-your-app.webp",
+    imageUrl: "/blog/when-ai-can-clone-your-app.es.webp",
     imageAiHint:
       "ilustración conceptual: una ventana de aplicación de escritorio luminosa escaneada por un agente de IA que reconstruye una copia idéntica a partir de fragmentos de código y datos binarios del otro lado; en el medio, un candado roto hecho de binario; a un lado una multitud de pequeñas siluetas humanas trabajando en escritorios, al otro una comunidad open source; mezcla de emoción y preocupación; fondo oscuro con luz ámbar cálida y azul frío; ilustración editorial tecnológica profesional, sin logotipos",
     author: "Sebastian Alvarez",

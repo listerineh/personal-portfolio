@@ -204,7 +204,7 @@ It's slower the first week and much faster every week after that. And you finall
     title: 'Terraform: escalar infraestructura sin quemar plata',
     date: 'January 14, 2026',
     excerpt: 'Cómo manejo dev, staging y prod con un solo código de Terraform, dimensiono cada entorno para lo que de verdad necesita y hago crecer la infraestructura solo cuando el producto lo pide.',
-    imageUrl: '/blog/terraform-scaling-infrastructure.webp',
+    imageUrl: '/blog/terraform-scaling-infrastructure.es.webp',
     imageAiHint: 'visualización de terraform infraestructura como código: tres entornos cloud paralelos (dev, staging, producción) fluyendo de izquierda a derecha, cada uno mostrando componentes de infraestructura como servidores, bases de datos, balanceadores de carga; bloques de código terraform y símbolos de control de versiones git; gráfico de optimización de costos mostrando gastos decrecientes; ilustración técnica profesional con colores azul y verde',
     content: `
 ## La época de la consola

@@ -205,7 +205,7 @@ What are you using Python for? AI, web, something else? I'd love to hear what yo
     title: 'Python en la era de la IA: por qué terminó en todos lados',
     date: 'February 24, 2026',
     excerpt: 'Cinco años escribiendo Python: por qué se volvió la opción por defecto para IA, qué hay de nuevo de verdad en el lenguaje, dónde todavía no es la herramienta correcta y por qué el "Python es lento" no da en el clavo.',
-    imageUrl: '/blog/python-renaissance-ai-era.webp',
+    imageUrl: '/blog/python-renaissance-ai-era.es.webp',
     imageAiHint: 'modern abstract illustration of Python programming language as a powerful multi-tool: center shows glowing Python logo, radiating connections to different domains - AI neural networks, web servers, database systems, cloud infrastructure, security shields, game controllers, mobile devices; vibrant tech aesthetic with code snippets, data flowing between systems, futuristic professional style',
     author: 'Sebastian Alvarez',
     tags: ['Python', 'IA', 'Machine Learning', 'Desarrollo Web', 'DevOps', 'Lenguajes de Programación'],

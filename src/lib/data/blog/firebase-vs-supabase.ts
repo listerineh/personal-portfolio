@@ -349,7 +349,7 @@ Try both, build something small with each, and keep the one that fits.
     title: 'Firebase vs Supabase: documentos, tablas y por qué sigo con Firebase',
     date: 'March 10, 2026',
     excerpt: 'Una comparación técnica entre Firebase y Supabase: NoSQL contra SQL, auth, storage, funciones, tiempo real y precios, y por qué Firebase sigue siendo mi opción por defecto aunque Supabase me sigue sorprendiendo.',
-    imageUrl: '/blog/firebase-vs-supabase.webp',
+    imageUrl: '/blog/firebase-vs-supabase.es.webp',
     imageAiHint: 'split technical comparison illustration: left side shows Firebase with NoSQL document structure, Google Cloud integration, realtime sync icons, orange/yellow Firebase colors; right side shows Supabase with PostgreSQL database tables, open source symbols, green Supabase branding; center shows vs symbol with code snippets, architecture diagrams, performance metrics; modern professional tech style with clean data visualization elements',
     content: `
 Llevo años construyendo con Firebase. Es el backend de más o menos el 90% de mis proyectos personales, desde MVPs de fin de semana hasta apps con usuarios reales: Auth, Firestore, Cloud Functions, Storage. Todo calza con las herramientas de Google que ya conozco y, casi siempre, simplemente funciona.

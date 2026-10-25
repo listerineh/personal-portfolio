@@ -90,7 +90,7 @@ It isn't a straight line and it looks different for everyone. If I had to put it
     title: 'De junior a senior: el cambio del que nadie te habla',
     date: 'December 21, 2025',
     excerpt: 'Volverme senior no fue escribir mejor código. Fue pasar de ejecutar a decidir, liderar sin el título y descubrir que las entrevistas se vuelven conversaciones sobre criterio.',
-    imageUrl: '/blog/from-junior-to-senior-engineer.webp',
+    imageUrl: '/blog/from-junior-to-senior-engineer.es.webp',
     imageAiHint: 'visualización de progresión de carrera: ingeniero escalando camino ascendente de nivel junior a senior; lado izquierdo muestra desarrollador junior en escritorio programando solo; medio muestra ingeniero mid-level en revisión de código; lado derecho muestra ingeniero senior mentoreando equipo, tomando decisiones arquitectónicas, liderando discusiones; flechas de crecimiento y badges de habilidades (comunicación, liderazgo, toma de decisiones) apareciendo a lo largo del camino; ilustración técnica profesional con colores cálidos',
     content: `
 ## No fue el título
