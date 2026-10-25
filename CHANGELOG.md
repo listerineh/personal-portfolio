@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.5.4] - 2026-10-25
+
+### Fixed
+- Talk cards (/slides and the home page) no longer repeat the title: they show the talk's first statement slide, else a quote or its figures, and only fall back to the title slide.
+
 ## [3.5.3] - 2026-10-25
 
 ### Added
