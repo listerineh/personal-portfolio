@@ -68,7 +68,7 @@ If you're juggling several projects, or just want to finish what you start, give
     title: 'Del caos a la claridad: por qué terminé haciendo mi propio tablero Kanban',
     date: 'July 7, 2025',
     excerpt: 'Las listas y las hojas de cálculo me fallaban; un tablero Kanban no. Por qué funcionan, qué cambió al limitar lo que está en curso y el tablero que construí para mí.',
-    imageUrl: '/blog/from-chaos-to-clarity-kanban.webp',
+    imageUrl: '/blog/from-chaos-to-clarity-kanban.es.webp',
     imageAiHint: 'visualización de interfaz de tablero kanban: tres columnas (backlog, en progreso, hecho) con tarjetas de tareas coloridas; tarjetas siendo arrastradas entre columnas con líneas de movimiento suaves; desarrollador en escritorio interactuando con tablero en pantalla; métricas de productividad e indicadores de progreso; elementos de calendario y gestión de tiempo; diseño moderno limpio con colores de acento azul y verde, ilustración técnica profesional',
     content: `
 ## Las listas dejaron de funcionar

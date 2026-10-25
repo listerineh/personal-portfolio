@@ -16,9 +16,11 @@ import { controlledObservabilityModernDevelopment } from './controlled-observabi
 import { aiSecurityDoubleEdgedSword } from './ai-security-double-edged-sword';
 import { flociAwsLocalDevelopmentRevolution } from './floci-aws-local-development-revolution';
 import { visualLanguageDesignSystems } from './visual-language-design-systems';
+import { whenAiCanCloneYourApp } from './when-ai-can-clone-your-app';
 
 const allBlogPosts = {
   en: [
+    whenAiCanCloneYourApp.en,
     visualLanguageDesignSystems.en,
     flociAwsLocalDevelopmentRevolution.en,
     aiSecurityDoubleEdgedSword.en,
@@ -36,6 +38,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    whenAiCanCloneYourApp.es,
     visualLanguageDesignSystems.es,
     flociAwsLocalDevelopmentRevolution.es,
     aiSecurityDoubleEdgedSword.es,

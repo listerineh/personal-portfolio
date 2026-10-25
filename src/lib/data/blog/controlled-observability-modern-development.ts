@@ -154,7 +154,7 @@ My advice: start small. One tool, one service, one alert. Then grow from there. 
     title: 'Observabilidad cuando el código sale más rápido de lo que alcanzas a leerlo',
     date: 'April 28, 2026',
     excerpt: 'Con la IA, el código llega a producción más rápido que nunca. Cómo Datadog, Splunk y Sentry cambiaron mi forma de operar backend, frontend y DevOps, con los incidentes que me lo enseñaron.',
-    imageUrl: '/blog/controlled-observability-modern-development.webp',
+    imageUrl: '/blog/controlled-observability-modern-development.es.webp',
     imageAiHint: 'visualización de dashboard de observabilidad moderna: múltiples monitores mostrando dashboards de datadog con métricas, logs y alertas; mapas de calor superpuestos en interfaz frontend; notificaciones de slack con íconos de alerta; métricas de servidor backend fluyendo hacia monitoreo centralizado; gráficos de comparación de entornos dev/staging/prod; pipeline de despliegue de código AI con puntos de control de observabilidad; ilustración técnica profesional con colores de acento azul, verde y naranja, diseño moderno limpio',
     content: `
 ## Las 2 de la mañana y pagos caído

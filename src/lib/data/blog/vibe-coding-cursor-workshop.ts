@@ -230,7 +230,7 @@ export const vibeCodingCursorWorkshop: Record<Locale, BlogPost> = {
     title: 'Vibe coding con IA: una landing de producción en menos de una hora',
     date: 'March 30, 2026',
     excerpt: 'En un workshop de Cursor en Quito me salí del guion e hice un experimento: Gemini como arquitecto, Cursor en modo automático con skills propias y una landing de producción en menos de una hora. Funcionó, y me hizo discrepar con el mensaje del workshop.',
-    imageUrl: '/blog/vibe-coding-cursor-workshop.webp',
+    imageUrl: '/blog/vibe-coding-cursor-workshop.es.webp',
     imageAiHint: 'ilustración de pantalla dividida: lado izquierdo muestra interfaz de Gemini AI con diagramas arquitectónicos, prompts y documentos de planificación en estructura organizada; lado derecho muestra editor Cursor con código de sistema de partículas Three.js, componentes React y preview de landing page minimalista oscura con efecto de campo neural; centro muestra flechas de flujo de trabajo conectando planificación con ejecución; silueta de montañas de los Andes de Quito en el fondo; tema oscuro con acentos neón cian y naranja volcánico; estilo de ilustración técnica profesional',
     author: 'Sebastian Alvarez',
     tags: ['IA', 'Cursor', 'Vibe Coding', 'Desarrollo Web', 'Three.js', 'Gemini', 'Windsurf', 'Landing Pages', 'Quito'],

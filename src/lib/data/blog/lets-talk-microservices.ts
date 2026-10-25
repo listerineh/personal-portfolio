@@ -100,7 +100,7 @@ Between migrating CMSs, scaling enterprise systems and occasionally rolling back
     title: 'Hablemos de microservicios: lo que aprendí en proyectos reales',
     date: 'September 1, 2025',
     excerpt: 'He partido monolitos en microservicios y he vuelto a juntar microservicios en un monolito. Con un banco como ejemplo: cuándo valen la pena, cuándo no y qué hay que hacer bien.',
-    imageUrl: '/blog/lets-talk-microservices.webp',
+    imageUrl: '/blog/lets-talk-microservices.es.webp',
     imageAiHint: 'diagrama de arquitectura de microservicios: sistema bancario con múltiples servicios independientes (transacciones, perfil de usuario, notificaciones) como contenedores separados; contenedores docker apilados y conectados; api gateway en el centro enrutando solicitudes; bases de datos aisladas por servicio; flujos de comunicación entre servicios con flechas; indicadores de escalado mostrando escalado horizontal; ilustración técnica profesional con tonos morados y azules, diseño moderno limpio',
     content: `
 ## He estado de los dos lados

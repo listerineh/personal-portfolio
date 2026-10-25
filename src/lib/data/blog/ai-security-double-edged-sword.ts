@@ -177,7 +177,7 @@ If AI writes your code, it can also break it. The same tools that make us faster
     title: 'IA y seguridad: la misma herramienta en los dos lados',
     date: 'May 18, 2026',
     excerpt: 'La IA ayudó a encontrar bugs críticos en GitHub, NGINX y el kernel de Linux, y los atacantes tienen los mismos modelos. Además, la filtración en Ecuador que expuso la biometría de casi todos los adultos, y lo que yo haría al respecto.',
-    imageUrl: '/blog/ai-security-double-edged-sword.webp',
+    imageUrl: '/blog/ai-security-double-edged-sword.es.webp',
     imageAiHint: 'visualización de ciberseguridad mostrando IA como espada de doble filo: un lado mostrando IA defendiendo sistemas con escudos y candados de seguridad, otro lado mostrando IA atacando con símbolos de advertencia rojos; centro muestra vulnerabilidades de código siendo descubiertas; fondo muestra logos de GitHub, NGINX, Linux con indicadores de brecha de seguridad; mapa de Ecuador con visualización de fuga de datos; código binario fluyendo; contraste dramático entre colores azul (defensa) y rojo (ataque); ilustración técnica profesional',
     content: `
 ## Ahora la IA encuentra los bugs. Para los dos lados.

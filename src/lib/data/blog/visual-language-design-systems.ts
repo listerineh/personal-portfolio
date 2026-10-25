@@ -274,7 +274,7 @@ If the code, this post or any of these patterns helped you, a star on the repo g
     title: 'Tu portafolio habla antes que tú: lenguaje visual y design systems',
     date: 'July 24, 2026',
     excerpt: 'En cocina dicen que la comida entra por los ojos, y con los portafolios pasa lo mismo. Tipografía, mockups, bases de UI/UX, librerías de componentes y las decisiones técnicas que hacen fácil un rediseño, con el mío como ejemplo.',
-    imageUrl: '/blog/visual-language-design-systems.webp',
+    imageUrl: '/blog/visual-language-design-systems.es.webp',
     imageAiHint: 'composición dividida mostrando evolución de sistema de diseño: lado izquierdo muestra interfaz web caricaturesca y colorida con tipografías desiguales y colores inconsistentes; lado derecho muestra portafolio profesional oscuro con color de acento ámbar, tipografía consistente, tokens de diseño ámbar, tarjetas de librería de componentes; centro muestra tokens de diseño y paleta de colores pasando de dispersa a organizada; concepto abstracto de chef emplatando comida elegantemente en un lado y desarrollador organizando componentes UI con el mismo cuidado en el otro; ilustración técnica profesional con tonos ámbar cálidos y oscuros',
     content: `
 En cocina hay una frase que los chefs repiten harto: la comida entra por los ojos.
