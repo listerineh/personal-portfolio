@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.5.5] - 2026-10-25
+
+### Fixed
+- Home: the contact card no longer runs into the Talks band above it; it gets the section's top spacing when Talks is shown.
+
 ## [3.5.4] - 2026-10-25
 
 ### Fixed
