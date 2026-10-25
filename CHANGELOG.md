@@ -4,6 +4,15 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.5.3] - 2026-10-25
+
+### Added
+- Blog post "When AI can clone your app" / "Cuando la IA puede clonar tu app": ArtCraft, REA and AI-driven reverse engineering, with sources.
+- Blog covers drawn from HTML with the Lumen kit (`scripts/blog-covers`, `scripts/generate-blog-covers.js`): a short phrase and objects from each post's world, one cover per language (`<slug>.webp`, `<slug>.es.webp`).
+
+### Changed
+- Every post uses the new covers, replacing the AI-generated images (about 30 KB each instead of about 250 KB).
+
 ## [3.5.2] - 2026-10-24
 
 ### Fixed
