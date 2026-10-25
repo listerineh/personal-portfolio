@@ -6,7 +6,7 @@ import { useLocale } from '@/context/locale-context';
 import type { DeckSummary } from './summary';
 import { DeckCover } from './renderer/DeckCover';
 
-/** A published deck as a card: its cover slide, where and when it was given, and its language when it differs. */
+/** A published deck as a card: one of its slides, where and when it was given, and its language when it differs. */
 export function TalkCard({ deck, headingLevel }: { deck: DeckSummary; headingLevel?: 'h2' | 'h3' }) {
   const t = useTranslations('slidesPage');
   const { locale } = useLocale();
