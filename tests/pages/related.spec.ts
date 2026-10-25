@@ -47,7 +47,7 @@ test.describe("After an article", () => {
   });
 
   test("the newest post only goes back, the oldest only forward", async ({ page }) => {
-    await open(page, "/blog/visual-language-design-systems", "en", "domcontentloaded");
+    await open(page, "/blog/when-ai-can-clone-your-app", "en", "domcontentloaded");
     let pager = page.getByRole("navigation", { name: "Previous and next articles" });
     await expect(pager.getByRole("link")).toHaveCount(1);
     await expect(pager.getByRole("link", { name: /Previous article/ })).toBeVisible();
