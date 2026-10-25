@@ -28,6 +28,7 @@ export function HomePage({ byLocale, skills, talks }: HomePageProps) {
   const t = useTranslations('common');
   const { locale } = useLocale();
   const data = byLocale[locale as Locale] ?? byLocale.en;
+  const localeTalks = talks[locale as Locale] ?? talks.en;
 
   useHashScroll();
 
@@ -41,8 +42,8 @@ export function HomePage({ byLocale, skills, talks }: HomePageProps) {
         <ProjectsSection projects={data.projects} />
         <SkillsSection skills={skills} />
         <BlogPreviewSection posts={data.posts} />
-        <TalksSection talks={talks[locale as Locale] ?? talks.en} />
-        <ContactSection />
+        <TalksSection talks={localeTalks} />
+        <ContactSection followsTint={localeTalks.length > 0} />
       </main>
       <Footer />
     </div>
