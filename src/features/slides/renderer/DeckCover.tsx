@@ -5,7 +5,7 @@ import { accentStyle } from '../theme';
 import type { DeckSummary } from '../summary';
 import { SlideCanvas, SlideFrame } from './SlideView';
 
-/** A deck's first slide, still, filling its box: the cover in listings. */
+/** The slide a deck shows in listings (its hook, see toDeckSummary), still, filling its box. */
 export function DeckCover({ deck }: { deck: DeckSummary }) {
   // Slides follow the site's light/dark theme.
   const { theme } = useTheme();

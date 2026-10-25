@@ -9,7 +9,7 @@ interface DeckCardProps {
   href: string;
   title: string;
   description?: string;
-  /** The deck's cover, 16:9, edge to edge (the slides feature renders the real first slide). */
+  /** The deck's cover, 16:9, edge to edge (the slides feature renders one of its real slides). */
   preview: ReactNode;
   /** Small line above the title: event, date, language. */
   meta?: string;

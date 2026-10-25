@@ -77,13 +77,23 @@ test.describe("Accent tokens", () => {
 });
 
 test.describe("Deck summaries", () => {
-  test("carry the cover slide without speaker notes, and nothing else of the deck", () => {
+  test("carry the talk's first statement as the card, without speaker notes, and nothing else of the deck", () => {
     const deck = deckSchema.parse(testPresentation);
     const summary = toDeckSummary(deck);
-    expect(summary.cover.id).toBe(deck.slides[0].id);
-    expect(deck.slides[0].notes).toBeTruthy();
+    // The title slide would repeat the card's own title, so the card shows the talk's hook instead.
+    expect(summary.cover.id).toBe("why");
     expect(summary.cover).not.toHaveProperty("notes");
-    expect(JSON.stringify(summary)).not.toContain(deck.slides[1].id);
+    for (const other of deck.slides.filter((slide) => slide.id !== "why")) {
+      expect(JSON.stringify(summary)).not.toContain(`"id":"${other.id}"`);
+    }
+  });
+
+  test("fall back to a quote or figures, then to the title slide", () => {
+    const deck = deckSchema.parse(testPresentation);
+    const noStatement = { ...deck, slides: deck.slides.filter((slide) => slide.layout !== "statement") };
+    expect(toDeckSummary(noStatement).cover.layout).toBe("quote");
+    const onlyCover = { ...deck, slides: deck.slides.slice(0, 2) };
+    expect(toDeckSummary(onlyCover).cover.id).toBe(deck.slides[0].id);
   });
 });
 
