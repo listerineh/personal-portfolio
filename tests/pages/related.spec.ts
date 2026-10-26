@@ -4,8 +4,10 @@ import { open } from "../support/setup";
 test.use({ contextOptions: { reducedMotion: "reduce" } });
 
 const keepReadingSlugs = async (page: Page) => {
-  const hrefs = await page
-    .getByRole("region", { name: /Keep reading|Sigue leyendo/ })
+  const region = page.getByRole("region", { name: /Keep reading|Sigue leyendo/ });
+  // The page streams in behind its loading skeleton, so the section can land just after domcontentloaded.
+  await expect(region).toBeVisible();
+  const hrefs = await region
     .locator('a[href^="/blog/"]')
     .evaluateAll((links) => links.map((link) => link.getAttribute("href")!));
   return [...new Set(hrefs)].map((href) => href.replace("/blog/", ""));
