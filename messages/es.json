@@ -1,6 +1,7 @@
 {
   "common": {
     "skipToContent": "Saltar al contenido principal",
+    "loadingPage": "Cargando página",
     "followMe": "Sígueme",
     "allRightsReserved": "Todos los derechos reservados.",
     "builtWith": "Construido con",

@@ -4,7 +4,7 @@ import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrappe
 import { Geist, Geist_Mono } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/context/theme-context';
-import { BackToTopButton, CookieBanner, ScrollRestoration } from '@/components/common';
+import { BackToTopButton, CookieBanner, ScrollRestoration, SoftNavigation } from '@/components/common';
 import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/common/schema-org';
 import { Toaster } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
@@ -97,6 +97,7 @@ export default async function RootLayout({
           <IntlProviderWrapper initialLocale={initialLocale} initialMessages={messages}>
             <ThemeProvider>
               <ScrollRestoration />
+              <SoftNavigation />
               {children}
               <BackToTopButton />
               <CookieBanner />
