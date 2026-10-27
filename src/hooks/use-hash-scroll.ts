@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import { useSitePathname } from '@/hooks/use-site-pathname';
 
 export function useHashScroll() {
-  const pathname = usePathname();
+  const pathname = useSitePathname();
   const hasScrolledRef = useRef(false);
 
   useEffect(() => {

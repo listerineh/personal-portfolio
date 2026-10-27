@@ -19,7 +19,7 @@ const violations = (page: Page) =>
 const nonceOf = (csp: string | null) => csp?.match(/'nonce-([^']+)'/)?.[1];
 
 test.describe("Content Security Policy", () => {
-  test("every page gets a policy with a fresh nonce", async ({ request }) => {
+  test("public pages get the static policy, the same on every request", async ({ request }) => {
     const first = await request.get("/");
     const second = await request.get("/");
     const csp = first.headers()["content-security-policy"];
@@ -27,20 +27,28 @@ test.describe("Content Security Policy", () => {
     expect(csp).toContain("object-src 'none'");
     expect(csp).toContain("frame-ancestors 'self'");
     expect(csp).toContain("report-uri /api/csp-report");
-    const nonce = nonceOf(csp);
-    expect(nonce).toBeTruthy();
-    expect(nonceOf(second.headers()["content-security-policy"])).not.toBe(nonce);
+    // Prerendered and cached, so no per-request nonce.
+    expect(nonceOf(csp)).toBeUndefined();
+    expect(second.headers()["content-security-policy"]).toBe(csp);
   });
 
-  test("the page's own scripts carry the nonce", async ({ page }) => {
-    const response = await open(page);
-    const nonce = nonceOf(response!.headers()["content-security-policy"]);
-    // Browsers hide the attribute after parsing; the property keeps it.
-    const prePaint = await page.evaluate(
-      () => [...document.querySelectorAll("head script:not([type])")].map((s) => (s as HTMLScriptElement).nonce),
-    );
-    expect(prePaint.length).toBeGreaterThan(0);
-    expect(prePaint.every((value) => value === nonce)).toBe(true);
+  test("owner routes get a fresh nonce, and their scripts carry it", async ({ request }) => {
+    const first = await request.get("/slides/manage");
+    const second = await request.get("/slides/manage");
+    const csp = first.headers()["content-security-policy"];
+    const nonce = nonceOf(csp);
+    expect(nonce).toBeTruthy();
+    const scriptSrc = csp.split(";").find((directive) => directive.trim().startsWith("script-src"));
+    // Preview deployments list the script hosts instead: Vercel's toolbar can't take 'strict-dynamic' (src/lib/csp.ts).
+    if (!scriptSrc?.includes("https://vercel.live")) expect(scriptSrc).toContain("'strict-dynamic'");
+    expect(scriptSrc).not.toContain("'unsafe-inline'");
+    expect(nonceOf(second.headers()["content-security-policy"])).not.toBe(nonce);
+    // The layout's inline script is allowed by hash; Next.js's own scripts carry the nonce.
+    expect(csp).toMatch(/'sha256-[A-Za-z0-9+/=]+'/);
+    const html = await first.text();
+    const scripts = (html.match(/<script\b[^>]*\bsrc=[^>]*>/g) ?? []);
+    expect(scripts.length).toBeGreaterThan(0);
+    for (const tag of scripts) expect(tag).toContain(`nonce="${nonce}"`);
   });
 
   test("static files, API routes and Storybook are left out", async ({ request }) => {

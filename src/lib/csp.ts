@@ -1,10 +1,11 @@
 /**
- * Content Security Policy, built per request with a fresh nonce (src/middleware.ts).
+ * Content Security Policy, set on every page by src/middleware.ts. Two policies:
  *
- * - production: nonce + 'strict-dynamic'. Only scripts carrying the nonce run, and whatever they load (Vercel
- *   Analytics, GA, Hotjar) inherits that trust, so no script hosts are listed.
- * - preview (develop staging, PR deploys): Vercel's comment toolbar is injected without a nonce and doesn't support
- *   'strict-dynamic', so previews list the script hosts instead.
+ * - public pages (no nonce): statically rendered and cached, so they can't carry a per-request nonce. Scripts come
+ *   from this origin, inline (the layout's pre-paint script, Next.js's page data) or the listed hosts (GA, Hotjar).
+ * - owner routes (a fresh nonce): production uses nonce + 'strict-dynamic', so only scripts carrying the nonce (or
+ *   the layout's inline scripts, by hash) run, and whatever they load inherits that trust. Previews list the script
+ *   hosts instead, since Vercel's comment toolbar is injected without a nonce and doesn't support 'strict-dynamic'.
  * - development: adds 'unsafe-eval' (React/Next dev tooling) and the local Storybook frame.
  *
  * `upgrade-insecure-requests` only goes out over HTTPS, so `next start` on http://localhost (CI) keeps working.
@@ -39,18 +40,27 @@ export function cspMode(): CspMode {
   return process.env.VERCEL_ENV === 'preview' ? 'preview' : 'production';
 }
 
-export function buildCsp(nonce: string, { mode = cspMode(), https = true }: { mode?: CspMode; https?: boolean } = {}): string {
+const SCRIPT_HOSTS = ['https://www.googletagmanager.com', 'https://*.hotjar.com', 'https://*.contentsquare.net'];
+
+interface CspOptions {
+  /** Owner routes only: a fresh per-request nonce. Without one, the public (static) policy. */
+  nonce?: string;
+  /** With a nonce: 'sha256-…' sources for the layout's inline scripts (src/lib/inline-scripts.ts). */
+  hashes?: string[];
+  mode?: CspMode;
+  https?: boolean;
+}
+
+export function buildCsp({ nonce, hashes = [], mode = cspMode(), https = true }: CspOptions = {}): string {
   const preview = mode === 'preview';
   const dev = mode === 'development';
+  const scripts = nonce
+    ? [`'nonce-${nonce}'`, ...hashes, ...(preview ? [...VERCEL_TOOLBAR.script, ...SCRIPT_HOSTS] : ["'strict-dynamic'"])]
+    : ["'unsafe-inline'", ...SCRIPT_HOSTS, ...(preview ? VERCEL_TOOLBAR.script : [])];
 
   const directives: Record<string, string[]> = {
     'default-src': ["'self'"],
-    'script-src': [
-      "'self'",
-      `'nonce-${nonce}'`,
-      ...(preview ? [...VERCEL_TOOLBAR.script, 'https://www.googletagmanager.com', 'https://*.hotjar.com', 'https://*.contentsquare.net'] : ["'strict-dynamic'"]),
-      ...(dev ? ["'unsafe-eval'"] : []),
-    ],
+    'script-src': ["'self'", ...scripts, ...(dev ? ["'unsafe-eval'"] : [])],
     // Inline styles are unavoidable (React style attributes in server HTML, next/font, Hotjar) and low risk.
     'style-src': ["'self'", "'unsafe-inline'", ...(preview ? VERCEL_TOOLBAR.style : [])],
     'img-src': ["'self'", 'data:', 'blob:', ...ICON_CDNS, ...GOOGLE_ANALYTICS, 'https://*.hotjar.com', 'https://*.contentsquare.net', ...(preview ? VERCEL_TOOLBAR.img : [])],

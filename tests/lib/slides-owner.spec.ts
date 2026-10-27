@@ -20,7 +20,7 @@ test.describe("Slides owner", () => {
   });
 
   test("the CSP lets the sign-in form hand off to GitHub, and nowhere else", () => {
-    const formAction = buildCsp("n", { mode: "production" })
+    const formAction = buildCsp({ nonce: "n", mode: "production" })
       .split("; ")
       .find((directive) => directive.startsWith("form-action"));
     expect(formAction).toBe("form-action 'self' https://github.com");

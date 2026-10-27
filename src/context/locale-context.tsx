@@ -8,6 +8,7 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 import { type Locale, defaultLocale, locales } from "@/i18n/config";
 import { loadMessages } from '@/i18n/client-messages';
 
@@ -31,6 +32,8 @@ export function LocaleProvider({
       : defaultLocale,
   );
 
+  const router = useRouter();
+
   const setLocale = useCallback(
     (newLocale: Locale) => {
       const apply = () => {
@@ -38,12 +41,15 @@ export function LocaleProvider({
         document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
         // Screen readers pick their voice from <html lang>.
         document.documentElement.lang = newLocale;
+        // Pages are prerendered per language: fetch this one's other version (the middleware picks it from the
+        // cookie). The interface already switched with the client messages; server-rendered content follows.
+        router.refresh();
       };
       // Switch only once the language's messages are here, so the page never shows a mix of both.
       if (newLocale === initialLocale) apply();
       else loadMessages(newLocale).then(apply, apply);
     },
-    [initialLocale],
+    [initialLocale, router],
   );
 
   const value = useMemo(() => ({ locale, setLocale }), [locale, setLocale]);

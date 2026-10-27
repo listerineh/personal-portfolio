@@ -1,20 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { useSitePathname } from "@/hooks/use-site-pathname";
 
 /**
  * Marks <html data-nav="soft"> after the first move to another page. The first screen keeps its full staggered intro;
  * from then on each page's intro is a short fade (globals.css), so moving around never waits on an animation.
  */
 export function SoftNavigation() {
-  const pathname = usePathname();
+  const pathname = useSitePathname();
   const firstPathname = useRef(pathname);
-
-  // Loading skeletons only draw once the app is live (see PageLoading).
-  useEffect(() => {
-    document.documentElement.dataset.hydrated = "";
-  }, []);
 
   useEffect(() => {
     if (pathname !== firstPathname.current)

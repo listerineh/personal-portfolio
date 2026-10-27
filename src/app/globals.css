@@ -340,13 +340,49 @@ html.js-motion[data-nav="soft"] [data-intro] {
   animation-delay: 0ms;
 }
 
-/* Loading skeleton (PageSkeleton): appears only if the page takes longer than a beat, so fast navigations don't flash. */
+/* Loading skeletons (PageSkeleton): each route's own components with placeholder data, drawn as soft shapes. Text keeps
+ * its real wrapping and line height and shows as bars (a thick strike in --muted, opaque so nested text doesn't stack);
+ * images and icons step back and accent fills turn neutral. Only the page's main area: the site header and footer stay
+ * live. It fades in after a beat, so fast navigations don't flash it, then breathes. */
+:is(.skeleton main, main .skeleton) * {
+  color: transparent !important;
+  text-decoration-line: line-through !important;
+  text-decoration-thickness: 0.62em !important;
+  text-decoration-color: rgb(var(--muted)) !important;
+  text-decoration-skip-ink: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+:is(.skeleton main, main .skeleton) ::placeholder {
+  color: transparent !important;
+}
+:is(.skeleton main, main .skeleton) :is(img, svg, video, canvas) {
+  visibility: hidden !important;
+}
+:is(.skeleton main, main .skeleton) [class*="bg-primary"] {
+  background-color: rgb(var(--foreground) / 0.06) !important;
+}
+:is(.skeleton main, main .skeleton) :is([class~="bg-foreground"], .eq-bar) {
+  background-color: rgb(var(--muted)) !important;
+}
+:is(.skeleton main, main .skeleton) .stage-light {
+  visibility: hidden !important;
+}
+:is(.skeleton main, main .skeleton) [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
 @keyframes skeleton-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-html.js-motion .page-skeleton {
-  animation: skeleton-in 200ms var(--ease-out) 150ms both;
+@keyframes skeleton-breathe {
+  50% { opacity: 0.6; }
+}
+html.js-motion :is(.skeleton main, main .skeleton) {
+  animation:
+    skeleton-in 200ms var(--ease-out) 150ms both,
+    skeleton-breathe 2s ease-in-out 350ms infinite;
 }
 
 /* Reveal: content rises into place as it enters, tied to scroll where supported. */

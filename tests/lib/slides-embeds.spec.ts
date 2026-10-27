@@ -40,7 +40,7 @@ test.describe("Slide embeds", () => {
   });
 
   test("the CSP frames exactly the embed sites (plus the site's own)", () => {
-    const frameSrc = buildCsp("n", { mode: "production" })
+    const frameSrc = buildCsp({ nonce: "n", mode: "production" })
       .split("; ")
       .find((directive) => directive.startsWith("frame-src"))!;
     for (const origin of EMBED_ORIGINS) expect(frameSrc).toContain(origin);

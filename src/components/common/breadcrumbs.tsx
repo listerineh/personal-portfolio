@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { useSitePathname } from '@/hooks/use-site-pathname';
 
 interface BreadcrumbItem {
   label: string;
@@ -10,7 +10,7 @@ interface BreadcrumbItem {
 }
 
 export function Breadcrumbs() {
-  const pathname = usePathname();
+  const pathname = useSitePathname();
 
   const getBreadcrumbs = (): BreadcrumbItem[] => {
     const segments = pathname.split('/').filter(Boolean);
