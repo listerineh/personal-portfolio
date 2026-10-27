@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.6.2] - 2026-10-27
+
+### Fixed
+- Switching language keeps the dark theme and the animations. Since 3.6.0 the switch remounts the root layout, which cleared the theme and the motion flag on <html> until a full reload.
+
 ## [3.6.1] - 2026-10-27
 
 ### Fixed
