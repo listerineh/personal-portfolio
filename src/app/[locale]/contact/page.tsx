@@ -1,13 +1,14 @@
 import { metadataFor } from '@/lib/metadata';
-import { requestLocale } from '@/i18n/locale';
+import { setRequestLocale } from 'next-intl/server';
+import type { Locale } from '@/i18n/config';
 import { ContactListingClient } from '@/components/contact/contact-listing-client';
-
-export const dynamic = 'force-dynamic';
 
 export const generateMetadata = metadataFor('contact');
 
-export default async function ContactPage() {
-  const locale = await requestLocale();
+/** Static: prerendered in both languages. */
+export default async function ContactPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 
   const structuredData = {

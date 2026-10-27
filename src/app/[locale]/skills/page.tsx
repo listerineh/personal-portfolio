@@ -1,14 +1,15 @@
 import { metadataFor } from '@/lib/metadata';
-import { requestLocale } from '@/i18n/locale';
+import { setRequestLocale } from 'next-intl/server';
+import type { Locale } from '@/i18n/config';
 import { getSkillsByCategory } from '@/lib/data/skills';
 import { SkillsListingClient } from '@/components/skills/skills-listing-client';
 
-export const dynamic = 'force-dynamic';
-
 export const generateMetadata = metadataFor('skills');
 
-export default async function SkillsPage() {
-  const locale = await requestLocale();
+/** Static: prerendered in both languages. */
+export default async function SkillsPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const skillGroups = getSkillsByCategory();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 

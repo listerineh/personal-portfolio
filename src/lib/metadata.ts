@@ -390,6 +390,7 @@ const PAGES: Record<
 
 /** The visitor's language: their choice (cookie), else their browser's, else English. See src/i18n/locale.ts. */
 import { requestLocale } from "@/i18n/locale";
+import { isLocale } from "@/i18n/negotiate";
 export { requestLocale };
 
 interface ShareOptions {
@@ -484,8 +485,11 @@ export function pageMetadata(page: PageKey, locale: Locale): Metadata {
   });
 }
 
-/** Convenience for route files: `export const generateMetadata = metadataFor('about')`. */
+/** Convenience for route files: `export const generateMetadata = metadataFor('about')`. The language comes from the
+ * [locale] segment, so a static page stays static. */
 export function metadataFor(page: PageKey) {
-  return async (): Promise<Metadata> =>
-    pageMetadata(page, await requestLocale());
+  return async ({ params }: { params: Promise<{ locale?: string }> }): Promise<Metadata> => {
+    const { locale } = await params;
+    return pageMetadata(page, isLocale(locale) ? locale : await requestLocale());
+  };
 }

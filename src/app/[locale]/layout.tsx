@@ -1,4 +1,5 @@
-import { getMessages } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 import { LocaleProvider } from '@/context/locale-context';
 import { IntlProviderWrapper } from '@/components/providers/intl-provider-wrapper';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -9,12 +10,14 @@ import { PersonSchema, WebsiteSchema, BreadcrumbSchema } from '@/components/comm
 import { Toaster } from '@/components/ds';
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import { AUTHOR_NAME, pageMetadata, requestLocale, SITE_NAME, SITE_URL, TITLE_TEMPLATE } from '@/lib/metadata';
-import { headers } from 'next/headers';
+import { AUTHOR_NAME, pageMetadata, SITE_NAME, SITE_URL, TITLE_TEMPLATE } from '@/lib/metadata';
+import { locales, type Locale } from '@/i18n/config';
+import { isLocale } from '@/i18n/negotiate';
+import { PRE_PAINT_SCRIPT } from '@/lib/inline-scripts';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 
-import './globals.css';
+import '../globals.css';
 
 // Geist carries the whole voice; tracking tightens as size grows (see .text-* in globals.css).
 const fontSans = Geist({
@@ -30,12 +33,16 @@ const fontMono = Geist_Mono({
   display: 'swap',
 });
 
-// Before first paint: restore the saved theme (cookie or localStorage) and opt into reveal states.
-// Without JS or with reduced motion, content stays visible.
-const prePaintScript = `try{var d=document.documentElement,m=document.cookie.match(/(?:^|; )theme=(light|dark)/),t=(m&&m[1])||localStorage.getItem('theme');if(t==='dark')d.classList.add('dark');if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('js-motion')}catch(e){}`;
+type LayoutParams = { params: Promise<{ locale: string }> };
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await requestLocale();
+// Both languages are prerendered; src/middleware.ts rewrites each request to the visitor's one.
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: LayoutParams): Promise<Metadata> {
+  const { locale: segment } = await params;
+  const locale: Locale = isLocale(segment) ? segment : 'en';
   const home = pageMetadata('home', locale);
 
   return {
@@ -72,13 +79,16 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}> & LayoutParams) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+  // The language comes from the URL segment, not the request, so pages under it can render statically.
+  setRequestLocale(locale);
   const messages = await getMessages();
-  // Set per request by src/middleware.ts; every inline or third-party script below carries it (CSP).
-  const nonce = (await headers()).get('x-nonce') ?? undefined;
-  const initialLocale = await requestLocale();
+  const initialLocale: Locale = locale;
 
   return (
     <html lang={initialLocale} className={cn(fontSans.variable, fontMono.variable)} suppressHydrationWarning>
@@ -86,8 +96,8 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
-        {/* Browsers hide nonce attributes from the DOM after parsing; suppress the resulting hydration mismatch. */}
-        <script nonce={nonce} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: prePaintScript }} />
+        {/* Allowed by the public policy's 'unsafe-inline', and by hash on owner routes (src/middleware.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: PRE_PAINT_SCRIPT }} />
         <PersonSchema />
         <WebsiteSchema />
         <BreadcrumbSchema />
@@ -111,7 +121,6 @@ export default async function RootLayout({
         {/* Service Worker - lazy load after page is interactive */}
         <Script
           id="service-worker"
-          nonce={nonce}
           strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
@@ -127,12 +136,10 @@ export default async function RootLayout({
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              nonce={nonce}
               strategy="afterInteractive"
             />
             <Script
               id="google-analytics"
-              nonce={nonce}
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
@@ -150,7 +157,6 @@ export default async function RootLayout({
         {process.env.NEXT_PUBLIC_HOTJAR_SCRIPT && (
           <Script
             src={process.env.NEXT_PUBLIC_HOTJAR_SCRIPT}
-            nonce={nonce}
             strategy="lazyOnload"
           />
         )}
