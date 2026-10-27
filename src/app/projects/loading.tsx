@@ -1,1 +1,1 @@
-export { PageLoading as default } from '@/components/layout/page-loading';
+export { ProjectsSkeleton as default } from '@/components/layout/skeletons/projects';
