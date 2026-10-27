@@ -30,10 +30,12 @@ interface ProjectDetailClientPageProps {
   initialLocale: Locale;
 }
 
+// "2026-08" parses as midnight UTC, so format in UTC: the prerender (UTC) and a browser west of it would otherwise
+// disagree on the month and the page would fail to hydrate.
 function formatProjectDate(dateString: string, locale: string) {
   return new Date(dateString).toLocaleDateString(
     locale === "es" ? "es-ES" : "en-US",
-    { year: "numeric", month: "long" },
+    { year: "numeric", month: "long", timeZone: "UTC" },
   );
 }
 
