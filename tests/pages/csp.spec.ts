@@ -39,7 +39,8 @@ test.describe("Content Security Policy", () => {
     const nonce = nonceOf(csp);
     expect(nonce).toBeTruthy();
     const scriptSrc = csp.split(";").find((directive) => directive.trim().startsWith("script-src"));
-    expect(scriptSrc).toContain("'strict-dynamic'");
+    // Preview deployments list the script hosts instead: Vercel's toolbar can't take 'strict-dynamic' (src/lib/csp.ts).
+    if (!scriptSrc?.includes("https://vercel.live")) expect(scriptSrc).toContain("'strict-dynamic'");
     expect(scriptSrc).not.toContain("'unsafe-inline'");
     expect(nonceOf(second.headers()["content-security-policy"])).not.toBe(nonce);
     // The layout's inline script is allowed by hash; Next.js's own scripts carry the nonce.
