@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.6.1] - 2026-10-27
+
+### Fixed
+- Project pages hydrate cleanly for readers west of UTC: a start date like "2026-08" was formatted in local time, so the prerendered page (UTC) and the browser disagreed on the month.
+
 ## [3.6.0] - 2026-10-27
 
 ### Changed
