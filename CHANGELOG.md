@@ -4,6 +4,15 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.6.0] - 2026-10-27
+
+### Changed
+- Every public page is prerendered in both languages and served from Vercel's CDN cache instead of being rendered on each visit: pages live under `app/[locale]` and the middleware serves the visitor's language (cookie, else browser, else English). URLs are unchanged. Cold starts no longer hit readers, and in-site navigation can prefetch whole pages.
+- Content Security Policy: public pages get a static policy (cached HTML can't carry a per-request nonce); the owner's slides area keeps a fresh nonce with 'strict-dynamic'.
+- The language switch also reloads server-rendered content in the new language.
+- `api/revalidate` revalidates each language's page for a public path.
+- Each route's loading skeleton is drawn from the route's own components, with the page's exact shapes and sizes; articles and projects get their own.
+
 ## [3.5.6] - 2026-10-26
 
 ### Changed
