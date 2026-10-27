@@ -17,6 +17,10 @@ const paths = [
   "/slides",
 ];
 
+// The browser runs where most readers are (Ecuador, UTC-5) while CI and Vercel render in UTC, so a date formatted in
+// local time shows up as a mismatch here too.
+test.use({ timezoneId: "America/Guayaquil" });
+
 test.describe("Hydration", () => {
   for (const locale of ["en", "es"] as Locale[]) {
     for (const path of paths) {
