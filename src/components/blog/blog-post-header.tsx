@@ -10,10 +10,12 @@ interface BlogPostMetaProps {
   post: BlogPostSummary;
   locale: string;
   formatDate: (dateString: string) => string;
+  /** Off in the loading skeleton, which has no real post to count: a same-size stand-in takes its place. */
+  views?: boolean;
 }
 
 /** The article's byline (author, date, reading time, views) and its tags. Sharing lives at the end of the article. */
-export function BlogPostHeader({ post, locale, formatDate }: BlogPostMetaProps) {
+export function BlogPostHeader({ post, locale, formatDate, views = true }: BlogPostMetaProps) {
   const t = useTranslations('blog');
 
   return (
@@ -30,7 +32,7 @@ export function BlogPostHeader({ post, locale, formatDate }: BlogPostMetaProps) 
             <span aria-hidden="true">·</span>
             <span>{formatReadingTime(post.readingTime, locale)}</span>
             <span aria-hidden="true">·</span>
-            <BlogViews slug={post.slug} />
+            {views ? <BlogViews slug={post.slug} /> : <span>000 views</span>}
           </div>
         </div>
       </div>

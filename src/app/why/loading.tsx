@@ -1,1 +1,1 @@
-export { PageLoading as default } from '@/components/layout/page-loading';
+export { WhySkeleton as default } from '@/components/layout/skeletons/why';

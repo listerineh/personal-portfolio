@@ -35,12 +35,11 @@ test.describe("Content Security Policy", () => {
   test("the page's own scripts carry the nonce", async ({ page }) => {
     const response = await open(page);
     const nonce = nonceOf(response!.headers()["content-security-policy"]);
-    // Browsers hide the attribute after parsing; the property keeps it.
-    const prePaint = await page.evaluate(
-      () => [...document.querySelectorAll("head script:not([type])")].map((s) => (s as HTMLScriptElement).nonce),
-    );
-    expect(prePaint.length).toBeGreaterThan(0);
-    expect(prePaint.every((value) => value === nonce)).toBe(true);
+    // The scripts the server sends. Chunks Next.js injects later (prefetched routes) run under 'strict-dynamic' instead.
+    const html = await response!.text();
+    const scripts = (html.slice(0, html.indexOf("</head>")).match(/<script\b[^>]*>/g) ?? []).filter((tag) => !/\stype=/.test(tag));
+    expect(scripts.length).toBeGreaterThan(0);
+    for (const tag of scripts) expect(tag).toContain(`nonce="${nonce}"`);
   });
 
   test("static files, API routes and Storybook are left out", async ({ request }) => {
