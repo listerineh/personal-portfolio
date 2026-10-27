@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { requestLocale, shareMetadata } from '@/lib/metadata';
+import { setRequestLocale } from 'next-intl/server';
+import { shareMetadata } from '@/lib/metadata';
 import { getProject, getProjects } from '@/lib/data/projects';
 import { notFound } from 'next/navigation';
 import { ProjectDetailClientPage, type ProjectVersion } from '@/components/projects/project-detail-client-page';
@@ -7,15 +8,21 @@ import { locales, type Locale } from '@/i18n/config';
 
 interface ProjectPageProps {
   params: Promise<{
+    locale: Locale;
     slug: string;
   }>;
 }
 
-export const dynamic = 'force-dynamic';
+/** Every project, prerendered in both languages (the [locale] layout supplies the languages). Any
+ * other slug is a 404 straight away: content ships with the code, so there is nothing to render on demand. */
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getProjects('en').map(({ slug }) => ({ slug }));
+}
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const locale = await requestLocale();
+  const { slug, locale } = await params;
   const project = getProject(slug, locale);
   if (!project) return { title: locale === 'es' ? 'Proyecto no encontrado' : 'Project not found', robots: { index: false } };
 
@@ -36,8 +43,8 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { slug } = await params;
-  const locale = await requestLocale();
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
   if (!getProject(slug, locale)) {
     notFound();
   }

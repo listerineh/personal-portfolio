@@ -1,14 +1,15 @@
 import { metadataFor } from '@/lib/metadata';
 import { getProjects } from '@/lib/data/projects';
-import { requestLocale } from '@/i18n/locale';
+import { setRequestLocale } from 'next-intl/server';
+import type { Locale } from '@/i18n/config';
 import { ProjectsListingClientPage } from '@/components/projects/projects-listing-client-page';
-
-export const dynamic = 'force-dynamic';
 
 export const generateMetadata = metadataFor('projects');
 
-export default async function ProjectsPage() {
-  const locale = await requestLocale();
+/** Static: prerendered in both languages. */
+export default async function ProjectsPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const projects = getProjects(locale);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://listerineh.dev';
 

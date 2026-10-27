@@ -1,23 +1,25 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import type { Locale } from '@/i18n/config';
 import { ArrowRight } from 'lucide-react';
 import { PageShell } from '@/components/layout';
 import { Button, PageHeader } from '@/components/ds';
-import { metadataFor, requestLocale } from '@/lib/metadata';
+import { metadataFor } from '@/lib/metadata';
 import { listPublishedDecks } from '@/features/slides/store';
 import { deckSummariesByLocale } from '@/features/slides/summary';
 import { TalkGrid } from '@/features/slides/TalkGrid';
 import { talksStructuredData } from '@/features/slides/structured-data';
 
-export const dynamic = 'force-dynamic';
-
 export const generateMetadata = metadataFor('slides');
 
-/** Every published talk, newest first, each opening in the viewer. */
-export default async function SlidesPage() {
+/** Every published talk, newest first, each opening in the viewer. Static, refreshed when a deck is saved (its cache
+ * tag) or after the store's cache window. */
+export default async function SlidesPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations('slidesPage');
   // Storage trouble shouldn't take the page down: it shows the empty state instead.
   const decks = await listPublishedDecks().catch(() => []);
-  const structuredData = talksStructuredData(decks, await requestLocale());
+  const structuredData = talksStructuredData(decks, locale);
 
   return (
     <PageShell>

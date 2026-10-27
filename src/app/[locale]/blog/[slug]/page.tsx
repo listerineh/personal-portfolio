@@ -1,8 +1,9 @@
 
 import type { Metadata } from 'next';
-import { requestLocale, shareMetadata } from '@/lib/metadata';
+import { setRequestLocale } from 'next-intl/server';
+import { shareMetadata } from '@/lib/metadata';
 import { blogShareImage } from '@/lib/og/blog-image';
-import { getBlogPost } from '@/lib/data/blog';
+import { getBlogPost, getBlogPosts } from '@/lib/data/blog';
 import { notFound } from 'next/navigation';
 import { BlogPostClientPage, type BlogPostVersion } from '@/components/blog/blog-post-client-page';
 import { BlogPostContent } from '@/components/blog/blog-post-content';
@@ -14,15 +15,21 @@ import { locales, type Locale } from '@/i18n/config';
 
 interface BlogPostPageProps {
   params: Promise<{
+    locale: Locale;
     slug: string;
   }>;
 }
 
-export const dynamic = 'force-dynamic';
+/** Every post, prerendered in both languages (the [locale] layout supplies the languages). Any
+ * other slug is a 404 straight away: content ships with the code, so there is nothing to render on demand. */
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getBlogPosts('en').map(({ slug }) => ({ slug }));
+}
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const locale = await requestLocale();
+  const { slug, locale } = await params;
   const post = getBlogPost(slug, locale);
   if (!post) return { title: locale === 'es' ? 'Artículo no encontrado' : 'Article not found', robots: { index: false } };
 
@@ -44,8 +51,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-  const locale = await requestLocale();
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
   const post = getBlogPost(slug, locale);
 
   if (!post) {
