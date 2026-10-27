@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useSitePathname } from "@/hooks/use-site-pathname";
 import { useTranslations } from "next-intl";
 import { ThemeToggleButton, LanguageSwitcher } from "@/components/common";
 import { Mark } from "@/components/ds";
@@ -16,7 +17,7 @@ export function Header() {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const router = useRouter();
-  const pathname = usePathname();
+  const pathname = useSitePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
