@@ -11,6 +11,11 @@ export function SoftNavigation() {
   const pathname = usePathname();
   const firstPathname = useRef(pathname);
 
+  // Loading skeletons only draw once the app is live (see PageLoading).
+  useEffect(() => {
+    document.documentElement.dataset.hydrated = "";
+  }, []);
+
   useEffect(() => {
     if (pathname !== firstPathname.current)
       document.documentElement.dataset.nav = "soft";
