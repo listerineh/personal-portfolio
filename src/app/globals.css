@@ -329,6 +329,26 @@ html.js-motion [data-intro] {
   animation-delay: calc(var(--i, 0) * 90ms + 60ms);
 }
 
+/* After the first page (data-nav="soft", set by SoftNavigation): a short settle, no blur, no stagger. Moving around
+ * the site never waits on the intro. */
+@keyframes settle-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+html.js-motion[data-nav="soft"] [data-intro] {
+  animation: settle-in 240ms var(--ease-out) both;
+  animation-delay: 0ms;
+}
+
+/* Loading skeleton (PageSkeleton): appears only if the page takes longer than a beat, so fast navigations don't flash. */
+@keyframes skeleton-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+html.js-motion .page-skeleton {
+  animation: skeleton-in 200ms var(--ease-out) 150ms both;
+}
+
 /* Reveal: content rises into place as it enters, tied to scroll where supported. */
 @keyframes rise {
   from { opacity: 0; transform: translateY(40px) scale(0.97); }

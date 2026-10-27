@@ -45,6 +45,7 @@ export { PageHeader } from './PageHeader'
 export { FilterTag } from './FilterTag'
 export { SearchField } from './SearchField'
 export { EntrySkeleton } from './EntrySkeleton'
+export { PageSkeleton } from './PageSkeleton'
 export { Exhibit } from './Exhibit'
 export type { StackLayer } from './StackList'
 

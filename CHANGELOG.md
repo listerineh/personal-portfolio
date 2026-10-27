@@ -4,6 +4,12 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.5.6] - 2026-10-26
+
+### Changed
+- Moving between pages answers at once: the header and a page skeleton show while the next page renders, and Next.js can prefetch it.
+- After the first page, the intro is a short 240ms settle instead of the staggered, blurred 800ms focus-in; the first visit keeps the full intro. A title is readable after a click in about 220ms instead of about 900ms.
+
 ## [3.5.5] - 2026-10-25
 
 ### Fixed
