@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useSyncExternalStore, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { PageSkeleton } from "@/components/ds";
 import { PageShell } from "./page-shell";
@@ -12,7 +12,11 @@ import { PageShell } from "./page-shell";
  *
  * Only for moves within the site: on a full page load (server render and hydration) it draws nothing. Otherwise the
  * first HTML would carry a second header that React swaps out a moment after load, losing any click in between.
+ * useSyncExternalStore makes that call hydration-safe: React uses the server value (false) while it hydrates, even
+ * when a page's boundary hydrates after the rest of the app, and the client value (true) for a fresh render.
  */
+const subscribe = () => () => {};
+
 export function PageLoading({
   children,
   shell = true,
@@ -21,11 +25,8 @@ export function PageLoading({
   shell?: boolean;
 }) {
   const t = useTranslations("common");
-  if (
-    typeof document === "undefined" ||
-    !("hydrated" in document.documentElement.dataset)
-  )
-    return null;
+  const clientRender = useSyncExternalStore(subscribe, () => true, () => false);
+  if (!clientRender) return null;
   const skeleton = (
     <PageSkeleton label={t("loadingPage")}>{children}</PageSkeleton>
   );
