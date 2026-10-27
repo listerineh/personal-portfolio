@@ -57,7 +57,7 @@ const nextConfig: NextConfig = {
     '/og/blog/[file]': ['./src/assets/fonts/*.ttf', './public/blog/*'],
     '/og/slides/[file]': ['./src/assets/fonts/*.ttf'],
     // Headless Chromium for slide PDFs (src/features/slides/pdf.ts): the compressed binary ships with the route.
-    '/slides/[slug]/pdf': ['./node_modules/@sparticuz/chromium/bin/**'],
+    '/[locale]/slides/[slug]/pdf': ['./node_modules/@sparticuz/chromium/bin/**'],
   },
   compress: true,
   poweredByHeader: false,
