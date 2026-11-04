@@ -4,8 +4,13 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.7.0] - 2026-11-04
+
 ### Added
 - The "De Endpoints a Enjambres de Agentes" talk as a draft deck (`/slides/agents-backend-gcp`) for DevFest, in Spanish and English: backend patterns on Google Cloud for autonomous systems, with the CodeSentry Swarm demo.
+
+### Fixed
+- `/projects` on phones: the status filters stay inside the screen, scrolling sideways within their own row.
 
 ## [3.6.2] - 2026-10-27
 
