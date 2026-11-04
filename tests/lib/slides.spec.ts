@@ -8,11 +8,12 @@ import { gitGithubGitflow } from "../../src/features/slides/decks/git-github-git
 import { pythonTyping } from "../../src/features/slides/decks/python-typing";
 import { firebaseVsSupabase } from "../../src/features/slides/decks/firebase-vs-supabase";
 import { ideaMicroSaas } from "../../src/features/slides/decks/idea-micro-saas";
+import { agentsBackendGcp } from "../../src/features/slides/decks/agents-backend-gcp";
 
 // Code-only checks (no page): the deck contract and the accent math behind every deck's colors.
 
 test.describe("Deck schema", () => {
-  for (const talk of [gitGithubGitflow, pythonTyping, firebaseVsSupabase, ideaMicroSaas]) {
+  for (const talk of [gitGithubGitflow, pythonTyping, firebaseVsSupabase, ideaMicroSaas, agentsBackendGcp]) {
     test(`the ${talk.slug} talk seed is valid and starts as a draft`, () => {
       const result = deckSchema.safeParse(talk);
       expect(result.success, result.success ? "" : JSON.stringify(result.error.issues)).toBe(true);
