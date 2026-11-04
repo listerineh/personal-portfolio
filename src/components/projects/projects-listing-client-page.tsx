@@ -76,7 +76,7 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
   return (
     <PageShell>
       <PageHeader ambient title={t('pageTitle')} intro={t('pageDescription')}>
-        <div className="grid gap-4">
+        <div className="grid grid-cols-1 gap-4">
           <div className="flex flex-col gap-3 md:flex-row md:items-center">
             <SearchField
               value={search}
@@ -87,27 +87,30 @@ export function ProjectsListingClientPage({ projects }: ProjectsListingClientPag
               className="md:flex-1"
             />
             {statuses.length > 1 && (
-              <div
-                role="group"
-                aria-label={t('statusFilter')}
-                className="inline-flex h-12 shrink-0 items-center gap-1 self-start rounded-full bg-foreground/[0.06] p-1 md:self-auto"
-              >
-                {[null, ...statuses].map((value) => (
-                  <button
-                    key={value ?? 'all'}
-                    type="button"
-                    aria-pressed={status === value}
-                    onClick={() => setStatus(value)}
-                    className={cn(
-                      'inline-flex h-full items-center gap-2 rounded-full px-4 text-[0.8125rem] font-medium',
-                      'transition-[background-color,color,box-shadow] duration-snap ease-snap motion-reduce:transition-none',
-                      status === value ? 'bg-background text-foreground shadow-card' : 'text-muted-foreground hover:text-foreground',
-                    )}
-                  >
-                    {value && <span aria-hidden="true" className={cn('h-1.5 w-1.5 rounded-full', projectStatusDot[value])} />}
-                    {value ? tProject(`status.${value}`) : t('filterAll')}
-                  </button>
-                ))}
+              // On phones the filter is wider than the screen: it slides in its own track, like the technologies below.
+              <div className="marquee-edges -mx-gutter overflow-x-auto px-gutter scrollbar-none md:mx-0 md:shrink-0 md:overflow-visible md:px-0 md:[-webkit-mask-image:none] md:[mask-image:none]">
+                <div
+                  role="group"
+                  aria-label={t('statusFilter')}
+                  className="inline-flex h-12 w-max items-center gap-1 rounded-full bg-foreground/[0.06] p-1"
+                >
+                  {[null, ...statuses].map((value) => (
+                    <button
+                      key={value ?? 'all'}
+                      type="button"
+                      aria-pressed={status === value}
+                      onClick={() => setStatus(value)}
+                      className={cn(
+                        'inline-flex h-full items-center gap-2 whitespace-nowrap rounded-full px-4 text-[0.8125rem] font-medium',
+                        'transition-[background-color,color,box-shadow] duration-snap ease-snap motion-reduce:transition-none',
+                        status === value ? 'bg-background text-foreground shadow-card' : 'text-muted-foreground hover:text-foreground',
+                      )}
+                    >
+                      {value && <span aria-hidden="true" className={cn('h-1.5 w-1.5 rounded-full', projectStatusDot[value])} />}
+                      {value ? tProject(`status.${value}`) : t('filterAll')}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
