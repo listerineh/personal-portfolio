@@ -113,3 +113,24 @@ test("the newsletter link pages are kept out of search results", async ({
     );
   }
 });
+
+test.describe("Projects filters on phones", () => {
+  test.use({ viewport: { width: 360, height: 800 } });
+
+  for (const locale of ["en", "es"] as const) {
+    test(`stay inside the screen (${locale})`, async ({ page }) => {
+      await open(page, "/projects", locale, "domcontentloaded");
+      const search = page.getByRole("searchbox");
+      await expect(search).toBeVisible();
+      const box = (await search.boundingBox())!;
+      expect(box.x + box.width).toBeLessThanOrEqual(360);
+      // The status filter is wider than the screen: it scrolls in its own track, the page doesn't grow.
+      const track = await page.getByRole("group", { name: /status|estado/i }).evaluate((group) => {
+        const parent = group.parentElement!;
+        return { right: parent.getBoundingClientRect().right, scrolls: parent.scrollWidth > parent.clientWidth };
+      });
+      expect(track.right).toBeLessThanOrEqual(360);
+      expect(track.scrolls).toBe(true);
+    });
+  }
+});
