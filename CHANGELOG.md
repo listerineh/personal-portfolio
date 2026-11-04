@@ -4,6 +4,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.7.1] - 2026-11-04
+
 ### Changed
 - The "De Endpoints a Enjambres de Agentes" talk grows from 14 to 45 slides: concrete failure modes, the four patterns with code from the demo, how CodeSentry Swarm works, its repos and road ahead, and measured results.
 
