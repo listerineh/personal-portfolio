@@ -1,5 +1,6 @@
 import type { AbstractIntlMessages } from "next-intl";
 import type { Locale } from "./config";
+import { withTenure } from "@/lib/tenure";
 
 /**
  * Messages for a language switched to in the browser. The server already sends the visitor's language, so only the
@@ -19,7 +20,7 @@ export function loadMessages(locale: Locale): Promise<AbstractIntlMessages> {
   if (ready) return Promise.resolve(ready);
   pending[locale] ??= import(`../../messages/${locale}.json`).then((module) => {
     // The JSON includes arrays read via t.raw(), which AbstractIntlMessages does not model.
-    const messages = module.default as unknown as AbstractIntlMessages;
+    const messages = withTenure(module.default) as unknown as AbstractIntlMessages;
     loaded[locale] = messages;
     return messages;
   });
