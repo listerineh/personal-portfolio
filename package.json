@@ -1,6 +1,6 @@
 {
   "name": "listerineh-portfolio",
-  "version": "3.7.2",
+  "version": "3.8.0",
   "private": true,
   "engines": {
     "node": ">=22"
@@ -15,6 +15,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "cv:pdf": "node scripts/generate-cv-pdf.js",
     "test:setup": "node scripts/setup-playwright.js",
     "test:server": "next dev --turbopack -p 3001",
     "test": "playwright test --reporter=list",

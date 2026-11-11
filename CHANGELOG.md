@@ -4,6 +4,19 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.8.0] - 2026-11-11
+
+### Added
+- CV in Harvard format, in English and Spanish, printed from the same role data as the career section (`/api/cv/<lang>`, `npm run cv:pdf`). "Download CV" on the home page now opens a menu to pick the language.
+
+### Changed
+- Years of experience are counted from their start dates (career: July 2020, GDG Quito: April 2023) instead of typed by hand, across the home page, About, the CV, structured data and the share-image script.
+- `Button` forwards its ref and extra attributes, so it can be a menu or dialog trigger.
+- About shows the current size of the GDG Quito community (5.7K+), matching the career section and the CV.
+
+### Removed
+- The Canva-exported English CV (`CV_SebastianAlvarez_FS_EN.pdf`).
+
 ## [3.7.2] - 2026-11-11
 
 ### Changed

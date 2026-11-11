@@ -42,16 +42,22 @@ test.describe("Home · hero", () => {
     await expect(page.locator("section#work")).toBeInViewport();
   });
 
-  test("downloads the CV", async ({ page }) => {
-    const download = page.waitForEvent("download");
-    await page
-      .locator("section#hero")
-      .getByRole("button", { name: "Download CV" })
-      .click();
-    expect((await download).suggestedFilename()).toBe(
-      "CV_SebastianAlvarez_EN.pdf",
-    );
-  });
+  for (const [language, file] of [
+    ["English", "CV_SebastianAlvarez_EN.pdf"],
+    ["Spanish", "CV_SebastianAlvarez_ES.pdf"],
+  ] as const) {
+    test(`downloads the CV in ${language} from the language menu`, async ({
+      page,
+    }) => {
+      await page
+        .locator("section#hero")
+        .getByRole("button", { name: "Download CV" })
+        .click();
+      const download = page.waitForEvent("download");
+      await page.getByRole("menuitem", { name: language }).click();
+      expect((await download).suggestedFilename()).toBe(file);
+    });
+  }
 
   test("with reduced motion nothing moves, so no pause button is offered", async ({
     page,
