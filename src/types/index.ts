@@ -19,7 +19,16 @@ export interface Experience {
   employmentDates: string;
   location?: string; 
   responsibilities: string[];
-  companyAiHint?: string; 
+  /** Client or internal projects within the role, shown as sub-blocks after the responsibilities. */
+  projects?: ExperienceProject[];
+  /** Key technologies of the role, most relevant first. */
+  stack?: string[];
+}
+
+export interface ExperienceProject {
+  name: string;
+  role: string;
+  summary: string;
 }
 
 export type SkillCategory =

@@ -4,6 +4,10 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+### Changed
+- Career section rewritten with the owner: official titles and dates, measurable results, SoFi Tech Solutions (formerly Galileo) with its new logo, ioet split into internship and engineer roles with a per-project breakdown, and older roles condensed. English and Spanish.
+- `RoleExplorer` shows the key stack of each role as tags and can list the projects inside a role.
+
 ## [3.7.1] - 2026-11-04
 
 ### Changed

@@ -16,6 +16,8 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
     location: exp.location,
     logoUrl: exp.logoUrl,
     responsibilities: exp.responsibilities,
+    projects: exp.projects,
+    stack: exp.stack,
     current: isCurrentRole(exp.employmentDates),
   }));
 
@@ -27,7 +29,7 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
       title={t('title')}
     >
       <Reveal>
-        <RoleExplorer roles={roles} label={t('rolesLabel')} currentLabel={tSala('now')} />
+        <RoleExplorer roles={roles} label={t('rolesLabel')} currentLabel={tSala('now')} stackLabel={t('stackLabel')} />
       </Reveal>
     </Section>
   );
