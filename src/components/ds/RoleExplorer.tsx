@@ -14,7 +14,7 @@ export interface Role {
   logoUrl?: string;
   responsibilities: string[];
   /** Client or internal projects within the role: name, the hat worn, one line on the work. */
-  projects?: { name: string; role: string; summary: string }[];
+  projects?: { name: string; role: string; summary: string; stack?: string[] }[];
   /** Key technologies, shown as tags under the detail. */
   stack?: string[];
   /** Open-ended role: gets the live amber dot and the current label. */
@@ -259,6 +259,15 @@ export function RoleExplorer({
                     <p className="mt-2 text-[0.9375rem] leading-relaxed text-foreground/85">
                       {project.summary}
                     </p>
+                    {project.stack && project.stack.length > 0 && (
+                      <ul aria-label={stackLabel} className="mt-3 flex flex-wrap gap-1.5">
+                        {project.stack.map((tech) => (
+                          <li key={tech} className="flex">
+                            <Pill size="sm" variant="outline">{tech}</Pill>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </li>
               ))}

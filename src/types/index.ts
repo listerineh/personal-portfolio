@@ -29,6 +29,7 @@ export interface ExperienceProject {
   name: string;
   role: string;
   summary: string;
+  stack?: string[];
 }
 
 export type SkillCategory =
