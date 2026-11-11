@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.8.1] - 2026-11-11
+
+### Changed
+- The About share image shows the current figures: years of experience, GDG Quito community size (5.7K+) and years organizing.
+
 ## [3.8.0] - 2026-11-11
 
 ### Added
