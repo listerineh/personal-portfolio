@@ -58,7 +58,7 @@ export const experiencesData: Record<Locale, Experience[]> = {
         "Provisioned the infrastructure with Terraform and contributed to the Flutter mobile app.",
         "Reduced costs by ~30% once the project was completed.",
       ],
-      stack: ["Python", "FastAPI", "TypeScript", "Next.js", "Tailwind CSS", "Flutter", "Dart", "MongoDB", "Firebase", "Terraform"],
+      stack: ["Python", "FastAPI", "TypeScript", "Next.js", "Tailwind CSS", "Flutter", "Dart", "MongoDB", "Firebase", "Redux", "Terraform", "CloudFormation"],
     },
     {
       company: "ioet",
@@ -71,27 +71,27 @@ export const experiencesData: Record<Locale, Experience[]> = {
         {
           name: "Symphonie.ai",
           role: "Fullstack Developer",
-          summary: "Processed, stored and labeled data in vector stores to train the ML models behind a RAG system for user queries, and built the web app that serves it.",
+          summary: "Built the web application of a multinational, data-driven product that brands use to query their own insights. Processed, stored and labeled data in vector stores to train the ML models behind its RAG system, and shaped that data for both the model and the frontend.",
         },
         {
           name: "Hewlett Packard Enterprise",
           role: "Backend Developer & Test Automation",
-          summary: "Maintained and scaled microservices, wrote automation scripts, and led integration, load and stress testing.",
+          summary: "Worked on a high-impact automation project: wrote the automation scripts that streamlined team workflows, and maintained and scaled the microservices behind them. Led the rollout of integration, load and stress tests to make the system more resilient.",
         },
         {
           name: "Pair Eyewear",
           role: "Frontend Engineer",
-          summary: "Shipped new features and performance improvements for the customer-facing web app.",
+          summary: "Maintained and extended the customer-facing e-commerce web app: shipped new features, optimized performance and improved the shopping experience end to end.",
         },
         {
           name: "ioet Payroll & Billing",
           role: "Fullstack Developer",
-          summary: "Led development of the internal payroll and billing systems that automate the company's financial processes.",
+          summary: "Led development of ioet's internal payroll system and automated its billing process: designed, built and maintained the components that keep payroll accurate, and worked with other teams to fit the automation into the company's workflow.",
         },
         {
           name: "ioet UI Standard",
           role: "Frontend Developer",
-          summary: "Created the internal UI component library used across projects.",
+          summary: "Created ioet's internal UI library to standardize how teams build interfaces, giving multiple projects consistent, reusable components and speeding up frontend work.",
         },
       ],
       stack: ["TypeScript", "Python", "Go", "Next.js", "FastAPI", "GraphQL", "AWS", "Terraform", "Kafka", "Kubernetes"],
@@ -203,7 +203,7 @@ export const experiencesData: Record<Locale, Experience[]> = {
         "Aprovisioné la infraestructura con Terraform y contribuí a la aplicación móvil en Flutter.",
         "Reduje los costos en ~30% una vez terminado el proyecto.",
       ],
-      stack: ["Python", "FastAPI", "TypeScript", "Next.js", "Tailwind CSS", "Flutter", "Dart", "MongoDB", "Firebase", "Terraform"],
+      stack: ["Python", "FastAPI", "TypeScript", "Next.js", "Tailwind CSS", "Flutter", "Dart", "MongoDB", "Firebase", "Redux", "Terraform", "CloudFormation"],
     },
     {
       company: "ioet",
@@ -216,27 +216,27 @@ export const experiencesData: Record<Locale, Experience[]> = {
         {
           name: "Symphonie.ai",
           role: "Desarrollador Fullstack",
-          summary: "Procesé, almacené y etiqueté datos en entornos vectorizados para entrenar los modelos de ML detrás de un sistema RAG de consultas de usuarios, y construí la aplicación web que lo sirve.",
+          summary: "Construí la aplicación web de un producto multinacional basado en datos que las marcas usan para consultar sus propios insights. Procesé, almacené y etiqueté datos en entornos vectorizados para entrenar los modelos de ML detrás de su sistema RAG, y preparé esos datos tanto para el modelo como para el frontend.",
         },
         {
           name: "Hewlett Packard Enterprise",
           role: "Desarrollador Backend y Automatización de Pruebas",
-          summary: "Mantuve y escalé microservicios, escribí scripts de automatización y lideré las pruebas de integración, carga y estrés.",
+          summary: "Trabajé en un proyecto de automatización de alto impacto: escribí los scripts que optimizaron los flujos de trabajo del equipo, y mantuve y escalé los microservicios detrás de ellos. Lideré la implementación de pruebas de integración, carga y estrés para hacer el sistema más resiliente.",
         },
         {
           name: "Pair Eyewear",
           role: "Ingeniero Frontend",
-          summary: "Entregué nuevas funcionalidades y mejoras de rendimiento para la aplicación web de cara al cliente.",
+          summary: "Mantuve y amplié la aplicación web de e-commerce de cara al cliente: entregué nuevas funcionalidades, optimicé el rendimiento y mejoré la experiencia de compra de punta a punta.",
         },
         {
           name: "ioet Payroll & Billing",
           role: "Desarrollador Fullstack",
-          summary: "Lideré el desarrollo de los sistemas internos de nómina y facturación que automatizan los procesos financieros de la empresa.",
+          summary: "Lideré el desarrollo del sistema interno de nómina de ioet y automaticé su proceso de facturación: diseñé, construí y mantuve los componentes que mantienen la nómina precisa, y trabajé con otros equipos para integrar la automatización al flujo de la empresa.",
         },
         {
           name: "ioet UI Standard",
           role: "Desarrollador Frontend",
-          summary: "Creé la biblioteca interna de componentes UI usada en múltiples proyectos.",
+          summary: "Creé la biblioteca interna de UI de ioet para estandarizar cómo los equipos construyen interfaces, dando a múltiples proyectos componentes consistentes y reutilizables y acelerando el trabajo de frontend.",
         },
       ],
       stack: ["TypeScript", "Python", "Go", "Next.js", "FastAPI", "GraphQL", "AWS", "Terraform", "Kafka", "Kubernetes"],
