@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import React, { type ReactNode } from "react";
+import React, { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { type Accent, type ButtonVariant, type ButtonSize } from "./types";
+
+/** Whatever a trigger wrapper (Radix `asChild`) hands down: aria state, data attributes, pointer and key handlers. */
+type TriggerProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonProps>;
 
 interface ButtonProps {
   variant?: ButtonVariant;
@@ -48,7 +51,11 @@ const base =
   "active:scale-[0.96] active:duration-snap active:ease-snap motion-reduce:transition-none motion-reduce:active:scale-100 " +
   "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
 
-export function Button({
+/**
+ * Forwards its ref and any extra button attributes, so it can be the trigger of a menu or dialog
+ * (`<DropdownTrigger asChild><Button>…</Button></DropdownTrigger>`). Those only apply to the button form, not links.
+ */
+export const Button = forwardRef<HTMLButtonElement, ButtonProps & TriggerProps>(function Button({
   variant = "primary",
   accent = "neutral",
   size = "md",
@@ -60,7 +67,8 @@ export function Button({
   type = "button",
   disabled = false,
   "aria-label": ariaLabel,
-}: ButtonProps) {
+  ...rest
+}, ref) {
   const tone = accent === "amber" ? "amber" : "ink";
   const classes = cn(base, sizeMap[size], variantMap[variant][tone], className);
 
@@ -88,6 +96,8 @@ export function Button({
 
   return (
     <button
+      {...rest}
+      ref={ref}
       type={type}
       onClick={onClick}
       disabled={disabled}
@@ -97,4 +107,4 @@ export function Button({
       {children}
     </button>
   );
-}
+});

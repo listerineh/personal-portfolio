@@ -4,7 +4,17 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Ambient, Button, PauseButton, RotatingWords } from "@/components/ds";
+import {
+  Ambient,
+  Button,
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownLabel,
+  DropdownTrigger,
+  PauseButton,
+  RotatingWords,
+} from "@/components/ds";
 import { HeroVignettes } from "./hero-vignettes";
 
 const step = (i: number) => ({ "--i": i }) as React.CSSProperties;
@@ -22,10 +32,12 @@ export function HeroSection() {
   // Per visit only, like the skills rows: not remembered.
   const [paused, setPaused] = useState(false);
 
-  const downloadCv = () => {
+  // One PDF per language, printed from the same role data as the career section (npm run cv:pdf).
+  const downloadCv = (lang: "en" | "es") => {
+    const file = `CV_SebastianAlvarez_${lang.toUpperCase()}.pdf`;
     const link = document.createElement("a");
-    link.href = "/docs/CV_SebastianAlvarez_FS_EN.pdf";
-    link.download = "CV_SebastianAlvarez_EN.pdf";
+    link.href = `/docs/${file}`;
+    link.download = file;
     link.click();
     toast({
       title: t("cvDownloadedTitle"),
@@ -95,15 +107,20 @@ export function HeroSection() {
             >
               {tSala("walkTheWork")}
             </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={downloadCv}
-              className="w-full sm:w-auto"
-            >
-              <FileText aria-hidden="true" className="h-4 w-4" />
-              {t("downloadCV")}
-            </Button>
+            <Dropdown>
+              <DropdownTrigger asChild>
+                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                  <FileText aria-hidden="true" className="h-4 w-4" />
+                  {t("downloadCV")}
+                  <ChevronDown aria-hidden="true" className="h-4 w-4 opacity-60" />
+                </Button>
+              </DropdownTrigger>
+              <DropdownContent align="start">
+                <DropdownLabel>{t("cvLanguage")}</DropdownLabel>
+                <DropdownItem onClick={() => downloadCv("en")}>{t("cvEnglish")}</DropdownItem>
+                <DropdownItem onClick={() => downloadCv("es")}>{t("cvSpanish")}</DropdownItem>
+              </DropdownContent>
+            </Dropdown>
             <Button
               variant="ghost"
               accent="amber"
