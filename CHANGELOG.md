@@ -4,6 +4,16 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.8.2] - 2026-11-11
+
+### Added
+- Skills: the 16 technologies named in the career section that the catalog was missing (Datadog, Coralogix, New Relic, CloudFormation, Django, PHP, MySQL, Strapi, Contentful, Shopify, WordPress, WooCommerce, npm, YOLO, MATLAB, Arduino).
+
+### Fixed
+- On phones the CV language menu is as wide as the "Download CV" button.
+- The Amazon Web Services skill icon loads again.
+- "Tailwind" no longer appears twice in the skills catalog.
+
 ## [3.8.1] - 2026-11-11
 
 ### Changed
