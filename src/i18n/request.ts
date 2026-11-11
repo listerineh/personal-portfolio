@@ -1,6 +1,7 @@
 import { getRequestConfig } from 'next-intl/server';
 import { requestLocale } from './locale';
 import { isLocale } from './negotiate';
+import { withTenure } from '@/lib/tenure';
 
 export default getRequestConfig(async ({ requestLocale: segment }) => {
   // The [locale] segment (set by the layout, picked by the middleware), so pages can render statically. Without one,
@@ -10,7 +11,8 @@ export default getRequestConfig(async ({ requestLocale: segment }) => {
 
   return {
     locale,
-    messages: (await import(`../../messages/${locale}.json`)).default,
+    // Years of experience in the copy are tokens, counted here from their start dates.
+    messages: withTenure((await import(`../../messages/${locale}.json`)).default),
     timeZone: 'UTC',
   };
 });

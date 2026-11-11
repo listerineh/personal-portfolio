@@ -24,6 +24,10 @@ const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
 
+// Same count as src/lib/tenure.ts: whole years since the start month (career: Jul 2020, GDG Quito: Apr 2023).
+const yearsSince = (year, month, now = new Date()) =>
+  Math.max(0, Math.floor(((now.getUTCFullYear() - year) * 12 + (now.getUTCMonth() + 1 - month)) / 12));
+
 const ROOT = path.join(__dirname, "..");
 const PUBLIC = path.join(ROOT, "public");
 const OG_DIR = path.join(PUBLIC, "og");
@@ -193,9 +197,9 @@ function pages(projects) {
             .stat span { font-size: 17px; line-height: 1.3; color: var(--muted); }
             .stat.lead { background: var(--amber); } .stat.lead span { color: #1D1D1F; font-weight: 500; } .stat.lead b { color: #1D1D1F; }`,
       visual: [
-        ["6+", "Years building software", "lead"],
-        ["4.6K+", "Developers in the GDG community", ""],
-        ["3+", "Years organizing GDG Quito", ""],
+        [`${yearsSince(2020, 7)}+`, "Years building software", "lead"],
+        ["5.7K+", "Developers in the GDG community", ""],
+        [`${yearsSince(2023, 4)}+`, "Years organizing GDG Quito", ""],
         ["4", "Instruments I play", ""],
       ]
         .map(

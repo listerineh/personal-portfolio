@@ -1,3 +1,5 @@
+import { careerYears } from '@/lib/tenure';
+
 export function PersonSchema() {
   const schema = {
     '@context': 'https://schema.org',
@@ -5,7 +7,7 @@ export function PersonSchema() {
     name: 'Sebastian Alvarez',
     url: 'https://listerineh.dev',
     image: 'https://listerineh.dev/og/home.png',
-    description: 'Senior Fullstack & Platform Engineer with 6+ years building scalable cloud systems. React, Next.js, Python, AWS. GDG Quito organizer and open source contributor based in Ecuador.',
+    description: `Senior Fullstack & Platform Engineer with ${careerYears()}+ years building scalable cloud systems. React, Next.js, Python, AWS. GDG Quito organizer and open source contributor based in Ecuador.`,
     jobTitle: 'Senior Fullstack & Platform Engineer',
     worksFor: {
       '@type': 'Organization',
