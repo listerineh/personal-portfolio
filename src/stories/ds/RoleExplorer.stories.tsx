@@ -4,9 +4,9 @@ import { Band } from '@/components/ds/Surface';
 
 // Illustrative roles for the story only.
 const roles = [
-  { company: 'Acme Fintech', jobTitle: 'Senior Software Engineer', employmentDates: 'Dec 2025 - Present', location: 'Remote', current: true, responsibilities: ['Led a migration from a monolith to services.', 'Designed APIs used across teams.'] },
+  { company: 'Acme Fintech', jobTitle: 'Senior Software Engineer', employmentDates: 'Dec 2025 - Present', location: 'Remote', current: true, responsibilities: ['Led a migration from a monolith to services.', 'Designed APIs used across teams.'], stack: ['Python', 'Terraform', 'Docker'] },
   { company: 'Community Group', jobTitle: 'Organizer', employmentDates: 'Apr 2023 - Present', location: 'Quito, EC', current: true, responsibilities: ['Organized meetups and workshops.'] },
-  { company: 'Studio', jobTitle: 'Fullstack Engineer', employmentDates: 'Jan 2021 - Nov 2025', location: 'Remote', responsibilities: ['Built web products end to end.', 'Ran the cloud infrastructure.'] },
+  { company: 'Studio', jobTitle: 'Fullstack Engineer', employmentDates: 'Jan 2021 - Nov 2025', location: 'Remote', responsibilities: [], projects: [{ name: 'Client One', role: 'Fullstack Developer', summary: 'Built the web product end to end.', stack: ['React', 'Node.js'] }, { name: 'Client Two', role: 'Backend Developer', summary: 'Ran the cloud infrastructure.' }], stack: ['TypeScript', 'Next.js', 'AWS'] },
 ];
 
 const meta: Meta<typeof RoleExplorer> = {
@@ -14,7 +14,7 @@ const meta: Meta<typeof RoleExplorer> = {
   component: RoleExplorer,
   parameters: { layout: 'fullscreen' },
   tags: ['autodocs'],
-  args: { roles, label: 'Roles', currentLabel: 'Now' },
+  args: { roles, label: 'Roles', currentLabel: 'Now', stackLabel: 'Stack' },
 };
 
 export default meta;
