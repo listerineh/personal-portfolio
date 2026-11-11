@@ -4,6 +4,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.8.0] - 2026-11-11
+
 ### Added
 - CV in Harvard format, in English and Spanish, printed from the same role data as the career section (`/api/cv/<lang>`, `npm run cv:pdf`). "Download CV" on the home page now opens a menu to pick the language.
 
