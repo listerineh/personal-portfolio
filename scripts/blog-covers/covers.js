@@ -418,6 +418,61 @@ module.exports = {
     ],
   },
 
+  "banco-pichincha-whitelotus-claim": {
+    theme: "dark",
+    phrase: {
+      en: ["Unconfirmed.", "Protect yourself anyway."],
+      es: ["Sin confirmar.", "Protégete igual."],
+    },
+    objects: (lang) => [
+      k.terminal({
+        x: 420,
+        y: 80,
+        w: 560,
+        rot: -2,
+        z: 3,
+        lines: [
+          "$ open bank-app",
+          "429 too many requests",
+          "{a:Global rate limit exceeded}",
+          t(lang, "(for hours)", "(durante horas)"),
+        ],
+      }),
+      k.notice({
+        icon: "triangle-alert",
+        title: t(lang, "Claim: data breach", "Afirmación: filtración"),
+        body: t(lang, "status · unconfirmed", "estado · sin confirmar"),
+        x: 236,
+        y: 330,
+        w: 520,
+        rot: -2,
+        z: 5,
+      }),
+      k.list({
+        title: t(lang, "Today", "Hoy"),
+        x: 880,
+        y: 330,
+        w: 420,
+        rot: 2,
+        z: 4,
+        items: [
+          {
+            text: t(lang, "Unique password", "Contraseña única"),
+            state: "done",
+          },
+          {
+            text: t(lang, "Alerts on every move", "Alertas por movimiento"),
+            state: "done",
+          },
+          {
+            text: t(lang, "Don't share codes", "No compartir códigos"),
+            state: "active",
+          },
+        ],
+      }),
+    ],
+  },
+
   "the-first-digital-death": {
     theme: "dark",
     phrase: {
