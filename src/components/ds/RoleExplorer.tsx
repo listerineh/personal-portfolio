@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Briefcase } from "lucide-react";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { cn } from "@/lib/utils";
+import { Pill } from "./Pill";
 
 export interface Role {
   company: string;
@@ -12,6 +13,10 @@ export interface Role {
   location?: string;
   logoUrl?: string;
   responsibilities: string[];
+  /** Client or internal projects within the role: name, the hat worn, one line on the work. */
+  projects?: { name: string; role: string; summary: string; stack?: string[] }[];
+  /** Key technologies, shown as tags under the detail. */
+  stack?: string[];
   /** Open-ended role: gets the live amber dot and the current label. */
   current?: boolean;
 }
@@ -22,6 +27,8 @@ interface RoleExplorerProps {
   label: string;
   /** Text for the live tag on current roles, e.g. "Now". */
   currentLabel: string;
+  /** Accessible name of the technology list, e.g. "Stack". */
+  stackLabel?: string;
   className?: string;
 }
 
@@ -62,6 +69,7 @@ export function RoleExplorer({
   roles,
   label,
   currentLabel,
+  stackLabel,
   className,
 }: RoleExplorerProps) {
   const [active, setActive] = useState(0);
@@ -212,6 +220,7 @@ export function RoleExplorer({
             </div>
           </div>
 
+          {role.responsibilities.length > 0 && (
           <ul className="mt-8 grid gap-4">
             {role.responsibilities.map((item) => (
               <li
@@ -228,6 +237,52 @@ export function RoleExplorer({
               </li>
             ))}
           </ul>
+          )}
+
+          {role.projects && role.projects.length > 0 && (
+            <ul className="mt-8 grid gap-6">
+              {role.projects.map((project) => (
+                <li key={project.name} className="flex items-start gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="mt-[0.2em] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/[0.14]"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  </span>
+                  <div className="min-w-0">
+                    <h4 className="text-[0.9375rem] font-semibold leading-snug text-foreground">
+                      {project.name}
+                    </h4>
+                    <p className="text-meta mt-0.5 text-muted-foreground">
+                      {project.role}
+                    </p>
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-foreground/85">
+                      {project.summary}
+                    </p>
+                    {project.stack && project.stack.length > 0 && (
+                      <ul aria-label={stackLabel} className="mt-3 flex flex-wrap gap-1.5">
+                        {project.stack.map((tech) => (
+                          <li key={tech} className="flex">
+                            <Pill size="sm" variant="outline">{tech}</Pill>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {role.stack && role.stack.length > 0 && (
+            <ul aria-label={stackLabel} className="mt-8 flex flex-wrap gap-2">
+              {role.stack.map((tech) => (
+                <li key={tech} className="flex">
+                  <Pill>{tech}</Pill>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
