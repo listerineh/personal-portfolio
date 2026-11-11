@@ -25,9 +25,9 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Apr 2023 - Present",
       location: "Quito, EC",
       responsibilities: [
-        "Organize in-person and virtual tech events for a community of 5,700+ members.",
-        "Delivered 20+ talks on emerging technologies, including AI and cloud.",
-        "Moderate sessions and lead community growth.",
+        "Co-organize the chapter's flagship events, DevFest and Build with AI, plus at least one community event per quarter for 5,700+ members.",
+        "Run the work end to end with a small organizing team: speaker sourcing and hospitality, logistics, social media and video.",
+        "Delivered 20+ talks on AI, security, backend and web design.",
       ],
     },
     {
@@ -52,12 +52,13 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Aug 2024 - Aug 2025",
       location: "Remote",
       responsibilities: [
-        "Built and maintained the event-driven microservices architecture behind courier operations.",
-        "Adapted and integrated a computer-vision model that validates courier photos (pickup, transit and delivery) before storage, filtering out invalid images at high volume.",
+        "Built the web app that tracks couriers, deliveries and order status in real time, plus the internal configuration panel, with Next.js and Tailwind.",
+        "Built the event-driven backend on EventBridge, queuing delivery, pickup, movement and notification events per order and per courier.",
+        "Adapted a computer-vision model served on Cloud Run and integrated it into the web and mobile apps to validate courier photos (pickup, transit and delivery) before storage, filtering out invalid images at high volume.",
+        "Provisioned the infrastructure with Terraform and contributed to the Flutter mobile app.",
         "Reduced costs by ~30% once the project was completed.",
-        "Worked across backend, frontend, mobile and infrastructure teams.",
       ],
-      stack: ["Python", "FastAPI", "TypeScript", "React", "Redux", "MongoDB", "Firebase", "CloudFormation"],
+      stack: ["Python", "FastAPI", "TypeScript", "Next.js", "Tailwind CSS", "Flutter", "Dart", "MongoDB", "Firebase", "Terraform"],
     },
     {
       company: "ioet",
@@ -102,7 +103,10 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Apr 2022 - Sep 2022",
       location: "Remote",
       responsibilities: [
-        "Learned by contributing to real client projects through pair programming and guided tasks.",
+        "Trained as a fullstack engineer across frontend, backend and infrastructure through pair programming and guided tasks on real projects.",
+        "Contributed to TimeTracker, ioet's internal tool for tracking work hours in real time, built with Angular and Python.",
+        "Did QA for a client's marketplace where users buy shares of songs to earn royalties.",
+        "Hired as a Software Engineer at the end of the internship.",
       ],
       stack: ["Python", "Angular", "PostgreSQL", "Azure", "Postman"],
     },
@@ -112,7 +116,7 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "May 2022 - Oct 2022",
       location: "Quito, EC",
       responsibilities: [
-        "Delivered a project-management platform for engineering students at Universidad de las Fuerzas Armadas ESPE.",
+        "Built an academic management platform for the military education department of Universidad de las Fuerzas Armadas ESPE, covering attendance, grades and courses for military students.",
         "Still take on occasional freelance web projects alongside full-time roles, from design to deployment.",
       ],
       stack: ["TypeScript", "React", "Node.js", "Python", "Django", "MongoDB", "AWS", "Strapi"],
@@ -123,9 +127,11 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Jan 2022 - Apr 2022",
       location: "Remote",
       responsibilities: [
-        "Led a team of developers building a multi-vendor e-commerce site with WordPress, WooCommerce and Dokan.",
+        "Led development end to end across an 11-person team spanning web, mobile, backend, data and marketing.",
+        "Launched a marketplace where local merchants list and sell their products with no listing fees or commissions; 12 businesses used it regularly in production.",
+        "Extended the WordPress, WooCommerce and Dokan setup with custom HTML, CSS and JavaScript where the template fell short.",
       ],
-      stack: ["WordPress", "WooCommerce", "PHP", "MySQL"],
+      stack: ["WordPress", "WooCommerce", "PHP", "MySQL", "JavaScript"],
     },
     {
       company: "Military Applications Research Center (CICTE – ESPE)",
@@ -133,10 +139,12 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Jul 2020 - Dec 2021",
       location: "Sangolquí, EC",
       responsibilities: [
-        "Developed real-time computer-vision algorithms in MATLAB and Python.",
-        "Integrated them with Arduino microcontrollers and servo motors for hardware automation.",
+        "Trained a crowd detector with YOLO and Python during COVID-19, labeling the dataset myself; the model was later integrated into Armed Forces drones.",
+        "Built an anomaly detection system for Armed Forces warehouses: a custom 360° camera driven by servo motors that follows intruders in real time and alerts security services with photos and video.",
+        "Used convolutional neural networks and ROI-based tracking in both projects.",
+        "Both prototypes were integrated and used by the Armed Forces.",
       ],
-      stack: ["MATLAB", "Python", "Arduino", "Computer Vision"],
+      stack: ["Python", "YOLO", "MATLAB", "Arduino", "Computer Vision"],
     },
   ],
   es: [
@@ -162,9 +170,9 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Abr 2023 - Presente",
       location: "Quito, EC",
       responsibilities: [
-        "Organizo eventos tecnológicos presenciales y virtuales para una comunidad de más de 5.700 miembros.",
-        "He dado más de 20 charlas sobre tecnologías emergentes, incluyendo IA y cloud.",
-        "Modero sesiones y lidero el crecimiento de la comunidad.",
+        "Coorganizo los eventos principales del capítulo, DevFest y Build with AI, además de al menos un evento comunitario por trimestre para más de 5.700 miembros.",
+        "Cubro el trabajo de punta a punta con un equipo organizador pequeño: búsqueda y atención de speakers, logística, redes sociales y video.",
+        "He dado más de 20 charlas sobre IA, seguridad, backend y diseño web.",
       ],
     },
     {
@@ -189,12 +197,13 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Ago 2024 - Ago 2025",
       location: "Remoto",
       responsibilities: [
-        "Construí y mantuve la arquitectura de microservicios basada en eventos detrás de la operación de couriers.",
-        "Adapté e integré un modelo de visión por computadora que valida las fotos de los couriers (recepción, movilización y entrega) antes de almacenarlas, filtrando imágenes inválidas a gran volumen.",
+        "Construí la aplicación web que da seguimiento a couriers, entregas y estados de pedidos en tiempo real, además del panel de configuración interna, con Next.js y Tailwind.",
+        "Construí el backend basado en eventos sobre EventBridge, encolando eventos de entrega, recepción, movimiento y notificación por pedido y por courier.",
+        "Adapté un modelo de visión por computadora servido en Cloud Run y lo integré en las aplicaciones web y móvil para validar las fotos de los couriers (recepción, movilización y entrega) antes de almacenarlas, filtrando imágenes inválidas a gran volumen.",
+        "Aprovisioné la infraestructura con Terraform y contribuí a la aplicación móvil en Flutter.",
         "Reduje los costos en ~30% una vez terminado el proyecto.",
-        "Trabajé con los equipos de backend, frontend, móvil e infraestructura.",
       ],
-      stack: ["Python", "FastAPI", "TypeScript", "React", "Redux", "MongoDB", "Firebase", "CloudFormation"],
+      stack: ["Python", "FastAPI", "TypeScript", "Next.js", "Tailwind CSS", "Flutter", "Dart", "MongoDB", "Firebase", "Terraform"],
     },
     {
       company: "ioet",
@@ -239,7 +248,10 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Abr 2022 - Sep 2022",
       location: "Remoto",
       responsibilities: [
-        "Aprendí contribuyendo a proyectos reales de clientes mediante pair programming y tareas guiadas.",
+        "Me formé como ingeniero fullstack en frontend, backend e infraestructura mediante pair programming y tareas guiadas en proyectos reales.",
+        "Contribuí a TimeTracker, la herramienta interna de ioet para gestionar horarios de trabajo en tiempo real, hecha con Angular y Python.",
+        "Hice QA para el marketplace de un cliente donde los usuarios compran porcentajes de canciones para obtener regalías.",
+        "Contratado como Ingeniero de Software al terminar la pasantía.",
       ],
       stack: ["Python", "Angular", "PostgreSQL", "Azure", "Postman"],
     },
@@ -249,7 +261,7 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "May 2022 - Oct 2022",
       location: "Quito, EC",
       responsibilities: [
-        "Entregué una plataforma de gestión de proyectos para estudiantes de ingeniería de la Universidad de las Fuerzas Armadas ESPE.",
+        "Construí una plataforma de gestión académica para el área de educación militar de la Universidad de las Fuerzas Armadas ESPE, que cubría asistencia, notas y materias de los estudiantes militares.",
         "Sigo tomando proyectos web freelance ocasionales en paralelo a mis roles de tiempo completo, del diseño al despliegue.",
       ],
       stack: ["TypeScript", "React", "Node.js", "Python", "Django", "MongoDB", "AWS", "Strapi"],
@@ -260,9 +272,11 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Ene 2022 - Abr 2022",
       location: "Remoto",
       responsibilities: [
-        "Lideré un equipo de desarrolladores en la construcción de un sitio de e-commerce multivendedor con WordPress, WooCommerce y Dokan.",
+        "Lideré el desarrollo de punta a punta en un equipo de 11 personas entre web, móvil, backend, datos y marketing.",
+        "Lancé un marketplace donde comerciantes locales publican y venden sus productos sin costo ni comisiones; 12 comercios lo usaron de forma recurrente en producción.",
+        "Extendí la base de WordPress, WooCommerce y Dokan con HTML, CSS y JavaScript a medida donde la plantilla no alcanzaba.",
       ],
-      stack: ["WordPress", "WooCommerce", "PHP", "MySQL"],
+      stack: ["WordPress", "WooCommerce", "PHP", "MySQL", "JavaScript"],
     },
     {
       company: "Centro de Investigación de Aplicaciones Militares (CICTE – ESPE)",
@@ -270,10 +284,12 @@ export const experiencesData: Record<Locale, Experience[]> = {
       employmentDates: "Jul 2020 - Dic 2021",
       location: "Sangolquí, EC",
       responsibilities: [
-        "Desarrollé algoritmos de visión por computadora en tiempo real con MATLAB y Python.",
-        "Los integré con microcontroladores Arduino y servomotores para automatización de hardware.",
+        "Entrené un detector de grupos de personas con YOLO y Python durante el COVID-19, etiquetando yo mismo el dataset; el modelo se integró después en drones de las Fuerzas Armadas.",
+        "Construí un sistema de detección de anomalías para bodegas de las Fuerzas Armadas: una cámara 360° propia movida por servomotores que sigue a los intrusos en tiempo real y alerta a los servicios de seguridad con fotos y video.",
+        "Usé redes neuronales convolucionales y tracking por regiones de interés (ROI) en ambos proyectos.",
+        "Ambos prototipos se integraron y usaron en las Fuerzas Armadas.",
       ],
-      stack: ["MATLAB", "Python", "Arduino", "Computer Vision"],
+      stack: ["Python", "YOLO", "MATLAB", "Arduino", "Computer Vision"],
     },
   ],
 };
