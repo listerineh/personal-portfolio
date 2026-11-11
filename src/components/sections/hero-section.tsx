@@ -115,7 +115,10 @@ export function HeroSection() {
                   <ChevronDown aria-hidden="true" className="h-4 w-4 opacity-60" />
                 </Button>
               </DropdownTrigger>
-              <DropdownContent align="start">
+              <DropdownContent
+                align="start"
+                className="w-[var(--radix-dropdown-menu-trigger-width)] sm:w-auto"
+              >
                 <DropdownLabel>{t("cvLanguage")}</DropdownLabel>
                 <DropdownItem onClick={() => downloadCv("en")}>{t("cvEnglish")}</DropdownItem>
                 <DropdownItem onClick={() => downloadCv("es")}>{t("cvSpanish")}</DropdownItem>
