@@ -876,5 +876,83 @@
       "en": "In English",
       "es": "In Spanish"
     }
+  },
+  "kairoLegal": {
+    "lastUpdated": "Last updated:",
+    "back": "Kairo",
+    "privacy": {
+      "title": "Kairo privacy policy",
+      "introTitle": "In short",
+      "introText": "Kairo is a task app for iPhone and Android made by Sebastian Alvarez. It keeps what it needs for your tasks to work and sync, and nothing more. There are no ads, I don't sell your data, and I don't track you across apps or websites.",
+      "collectTitle": "What Kairo keeps",
+      "accountTitle": "Your account",
+      "accountItems": [
+        "Email, name and username.",
+        "A profile photo, only if you choose to upload one.",
+        "If you sign in with Google or Apple, the identifier that service shares with Kairo. Apple lets you hide your real email."
+      ],
+      "contentTitle": "What you create",
+      "contentItems": [
+        "Your tasks: title, description, dates, priority and whether they are done.",
+        "Your friendships, the tasks you share and the nudges you send to friends.",
+        "Your task color and whether your calendar is public or private to your friends."
+      ],
+      "deviceTitle": "Technical data",
+      "deviceItems": [
+        "A notification token for your device, to send you alerts.",
+        "Error logs: the kind of error, operating system, device model, app version and your user identifier. They are used to find and fix bugs.",
+        "On your own device, your preferences and a copy of your tasks so the app works offline."
+      ],
+      "useTitle": "What it is used for",
+      "useText": "Only to make Kairo work:",
+      "useItems": [
+        "Saving and syncing your tasks across your devices.",
+        "Showing your friends what you choose to share with them.",
+        "Sending you notifications: shared tasks, friend requests, reminders and streaks.",
+        "Finding and fixing bugs."
+      ],
+      "useNever": "Kairo shows no ads, does not sell or rent data, uses no analytics tools and does not track you.",
+      "shareTitle": "Who it is shared with",
+      "shareText": "Your friends only see what you share with them, or a \"Busy\" block if your calendar is private. To work, Kairo uses these providers, which process data on my behalf:",
+      "shareItems": [
+        "Supabase: database, sign-in and profile photos. Servers in the United States.",
+        "Google Firebase Cloud Messaging: notification delivery.",
+        "Google and Apple: only if you choose to sign in with them."
+      ],
+      "retentionTitle": "How long it is kept",
+      "retentionText": "Your data is kept while you have an account. When you delete it, your account, tasks, friendships, nudges, photo and error logs are removed right away. The provider's backups can take up to 30 days to roll over.",
+      "rightsTitle": "Your rights",
+      "rightsText": "You can see and correct your data in the app, under Me. You can delete your account and everything in it at any time:",
+      "rightsDelete": "How to delete your account",
+      "securityTitle": "Security",
+      "securityText": "All traffic is encrypted (HTTPS). In the database, each person can only read and change their own data and what others share with them.",
+      "childrenTitle": "Children",
+      "childrenText": "Kairo is not directed at children under 13 and does not knowingly collect their data.",
+      "changesTitle": "Changes",
+      "changesText": "If this policy changes, I will update the date above. If the change is significant, I will tell you in the app.",
+      "contactTitle": "Contact",
+      "contactText": "For any question about your data, write to me from the <contactLink>contact page</contactLink>."
+    },
+    "delete": {
+      "title": "Delete your Kairo account",
+      "appTitle": "From the app",
+      "appSteps": [
+        "Open Kairo and sign in.",
+        "Go to the Me tab.",
+        "Tap \"Delete account\" at the bottom and confirm."
+      ],
+      "appNote": "Deletion is immediate and cannot be undone.",
+      "askTitle": "If you can't get into the app",
+      "askText": "Write to me from the <contactLink>contact page</contactLink> with your account's email and the word \"Kairo\". I will delete your account within 7 days and confirm when it is done.",
+      "whatTitle": "What is deleted",
+      "whatItems": [
+        "Your account and profile: email, name, username and photo.",
+        "All your tasks, including the ones you shared.",
+        "Your friendships and the nudges you sent and received.",
+        "Your error logs."
+      ],
+      "whatNote": "The provider's backups can take up to 30 days to roll over. Nothing is kept after that.",
+      "privacyLink": "Kairo privacy policy"
+    }
   }
 }
