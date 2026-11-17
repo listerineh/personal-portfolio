@@ -4,6 +4,11 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.8.3] - 2026-11-17
+
+### Added
+- Kairo app legal pages, in English and Spanish: privacy policy (`/kairo/privacy`) and how to delete your account (`/kairo/delete-account`).
+
 ## [3.8.2] - 2026-11-11
 
 ### Added
