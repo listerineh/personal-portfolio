@@ -876,5 +876,83 @@
       "en": "En inglés",
       "es": "En español"
     }
+  },
+  "kairoLegal": {
+    "lastUpdated": "Última actualización:",
+    "back": "Kairo",
+    "privacy": {
+      "title": "Política de privacidad de Kairo",
+      "introTitle": "En resumen",
+      "introText": "Kairo es una app de tareas para iPhone y Android hecha por Sebastian Alvarez. Guarda lo que necesita para que tus tareas funcionen y se sincronicen, nada más. No hay publicidad, no vendo tus datos y no te rastreo entre apps ni sitios.",
+      "collectTitle": "Qué datos guarda Kairo",
+      "accountTitle": "Tu cuenta",
+      "accountItems": [
+        "Correo electrónico, nombre y nombre de usuario.",
+        "Foto de perfil, solo si eliges subir una.",
+        "Si entras con Google o Apple, el identificador que ese servicio comparte con Kairo. Con Apple puedes ocultar tu correo real."
+      ],
+      "contentTitle": "Lo que creas",
+      "contentItems": [
+        "Tus tareas: título, descripción, fechas, prioridad y si están hechas.",
+        "Tus amistades, las tareas que compartes y los recordatorios que envías a tus amigos.",
+        "El color de tus tareas y si tu calendario es público o privado para tus amigos."
+      ],
+      "deviceTitle": "Datos técnicos",
+      "deviceItems": [
+        "Un token de notificaciones de tu dispositivo, para enviarte avisos.",
+        "Registros de errores: el tipo de error, el sistema operativo, el modelo del dispositivo, la versión de la app y tu identificador de usuario. Sirven para encontrar y corregir fallos.",
+        "En tu propio dispositivo, tus preferencias y una copia de tus tareas para que la app funcione sin conexión."
+      ],
+      "useTitle": "Para qué se usan",
+      "useText": "Solo para que Kairo funcione:",
+      "useItems": [
+        "Guardar y sincronizar tus tareas entre tus dispositivos.",
+        "Mostrar a tus amigos lo que decides compartir con ellos.",
+        "Enviarte notificaciones: tareas compartidas, solicitudes de amistad, recordatorios y rachas.",
+        "Encontrar y corregir errores."
+      ],
+      "useNever": "Kairo no muestra publicidad, no vende ni alquila datos, no usa herramientas de analítica y no te rastrea.",
+      "shareTitle": "Con quién se comparten",
+      "shareText": "Tus amigos solo ven lo que compartes con ellos, o un bloque «Ocupado» si tu calendario es privado. Para funcionar, Kairo usa estos proveedores, que tratan los datos en mi nombre:",
+      "shareItems": [
+        "Supabase: base de datos, inicio de sesión y fotos de perfil. Servidores en Estados Unidos.",
+        "Google Firebase Cloud Messaging: entrega de notificaciones.",
+        "Google y Apple: solo si eliges iniciar sesión con ellos."
+      ],
+      "retentionTitle": "Cuánto tiempo se guardan",
+      "retentionText": "Tus datos se guardan mientras tengas una cuenta. Cuando la eliminas, se borran de inmediato tu cuenta, tus tareas, tus amistades, tus recordatorios, tu foto y tus registros de errores. Las copias de seguridad del proveedor pueden tardar hasta 30 días en renovarse.",
+      "rightsTitle": "Tus derechos",
+      "rightsText": "Puedes ver y corregir tus datos en la app, en Yo. Puedes eliminar tu cuenta y todo lo que contiene en cualquier momento:",
+      "rightsDelete": "Cómo eliminar tu cuenta",
+      "securityTitle": "Seguridad",
+      "securityText": "Toda la comunicación va cifrada (HTTPS). En la base de datos, cada persona solo puede leer y cambiar sus propios datos y lo que otros le comparten.",
+      "childrenTitle": "Menores",
+      "childrenText": "Kairo no está dirigida a menores de 13 años y no recopila sus datos a sabiendas.",
+      "changesTitle": "Cambios",
+      "changesText": "Si esta política cambia, actualizaré la fecha de arriba. Si el cambio es importante, te avisaré en la app.",
+      "contactTitle": "Contacto",
+      "contactText": "Para cualquier pregunta sobre tus datos, escríbeme desde la <contactLink>página de contacto</contactLink>."
+    },
+    "delete": {
+      "title": "Eliminar tu cuenta de Kairo",
+      "appTitle": "Desde la app",
+      "appSteps": [
+        "Abre Kairo e inicia sesión.",
+        "Ve a la pestaña Yo.",
+        "Toca «Eliminar cuenta» al final y confirma."
+      ],
+      "appNote": "La eliminación es inmediata y no se puede deshacer.",
+      "askTitle": "Si no puedes entrar a la app",
+      "askText": "Escríbeme desde la <contactLink>página de contacto</contactLink> con el correo de tu cuenta y la palabra «Kairo». Eliminaré tu cuenta en un máximo de 7 días y te confirmaré cuando esté hecho.",
+      "whatTitle": "Qué se elimina",
+      "whatItems": [
+        "Tu cuenta y tu perfil: correo, nombre, usuario y foto.",
+        "Todas tus tareas, incluidas las que compartiste.",
+        "Tus amistades y los recordatorios enviados y recibidos.",
+        "Tus registros de errores."
+      ],
+      "whatNote": "Las copias de seguridad del proveedor pueden tardar hasta 30 días en renovarse. Nada se conserva después.",
+      "privacyLink": "Política de privacidad de Kairo"
+    }
   }
 }

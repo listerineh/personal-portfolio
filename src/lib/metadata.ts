@@ -30,7 +30,9 @@ export type PageKey =
   | "contact"
   | "why"
   | "privacy"
-  | "terms";
+  | "terms"
+  | "kairoPrivacy"
+  | "kairoDeleteAccount";
 
 interface PageCopy {
   title: string;
@@ -383,6 +385,42 @@ const PAGES: Record<
           "términos y condiciones",
           "listerineh.dev",
         ],
+      },
+    },
+  },
+  kairoPrivacy: {
+    path: "/kairo/privacy",
+    image: "/og/privacy.png",
+    copy: {
+      en: {
+        title: "Kairo privacy policy",
+        description:
+          "What the Kairo app collects, why, who it is shared with, how long it is kept and how to delete your account.",
+        keywords: ["Kairo", "privacy policy", "task app", "data deletion"],
+      },
+      es: {
+        title: "Política de privacidad de Kairo",
+        description:
+          "Qué datos recopila la app Kairo, para qué, con quién se comparten, cuánto se guardan y cómo eliminar tu cuenta.",
+        keywords: ["Kairo", "política de privacidad", "app de tareas", "eliminar datos"],
+      },
+    },
+  },
+  kairoDeleteAccount: {
+    path: "/kairo/delete-account",
+    image: "/og/privacy.png",
+    copy: {
+      en: {
+        title: "Delete your Kairo account",
+        description:
+          "How to delete your Kairo account and all its data, from the app or by asking.",
+        keywords: ["Kairo", "delete account", "data deletion"],
+      },
+      es: {
+        title: "Eliminar tu cuenta de Kairo",
+        description:
+          "Cómo eliminar tu cuenta de Kairo y todos sus datos, desde la app o pidiéndolo.",
+        keywords: ["Kairo", "eliminar cuenta", "borrar datos"],
       },
     },
   },
