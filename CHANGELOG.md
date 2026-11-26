@@ -4,6 +4,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.9.0] - 2026-11-26
+
 ### Added
 - CodeSentry Swarm in the projects, in English and Spanish, with its product shot and share image.
 - Project pages show the project in numbers, how it works as a flow of steps, and the decisions behind it, with what each one cost. Each section appears only when the project has data for it.
