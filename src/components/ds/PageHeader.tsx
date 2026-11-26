@@ -19,6 +19,10 @@ interface PageHeaderProps {
 
 /** The top of an inner page: a large title that comes into focus, one line on what is inside, then any controls. */
 export function PageHeader({ title, intro, nav, children, tone = 'plain', titleSize = 'display', ambient = false, className }: PageHeaderProps) {
+  // A display title never breaks inside a word: it shrinks until its longest word fits the column. The width of a
+  // word is estimated at 0.64em per character (Geist bold, tight tracking, with room for wide letters like W and M).
+  const longestWord = typeof title === 'string' ? Math.max(...title.split(/\s+/).map((word) => word.length)) : 0
+  const fitWord = titleSize === 'display' && longestWord > 0 ? (longestWord * 0.64).toFixed(2) : null
   return (
     <header
       id="page-top"
@@ -42,9 +46,19 @@ export function PageHeader({ title, intro, nav, children, tone = 'plain', titleS
           <h1
             data-intro=""
             style={{ '--i': 0 } as React.CSSProperties}
-            className={cn(titleSize === 'section' ? 'text-display-sm max-w-[24ch]' : 'text-display', intro && titleSize === 'display' && 'lg:col-span-7')}
+            className={cn(
+              titleSize === 'section' ? 'text-display-sm max-w-[24ch]' : 'text-display',
+              intro && titleSize === 'display' && 'lg:col-span-7',
+              fitWord && '[container-type:inline-size]',
+            )}
           >
-            {title}
+            {fitWord ? (
+              <span className="block" style={{ fontSize: `min(1em, calc(100cqi / ${fitWord}))` }}>
+                {title}
+              </span>
+            ) : (
+              title
+            )}
           </h1>
           {intro && (
             <div
