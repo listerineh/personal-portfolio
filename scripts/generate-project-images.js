@@ -542,9 +542,67 @@ function htmlKairo() {
   );
 }
 
+// ─── 8. CodeSentry Swarm: a pull request through three agents ─────────────
+
+function htmlCodeSentry() {
+  const stage = (n, name, detail, state) => `
+    <div class="stage">
+      <span class="num mono">${n}</span>
+      <div style="flex:1;min-width:0;">
+        <div class="row" style="gap:10px;"><span style="font-size:16px;font-weight:600;">${name}</span>${state}</div>
+        <div class="label" style="margin-top:4px;">${detail}</div>
+      </div>
+    </div>`;
+  const pill = (text, cls) => `<span class="chip ${cls}" style="height:24px;font-size:12px;">${text}</span>`;
+  return page(
+    { ground: "#E4E6F8", accent: "#4338CA", accentSoft: "#ECEDFC" },
+    `
+    .scene { transform: translate(-40px, -6px); }
+    .window { width: 720px; }
+    .stage { display: flex; gap: 16px; align-items: flex-start; padding: 16px 18px; border-radius: 16px; background: var(--fill); }
+    .num { width: 32px; height: 32px; border-radius: 50%; background: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); flex-shrink: 0; }
+    .chip.red { background: #FDECEA; color: #B42318; }
+    .chip.green { background: #E7F6EC; color: #157F3C; }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .metric { border-radius: 16px; border: 1.5px solid var(--line); padding: 14px 16px; }
+    .comment { right: 40px; bottom: 96px; width: 330px; display: grid; gap: 12px; }
+    .diff { border-radius: 12px; background: var(--fill); padding: 12px 14px; font-size: 12.5px; line-height: 1.7; }
+    .del { color: #B42318; } .add { color: #157F3C; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("Pull request #18 · checkout", '<span class="chip soft">3 agents</span>')}
+      <div class="content" style="display:grid;gap:14px;">
+        ${stage("1", "Triage", "Hypothesis: points are counted before the discount", pill("Gemini", "soft"))}
+        ${stage("2", "Sandbox", '<span class="mono">test_loyalty_points</span> fails, then 6 tests pass', pill("Red", "red") + pill("Green", "green"))}
+        ${stage("3", "Judge", "Exit codes check out. Fix proposed", '<span class="check"></span>')}
+        <div class="metrics" style="margin-top:6px;">
+          <div class="metric"><div class="label">Time</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.03em;margin-top:4px;">111 s</div></div>
+          <div class="metric"><div class="label">Cost</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.03em;margin-top:4px;">0.0026 USD</div></div>
+          <div class="metric"><div class="label">Iterations</div><div style="font-size:24px;font-weight:700;letter-spacing:-0.03em;margin-top:4px;">1 of 3</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="float comment">
+      <div class="row" style="gap:10px;"><span class="dot"></span><span style="font-size:14px;font-weight:600;">codesentry-swarm</span><span class="label">commented</span></div>
+      <div style="font-size:15px;font-weight:600;">Fix proposed, a person merges</div>
+      <div class="diff mono">
+        <div class="del">- points = total // 10</div>
+        <div class="add">+ points = (total - discount) // 10</div>
+      </div>
+    </div>
+    `,
+  );
+}
+
 // ─── Runner ────────────────────────────────────────────────────────────────
 
 const ALL_PROJECTS = [
+  {
+    id: "codesentry-swarm",
+    filename: "codesentry-swarm.webp",
+    html: htmlCodeSentry(),
+  },
   { id: "kairo", filename: "kairo.webp", html: htmlKairo() },
   { id: "openstage", filename: "openstage.webp", html: htmlOpenStage() },
   {

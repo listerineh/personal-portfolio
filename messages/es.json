@@ -152,7 +152,23 @@
     "statusLabel": "Estado",
     "nextProject": "Siguiente proyecto",
     "timeline": "Periodo",
-    "allProjects": "Todos los proyectos"
+    "allProjects": "Todos los proyectos",
+    "keyFigures": "En cifras",
+    "howItWorks": "Cómo funciona",
+    "howItWorksIntro": "El camino que sigue una petición, paso a paso.",
+    "decisions": "Decisiones",
+    "decisionsIntro": "Las decisiones que le dieron forma y lo que costó cada una.",
+    "decisionWhy": "Por qué",
+    "decisionTradeoff": "Qué costó",
+    "flowKind": {
+      "actor": "Persona",
+      "client": "App",
+      "service": "Servicio",
+      "agent": "Agente de IA",
+      "queue": "Cola",
+      "store": "Datos",
+      "output": "Resultado"
+    }
   },
   "blog": {
     "title": "Artículos recientes",

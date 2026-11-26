@@ -11,6 +11,7 @@ const paths = [
   "/blog/when-ai-can-clone-your-app",
   "/projects",
   "/projects/kairo",
+  "/projects/codesentry-swarm",
   "/skills",
   "/contact",
   "/why",

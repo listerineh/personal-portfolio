@@ -28,6 +28,7 @@ const TAG_LAYER: Record<string, StackLayer> = {
   redis: 'data',
   firebase: 'infra',
   'cloud run': 'infra',
+  'pub/sub': 'infra',
   vercel: 'infra',
   aws: 'infra',
   terraform: 'infra',

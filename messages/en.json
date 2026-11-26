@@ -152,7 +152,23 @@
     "statusLabel": "Status",
     "nextProject": "Next project",
     "timeline": "Timeline",
-    "allProjects": "All projects"
+    "allProjects": "All projects",
+    "keyFigures": "In numbers",
+    "howItWorks": "How it works",
+    "howItWorksIntro": "The path a request takes, step by step.",
+    "decisions": "Decisions",
+    "decisionsIntro": "The choices that shaped it, and what each one cost.",
+    "decisionWhy": "Why",
+    "decisionTradeoff": "What it cost",
+    "flowKind": {
+      "actor": "Person",
+      "client": "App",
+      "service": "Service",
+      "agent": "AI agent",
+      "queue": "Queue",
+      "store": "Data",
+      "output": "Result"
+    }
   },
   "blog": {
     "title": "Latest articles",
