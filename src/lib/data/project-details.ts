@@ -10,6 +10,252 @@ type ProjectDetails = Pick<Project, "figures" | "flow" | "decisions">;
 
 export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
   en: {
+    "football-data": {
+      figures: [
+        {
+          value: "11",
+          label: "Libertadores seasons scraped, 2014 to 2024",
+        },
+        {
+          value: "110",
+          label: "Cities mapped to their altitude",
+        },
+        {
+          value: "103",
+          label: "Clubs with their squad market value",
+        },
+        {
+          value: "17",
+          label: "Seasons of market values, 2010 to 2026",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Wikipedia",
+            detail: "Group stage and knockouts, season by season",
+            kind: "store",
+          },
+          {
+            label: "Scraper",
+            detail: "Requests and PyQuery parse every match",
+            kind: "service",
+          },
+          {
+            label: "Raw JSON",
+            detail: "Matches exactly as parsed",
+            kind: "store",
+          },
+          {
+            label: "Altitude",
+            detail: "pandas joins each city with its height",
+            kind: "service",
+          },
+          {
+            label: "Market value",
+            detail: "Transfermarkt history for each club",
+            kind: "service",
+          },
+          {
+            label: "CSV",
+            detail: "1,729 matches ready for analysis",
+            kind: "output",
+          },
+        ],
+        loop: "A club that matched the wrong Transfermarkt page is marked for retry and validated again; every step can resume where it stopped.",
+      },
+      decisions: [
+        {
+          title: "Keep raw and processed data apart",
+          why: "Matches are saved exactly as parsed, so the altitude step can change and re-run without scraping again.",
+          tradeoff: "A parsing fix still means scraping the season again.",
+        },
+        {
+          title: "One file maintained by hand: the city map",
+          why: "No source maps every club to the altitude of its city, so 110 cities live in one JSON file, with their teams.",
+          tradeoff:
+            "A new club needs a manual entry before its matches get an altitude.",
+        },
+        {
+          title: "Make the market value scraper resumable",
+          why: "Searching Transfermarkt by name sometimes finds the wrong club. Each club carries a status, wrong ones are marked for retry and checked, and a run continues where it stopped.",
+          tradeoff:
+            "Slower on purpose: a delay between requests makes each phase take several minutes.",
+        },
+      ],
+    },
+    "sign-language-recognition": {
+      figures: [
+        {
+          value: "26",
+          label: "Letters the network tells apart",
+        },
+        {
+          value: "3",
+          label: "Convolution layers, trained from scratch",
+        },
+        {
+          value: "25",
+          label: "Training epochs on 64×64 images",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "You",
+            detail: "Sign a letter inside the box",
+            kind: "actor",
+          },
+          {
+            label: "Camera",
+            detail: "OpenCV inside a PyQt5 app",
+            kind: "client",
+          },
+          {
+            label: "HSV mask",
+            detail: "Separates the hand from the background",
+            kind: "service",
+          },
+          {
+            label: "SIFT check",
+            detail: "Matches saved custom gestures first",
+            kind: "service",
+          },
+          {
+            label: "CNN",
+            detail: "Keras, softmax over 26 letters",
+            kind: "model",
+          },
+          {
+            label: "Letter",
+            detail: "Shown live, or scored in test mode",
+            kind: "output",
+          },
+        ],
+      },
+      decisions: [
+        {
+          title: "Mask the hand before the model sees it",
+          why: "An HSV mask on a fixed region removes the background, so a small network trained on 64×64 images only has to learn the shape of the hand.",
+          tradeoff:
+            "It depends on lighting, and the hand has to stay inside the box.",
+        },
+        {
+          title: "Add gestures without retraining",
+          why: "SIFT features with a FLANN matcher compare the frame with a folder of saved gestures, so a new one, like a space, is just an image dropped in that folder.",
+          tradeoff:
+            "The match runs before the network, so a loose threshold can override a correct prediction.",
+        },
+      ],
+    },
+    "lbph-face-recognition": {
+      figures: [
+        {
+          value: "300",
+          label: "Face crops captured per person",
+        },
+        {
+          value: "150 px",
+          label: "Square grayscale crops for training",
+        },
+        {
+          value: "70",
+          label: "Distance under which a face counts as known",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Person",
+            detail: "Sits in front of the webcam",
+            kind: "actor",
+          },
+          {
+            label: "Haar cascade",
+            detail: "Finds faces in each frame",
+            kind: "service",
+          },
+          {
+            label: "Capture",
+            detail: "300 grayscale crops per person",
+            kind: "store",
+          },
+          {
+            label: "LBPH",
+            detail: "One label per person, saved to a file",
+            kind: "model",
+          },
+          {
+            label: "Live result",
+            detail: "A name, or an unknown face",
+            kind: "output",
+          },
+        ],
+      },
+      decisions: [
+        {
+          title: "LBPH instead of a deep network",
+          why: "It describes faces by local texture, so it trains in seconds on a laptop from a few hundred photos.",
+          tradeoff:
+            "It handles pose and angle worse than learned embeddings, and every new person means training again.",
+        },
+        {
+          title: "Prefer unknown over a wrong name",
+          why: "A face only gets a name when the distance is under 70; everything else is drawn in red as unknown.",
+          tradeoff:
+            "The threshold is fixed by hand, so a known person in different light can show up as unknown.",
+        },
+      ],
+    },
+    "hands-tracking": {
+      figures: [
+        {
+          value: "21",
+          label: "Landmarks per hand, wrist to fingertips",
+        },
+        {
+          value: "0",
+          label: "Training images needed: the model comes pretrained",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Camera",
+            detail: "OpenCV reads the live feed",
+            kind: "client",
+          },
+          {
+            label: "MediaPipe Hands",
+            detail: "21 landmarks per hand",
+            kind: "model",
+          },
+          {
+            label: "Box",
+            detail: "Outer edges of the fingers and the wrist",
+            kind: "service",
+          },
+          {
+            label: "Square crop",
+            detail: "Padded on its short side, drawn when it fits",
+            kind: "output",
+          },
+        ],
+      },
+      decisions: [
+        {
+          title: "Square the box around the hand",
+          why: "Image classifiers take square inputs; padding the shorter side keeps the hand in proportion instead of stretching it.",
+          tradeoff: "A long, narrow hand brings more background into the crop.",
+        },
+        {
+          title: "Use a pretrained landmark model",
+          why: "MediaPipe finds the hand anywhere in the frame with no training data of my own.",
+          tradeoff:
+            "Accuracy and speed are whatever the model gives; there is nothing to tune.",
+        },
+      ],
+    },
     "codesentry-swarm": {
       figures: [
         { value: "3", label: "AI agents, each behind its own queue" },
@@ -167,7 +413,7 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
           {
             label: "Whisper",
             detail: "Transcribes the audio locally",
-            kind: "agent",
+            kind: "model",
           },
           {
             label: "FFmpeg WASM",
@@ -389,6 +635,253 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
     },
   },
   es: {
+    "football-data": {
+      figures: [
+        {
+          value: "11",
+          label: "Temporadas de la Libertadores extraídas, de 2014 a 2024",
+        },
+        {
+          value: "110",
+          label: "Ciudades con su altitud",
+        },
+        {
+          value: "103",
+          label: "Clubes con el valor de mercado de su plantilla",
+        },
+        {
+          value: "17",
+          label: "Temporadas de valores de mercado, de 2010 a 2026",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Wikipedia",
+            detail: "Fase de grupos y eliminatorias, temporada por temporada",
+            kind: "store",
+          },
+          {
+            label: "Scraper",
+            detail: "Requests y PyQuery leen cada partido",
+            kind: "service",
+          },
+          {
+            label: "JSON crudo",
+            detail: "Los partidos tal como se leyeron",
+            kind: "store",
+          },
+          {
+            label: "Altitud",
+            detail: "pandas cruza cada ciudad con su altura",
+            kind: "service",
+          },
+          {
+            label: "Valor de mercado",
+            detail: "Historial de Transfermarkt de cada club",
+            kind: "service",
+          },
+          {
+            label: "CSV",
+            detail: "1.729 partidos listos para analizar",
+            kind: "output",
+          },
+        ],
+        loop: "Un club que coincidió con la página equivocada de Transfermarkt se marca para reintentar y se valida de nuevo; cada paso retoma donde se quedó.",
+      },
+      decisions: [
+        {
+          title: "Separar los datos crudos de los procesados",
+          why: "Los partidos se guardan tal como se leyeron, así que el paso de altitud puede cambiar y volver a correr sin extraer otra vez.",
+          tradeoff:
+            "Corregir cómo se lee una página igual obliga a extraer esa temporada de nuevo.",
+        },
+        {
+          title: "Un solo archivo mantenido a mano: el mapa de ciudades",
+          why: "Ninguna fuente relaciona cada club con la altitud de su ciudad, así que 110 ciudades viven en un JSON, con sus equipos.",
+          tradeoff:
+            "Un club nuevo necesita una entrada manual antes de que sus partidos tengan altitud.",
+        },
+        {
+          title: "Que el scraper de valores pueda retomar",
+          why: "Buscar en Transfermarkt por nombre a veces encuentra el club equivocado. Cada club lleva un estado, los incorrectos se marcan para reintentar y se validan, y una ejecución sigue donde se quedó.",
+          tradeoff:
+            "Más lento a propósito: una pausa entre peticiones hace que cada fase tarde varios minutos.",
+        },
+      ],
+    },
+    "sign-language-recognition": {
+      figures: [
+        {
+          value: "26",
+          label: "Letras que la red distingue",
+        },
+        {
+          value: "3",
+          label: "Capas de convolución, entrenadas desde cero",
+        },
+        {
+          value: "25",
+          label: "Épocas de entrenamiento con imágenes de 64×64",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Tú",
+            detail: "Haces una letra dentro del recuadro",
+            kind: "actor",
+          },
+          {
+            label: "Cámara",
+            detail: "OpenCV dentro de una app en PyQt5",
+            kind: "client",
+          },
+          {
+            label: "Máscara HSV",
+            detail: "Separa la mano del fondo",
+            kind: "service",
+          },
+          {
+            label: "Revisión SIFT",
+            detail: "Compara primero con gestos guardados",
+            kind: "service",
+          },
+          {
+            label: "CNN",
+            detail: "Keras, softmax sobre 26 letras",
+            kind: "model",
+          },
+          {
+            label: "Letra",
+            detail: "En vivo, o calificada en modo de prueba",
+            kind: "output",
+          },
+        ],
+      },
+      decisions: [
+        {
+          title: "Enmascarar la mano antes de que la vea el modelo",
+          why: "Una máscara HSV sobre una región fija quita el fondo, así que una red pequeña entrenada con imágenes de 64×64 solo tiene que aprender la forma de la mano.",
+          tradeoff:
+            "Depende de la luz, y la mano tiene que quedarse dentro del recuadro.",
+        },
+        {
+          title: "Agregar gestos sin volver a entrenar",
+          why: "Características SIFT con un matcher FLANN comparan el cuadro con una carpeta de gestos guardados, así que uno nuevo, como el espacio, es solo una imagen en esa carpeta.",
+          tradeoff:
+            "La comparación corre antes que la red, así que un umbral flojo puede pisar una predicción correcta.",
+        },
+      ],
+    },
+    "lbph-face-recognition": {
+      figures: [
+        {
+          value: "300",
+          label: "Recortes de rostro capturados por persona",
+        },
+        {
+          value: "150 px",
+          label: "Recortes cuadrados en escala de grises para entrenar",
+        },
+        {
+          value: "70",
+          label: "Distancia bajo la cual un rostro se reconoce",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Persona",
+            detail: "Se sienta frente a la webcam",
+            kind: "actor",
+          },
+          {
+            label: "Clasificador Haar",
+            detail: "Encuentra rostros en cada cuadro",
+            kind: "service",
+          },
+          {
+            label: "Captura",
+            detail: "300 recortes en escala de grises por persona",
+            kind: "store",
+          },
+          {
+            label: "LBPH",
+            detail: "Una etiqueta por persona, guardada en un archivo",
+            kind: "model",
+          },
+          {
+            label: "Resultado en vivo",
+            detail: "Un nombre, o un rostro desconocido",
+            kind: "output",
+          },
+        ],
+      },
+      decisions: [
+        {
+          title: "LBPH en lugar de una red profunda",
+          why: "Describe los rostros por su textura local, así que entrena en segundos en una laptop con unos cientos de fotos.",
+          tradeoff:
+            "Maneja peor la pose y el ángulo que los embeddings aprendidos, y cada persona nueva obliga a entrenar otra vez.",
+        },
+        {
+          title: "Preferir desconocido a un nombre equivocado",
+          why: "Un rostro solo recibe un nombre si la distancia es menor a 70; lo demás se dibuja en rojo como desconocido.",
+          tradeoff:
+            "El umbral se fijó a mano, así que una persona conocida con otra luz puede aparecer como desconocida.",
+        },
+      ],
+    },
+    "hands-tracking": {
+      figures: [
+        {
+          value: "21",
+          label: "Puntos por mano, de la muñeca a la punta de los dedos",
+        },
+        {
+          value: "0",
+          label: "Imágenes de entrenamiento: el modelo viene preentrenado",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Cámara",
+            detail: "OpenCV lee la imagen en vivo",
+            kind: "client",
+          },
+          {
+            label: "MediaPipe Hands",
+            detail: "21 puntos por mano",
+            kind: "model",
+          },
+          {
+            label: "Recuadro",
+            detail: "Bordes exteriores de los dedos y la muñeca",
+            kind: "service",
+          },
+          {
+            label: "Recorte cuadrado",
+            detail: "Relleno en su lado corto, se dibuja si cabe",
+            kind: "output",
+          },
+        ],
+      },
+      decisions: [
+        {
+          title: "Volver cuadrado el recuadro de la mano",
+          why: "Los clasificadores de imágenes reciben entradas cuadradas; rellenar el lado más corto mantiene la proporción de la mano en vez de estirarla.",
+          tradeoff: "Una mano larga y angosta mete más fondo en el recorte.",
+        },
+        {
+          title: "Usar un modelo de puntos preentrenado",
+          why: "MediaPipe encuentra la mano en cualquier parte del cuadro sin datos de entrenamiento propios.",
+          tradeoff:
+            "La precisión y la velocidad son las que da el modelo; no hay nada que ajustar.",
+        },
+      ],
+    },
     "codesentry-swarm": {
       figures: [
         {
@@ -560,7 +1053,7 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
           {
             label: "Whisper",
             detail: "Transcribe el audio en local",
-            kind: "agent",
+            kind: "model",
           },
           {
             label: "FFmpeg WASM",

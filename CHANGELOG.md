@@ -4,6 +4,10 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+### Added
+- Four more projects, in English and Spanish, each with figures, a flow and its decisions: Football Altitude Data, Sign Language Alphabet, LBPH Face Recognition and Hand Tracking.
+- Project flows mark AI models (a CNN, Whisper, MediaPipe) apart from AI agents.
+
 ## [3.9.0] - 2026-11-26
 
 ### Added
