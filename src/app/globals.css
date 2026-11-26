@@ -418,6 +418,14 @@ html.js-motion :is(.skeleton main, main .skeleton) {
   }
 }
 
+/* ── Drawn links (FlowDiagram): a connector grows from its start as the diagram scrolls in. ── */
+@keyframes draw-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes draw-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@supports (animation-timeline: view()) {
+  html.js-motion [data-draw="x"] { animation: draw-x linear both; animation-timeline: view(); animation-range: entry 60% cover 35%; }
+  html.js-motion [data-draw="y"] { animation: draw-y linear both; animation-timeline: view(); animation-range: entry 60% cover 35%; }
+}
+
 /* ── Ambient light: warm halos that drift, a fading dot grid, an amber spotlight under the pointer ── */
 .ambient-halo {
   position: absolute;
