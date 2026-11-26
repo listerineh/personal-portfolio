@@ -11,10 +11,14 @@ import { stackLayers } from "@/lib/stack-layers";
 import {
   Ambient,
   Button,
+  DecisionList,
+  FlowDiagram,
+  KeyFigures,
   PageHeader,
   Panel,
   Reveal,
   StackList,
+  type FlowKind,
 } from "@/components/ds";
 import { projectStatusDot, type ProjectStatus } from "@/components/ds/ProjectCard";
 import { PageShell } from "@/components/layout";
@@ -40,9 +44,13 @@ function formatProjectDate(dateString: string, locale: string) {
 }
 
 
+const flowKinds: FlowKind[] = ["actor", "client", "service", "agent", "queue", "store", "output"];
+
 /**
- * A single project, product-page style: title and actions, the product shot large, three quick facts,
- * the story at reading width with the stack beside it, then the next project.
+ * A single project, product-page style: title and actions, the product shot large, three quick facts, the
+ * project in numbers, the story at reading width with the stack beside it, how it works as a flow, the
+ * decisions behind it, then the next project. Every section after the facts appears only when the project
+ * has data for it.
  */
 export function ProjectDetailClientPage({
   versions,
@@ -86,6 +94,13 @@ export function ProjectDetailClientPage({
       ),
     },
   ].filter(Boolean) as { label: string; value: React.ReactNode }[];
+
+  const figures = project.figures ?? [];
+  const flow = project.flow;
+  const decisions = project.decisions ?? [];
+  // Grounds alternate down the page: the flow sits on tint, so the next-project band goes plain when the
+  // flow is the section right above it.
+  const nextOnTint = !(flow && decisions.length === 0);
 
   return (
     <PageShell>
@@ -159,8 +174,14 @@ export function ProjectDetailClientPage({
         </div>
       </section>
 
-      {/* Story at reading width; the stack and why it matters stay beside it on desktop. */}
+      {/* The project in numbers, then the story at reading width; the stack and why it matters stay beside it on desktop. */}
       <section className="px-gutter py-20 md:py-28">
+        {figures.length > 0 && (
+          <div className="mx-auto mb-20 max-w-[1200px] md:mb-28">
+            <h2 className="text-meta text-muted-foreground">{t("keyFigures")}</h2>
+            <KeyFigures figures={figures} className="mt-6 md:mt-8" />
+          </div>
+        )}
         <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
             {project.longDescription && (
@@ -198,13 +219,55 @@ export function ProjectDetailClientPage({
         </div>
       </section>
 
+      {/* How it works: the system as connected steps, on tint. */}
+      {flow && flow.steps.length > 0 && (
+        <section
+          aria-labelledby="how-it-works"
+          className="relative isolate overflow-clip tint px-gutter py-20 md:py-28"
+        >
+          <Ambient intensity="soft" grid={false} spotlight={false} />
+          <div className="mx-auto max-w-[1200px]">
+            <h2 id="how-it-works" className="text-display-sm">
+              {t("howItWorks")}
+            </h2>
+            <p className="mt-4 text-lead text-muted-foreground">{t("howItWorksIntro")}</p>
+            <FlowDiagram
+              steps={flow.steps}
+              loop={flow.loop}
+              kindLabels={Object.fromEntries(flowKinds.map((kind) => [kind, t(`flowKind.${kind}`)]))}
+              className="mt-10 md:mt-14"
+            />
+          </div>
+        </section>
+      )}
+
+      {/* The decisions behind it: what was chosen, why, and what it cost. */}
+      {decisions.length > 0 && (
+        <section aria-labelledby="decisions" className="px-gutter py-20 md:py-28">
+          <div className="mx-auto max-w-[1200px]">
+            <h2 id="decisions" className="text-display-sm">
+              {t("decisions")}
+            </h2>
+            <p className="mt-4 text-lead text-muted-foreground">{t("decisionsIntro")}</p>
+            <DecisionList
+              decisions={decisions}
+              labels={{ why: t("decisionWhy"), tradeoff: t("decisionTradeoff") }}
+              className="mt-10 md:mt-14"
+            />
+          </div>
+        </section>
+      )}
+
       {/* Next project: the page continues instead of stopping. */}
       {version?.next && (
         <section
           aria-labelledby="next-project"
-          className="relative isolate overflow-clip tint px-gutter py-20 md:py-28"
+          className={cn(
+            "relative isolate overflow-clip px-gutter py-20 md:py-28",
+            nextOnTint && "tint",
+          )}
         >
-          <Ambient intensity="soft" grid={false} spotlight={false} mirror />
+          {nextOnTint && <Ambient intensity="soft" grid={false} spotlight={false} mirror />}
           <div className="mx-auto max-w-[1200px]">
             <p id="next-project" className="text-meta text-muted-foreground">
               {t("nextProject")}
