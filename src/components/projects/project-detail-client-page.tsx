@@ -44,7 +44,7 @@ function formatProjectDate(dateString: string, locale: string) {
 }
 
 
-const flowKinds: FlowKind[] = ["actor", "client", "service", "agent", "queue", "store", "output"];
+const flowKinds: FlowKind[] = ["actor", "client", "service", "agent", "model", "queue", "store", "output"];
 
 /**
  * A single project, product-page style: title and actions, the product shot large, three quick facts, the

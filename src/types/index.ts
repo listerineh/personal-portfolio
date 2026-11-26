@@ -82,7 +82,7 @@ export interface ProjectFigure {
   label: string;
 }
 
-export type ProjectFlowKind = 'actor' | 'client' | 'service' | 'agent' | 'queue' | 'store' | 'output';
+export type ProjectFlowKind = 'actor' | 'client' | 'service' | 'agent' | 'model' | 'queue' | 'store' | 'output';
 
 export interface ProjectFlowStep {
   label: string;
