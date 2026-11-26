@@ -1,8 +1,24 @@
 import type { Project } from '@/types';
 import type { Locale } from '@/i18n/config';
+import { projectDetails } from './project-details';
 
 export const projectsData: Record<Locale, Project[]> = {
   en: [
+    {
+      id: 'codesentry-swarm',
+      slug: 'codesentry-swarm',
+      title: 'CodeSentry Swarm',
+      description: 'Three AI agents on Google Cloud that review a pull request, prove the bug with a failing test in a sandbox, and propose a fix. Deterministic code decides, and a person merges.',
+      longDescription: "CodeSentry Swarm is a multi-agent pipeline that audits a pull request, tests its own hypothesis in an isolated sandbox, and comments a typed fix. The idea behind it: the probabilistic part lives behind a queue, and the decisions that matter are made by deterministic code.\n\nWhen a pull request opens, a signed webhook reaches an API on Cloud Run, which stores the task in Firestore and answers right away. Triage, on Gemini, reads the diff and writes a hypothesis, a pytest test and the edits. A Cloud Run Job runs that test in a sandbox with no network: it must fail on the pull request, and the whole suite must pass with the fix. The Judge reads the exit codes and writes the verdict; it can reject a green run but never approve a red one. A failing run goes back to Triage with feedback, up to three times, and then asks a person. Every step is a Pub/Sub message with retries and a dead-letter queue, and every model call is a span in Cloud Trace with its tokens and cost.\n\nI built it in November 2026 as the live demo for my talk From Endpoints to Agent Swarms, first given at Universidad Indoamérica. I wanted to show the backend patterns that make agents safe to run, not another chat window: queues, idempotent stages, sandboxes, budgets and tracing. It is Python and FastAPI, deployed with Terraform and MIT-licensed, and it also runs offline with hand-written scenarios for anyone who wants to try it without a cloud account.",
+      imageUrl: '/projects/codesentry-swarm.webp',
+      imageAiHint: 'CodeSentry Swarm pipeline reviewing a pull request',
+      sourceCodeUrl: 'https://github.com/listerineh/codesentry-swarm',
+      tags: ['Python', 'FastAPI', 'Gemini AI', 'Cloud Run', 'Pub/Sub', 'Firestore', 'Terraform'],
+      role: 'Backend & AI Engineer',
+      status: 'in-progress',
+      relevance: 'Agents in production terms: queues, idempotent stages, sandboxed execution, deterministic gates and tracing on Google Cloud.',
+      startDate: '2026-11',
+    },
     {
       id: 'kairo',
       slug: 'kairo',
@@ -116,6 +132,21 @@ export const projectsData: Record<Locale, Project[]> = {
     },
   ],
   es: [
+    {
+      id: 'codesentry-swarm',
+      slug: 'codesentry-swarm',
+      title: 'CodeSentry Swarm',
+      description: 'Tres agentes de IA en Google Cloud que revisan un pull request, prueban el bug con un test que falla en un sandbox y proponen un arreglo. Decide el código determinista, y el merge lo hace una persona.',
+      longDescription: "CodeSentry Swarm es un pipeline multiagente que audita un pull request, pone a prueba su propia hipótesis en un sandbox aislado y comenta un arreglo tipado. La idea detrás: la parte probabilística vive detrás de una cola, y las decisiones que importan las toma código determinista.\n\nCuando se abre un pull request, un webhook firmado llega a una API en Cloud Run, que guarda la tarea en Firestore y responde al instante. Triage, sobre Gemini, lee el diff y escribe una hipótesis, un test de pytest y los cambios. Un Cloud Run Job ejecuta ese test en un sandbox sin red: debe fallar sobre el pull request, y toda la suite debe pasar con el arreglo. El Juez lee los exit codes y escribe el veredicto; puede rechazar un verde, pero nunca aprobar un rojo. Una ejecución fallida vuelve a Triage con feedback, hasta tres veces, y luego pide ayuda a una persona. Cada paso es un mensaje de Pub/Sub con reintentos y una cola de dead letters, y cada llamada al modelo es un span en Cloud Trace con sus tokens y su costo.\n\nLo construí en noviembre de 2026 como la demo en vivo de mi charla De Endpoints a Enjambres de Agentes, que di por primera vez en la Universidad Indoamérica. Quería mostrar los patrones de backend que hacen seguro ejecutar agentes, no otra ventana de chat: colas, etapas idempotentes, sandboxes, presupuestos y trazas. Está hecho en Python y FastAPI, se despliega con Terraform y tiene licencia MIT, y también corre sin conexión con escenarios escritos a mano para quien quiera probarlo sin una cuenta en la nube.",
+      imageUrl: '/projects/codesentry-swarm.webp',
+      imageAiHint: 'Pipeline de CodeSentry Swarm revisando un pull request',
+      sourceCodeUrl: 'https://github.com/listerineh/codesentry-swarm',
+      tags: ['Python', 'FastAPI', 'Gemini AI', 'Cloud Run', 'Pub/Sub', 'Firestore', 'Terraform'],
+      role: 'Ingeniero de backend e IA',
+      status: 'in-progress',
+      relevance: 'Agentes en términos de producción: colas, etapas idempotentes, ejecución en sandbox, gates deterministas y trazas en Google Cloud.',
+      startDate: '2026-11',
+    },
     {
       id: 'kairo',
       slug: 'kairo',
@@ -232,8 +263,11 @@ export const projectsData: Record<Locale, Project[]> = {
 
 export const projects = projectsData.en;
 
+/** Each project with its structured details (figures, flow, decisions) from project-details.ts. */
 export function getProjects(locale: Locale = 'en'): Project[] {
-  return projectsData[locale] || projectsData.en;
+  const list = projectsData[locale] || projectsData.en;
+  const details = projectDetails[locale] ?? projectDetails.en;
+  return list.map((project) => ({ ...project, ...details[project.slug] }));
 }
 
 export function getProject(slug: string, locale: Locale = 'en'): Project | undefined {

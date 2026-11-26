@@ -69,7 +69,9 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <ProjectsListingClientPage projects={projects} />
+      <ProjectsListingClientPage
+        projects={projects.map(({ figures: _figures, flow: _flow, decisions: _decisions, ...project }) => project)}
+      />
     </>
   );
 }
