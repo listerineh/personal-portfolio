@@ -17,8 +17,8 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
           label: "Recall@10 on 300 SciFact claims, vector search",
         },
         {
-          value: "6.0 ms",
-          label: "Median retrieval time, query embedding included",
+          value: "0.946",
+          label: "Faithfulness of 50 answers, judged claim by claim",
         },
         {
           value: "0.756",
@@ -26,8 +26,8 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
             "Recall@10 of equal-weight hybrid search: lower, and 6.6× slower",
         },
         {
-          value: "31",
-          label: "Tests in CI, 6 of them against real Postgres + pgvector",
+          value: "0.00071 USD",
+          label: "Per answer with Claude Haiku; the judge costs 13× more",
         },
       ],
       flow: {
@@ -63,7 +63,7 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
             kind: "output",
           },
         ],
-        loop: "Offline, the harness runs the same retrieval over 300 SciFact claims with expert labels and writes recall, MRR and latency to one JSON file per run.",
+        loop: "Offline, the harness runs the same retrieval over 300 SciFact claims with expert labels and writes recall, MRR and latency to one JSON file per run. A second run sends 50 claims through /ask and has Claude Sonnet judge each answer for faithfulness and citations.",
       },
       decisions: [
         {
@@ -951,9 +951,8 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
           label: "Recall@10 en 300 afirmaciones de SciFact, búsqueda vectorial",
         },
         {
-          value: "6,0 ms",
-          label:
-            "Tiempo medio de recuperación, con el embedding de la pregunta",
+          value: "0,946",
+          label: "Fidelidad de 50 respuestas, revisadas afirmación por afirmación",
         },
         {
           value: "0,756",
@@ -961,8 +960,8 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
             "Recall@10 de la búsqueda híbrida con pesos iguales: menor, y 6,6 veces más lenta",
         },
         {
-          value: "31",
-          label: "Tests en CI, 6 de ellos contra Postgres + pgvector reales",
+          value: "0,00071 USD",
+          label: "Por respuesta con Claude Haiku; el juez cuesta 13 veces más",
         },
       ],
       flow: {
@@ -998,7 +997,7 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
             kind: "output",
           },
         ],
-        loop: "Fuera de línea, el banco de pruebas corre la misma recuperación sobre 300 afirmaciones de SciFact con etiquetas de expertos y escribe recall, MRR y latencia en un archivo JSON por ejecución.",
+        loop: "Fuera de línea, el banco de pruebas corre la misma recuperación sobre 300 afirmaciones de SciFact con etiquetas de expertos y escribe recall, MRR y latencia en un archivo JSON por ejecución. Otra ejecución pasa 50 afirmaciones por /ask y Claude Sonnet juzga la fidelidad y las citas de cada respuesta.",
       },
       decisions: [
         {
