@@ -9,6 +9,9 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 - Four more projects, in English and Spanish, each with figures, a flow and its decisions: Football Altitude Data, Sign Language Alphabet, LBPH Face Recognition and Hand Tracking.
 - Project flows mark AI models (a CNN, Whisper, MediaPipe) apart from AI agents.
 
+### Changed
+- Football Data Pipeline now reports its end-to-end run on Floci, a local AWS emulator: 39.1 s for the scheduled run, labelled as emulator figures.
+
 ## [3.9.0] - 2026-11-26
 
 ### Added

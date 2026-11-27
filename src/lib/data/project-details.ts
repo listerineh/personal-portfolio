@@ -186,8 +186,8 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
           label: "Home wins when the home city is 2,500 m or more higher",
         },
         {
-          value: "49",
-          label: "Tests, from the parser to S3 and the API",
+          value: "39.1 s",
+          label: "Full scheduled run end to end on Floci, a local AWS emulator",
         },
       ],
       flow: {
@@ -1047,8 +1047,8 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
             "Victorias locales cuando la ciudad local está 2.500 m o más arriba",
         },
         {
-          value: "49",
-          label: "Tests, del parser a S3 y la API",
+          value: "39,1 s",
+          label: "Ejecución programada completa en Floci, un emulador local de AWS",
         },
       ],
       flow: {
