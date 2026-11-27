@@ -8,6 +8,7 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 - Skills for the technologies behind the new projects: pgvector, Alembic, DuckDB, AWS Lambda, Step Functions, S3, Pub/Sub, MediaPipe, pandas, PyQt5 and BLoC.
 
 ### Changed
+- RAG Evals is marked completed, with its answer evaluation: faithfulness 0.946 and citation precision 0.643 on 50 SciFact claims, at $0.00071 per answer.
 - Football Data Pipeline is marked completed: it runs end to end on Floci, a local AWS emulator.
 - Projects tagged Tailwind now use the skill's name, Tailwind CSS.
 
