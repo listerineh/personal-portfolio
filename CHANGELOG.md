@@ -4,6 +4,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.10.0] - 2026-11-27
+
 ### Added
 - Three backend projects, in English and Spanish, each with measured figures, a flow and its decisions: RAG Evals, Payments Ledger (Go) and Football Data Pipeline (AWS, Terraform).
 - Four more projects, in English and Spanish, each with figures, a flow and its decisions: Football Altitude Data, Sign Language Alphabet, LBPH Face Recognition and Hand Tracking.
