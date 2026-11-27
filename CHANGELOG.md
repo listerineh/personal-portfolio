@@ -4,6 +4,8 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+## [3.11.0] - 2026-11-27
+
 ### Added
 - Skills for the technologies behind the new projects: pgvector, Alembic, DuckDB, AWS Lambda, Step Functions, S3, Pub/Sub, MediaPipe, pandas, PyQt5 and BLoC.
 
