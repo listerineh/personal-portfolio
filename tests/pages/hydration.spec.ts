@@ -13,6 +13,7 @@ const paths = [
   "/projects/kairo",
   "/projects/codesentry-swarm",
   "/projects/football-data",
+  "/projects/ledger-go",
   "/skills",
   "/contact",
   "/why",
