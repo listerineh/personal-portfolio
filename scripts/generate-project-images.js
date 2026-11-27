@@ -595,6 +595,380 @@ function htmlCodeSentry() {
   );
 }
 
+// ─── 9. Football Altitude Data: matches joined with altitude ──────────────
+
+function htmlFootballData() {
+  const row = (year, home, away, diff, score) => `
+    <div class="trow">
+      <span class="mono muted">${year}</span>
+      <span>${home} <span class="muted">vs</span> ${away}</span>
+      <span class="chip soft mono" style="height:24px;font-size:12px;">${diff}</span>
+      <span class="mono" style="text-align:right;">${score}</span>
+    </div>`;
+  const city = (name, m, w) => `
+    <div style="display:grid;gap:6px;">
+      <div class="row" style="justify-content:space-between;font-size:14px;"><span style="font-weight:600;">${name}</span><span class="mono muted">${m} m</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%"></div></div>
+    </div>`;
+  return page(
+    { ground: "#EAF2DC", accent: "#4D7C0F", accentSoft: "#EEF5E1" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 760px; }
+    .muted { color: var(--muted); }
+    .thead, .trow { display: grid; grid-template-columns: 56px 1fr 92px 48px; gap: 12px; align-items: center; }
+    .thead { font-size: 12px; font-weight: 500; color: var(--muted); padding: 0 0 10px; }
+    .trow { font-size: 15px; padding: 14px 0; border-top: 1px solid var(--line); }
+    .cities { right: 50px; bottom: 60px; width: 290px; display: grid; gap: 14px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("libertadores_analysis.csv", '<span class="chip soft">2014–2024</span>')}
+      <div class="content">
+        <div class="thead"><span>Year</span><span>Match</span><span>Altitude gap</span><span style="text-align:right;">Score</span></div>
+        ${row("2020", "Binacional", "River Plate", "+3,799 m", "0:6")}
+        ${row("2019", "San José", "Flamengo", "+3,725 m", "0:1")}
+        ${row("2019", "Flamengo", "San José", "−3,725 m", "6:1")}
+        ${row("2020", "River Plate", "Binacional", "−3,799 m", "8:0")}
+        <div class="label" style="padding-top:18px;border-top:1px solid var(--line);">1,729 matches · altitude from 110 cities</div>
+      </div>
+    </div>
+    <div class="float cities">
+      <div class="label">City altitude</div>
+      ${city("El Alto", "4,150", 100)}
+      ${city("La Paz", "3,640", 88)}
+      ${city("Quito", "2,850", 69)}
+      ${city("Guayaquil", "9", 2)}
+    </div>
+    `,
+  );
+}
+
+// ─── 10. Sign Language Alphabet: test mode ────────────────────────────────
+
+function htmlSignLanguage() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const grid = letters
+    .map((l) => `<span class="key ${l === "K" ? "on" : ""}">${l}</span>`)
+    .join("");
+  return page(
+    { ground: "#F8E7DC", accent: "#C2410C", accentSoft: "#FCEEE5" },
+    `
+    .scene { transform: translate(-50px, -10px); }
+    .window { width: 700px; }
+    .cam { position: relative; height: 330px; border-radius: 18px; background: linear-gradient(160deg, #2B2420, #4A3A30); overflow: hidden; }
+    .roi { position: absolute; right: 48px; top: 46px; width: 200px; height: 200px; border-radius: 16px; border: 2px dashed rgba(255,255,255,0.75); }
+    .mask { position: absolute; left: 22px; top: 22px; right: 22px; bottom: 22px; border-radius: 12px; background: #000; display: flex; align-items: center; justify-content: center; }
+    .mask svg { width: 120px; height: 120px; }
+    .tag { position: absolute; left: 20px; bottom: 20px; }
+    .keys { left: 100px; bottom: 70px; width: 300px; }
+    .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 12px; }
+    .key { height: 32px; border-radius: 9px; background: var(--fill); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--muted); }
+    .key.on { background: var(--accent); color: #fff; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("Test mode", '<span class="chip soft">Asked: K</span>')}
+      <div class="content" style="display:grid;gap:18px;">
+        <div class="cam">
+          <div class="roi"><div class="mask">
+            <svg viewBox="0 0 100 100" fill="#fff"><rect x="30" y="44" width="40" height="44" rx="12"/><rect x="34" y="12" width="9" height="40" rx="4.5"/><rect x="46" y="8" width="9" height="42" rx="4.5"/><rect x="58" y="22" width="9" height="30" rx="4.5" transform="rotate(14 62 37)"/><rect x="16" y="46" width="9" height="26" rx="4.5" transform="rotate(-40 20 59)"/></svg>
+          </div></div>
+          <span class="chip tag" style="background:rgba(255,255,255,0.16);color:#fff;">Keep your hand inside the box</span>
+        </div>
+        <div class="row" style="justify-content:space-between;">
+          <div><div class="label">You signed</div><div style="font-size:30px;font-weight:700;letter-spacing:-0.03em;margin-top:2px;">K</div></div>
+          <span class="row" style="gap:10px;font-size:15px;font-weight:600;"><span class="check"></span>Correct</span>
+        </div>
+      </div>
+    </div>
+    <div class="float keys">
+      <div class="label">26 letters</div>
+      <div class="grid">${grid}</div>
+    </div>
+    `,
+  );
+}
+
+// ─── 11. LBPH Face Recognition: live result ───────────────────────────────
+
+function htmlLBPH() {
+  const face = (left, top, color, name, dist) => `
+    <div style="position:absolute;left:${left}px;top:${top}px;">
+      <span class="chip" style="height:26px;font-size:12px;background:${color};color:#fff;position:absolute;top:-36px;left:0;white-space:nowrap;">${name} · ${dist}</span>
+      <div class="box" style="border-color:${color};"><span class="head"></span></div>
+      <span class="body"></span>
+    </div>`;
+  const thumbs = Array.from({ length: 8 }, () => `<span class="thumb"><span></span></span>`).join("");
+  return page(
+    { ground: "#E6E9EE", accent: "#334155", accentSoft: "#EEF1F5" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 720px; }
+    .cam { position: relative; height: 360px; border-radius: 18px; background: linear-gradient(170deg, #1F2733, #374151); overflow: hidden; }
+    .box { width: 120px; height: 140px; border: 3px solid; border-radius: 14px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+    .head { width: 74px; height: 92px; border-radius: 50% 50% 46% 46%; background: rgba(255,255,255,0.22); margin-bottom: 14px; }
+    .body { position: absolute; left: -30px; top: 150px; width: 180px; height: 140px; border-radius: 90px 90px 0 0; background: rgba(255,255,255,0.12); }
+    .capture { right: 40px; bottom: 80px; width: 280px; display: grid; gap: 12px; }
+    .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .thumb { aspect-ratio: 1; border-radius: 10px; background: #D9DEE5; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+    .thumb span { width: 55%; height: 70%; border-radius: 50% 50% 0 0; background: #B7BFCA; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("Live recognition", '<span class="chip soft">LBPH · threshold 70</span>')}
+      <div class="content">
+        <div class="cam">
+          ${face(110, 90, "#15803D", "Person 1", "41")}
+          ${face(400, 120, "#B42318", "Unknown face", "96")}
+        </div>
+      </div>
+    </div>
+    <div class="float capture">
+      <div class="row" style="justify-content:space-between;"><span class="label">Capture</span><span class="mono label">300 / 300</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="thumbs">${thumbs}</div>
+    </div>
+    `,
+  );
+}
+
+// ─── 12. Hand Tracking: landmarks and a square crop ───────────────────────
+
+function htmlHandsTracking() {
+  // An open hand, 21 MediaPipe landmarks: wrist, then four points per finger from thumb to little finger.
+  const pts = [
+    [200, 300], [160, 280], [130, 250], [110, 220], [92, 192],
+    [170, 200], [162, 150], [157, 118], [153, 88],
+    [200, 194], [200, 140], [200, 104], [200, 72],
+    [230, 200], [238, 150], [243, 118], [247, 90],
+    [256, 214], [272, 176], [282, 152], [290, 130],
+  ];
+  const bones = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
+  const lines = bones.map(([a, b]) => `<line x1="${pts[a][0]}" y1="${pts[a][1]}" x2="${pts[b][0]}" y2="${pts[b][1]}" />`).join("");
+  const dots = pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="6" />`).join("");
+  return page(
+    { ground: "#F5EEDB", accent: "#A16207", accentSoft: "#FAF3E1" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 700px; }
+    .cam { position: relative; height: 380px; border-radius: 18px; background: linear-gradient(165deg, #2A2418, #4B3F28); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .cam svg { width: 400px; height: 380px; }
+    .cam line { stroke: #fff; stroke-width: 3; stroke-linecap: round; opacity: 0.9; }
+    .cam circle { fill: var(--accent); stroke: #fff; stroke-width: 2; }
+    .cam rect { fill: none; stroke: #F87171; stroke-width: 3; }
+    .legend { right: 50px; bottom: 90px; width: 260px; display: grid; gap: 10px; }
+    .lm { display: flex; justify-content: space-between; font-size: 14px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("Lecture", '<span class="chip soft">MediaPipe Hands</span>')}
+      <div class="content">
+        <div class="cam">
+          <svg viewBox="0 0 400 380">${lines}${dots}<rect x="47" y="42" width="288" height="288" rx="6" /></svg>
+        </div>
+      </div>
+    </div>
+    <div class="float legend">
+      <div class="label">21 landmarks</div>
+      <div class="lm"><span>0 · Wrist</span><span class="mono label">bottom</span></div>
+      <div class="lm"><span>4 · Thumb tip</span><span class="mono label">left</span></div>
+      <div class="lm"><span>12 · Middle tip</span><span class="mono label">top</span></div>
+      <div class="lm"><span>20 · Little tip</span><span class="mono label">right</span></div>
+    </div>
+    `,
+  );
+}
+
+// ─── 13. RAG Evals: an answer with citations, and the retrieval scores ─────
+
+function htmlRagEvals() {
+  const chunk = (id, title, score, on) => `
+    <div class="chunk ${on ? "on" : ""}">
+      <span class="mono cid">${id}</span>
+      <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</span>
+      <span class="mono label">${score}</span>
+    </div>`;
+  const mode = (name, value, w, on) => `
+    <div style="display:grid;gap:6px;">
+      <div class="row" style="justify-content:space-between;font-size:14px;"><span style="font-weight:${on ? 600 : 500};">${name}</span><span class="mono ${on ? "" : "label"}">${value}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%;opacity:${on ? 1 : 0.35}"></div></div>
+    </div>`;
+  return page(
+    { ground: "#DFF0F4", accent: "#0E7490", accentSoft: "#E4F3F7" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 740px; }
+    .q { border-radius: 16px; background: var(--fill); padding: 14px 18px; font-size: 16px; }
+    .answer { font-size: 16px; line-height: 1.6; }
+    .cite { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 600; vertical-align: 2px; }
+    .chunk { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; font-size: 14px; border: 1.5px solid var(--line); }
+    .chunk.on { border-color: var(--accent); background: var(--accent-soft); }
+    .cid { font-size: 12px; color: var(--accent); }
+    .modes { right: 40px; bottom: 70px; width: 290px; display: grid; gap: 14px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("POST /ask", '<span class="chip soft">mode: vector</span>')}
+      <div class="content" style="display:grid;gap:16px;">
+        <div class="q">Is the claim supported by the abstracts?</div>
+        <div class="answer">The abstracts support it in adults <span class="cite">1</span>, but one trial found no effect in children <span class="cite">2</span>.</div>
+        <div style="display:grid;gap:8px;">
+          ${chunk("#4812", "Randomized trial in adults, 12-month follow-up", "0.71", true)}
+          ${chunk("#2290", "Pediatric cohort, no significant difference", "0.66", true)}
+          ${chunk("#0937", "Review of observational studies", "0.58", false)}
+        </div>
+      </div>
+    </div>
+    <div class="float modes">
+      <div class="label">Recall@10 · SciFact test</div>
+      ${mode("Vector", "0.829", 83, true)}
+      ${mode("Hybrid", "0.756", 76, false)}
+      ${mode("Full text", "0.521", 52, false)}
+    </div>
+    `,
+  );
+}
+
+// ─── 14. Payments Ledger: an idempotent transfer, and the benchmark ────────
+
+function htmlLedger() {
+  const bench = (accounts, conc, rate, p99) => `
+    <div class="brow"><span>${accounts}</span><span class="mono">${conc}</span><span class="mono">${rate}</span><span class="mono" style="text-align:right;">${p99}</span></div>`;
+  return page(
+    { ground: "#F7E1E7", accent: "#9F1239", accentSoft: "#FBE9EE" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 720px; }
+    .code { border-radius: 16px; background: #1D1D1F; color: #E5E5EA; padding: 18px 20px; font-size: 14px; line-height: 1.7; }
+    .k { color: #FDA4AF; } .s { color: #A7F3D0; } .m { color: #8E8E93; }
+    .resp { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 16px; background: var(--fill); font-size: 15px; }
+    .bench { right: 40px; bottom: 70px; width: 320px; display: grid; gap: 2px; }
+    .brow { display: grid; grid-template-columns: 1fr 44px 70px 70px; gap: 8px; font-size: 13px; padding: 8px 0; border-top: 1px solid var(--line); }
+    .bhead { display: grid; grid-template-columns: 1fr 44px 70px 70px; gap: 8px; font-size: 11px; color: var(--muted); padding-bottom: 6px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("POST /transactions", '<span class="chip soft">Idempotency-Key: pay-7f3a</span>')}
+      <div class="content" style="display:grid;gap:16px;">
+        <div class="code mono">
+          <div>{</div>
+          <div>&nbsp;&nbsp;<span class="k">"entries"</span>: [</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="k">"account"</span>: <span class="s">"cash"</span>, <span class="k">"amount"</span>: -2500 },</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="k">"account"</span>: <span class="s">"merchant"</span>, <span class="k">"amount"</span>: 2500 }</div>
+          <div>&nbsp;&nbsp;] <span class="m">// sums to zero, USD</span></div>
+          <div>}</div>
+        </div>
+        <div class="resp"><span class="chip on" style="height:26px;">201</span><span>Posted once</span><span class="label" style="margin-left:auto;">retry → 200 · Idempotent-Replayed</span></div>
+      </div>
+    </div>
+    <div class="float bench">
+      <div class="label" style="margin-bottom:8px;">Benchmark · M4 Pro, Postgres 17</div>
+      <div class="bhead"><span>Accounts</span><span>Conc.</span><span>Posts/s</span><span style="text-align:right;">p99</span></div>
+      ${bench("1,000", "32", "4,004", "18.0 ms")}
+      ${bench("1,000", "8", "3,229", "4.2 ms")}
+      ${bench("10 (hot)", "32", "2,060", "207.2 ms")}
+    </div>
+    `,
+  );
+}
+
+// ─── 15. Football Data Pipeline: a run, and the altitude table ─────────────
+
+function htmlFootballPipeline() {
+  const stat = (label, value) => `<div class="stat"><div class="label">${label}</div><div style="font-size:22px;font-weight:700;letter-spacing:-0.03em;margin-top:4px;">${value}</div></div>`;
+  const band = (name, pct, n) => `
+    <div style="display:grid;gap:6px;">
+      <div class="row" style="justify-content:space-between;font-size:13px;"><span>${name}</span><span class="mono label">${pct} · ${n}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}"></div></div>
+    </div>`;
+  return page(
+    { ground: "#E2E7F6", accent: "#1E40AF", accentSoft: "#E8ECFA" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 740px; }
+    .steps { display: flex; align-items: center; gap: 8px; }
+    .step { flex: 1; text-align: center; padding: 12px 8px; border-radius: 14px; background: var(--fill); font-size: 14px; font-weight: 600; }
+    .step .label { font-weight: 500; margin-top: 2px; }
+    .arrow { color: var(--muted); font-size: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .stat { border-radius: 16px; border: 1.5px solid var(--line); padding: 14px 16px; }
+    .alt { right: 40px; bottom: 150px; width: 300px; display: grid; gap: 12px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("Run 2026-11-26", '<span class="chip soft">Step Functions · weekly</span>')}
+      <div class="content" style="display:grid;gap:18px;">
+        <div class="steps">
+          <div class="step">Ingest<div class="label">24 pages</div></div><span class="arrow">→</span>
+          <div class="step">Quality<div class="label">2 quarantined</div></div><span class="arrow">→</span>
+          <div class="step">Transform<div class="label">DuckDB</div></div><span class="arrow">→</span>
+          <div class="step">API<div class="label">Parquet</div></div>
+        </div>
+        <div class="stats">
+          ${stat("Valid rows", "3,290")}
+          ${stat("Duplicates", "0")}
+          ${stat("Parse + validate", "0.28 s")}
+        </div>
+      </div>
+    </div>
+    <div class="float alt">
+      <div class="label">Home win rate by altitude advantage</div>
+      ${band("2,500 m and more", "56.0%", "225")}
+      ${band("500–1,499 m", "49.8%", "396")}
+      ${band("0–499 m", "41.0%", "542")}
+    </div>
+    `,
+  );
+}
+
+// ─── 16. Vector Search in Go: throughput by goroutines, and the build ─────
+
+function htmlVecsearch() {
+  const row = (workers, qps, pct, speed) => `
+    <div style="display:grid;grid-template-columns:44px 1fr 92px 56px;gap:12px;align-items:center;font-size:14px;">
+      <span class="mono">${workers}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}"></div></div>
+      <span class="mono" style="text-align:right;">${qps}</span>
+      <span class="mono label" style="text-align:right;">${speed}</span>
+    </div>`;
+  const build = (workers, secs, recall) => `
+    <div class="brow"><span class="mono">${workers}</span><span class="mono">${secs}</span><span class="mono" style="text-align:right;">${recall}</span></div>`;
+  return page(
+    { ground: "#DDF0EA", accent: "#0F766E", accentSoft: "#E6F4F0" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 740px; }
+    .build { right: 40px; bottom: 90px; width: 290px; display: grid; gap: 2px; }
+    .brow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 13px; padding: 8px 0; border-top: 1px solid var(--line); }
+    .bhead { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 11px; color: var(--muted); padding-bottom: 6px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("vecbench · SciFact", '<span class="chip soft">5,183 × 384 · ef=64</span>')}
+      <div class="content" style="display:grid;gap:16px;">
+        <div class="row" style="justify-content:space-between;">
+          <span class="label">HNSW queries per second by goroutines</span>
+          <span class="chip on" style="height:26px;">recall@10 0.985</span>
+        </div>
+        ${row("1", "13,593", "11.4%", "1.00×")}
+        ${row("4", "55,008", "46.2%", "4.05×")}
+        ${row("8", "104,198", "87.6%", "7.67×")}
+        ${row("12", "118,993", "100%", "8.75×")}
+        <div class="label">No locks on the read path · go test -race passes</div>
+      </div>
+    </div>
+    <div class="float build">
+      <div class="label" style="margin-bottom:8px;">Parallel build</div>
+      <div class="bhead"><span>Workers</span><span>Seconds</span><span style="text-align:right;">Recall</span></div>
+      ${build("1", "0.787", "0.994")}
+      ${build("4", "0.199", "0.993")}
+      ${build("8", "0.106", "0.990")}
+    </div>
+    `,
+  );
+}
+
 // ─── Runner ────────────────────────────────────────────────────────────────
 
 const ALL_PROJECTS = [
@@ -618,6 +992,22 @@ const ALL_PROJECTS = [
   { id: "cadenza-app", filename: "cadenza-app.webp", html: htmlCadenza() },
   { id: "gdg-ecuador", filename: "gdg-ecuador.webp", html: htmlGDGEcuador() },
   { id: "flights", filename: "flights.webp", html: htmlFlights() },
+  { id: "football-data", filename: "football-data.webp", html: htmlFootballData() },
+  {
+    id: "sign-language-recognition",
+    filename: "sign-language-recognition.webp",
+    html: htmlSignLanguage(),
+  },
+  { id: "lbph-face-recognition", filename: "lbph-face-recognition.webp", html: htmlLBPH() },
+  { id: "hands-tracking", filename: "hands-tracking.webp", html: htmlHandsTracking() },
+  { id: "rag-evals", filename: "rag-evals.webp", html: htmlRagEvals() },
+  { id: "ledger-go", filename: "ledger-go.webp", html: htmlLedger() },
+  { id: "vecsearch-go", filename: "vecsearch-go.webp", html: htmlVecsearch() },
+  {
+    id: "football-data-pipeline",
+    filename: "football-data-pipeline.webp",
+    html: htmlFootballPipeline(),
+  },
 ];
 
 async function generateImages() {

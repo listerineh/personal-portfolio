@@ -1,5 +1,6 @@
 import {
   Bot,
+  BrainCircuit,
   ChevronDown,
   ChevronRight,
   Database,
@@ -19,6 +20,7 @@ export type FlowKind =
   | "client"
   | "service"
   | "agent"
+  | "model"
   | "queue"
   | "store"
   | "output";
@@ -44,6 +46,7 @@ const kindIcon: Record<FlowKind, LucideIcon> = {
   client: MonitorSmartphone,
   service: Server,
   agent: Bot,
+  model: BrainCircuit,
   queue: Layers,
   store: Database,
   output: MessageSquareText,
@@ -51,7 +54,7 @@ const kindIcon: Record<FlowKind, LucideIcon> = {
 
 /**
  * How work moves through a system, as connected steps: a row on desktop (up to six), a column on phones.
- * AI agents carry the amber disc; everything else stays neutral. The links draw themselves in as the
+ * AI agents and models carry the amber disc; everything else stays neutral. The links draw themselves in as the
  * diagram scrolls into view (only under html.js-motion; still and complete otherwise).
  */
 export function FlowDiagram({
@@ -68,7 +71,7 @@ export function FlowDiagram({
           const kind = step.kind ?? "service";
           const Icon = kindIcon[kind];
           const last = index === steps.length - 1;
-          const agent = kind === "agent";
+          const agent = kind === "agent" || kind === "model";
           return (
             <li
               key={`${index}-${step.label}`}
