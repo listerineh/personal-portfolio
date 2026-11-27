@@ -922,6 +922,53 @@ function htmlFootballPipeline() {
   );
 }
 
+// ─── 16. Vector Search in Go: throughput by goroutines, and the build ─────
+
+function htmlVecsearch() {
+  const row = (workers, qps, pct, speed) => `
+    <div style="display:grid;grid-template-columns:44px 1fr 92px 56px;gap:12px;align-items:center;font-size:14px;">
+      <span class="mono">${workers}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}"></div></div>
+      <span class="mono" style="text-align:right;">${qps}</span>
+      <span class="mono label" style="text-align:right;">${speed}</span>
+    </div>`;
+  const build = (workers, secs, recall) => `
+    <div class="brow"><span class="mono">${workers}</span><span class="mono">${secs}</span><span class="mono" style="text-align:right;">${recall}</span></div>`;
+  return page(
+    { ground: "#DDF0EA", accent: "#0F766E", accentSoft: "#E6F4F0" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 740px; }
+    .build { right: 40px; bottom: 90px; width: 290px; display: grid; gap: 2px; }
+    .brow { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 13px; padding: 8px 0; border-top: 1px solid var(--line); }
+    .bhead { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 11px; color: var(--muted); padding-bottom: 6px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("vecbench · SciFact", '<span class="chip soft">5,183 × 384 · ef=64</span>')}
+      <div class="content" style="display:grid;gap:16px;">
+        <div class="row" style="justify-content:space-between;">
+          <span class="label">HNSW queries per second by goroutines</span>
+          <span class="chip on" style="height:26px;">recall@10 0.985</span>
+        </div>
+        ${row("1", "13,593", "11.4%", "1.00×")}
+        ${row("4", "55,008", "46.2%", "4.05×")}
+        ${row("8", "104,198", "87.6%", "7.67×")}
+        ${row("12", "118,993", "100%", "8.75×")}
+        <div class="label">No locks on the read path · go test -race passes</div>
+      </div>
+    </div>
+    <div class="float build">
+      <div class="label" style="margin-bottom:8px;">Parallel build</div>
+      <div class="bhead"><span>Workers</span><span>Seconds</span><span style="text-align:right;">Recall</span></div>
+      ${build("1", "0.787", "0.994")}
+      ${build("4", "0.199", "0.993")}
+      ${build("8", "0.106", "0.990")}
+    </div>
+    `,
+  );
+}
+
 // ─── Runner ────────────────────────────────────────────────────────────────
 
 const ALL_PROJECTS = [
@@ -955,6 +1002,7 @@ const ALL_PROJECTS = [
   { id: "hands-tracking", filename: "hands-tracking.webp", html: htmlHandsTracking() },
   { id: "rag-evals", filename: "rag-evals.webp", html: htmlRagEvals() },
   { id: "ledger-go", filename: "ledger-go.webp", html: htmlLedger() },
+  { id: "vecsearch-go", filename: "vecsearch-go.webp", html: htmlVecsearch() },
   {
     id: "football-data-pipeline",
     filename: "football-data-pipeline.webp",
