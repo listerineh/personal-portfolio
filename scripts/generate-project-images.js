@@ -780,6 +780,148 @@ function htmlHandsTracking() {
   );
 }
 
+// ─── 13. RAG Evals: an answer with citations, and the retrieval scores ─────
+
+function htmlRagEvals() {
+  const chunk = (id, title, score, on) => `
+    <div class="chunk ${on ? "on" : ""}">
+      <span class="mono cid">${id}</span>
+      <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</span>
+      <span class="mono label">${score}</span>
+    </div>`;
+  const mode = (name, value, w, on) => `
+    <div style="display:grid;gap:6px;">
+      <div class="row" style="justify-content:space-between;font-size:14px;"><span style="font-weight:${on ? 600 : 500};">${name}</span><span class="mono ${on ? "" : "label"}">${value}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${w}%;opacity:${on ? 1 : 0.35}"></div></div>
+    </div>`;
+  return page(
+    { ground: "#DFF0F4", accent: "#0E7490", accentSoft: "#E4F3F7" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 740px; }
+    .q { border-radius: 16px; background: var(--fill); padding: 14px 18px; font-size: 16px; }
+    .answer { font-size: 16px; line-height: 1.6; }
+    .cite { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 600; vertical-align: 2px; }
+    .chunk { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; font-size: 14px; border: 1.5px solid var(--line); }
+    .chunk.on { border-color: var(--accent); background: var(--accent-soft); }
+    .cid { font-size: 12px; color: var(--accent); }
+    .modes { right: 40px; bottom: 70px; width: 290px; display: grid; gap: 14px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("POST /ask", '<span class="chip soft">mode: vector</span>')}
+      <div class="content" style="display:grid;gap:16px;">
+        <div class="q">Is the claim supported by the abstracts?</div>
+        <div class="answer">The abstracts support it in adults <span class="cite">1</span>, but one trial found no effect in children <span class="cite">2</span>.</div>
+        <div style="display:grid;gap:8px;">
+          ${chunk("#4812", "Randomized trial in adults, 12-month follow-up", "0.71", true)}
+          ${chunk("#2290", "Pediatric cohort, no significant difference", "0.66", true)}
+          ${chunk("#0937", "Review of observational studies", "0.58", false)}
+        </div>
+      </div>
+    </div>
+    <div class="float modes">
+      <div class="label">Recall@10 · SciFact test</div>
+      ${mode("Vector", "0.829", 83, true)}
+      ${mode("Hybrid", "0.756", 76, false)}
+      ${mode("Full text", "0.521", 52, false)}
+    </div>
+    `,
+  );
+}
+
+// ─── 14. Payments Ledger: an idempotent transfer, and the benchmark ────────
+
+function htmlLedger() {
+  const bench = (accounts, conc, rate, p99) => `
+    <div class="brow"><span>${accounts}</span><span class="mono">${conc}</span><span class="mono">${rate}</span><span class="mono" style="text-align:right;">${p99}</span></div>`;
+  return page(
+    { ground: "#F7E1E7", accent: "#9F1239", accentSoft: "#FBE9EE" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 720px; }
+    .code { border-radius: 16px; background: #1D1D1F; color: #E5E5EA; padding: 18px 20px; font-size: 14px; line-height: 1.7; }
+    .k { color: #FDA4AF; } .s { color: #A7F3D0; } .m { color: #8E8E93; }
+    .resp { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 16px; background: var(--fill); font-size: 15px; }
+    .bench { right: 40px; bottom: 70px; width: 320px; display: grid; gap: 2px; }
+    .brow { display: grid; grid-template-columns: 1fr 44px 70px 70px; gap: 8px; font-size: 13px; padding: 8px 0; border-top: 1px solid var(--line); }
+    .bhead { display: grid; grid-template-columns: 1fr 44px 70px 70px; gap: 8px; font-size: 11px; color: var(--muted); padding-bottom: 6px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("POST /transactions", '<span class="chip soft">Idempotency-Key: pay-7f3a</span>')}
+      <div class="content" style="display:grid;gap:16px;">
+        <div class="code mono">
+          <div>{</div>
+          <div>&nbsp;&nbsp;<span class="k">"entries"</span>: [</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="k">"account"</span>: <span class="s">"cash"</span>, <span class="k">"amount"</span>: -2500 },</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="k">"account"</span>: <span class="s">"merchant"</span>, <span class="k">"amount"</span>: 2500 }</div>
+          <div>&nbsp;&nbsp;] <span class="m">// sums to zero, USD</span></div>
+          <div>}</div>
+        </div>
+        <div class="resp"><span class="chip on" style="height:26px;">201</span><span>Posted once</span><span class="label" style="margin-left:auto;">retry → 200 · Idempotent-Replayed</span></div>
+      </div>
+    </div>
+    <div class="float bench">
+      <div class="label" style="margin-bottom:8px;">Benchmark · M4 Pro, Postgres 17</div>
+      <div class="bhead"><span>Accounts</span><span>Conc.</span><span>Posts/s</span><span style="text-align:right;">p99</span></div>
+      ${bench("1,000", "32", "4,004", "18.0 ms")}
+      ${bench("1,000", "8", "3,229", "4.2 ms")}
+      ${bench("10 (hot)", "32", "2,060", "207.2 ms")}
+    </div>
+    `,
+  );
+}
+
+// ─── 15. Football Data Pipeline: a run, and the altitude table ─────────────
+
+function htmlFootballPipeline() {
+  const stat = (label, value) => `<div class="stat"><div class="label">${label}</div><div style="font-size:22px;font-weight:700;letter-spacing:-0.03em;margin-top:4px;">${value}</div></div>`;
+  const band = (name, pct, n) => `
+    <div style="display:grid;gap:6px;">
+      <div class="row" style="justify-content:space-between;font-size:13px;"><span>${name}</span><span class="mono label">${pct} · ${n}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}"></div></div>
+    </div>`;
+  return page(
+    { ground: "#E2E7F6", accent: "#1E40AF", accentSoft: "#E8ECFA" },
+    `
+    .scene { transform: translate(-40px, -10px); }
+    .window { width: 740px; }
+    .steps { display: flex; align-items: center; gap: 8px; }
+    .step { flex: 1; text-align: center; padding: 12px 8px; border-radius: 14px; background: var(--fill); font-size: 14px; font-weight: 600; }
+    .step .label { font-weight: 500; margin-top: 2px; }
+    .arrow { color: var(--muted); font-size: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .stat { border-radius: 16px; border: 1.5px solid var(--line); padding: 14px 16px; }
+    .alt { right: 40px; bottom: 150px; width: 300px; display: grid; gap: 12px; }
+    `,
+    `
+    <div class="window">
+      ${windowBar("Run 2026-11-26", '<span class="chip soft">Step Functions · weekly</span>')}
+      <div class="content" style="display:grid;gap:18px;">
+        <div class="steps">
+          <div class="step">Ingest<div class="label">24 pages</div></div><span class="arrow">→</span>
+          <div class="step">Quality<div class="label">2 quarantined</div></div><span class="arrow">→</span>
+          <div class="step">Transform<div class="label">DuckDB</div></div><span class="arrow">→</span>
+          <div class="step">API<div class="label">Parquet</div></div>
+        </div>
+        <div class="stats">
+          ${stat("Valid rows", "3,290")}
+          ${stat("Duplicates", "0")}
+          ${stat("Parse + validate", "0.28 s")}
+        </div>
+      </div>
+    </div>
+    <div class="float alt">
+      <div class="label">Home win rate by altitude advantage</div>
+      ${band("2,500 m and more", "56.0%", "225")}
+      ${band("500–1,499 m", "49.8%", "396")}
+      ${band("0–499 m", "41.0%", "542")}
+    </div>
+    `,
+  );
+}
+
 // ─── Runner ────────────────────────────────────────────────────────────────
 
 const ALL_PROJECTS = [
@@ -811,6 +953,13 @@ const ALL_PROJECTS = [
   },
   { id: "lbph-face-recognition", filename: "lbph-face-recognition.webp", html: htmlLBPH() },
   { id: "hands-tracking", filename: "hands-tracking.webp", html: htmlHandsTracking() },
+  { id: "rag-evals", filename: "rag-evals.webp", html: htmlRagEvals() },
+  { id: "ledger-go", filename: "ledger-go.webp", html: htmlLedger() },
+  {
+    id: "football-data-pipeline",
+    filename: "football-data-pipeline.webp",
+    html: htmlFootballPipeline(),
+  },
 ];
 
 async function generateImages() {
