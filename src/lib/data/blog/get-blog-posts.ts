@@ -17,9 +17,11 @@ import { aiSecurityDoubleEdgedSword } from './ai-security-double-edged-sword';
 import { flociAwsLocalDevelopmentRevolution } from './floci-aws-local-development-revolution';
 import { visualLanguageDesignSystems } from './visual-language-design-systems';
 import { whenAiCanCloneYourApp } from './when-ai-can-clone-your-app';
+import { bancoPichinchaWhitelotusClaim } from './banco-pichincha-whitelotus-claim';
 
 const allBlogPosts = {
   en: [
+    bancoPichinchaWhitelotusClaim.en,
     whenAiCanCloneYourApp.en,
     visualLanguageDesignSystems.en,
     flociAwsLocalDevelopmentRevolution.en,
@@ -38,6 +40,7 @@ const allBlogPosts = {
     whyMarkdownForBlogs.en,
   ],
   es: [
+    bancoPichinchaWhitelotusClaim.es,
     whenAiCanCloneYourApp.es,
     visualLanguageDesignSystems.es,
     flociAwsLocalDevelopmentRevolution.es,
