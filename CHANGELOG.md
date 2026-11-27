@@ -4,6 +4,13 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 
 ## [Unreleased]
 
+### Added
+- Skills for the technologies behind the new projects: pgvector, Alembic, DuckDB, AWS Lambda, Step Functions, S3, Pub/Sub, MediaPipe, pandas, PyQt5 and BLoC.
+
+### Changed
+- Football Data Pipeline is marked completed: it runs end to end on Floci, a local AWS emulator.
+- Projects tagged Tailwind now use the skill's name, Tailwind CSS.
+
 ## [3.10.0] - 2026-11-27
 
 ### Added

@@ -11,6 +11,7 @@ const TAG_LAYER: Record<string, StackLayer> = {
   'react.js': 'interface',
   react: 'interface',
   tailwind: 'interface',
+  'tailwind css': 'interface',
   radixui: 'interface',
   pwa: 'interface',
   i18n: 'interface',
