@@ -171,6 +171,81 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
         },
       ],
     },
+    "vecsearch-go": {
+      figures: [
+        {
+          value: "118,993",
+          label: "Queries per second on 12 goroutines, recall@10 0.985",
+        },
+        {
+          value: "8.75×",
+          label: "Throughput of 12 goroutines against one, with no locks",
+        },
+        {
+          value: "0.11 s",
+          label: "Graph build on 8 workers, down from 0.79 s on one",
+        },
+        {
+          value: "41×",
+          label: "Throughput of an exact scan, on 100,000 vectors",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Embeddings",
+            detail: "5,183 SciFact abstracts, bge-small, 384 dims",
+            kind: "model",
+          },
+          {
+            label: "Parallel build",
+            detail: "Goroutines insert with one mutex per node",
+            kind: "service",
+          },
+          {
+            label: "Freeze",
+            detail: "The graph stops changing; later inserts panic",
+            kind: "store",
+          },
+          {
+            label: "Search",
+            detail: "Concurrent and lock-free, scratch from a sync.Pool",
+            kind: "service",
+          },
+          {
+            label: "HTTP API",
+            detail: "POST /search behind a semaphore",
+            kind: "output",
+          },
+        ],
+        loop: "Every run checks HNSW against exact search on the same queries, so each throughput figure comes with its recall@10.",
+      },
+      decisions: [
+        {
+          title: "Freeze the index instead of locking reads",
+          why: "A built graph never changes, and even a read lock writes to a shared cache line. Freezing it lets every search run without locks.",
+          tradeoff: "No inserts after the build; new vectors mean a rebuild.",
+        },
+        {
+          title: "Parallelize between queries, not inside one",
+          why: "Splitting one query over 8 graphs made it slower (71 → 93 µs) and lowered recall, because each shard repeats the beam search.",
+          tradeoff:
+            "One query is no faster on more cores; only throughput grows.",
+        },
+        {
+          title: "Pure Go float32, no SIMD",
+          why: "The code stays readable and portable; the dot product is unrolled by eight instead.",
+          tradeoff:
+            "Quantizing to int8 would cut memory traffic 4×, and it is not measured yet.",
+        },
+        {
+          title: "Clustered synthetic data, not uniform",
+          why: "Real embeddings cluster, and uniform random vectors make every index look worse than it is.",
+          tradeoff:
+            "The 100k figures are still synthetic and were run on a busy machine, so they are a lower bound.",
+        },
+      ],
+    },
     "football-data-pipeline": {
       figures: [
         {
@@ -1028,6 +1103,82 @@ export const projectDetails: Record<Locale, Record<string, ProjectDetails>> = {
           title: "SQL escrito a mano en lugar de un ORM",
           why: "Unas 300 líneas de SQL dejan cada bloqueo y su orden a la vista en el código.",
           tradeoff: "Cada consulta se escribe y se mapea a mano.",
+        },
+      ],
+    },
+    "vecsearch-go": {
+      figures: [
+        {
+          value: "118.993",
+          label: "Consultas por segundo en 12 goroutines, recall@10 de 0,985",
+        },
+        {
+          value: "8,75×",
+          label: "Rendimiento de 12 goroutines frente a una, sin locks",
+        },
+        {
+          value: "0,11 s",
+          label: "Construcción del grafo con 8 workers, frente a 0,79 s con uno",
+        },
+        {
+          value: "41×",
+          label: "El rendimiento de una búsqueda exacta, con 100.000 vectores",
+        },
+      ],
+      flow: {
+        steps: [
+          {
+            label: "Embeddings",
+            detail: "5.183 resúmenes de SciFact, bge-small, 384 dimensiones",
+            kind: "model",
+          },
+          {
+            label: "Construcción en paralelo",
+            detail: "Goroutines insertan con un mutex por nodo",
+            kind: "service",
+          },
+          {
+            label: "Congelar",
+            detail: "El grafo deja de cambiar; insertar después es un panic",
+            kind: "store",
+          },
+          {
+            label: "Búsqueda",
+            detail: "Concurrente y sin locks, memoria de un sync.Pool",
+            kind: "service",
+          },
+          {
+            label: "API HTTP",
+            detail: "POST /search detrás de un semáforo",
+            kind: "output",
+          },
+        ],
+        loop: "Cada ejecución compara HNSW con la búsqueda exacta sobre las mismas consultas, así que cada cifra de rendimiento viene con su recall@10.",
+      },
+      decisions: [
+        {
+          title: "Congelar el índice en lugar de bloquear lecturas",
+          why: "Un grafo construido no cambia, y hasta un lock de lectura escribe en una línea de caché compartida. Congelarlo deja que cada búsqueda corra sin locks.",
+          tradeoff:
+            "No se puede insertar después de construir; vectores nuevos implican reconstruir.",
+        },
+        {
+          title: "Paralelizar entre consultas, no dentro de una",
+          why: "Repartir una consulta entre 8 grafos la hizo más lenta (71 → 93 µs) y bajó el recall, porque cada fragmento repite la búsqueda en haz.",
+          tradeoff:
+            "Una consulta no va más rápido con más núcleos; solo crece el rendimiento total.",
+        },
+        {
+          title: "Go puro con float32, sin SIMD",
+          why: "El código queda legible y portable; a cambio, el producto punto se desenrolla de ocho en ocho.",
+          tradeoff:
+            "Cuantizar a int8 reduciría 4 veces el tráfico de memoria, y aún no está medido.",
+        },
+        {
+          title: "Datos sintéticos agrupados, no uniformes",
+          why: "Los embeddings reales forman grupos, y los vectores aleatorios uniformes hacen que cualquier índice parezca peor de lo que es.",
+          tradeoff:
+            "Las cifras de 100.000 vectores siguen siendo sintéticas y salieron de una máquina ocupada, así que son un mínimo.",
         },
       ],
     },

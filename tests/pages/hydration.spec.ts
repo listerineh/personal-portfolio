@@ -14,6 +14,7 @@ const paths = [
   "/projects/codesentry-swarm",
   "/projects/football-data",
   "/projects/ledger-go",
+  "/projects/vecsearch-go",
   "/skills",
   "/contact",
   "/why",

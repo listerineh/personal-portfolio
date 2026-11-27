@@ -8,6 +8,7 @@ Versions are git tags (`vX.Y.Z`) on `main`. Earlier releases (`v2.1.0`, `v2.0.0`
 - Three backend projects, in English and Spanish, each with measured figures, a flow and its decisions: RAG Evals, Payments Ledger (Go) and Football Data Pipeline (AWS, Terraform).
 - Four more projects, in English and Spanish, each with figures, a flow and its decisions: Football Altitude Data, Sign Language Alphabet, LBPH Face Recognition and Hand Tracking.
 - Project flows mark AI models (a CNN, Whisper, MediaPipe) apart from AI agents.
+- Vector Search in Go, in English and Spanish: an HNSW index with a parallel build and lock-free search, with its figures, flow, decisions, product shot and share image.
 
 ### Changed
 - Football Data Pipeline now reports its end-to-end run on Floci, a local AWS emulator: 39.1 s for the scheduled run, labelled as emulator figures.
